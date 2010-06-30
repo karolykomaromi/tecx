@@ -17,6 +17,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 Common", "01 Common", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99 Tests", "99 Tests", "{3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 Visual Studio", "02 Visual Studio", "{C02AB11F-1B5F-4803-9B13-5A21000AE5D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 WCF", "03 WCF", "{E1D2BCBC-4FA7-4B80-B80D-1E2FF04F9EB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 Geneva", "04 Geneva", "{69923832-7A15-43F7-9842-46EC401E28D4}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 3
