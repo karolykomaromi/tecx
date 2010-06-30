@@ -7,10 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Common.Test", "TecX.Co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{152B0C27-6933-4AD1-8757-0D6C7F087C35}"
 	ProjectSection(SolutionItems) = preProject
+		CommonFiles\GlobalAssemblyVersion.cs = CommonFiles\GlobalAssemblyVersion.cs
 		Local.testsettings = Local.testsettings
 		TecX.vsmdi = TecX.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 Common", "01 Common", "{0F6D840F-1B1D-47DF-9007-C725CB01A384}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99 Tests", "99 Tests", "{3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -19,9 +24,11 @@ Global
 		SccTeamFoundationServer = https://tfs04.codeplex.com/
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = TecX.Common\\TecX.Common.csproj
+		SccProjectTopLevelParentUniqueName1 = TecX.sln
 		SccProjectName1 = TecX.Common
 		SccLocalPath1 = TecX.Common
 		SccProjectUniqueName2 = TecX.Common.Test\\TecX.Common.Test.csproj
+		SccProjectTopLevelParentUniqueName2 = TecX.sln
 		SccProjectName2 = TecX.Common.Test
 		SccLocalPath2 = TecX.Common.Test
 	EndGlobalSection
@@ -44,5 +51,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{23E54945-0126-43BE-A3FC-5F61AF5BDFF3} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
+		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 	EndGlobalSection
 EndGlobal
