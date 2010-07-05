@@ -6,11 +6,11 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}</ProjectGuid>
+    <ProjectGuid>{A74805DC-C27A-4BC2-9F6A-744E64596C89}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TecX.Common.Test</RootNamespace>
-    <AssemblyName>TecX.Common.Test</AssemblyName>
+    <RootNamespace>TecX.Agile.Domain.Test</RootNamespace>
+    <AssemblyName>TecX.Agile.Domain.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -49,16 +49,13 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExceptionExtensionFixture.cs" />
-    <Compile Include="GuardFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegexBuilderFixture.cs" />
-    <Compile Include="TypeHelperFixture.cs" />
+    <Compile Include="ProjectFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
-      <Project>{23E54945-0126-43BE-A3FC-5F61AF5BDFF3}</Project>
-      <Name>TecX.Common</Name>
+    <ProjectReference Include="..\TecX.Agile.Domain\TecX.Agile.Domain.csproj">
+      <Project>{3769FA7C-C119-42D4-8F97-F5B954FD0331}</Project>
+      <Name>TecX.Agile.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
