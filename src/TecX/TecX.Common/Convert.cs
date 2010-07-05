@@ -43,7 +43,7 @@ namespace TecX.Common
 
             try
             {
-                result = ToDecimal(value);
+                result = System.Convert.ToDecimal(value);
                 return result;
             }
             catch
@@ -70,12 +70,12 @@ namespace TecX.Common
         {
             Guard.AssertNotEmpty(value, "value");
 
-            Type enumType = typeof (T);
+            Type enumType = typeof(T);
             T enumValue = default(T);
 
             try
             {
-                enumValue = (T) Enum.Parse(enumType, value, true);
+                enumValue = (T)Enum.Parse(enumType, value, true);
             }
             catch
             {
@@ -135,11 +135,9 @@ namespace TecX.Common
             {
                 string[] byteStrings = hexString.Split('-');
 
-                for (int i = 0; i < byteStrings.Length; i++)
+                foreach (string str in byteStrings)
                 {
-                    string str = byteStrings[i];
-
-                    if (!String.IsNullOrEmpty(str) && (str != "-"))
+                    if (!string.IsNullOrEmpty(str) && (str != "-"))
                     {
                         byte b;
                         if (Byte.TryParse(str, NumberStyles.HexNumber, null, out b))
@@ -153,7 +151,7 @@ namespace TecX.Common
             }
             //you need two hex digits for a byte so the
             //string length must be even
-            if (hexString.Length%2 != 0)
+            if (hexString.Length % 2 != 0)
             {
                 return new byte[0];
             }

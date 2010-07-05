@@ -16,7 +16,7 @@ namespace TecX.Common.Extensions.Error
         /// <param name="additionalInformation">The additional information.</param>
         /// <returns>The original exception. Fluent interface</returns>
         public static TException WithAdditionalInfos<TException>(this TException exception,
-                                                                 IDictionary<object, object> additionalInformation)
+                                                                 IEnumerable<KeyValuePair<object, object>> additionalInformation)
             where TException : Exception
         {
             Guard.AssertNotNull(exception, "exception");
