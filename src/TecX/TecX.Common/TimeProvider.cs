@@ -4,7 +4,7 @@ namespace TecX.Common
 {
     /// <summary>
     /// If you ever need to &quot;change time&quot; be it for tests or some kind of simulation you will have a 
-    /// hard time doing so if you used <see cref="DateTime.Now"/> all over your code. This class allows you to 
+    /// hard time doing so if you use <see cref="DateTime.Now"/> all over your code. This class allows you to 
     /// change how time behaves at your will
     /// </summary>
     public abstract class TimeProvider
