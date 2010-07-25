@@ -69,6 +69,7 @@
     <Compile Include="RegexBuilder.cs" />
     <Compile Include="TimeProvider.cs" />
     <Compile Include="TypeHelper.cs" />
+    <Compile Include="ZellersCongruence.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

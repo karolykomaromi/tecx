@@ -29,9 +29,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Domain", "TecX.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Domain.Test", "TecX.Agile.Domain.Test\TecX.Agile.Domain.Test.csproj", "{A74805DC-C27A-4BC2-9F6A-744E64596C89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.TestTools", "TecX.TestTools\TecX.TestTools.csproj", "{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.TestTools.Test", "TecX.TestTools.Test\TecX.TestTools.Test.csproj", "{41DA2181-3591-447B-A183-E79D34AA7907}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 7
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs04.codeplex.com/
 		SccLocalPath0 = .
@@ -51,6 +55,14 @@ Global
 		SccProjectTopLevelParentUniqueName4 = TecX.sln
 		SccProjectName4 = TecX.Agile.Domain.Test
 		SccLocalPath4 = TecX.Agile.Domain.Test
+		SccProjectUniqueName5 = TecX.TestTools\\TecX.TestTools.csproj
+		SccProjectTopLevelParentUniqueName5 = TecX.sln
+		SccProjectName5 = TecX.TestTools
+		SccLocalPath5 = TecX.TestTools
+		SccProjectUniqueName6 = TecX.TestTools.Test\\TecX.TestTools.Test.csproj
+		SccProjectTopLevelParentUniqueName6 = TecX.sln
+		SccProjectName6 = TecX.TestTools.Test
+		SccLocalPath6 = TecX.TestTools.Test
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -76,6 +88,14 @@ Global
 		{A74805DC-C27A-4BC2-9F6A-744E64596C89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A74805DC-C27A-4BC2-9F6A-744E64596C89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A74805DC-C27A-4BC2-9F6A-744E64596C89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41DA2181-3591-447B-A183-E79D34AA7907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41DA2181-3591-447B-A183-E79D34AA7907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41DA2181-3591-447B-A183-E79D34AA7907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41DA2181-3591-447B-A183-E79D34AA7907}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +104,8 @@ Global
 		{23E54945-0126-43BE-A3FC-5F61AF5BDFF3} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{A74805DC-C27A-4BC2-9F6A-744E64596C89} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
+		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
+		{41DA2181-3591-447B-A183-E79D34AA7907} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{3769FA7C-C119-42D4-8F97-F5B954FD0331} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
 	EndGlobalSection
 EndGlobal
