@@ -33,9 +33,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.TestTools", "TecX.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.TestTools.Test", "TecX.TestTools.Test\TecX.TestTools.Test.csproj", "{41DA2181-3591-447B-A183-E79D34AA7907}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.ServiceModel.Unity", "TecX.ServiceModel.Unity\TecX.ServiceModel.Unity.csproj", "{0505E426-7710-4783-8D70-6B6DD1667ADB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.ServiceModel.AutoMagic", "TecX.ServiceModel.AutoMagic\TecX.ServiceModel.AutoMagic.csproj", "{DA32E74A-CC64-45F7-8602-C08FC93BF8B7}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 7
+		SccNumberOfProjects = 9
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs04.codeplex.com/
 		SccLocalPath0 = .
@@ -63,6 +67,14 @@ Global
 		SccProjectTopLevelParentUniqueName6 = TecX.sln
 		SccProjectName6 = TecX.TestTools.Test
 		SccLocalPath6 = TecX.TestTools.Test
+		SccProjectUniqueName7 = TecX.ServiceModel.Unity\\TecX.ServiceModel.Unity.csproj
+		SccProjectTopLevelParentUniqueName7 = TecX.sln
+		SccProjectName7 = TecX.ServiceModel.Unity
+		SccLocalPath7 = TecX.ServiceModel.Unity
+		SccProjectUniqueName8 = TecX.ServiceModel.AutoMagic\\TecX.ServiceModel.AutoMagic.csproj
+		SccProjectTopLevelParentUniqueName8 = TecX.sln
+		SccProjectName8 = TecX.ServiceModel.AutoMagic
+		SccLocalPath8 = TecX.ServiceModel.AutoMagic
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -96,6 +108,14 @@ Global
 		{41DA2181-3591-447B-A183-E79D34AA7907}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41DA2181-3591-447B-A183-E79D34AA7907}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41DA2181-3591-447B-A183-E79D34AA7907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0505E426-7710-4783-8D70-6B6DD1667ADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0505E426-7710-4783-8D70-6B6DD1667ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0505E426-7710-4783-8D70-6B6DD1667ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0505E426-7710-4783-8D70-6B6DD1667ADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA32E74A-CC64-45F7-8602-C08FC93BF8B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA32E74A-CC64-45F7-8602-C08FC93BF8B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA32E74A-CC64-45F7-8602-C08FC93BF8B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA32E74A-CC64-45F7-8602-C08FC93BF8B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,6 +126,8 @@ Global
 		{A74805DC-C27A-4BC2-9F6A-744E64596C89} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{41DA2181-3591-447B-A183-E79D34AA7907} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
+		{0505E426-7710-4783-8D70-6B6DD1667ADB} = {E1D2BCBC-4FA7-4B80-B80D-1E2FF04F9EB8}
+		{DA32E74A-CC64-45F7-8602-C08FC93BF8B7} = {E1D2BCBC-4FA7-4B80-B80D-1E2FF04F9EB8}
 		{3769FA7C-C119-42D4-8F97-F5B954FD0331} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
 	EndGlobalSection
 EndGlobal
