@@ -8,6 +8,8 @@ namespace TecX.Common.Extensions.LinqTo.Objects
     /// This class extends the generic type "Expression(Func(T, bool))" to easily concatenate 
     /// multiple expressions of this type for a where statement
     /// </summary>
+    /// <remarks>Uses <see cref="InvocationExpression"/> which is not supported by the Entity Framework
+    /// but works quite well with regular .NET queries</remarks>
     public static class PredicateExtensions
     {
         /// <summary>
@@ -15,7 +17,7 @@ namespace TecX.Common.Extensions.LinqTo.Objects
         /// build up a sequence of AND-concatenated expressions.
         /// </summary>
         /// <typeparam name="T">pass here the type of the object you want to use inside the excpression</typeparam>
-        /// <returns>an expression that returns TRUE</returns>
+        /// <returns>an expression that returns <c>true</c></returns>
         public static Expression<Func<T, bool>> True<T>()
         {
             return f => true;
@@ -26,7 +28,7 @@ namespace TecX.Common.Extensions.LinqTo.Objects
         /// build up a sequence of OR-concatenated expressions.
         /// </summary>
         /// <typeparam name="T">pass here the type of the object you want to use inside the excpression</typeparam>
-        /// <returns>an expression that returns FALSE</returns>
+        /// <returns>an expression that returns <c>false</c></returns>
         public static Expression<Func<T, bool>> False<T>()
         {
             return f => false;
@@ -36,36 +38,36 @@ namespace TecX.Common.Extensions.LinqTo.Objects
         /// Concatenates two expressions using the OR operator resulting a new expression
         /// </summary>
         /// <typeparam name="T">the type of object you want to use inside the expression tree</typeparam>
-        /// <param name="expression1">the "source" expression</param>
-        /// <param name="expression2">the second expression to "add" to the first one using "OR"</param>
+        /// <param name="left">the "source" expression</param>
+        /// <param name="right">the second expression to "add" to the first one using "OR"</param>
         /// <returns>a comined expression using OR</returns>
         public static Expression<Func<T, bool>> Or<T>(
-            this Expression<Func<T, bool>> expression1,
-            Expression<Func<T, bool>> expression2)
+            this Expression<Func<T, bool>> left,
+            Expression<Func<T, bool>> right)
         {
-            var invokedExpression = Expression.Invoke(expression2, expression1.Parameters.Cast<Expression>());
+            var invokedExpression = Expression.Invoke(right, left.Parameters.Cast<Expression>());
 
             return Expression.Lambda<Func<T, bool>>(
-                Expression.Or(expression1.Body, invokedExpression),
-                expression1.Parameters);
+                Expression.Or(left.Body, invokedExpression),
+                left.Parameters);
         }
 
         /// <summary>
         /// Concatenates two expressions using the AND operator resulting a new expression
         /// </summary>
         /// <typeparam name="T">the type of object you want to use inside the expression tree</typeparam>
-        /// <param name="expression1">the "source" expression</param>
-        /// <param name="expression2">the second expression to "add" to the first one using "AND"</param>
+        /// <param name="left">the "source" expression</param>
+        /// <param name="right">the second expression to "add" to the first one using "AND"</param>
         /// <returns>a comined expression using AND</returns>
         public static Expression<Func<T, bool>> And<T>(
-            this Expression<Func<T, bool>> expression1,
-            Expression<Func<T, bool>> expression2)
+            this Expression<Func<T, bool>> left,
+            Expression<Func<T, bool>> right)
         {
-            var invokedExpression = Expression.Invoke(expression2, expression1.Parameters.Cast<Expression>());
+            var invokedExpression = Expression.Invoke(right, left.Parameters.Cast<Expression>());
 
             return Expression.Lambda<Func<T, bool>>(
-                Expression.And(expression1.Body, invokedExpression),
-                expression1.Parameters);
+                Expression.And(left.Body, invokedExpression),
+                left.Parameters);
         }
     }
 }
