@@ -6,7 +6,8 @@ namespace TecX.Common.Extensions.LinqTo.Entities
 {
     public static class PredicateExtensions
     {
-        public static Expression<T> Compose<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
+        public static Expression<T> Compose<T>(this Expression<T> first, Expression<T> second, 
+            Func<Expression, Expression, Expression> merge)
         {
             // build parameter map (from parameters of second to parameters of first)
             var map = first.Parameters.Select((f, i) => new { f, s = second.Parameters[i] }).ToDictionary(p => p.s, p => p.f);
