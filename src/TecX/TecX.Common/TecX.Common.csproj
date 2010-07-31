@@ -64,6 +64,9 @@
     </Compile>
     <Compile Include="Convert.cs" />
     <Compile Include="Extensions\Error\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\LinqTo\Entities\ParameterRebinder.cs" />
+    <Compile Include="Extensions\LinqTo\Entities\PredicateExtensions.cs" />
+    <Compile Include="Extensions\LinqTo\Objects\PredicateExtensions.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexBuilder.cs" />
@@ -71,6 +74,7 @@
     <Compile Include="TypeHelper.cs" />
     <Compile Include="ZellersCongruence.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
