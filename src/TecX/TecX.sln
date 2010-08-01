@@ -23,11 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 WCF", "03 WCF", "{E1D2BC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 Geneva", "04 Geneva", "{69923832-7A15-43F7-9842-46EC401E28D4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 DDD", "05 DDD", "{A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Domain", "TecX.Agile.Domain\TecX.Agile.Domain.csproj", "{3769FA7C-C119-42D4-8F97-F5B954FD0331}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Domain.Test", "TecX.Agile.Domain.Test\TecX.Agile.Domain.Test.csproj", "{A74805DC-C27A-4BC2-9F6A-744E64596C89}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 Agile", "05 Agile", "{A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.TestTools", "TecX.TestTools\TecX.TestTools.csproj", "{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}"
 EndProject
@@ -36,6 +32,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.ServiceModel.Unity", "TecX.ServiceModel.Unity\TecX.ServiceModel.Unity.csproj", "{0505E426-7710-4783-8D70-6B6DD1667ADB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.ServiceModel.AutoMagic", "TecX.ServiceModel.AutoMagic\TecX.ServiceModel.AutoMagic.csproj", "{DA32E74A-CC64-45F7-8602-C08FC93BF8B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile", "TecX.Agile\TecX.Agile.csproj", "{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Test", "TecX.Agile.Test\TecX.Agile.Test.csproj", "{16914DD0-5805-4250-879B-26FEB00FA7BD}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -51,30 +51,30 @@ Global
 		SccProjectTopLevelParentUniqueName2 = TecX.sln
 		SccProjectName2 = TecX.Common.Test
 		SccLocalPath2 = TecX.Common.Test
-		SccProjectUniqueName3 = TecX.Agile.Domain.Test\\TecX.Agile.Domain.Test.csproj
+		SccProjectUniqueName3 = TecX.TestTools.Test\\TecX.TestTools.Test.csproj
 		SccProjectTopLevelParentUniqueName3 = TecX.sln
-		SccProjectName3 = TecX.Agile.Domain.Test
-		SccLocalPath3 = TecX.Agile.Domain.Test
-		SccProjectUniqueName4 = TecX.Agile.Domain\\TecX.Agile.Domain.csproj
+		SccProjectName3 = TecX.TestTools.Test
+		SccLocalPath3 = TecX.TestTools.Test
+		SccProjectUniqueName4 = TecX.ServiceModel.AutoMagic\\TecX.ServiceModel.AutoMagic.csproj
 		SccProjectTopLevelParentUniqueName4 = TecX.sln
-		SccProjectName4 = TecX.Agile.Domain
-		SccLocalPath4 = TecX.Agile.Domain
-		SccProjectUniqueName5 = TecX.TestTools.Test\\TecX.TestTools.Test.csproj
+		SccProjectName4 = TecX.ServiceModel.AutoMagic
+		SccLocalPath4 = TecX.ServiceModel.AutoMagic
+		SccProjectUniqueName5 = TecX.TestTools\\TecX.TestTools.csproj
 		SccProjectTopLevelParentUniqueName5 = TecX.sln
-		SccProjectName5 = TecX.TestTools.Test
-		SccLocalPath5 = TecX.TestTools.Test
-		SccProjectUniqueName6 = TecX.ServiceModel.AutoMagic\\TecX.ServiceModel.AutoMagic.csproj
+		SccProjectName5 = TecX.TestTools
+		SccLocalPath5 = TecX.TestTools
+		SccProjectUniqueName6 = TecX.ServiceModel.Unity\\TecX.ServiceModel.Unity.csproj
 		SccProjectTopLevelParentUniqueName6 = TecX.sln
-		SccProjectName6 = TecX.ServiceModel.AutoMagic
-		SccLocalPath6 = TecX.ServiceModel.AutoMagic
-		SccProjectUniqueName7 = TecX.TestTools\\TecX.TestTools.csproj
+		SccProjectName6 = TecX.ServiceModel.Unity
+		SccLocalPath6 = TecX.ServiceModel.Unity
+		SccProjectUniqueName7 = TecX.Agile\\TecX.Agile.csproj
 		SccProjectTopLevelParentUniqueName7 = TecX.sln
-		SccProjectName7 = TecX.TestTools
-		SccLocalPath7 = TecX.TestTools
-		SccProjectUniqueName8 = TecX.ServiceModel.Unity\\TecX.ServiceModel.Unity.csproj
+		SccProjectName7 = TecX.Agile
+		SccLocalPath7 = TecX.Agile
+		SccProjectUniqueName8 = TecX.Agile.Test\\TecX.Agile.Test.csproj
 		SccProjectTopLevelParentUniqueName8 = TecX.sln
-		SccProjectName8 = TecX.ServiceModel.Unity
-		SccLocalPath8 = TecX.ServiceModel.Unity
+		SccProjectName8 = TecX.Agile.Test
+		SccLocalPath8 = TecX.Agile.Test
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -92,14 +92,6 @@ Global
 		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3769FA7C-C119-42D4-8F97-F5B954FD0331}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3769FA7C-C119-42D4-8F97-F5B954FD0331}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3769FA7C-C119-42D4-8F97-F5B954FD0331}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3769FA7C-C119-42D4-8F97-F5B954FD0331}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A74805DC-C27A-4BC2-9F6A-744E64596C89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A74805DC-C27A-4BC2-9F6A-744E64596C89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A74805DC-C27A-4BC2-9F6A-744E64596C89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A74805DC-C27A-4BC2-9F6A-744E64596C89}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -116,6 +108,14 @@ Global
 		{DA32E74A-CC64-45F7-8602-C08FC93BF8B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA32E74A-CC64-45F7-8602-C08FC93BF8B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA32E74A-CC64-45F7-8602-C08FC93BF8B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16914DD0-5805-4250-879B-26FEB00FA7BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16914DD0-5805-4250-879B-26FEB00FA7BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16914DD0-5805-4250-879B-26FEB00FA7BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16914DD0-5805-4250-879B-26FEB00FA7BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,11 +123,11 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{23E54945-0126-43BE-A3FC-5F61AF5BDFF3} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
-		{A74805DC-C27A-4BC2-9F6A-744E64596C89} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{41DA2181-3591-447B-A183-E79D34AA7907} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
+		{16914DD0-5805-4250-879B-26FEB00FA7BD} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{0505E426-7710-4783-8D70-6B6DD1667ADB} = {E1D2BCBC-4FA7-4B80-B80D-1E2FF04F9EB8}
 		{DA32E74A-CC64-45F7-8602-C08FC93BF8B7} = {E1D2BCBC-4FA7-4B80-B80D-1E2FF04F9EB8}
-		{3769FA7C-C119-42D4-8F97-F5B954FD0331} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
+		{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
 	EndGlobalSection
 EndGlobal
