@@ -72,6 +72,7 @@
     <Compile Include="Extensions\Primitives\ObjectExtensions.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Comparison\LambdaComparer.cs" />
+    <Compile Include="Latch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexBuilder.cs" />
     <Compile Include="TimeProvider.cs" />

@@ -38,6 +38,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Ploeh.AutoFixture">
+      <HintPath>..\..\..\lib\AutoFixture\Ploeh.AutoFixture.dll</HintPath>
+    </Reference>
+    <Reference Include="Ploeh.SemanticComparison">
+      <HintPath>..\..\..\lib\AutoFixture\Ploeh.SemanticComparison.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -51,6 +57,16 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AgileBuilderFixture.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile\TecX.Agile.csproj">
+      <Project>{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300}</Project>
+      <Name>TecX.Agile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.TestTools\TecX.TestTools.csproj">
+      <Project>{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}</Project>
+      <Name>TecX.TestTools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
