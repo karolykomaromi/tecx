@@ -56,7 +56,7 @@ namespace TecX.Agile.Builder
 
         ////////////////////////////////////////////////////////////
 
-        #region Public Methods
+        #region Methods
 
         /// <summary>
         /// Sets the end date.
@@ -95,151 +95,33 @@ namespace TecX.Agile.Builder
         }
 
         /// <summary>
-        /// Sets the priority
+        /// Sets the view.
         /// </summary>
-        /// <param name="priority">The priority.</param>
+        /// <param name="view">The view.</param>
         /// <returns>Current instance of the builder. Fluent interface</returns>
-        public IterationBuilder WithPriority(Priority priority)
+        public IterationBuilder WithView(VisualizableBuilder view)
         {
-            ConstructedObject.Tracking.Priority = priority;
+            Guard.AssertNotNull(view, "view");
+
+            ConstructedObject.View = view;
 
             return this;
         }
 
         /// <summary>
-        /// Sets the actual effort.
+        /// Sets the tracking information.
         /// </summary>
-        /// <param name="actualEffort">The actual effort.</param>
+        /// <param name="tracking">The tracking.</param>
         /// <returns>Current instance of the builder. Fluent interface</returns>
-        public IterationBuilder WithActualEffort(decimal actualEffort)
+        public IterationBuilder WithTracking(TrackableBuilder tracking)
         {
-            ConstructedObject.Tracking.ActualEffort = actualEffort;
+            Guard.AssertNotNull(tracking, "tracking");
+
+            ConstructedObject.Tracking = tracking;
 
             return this;
         }
 
-        /// <summary>
-        /// Sets the most likely estimate.
-        /// </summary>
-        /// <param name="mostLikelyEstimate">The most likely estimate.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public IterationBuilder WithMostLikelyEstimate(decimal mostLikelyEstimate)
-        {
-            ConstructedObject.Tracking.MostLikelyEstimate = mostLikelyEstimate;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the best case estimate.
-        /// </summary>
-        /// <param name="bestCaseEstimate">The best case estimate.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public IterationBuilder WithBestCaseEstimate(decimal bestCaseEstimate)
-        {
-            ConstructedObject.Tracking.BestCaseEstimate = bestCaseEstimate;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the color.
-        /// </summary>
-        /// <param name="color">The color.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public IterationBuilder WithColor(byte[] color)
-        {
-            Guard.AssertNotNull(color, "color");
-
-            ConstructedObject.View.Color = (byte[]) color.Clone();
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the rotation angle.
-        /// </summary>
-        /// <param name="rotationAngle">The rotation angle.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public IterationBuilder WithRotationAngle(double rotationAngle)
-        {
-            ConstructedObject.View.RotationAngle = rotationAngle;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the status.
-        /// </summary>
-        /// <param name="status">The status.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public IterationBuilder WithStatus(Status status)
-        {
-            ConstructedObject.Tracking.Status = status;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the width.
-        /// </summary>
-        /// <param name="width">The width.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public IterationBuilder WithWidth(double width)
-        {
-            ConstructedObject.View.Width = width;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the height.
-        /// </summary>
-        /// <param name="height">The height.</param>
-        /// <returns>Current instance of the builder. Fluent interface.</returns>
-        public IterationBuilder WithHeight(double height)
-        {
-            ConstructedObject.View.Height = height;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the worst case estimate.
-        /// </summary>
-        /// <param name="worstCaseEstimate">The worst case estimate.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public IterationBuilder WithWorstCaseEstimate(decimal worstCaseEstimate)
-        {
-            ConstructedObject.Tracking.WorstCaseEstimate = worstCaseEstimate;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the X.
-        /// </summary>
-        /// <param name="x">The x.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public IterationBuilder WithX(double x)
-        {
-            ConstructedObject.View.X = x;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the Y.
-        /// </summary>
-        /// <param name="y">The y.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public IterationBuilder WithY(double y)
-        {
-            ConstructedObject.View.Y = y;
-
-            return this;
-        }
-
-        #endregion Public Methods
+        #endregion Methods
     }
 }

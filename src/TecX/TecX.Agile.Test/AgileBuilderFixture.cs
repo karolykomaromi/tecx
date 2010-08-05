@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,24 +56,28 @@ namespace TecX.Agile.Test
             Guid id = Guid.NewGuid();
 
             StoryCardBuilder builder = New.StoryCard()
-                .WithActualEffort(1.2m)
-                .WithBestCaseEstimate(2.3m)
-                .WithColor(new byte[] { 1, 2, 3, 4 })
                 .WithCurrentSideUp(StoryCardSides.RichTestSide)
                 .WithDescription("desc")
                 .WithDescriptionHandwritingImage(new byte[] { 2, 3, 4, 5, 6, 7, 8, 9 })
-                .WithHeight(3.4)
                 .WithId(id)
-                .WithMostLikelyEstimate(4.5m)
                 .WithName("name")
-                .WithPriority(Priority.Immediate)
-                .WithRotationAngle(5.6)
-                .WithStatus(Status.Completed)
                 .WithTaskOwner("John Wayne")
-                .WithWidth(6.7)
-                .WithWorstCaseEstimate(7.8m)
-                .WithX(8.9)
-                .WithY(9.1);
+                .WithTracking(
+                    New.Tracking()
+                        .WithMostLikelyEstimate(4.5m)
+                        .WithActualEffort(1.2m)
+                        .WithBestCaseEstimate(2.3m)
+                        .WithPriority(Priority.Immediate)
+                        .WithStatus(Status.Completed)
+                        .WithWorstCaseEstimate(7.8m))
+                .WithView(
+                    New.View()
+                        .WithHeight(3.4)
+                        .WithColor(new byte[] { 1, 2, 3, 4 })
+                        .WithRotationAngle(5.6)
+                        .WithWidth(6.7)
+                        .WithX(8.9)
+                        .WithY(9.1));
 
             StoryCard storyCard = builder.Build();
 
@@ -108,19 +113,41 @@ namespace TecX.Agile.Test
         }
 
         [TestMethod]
-        public void CanUseAutoFixture()
+        public void CanCreateStoryCardUsingAutoFixture()
         {
             var fixture = new Fixture
                               {
-                                  Resolver = FixtureResolver.ResolveEnum
+                                  Resolver = AutoFixtureHelper.ResolveEnum
                               };
 
-            StoryCard storyCard = fixture.CreateAnonymous<StoryCard>();
-            storyCard.View.Color = fixture.CreateAnonymous<byte[]>();
+            fixture.Customize<Visualizable>(ob => ob.With(vis => vis.Color,
+                fixture.CreateMany<byte>(4).ToArray()));
 
-            //fixture.Build<StoryCard>().With()
+            StoryCard storyCard = fixture.CreateAnonymous<StoryCard>();
 
             Assert.AreNotEqual(0, storyCard.View.Height);
+
+            Assert.IsNotNull(storyCard.View.Color);
+            Assert.IsTrue(storyCard.View.Color.Length == 4);
+            Assert.IsFalse(storyCard.View.Color.SequenceEqual(new byte[] { 255, 255, 255, 255 }));
+        }
+
+        [TestMethod]
+        public void CanBuildIteration()
+        {
+            Assert.Fail("not implemented");
+        }
+
+        [TestMethod]
+        public void CanBuildBacklog()
+        {
+            Assert.Fail("not implemented");
+        }
+
+        [TestMethod]
+        public void CanBuildProject()
+        {
+            Assert.Fail("not implemented");
         }
     }
 }

@@ -44,18 +44,6 @@ namespace TecX.Agile.Builder
         #region Public Methods
 
         /// <summary>
-        /// Sets the priority
-        /// </summary>
-        /// <param name="priority">The priority.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public StoryCardBuilder WithPriority(Priority priority)
-        {
-            ConstructedObject.Tracking.Priority = priority;
-
-            return this;
-        }
-
-        /// <summary>
         /// Sets the current side up.
         /// </summary>
         /// <param name="currentSideUp">The current side up.</param>
@@ -96,135 +84,29 @@ namespace TecX.Agile.Builder
         }
 
         /// <summary>
-        /// Sets the actual effort.
+        /// Sets the view.
         /// </summary>
-        /// <param name="actualEffort">The actual effort.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public StoryCardBuilder WithActualEffort(decimal actualEffort)
-        {
-            ConstructedObject.Tracking.ActualEffort = actualEffort;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the most likely estimate.
-        /// </summary>
-        /// <param name="mostLikelyEstimate">The most likely estimate.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public StoryCardBuilder WithMostLikelyEstimate(decimal mostLikelyEstimate)
-        {
-            ConstructedObject.Tracking.MostLikelyEstimate = mostLikelyEstimate;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the best case estimate.
-        /// </summary>
-        /// <param name="bestCaseEstimate">The best case estimate.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public StoryCardBuilder WithBestCaseEstimate(decimal bestCaseEstimate)
-        {
-            ConstructedObject.Tracking.BestCaseEstimate = bestCaseEstimate;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the color.
-        /// </summary>
-        /// <param name="color">The color.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public StoryCardBuilder WithColor(byte[] color)
-        {
-            Guard.AssertNotNull(color, "color");
-
-            ConstructedObject.View.Color = (byte[]) color.Clone();
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the rotation angle.
-        /// </summary>
-        /// <param name="rotationAngle">The rotation angle.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public StoryCardBuilder WithRotationAngle(double rotationAngle)
-        {
-            ConstructedObject.View.RotationAngle = rotationAngle;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the status.
-        /// </summary>
-        /// <param name="status">The status.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public StoryCardBuilder WithStatus(Status status)
-        {
-            ConstructedObject.Tracking.Status = status;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the width.
-        /// </summary>
-        /// <param name="width">The width.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public StoryCardBuilder WithWidth(double width)
-        {
-            ConstructedObject.View.Width = width;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the height.
-        /// </summary>
-        /// <param name="height">The height.</param>
+        /// <param name="view">The view.</param>
         /// <returns>Current instance of the builder. Fluent interface.</returns>
-        public StoryCardBuilder WithHeight(double height)
+        public StoryCardBuilder WithView(VisualizableBuilder view)
         {
-            ConstructedObject.View.Height = height;
+            Guard.AssertNotNull(view, "view");
+
+            ConstructedObject.View = view;
 
             return this;
         }
 
         /// <summary>
-        /// Sets the worst case estimate.
+        /// Sets the tracking information
         /// </summary>
-        /// <param name="worstCaseEstimate">The worst case estimate.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public StoryCardBuilder WithWorstCaseEstimate(decimal worstCaseEstimate)
+        /// <param name="tracking">The tracking information</param>
+        /// <returns>Current instance of the builder. Fluent interface.</returns>
+        public StoryCardBuilder WithTracking(TrackableBuilder tracking)
         {
-            ConstructedObject.Tracking.WorstCaseEstimate = worstCaseEstimate;
+            Guard.AssertNotNull(tracking, "tracking");
 
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the X.
-        /// </summary>
-        /// <param name="x">The x.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public StoryCardBuilder WithX(double x)
-        {
-            ConstructedObject.View.X = x;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the Y.
-        /// </summary>
-        /// <param name="y">The y.</param>
-        /// <returns>Current instance of the builder. Fluent interface</returns>
-        public StoryCardBuilder WithY(double y)
-        {
-            ConstructedObject.View.Y = y;
+            ConstructedObject.Tracking = tracking;
 
             return this;
         }

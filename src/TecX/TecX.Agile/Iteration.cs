@@ -42,8 +42,8 @@ namespace TecX.Agile
 
         #region Fields
 
-        private readonly Trackable _tracking;
-        private readonly Visualizable _view;
+        private Trackable _tracking;
+        private Visualizable _view;
 
         #endregion Fields
 
@@ -57,6 +57,12 @@ namespace TecX.Agile
         public Trackable Tracking
         {
             get { return _tracking; }
+            set
+            {
+                Guard.AssertNotNull(value, "value");
+
+                _tracking = value;
+            }
         }
 
         /// <summary>
@@ -65,6 +71,12 @@ namespace TecX.Agile
         public Visualizable View
         {
             get { return _view; }
+            set
+            {
+                Guard.AssertNotNull(value, "value");
+
+                _view = value;
+            }
         }
 
         /// <summary>

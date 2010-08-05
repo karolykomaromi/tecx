@@ -21,5 +21,15 @@
         {
             return new ProjectBuilder();
         }
+
+        public static VisualizableBuilder View()
+        {
+            return new VisualizableBuilder();
+        }
+
+        public static TrackableBuilder Tracking()
+        {
+            return new TrackableBuilder();
+        }
     }
 }

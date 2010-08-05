@@ -47,6 +47,16 @@ namespace TecX.Agile
         /// </summary>
         private byte[] _color;
 
+        /// <summary>
+        /// Backing field for <see cref="Width"/>
+        /// </summary>
+        private double _width;
+
+        /// <summary>
+        /// Backing field for <see cref="Height"/>
+        /// </summary>
+        private double _height;
+
         #endregion Fields
 
         ////////////////////////////////////////////////////////////
@@ -71,12 +81,31 @@ namespace TecX.Agile
         /// <summary>
         /// Gets and sets the width of the index-card
         /// </summary>
-        public double Width { get; set; }
+        public double Width
+        {
+            get { return _width; }
+            set
+            {
+                Guard.AssertCondition(value >= 0, value, "value", "Width must be >= 0");
+
+                _width = value;
+            }
+        }
+
 
         /// <summary>
         /// Gets and sets the height of the index-card
         /// </summary>
-        public double Height { get; set; }
+        public double Height
+        {
+            get { return _height; }
+            set
+            {
+                Guard.AssertCondition(value >= 0, value, "value", "Height must be >= 0");
+
+                _height = value;
+            }
+        }
 
         /// <summary>
         /// Gets and sets the color of the index-card
@@ -86,8 +115,10 @@ namespace TecX.Agile
             get { return _color; }
             set
             {
-                if (value == null)
-                    value = new byte[0];
+                Guard.AssertNotNull(value, "value");
+
+                if (value.Length != 4)
+                    throw new ArgumentOutOfRangeException("value", "Color must be 4 bytes (ARGB)");
 
                 _color = value;
             }
@@ -104,7 +135,7 @@ namespace TecX.Agile
         /// </summary>
         public Visualizable()
         {
-            Color = new byte[0];
+            Color = new byte[] { 255, 255, 255, 255 };
             Height = 0;
             RotationAngle = 0;
             Width = 0;
