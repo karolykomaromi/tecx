@@ -40,22 +40,72 @@ namespace TecX.Agile
 
         ////////////////////////////////////////////////////////////
 
+        #region Fields
+
+        /// <summary>
+        /// Backing field for <see cref="ActualEffort"/>
+        /// </summary>
+        private decimal _actualEffort;
+
+        /// <summary>
+        /// Backing field for <see cref="BestCaseEstimate"/>
+        /// </summary>
+        private decimal _bestCaseEstimate;
+
+        /// <summary>
+        /// Backing field for <see cref="MostLikelyEstimate"/>
+        /// </summary>
+        private decimal _mostLikelyEstimate;
+
+        /// <summary>
+        /// Backing field for <see cref="WorstCaseEstimate"/>
+        /// </summary>
+        private decimal _worstCaseEstimate;
+
+        #endregion Fields
+
+        ////////////////////////////////////////////////////////////
+
         #region Properties
 
         /// <summary>
         /// Gets and sets the actual effort for completing the task denoted on the index-card
         /// </summary>
-        public decimal ActualEffort { get; set; }
+        public decimal ActualEffort
+        {
+            get { return _actualEffort; }
+            set
+            {
+                Guard.AssertCondition(value >= 0, value, "value", "ActualEffort must be >= 0");
+                _actualEffort = value;
+            }
+        }
 
         /// <summary>
         /// Gets and sets the best-case estimate for completing the task denoted on the index-card
         /// </summary>
-        public decimal BestCaseEstimate { get; set; }
+        public decimal BestCaseEstimate
+        {
+            get { return _bestCaseEstimate; }
+            set
+            {
+                Guard.AssertCondition(value >= 0, value, "value", "BestCaseEstimate must be >= 0");
+                _bestCaseEstimate = value;
+            }
+        }
 
         /// <summary>
         /// Gets and sets the most-likely estimate for completing the task denoted on the index-card
         /// </summary>
-        public decimal MostLikelyEstimate { get; set; }
+        public decimal MostLikelyEstimate
+        {
+            get { return _mostLikelyEstimate; }
+            set
+            {
+                Guard.AssertCondition(value >= 0, value, "value", "MostLikelyEstimate must be >= 0");
+                _mostLikelyEstimate = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the priority for this story-card
@@ -66,7 +116,15 @@ namespace TecX.Agile
         /// <summary>
         /// Gets and sets the worst-case estimate for completing the task denoted on the index-card
         /// </summary>
-        public decimal WorstCaseEstimate { get; set; }
+        public decimal WorstCaseEstimate
+        {
+            get { return _worstCaseEstimate; }
+            set
+            {
+                Guard.AssertCondition(value >= 0, value, "value", "WorstCaseEstimate must be >= 0");
+                _worstCaseEstimate = value;
+            }
+        }
 
         /// <summary>
         /// Gets and sets the current status of the task denoted on the index-card

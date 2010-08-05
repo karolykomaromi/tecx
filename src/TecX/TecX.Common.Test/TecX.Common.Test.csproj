@@ -52,6 +52,7 @@
     <Compile Include="EntityPredicateExtensionsFixture.cs" />
     <Compile Include="ExceptionExtensionFixture.cs" />
     <Compile Include="GuardFixture.cs" />
+    <Compile Include="LatchFixture.cs" />
     <Compile Include="ObjectPredicateExtensionsFixture.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
