@@ -16,29 +16,6 @@ namespace TecX.Agile
     [Serializable]
     public class Project : PlanningArtefact, IEquatable<Project>, IEnumerable<Iteration>
     {
-        #region Constants
-
-        public static class Constants
-        {
-            /// <summary>Project</summary>
-            public const string ProjectElementName = "Project";
-
-            public static class PropertyNames
-            {
-                /// <summary>Iterations</summary>
-                public const string IterationsPropertyName = "Iterations";
-
-                /// <summary>Backlog</summary>
-                public const string BacklogPropertyName = "Backlog";
-
-                /// <summary>Legend</summary>
-                public const string LegendPropertyName = "Legend";
-            }
-        }
-
-        #endregion Constants
-
-        ////////////////////////////////////////////////////////////
 
         #region Fields
 

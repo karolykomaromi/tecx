@@ -10,35 +10,6 @@ namespace TecX.Agile
     [Serializable]
     public class Iteration : StoryCardContainer, IEquatable<Iteration>
     {
-        #region Constants
-
-        private static class Constants
-        {
-            public static class PropertyNames
-            {
-                /// <summary>View</summary>
-                public const string ViewPropertyName = "View";
-
-                /// <summary>Tracking</summary>
-                public const string TrackingPropertyName = "Tracking";
-
-                /// <summary>AvailableEffort</summary>
-                public const string AvailableEffortPropertyName = "AvailableEffort";
-
-                /// <summary>EndDate</summary>
-                public const string EndDatePropertyName = "EndDate";
-
-                /// <summary>StartDate</summary>
-                public const string StartDatePropertyName = "StartDate";
-
-                /// <summary>Iteration</summary>
-                public const string IterationElementName = "Iteration";
-            }
-        }
-
-        #endregion Constants
-
-        ////////////////////////////////////////////////////////////
 
         #region Fields
 
