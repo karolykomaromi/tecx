@@ -37,9 +37,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile", "TecX.Agile\Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Test", "TecX.Agile.Test\TecX.Agile.Test.csproj", "{16914DD0-5805-4250-879B-26FEB00FA7BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Common.EntLib", "TecX.Common.EntLib\TecX.Common.EntLib.csproj", "{45BE1494-E6F4-415F-8206-2856FBD28F66}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 9
+		SccNumberOfProjects = 10
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -75,6 +77,10 @@ Global
 		SccProjectTopLevelParentUniqueName8 = TecX.sln
 		SccProjectName8 = TecX.Agile.Test
 		SccLocalPath8 = TecX.Agile.Test
+		SccProjectUniqueName9 = TecX.Common.EntLib\\TecX.Common.EntLib.csproj
+		SccProjectTopLevelParentUniqueName9 = TecX.sln
+		SccProjectName9 = TecX.Common.EntLib
+		SccLocalPath9 = TecX.Common.EntLib
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -116,12 +122,17 @@ Global
 		{16914DD0-5805-4250-879B-26FEB00FA7BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16914DD0-5805-4250-879B-26FEB00FA7BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16914DD0-5805-4250-879B-26FEB00FA7BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45BE1494-E6F4-415F-8206-2856FBD28F66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45BE1494-E6F4-415F-8206-2856FBD28F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45BE1494-E6F4-415F-8206-2856FBD28F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45BE1494-E6F4-415F-8206-2856FBD28F66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{23E54945-0126-43BE-A3FC-5F61AF5BDFF3} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
+		{45BE1494-E6F4-415F-8206-2856FBD28F66} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{41DA2181-3591-447B-A183-E79D34AA7907} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
