@@ -15,27 +15,6 @@ namespace TecX.Agile
     [Serializable]
     public abstract class PlanningArtefact : ICloneable, IEquatable<PlanningArtefact>
     {
-        #region Constants
-
-        private static class Constants
-        {
-            public static class PropertyNames
-            {
-                /// <summary>Id</summary>
-                public const string IdPropertyName = "Id";
-
-                /// <summary>Name</summary>
-                public const string NamePropertyName = "Name";
-
-                /// <summary>Description</summary>
-                public const string DescriptionPropertyName = "Description";
-            }
-        }
-
-        #endregion Constants
-
-        ////////////////////////////////////////////////////////////
-
         #region Fields
 
         private Guid _id;

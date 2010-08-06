@@ -60,6 +60,7 @@
     <Compile Include="Builder\StoryCardBuilder.cs" />
     <Compile Include="Builder\TrackableBuilder.cs" />
     <Compile Include="Builder\VisualizableBuilder.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Features.cs" />
     <Compile Include="Legend.cs" />
     <Compile Include="Mapping.cs" />

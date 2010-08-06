@@ -12,36 +12,6 @@ namespace TecX.Agile
     [Serializable]
     public class StoryCard : PlanningArtefact, IEquatable<StoryCard>
     {
-        #region Constants
-
-        public static class Constants
-        {
-            /// <summary>StoryCard</summary>
-            public const string StoryCardElementName = "StoryCard";
-
-            public static class PropertyNames
-            {
-                /// <summary>View</summary>
-                public const string ViewPropertyName = "View";
-
-                /// <summary>Tracking</summary>
-                public const string TrackingPropertyName = "Tracking";
-
-                /// <summary>TaskOwner</summary>
-                public const string TaskOwnerPropertyName = "TaskOwner";
-
-                /// <summary>CurrentSideUp</summary>
-                public const string CurrentSideUpPropertyName = "CurrentSideUp";
-
-                /// <summary>DescriptionHandwritingImage</summary>
-                public const string DescriptionHandwritingImagePropertyName = "DescriptionHandwritingImage";
-            }
-        }
-
-        #endregion Constants
-
-        ////////////////////////////////////////////////////////////
-
         #region Fields
 
         private Trackable _tracking;
