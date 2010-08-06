@@ -50,11 +50,11 @@ namespace TecX.Agile.Builder
         /// </summary>
         /// <param name="aStorycard">The story-card.</param>
         /// <returns>Current instance of the builder. Fluent interface</returns>
-        public TBuilder With(StoryCardBuilder aStorycard)
+        public TBuilder With(StoryCard aStorycard)
         {
             Guard.AssertNotNull(aStorycard, "aStorycard");
 
-            ConstructedObject.Add(aStorycard.Build());
+            ConstructedObject.Add(aStorycard);
 
             return this as TBuilder;
         }
@@ -62,13 +62,11 @@ namespace TecX.Agile.Builder
         /// <summary>
         ///Removes a story-card.
         /// </summary>
-        /// <param name="aStorycard">The story-card.</param>
+        /// <param name="id">The id of the story-card to remove</param>
         /// <returns>Current instance of the builder. Fluent interface</returns>
-        public TBuilder Without(StoryCardBuilder aStorycard)
+        public TBuilder Without(Guid id)
         {
-            Guard.AssertNotNull(aStorycard, "aStorycard");
-
-            ConstructedObject.Remove(aStorycard.Build().Id);
+            ConstructedObject.Remove(id);
 
             return this as TBuilder;
         }

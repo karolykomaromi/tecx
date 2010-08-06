@@ -18,8 +18,21 @@ namespace TecX.Agile.Test
     [TestClass]
     public class AgileBuilderFixture
     {
+        private Fixture AutoFixture { get; set; }
+
         public AgileBuilderFixture()
         {
+            var fixture = new Fixture
+            {
+                Resolver = AutoFixtureExtensions.ResolveEnum
+            };
+
+            fixture.Customize<Visualizable>(ob => ob.With(vis => vis.Color,
+                                                          fixture.CreateMany<byte>(4).ToArray()));
+
+            fixture.Freeze<StoryCard>();
+            
+            AutoFixture = fixture;
         }
 
         /// <summary>
@@ -98,13 +111,13 @@ namespace TecX.Agile.Test
             Assert.AreEqual(StoryCardSides.RichTestSide, storyCard.CurrentSideUp);
             Assert.AreEqual("desc", storyCard.Description);
             Assert.IsTrue(new byte[] { 2, 3, 4, 5, 6, 7, 8, 9 }.SequenceEqual(storyCard.DescriptionHandwritingImage));
-            
+
             Assert.AreEqual(id, storyCard.Id);
-            
+
             Assert.AreEqual("name", storyCard.Name);
-            
-            
-            
+
+
+
             Assert.AreEqual("John Wayne", storyCard.TaskOwner);
 
 
@@ -162,7 +175,7 @@ namespace TecX.Agile.Test
                         .WithWorstCaseEstimate(7.8m))
                 .WithView(
                     New.View()
-                        .WithColor(new byte[] {1, 2, 3, 4})
+                        .WithColor(new byte[] { 1, 2, 3, 4 })
                         .WithHeight(5.6)
                         .WithRotationAngle(6.7)
                         .WithWidth(7.8)
@@ -173,10 +186,10 @@ namespace TecX.Agile.Test
 
             Assert.AreEqual(10.2m, iteration.AvailableEffort);
             Assert.AreEqual("CanBuildIteration", iteration.Description);
-            Assert.AreEqual(new DateTime(2010, 8,6), iteration.EndDate);
+            Assert.AreEqual(new DateTime(2010, 8, 6), iteration.EndDate);
             Assert.AreEqual(id, iteration.Id);
             Assert.AreEqual("Clint Eastwood", iteration.Name);
-            Assert.AreEqual(new DateTime(2009,1,1), iteration.StartDate);
+            Assert.AreEqual(new DateTime(2009, 1, 1), iteration.StartDate);
 
             Assert.AreEqual(2.3m, iteration.Tracking.ActualEffort);
             Assert.AreEqual(3.4m, iteration.Tracking.BestCaseEstimate);
@@ -201,6 +214,48 @@ namespace TecX.Agile.Test
             iteration2 = builder;
 
             Assert.AreNotEqual(iteration, iteration2);
+        }
+
+        [TestMethod]
+        public void CanAddAndRemoveStoryFromBacklog()
+        {
+            BacklogBuilder bb = New.Backlog();
+
+            StoryCard storyCard = AutoFixture.CreateAnonymous<StoryCard>();
+
+            bb.With(storyCard);
+
+            Backlog backlog = bb;
+
+            Assert.AreEqual(1, backlog.StoryCards.Count());
+
+            Assert.AreEqual(storyCard, backlog.StoryCards.First());
+            Assert.AreNotSame(storyCard, backlog.StoryCards.First());
+
+            Assert.IsTrue(backlog.Remove(storyCard.Id));
+
+            Assert.AreEqual(0, backlog.StoryCards.Count());
+        }
+
+        [TestMethod]
+        public void CanAddAndRemoveStoryFromIteration()
+        {
+            StoryCard storyCard = AutoFixture.CreateAnonymous<StoryCard>();
+
+            IterationBuilder ib = New.Iteration();
+
+            ib.With(storyCard);
+
+            Iteration iteration = ib;
+
+            Assert.AreEqual(1, iteration.StoryCards.Count());
+
+            Assert.AreEqual(storyCard, iteration.StoryCards.First());
+            Assert.AreNotSame(storyCard, iteration.StoryCards.First());
+
+            Assert.IsTrue(iteration.Remove(storyCard.Id));
+
+            Assert.AreEqual(0, iteration.StoryCards.Count());
         }
 
         [TestMethod]
