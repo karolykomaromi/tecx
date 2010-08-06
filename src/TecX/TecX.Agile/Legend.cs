@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using TecX.Common;
 using TecX.Common.Extensions.Error;
@@ -60,7 +58,6 @@ namespace TecX.Agile
             _mappings = new Dictionary<string, Mapping>();
         }
 
-
         #endregion c'tor
 
         ////////////////////////////////////////////////////////////
@@ -74,7 +71,7 @@ namespace TecX.Agile
 
         public bool TryGetValue(string name, out Mapping mapping)
         {
-            if(string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
             {
                 mapping = null;
                 return false;
@@ -99,7 +96,7 @@ namespace TecX.Agile
 
             if (_mappings.ContainsKey(name))
             {
-                throw new ArgumentException("name", "A mapping with the same name already exists")
+                throw new ArgumentException("A mapping with the same name already exists", "name")
                     .WithAdditionalInfo("existing", _mappings[name]);
             }
 
@@ -121,8 +118,15 @@ namespace TecX.Agile
 
             foreach (Mapping mapping in other)
             {
-                Add(mapping.Name, (byte[])mapping.Color.Clone());
+                Add(mapping.Name, (byte[]) mapping.Color.Clone());
             }
+        }
+
+        public Legend With(string name, byte[] color)
+        {
+            Add(name, color);
+
+            return this;
         }
 
         #endregion Methods
@@ -144,7 +148,7 @@ namespace TecX.Agile
 
             foreach (Mapping mapping in this)
             {
-                clone.Add(mapping.Name, mapping.Color);
+                clone.Add(mapping.Name, (byte[])mapping.Color.Clone());
             }
 
             return clone;
@@ -173,7 +177,7 @@ namespace TecX.Agile
             foreach (Mapping mapping in other)
             {
                 Mapping m;
-                if(_mappings.TryGetValue(mapping.Name, out m))
+                if (_mappings.TryGetValue(mapping.Name, out m))
                 {
                     if (!mapping.Equals(m))
                         return false;

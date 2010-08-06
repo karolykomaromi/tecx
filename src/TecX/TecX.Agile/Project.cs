@@ -43,8 +43,8 @@ namespace TecX.Agile
         #region Fields
 
         private readonly Dictionary<Guid, Iteration> _iterations;
-        private readonly Legend _legend;
-        private readonly Backlog _backlog;
+        private Legend _legend;
+        private Backlog _backlog;
 
         #endregion Fields
 
@@ -66,6 +66,12 @@ namespace TecX.Agile
         public Backlog Backlog
         {
             get { return _backlog; }
+            set
+            {
+                Guard.AssertNotNull(value, "value");
+
+                _backlog = value;
+            }
         }
 
         /// <summary>
@@ -74,6 +80,12 @@ namespace TecX.Agile
         public Legend Legend
         {
             get { return _legend; }
+            set
+            {
+                Guard.AssertNotNull(value, "value");
+
+                _legend = value;
+            }
         }
 
         #endregion Properties

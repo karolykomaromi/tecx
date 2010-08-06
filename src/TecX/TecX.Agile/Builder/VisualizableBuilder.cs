@@ -18,7 +18,7 @@ namespace TecX.Agile.Builder
         /// Initializes a new instance of the <see cref="VisualizableBuilder"/> class. Copy constructor
         /// </summary>
         /// <param name="builder">The builder to copy</param>
-        public VisualizableBuilder(EntityBuilder<Visualizable> builder)
+        private VisualizableBuilder(EntityBuilder<Visualizable> builder)
             : base(builder)
         {
         }

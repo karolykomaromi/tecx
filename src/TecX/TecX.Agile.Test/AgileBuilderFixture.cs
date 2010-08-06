@@ -83,22 +83,30 @@ namespace TecX.Agile.Test
 
             Assert.AreEqual(1.2m, storyCard.Tracking.ActualEffort);
             Assert.AreEqual(2.3m, storyCard.Tracking.BestCaseEstimate);
+            Assert.AreEqual(4.5m, storyCard.Tracking.MostLikelyEstimate);
+            Assert.AreEqual(Priority.Immediate, storyCard.Tracking.Priority);
+            Assert.AreEqual(Status.Completed, storyCard.Tracking.Status);
+            Assert.AreEqual(7.8m, storyCard.Tracking.WorstCaseEstimate);
+
             Assert.IsTrue(new byte[] { 1, 2, 3, 4 }.SequenceEqual(storyCard.View.Color));
+            Assert.AreEqual(3.4, storyCard.View.Height);
+            Assert.AreEqual(5.6, storyCard.View.RotationAngle);
+            Assert.AreEqual(6.7, storyCard.View.Width);
+            Assert.AreEqual(8.9, storyCard.View.X);
+            Assert.AreEqual(9.1, storyCard.View.Y);
+
             Assert.AreEqual(StoryCardSides.RichTestSide, storyCard.CurrentSideUp);
             Assert.AreEqual("desc", storyCard.Description);
             Assert.IsTrue(new byte[] { 2, 3, 4, 5, 6, 7, 8, 9 }.SequenceEqual(storyCard.DescriptionHandwritingImage));
-            Assert.AreEqual(3.4, storyCard.View.Height);
+            
             Assert.AreEqual(id, storyCard.Id);
-            Assert.AreEqual(4.5m, storyCard.Tracking.MostLikelyEstimate);
+            
             Assert.AreEqual("name", storyCard.Name);
-            Assert.AreEqual(Priority.Immediate, storyCard.Tracking.Priority);
-            Assert.AreEqual(5.6, storyCard.View.RotationAngle);
-            Assert.AreEqual(Status.Completed, storyCard.Tracking.Status);
+            
+            
+            
             Assert.AreEqual("John Wayne", storyCard.TaskOwner);
-            Assert.AreEqual(6.7, storyCard.View.Width);
-            Assert.AreEqual(7.8m, storyCard.Tracking.WorstCaseEstimate);
-            Assert.AreEqual(8.9, storyCard.View.X);
-            Assert.AreEqual(9.1, storyCard.View.Y);
+
 
             //test implicit conversion
             StoryCard storyCard2 = builder;
@@ -117,7 +125,7 @@ namespace TecX.Agile.Test
         {
             var fixture = new Fixture
                               {
-                                  Resolver = AutoFixtureHelper.ResolveEnum
+                                  Resolver = AutoFixtureExtensions.ResolveEnum
                               };
 
             fixture.Customize<Visualizable>(ob => ob.With(vis => vis.Color,
@@ -135,7 +143,64 @@ namespace TecX.Agile.Test
         [TestMethod]
         public void CanBuildIteration()
         {
-            Assert.Fail("not implemented");
+            Guid id = Guid.NewGuid();
+
+            IterationBuilder builder = New.Iteration()
+                .WithAvailableEffort(10.2m)
+                .WithDescription("CanBuildIteration")
+                .WithEndDate(new DateTime(2010, 8, 6))
+                .WithId(id)
+                .WithName("Clint Eastwood")
+                .WithStartDate(new DateTime(2009, 1, 1))
+                .WithTracking(
+                    New.Tracking()
+                        .WithActualEffort(2.3m)
+                        .WithBestCaseEstimate(3.4m)
+                        .WithMostLikelyEstimate(4.5m)
+                        .WithPriority(Priority.Low)
+                        .WithStatus(Status.Accepted)
+                        .WithWorstCaseEstimate(7.8m))
+                .WithView(
+                    New.View()
+                        .WithColor(new byte[] {1, 2, 3, 4})
+                        .WithHeight(5.6)
+                        .WithRotationAngle(6.7)
+                        .WithWidth(7.8)
+                        .WithX(8.9)
+                        .WithY(9.1));
+
+            Iteration iteration = builder.Build();
+
+            Assert.AreEqual(10.2m, iteration.AvailableEffort);
+            Assert.AreEqual("CanBuildIteration", iteration.Description);
+            Assert.AreEqual(new DateTime(2010, 8,6), iteration.EndDate);
+            Assert.AreEqual(id, iteration.Id);
+            Assert.AreEqual("Clint Eastwood", iteration.Name);
+            Assert.AreEqual(new DateTime(2009,1,1), iteration.StartDate);
+
+            Assert.AreEqual(2.3m, iteration.Tracking.ActualEffort);
+            Assert.AreEqual(3.4m, iteration.Tracking.BestCaseEstimate);
+            Assert.AreEqual(4.5m, iteration.Tracking.MostLikelyEstimate);
+            Assert.AreEqual(Priority.Low, iteration.Tracking.Priority);
+            Assert.AreEqual(Status.Accepted, iteration.Tracking.Status);
+            Assert.AreEqual(7.8m, iteration.Tracking.WorstCaseEstimate);
+
+            Assert.IsTrue(new byte[] { 1, 2, 3, 4 }.SequenceEqual(iteration.View.Color));
+            Assert.AreEqual(5.6, iteration.View.Height);
+            Assert.AreEqual(6.7, iteration.View.RotationAngle);
+            Assert.AreEqual(7.8, iteration.View.Width);
+            Assert.AreEqual(8.9, iteration.View.X);
+            Assert.AreEqual(9.1, iteration.View.Y);
+
+            Iteration iteration2 = builder;
+
+            Assert.AreEqual(iteration, iteration2);
+
+            builder.WithName("new name");
+
+            iteration2 = builder;
+
+            Assert.AreNotEqual(iteration, iteration2);
         }
 
         [TestMethod]
