@@ -4,6 +4,48 @@
     {
         public static class Properties
         {
+            public static class Visualizable
+            {
+                /// <summary>X</summary>
+                public const string X = "X";
+
+                /// <summary>Y</summary>
+                public const string Y = "Y";
+
+                /// <summary>RotationAngle</summary>
+                public const string RotationAngle = "RotationAngle";
+
+                /// <summary>Width</summary>
+                public const string Width = "Width";
+
+                /// <summary>Height</summary>
+                public const string Height = "Height";
+
+                /// <summary>Color</summary>
+                public const string Color = "Color";
+            }
+
+            public static class Trackable
+            {
+                /// <summary>Priority</summary>
+                public const string Priority = "Priority";
+
+                /// <summary>ActualEffort</summary>
+                public const string ActualEffort = "ActualEffort";
+
+                /// <summary>BestCaseEstimate</summary>
+                public const string BestCaseEstimate = "BestCaseEstimate";
+
+                /// <summary>MostLikelyEstimate</summary>
+                public const string MostLikelyEstimate = "MostLikelyEstimate";
+
+                /// <summary>WorstCaseEstimate</summary>
+                public const string WorstCaseEstimate = "WorstCaseEstimate";
+
+                /// <summary>Status</summary>
+                public const string Status = "Status";
+            }
+
             public static class PlanningArtefact
             {
                 /// <summary>Id</summary>

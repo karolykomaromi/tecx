@@ -10,36 +10,6 @@ namespace TecX.Agile
     /// </summary>
     public class Visualizable : Features<Visualizable>
     {
-        #region Constants
-
-        public static class Constants
-        {
-            public static class PropertyNames
-            {
-                /// <summary>X</summary>
-                public const string XPropertyName = "X";
-
-                /// <summary>Y</summary>
-                public const string YPropertyName = "Y";
-
-                /// <summary>RotationAngle</summary>
-                public const string RotationAnglePropertyName = "RotationAngle";
-
-                /// <summary>Width</summary>
-                public const string WidthPropertyName = "Width";
-
-                /// <summary>Height</summary>
-                public const string HeightPropertyName = "Height";
-
-                /// <summary>Color</summary>
-                public const string ColorPropertyName = "Color";
-            }
-        }
-
-        #endregion Constants
-
-        ////////////////////////////////////////////////////////////
-
         #region Fields
 
         /// <summary>
