@@ -1,4 +1,6 @@
-﻿namespace TecX.Agile.Builder
+﻿using TecX.Common;
+
+namespace TecX.Agile.Builder
 {
     public class LegendBuilder : EntityBuilder<Legend>
     {
@@ -34,6 +36,42 @@
 
         ////////////////////////////////////////////////////////////
 
+        #region Methods
+
+        public LegendBuilder With(string name, byte[] color)
+        {
+            Guard.AssertNotEmpty(name, "name");
+            Guard.AssertNotNull(color, "color");
+
+            ConstructedObject.Add(name, color);
+
+            return this;
+        }
+
+        public LegendBuilder Without(string name)
+        {
+            Guard.AssertNotEmpty(name, "name");
+
+            ConstructedObject.Remove(name);
+
+            return this;
+        }
+
+        public LegendBuilder Replace(string name, byte[] color)
+        {
+            Guard.AssertNotEmpty(name, "name");
+            Guard.AssertNotNull(color, "color");
+
+            ConstructedObject.Remove(name);
+            ConstructedObject.Add(name, color);
+
+            return this;
+        }
+
+        #endregion Methods
+
+        ////////////////////////////////////////////////////////////
+
         #region Overrides of EntityBuilder<Legend>
 
         /// <summary>
@@ -47,6 +85,6 @@
             return new LegendBuilder(this);
         }
 
-        #endregion
+        #endregion Overrides of EntityBuilder<Legend>
     }
 }

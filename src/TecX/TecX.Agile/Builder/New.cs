@@ -31,5 +31,10 @@
         {
             return new TrackableBuilder();
         }
+
+        public static LegendBuilder Legend()
+        {
+            return new LegendBuilder();
+        }
     }
 }

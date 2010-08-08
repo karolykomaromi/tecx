@@ -261,13 +261,63 @@ namespace TecX.Agile.Test
         [TestMethod]
         public void CanBuildBacklog()
         {
-            Assert.Fail("not implemented");
+            Guid id = Guid.NewGuid();
+
+            BacklogBuilder builder = New.Backlog()
+                .WithDescription("CanBuildBacklog")
+                .WithId(id)
+                .WithName("Butch Cassidy");
+
+            Backlog backlog = builder.Build();
+
+            Assert.AreEqual("CanBuildBacklog", backlog.Description);
+            Assert.AreEqual(id, backlog.Id);
+            Assert.AreEqual("Butch Cassidy", backlog.Name);
+
+            Backlog backlog2 = builder;
+
+            Assert.AreEqual(backlog, backlog2);
+            Assert.AreNotSame(backlog, backlog2);
+
+            builder.WithName("Sundance Kid");
+
+            backlog2 = builder;
+
+            Assert.AreNotEqual(backlog, backlog2);
         }
 
         [TestMethod]
         public void CanBuildProject()
         {
-            Assert.Fail("not implemented");
+            Guid id = Guid.NewGuid();
+
+            ProjectBuilder builder = New.Project()
+                .WithDescription("CanBuildProject")
+                .WithId(id)
+                .WithName("Buffalo Bill")
+                .WithLegend(
+                    New.Legend()
+                        .With("a", new byte[] {1, 2, 3, 4})
+                        .With("b", new byte[] {2, 3, 4, 5}));
+
+            Project project = builder.Build();
+
+            Assert.AreEqual("CanBuildProject", project.Description);
+            Assert.AreEqual(id, project.Id);
+            Assert.AreEqual("Buffalo Bill", project.Name);
+            Assert.IsTrue(new byte[]{1,2,3,4}.SequenceEqual(project.Legend["a"].Color));
+            Assert.IsTrue(new byte[] { 2, 3, 4, 5 }.SequenceEqual(project.Legend["b"].Color));
+
+            Project project2 = builder;
+
+            Assert.AreEqual(project, project2);
+            Assert.AreNotSame(project, project2);
+
+            project2 = builder.WithLegend(project2.Legend.BuildUp().Replace("b", new byte[] {5, 6, 7, 8}));
+
+            Assert.IsTrue(new byte[]{5,6,7,8}.SequenceEqual(project2.Legend["b"].Color));
+
+            Assert.AreNotEqual(project, project2);
         }
     }
 }
