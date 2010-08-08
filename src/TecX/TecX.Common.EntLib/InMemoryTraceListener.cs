@@ -2,18 +2,29 @@
 
 namespace TecX.Common.EntLib
 {
-    public class InMemoryTraceListener : TraceListenerBase
+    public class InMemoryTraceListener : TecXTraceListenerBase
     {
-        private static readonly StringBuilder Messages = new StringBuilder(8192);
-        private static readonly object SyncRoot = new object();
+        private static readonly StringBuilder _messages = new StringBuilder(8192);
+        private static readonly object _syncRoot = new object();
+
+        public string Messages
+        {
+            get
+            {
+                lock(_syncRoot)
+                {
+                    return _messages.ToString();
+                }
+            }
+        }
 
         public override void Write(string message)
         {
             Guard.AssertNotNull(message, "message");
 
-            lock (SyncRoot)
+            lock (_syncRoot)
             {
-                Messages.Append(message);
+                _messages.Append(message);
             }
         }
 
@@ -21,9 +32,9 @@ namespace TecX.Common.EntLib
         {
             Guard.AssertNotNull(message, "message");
 
-            lock (SyncRoot)
+            lock (_syncRoot)
             {
-                Messages.AppendLine(message);
+                _messages.AppendLine(message);
             }
         }
     }

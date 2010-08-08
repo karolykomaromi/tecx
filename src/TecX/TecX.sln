@@ -39,9 +39,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Test", "TecX.Agi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Common.EntLib", "TecX.Common.EntLib\TecX.Common.EntLib.csproj", "{45BE1494-E6F4-415F-8206-2856FBD28F66}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Common.EntLib.Test", "TecX.Common.EntLib.Test\TecX.Common.EntLib.Test.csproj", "{74AB8CBC-3DCE-4DE9-B43B-FDBAB0C4AEA1}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 10
+		SccNumberOfProjects = 11
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -81,6 +83,10 @@ Global
 		SccProjectTopLevelParentUniqueName9 = TecX.sln
 		SccProjectName9 = TecX.Common.EntLib
 		SccLocalPath9 = TecX.Common.EntLib
+		SccProjectUniqueName10 = TecX.Common.EntLib.Test\\TecX.Common.EntLib.Test.csproj
+		SccProjectTopLevelParentUniqueName10 = TecX.sln
+		SccProjectName10 = TecX.Common.EntLib.Test
+		SccLocalPath10 = TecX.Common.EntLib.Test
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -126,6 +132,10 @@ Global
 		{45BE1494-E6F4-415F-8206-2856FBD28F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45BE1494-E6F4-415F-8206-2856FBD28F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45BE1494-E6F4-415F-8206-2856FBD28F66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74AB8CBC-3DCE-4DE9-B43B-FDBAB0C4AEA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74AB8CBC-3DCE-4DE9-B43B-FDBAB0C4AEA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74AB8CBC-3DCE-4DE9-B43B-FDBAB0C4AEA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74AB8CBC-3DCE-4DE9-B43B-FDBAB0C4AEA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +147,7 @@ Global
 		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{41DA2181-3591-447B-A183-E79D34AA7907} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{16914DD0-5805-4250-879B-26FEB00FA7BD} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
+		{74AB8CBC-3DCE-4DE9-B43B-FDBAB0C4AEA1} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{0505E426-7710-4783-8D70-6B6DD1667ADB} = {E1D2BCBC-4FA7-4B80-B80D-1E2FF04F9EB8}
 		{DA32E74A-CC64-45F7-8602-C08FC93BF8B7} = {E1D2BCBC-4FA7-4B80-B80D-1E2FF04F9EB8}
 		{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
