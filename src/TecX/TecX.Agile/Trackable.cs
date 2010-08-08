@@ -10,36 +10,6 @@ namespace TecX.Agile
     [Serializable]
     public class Trackable : Features<Trackable>
     {
-        #region Constants
-
-        public static class Constants
-        {
-            public static class PropertyNames
-            {
-                /// <summary>Priority</summary>
-                public const string PriorityPropertyName = "Priority";
-
-                /// <summary>ActualEffort</summary>
-                public const string ActualEffortPropertyName = "ActualEffort";
-
-                /// <summary>BestCaseEstimate</summary>
-                public const string BestCaseEstimatePropertyName = "BestCaseEstimate";
-
-                /// <summary>MostLikelyEstimate</summary>
-                public const string MostLikelyEstimatePropertyName = "MostLikelyEstimate";
-
-                /// <summary>WorstCaseEstimate</summary>
-                public const string WorstCaseEstimatePropertyName = "WorstCaseEstimate";
-
-                /// <summary>Status</summary>
-                public const string StatusPropertyName = "Status";
-            }
-        }
-
-        #endregion Constants
-
-        ////////////////////////////////////////////////////////////
-
         #region Fields
 
         /// <summary>

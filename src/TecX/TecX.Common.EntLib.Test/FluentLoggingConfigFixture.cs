@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
 
 using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 using Microsoft.Practices.EnterpriseLibrary.Logging;
 using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TecX.Common.EntLib.Test
@@ -19,11 +17,11 @@ namespace TecX.Common.EntLib.Test
             var builder = new ConfigurationSourceBuilder();
 
             builder.ConfigureLogging()
-            .LogToCategoryNamed("General")
+                .LogToCategoryNamed("General")
                 .WithOptions
-                    .SetAsDefaultCategory()
+                .SetAsDefaultCategory()
                 .SendTo
-                    .Custom("DefaultTraceListener", typeof(InMemoryTraceListener))
+                .Custom("DefaultTraceListener", typeof (InMemoryTraceListener))
                 .FormatWith(
                     new FormatterBuilder()
                         .TextFormatterNamed("DefaultTextFormatter")
@@ -31,9 +29,9 @@ namespace TecX.Common.EntLib.Test
 
             var configSource = new DictionaryConfigurationSource();
             builder.UpdateConfigurationWithReplace(configSource);
-            EnterpriseLibraryContainer.Current
-              = EnterpriseLibraryContainer.CreateDefaultContainer(configSource);
 
+            EnterpriseLibraryContainer.Current
+                = EnterpriseLibraryContainer.CreateDefaultContainer(configSource);
 
             LogSource generalLogSource = Logger.Writer.TraceSources["General"];
 
@@ -44,7 +42,7 @@ namespace TecX.Common.EntLib.Test
             Assert.IsNotNull(wrapper);
 
             InMemoryTraceListener listener = wrapper.InnerTraceListener as InMemoryTraceListener;
-            
+
             Assert.IsNotNull(listener);
 
             Logger.Write("TestTestTest");
