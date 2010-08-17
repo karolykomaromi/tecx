@@ -37,13 +37,20 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IRepository.cs" />
+    <Compile Include="ProjectInfo.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryException.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile.Error\TecX.Agile.Error.csproj">
+      <Project>{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}</Project>
+      <Name>TecX.Agile.Error</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile\TecX.Agile.csproj">
       <Project>{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300}</Project>
       <Name>TecX.Agile</Name>

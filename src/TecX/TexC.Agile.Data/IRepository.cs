@@ -9,9 +9,13 @@ namespace TexC.Agile.Data
 {
     public interface IRepository
     {
-        Project GetProject(Guid id);
+        Project GetProjectBy(Guid id);
 
-        Project GetProject(string name);
+        Project GetProjectBy(string name);
+
+        IEnumerable<ProjectInfo> GetExistingProjects();
+
+        Project CreateProject();
 
         bool SaveProject(Project project);
     }

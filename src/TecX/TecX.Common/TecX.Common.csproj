@@ -65,6 +65,7 @@
     <Compile Include="Comparison\Compare.cs" />
     <Compile Include="Comparison\DictionaryComparer.cs" />
     <Compile Include="Convert.cs" />
+    <Compile Include="DefaultTimeProvider.cs" />
     <Compile Include="Extensions\Error\ExceptionExtensions.cs" />
     <Compile Include="Extensions\LinqTo\Entities\ParameterRebinder.cs" />
     <Compile Include="Extensions\LinqTo\Entities\PredicateExtensions.cs" />

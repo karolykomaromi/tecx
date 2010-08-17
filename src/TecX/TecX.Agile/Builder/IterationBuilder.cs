@@ -7,7 +7,7 @@ namespace TecX.Agile.Builder
     /// <summary>
     /// Builder for creating <see cref="Iteration"/> instances
     /// </summary>
-    public class IterationBuilder : StoryCardContainerBuilder<IterationBuilder, Iteration>
+    public class IterationBuilder : StoryCardCollectionBuilder<IterationBuilder, Iteration>
     {
         #region c'tor
 

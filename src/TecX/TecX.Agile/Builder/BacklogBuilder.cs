@@ -3,7 +3,7 @@
     /// <summary>
     /// Builder for creating <see cref="Backlog"/> instances
     /// </summary>
-    public class BacklogBuilder : StoryCardContainerBuilder<BacklogBuilder, Backlog>
+    public class BacklogBuilder : StoryCardCollectionBuilder<BacklogBuilder, Backlog>
     {
         #region c'tor
 

@@ -12,7 +12,7 @@ namespace TecX.Agile
     /// <see cref="Iteration"/>)
     /// </summary>
     [Serializable]
-    public abstract class StoryCardContainer : PlanningArtefact, IEnumerable<StoryCard>
+    public abstract class StoryCardCollection : PlanningArtefact, IEnumerable<StoryCard>
     {
         #region Constants
 
@@ -57,9 +57,9 @@ namespace TecX.Agile
         #region c'tor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StoryCardContainer"/> class.
+        /// Initializes a new instance of the <see cref="StoryCardCollection"/> class.
         /// </summary>
-        protected StoryCardContainer()
+        protected StoryCardCollection()
         {
             _storyCards = new Dictionary<Guid, StoryCard>();
         }
@@ -111,7 +111,7 @@ namespace TecX.Agile
             return _storyCards.Remove(id);
         }
 
-        protected internal void CopyValuesFrom(StoryCardContainer other)
+        protected internal void CopyValuesFrom(StoryCardCollection other)
         {
             Guard.AssertNotNull(other, "other");
 

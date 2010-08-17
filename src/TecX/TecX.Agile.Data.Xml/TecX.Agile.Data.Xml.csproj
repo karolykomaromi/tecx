@@ -49,7 +49,6 @@
     </Compile>
     <Compile Include="ConversionExtensions.cs" />
     <Compile Include="XmlExtensions.cs" />
-    <Compile Include="XmlRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

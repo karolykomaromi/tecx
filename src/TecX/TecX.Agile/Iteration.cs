@@ -8,7 +8,7 @@ namespace TecX.Agile
     /// Data-object for an iteration
     /// </summary>
     [Serializable]
-    public class Iteration : StoryCardContainer, IEquatable<Iteration>
+    public class Iteration : StoryCardCollection, IEquatable<Iteration>
     {
 
         #region Fields
@@ -77,8 +77,8 @@ namespace TecX.Agile
         public Iteration()
         {
             AvailableEffort = 0;
-            StartDate = DateTime.Today;
-            EndDate = DateTime.Today.AddDays(14);
+            StartDate = TimeProvider.Current.Today;
+            EndDate = TimeProvider.Current.Today.AddDays(14);
 
             _tracking = new Trackable();
             _view = new Visualizable();

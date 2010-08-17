@@ -71,35 +71,10 @@ namespace TecX.Common
         /// </summary>
         public abstract DateTime Now { get; }
 
-    }
-
-    /// <summary>
-    /// Default implementation of a <see cref="TimeProvider"/> using <see cref="DateTime"/> internally
-    /// </summary>
-    public class DefaultTimeProvider : TimeProvider
-    {
-        #region Overrides of TimeProvider
-
         /// <summary>
-        /// Gets a <see cref="DateTime"/> object that is set to the current date and time
-        /// on this computer, expressed as the Coordinated Universal Time (UTC).
+        /// Gets the current date.
         /// </summary>
-        /// <value></value>
-        public override DateTime UtcNow
-        {
-            get { return DateTime.UtcNow; }
-        }
+        public abstract DateTime Today { get; }
 
-        /// <summary>
-        /// Gets a <see cref="DateTime"/>  object that is set to the current date and time on this computer,
-        /// expressed as the local time.
-        /// </summary>
-        /// <value></value>
-        public override DateTime Now
-        {
-            get { return DateTime.Now; }
-        }
-
-        #endregion Overrides of TimeProvider
     }
 }
