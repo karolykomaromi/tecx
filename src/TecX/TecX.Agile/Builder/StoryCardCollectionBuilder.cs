@@ -5,36 +5,36 @@ using TecX.Common;
 namespace TecX.Agile.Builder
 {
     /// <summary>
-    /// Abstract base for implementations of the Builder Pattern that produce <see cref="StoryCardContainer"/> DTOs
+    /// Abstract base for implementations of the Builder Pattern that produce <see cref="StoryCardCollection"/> DTOs
     /// </summary>
     /// <typeparam name="TBuilder">The type of the builder.</typeparam>
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
-    public abstract class StoryCardContainerBuilder<TBuilder, TEntity> : PlanningArtefactBuilder<TBuilder, TEntity>
-        where TEntity : StoryCardContainer, ICloneable
+    public abstract class StoryCardCollectionBuilder<TBuilder, TEntity> : PlanningArtefactBuilder<TBuilder, TEntity>
+        where TEntity : StoryCardCollection, ICloneable
         where TBuilder : EntityBuilder<TEntity>
     {
         #region c'tor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StoryCardContainerBuilder{TBuilder,TEntity}"/> class.
+        /// Initializes a new instance of the <see cref="StoryCardCollectionBuilder{TBuilder,TEntity}"/> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        protected StoryCardContainerBuilder(TEntity entity)
+        protected StoryCardCollectionBuilder(TEntity entity)
             : base(entity)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StoryCardContainerBuilder{TBuilder,TEntity}"/> class.
+        /// Initializes a new instance of the <see cref="StoryCardCollectionBuilder{TBuilder,TEntity}"/> class.
         /// </summary>
-        protected internal StoryCardContainerBuilder()
+        protected internal StoryCardCollectionBuilder()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StoryCardContainerBuilder{TBuilder,TEntity}"/> class.
+        /// Initializes a new instance of the <see cref="StoryCardCollectionBuilder{TBuilder,TEntity}"/> class.
         /// </summary>
-        protected StoryCardContainerBuilder(EntityBuilder<TEntity> builder)
+        protected StoryCardCollectionBuilder(EntityBuilder<TEntity> builder)
             : base(builder)
         {
         }

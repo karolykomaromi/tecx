@@ -88,7 +88,7 @@
                 public const string Legend = "Legend";
             }
 
-            public static class StoryCardContainer
+            public static class StoryCardCollection
             {
                 /// <summary>StoryCards</summary>
                 public const string StoryCards = "StoryCards";

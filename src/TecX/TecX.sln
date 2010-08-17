@@ -51,9 +51,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Data.File", "Tec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Data.Test", "TecX.Agile.Data.Test\TecX.Agile.Data.Test.csproj", "{FE8DE41C-47CE-4DE5-BDAF-8CCF2F8A854E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Error", "TecX.Agile.Error\TecX.Agile.Error.csproj", "{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 16
+		SccNumberOfProjects = 17
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -117,6 +119,10 @@ Global
 		SccProjectTopLevelParentUniqueName15 = TecX.sln
 		SccProjectName15 = TecX.Agile.Data.Test
 		SccLocalPath15 = TecX.Agile.Data.Test
+		SccProjectUniqueName16 = TecX.Agile.Error\\TecX.Agile.Error.csproj
+		SccProjectTopLevelParentUniqueName16 = TecX.sln
+		SccProjectName16 = TecX.Agile.Error
+		SccLocalPath16 = TecX.Agile.Error
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -186,6 +192,10 @@ Global
 		{FE8DE41C-47CE-4DE5-BDAF-8CCF2F8A854E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE8DE41C-47CE-4DE5-BDAF-8CCF2F8A854E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE8DE41C-47CE-4DE5-BDAF-8CCF2F8A854E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -206,5 +216,6 @@ Global
 		{6E05A14A-9374-40FD-B8CA-C33B4108CBDB} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
 		{7D88B6EE-87D9-4FCC-BC90-91A5A6D7804B} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
 		{8B37223D-5BE4-482F-B9E1-99D4F40E40BF} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
+		{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
 	EndGlobalSection
 EndGlobal

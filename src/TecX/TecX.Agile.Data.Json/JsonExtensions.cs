@@ -152,7 +152,7 @@ namespace TecX.Agile.Data.Json
 
                 if (!string.IsNullOrEmpty(str))
                 {
-                    byte[] bytes = Convert.ToByte(str);
+                    byte[] bytes = Common.Convert.ToByte(str);
                     value = bytes;
                     return true;
                 }

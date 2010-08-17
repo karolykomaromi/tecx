@@ -59,21 +59,21 @@ namespace TecX.Agile.Data.Json
         }
 
         /// <summary>
-        /// Fills an <see cref="StoryCardContainer"/> with values from a JSON serialized object
+        /// Fills an <see cref="StoryCardCollection"/> with values from a JSON serialized object
         /// </summary>
-        /// <param name="storyCardContainer">The index card with children.</param>
+        /// <param name="StoryCardCollection">The index card with children.</param>
         /// <param name="json">The json.</param>
-        /// <returns>The <see cref="StoryCardContainer"/> filled with the values from a JSON serialized
+        /// <returns>The <see cref="StoryCardCollection"/> filled with the values from a JSON serialized
         /// object</returns>
-        public static StoryCardContainer FromJson(this StoryCardContainer storyCardContainer, JObject json)
+        public static StoryCardCollection FromJson(this StoryCardCollection StoryCardCollection, JObject json)
         {
-            Guard.AssertNotNull(storyCardContainer, "storyCardContainer");
+            Guard.AssertNotNull(StoryCardCollection, "StoryCardCollection");
             Guard.AssertNotNull(json, "json");
 
-            ((PlanningArtefact)storyCardContainer).FromJson(json);
+            ((PlanningArtefact)StoryCardCollection).FromJson(json);
 
             JArray jsonStoryCards;
-            if (json.TryGetValue(Constants.Properties.StoryCardContainer.StoryCards, out jsonStoryCards))
+            if (json.TryGetValue(Constants.Properties.StoryCardCollection.StoryCards, out jsonStoryCards))
             {
                 if (jsonStoryCards != null)
                 {
@@ -83,13 +83,13 @@ namespace TecX.Agile.Data.Json
                         {
                             var storycard = new StoryCard();
                             storycard.FromJson(jsonStoryCard);
-                            storyCardContainer.Add(storycard);
+                            StoryCardCollection.Add(storycard);
                         }
                     }
                 }
             }
 
-            return storyCardContainer;
+            return StoryCardCollection;
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace TecX.Agile.Data.Json
             Guard.AssertNotNull(iteration, "iteration");
             Guard.AssertNotNull(json, "json");
 
-            ((StoryCardContainer)iteration).FromJson(json);
+            ((StoryCardCollection)iteration).FromJson(json);
 
             decimal availableEffort;
             if (json.TryGetValue(Constants.Properties.Iteration.AvailableEffort, out availableEffort))
@@ -182,7 +182,7 @@ namespace TecX.Agile.Data.Json
             Guard.AssertNotNull(backlog, "backlog");
             Guard.AssertNotNull(json, "json");
 
-            ((StoryCardContainer)backlog).FromJson(json);
+            ((StoryCardCollection)backlog).FromJson(json);
 
             return backlog;
         }
@@ -375,13 +375,13 @@ namespace TecX.Agile.Data.Json
         }
 
         /// <summary>
-        /// Converts an <see cref="StoryCardContainer"/> to its JSON serialized representation
+        /// Converts an <see cref="StoryCardCollection"/> to its JSON serialized representation
         /// </summary>
         /// <param name="indexCardWithChildren">The index card with children.</param>
-        /// <returns>The JSON serialized representation of the <see cref="StoryCardContainer"/></returns>
-        public static JObject ToJson(this StoryCardContainer indexCardWithChildren)
+        /// <returns>The JSON serialized representation of the <see cref="StoryCardCollection"/></returns>
+        public static JObject ToJson(this StoryCardCollection indexCardWithChildren)
         {
-            Guard.AssertNotNull(indexCardWithChildren, "storyCardContainer");
+            Guard.AssertNotNull(indexCardWithChildren, "StoryCardCollection");
 
             var json = ((PlanningArtefact)indexCardWithChildren).ToJson();
 
@@ -397,7 +397,7 @@ namespace TecX.Agile.Data.Json
                 }
             }
 
-            json.AddProperty(Constants.Properties.StoryCardContainer.StoryCards, storycards);
+            json.AddProperty(Constants.Properties.StoryCardCollection.StoryCards, storycards);
 
             return json;
         }
@@ -438,7 +438,7 @@ namespace TecX.Agile.Data.Json
         {
             Guard.AssertNotNull(iteration, "iteration");
 
-            var json = ((StoryCardContainer)iteration).ToJson();
+            var json = ((StoryCardCollection)iteration).ToJson();
 
             json.AddProperty(Constants.Properties.Trackable.ActualEffort,
                              iteration.Tracking.ActualEffort.ToString(
@@ -496,7 +496,7 @@ namespace TecX.Agile.Data.Json
         {
             Guard.AssertNotNull(backlog, "backlog");
 
-            var json = ((StoryCardContainer)backlog).ToJson();
+            var json = ((StoryCardCollection)backlog).ToJson();
 
             return json;
         }

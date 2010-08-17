@@ -47,10 +47,25 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Constants.cs" />
     <Compile Include="FileRepository.cs" />
+    <Compile Include="FileRepositoryHelper.cs" />
+    <Compile Include="ProjectToStringConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile.Error\TecX.Agile.Error.csproj">
+      <Project>{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}</Project>
+      <Name>TecX.Agile.Error</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile\TecX.Agile.csproj">
+      <Project>{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300}</Project>
+      <Name>TecX.Agile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
+      <Project>{23E54945-0126-43BE-A3FC-5F61AF5BDFF3}</Project>
+      <Name>TecX.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TexC.Agile.Data\TexC.Agile.Data.csproj">
       <Project>{1D3C29B0-7785-442A-91BC-4DCCDCC84D92}</Project>
       <Name>TexC.Agile.Data</Name>

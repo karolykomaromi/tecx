@@ -8,7 +8,7 @@ namespace TecX.Agile
     /// Data-object for a Project backlog
     /// </summary>
     [Serializable]
-    public class Backlog : StoryCardContainer, IEquatable<Backlog>
+    public class Backlog : StoryCardCollection, IEquatable<Backlog>
     {
         #region Constants
 

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using TecX.Agile;
 using TecX.Common;
+using TecX.Agile.Builder;
 
 namespace TexC.Agile.Data
 {
@@ -15,7 +18,7 @@ namespace TexC.Agile.Data
 
         ////////////////////////////////////////////////////////////
 
-        public Project GetProject(Guid id)
+        public Project GetProjectBy(Guid id)
         {
             if (id == _currentProject.Id)
                 return _currentProject;
@@ -25,28 +28,54 @@ namespace TexC.Agile.Data
             return _currentProject;
         }
 
-        public Project GetProject(string name)
+        public Project GetProjectBy(string name)
         {
             Guard.AssertNotEmpty(name, "name");
 
             Guid id = GetProjectId(name);
 
-            return GetProject(id);
+            return GetProjectBy(id);
         }
+
+        public Project CreateProject()
+        {
+            Project project = New.Project();
+
+            project = DoCreateProject(project);
+
+            return project;
+        }
+
+        protected abstract Project DoCreateProject(Project project);
 
         public bool SaveProject(Project project)
         {
             Guard.AssertNotNull(project, "project");
 
-            bool saved = SaveProjectInternal(project);
+            bool saved = DoSaveProject(project);
 
             return saved;
         }
 
-        protected abstract Guid GetProjectId(string name);
+        protected Guid GetProjectId(string name)
+        {
+            IEnumerable<ProjectInfo> projects = GetExistingProjects();
+
+            ProjectInfo info = projects.SingleOrDefault(p => p.Name == name);
+
+            if(info != null)
+            {
+                return info.Id;
+            }
+
+            throw new InvalidOperationException("No project with name '" + name + "' found.");
+        }
 
         protected abstract Project LoadProject(Guid id);
 
-        protected abstract bool SaveProjectInternal(Project project);
+        protected abstract bool DoSaveProject(Project project);
+
+        public abstract IEnumerable<ProjectInfo> GetExistingProjects();
+
     }
 }

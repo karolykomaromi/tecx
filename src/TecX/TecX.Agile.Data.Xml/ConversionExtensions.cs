@@ -58,18 +58,18 @@ namespace TecX.Agile.Data.Xml
         }
 
         /// <summary>
-        /// Fills an <see cref="StoryCardContainer"/> with values from an XML serialized object
+        /// Fills an <see cref="StoryCardCollection"/> with values from an XML serialized object
         /// </summary>
-        /// <param name="storyCardContainer">The planning artefact.</param>
+        /// <param name="StoryCardCollection">The planning artefact.</param>
         /// <param name="xml">The xml.</param>
-        /// <returns>The <see cref="StoryCardContainer"/> filled with the values from an XML serialized
+        /// <returns>The <see cref="StoryCardCollection"/> filled with the values from an XML serialized
         /// object</returns>
-        public static StoryCardContainer FromXml(this StoryCardContainer storyCardContainer, XElement xml)
+        public static StoryCardCollection FromXml(this StoryCardCollection StoryCardCollection, XElement xml)
         {
-            Guard.AssertNotNull(storyCardContainer, "storyCardContainer");
+            Guard.AssertNotNull(StoryCardCollection, "StoryCardCollection");
             Guard.AssertNotNull(xml, "xml");
 
-            ((PlanningArtefact)storyCardContainer).FromXml(xml);
+            ((PlanningArtefact)StoryCardCollection).FromXml(xml);
 
             IEnumerable<XElement> storycards = xml.Descendants("StoryCards");
 
@@ -78,10 +78,10 @@ namespace TecX.Agile.Data.Xml
                 var storycard = new StoryCard();
                 FromXml((PlanningArtefact)storycard, element);
 
-                storyCardContainer.Add(storycard);
+                StoryCardCollection.Add(storycard);
             }
 
-            return storyCardContainer;
+            return StoryCardCollection;
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace TecX.Agile.Data.Xml
             Guard.AssertNotNull(iteration, "iteration");
             Guard.AssertNotNull(xml, "xml");
 
-            ((StoryCardContainer)iteration).FromXml(xml);
+            ((StoryCardCollection)iteration).FromXml(xml);
 
             decimal availableEffort;
             if (xml.TryGetValue(Constants.Properties.Iteration.AvailableEffort, out availableEffort))
@@ -273,7 +273,7 @@ namespace TecX.Agile.Data.Xml
             Guard.AssertNotNull(backlog, "backlog");
             Guard.AssertNotNull(xml, "xml");
 
-            ((StoryCardContainer)backlog).FromXml(xml);
+            ((StoryCardCollection)backlog).FromXml(xml);
 
             return backlog;
         }
@@ -363,15 +363,15 @@ namespace TecX.Agile.Data.Xml
         }
 
         /// <summary>
-        /// Converts an <see cref="StoryCardContainer"/> to its XML serialized representation
+        /// Converts an <see cref="StoryCardCollection"/> to its XML serialized representation
         /// </summary>
         /// <param name="indexCardWithChildren">The index card with children.</param>
         /// <returns>
-        /// The XML serialized representation of the <see cref="StoryCardContainer"/>
+        /// The XML serialized representation of the <see cref="StoryCardCollection"/>
         /// </returns>
-        public static XElement ToXml(this StoryCardContainer indexCardWithChildren)
+        public static XElement ToXml(this StoryCardCollection indexCardWithChildren)
         {
-            Guard.AssertNotNull(indexCardWithChildren, "storyCardContainer");
+            Guard.AssertNotNull(indexCardWithChildren, "StoryCardCollection");
 
             var xml = ((PlanningArtefact)indexCardWithChildren).ToXml();
 
@@ -424,7 +424,7 @@ namespace TecX.Agile.Data.Xml
         {
             Guard.AssertNotNull(iteration, "iteration");
 
-            var xml = ((StoryCardContainer)iteration).ToXml();
+            var xml = ((StoryCardCollection)iteration).ToXml();
 
             xml.AddAttribute(Constants.Properties.Iteration.AvailableEffort,
                              iteration.AvailableEffort.ToString(
@@ -451,7 +451,7 @@ namespace TecX.Agile.Data.Xml
         {
             Guard.AssertNotNull(backlog, "backlog");
 
-            var xml = ((StoryCardContainer)backlog).ToXml();
+            var xml = ((StoryCardCollection)backlog).ToXml();
 
             return xml;
         }

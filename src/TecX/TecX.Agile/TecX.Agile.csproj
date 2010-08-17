@@ -52,7 +52,7 @@
     <Compile Include="Builder\EntityBuilder.cs" />
     <Compile Include="Builder\Extensions.cs" />
     <Compile Include="Builder\LegendBuilder.cs" />
-    <Compile Include="Builder\StoryCardContainerBuilder.cs" />
+    <Compile Include="Builder\StoryCardCollectionBuilder.cs" />
     <Compile Include="Builder\IterationBuilder.cs" />
     <Compile Include="Builder\New.cs" />
     <Compile Include="Builder\PlanningArtefactBuilder.cs" />
@@ -64,7 +64,7 @@
     <Compile Include="Features.cs" />
     <Compile Include="Legend.cs" />
     <Compile Include="Mapping.cs" />
-    <Compile Include="StoryCardContainer.cs" />
+    <Compile Include="StoryCardCollection.cs" />
     <Compile Include="Iteration.cs" />
     <Compile Include="PlanningArtefact.cs" />
     <Compile Include="Priority.cs" />
