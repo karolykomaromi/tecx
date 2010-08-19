@@ -61,16 +61,16 @@ namespace TecX.Agile.Data.Json
         /// <summary>
         /// Fills an <see cref="StoryCardCollection"/> with values from a JSON serialized object
         /// </summary>
-        /// <param name="StoryCardCollection">The index card with children.</param>
+        /// <param name="storyCardCollection">The index card with children.</param>
         /// <param name="json">The json.</param>
         /// <returns>The <see cref="StoryCardCollection"/> filled with the values from a JSON serialized
         /// object</returns>
-        public static StoryCardCollection FromJson(this StoryCardCollection StoryCardCollection, JObject json)
+        public static StoryCardCollection FromJson(this StoryCardCollection storyCardCollection, JObject json)
         {
-            Guard.AssertNotNull(StoryCardCollection, "StoryCardCollection");
+            Guard.AssertNotNull(storyCardCollection, "storyCardCollection");
             Guard.AssertNotNull(json, "json");
 
-            ((PlanningArtefact)StoryCardCollection).FromJson(json);
+            ((PlanningArtefact)storyCardCollection).FromJson(json);
 
             JArray jsonStoryCards;
             if (json.TryGetValue(Constants.Properties.StoryCardCollection.StoryCards, out jsonStoryCards))
@@ -83,13 +83,13 @@ namespace TecX.Agile.Data.Json
                         {
                             var storycard = new StoryCard();
                             storycard.FromJson(jsonStoryCard);
-                            StoryCardCollection.Add(storycard);
+                            storyCardCollection.Add(storycard);
                         }
                     }
                 }
             }
 
-            return StoryCardCollection;
+            return storyCardCollection;
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace TecX.Agile.Data.Json
         /// <returns>The JSON serialized representation of the <see cref="StoryCardCollection"/></returns>
         public static JObject ToJson(this StoryCardCollection indexCardWithChildren)
         {
-            Guard.AssertNotNull(indexCardWithChildren, "StoryCardCollection");
+            Guard.AssertNotNull(indexCardWithChildren, "storyCardCollection");
 
             var json = ((PlanningArtefact)indexCardWithChildren).ToJson();
 

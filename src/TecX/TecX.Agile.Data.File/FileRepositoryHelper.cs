@@ -12,9 +12,11 @@ namespace TecX.Agile.Data.File
 {
     public static class FileRepositoryHelper
     {
-        public static IEnumerable<ProjectInfo> GetProjectInfosFromXmlFiles(IEnumerable<DirectoryInfo> projectSubFolders)
+        public static IEnumerable<ProjectInfo> GetProjectInfos(DirectoryInfo baseFolder)
         {
-            Guard.AssertNotNull(projectSubFolders, "projectSubFolders");
+            Guard.AssertNotNull(baseFolder, "baseFolder");
+
+            IEnumerable<DirectoryInfo> projectSubFolders = GetProjectSubFolders(baseFolder);
 
             List<ProjectInfo> projectInfos = new List<ProjectInfo>();
 
@@ -35,16 +37,6 @@ namespace TecX.Agile.Data.File
             }
 
             return projectInfos;
-        }
-
-        public static IEnumerable<DirectoryInfo> GetProjectSubDirectories(DirectoryInfo baseFolder)
-        {
-            Guard.AssertNotNull(baseFolder, "baseFolder");
-
-            IEnumerable<DirectoryInfo> projectSubDirectories =
-                baseFolder.GetDirectories().Where(di => TypeHelper.IsGuid(di.Name));
-
-            return projectSubDirectories;
         }
 
         public static DirectoryInfo CreateDirectoryIfNotExists(DirectoryInfo baseFolder, string subFolderName)
@@ -80,5 +72,16 @@ namespace TecX.Agile.Data.File
 
             serializer.SerializePlain(projectInfo, stream);
         }
+
+        private static IEnumerable<DirectoryInfo> GetProjectSubFolders(DirectoryInfo baseFolder)
+        {
+            Guard.AssertNotNull(baseFolder, "baseFolder");
+
+            IEnumerable<DirectoryInfo> projectSubDirectories =
+                baseFolder.GetDirectories().Where(di => TypeHelper.IsGuid(di.Name));
+
+            return projectSubDirectories;
+        }
+
     }
 }

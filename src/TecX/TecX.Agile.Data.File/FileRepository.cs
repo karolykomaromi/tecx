@@ -2,30 +2,21 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Text;
-using System.Xml.Linq;
 
 using TecX.Common;
 using TecX.Common.Extensions.Error;
 
-using TexC.Agile;
 using TexC.Agile.Data;
-using System.Xml.Serialization;
 
 namespace TecX.Agile.Data.File
 {
     public abstract class FileRepository : Repository
     {
-        #region Constants
-
-        #endregion Constants
-
-        ////////////////////////////////////////////////////////////
-
         #region Fields
 
         private readonly DirectoryInfo _baseFolder;
+        private readonly ProjectToStringConverter _converter;
 
         #endregion Fields
 
@@ -48,27 +39,39 @@ namespace TecX.Agile.Data.File
         /// <summary>
         /// Initializes a new instance of the <see cref="FileRepository"/> class
         /// </summary>
-        protected FileRepository(DirectoryInfo baseFolder)
+        protected FileRepository(DirectoryInfo baseFolder, ProjectToStringConverter converter)
         {
             Guard.AssertNotNull(baseFolder, "baseFolder");
+            Guard.AssertNotNull(converter, "converter");
 
             _baseFolder = baseFolder;
+
+            if (!_baseFolder.Exists)
+                _baseFolder.Create();
+
+            _converter = converter;
         }
 
         #endregion c'tor
 
         ////////////////////////////////////////////////////////////
 
+        public override IEnumerable<ProjectInfo> GetExistingProjects()
+        {
+            IEnumerable<ProjectInfo> infos = FileRepositoryHelper.GetProjectInfos(_baseFolder);
+
+            return infos;
+        }
+
         protected override Project DoCreateProject(Project project)
         {
-            if (!_baseFolder.Exists)
-                _baseFolder.Create();
-
             string projectFolderName = project.Id.ToString();
-            
-            CurrentFolder = _baseFolder.CreateSubdirectory(projectFolderName);
 
-            CurrentFile = new FileInfo(CurrentFolder.FullName + Path.PathSeparator + "project" + FileExtension);
+            CurrentFolder = FileRepositoryHelper.CreateDirectoryIfNotExists(_baseFolder, projectFolderName);
+
+            string projectFileName = CurrentFolder.FullName + Path.PathSeparator + "project" + FileExtension;
+
+            CurrentFile = new FileInfo(projectFileName);
 
             if (!CurrentFile.Exists)
                 CurrentFile.Create();
@@ -87,13 +90,17 @@ namespace TecX.Agile.Data.File
 
             DirectoryInfo dirInfo = _baseFolder.GetDirectories(projectSubFolderName).SingleOrDefault();
 
-            if(dirInfo != null)
+            if (dirInfo != null)
             {
                 FileInfo fileInfo = dirInfo.GetFiles("project" + FileExtension).SingleOrDefault();
 
                 if (fileInfo != null)
                 {
-                    Project project = DoLoadProject(fileInfo);
+                    string projectString = fileInfo.OpenText().ReadToEnd();
+
+                    Guard.AssertNotNull(projectString, "projectString");
+
+                    Project project = _converter.ConvertToProject(projectString);
 
                     return project;
                 }
@@ -103,22 +110,16 @@ namespace TecX.Agile.Data.File
                 .WithAdditionalInfo("id", id);
         }
 
-        protected abstract Project DoLoadProject(FileInfo fileInfo);
-
         protected override bool DoSaveProject(Project project)
         {
-            throw new NotImplementedException();
+            string projectString = _converter.ConvertToString(project);
+
+            using (TextWriter writer = new StreamWriter(CurrentFile.OpenWrite(), Encoding.UTF8))
+            {
+                writer.Write(projectString);
+                return true;
+            }
         }
 
-        public override IEnumerable<ProjectInfo> GetExistingProjects()
-        {
-            var subFolders = _baseFolder.GetDirectories();
-
-            var projectSubFolders = subFolders.Where(sf => TypeHelper.IsGuid(sf.Name));
-
-            IEnumerable<ProjectInfo> infos = FileRepositoryHelper.GetProjectInfosFromXmlFiles(projectSubFolders);
-
-            return infos;
-        }
     }
 }

@@ -57,7 +57,7 @@ namespace TexC.Agile.Data
             return saved;
         }
 
-        protected Guid GetProjectId(string name)
+        private Guid GetProjectId(string name)
         {
             IEnumerable<ProjectInfo> projects = GetExistingProjects();
 

@@ -4,29 +4,6 @@
         <name>Ploeh.SemanticComparison</name>
     </assembly>
     <members>
-        <member name="T:Ploeh.SemanticComparison.LikenessMember`2">
-            <summary>
-            Encapsulates information about a member (property or field) which is used in a
-            <see cref="T:Ploeh.SemanticComparison.Likeness`2"/> comparison.
-            </summary>
-            <typeparam name="TSource">The type of the source value.</typeparam>
-            <typeparam name="TDestination">
-            The type of the destination that is evaluated against the source value.
-            </typeparam>
-        </member>
-        <member name="M:Ploeh.SemanticComparison.LikenessMember`2.EqualsWhen(System.Func{`0,`1,System.Boolean})">
-            <summary>
-            Returns a new <see cref="T:Ploeh.SemanticComparison.Likeness`2"/> that includes the specified
-            evaluator.
-            </summary>
-            <param name="evaluator">
-            An expression that evaluates the source value against the destination value for the
-            property or field encapsulated by the instance.</param>
-            <returns>
-            A new <see cref="T:Ploeh.SemanticComparison.Likeness`2"/> that includes
-            <paramref name="evaluator"/>.
-            </returns>
-        </member>
         <member name="T:Ploeh.SemanticComparison.Fluent.LikenessSource`1">
             <summary>
             Defines the source-side of a <see cref="T:Ploeh.SemanticComparison.Likeness`2"/>.
@@ -49,31 +26,26 @@
             A new instance of <see cref="T:Ploeh.SemanticComparison.Likeness`2"/> that contains the
             source value defined in the constructor.</returns>
         </member>
-        <member name="T:Ploeh.SemanticComparison.MemberInfoNameComparer">
+        <member name="T:Ploeh.SemanticComparison.Fluent.LikenessSourceFactory">
             <summary>
-            Compares <see cref="T:System.Reflection.MemberInfo"/> instances.
+            Contains extension methods for working with <see cref="T:Ploeh.SemanticComparison.Likeness`2"/>.
             </summary>
         </member>
-        <member name="M:Ploeh.SemanticComparison.MemberInfoNameComparer.Equals(System.Reflection.MemberInfo,System.Reflection.MemberInfo)">
+        <member name="M:Ploeh.SemanticComparison.Fluent.LikenessSourceFactory.AsSource``1(``0)">
             <summary>
-            Compares two <see cref="T:System.Reflection.MemberInfo"/> instances for equality.
+            Creates a new <see cref="T:Ploeh.SemanticComparison.Fluent.LikenessSource`1"/> from an object instance.
             </summary>
-            <param name="x">The first instance to compare.</param>
-            <param name="y">The second instance to compare.</param>
-            <returns>
-            <see langword="true"/> if <paramref name="x"/> and <paramref name="y"/> has the same
-            name; otherwise, <see langword="false"/>.
-            </returns>
-        </member>
-        <member name="M:Ploeh.SemanticComparison.MemberInfoNameComparer.GetHashCode(System.Reflection.MemberInfo)">
-            <summary>
-            Returns the hash code of the <see cref="T:System.Reflection.MemberInfo"/> instance's
-            <see cref="P:System.Reflection.MemberInfo.Name"/>.
-            </summary>
-            <param name="obj">The <see cref="T:System.Reflection.MemberInfo"/> for which to return a hash code.</param>
-            <returns>
-            The hash code of the <see cref="T:System.Reflection.MemberInfo"/> instance's <see cref="P:System.Reflection.MemberInfo.Name"/>.
-            </returns>
+            <typeparam name="TSource">The type of the source value.</typeparam>
+            <param name="value">The source value.</param>
+            <returns>A new <see cref="T:Ploeh.SemanticComparison.Fluent.LikenessSource`1"/> instance.</returns>
+            <remarks>
+            <para>
+            This method is particularly handy for anonymous types, since it can use type
+            inferencing to determine <typeparamref name="TSource"/> from the value itself. This is
+            essentially the only way you can create a <see cref="T:Ploeh.SemanticComparison.Likeness`2"/>
+            from the public API when the source value is an instance of an anonymous type.
+            </para>
+            </remarks>
         </member>
         <member name="T:Ploeh.SemanticComparison.Likeness`2">
             <summary>
@@ -192,26 +164,54 @@
             <see cref="M:Ploeh.SemanticComparison.Likeness`2.Equals(`1)"/> is invoked.
             </summary>
         </member>
-        <member name="T:Ploeh.SemanticComparison.Fluent.LikenessSourceFactory">
+        <member name="T:Ploeh.SemanticComparison.LikenessMember`2">
             <summary>
-            Contains extension methods for working with <see cref="T:Ploeh.SemanticComparison.Likeness`2"/>.
-            </summary>
-        </member>
-        <member name="M:Ploeh.SemanticComparison.Fluent.LikenessSourceFactory.AsSource``1(``0)">
-            <summary>
-            Creates a new <see cref="T:Ploeh.SemanticComparison.Fluent.LikenessSource`1"/> from an object instance.
+            Encapsulates information about a member (property or field) which is used in a
+            <see cref="T:Ploeh.SemanticComparison.Likeness`2"/> comparison.
             </summary>
             <typeparam name="TSource">The type of the source value.</typeparam>
-            <param name="value">The source value.</param>
-            <returns>A new <see cref="T:Ploeh.SemanticComparison.Fluent.LikenessSource`1"/> instance.</returns>
-            <remarks>
-            <para>
-            This method is particularly handy for anonymous types, since it can use type
-            inferencing to determine <typeparamref name="TSource"/> from the value itself. This is
-            essentially the only way you can create a <see cref="T:Ploeh.SemanticComparison.Likeness`2"/>
-            from the public API when the source value is an instance of an anonymous type.
-            </para>
-            </remarks>
+            <typeparam name="TDestination">
+            The type of the destination that is evaluated against the source value.
+            </typeparam>
+        </member>
+        <member name="M:Ploeh.SemanticComparison.LikenessMember`2.EqualsWhen(System.Func{`0,`1,System.Boolean})">
+            <summary>
+            Returns a new <see cref="T:Ploeh.SemanticComparison.Likeness`2"/> that includes the specified
+            evaluator.
+            </summary>
+            <param name="evaluator">
+            An expression that evaluates the source value against the destination value for the
+            property or field encapsulated by the instance.</param>
+            <returns>
+            A new <see cref="T:Ploeh.SemanticComparison.Likeness`2"/> that includes
+            <paramref name="evaluator"/>.
+            </returns>
+        </member>
+        <member name="T:Ploeh.SemanticComparison.MemberInfoNameComparer">
+            <summary>
+            Compares <see cref="T:System.Reflection.MemberInfo"/> instances.
+            </summary>
+        </member>
+        <member name="M:Ploeh.SemanticComparison.MemberInfoNameComparer.Equals(System.Reflection.MemberInfo,System.Reflection.MemberInfo)">
+            <summary>
+            Compares two <see cref="T:System.Reflection.MemberInfo"/> instances for equality.
+            </summary>
+            <param name="x">The first instance to compare.</param>
+            <param name="y">The second instance to compare.</param>
+            <returns>
+            <see langword="true"/> if <paramref name="x"/> and <paramref name="y"/> has the same
+            name; otherwise, <see langword="false"/>.
+            </returns>
+        </member>
+        <member name="M:Ploeh.SemanticComparison.MemberInfoNameComparer.GetHashCode(System.Reflection.MemberInfo)">
+            <summary>
+            Returns the hash code of the <see cref="T:System.Reflection.MemberInfo"/> instance's
+            <see cref="P:System.Reflection.MemberInfo.Name"/>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Reflection.MemberInfo"/> for which to return a hash code.</param>
+            <returns>
+            The hash code of the <see cref="T:System.Reflection.MemberInfo"/> instance's <see cref="P:System.Reflection.MemberInfo.Name"/>.
+            </returns>
         </member>
     </members>
 </doc>
