@@ -1,15 +1,15 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using TecX.Common;
+using Ploeh.AutoFixture;
+
+using TecX.Agile.Data.File;
 
 using TexC.Agile.Data;
 
@@ -40,33 +40,47 @@ namespace TecX.Agile.Data.Test
             Assert.AreEqual(pi.LastModified, deserialized.LastModified);
             Assert.AreEqual(pi.Name, deserialized.Name);
         }
-    }
 
-    public static class XmlExtensions
-    {
-        public static string SerializePlain(this XmlSerializer serializer, object obj)
+        [TestMethod]
+        public void CanCreateProjectFolder()
         {
-            Guard.AssertNotNull(serializer, "serializer");
-            Guard.AssertNotNull(obj, "obj");
+            string currentDirName = Directory.GetCurrentDirectory();
 
-            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-            ns.Add(string.Empty, string.Empty);
+            DirectoryInfo current = new DirectoryInfo(currentDirName);
 
-            XmlWriterSettings xws = new XmlWriterSettings
-            {
-                OmitXmlDeclaration = true,
-                Indent = true
-            };
+            Guid id = Guid.NewGuid();
 
-            StringBuilder sb = new StringBuilder(512);
+            DirectoryInfo newDir = FileRepositoryHelper.CreateDirectoryIfNotExists(current, id.ToString());
 
-            XmlWriter writer = XmlWriter.Create(sb, xws);
+            Assert.IsTrue(newDir.Exists);
+        }
 
-            serializer.Serialize(writer, obj, ns);
+        [TestMethod]
+        public void CanWriteAndReadProjectInfo()
+        {
+            Fixture fixture = new Fixture();
 
-            string xml = sb.ToString();
+            ProjectInfo info = fixture.CreateAnonymous<ProjectInfo>();
 
-            return xml;
+            Assert.IsNotNull(info);
+            Assert.AreNotEqual(Guid.Empty, info.Id);
+
+            DirectoryInfo current = new DirectoryInfo(Directory.GetCurrentDirectory());
+
+            DirectoryInfo projectDir = FileRepositoryHelper.CreateDirectoryIfNotExists(current, info.Id.ToString());
+
+            FileRepositoryHelper.WriteProjectInfo(projectDir, info);
+
+            var infos = FileRepositoryHelper.GetProjectInfosFromXmlFiles(new[] { projectDir });
+
+            Assert.AreEqual(1, infos.Count());
+
+            ProjectInfo read = infos.Single();
+
+            Assert.AreEqual(info.Created, read.Created);
+            Assert.AreEqual(info.Id, read.Id);
+            Assert.AreEqual(info.LastModified, read.LastModified);
+            Assert.AreEqual(info.Name, read.Name);
         }
     }
 }

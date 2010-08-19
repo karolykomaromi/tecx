@@ -119,5 +119,21 @@ namespace TecX.Common.Test
 
             Assert.AreEqual("Fill in the blanks, 1 by {2}", format);
         }
+
+        [TestMethod]
+        public void CanIdentifyRegex()
+        {
+            string guid = Guid.NewGuid().ToString();
+
+            Assert.IsTrue(TypeHelper.IsGuid(guid));
+
+            string noGuid = guid.Substring(1) + "X";
+
+            Assert.IsFalse(TypeHelper.IsGuid(noGuid));
+
+            noGuid = "X" + guid.Substring(1);
+
+            Assert.IsFalse(TypeHelper.IsGuid(noGuid));
+        }
     }
 }
