@@ -14,6 +14,8 @@ namespace TecX.Agile.Data.File
     {
         public static IEnumerable<ProjectInfo> GetProjectInfosFromXmlFiles(IEnumerable<DirectoryInfo> projectSubFolders)
         {
+            Guard.AssertNotNull(projectSubFolders, "projectSubFolders");
+
             List<ProjectInfo> projectInfos = new List<ProjectInfo>();
 
             foreach (DirectoryInfo psf in projectSubFolders)
@@ -24,9 +26,9 @@ namespace TecX.Agile.Data.File
                 {
                     Stream stream = info.OpenRead();
 
-                    XmlSerializer serializer = new XmlSerializer(typeof (ProjectInfo));
+                    XmlSerializer serializer = new XmlSerializer(typeof(ProjectInfo));
 
-                    ProjectInfo pi = (ProjectInfo) serializer.Deserialize(stream);
+                    ProjectInfo pi = (ProjectInfo)serializer.Deserialize(stream);
 
                     projectInfos.Add(pi);
                 }
@@ -50,7 +52,7 @@ namespace TecX.Agile.Data.File
             Guard.AssertNotNull(baseFolder, "baseFolder");
             Guard.AssertNotEmpty(subFolderName, "subFolderName");
 
-            IEnumerable<DirectoryInfo> subFolders = baseFolder.GetDirectories(subFolderName, 
+            IEnumerable<DirectoryInfo> subFolders = baseFolder.GetDirectories(subFolderName,
                 SearchOption.TopDirectoryOnly);
 
             if (subFolders.Count() == 0)
@@ -59,10 +61,24 @@ namespace TecX.Agile.Data.File
                 return subFolder;
             }
 
-            if(subFolders.Count() == 1)
+            if (subFolders.Count() == 1)
                 return subFolders.First();
 
-            throw new InvalidOperationException("");
+            throw new InvalidOperationException("multiple sub folders that match subfoldername");
+        }
+
+        public static void WriteProjectInfo(DirectoryInfo folder, ProjectInfo projectInfo)
+        {
+            Guard.AssertNotNull(folder, "folder");
+            Guard.AssertNotNull(projectInfo, "projectInfo");
+
+            string fileName = folder.FullName + Path.DirectorySeparatorChar + Constants.ProjectInfoFileName;
+
+            FileStream stream = System.IO.File.Create(fileName);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(ProjectInfo));
+
+            serializer.SerializePlain(projectInfo, stream);
         }
     }
 }
