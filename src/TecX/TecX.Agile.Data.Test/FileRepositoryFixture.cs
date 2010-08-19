@@ -71,7 +71,7 @@ namespace TecX.Agile.Data.Test
 
             FileRepositoryHelper.WriteProjectInfo(projectDir, info);
 
-            var infos = FileRepositoryHelper.GetProjectInfosFromXmlFiles(new[] { projectDir });
+            var infos = FileRepositoryHelper.GetProjectInfos(current);
 
             Assert.AreEqual(1, infos.Count());
 

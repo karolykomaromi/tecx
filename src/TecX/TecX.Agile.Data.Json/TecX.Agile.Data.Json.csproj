@@ -52,6 +52,8 @@
     </Compile>
     <Compile Include="ConversionExtensions.cs" />
     <Compile Include="JsonExtensions.cs" />
+    <Compile Include="JsonProjectToStringConverter.cs" />
+    <Compile Include="JsonRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
