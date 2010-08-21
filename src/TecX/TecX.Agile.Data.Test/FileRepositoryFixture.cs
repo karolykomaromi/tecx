@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using System.Xml.Serialization;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -10,8 +8,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ploeh.AutoFixture;
 
 using TecX.Agile.Data.File;
-
-using TexC.Agile.Data;
 
 namespace TecX.Agile.Data.Test
 {
@@ -29,11 +25,11 @@ namespace TecX.Agile.Data.Test
                                      Name = "To whom the bell tolls"
                                  };
 
-            XmlSerializer serializer = new XmlSerializer(typeof(ProjectInfo));
+            XmlSerializer serializer = new XmlSerializer(typeof (ProjectInfo));
 
             string xml = serializer.SerializePlain(pi);
 
-            ProjectInfo deserialized = (ProjectInfo)serializer.Deserialize(new StringReader(xml));
+            ProjectInfo deserialized = (ProjectInfo) serializer.Deserialize(new StringReader(xml));
 
             Assert.AreEqual(pi.Created, deserialized.Created);
             Assert.AreEqual(pi.Id, deserialized.Id);

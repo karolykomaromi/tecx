@@ -58,6 +58,10 @@
       <Project>{8B37223D-5BE4-482F-B9E1-99D4F40E40BF}</Project>
       <Name>TecX.Agile.Data.File</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Data\TecX.Agile.Data.csproj">
+      <Project>{5A6CB6EB-7298-40B9-91FD-0378798D8F7C}</Project>
+      <Name>TecX.Agile.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile\TecX.Agile.csproj">
       <Project>{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300}</Project>
       <Name>TecX.Agile</Name>
@@ -65,10 +69,6 @@
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{23E54945-0126-43BE-A3FC-5F61AF5BDFF3}</Project>
       <Name>TecX.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TexC.Agile.Data\TexC.Agile.Data.csproj">
-      <Project>{1D3C29B0-7785-442A-91BC-4DCCDCC84D92}</Project>
-      <Name>TexC.Agile.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

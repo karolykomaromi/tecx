@@ -9,6 +9,7 @@ using TecX.Common;
 
 namespace TecX.TestTools
 {
+    [Obsolete]
     public static class AutoFixtureExtensions
     {
         private static class Constants

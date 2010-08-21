@@ -22,10 +22,7 @@ namespace TecX.Agile.Test
 
         public AgileBuilderFixture()
         {
-            var fixture = new Fixture
-            {
-                Resolver = AutoFixtureExtensions.ResolveEnum
-            };
+            var fixture = new Fixture();
 
             fixture.Customize<Visualizable>(ob => ob.With(vis => vis.Color,
                                                           fixture.CreateMany<byte>(4).ToArray()));
@@ -136,10 +133,7 @@ namespace TecX.Agile.Test
         [TestMethod]
         public void CanCreateStoryCardUsingAutoFixture()
         {
-            var fixture = new Fixture
-                              {
-                                  Resolver = AutoFixtureExtensions.ResolveEnum
-                              };
+            var fixture = new Fixture();
 
             fixture.Customize<Visualizable>(ob => ob.With(vis => vis.Color,
                 fixture.CreateMany<byte>(4).ToArray()));

@@ -7,8 +7,6 @@ using System.Text;
 using TecX.Common;
 using TecX.Common.Extensions.Error;
 
-using TexC.Agile.Data;
-
 namespace TecX.Agile.Data.File
 {
     public abstract class FileRepository : Repository
