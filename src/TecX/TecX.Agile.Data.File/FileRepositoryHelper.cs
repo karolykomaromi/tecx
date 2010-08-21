@@ -6,8 +6,6 @@ using System.Xml.Serialization;
 
 using TecX.Common;
 
-using TexC.Agile.Data;
-
 namespace TecX.Agile.Data.File
 {
     public static class FileRepositoryHelper

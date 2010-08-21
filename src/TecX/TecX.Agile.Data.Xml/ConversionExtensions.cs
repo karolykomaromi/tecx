@@ -15,8 +15,15 @@ namespace TecX.Agile.Data.Xml
     {
         #region Constants
 
-        /// <summary>F2</summary>
-        public const string Precision = "F2";
+        private static class Constants
+        {
+            /// <summary>F2</summary>
+            public const string Precision = "F2";
+
+            /// <summary>Mapping</summary>
+            public const string MappingElementName = "Mapping";
+        }
+
 
         #endregion Constants
 
@@ -31,57 +38,58 @@ namespace TecX.Agile.Data.Xml
         /// <param name="xml">The XML.</param>
         /// <returns>The <see cref="PlanningArtefact"/> filled with the values from an XML serialized
         /// object</returns>
-        public static PlanningArtefact FromXml(this PlanningArtefact planningArtefact, XElement xml)
+        private static void FromXml(this PlanningArtefact planningArtefact, XElement xml)
         {
             Guard.AssertNotNull(planningArtefact, "planningArtefact");
             Guard.AssertNotNull(xml, "xml");
 
             string description;
-            if (xml.TryGetValue(Constants.Properties.PlanningArtefact.Description, out description))
+            if (xml.TryGetValue(Agile.Constants.Properties.PlanningArtefact.Description, out description))
             {
                 planningArtefact.Description = description;
             }
 
             Guid id;
-            if (xml.TryGetValue(Constants.Properties.PlanningArtefact.Id, out id))
+            if (xml.TryGetValue(Agile.Constants.Properties.PlanningArtefact.Id, out id))
             {
                 planningArtefact.Id = id;
             }
 
             string name;
-            if (xml.TryGetValue(Constants.Properties.PlanningArtefact.Name, out name))
+            if (xml.TryGetValue(Agile.Constants.Properties.PlanningArtefact.Name, out name))
             {
                 planningArtefact.Name = name;
             }
 
-            return planningArtefact;
+            return;
         }
 
         /// <summary>
         /// Fills an <see cref="StoryCardCollection"/> with values from an XML serialized object
         /// </summary>
-        /// <param name="StoryCardCollection">The planning artefact.</param>
+        /// <param name="storyCardCollection">The planning artefact.</param>
         /// <param name="xml">The xml.</param>
         /// <returns>The <see cref="StoryCardCollection"/> filled with the values from an XML serialized
         /// object</returns>
-        public static StoryCardCollection FromXml(this StoryCardCollection StoryCardCollection, XElement xml)
+        private static void FromXml(this StoryCardCollection storyCardCollection, XElement xml)
         {
-            Guard.AssertNotNull(StoryCardCollection, "StoryCardCollection");
+            Guard.AssertNotNull(storyCardCollection, "storyCardCollection");
             Guard.AssertNotNull(xml, "xml");
 
-            ((PlanningArtefact)StoryCardCollection).FromXml(xml);
+            ((PlanningArtefact)storyCardCollection).FromXml(xml);
 
-            IEnumerable<XElement> storycards = xml.Descendants("StoryCards");
+            IEnumerable<XElement> storycards = xml.Descendants(
+                Agile.Constants.Properties.StoryCardCollection.StoryCards);
 
-            foreach (XElement element in storycards)
+            foreach (XElement element in storycards.Descendants("StoryCard"))
             {
                 var storycard = new StoryCard();
-                FromXml((PlanningArtefact)storycard, element);
+                storycard.FromXml(element);
 
-                StoryCardCollection.Add(storycard);
+                storyCardCollection.Add(storycard);
             }
 
-            return StoryCardCollection;
+            return;
         }
 
         /// <summary>
@@ -91,7 +99,7 @@ namespace TecX.Agile.Data.Xml
         /// <param name="xml">The XML.</param>
         /// <returns>The <see cref="StoryCard"/> filled with the values from an XML serialized
         /// object</returns>
-        public static StoryCard FromXml(this StoryCard storycard, XElement xml)
+        public static void FromXml(this StoryCard storycard, XElement xml)
         {
             Guard.AssertNotNull(storycard, "storycard");
             Guard.AssertNotNull(xml, "xml");
@@ -99,21 +107,21 @@ namespace TecX.Agile.Data.Xml
             ((PlanningArtefact)storycard).FromXml(xml);
 
             string strCurrentSideUp;
-            if (xml.TryGetValue(Constants.Properties.StoryCard.CurrentSideUp, out strCurrentSideUp))
+            if (xml.TryGetValue(Agile.Constants.Properties.StoryCard.CurrentSideUp, out strCurrentSideUp))
             {
                 var currentSideUp = Common.Convert.ToEnum<StoryCardSides>(strCurrentSideUp);
                 storycard.CurrentSideUp = currentSideUp;
             }
 
             byte[] descriptionHandwritingImage;
-            if (xml.TryGetValue(Constants.Properties.StoryCard.DescriptionHandwritingImage,
+            if (xml.TryGetValue(Agile.Constants.Properties.StoryCard.DescriptionHandwritingImage,
                                 out descriptionHandwritingImage))
             {
                 storycard.DescriptionHandwritingImage = descriptionHandwritingImage;
             }
 
             string owner;
-            if (xml.TryGetValue(Constants.Properties.StoryCard.TaskOwner, out owner))
+            if (xml.TryGetValue(Agile.Constants.Properties.StoryCard.TaskOwner, out owner))
             {
                 storycard.TaskOwner = owner;
             }
@@ -121,7 +129,7 @@ namespace TecX.Agile.Data.Xml
             storycard.Tracking.FromXml(xml);
             storycard.View.FromXml(xml);
 
-            return storycard;
+            return;
         }
 
         /// <summary>
@@ -131,7 +139,7 @@ namespace TecX.Agile.Data.Xml
         /// <param name="xml">The XML.</param>
         /// <returns>The <see cref="Iteration"/> filled with the values from an XML serialized
         /// object</returns>
-        public static Iteration FromXml(this Iteration iteration, XElement xml)
+        public static void FromXml(this Iteration iteration, XElement xml)
         {
             Guard.AssertNotNull(iteration, "iteration");
             Guard.AssertNotNull(xml, "xml");
@@ -139,19 +147,19 @@ namespace TecX.Agile.Data.Xml
             ((StoryCardCollection)iteration).FromXml(xml);
 
             decimal availableEffort;
-            if (xml.TryGetValue(Constants.Properties.Iteration.AvailableEffort, out availableEffort))
+            if (xml.TryGetValue(Agile.Constants.Properties.Iteration.AvailableEffort, out availableEffort))
             {
                 iteration.AvailableEffort = availableEffort;
             }
 
             DateTime endDate;
-            if (xml.TryGetValue(Constants.Properties.Iteration.EndDate, out endDate))
+            if (xml.TryGetValue(Agile.Constants.Properties.Iteration.EndDate, out endDate))
             {
                 iteration.EndDate = endDate;
             }
 
             DateTime startDate;
-            if (xml.TryGetValue(Constants.Properties.Iteration.StartDate, out startDate))
+            if (xml.TryGetValue(Agile.Constants.Properties.Iteration.StartDate, out startDate))
             {
                 iteration.StartDate = startDate;
             }
@@ -159,7 +167,7 @@ namespace TecX.Agile.Data.Xml
             iteration.Tracking.FromXml(xml);
             iteration.View.FromXml(xml);
 
-            return iteration;
+            return;
         }
 
         /// <summary>
@@ -167,43 +175,43 @@ namespace TecX.Agile.Data.Xml
         /// </summary>
         /// <param name="visualizable">The visualizable.</param>
         /// <param name="xml">The XML.</param>
-        private static void FromXml(this Visualizable visualizable, XElement xml)
+        public static void FromXml(this Visualizable visualizable, XElement xml)
         {
             Guard.AssertNotNull(visualizable, "visualizable");
             Guard.AssertNotNull(xml, "xml");
 
             double x;
-            if (xml.TryGetValue(Constants.Properties.Visualizable.X, out x))
+            if (xml.TryGetValue(Agile.Constants.Properties.Visualizable.X, out x))
             {
                 visualizable.X = x;
             }
 
             double y;
-            if (xml.TryGetValue(Constants.Properties.Visualizable.Y, out y))
+            if (xml.TryGetValue(Agile.Constants.Properties.Visualizable.Y, out y))
             {
                 visualizable.Y = y;
             }
 
             double width;
-            if (xml.TryGetValue(Constants.Properties.Visualizable.Width, out width))
+            if (xml.TryGetValue(Agile.Constants.Properties.Visualizable.Width, out width))
             {
                 visualizable.Width = width;
             }
 
             double rotationAngle;
-            if (xml.TryGetValue(Constants.Properties.Visualizable.RotationAngle, out rotationAngle))
+            if (xml.TryGetValue(Agile.Constants.Properties.Visualizable.RotationAngle, out rotationAngle))
             {
                 visualizable.RotationAngle = rotationAngle;
             }
 
             byte[] color;
-            if (xml.TryGetValue(Constants.Properties.Visualizable.Color, out color))
+            if (xml.TryGetValue(Agile.Constants.Properties.Visualizable.Color, out color))
             {
                 visualizable.Color = color;
             }
 
             double height;
-            if (xml.TryGetValue(Constants.Properties.Visualizable.Height, out height))
+            if (xml.TryGetValue(Agile.Constants.Properties.Visualizable.Height, out height))
             {
                 visualizable.Height = height;
             }
@@ -214,50 +222,69 @@ namespace TecX.Agile.Data.Xml
         /// </summary>
         /// <param name="trackable">The trackable.</param>
         /// <param name="xml">The XML.</param>
-        private static void FromXml(this Trackable trackable, XElement xml)
+        public static void FromXml(this Trackable trackable, XElement xml)
         {
             Guard.AssertNotNull(trackable, "trackable");
             Guard.AssertNotNull(xml, "xml");
 
             decimal actualEffort;
-            if (xml.TryGetValue(Constants.Properties.Trackable.ActualEffort, out actualEffort))
+            if (xml.TryGetValue(Agile.Constants.Properties.Trackable.ActualEffort, out actualEffort))
             {
                 trackable.ActualEffort = actualEffort;
             }
 
             decimal bestCaseEstimate;
-            if (xml.TryGetValue(Constants.Properties.Trackable.BestCaseEstimate,
+            if (xml.TryGetValue(Agile.Constants.Properties.Trackable.BestCaseEstimate,
                                 out bestCaseEstimate))
             {
                 trackable.BestCaseEstimate = bestCaseEstimate;
             }
 
             decimal mostLikelyEstimate;
-            if (xml.TryGetValue(Constants.Properties.Trackable.MostLikelyEstimate,
+            if (xml.TryGetValue(Agile.Constants.Properties.Trackable.MostLikelyEstimate,
                                 out mostLikelyEstimate))
             {
                 trackable.MostLikelyEstimate = mostLikelyEstimate;
             }
 
             string priorityString;
-            if (xml.TryGetValue(Constants.Properties.Trackable.Priority, out priorityString))
+            if (xml.TryGetValue(Agile.Constants.Properties.Trackable.Priority, out priorityString))
             {
                 Priority priority = Common.Convert.ToEnum<Priority>(priorityString);
                 trackable.Priority = priority;
             }
 
             string statusString;
-            if (xml.TryGetValue(Constants.Properties.Trackable.Status, out statusString))
+            if (xml.TryGetValue(Agile.Constants.Properties.Trackable.Status, out statusString))
             {
                 Status status = Common.Convert.ToEnum<Status>(statusString);
                 trackable.Status = status;
             }
 
             decimal worstCaseEstimate;
-            if (xml.TryGetValue(Constants.Properties.Trackable.WorstCaseEstimate,
+            if (xml.TryGetValue(Agile.Constants.Properties.Trackable.WorstCaseEstimate,
                                 out worstCaseEstimate))
             {
                 trackable.WorstCaseEstimate = worstCaseEstimate;
+            }
+        }
+
+        public static void FromXml(this Legend legend, XElement xml)
+        {
+            Guard.AssertNotNull(legend, "legend");
+            Guard.AssertNotNull(xml, "xml");
+
+            foreach (XElement mapping in xml.Elements(Constants.MappingElementName))
+            {
+                string name;
+                if (mapping.TryGetValue(Agile.Constants.Properties.Mapping.Name, out name))
+                {
+                    byte[] color;
+                    if (mapping.TryGetValue(Agile.Constants.Properties.Mapping.Color, out color))
+                    {
+                        legend.Add(name, color);
+                    }
+                }
             }
         }
 
@@ -268,14 +295,14 @@ namespace TecX.Agile.Data.Xml
         /// <param name="xml">The XML.</param>
         /// <returns>The <see cref="Backlog"/> filled with the values from an XML serialized
         /// object</returns>
-        public static Backlog FromXml(this Backlog backlog, XElement xml)
+        public static void FromXml(this Backlog backlog, XElement xml)
         {
             Guard.AssertNotNull(backlog, "backlog");
             Guard.AssertNotNull(xml, "xml");
 
             ((StoryCardCollection)backlog).FromXml(xml);
 
-            return backlog;
+            return;
         }
 
         /// <summary>
@@ -285,7 +312,7 @@ namespace TecX.Agile.Data.Xml
         /// <param name="xml">The XML.</param>
         /// <returns>The <see cref="Project"/> filled with the values from an XML serialized
         /// object</returns>
-        public static Project FromXml(this Project project, XElement xml)
+        public static void FromXml(this Project project, XElement xml)
         {
             Guard.AssertNotNull(project, "project");
             Guard.AssertNotNull(xml, "xml");
@@ -301,23 +328,10 @@ namespace TecX.Agile.Data.Xml
                 project.Backlog = backlog;
             }
 
-            XElement xmlLegend = xml.Element(Constants.Properties.Project.Legend);
+            XElement xmlLegend = xml.Element(Agile.Constants.Properties.Project.Legend);
             if (xmlLegend != null)
             {
-                if (xmlLegend.Attributes().Count() > 0)
-                {
-                    foreach (XAttribute attribute in xmlLegend.Attributes())
-                    {
-                        string name = TypeHelper.ToNullSafeString(attribute.Name);
-                        byte[] color = Common.Convert.ToByte(attribute.Value);
-
-                        if (!string.IsNullOrEmpty(name) &&
-                            color.Length > 0)
-                        {
-                            project.Legend.Add(name, color);
-                        }
-                    }
-                }
+                project.Legend.FromXml(xmlLegend);
             }
 
             IEnumerable<XElement> xmlIterations = xml.Descendants("Iteration");
@@ -330,7 +344,7 @@ namespace TecX.Agile.Data.Xml
                 }
             }
 
-            return project;
+            return;
         }
 
         #endregion Conversion from XML
@@ -346,18 +360,36 @@ namespace TecX.Agile.Data.Xml
         /// <returns>
         /// The XML serialized representation of the <see cref="PlanningArtefact"/>
         /// </returns>
-        public static XElement ToXml(this PlanningArtefact planningArtefact)
+        private static XElement ToXml(this PlanningArtefact planningArtefact)
         {
             Guard.AssertNotNull(planningArtefact, "planningArtefact");
 
             var xml = new XElement(planningArtefact.GetType().Name);
 
-            xml.AddAttribute(Constants.Properties.PlanningArtefact.Description,
+            xml.AddAttribute(Agile.Constants.Properties.PlanningArtefact.Description,
                              TypeHelper.ToNullSafeString(planningArtefact.Description))
-                .AddAttribute(Constants.Properties.PlanningArtefact.Id,
+                .AddAttribute(Agile.Constants.Properties.PlanningArtefact.Id,
                               TypeHelper.ToNullSafeString(planningArtefact.Id, Guid.Empty.ToString()))
-                .AddAttribute(Constants.Properties.PlanningArtefact.Name,
+                .AddAttribute(Agile.Constants.Properties.PlanningArtefact.Name,
                               TypeHelper.ToNullSafeString(planningArtefact.Name));
+
+            return xml;
+        }
+
+        public static XElement ToXml(this Legend legend)
+        {
+            Guard.AssertNotNull(legend, "legend");
+
+            XElement xml = new XElement(Agile.Constants.Properties.Project.Legend);
+
+            foreach (Mapping mapping in legend)
+            {
+                XElement map = new XElement(Constants.MappingElementName)
+                    .AddAttribute(Agile.Constants.Properties.Mapping.Name, mapping.Name)
+                    .AddAttribute(Agile.Constants.Properties.Mapping.Color, Common.Convert.ToHex(mapping.Color));
+
+                xml.Add(map);
+            }
 
             return xml;
         }
@@ -369,20 +401,25 @@ namespace TecX.Agile.Data.Xml
         /// <returns>
         /// The XML serialized representation of the <see cref="StoryCardCollection"/>
         /// </returns>
-        public static XElement ToXml(this StoryCardCollection indexCardWithChildren)
+        private static XElement ToXml(this StoryCardCollection indexCardWithChildren)
         {
-            Guard.AssertNotNull(indexCardWithChildren, "StoryCardCollection");
+            Guard.AssertNotNull(indexCardWithChildren, "storyCardCollection");
 
             var xml = ((PlanningArtefact)indexCardWithChildren).ToXml();
 
             if (indexCardWithChildren.StoryCards != null &&
                 indexCardWithChildren.StoryCards.Count() > 0)
             {
+                XElement storyCards = new XElement(
+                    Agile.Constants.Properties.StoryCardCollection.StoryCards);
+
                 foreach (StoryCard storycard in indexCardWithChildren.StoryCards)
                 {
                     var xmlStoryCard = storycard.ToXml();
-                    xml.Add(xmlStoryCard);
+                    storyCards.Add(xmlStoryCard);
                 }
+
+                xml.Add(storyCards);
             }
 
             return xml;
@@ -401,11 +438,11 @@ namespace TecX.Agile.Data.Xml
 
             var xml = ((PlanningArtefact)storycard).ToXml();
 
-            xml.AddAttribute(Constants.Properties.StoryCard.CurrentSideUp,
+            xml.AddAttribute(Agile.Constants.Properties.StoryCard.CurrentSideUp,
                              Enum.GetName(typeof(StoryCardSides), storycard.CurrentSideUp))
-                .AddAttribute(Constants.Properties.StoryCard.DescriptionHandwritingImage,
+                .AddAttribute(Agile.Constants.Properties.StoryCard.DescriptionHandwritingImage,
                               Common.Convert.ToHex(storycard.DescriptionHandwritingImage))
-                .AddAttribute(Constants.Properties.StoryCard.TaskOwner, TypeHelper.ToNullSafeString(storycard.TaskOwner));
+                .AddAttribute(Agile.Constants.Properties.StoryCard.TaskOwner, TypeHelper.ToNullSafeString(storycard.TaskOwner));
 
             storycard.View.ToXml(xml);
             storycard.Tracking.ToXml(xml);
@@ -426,13 +463,13 @@ namespace TecX.Agile.Data.Xml
 
             var xml = ((StoryCardCollection)iteration).ToXml();
 
-            xml.AddAttribute(Constants.Properties.Iteration.AvailableEffort,
+            xml.AddAttribute(Agile.Constants.Properties.Iteration.AvailableEffort,
                              iteration.AvailableEffort.ToString(
-                                 Precision, CultureInfo.InvariantCulture))
-                .AddAttribute(Constants.Properties.Iteration.EndDate,
-                              iteration.EndDate.ToString(CultureInfo.InvariantCulture))
-                .AddAttribute(Constants.Properties.Iteration.StartDate,
-                              iteration.StartDate.ToString(CultureInfo.InvariantCulture));
+                                 Constants.Precision, CultureInfo.InvariantCulture))
+                .AddAttribute(Agile.Constants.Properties.Iteration.EndDate,
+                              iteration.EndDate.ToString("o", CultureInfo.InvariantCulture))
+                .AddAttribute(Agile.Constants.Properties.Iteration.StartDate,
+                              iteration.StartDate.ToString("o", CultureInfo.InvariantCulture));
 
             iteration.View.ToXml(xml);
             iteration.Tracking.ToXml(xml);
@@ -472,13 +509,7 @@ namespace TecX.Agile.Data.Xml
             if (project.Legend != null &&
                 project.Legend.Count > 0)
             {
-                var legendElement = new XElement(Constants.Properties.Project.Legend);
-
-                foreach (var mapping in project.Legend)
-                {
-                    legendElement.AddAttribute(mapping.Name, Common.Convert.ToHex(mapping.Color));
-                }
-
+                var legendElement = project.Legend.ToXml();
                 xml.Add(legendElement);
             }
 
@@ -506,22 +537,22 @@ namespace TecX.Agile.Data.Xml
         /// </summary>
         /// <param name="visualizable">The visualizable.</param>
         /// <param name="xml">The XML.</param>
-        private static void ToXml(this Visualizable visualizable, XElement xml)
+        public static void ToXml(this Visualizable visualizable, XElement xml)
         {
             Guard.AssertNotNull(visualizable, "visualizable");
             Guard.AssertNotNull(xml, "xml");
 
-            xml.AddAttribute(Constants.Properties.Visualizable.X,
-                             visualizable.X.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddAttribute(Constants.Properties.Visualizable.Y,
-                              visualizable.Y.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddAttribute(Constants.Properties.Visualizable.RotationAngle,
-                              visualizable.RotationAngle.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddAttribute(Constants.Properties.Visualizable.Width,
-                              visualizable.Width.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddAttribute(Constants.Properties.Visualizable.Height,
-                              visualizable.Height.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddAttribute(Constants.Properties.Visualizable.Color,
+            xml.AddAttribute(Agile.Constants.Properties.Visualizable.X,
+                             visualizable.X.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddAttribute(Agile.Constants.Properties.Visualizable.Y,
+                              visualizable.Y.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddAttribute(Agile.Constants.Properties.Visualizable.RotationAngle,
+                              visualizable.RotationAngle.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddAttribute(Agile.Constants.Properties.Visualizable.Width,
+                              visualizable.Width.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddAttribute(Agile.Constants.Properties.Visualizable.Height,
+                              visualizable.Height.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddAttribute(Agile.Constants.Properties.Visualizable.Color,
                               Common.Convert.ToHex(visualizable.Color));
         }
 
@@ -530,23 +561,23 @@ namespace TecX.Agile.Data.Xml
         /// </summary>
         /// <param name="trackable">The trackable.</param>
         /// <param name="xml">The XML.</param>
-        private static void ToXml(this Trackable trackable, XElement xml)
+        public static void ToXml(this Trackable trackable, XElement xml)
         {
             Guard.AssertNotNull(trackable, "trackable");
             Guard.AssertNotNull(xml, "xml");
 
-            xml.AddAttribute(Constants.Properties.Trackable.ActualEffort,
-                             trackable.ActualEffort.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddAttribute(Constants.Properties.Trackable.BestCaseEstimate,
-                              trackable.BestCaseEstimate.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddAttribute(Constants.Properties.Trackable.MostLikelyEstimate,
-                              trackable.MostLikelyEstimate.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddAttribute(Constants.Properties.Trackable.Priority,
+            xml.AddAttribute(Agile.Constants.Properties.Trackable.ActualEffort,
+                             trackable.ActualEffort.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddAttribute(Agile.Constants.Properties.Trackable.BestCaseEstimate,
+                              trackable.BestCaseEstimate.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddAttribute(Agile.Constants.Properties.Trackable.MostLikelyEstimate,
+                              trackable.MostLikelyEstimate.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddAttribute(Agile.Constants.Properties.Trackable.Priority,
                               TypeHelper.ToNullSafeString(trackable.Priority))
-                .AddAttribute(Constants.Properties.Trackable.Status,
+                .AddAttribute(Agile.Constants.Properties.Trackable.Status,
                               TypeHelper.ToNullSafeString(trackable.Status))
-                .AddAttribute(Constants.Properties.Trackable.WorstCaseEstimate,
-                              trackable.WorstCaseEstimate.ToString(Precision, CultureInfo.InvariantCulture));
+                .AddAttribute(Agile.Constants.Properties.Trackable.WorstCaseEstimate,
+                              trackable.WorstCaseEstimate.ToString(Constants.Precision, CultureInfo.InvariantCulture));
         }
 
         #endregion Conversion to XML

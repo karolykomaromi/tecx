@@ -16,8 +16,11 @@ namespace TecX.Agile.Data.Json
     {
         #region Constants
 
-        /// <summary>F2</summary>
-        public const string Precision = "F2";
+        private static class Constants
+        {
+            /// <summary>F2</summary>
+            public const string Precision = "F2";
+        }
 
         #endregion Constants
 
@@ -32,30 +35,30 @@ namespace TecX.Agile.Data.Json
         /// <param name="json">The json.</param>
         /// <returns>The <see cref="PlanningArtefact"/> filled with the values from a JSON serialized
         /// object</returns>
-        public static PlanningArtefact FromJson(this PlanningArtefact planningArtefact, JObject json)
+        private static void FromJson(this PlanningArtefact planningArtefact, JObject json)
         {
             Guard.AssertNotNull(planningArtefact, "planningArtefact");
             Guard.AssertNotNull(json, "json");
 
             string description;
-            if (json.TryGetValue(Constants.Properties.PlanningArtefact.Description, out description))
+            if (json.TryGetValue(Agile.Constants.Properties.PlanningArtefact.Description, out description))
             {
                 planningArtefact.Description = description;
             }
 
             Guid id;
-            if (json.TryGetValue(Constants.Properties.PlanningArtefact.Id, out id))
+            if (json.TryGetValue(Agile.Constants.Properties.PlanningArtefact.Id, out id))
             {
                 planningArtefact.Id = id;
             }
 
             string name;
-            if (json.TryGetValue(Constants.Properties.PlanningArtefact.Name, out name))
+            if (json.TryGetValue(Agile.Constants.Properties.PlanningArtefact.Name, out name))
             {
                 planningArtefact.Name = name;
             }
 
-            return planningArtefact;
+            return;
         }
 
         /// <summary>
@@ -65,7 +68,7 @@ namespace TecX.Agile.Data.Json
         /// <param name="json">The json.</param>
         /// <returns>The <see cref="StoryCardCollection"/> filled with the values from a JSON serialized
         /// object</returns>
-        public static StoryCardCollection FromJson(this StoryCardCollection storyCardCollection, JObject json)
+        private static void FromJson(this StoryCardCollection storyCardCollection, JObject json)
         {
             Guard.AssertNotNull(storyCardCollection, "storyCardCollection");
             Guard.AssertNotNull(json, "json");
@@ -73,7 +76,7 @@ namespace TecX.Agile.Data.Json
             ((PlanningArtefact)storyCardCollection).FromJson(json);
 
             JArray jsonStoryCards;
-            if (json.TryGetValue(Constants.Properties.StoryCardCollection.StoryCards, out jsonStoryCards))
+            if (json.TryGetValue(Agile.Constants.Properties.StoryCardCollection.StoryCards, out jsonStoryCards))
             {
                 if (jsonStoryCards != null)
                 {
@@ -89,7 +92,7 @@ namespace TecX.Agile.Data.Json
                 }
             }
 
-            return storyCardCollection;
+            return;
         }
 
         /// <summary>
@@ -99,7 +102,7 @@ namespace TecX.Agile.Data.Json
         /// <param name="json">The json.</param>
         /// <returns>The <see cref="StoryCard"/> filled with the values from a JSON serialized
         /// object</returns>
-        public static StoryCard FromJson(this StoryCard storycard, JObject json)
+        public static void FromJson(this StoryCard storycard, JObject json)
         {
             Guard.AssertNotNull(storycard, "storycard");
             Guard.AssertNotNull(json, "json");
@@ -107,7 +110,7 @@ namespace TecX.Agile.Data.Json
             ((PlanningArtefact)storycard).FromJson(json);
 
             string strCurrentSide;
-            if (json.TryGetValue(Constants.Properties.StoryCard.CurrentSideUp, out strCurrentSide))
+            if (json.TryGetValue(Agile.Constants.Properties.StoryCard.CurrentSideUp, out strCurrentSide))
             {
                 var currentSideUp = Common.Convert.ToEnum<StoryCardSides>(strCurrentSide);
 
@@ -115,13 +118,13 @@ namespace TecX.Agile.Data.Json
             }
 
             byte[] descriptionHandwritingImage;
-            if (json.TryGetValue(Constants.Properties.StoryCard.DescriptionHandwritingImage, out descriptionHandwritingImage))
+            if (json.TryGetValue(Agile.Constants.Properties.StoryCard.DescriptionHandwritingImage, out descriptionHandwritingImage))
             {
                 storycard.DescriptionHandwritingImage = descriptionHandwritingImage;
             }
 
             string owner;
-            if (json.TryGetValue(Constants.Properties.StoryCard.TaskOwner, out owner))
+            if (json.TryGetValue(Agile.Constants.Properties.StoryCard.TaskOwner, out owner))
             {
                 storycard.TaskOwner = owner;
             }
@@ -129,7 +132,7 @@ namespace TecX.Agile.Data.Json
             storycard.Tracking.FromJson(json);
             storycard.View.FromJson(json);
 
-            return storycard;
+            return;
         }
 
         /// <summary>
@@ -139,7 +142,7 @@ namespace TecX.Agile.Data.Json
         /// <param name="json">The json.</param>
         /// <returns>The <see cref="StoryCard"/> filled with the values from a JSON serialized
         /// object</returns>
-        public static Iteration FromJson(this Iteration iteration, JObject json)
+        public static void FromJson(this Iteration iteration, JObject json)
         {
             Guard.AssertNotNull(iteration, "iteration");
             Guard.AssertNotNull(json, "json");
@@ -147,19 +150,19 @@ namespace TecX.Agile.Data.Json
             ((StoryCardCollection)iteration).FromJson(json);
 
             decimal availableEffort;
-            if (json.TryGetValue(Constants.Properties.Iteration.AvailableEffort, out availableEffort))
+            if (json.TryGetValue(Agile.Constants.Properties.Iteration.AvailableEffort, out availableEffort))
             {
                 iteration.AvailableEffort = availableEffort;
             }
 
             DateTime endDate;
-            if (json.TryGetValue(Constants.Properties.Iteration.EndDate, out endDate))
+            if (json.TryGetValue(Agile.Constants.Properties.Iteration.EndDate, out endDate))
             {
                 iteration.EndDate = endDate;
             }
 
             DateTime startDate;
-            if (json.TryGetValue(Constants.Properties.Iteration.StartDate, out startDate))
+            if (json.TryGetValue(Agile.Constants.Properties.Iteration.StartDate, out startDate))
             {
                 iteration.StartDate = startDate;
             }
@@ -167,7 +170,7 @@ namespace TecX.Agile.Data.Json
             iteration.Tracking.FromJson(json);
             iteration.View.FromJson(json);
 
-            return iteration;
+            return;
         }
 
         /// <summary>
@@ -177,14 +180,14 @@ namespace TecX.Agile.Data.Json
         /// <param name="json">The json.</param>
         /// <returns>The <see cref="Backlog"/> filled with the values from a JSON serialized
         /// object</returns>
-        public static Backlog FromJson(this Backlog backlog, JObject json)
+        public static void FromJson(this Backlog backlog, JObject json)
         {
             Guard.AssertNotNull(backlog, "backlog");
             Guard.AssertNotNull(json, "json");
 
             ((StoryCardCollection)backlog).FromJson(json);
 
-            return backlog;
+            return;
         }
 
         /// <summary>
@@ -194,14 +197,14 @@ namespace TecX.Agile.Data.Json
         /// <param name="json">The json.</param>
         /// <returns>The <see cref="Project"/> filled with the values from a JSON serialized
         /// object</returns>
-        public static Project FromJson(this Project project, JObject json)
+        public static void FromJson(this Project project, JObject json)
         {
             Guard.AssertNotNull(project, "project");
             Guard.AssertNotNull(json, "json");
 
             ((PlanningArtefact)project).FromJson(json);
 
-            var jsonLegend = json[Constants.Properties.Project.Legend] as JObject;
+            var jsonLegend = json[Agile.Constants.Properties.Project.Legend] as JObject;
 
             if (jsonLegend != null)
             {
@@ -227,7 +230,7 @@ namespace TecX.Agile.Data.Json
                 }
             }
 
-            var jsonBacklog = json[Constants.Properties.Project.Backlog] as JObject;
+            var jsonBacklog = json[Agile.Constants.Properties.Project.Backlog] as JObject;
 
             if (jsonBacklog != null)
             {
@@ -237,7 +240,7 @@ namespace TecX.Agile.Data.Json
             }
 
             JArray jsonIterations;
-            if (json.TryGetValue(Constants.Properties.Project.Iterations, out jsonIterations))
+            if (json.TryGetValue(Agile.Constants.Properties.Project.Iterations, out jsonIterations))
             {
                 if (jsonIterations != null)
                 {
@@ -250,7 +253,7 @@ namespace TecX.Agile.Data.Json
                 }
             }
 
-            return project;
+            return;
         }
 
         /// <summary>
@@ -258,43 +261,43 @@ namespace TecX.Agile.Data.Json
         /// </summary>
         /// <param name="visualizable">The visualizable.</param>
         /// <param name="json">The json.</param>
-        private static void FromJson(this Visualizable visualizable, JObject json)
+        public static void FromJson(this Visualizable visualizable, JObject json)
         {
             Guard.AssertNotNull(visualizable, "visualizable");
             Guard.AssertNotNull(json, "json");
 
             byte[] color;
-            if (json.TryGetValue(Constants.Properties.Visualizable.Color, out color))
+            if (json.TryGetValue(Agile.Constants.Properties.Visualizable.Color, out color))
             {
                 visualizable.Color = color;
             }
 
             double height;
-            if (json.TryGetValue(Constants.Properties.Visualizable.Height, out height))
+            if (json.TryGetValue(Agile.Constants.Properties.Visualizable.Height, out height))
             {
                 visualizable.Height = height;
             }
 
             double rotationAngle;
-            if (json.TryGetValue(Constants.Properties.Visualizable.RotationAngle, out rotationAngle))
+            if (json.TryGetValue(Agile.Constants.Properties.Visualizable.RotationAngle, out rotationAngle))
             {
                 visualizable.RotationAngle = rotationAngle;
             }
 
             double width;
-            if (json.TryGetValue(Constants.Properties.Visualizable.Width, out width))
+            if (json.TryGetValue(Agile.Constants.Properties.Visualizable.Width, out width))
             {
                 visualizable.Width = width;
             }
 
             double x;
-            if (json.TryGetValue(Constants.Properties.Visualizable.X, out x))
+            if (json.TryGetValue(Agile.Constants.Properties.Visualizable.X, out x))
             {
                 visualizable.X = x;
             }
 
             double y;
-            if (json.TryGetValue(Constants.Properties.Visualizable.Y, out y))
+            if (json.TryGetValue(Agile.Constants.Properties.Visualizable.Y, out y))
             {
                 visualizable.Y = y;
             }
@@ -305,47 +308,83 @@ namespace TecX.Agile.Data.Json
         /// </summary>
         /// <param name="trackable">The trackable.</param>
         /// <param name="json">The json.</param>
-        private static void FromJson(this Trackable trackable, JObject json)
+        public static void FromJson(this Trackable trackable, JObject json)
         {
             Guard.AssertNotNull(trackable, "trackable");
             Guard.AssertNotNull(json, "json");
 
             decimal actualEffort;
-            if (json.TryGetValue(Constants.Properties.Trackable.ActualEffort, out actualEffort))
+            if (json.TryGetValue(Agile.Constants.Properties.Trackable.ActualEffort, out actualEffort))
             {
                 trackable.ActualEffort = actualEffort;
             }
 
             decimal bestCaseEstimate;
-            if (json.TryGetValue(Constants.Properties.Trackable.BestCaseEstimate, out bestCaseEstimate))
+            if (json.TryGetValue(Agile.Constants.Properties.Trackable.BestCaseEstimate, out bestCaseEstimate))
             {
                 trackable.BestCaseEstimate = bestCaseEstimate;
             }
 
             decimal mostLikelyEstimate;
-            if (json.TryGetValue(Constants.Properties.Trackable.MostLikelyEstimate, out mostLikelyEstimate))
+            if (json.TryGetValue(Agile.Constants.Properties.Trackable.MostLikelyEstimate, out mostLikelyEstimate))
             {
                 trackable.MostLikelyEstimate = mostLikelyEstimate;
             }
 
             string priorityString;
-            if (json.TryGetValue(Constants.Properties.Trackable.Priority, out priorityString))
+            if (json.TryGetValue(Agile.Constants.Properties.Trackable.Priority, out priorityString))
             {
                 Priority priority = Common.Convert.ToEnum<Priority>(priorityString);
                 trackable.Priority = priority;
             }
 
             string statusString;
-            if (json.TryGetValue(Constants.Properties.Trackable.Status, out statusString))
+            if (json.TryGetValue(Agile.Constants.Properties.Trackable.Status, out statusString))
             {
                 Status status = Common.Convert.ToEnum<Status>(statusString);
                 trackable.Status = status;
             }
 
             decimal worstCaseEstimate;
-            if (json.TryGetValue(Constants.Properties.Trackable.WorstCaseEstimate, out worstCaseEstimate))
+            if (json.TryGetValue(Agile.Constants.Properties.Trackable.WorstCaseEstimate, out worstCaseEstimate))
             {
                 trackable.WorstCaseEstimate = worstCaseEstimate;
+            }
+        }
+
+        public static void FromJson(this Legend legend, JObject json)
+        {
+            Guard.AssertNotNull(legend, "legend");
+            Guard.AssertNotNull(json, "json");
+
+            legend.Clear();
+
+            JProperty property = json.Property(Agile.Constants.Properties.Project.Legend);
+
+            if (property != null)
+            {
+                JArray array = property.Value as JArray;
+
+                if (array != null)
+                {
+                    foreach (JToken token in array)
+                    {
+                        JObject mapping = token as JObject;
+
+                        if (mapping != null)
+                        {
+                            string name;
+                            mapping.Property(Agile.Constants.Properties.Mapping.Name).Value.TryGetValue(out name);
+                            byte[] color;
+                            mapping.Property(Agile.Constants.Properties.Mapping.Color).Value.TryGetValue(out color);
+
+                            if (!string.IsNullOrEmpty(name) && color != null && color.Count() == 4)
+                            {
+                                legend.Add(name, color);
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -360,16 +399,16 @@ namespace TecX.Agile.Data.Json
         /// </summary>
         /// <param name="planningArtefact">The planning artefact.</param>
         /// <returns>The JSON serialized representation of the <see cref="PlanningArtefact"/></returns>
-        public static JObject ToJson(this PlanningArtefact planningArtefact)
+        private static JObject ToJson(this PlanningArtefact planningArtefact)
         {
             Guard.AssertNotNull(planningArtefact, "planningArtefact");
 
             var json = new JObject();
 
-            json.AddProperty(Constants.Properties.PlanningArtefact.Description,
+            json.AddProperty(Agile.Constants.Properties.PlanningArtefact.Description,
                              TypeHelper.ToNullSafeString(planningArtefact.Description))
-                .AddProperty(Constants.Properties.PlanningArtefact.Id, TypeHelper.ToNullSafeString(planningArtefact.Id))
-                .AddProperty(Constants.Properties.PlanningArtefact.Name, TypeHelper.ToNullSafeString(planningArtefact.Name));
+                .AddProperty(Agile.Constants.Properties.PlanningArtefact.Id, TypeHelper.ToNullSafeString(planningArtefact.Id))
+                .AddProperty(Agile.Constants.Properties.PlanningArtefact.Name, TypeHelper.ToNullSafeString(planningArtefact.Name));
 
             return json;
         }
@@ -379,7 +418,7 @@ namespace TecX.Agile.Data.Json
         /// </summary>
         /// <param name="indexCardWithChildren">The index card with children.</param>
         /// <returns>The JSON serialized representation of the <see cref="StoryCardCollection"/></returns>
-        public static JObject ToJson(this StoryCardCollection indexCardWithChildren)
+        private static JObject ToJson(this StoryCardCollection indexCardWithChildren)
         {
             Guard.AssertNotNull(indexCardWithChildren, "storyCardCollection");
 
@@ -397,7 +436,7 @@ namespace TecX.Agile.Data.Json
                 }
             }
 
-            json.AddProperty(Constants.Properties.StoryCardCollection.StoryCards, storycards);
+            json.AddProperty(Agile.Constants.Properties.StoryCardCollection.StoryCards, storycards);
 
             return json;
         }
@@ -415,11 +454,11 @@ namespace TecX.Agile.Data.Json
 
             var json = ((PlanningArtefact)storycard).ToJson();
 
-            json.AddProperty(Constants.Properties.StoryCard.CurrentSideUp,
+            json.AddProperty(Agile.Constants.Properties.StoryCard.CurrentSideUp,
                              TypeHelper.ToNullSafeString(storycard.CurrentSideUp))
-                .AddProperty(Constants.Properties.StoryCard.DescriptionHandwritingImage,
+                .AddProperty(Agile.Constants.Properties.StoryCard.DescriptionHandwritingImage,
                              Common.Convert.ToHex(storycard.DescriptionHandwritingImage))
-                .AddProperty(Constants.Properties.StoryCard.TaskOwner, TypeHelper.ToNullSafeString(storycard.TaskOwner));
+                .AddProperty(Agile.Constants.Properties.StoryCard.TaskOwner, TypeHelper.ToNullSafeString(storycard.TaskOwner));
 
             storycard.Tracking.ToJson(json);
             storycard.View.ToJson(json);
@@ -440,47 +479,16 @@ namespace TecX.Agile.Data.Json
 
             var json = ((StoryCardCollection)iteration).ToJson();
 
-            json.AddProperty(Constants.Properties.Trackable.ActualEffort,
-                             iteration.Tracking.ActualEffort.ToString(
-                                 Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Trackable.BestCaseEstimate,
-                             iteration.Tracking.BestCaseEstimate.ToString(
-                                 Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Visualizable.Color,
-                             Common.Convert.ToHex(iteration.View.Color))
-                .AddProperty(Constants.Properties.Visualizable.Height,
-                             iteration.View.Height.ToString(
-                                 Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Trackable.MostLikelyEstimate,
-                             iteration.Tracking.MostLikelyEstimate.ToString(
-                                 Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Visualizable.RotationAngle,
-                             iteration.View.RotationAngle.ToString(
-                                 Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Trackable.Priority,
-                             TypeHelper.ToNullSafeString(iteration.Tracking.Priority))
-                .AddProperty(Constants.Properties.Trackable.Status,
-                             TypeHelper.ToNullSafeString(iteration.Tracking.Status))
-                .AddProperty(Constants.Properties.Visualizable.Width,
-                             iteration.View.Width.ToString(
-                                 Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Trackable.WorstCaseEstimate,
-                             iteration.Tracking.WorstCaseEstimate.ToString(
-                                 Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Visualizable.X,
-                             iteration.View.X.ToString(
-                                 Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Visualizable.Y,
-                             iteration.View.Y.ToString(
-                                 Precision, CultureInfo.InvariantCulture));
-
-            json.AddProperty(Constants.Properties.Iteration.AvailableEffort,
+            json.AddProperty(Agile.Constants.Properties.Iteration.AvailableEffort,
                              iteration.AvailableEffort.ToString(
-                                 Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Iteration.EndDate,
-                             iteration.EndDate.ToString(CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Iteration.StartDate,
-                             iteration.StartDate.ToString(CultureInfo.InvariantCulture));
+                                 Constants.Precision, CultureInfo.InvariantCulture))
+                .AddProperty(Agile.Constants.Properties.Iteration.EndDate,
+                             iteration.EndDate.ToString("o", CultureInfo.InvariantCulture))
+                .AddProperty(Agile.Constants.Properties.Iteration.StartDate,
+                             iteration.StartDate.ToString("o", CultureInfo.InvariantCulture));
+
+            iteration.View.ToJson(json);
+            iteration.Tracking.ToJson(json);
 
             return json;
         }
@@ -525,7 +533,7 @@ namespace TecX.Agile.Data.Json
                     legendElement.Add(property);
                 }
 
-                json.AddProperty(Constants.Properties.Project.Legend, legendElement);
+                json.AddProperty(Agile.Constants.Properties.Project.Legend, legendElement);
             }
 
             if (project.Backlog != null)
@@ -545,7 +553,7 @@ namespace TecX.Agile.Data.Json
                     iterationsArray.Add(jsonIteration);
                 }
 
-                json.AddProperty(Constants.Properties.Project.Iterations, iterationsArray);
+                json.AddProperty(Agile.Constants.Properties.Project.Iterations, iterationsArray);
             }
 
             return json;
@@ -557,21 +565,21 @@ namespace TecX.Agile.Data.Json
         /// </summary>
         /// <param name="trackable">The trackable.</param>
         /// <param name="json">The json.</param>
-        private static void ToJson(this Trackable trackable, JObject json)
+        public static void ToJson(this Trackable trackable, JObject json)
         {
             Guard.AssertNotNull(trackable, "trackable");
             Guard.AssertNotNull(json, "json");
 
-            json.AddProperty(Constants.Properties.Trackable.WorstCaseEstimate,
-                             trackable.WorstCaseEstimate.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Trackable.Priority, TypeHelper.ToNullSafeString(trackable.Priority))
-                .AddProperty(Constants.Properties.Trackable.Status, TypeHelper.ToNullSafeString(trackable.Status))
-                .AddProperty(Constants.Properties.Trackable.MostLikelyEstimate,
-                             trackable.MostLikelyEstimate.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Trackable.ActualEffort,
-                             trackable.ActualEffort.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Trackable.BestCaseEstimate,
-                             trackable.BestCaseEstimate.ToString(Precision, CultureInfo.InvariantCulture));
+            json.AddProperty(Agile.Constants.Properties.Trackable.WorstCaseEstimate,
+                             trackable.WorstCaseEstimate.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddProperty(Agile.Constants.Properties.Trackable.Priority, TypeHelper.ToNullSafeString(trackable.Priority))
+                .AddProperty(Agile.Constants.Properties.Trackable.Status, TypeHelper.ToNullSafeString(trackable.Status))
+                .AddProperty(Agile.Constants.Properties.Trackable.MostLikelyEstimate,
+                             trackable.MostLikelyEstimate.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddProperty(Agile.Constants.Properties.Trackable.ActualEffort,
+                             trackable.ActualEffort.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddProperty(Agile.Constants.Properties.Trackable.BestCaseEstimate,
+                             trackable.BestCaseEstimate.ToString(Constants.Precision, CultureInfo.InvariantCulture));
         }
 
         /// <summary>
@@ -580,22 +588,44 @@ namespace TecX.Agile.Data.Json
         /// </summary>
         /// <param name="visualizable">The visualizable.</param>
         /// <param name="json">The json.</param>
-        private static void ToJson(this Visualizable visualizable, JObject json)
+        public static void ToJson(this Visualizable visualizable, JObject json)
         {
             Guard.AssertNotNull(visualizable, "visualizable");
             Guard.AssertNotNull(json, "json");
 
-            json.AddProperty(Constants.Properties.Visualizable.Color, Common.Convert.ToHex(visualizable.Color))
-                .AddProperty(Constants.Properties.Visualizable.Height,
-                             visualizable.Height.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Visualizable.RotationAngle,
-                             visualizable.RotationAngle.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Visualizable.Width,
-                             visualizable.Width.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Visualizable.X,
-                             visualizable.X.ToString(Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Constants.Properties.Visualizable.Y,
-                             visualizable.Y.ToString(Precision, CultureInfo.InvariantCulture));
+            json.AddProperty(Agile.Constants.Properties.Visualizable.Color, Common.Convert.ToHex(visualizable.Color))
+                .AddProperty(Agile.Constants.Properties.Visualizable.Height,
+                             visualizable.Height.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddProperty(Agile.Constants.Properties.Visualizable.RotationAngle,
+                             visualizable.RotationAngle.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddProperty(Agile.Constants.Properties.Visualizable.Width,
+                             visualizable.Width.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddProperty(Agile.Constants.Properties.Visualizable.X,
+                             visualizable.X.ToString(Constants.Precision, CultureInfo.InvariantCulture))
+                .AddProperty(Agile.Constants.Properties.Visualizable.Y,
+                             visualizable.Y.ToString(Constants.Precision, CultureInfo.InvariantCulture));
+        }
+
+        public static void ToJson(this Legend legend, JObject json)
+        {
+            Guard.AssertNotNull(legend, "legend");
+            Guard.AssertNotNull(json, "json");
+
+            if (legend.Count > 0)
+            {
+                JArray array = new JArray();
+
+                foreach (Mapping mapping in legend)
+                {
+                    JObject map = new JObject(
+                        new JProperty(Agile.Constants.Properties.Mapping.Name, mapping.Name),
+                        new JProperty(Agile.Constants.Properties.Mapping.Color,
+                            Common.Convert.ToHex(mapping.Color)));
+                    array.Add(map);
+                }
+
+                json.AddProperty(Agile.Constants.Properties.Project.Legend, array);
+            }
         }
 
         #endregion Conversion to JSON

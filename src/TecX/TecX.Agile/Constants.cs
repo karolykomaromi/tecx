@@ -111,6 +111,15 @@
                 /// <summary>StartDate</summary>
                 public const string StartDate = "StartDate";
             }
+
+            public static class Mapping
+            {
+                /// <summary>Name</summary>
+                public const string Name = "Name";
+
+                /// <summary>Color</summary>
+                public const string Color = "Color";
+            }
         }
     }
 }

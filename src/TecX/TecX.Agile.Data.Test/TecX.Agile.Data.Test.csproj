@@ -38,8 +38,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Ploeh.AutoFixture">
-      <HintPath>..\..\..\lib\AutoFixture\Ploeh.AutoFixture.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\lib\Json\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ploeh.AutoFixture, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\AutoFixture2\Ploeh.AutoFixture.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -55,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileRepositoryFixture.cs" />
+    <Compile Include="JsonConversionFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlConversionFixture.cs" />
   </ItemGroup>
@@ -63,9 +68,21 @@
       <Project>{8B37223D-5BE4-482F-B9E1-99D4F40E40BF}</Project>
       <Name>TecX.Agile.Data.File</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Data.Json\TecX.Agile.Data.Json.csproj">
+      <Project>{6E05A14A-9374-40FD-B8CA-C33B4108CBDB}</Project>
+      <Name>TecX.Agile.Data.Json</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Data.Xml\TecX.Agile.Data.Xml.csproj">
       <Project>{7D88B6EE-87D9-4FCC-BC90-91A5A6D7804B}</Project>
       <Name>TecX.Agile.Data.Xml</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Data\TecX.Agile.Data.csproj">
+      <Project>{5A6CB6EB-7298-40B9-91FD-0378798D8F7C}</Project>
+      <Name>TecX.Agile.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Test\TecX.Agile.Test.csproj">
+      <Project>{16914DD0-5805-4250-879B-26FEB00FA7BD}</Project>
+      <Name>TecX.Agile.Test</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Agile\TecX.Agile.csproj">
       <Project>{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300}</Project>
@@ -74,10 +91,6 @@
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{23E54945-0126-43BE-A3FC-5F61AF5BDFF3}</Project>
       <Name>TecX.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TexC.Agile.Data\TexC.Agile.Data.csproj">
-      <Project>{1D3C29B0-7785-442A-91BC-4DCCDCC84D92}</Project>
-      <Name>TexC.Agile.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -41,8 +41,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Common.EntLib", "TecX.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Common.EntLib.Test", "TecX.Common.EntLib.Test\TecX.Common.EntLib.Test.csproj", "{74AB8CBC-3DCE-4DE9-B43B-FDBAB0C4AEA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexC.Agile.Data", "TexC.Agile.Data\TexC.Agile.Data.csproj", "{1D3C29B0-7785-442A-91BC-4DCCDCC84D92}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Data.Json", "TecX.Agile.Data.Json\TecX.Agile.Data.Json.csproj", "{6E05A14A-9374-40FD-B8CA-C33B4108CBDB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Data.Xml", "TecX.Agile.Data.Xml\TecX.Agile.Data.Xml.csproj", "{7D88B6EE-87D9-4FCC-BC90-91A5A6D7804B}"
@@ -52,6 +50,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Data.Test", "TecX.Agile.Data.Test\TecX.Agile.Data.Test.csproj", "{FE8DE41C-47CE-4DE5-BDAF-8CCF2F8A854E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Error", "TecX.Agile.Error\TecX.Agile.Error.csproj", "{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Data", "TecX.Agile.Data\TecX.Agile.Data.csproj", "{5A6CB6EB-7298-40B9-91FD-0378798D8F7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "98 Test Tools", "98 Test Tools", "{9F74F4C2-9999-4E1D-93DD-413B4E40DE5A}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -99,30 +101,30 @@ Global
 		SccProjectTopLevelParentUniqueName10 = TecX.sln
 		SccProjectName10 = TecX.Common.EntLib.Test
 		SccLocalPath10 = TecX.Common.EntLib.Test
-		SccProjectUniqueName11 = TexC.Agile.Data\\TexC.Agile.Data.csproj
+		SccProjectUniqueName11 = TecX.Agile.Data.Json\\TecX.Agile.Data.Json.csproj
 		SccProjectTopLevelParentUniqueName11 = TecX.sln
-		SccProjectName11 = TexC.Agile.Data
-		SccLocalPath11 = TexC.Agile.Data
-		SccProjectUniqueName12 = TecX.Agile.Data.Json\\TecX.Agile.Data.Json.csproj
+		SccProjectName11 = TecX.Agile.Data.Json
+		SccLocalPath11 = TecX.Agile.Data.Json
+		SccProjectUniqueName12 = TecX.Agile.Data.Xml\\TecX.Agile.Data.Xml.csproj
 		SccProjectTopLevelParentUniqueName12 = TecX.sln
-		SccProjectName12 = TecX.Agile.Data.Json
-		SccLocalPath12 = TecX.Agile.Data.Json
-		SccProjectUniqueName13 = TecX.Agile.Data.Xml\\TecX.Agile.Data.Xml.csproj
+		SccProjectName12 = TecX.Agile.Data.Xml
+		SccLocalPath12 = TecX.Agile.Data.Xml
+		SccProjectUniqueName13 = TecX.Agile.Data.File\\TecX.Agile.Data.File.csproj
 		SccProjectTopLevelParentUniqueName13 = TecX.sln
-		SccProjectName13 = TecX.Agile.Data.Xml
-		SccLocalPath13 = TecX.Agile.Data.Xml
-		SccProjectUniqueName14 = TecX.Agile.Data.File\\TecX.Agile.Data.File.csproj
+		SccProjectName13 = TecX.Agile.Data.File
+		SccLocalPath13 = TecX.Agile.Data.File
+		SccProjectUniqueName14 = TecX.Agile.Data.Test\\TecX.Agile.Data.Test.csproj
 		SccProjectTopLevelParentUniqueName14 = TecX.sln
-		SccProjectName14 = TecX.Agile.Data.File
-		SccLocalPath14 = TecX.Agile.Data.File
-		SccProjectUniqueName15 = TecX.Agile.Data.Test\\TecX.Agile.Data.Test.csproj
+		SccProjectName14 = TecX.Agile.Data.Test
+		SccLocalPath14 = TecX.Agile.Data.Test
+		SccProjectUniqueName15 = TecX.Agile.Error\\TecX.Agile.Error.csproj
 		SccProjectTopLevelParentUniqueName15 = TecX.sln
-		SccProjectName15 = TecX.Agile.Data.Test
-		SccLocalPath15 = TecX.Agile.Data.Test
-		SccProjectUniqueName16 = TecX.Agile.Error\\TecX.Agile.Error.csproj
+		SccProjectName15 = TecX.Agile.Error
+		SccLocalPath15 = TecX.Agile.Error
+		SccProjectUniqueName16 = TecX.Agile.Data\\TecX.Agile.Data.csproj
 		SccProjectTopLevelParentUniqueName16 = TecX.sln
-		SccProjectName16 = TecX.Agile.Error
-		SccLocalPath16 = TecX.Agile.Error
+		SccProjectName16 = TecX.Agile.Data
+		SccLocalPath16 = TecX.Agile.Data
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -172,10 +174,6 @@ Global
 		{74AB8CBC-3DCE-4DE9-B43B-FDBAB0C4AEA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74AB8CBC-3DCE-4DE9-B43B-FDBAB0C4AEA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74AB8CBC-3DCE-4DE9-B43B-FDBAB0C4AEA1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1D3C29B0-7785-442A-91BC-4DCCDCC84D92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1D3C29B0-7785-442A-91BC-4DCCDCC84D92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1D3C29B0-7785-442A-91BC-4DCCDCC84D92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1D3C29B0-7785-442A-91BC-4DCCDCC84D92}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E05A14A-9374-40FD-B8CA-C33B4108CBDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E05A14A-9374-40FD-B8CA-C33B4108CBDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E05A14A-9374-40FD-B8CA-C33B4108CBDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -196,6 +194,10 @@ Global
 		{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A6CB6EB-7298-40B9-91FD-0378798D8F7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A6CB6EB-7298-40B9-91FD-0378798D8F7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A6CB6EB-7298-40B9-91FD-0378798D8F7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A6CB6EB-7298-40B9-91FD-0378798D8F7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -204,7 +206,6 @@ Global
 		{23E54945-0126-43BE-A3FC-5F61AF5BDFF3} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{45BE1494-E6F4-415F-8206-2856FBD28F66} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
-		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{41DA2181-3591-447B-A183-E79D34AA7907} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{16914DD0-5805-4250-879B-26FEB00FA7BD} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{74AB8CBC-3DCE-4DE9-B43B-FDBAB0C4AEA1} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
@@ -212,10 +213,11 @@ Global
 		{0505E426-7710-4783-8D70-6B6DD1667ADB} = {E1D2BCBC-4FA7-4B80-B80D-1E2FF04F9EB8}
 		{DA32E74A-CC64-45F7-8602-C08FC93BF8B7} = {E1D2BCBC-4FA7-4B80-B80D-1E2FF04F9EB8}
 		{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
-		{1D3C29B0-7785-442A-91BC-4DCCDCC84D92} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
 		{6E05A14A-9374-40FD-B8CA-C33B4108CBDB} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
 		{7D88B6EE-87D9-4FCC-BC90-91A5A6D7804B} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
 		{8B37223D-5BE4-482F-B9E1-99D4F40E40BF} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
 		{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
+		{5A6CB6EB-7298-40B9-91FD-0378798D8F7C} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
+		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC} = {9F74F4C2-9999-4E1D-93DD-413B4E40DE5A}
 	EndGlobalSection
 EndGlobal

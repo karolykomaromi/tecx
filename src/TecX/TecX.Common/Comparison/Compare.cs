@@ -72,6 +72,8 @@ namespace TecX.Common.Comparison
         /// <returns><c>true</c> if the two objects are considered equal; <c>false</c> otherwise</returns>
         public static bool AreEqual<T>(T first, T second, IEqualityComparer<T> comparer)
         {
+            Guard.AssertNotNull(comparer, "comparer");
+
             //one object is null -> not equal
             if (IsExactlyOneNull(first, second))
                 return false;

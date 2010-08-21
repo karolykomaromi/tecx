@@ -251,5 +251,17 @@ namespace TecX.Agile.Data.Xml
 
             return source;
         }
+
+        public static XElement AddElement(this XElement source, string elementName)
+        {
+            Guard.AssertNotNull(source, "source");
+            Guard.AssertNotEmpty(elementName, "elementName");
+
+            XElement child = new XElement(elementName);
+
+            source.Add(child);
+
+            return child;
+        }
     }
 }
