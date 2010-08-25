@@ -169,6 +169,8 @@ namespace TecX.Common.EntLib
         {
             Console.Out.Flush();
 
+            Win32.FreeConsole();
+
             base.Dispose(disposing);
         }
 

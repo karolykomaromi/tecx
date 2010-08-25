@@ -6,11 +6,11 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}</ProjectGuid>
+    <ProjectGuid>{5C1D555E-0F85-4B00-9410-E4C5404636AA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TecX.Common.Test</RootNamespace>
-    <AssemblyName>TecX.Common.Test</AssemblyName>
+    <RootNamespace>TecX.Agile.Peer.Test</RootNamespace>
+    <AssemblyName>TecX.Agile.Peer.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -49,17 +49,8 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityPredicateExtensionsFixture.cs" />
-    <Compile Include="ExceptionExtensionFixture.cs" />
-    <Compile Include="FluentLoggingConfigFixture.cs" />
-    <Compile Include="GuardFixture.cs" />
-    <Compile Include="LatchFixture.cs" />
-    <Compile Include="ObjectPredicateExtensionsFixture.cs" />
-    <Compile Include="Order.cs" />
+    <Compile Include="PeerFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegexBuilderFixture.cs" />
-    <Compile Include="TimeSlotFixture.cs" />
-    <Compile Include="TypeHelperFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
