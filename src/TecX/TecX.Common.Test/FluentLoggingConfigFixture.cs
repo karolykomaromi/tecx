@@ -3,10 +3,11 @@
 using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 using Microsoft.Practices.EnterpriseLibrary.Logging;
 using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace TecX.Common.EntLib.Test
+using TecX.Common.EntLib;
+
+namespace TecX.Common.Test
 {
     [TestClass]
     public class FluentLoggingConfigFixture

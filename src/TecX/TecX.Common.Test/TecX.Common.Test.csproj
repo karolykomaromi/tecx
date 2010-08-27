@@ -37,8 +37,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\EntLib5\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -50,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityPredicateExtensionsFixture.cs" />
+    <Compile Include="EventAggregatorFixture.cs" />
     <Compile Include="ExceptionExtensionFixture.cs" />
     <Compile Include="FluentLoggingConfigFixture.cs" />
     <Compile Include="GuardFixture.cs" />
@@ -62,6 +70,14 @@
     <Compile Include="TypeHelperFixture.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Common.EntLib\TecX.Common.EntLib.csproj">
+      <Project>{45BE1494-E6F4-415F-8206-2856FBD28F66}</Project>
+      <Name>TecX.Common.EntLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.csproj">
+      <Project>{266522EB-9DCB-451A-8CD7-678188DCB5F6}</Project>
+      <Name>TecX.Common.Event</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{23E54945-0126-43BE-A3FC-5F61AF5BDFF3}</Project>
       <Name>TecX.Common</Name>

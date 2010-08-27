@@ -44,10 +44,12 @@ namespace TecX.Common.Event
 
             PurgeSubscribers();
 
-            if (AllSubscribers()
-                .Where(s => s.IsAlive && 
-                    s.Target.Equals(subscriber))
-                .Count() < 1)
+            bool canSubscribe = AllSubscribers()
+                                     .Where(s => s.IsAlive &&
+                                                 s.Target.Equals(subscriber))
+                                     .Count() == 0;
+
+            if (canSubscribe)
             {
                 WithinLock(() => _subscribers.Add(new WeakReference(subscriber)));
             }
@@ -74,18 +76,26 @@ namespace TecX.Common.Event
         {
             Guard.AssertNotNull(message, "message");
 
-            foreach (WeakReference reference in _subscribers)
+            foreach (WeakReference reference in AllSubscribers())
             {
-                if(reference.IsAlive)
+                if (reference.IsAlive)
                 {
                     ISubscribeTo<TMessage> subcriber = reference.Target as ISubscribeTo<TMessage>;
 
-                    if(subcriber != null)
+                    if (subcriber != null)
                     {
                         subcriber.Handle(message);
                     }
                 }
             }
+        }
+
+        public ICancellationToken PublishWithCancelOption<TMessage>(TMessage message) 
+            where TMessage : ICancellationToken
+        {
+            Publish(message);
+
+            return message;
         }
 
         #endregion Implementation of IEventAggregator
