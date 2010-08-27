@@ -48,6 +48,7 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="EventAggregator.cs" />
+    <Compile Include="ICancellationToken.cs" />
     <Compile Include="IEventAggregator.cs" />
     <Compile Include="ISubscribeTo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
