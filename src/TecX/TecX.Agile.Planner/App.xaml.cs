@@ -24,8 +24,7 @@ namespace TecX.Agile.Planner
 
         private static void RunInDebugMode()
         {
-            UnityBootstrapper bootstrapper = new Bootstrapper();
-            bootstrapper.Run();
+            new Bootstrapper().Run();
         }
 
         private static void RunInReleaseMode()
@@ -33,8 +32,7 @@ namespace TecX.Agile.Planner
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
             try
             {
-                UnityBootstrapper bootstrapper = new Bootstrapper();
-                bootstrapper.Run();
+                new Bootstrapper().Run();
             }
             catch (Exception ex)
             {
