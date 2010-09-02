@@ -5,6 +5,8 @@ using System.Reflection;
 
 using Microsoft.Practices.Unity;
 
+using TecX.Common;
+
 namespace TecX.Unity.AutoRegistration
 {
     /// <summary>
@@ -21,7 +23,10 @@ namespace TecX.Unity.AutoRegistration
         public static TAttr GetAttribute<TAttr>(this Type type) 
             where TAttr : Attribute
         {
-            return type.GetCustomAttributes(false).Single(a => typeof (TAttr) == a.GetType()) as TAttr;
+            Guard.AssertNotNull(type, "type");
+
+            return type.GetCustomAttributes(false)
+                .Single(a => typeof (TAttr) == a.GetType()) as TAttr;
         }
 
         /// <summary>
@@ -30,9 +35,14 @@ namespace TecX.Unity.AutoRegistration
         /// <param name="autoRegistration">Auto registration.</param>
         /// <param name="assemblyPath">Assembly path.</param>
         /// <returns>Auto registration</returns>
-        public static IAutoRegistration LoadAssemblyFrom(this IAutoRegistration autoRegistration, string assemblyPath)
+        public static IAutoRegistration LoadAssemblyFrom(this IAutoRegistration autoRegistration, 
+            string assemblyPath)
         {
+            Guard.AssertNotNull(autoRegistration, "autoRegistration");
+            Guard.AssertNotEmpty(assemblyPath, "assemblyPath");
+
             Assembly assembly = Assembly.LoadFrom(assemblyPath);
+
             return autoRegistration;
         }
 
@@ -42,12 +52,17 @@ namespace TecX.Unity.AutoRegistration
         /// <param name="autoRegistration">Auto registration.</param>
         /// <param name="assemblyPaths">Assembly paths.</param>
         /// <returns>Auto registration</returns>
-        public static IAutoRegistration LoadAssembliesFrom(this IAutoRegistration autoRegistration, IEnumerable<string> assemblyPaths)
+        public static IAutoRegistration LoadAssembliesFrom(this IAutoRegistration autoRegistration, 
+            IEnumerable<string> assemblyPaths)
         {
+            Guard.AssertNotNull(autoRegistration, "autoRegistration");
+            Guard.AssertNotNull(assemblyPaths, "assemblyPaths");
+
             foreach (var assemblyPath in assemblyPaths)
             {
                 autoRegistration.LoadAssemblyFrom(assemblyPath);
             }
+
             return autoRegistration;
         }
 
@@ -58,9 +73,9 @@ namespace TecX.Unity.AutoRegistration
         /// <returns>Auto registration</returns>
         public static IAutoRegistration ConfigureAutoRegistration(this IUnityContainer container)
         {
-            if (container == null)
-                throw new ArgumentNullException("container");
-            return new TecX.Unity.AutoRegistration.AutoRegistration(container);
+            Guard.AssertNotNull(container, "container");
+
+            return new AutoRegistration(container);
         }
 
         /// <summary>
@@ -70,8 +85,11 @@ namespace TecX.Unity.AutoRegistration
         /// <returns>Auto registration</returns>
         public static IAutoRegistration ExcludeSystemAssemblies(this IAutoRegistration autoRegistration)
         {
-            autoRegistration.ExcludeAssemblies(a => a.GetName().FullName.StartsWith("System") 
-                || a.GetName().FullName.StartsWith("mscorlib"));
+            Guard.AssertNotNull(autoRegistration, "autoRegistration");
+
+            autoRegistration.ExcludeAssemblies(a => a.GetName().FullName.StartsWith("System") || 
+                a.GetName().FullName.StartsWith("mscorlib"));
+
             return autoRegistration;
         }
     }

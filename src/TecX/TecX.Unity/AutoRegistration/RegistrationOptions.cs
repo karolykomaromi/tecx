@@ -4,6 +4,8 @@ using System.Linq;
 
 using Microsoft.Practices.Unity;
 
+using TecX.Common;
+
 namespace TecX.Unity.AutoRegistration
 {
     /// <summary>
@@ -73,8 +75,8 @@ namespace TecX.Unity.AutoRegistration
         {
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException();
+                Guard.AssertNotNull(value, "value");
+
                 _type = value;
             }
         }
@@ -84,9 +86,11 @@ namespace TecX.Unity.AutoRegistration
         /// </summary>
         /// <typeparam name="TLifetimeManager">The type of the lifetime manager.</typeparam>
         /// <returns>Fluent registration</returns>
-        public IFluentRegistration UsingLifetime<TLifetimeManager>() where TLifetimeManager : LifetimeManager, new()
+        public IFluentRegistration UsingLifetime<TLifetimeManager>() 
+            where TLifetimeManager : LifetimeManager, new()
         {
             _lifetimeManagerToRegisterWithResolver = t => new TLifetimeManager();
+
             return this;
         }
 
@@ -97,10 +101,10 @@ namespace TecX.Unity.AutoRegistration
         /// <returns>Fluent registration</returns>
         public IFluentRegistration UsingLifetime(Func<Type, LifetimeManager> lifetimeResolver)
         {
-            if (lifetimeResolver == null)
-                throw new ArgumentNullException("lifetimeResolver");
+            Guard.AssertNotNull(lifetimeResolver, "lifetimeResolver");
 
             _lifetimeManagerToRegisterWithResolver = lifetimeResolver;
+
             return this;
         }
 
@@ -110,10 +114,10 @@ namespace TecX.Unity.AutoRegistration
         /// <typeparam name="TLifetimeManager">The type of the lifetime manager.</typeparam>
         /// <param name="manager"></param>
         /// <returns>Fluent registration</returns>
-        public IFluentRegistration UsingLifetime<TLifetimeManager>(TLifetimeManager manager) where TLifetimeManager : LifetimeManager
+        public IFluentRegistration UsingLifetime<TLifetimeManager>(TLifetimeManager manager) 
+            where TLifetimeManager : LifetimeManager
         {
-            if (manager == null)
-                throw new ArgumentNullException("manager");
+            Guard.AssertNotNull(manager, "manager");
 
             _lifetimeManagerToRegisterWithResolver = t => manager;
             return this;
@@ -126,6 +130,7 @@ namespace TecX.Unity.AutoRegistration
         public IFluentRegistration UsingSingletonMode()
         {
             _lifetimeManagerToRegisterWithResolver = t => new ContainerControlledLifetimeManager();
+
             return this;
         }
 
@@ -136,6 +141,7 @@ namespace TecX.Unity.AutoRegistration
         public IFluentRegistration UsingPerCallMode()
         {
             _lifetimeManagerToRegisterWithResolver = t => new TransientLifetimeManager();
+
             return this;
         }
 
@@ -146,6 +152,7 @@ namespace TecX.Unity.AutoRegistration
         public IFluentRegistration UsingPerThreadMode()
         {
             _lifetimeManagerToRegisterWithResolver = t => new PerThreadLifetimeManager();
+
             return this;
         }
 
@@ -156,10 +163,10 @@ namespace TecX.Unity.AutoRegistration
         /// <returns>Fluent registration</returns>
         public IFluentRegistration WithName(string name)
         {
-            if (name == null)
-                throw new ArgumentNullException("name");
+            Guard.AssertNotNull(name, "name");
 
             Name = name;
+
             return this;
         }
 
@@ -170,10 +177,10 @@ namespace TecX.Unity.AutoRegistration
         /// <returns>Fluent registration</returns>
         public IFluentRegistration WithName(Func<Type, string> nameResolver)
         {
-            if (nameResolver == null)
-                throw new ArgumentNullException("nameResolver");
+            Guard.AssertNotNull(nameResolver, "nameResolver");
 
             _nameToRegisterWithResolver = nameResolver;
+
             return this;
         }
 
@@ -184,6 +191,7 @@ namespace TecX.Unity.AutoRegistration
         public IFluentRegistration WithTypeName()
         {
             _nameToRegisterWithResolver = t => t.Name;
+
             return this;
         }
 
@@ -196,6 +204,8 @@ namespace TecX.Unity.AutoRegistration
         /// <returns>Fluent registration</returns>
         public IFluentRegistration WithPartName(string name)
         {
+            Guard.AssertNotNull(name, "name");
+
             _nameToRegisterWithResolver = t =>
                                               {
                                                   var typeName = t.Name;
@@ -224,8 +234,7 @@ namespace TecX.Unity.AutoRegistration
         /// <returns>Fluent registration</returns>
         public IFluentRegistration As(Func<Type, Type> typeResolver)
         {
-            if (typeResolver == null)
-                throw new ArgumentNullException("typeResolver");
+            Guard.AssertNotNull(typeResolver, "typeResolver");
 
             _interfacesToRegisterAsResolver = t => new List<Type> {typeResolver(t)};
             return this;
@@ -238,8 +247,7 @@ namespace TecX.Unity.AutoRegistration
         /// <returns>Fluent registration</returns>
         public IFluentRegistration As(Func<Type, Type[]> typesResolver)
         {
-            if (typesResolver == null)
-                throw new ArgumentNullException("typesResolver");
+            Guard.AssertNotNull(typesResolver, "typesResolver");
 
             _interfacesToRegisterAsResolver = t => new List<Type> ( typesResolver(t) );
             return this;

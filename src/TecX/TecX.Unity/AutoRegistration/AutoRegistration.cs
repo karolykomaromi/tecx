@@ -5,6 +5,8 @@ using System.Reflection;
 
 using Microsoft.Practices.Unity;
 
+using TecX.Common;
+
 namespace TecX.Unity.AutoRegistration
 {
     /// <summary>
@@ -26,8 +28,7 @@ namespace TecX.Unity.AutoRegistration
         /// <param name="container">Unity container.</param>
         public AutoRegistration (IUnityContainer container)
         {
-            if (container == null)
-                throw new ArgumentNullException("container");
+            Guard.AssertNotNull(container, "container");
             _container = container;
         }
 
@@ -42,10 +43,8 @@ namespace TecX.Unity.AutoRegistration
             Predicate<Type> typeFilter,
             Action<Type, IUnityContainer> registrator)
         {
-            if (typeFilter == null)
-                throw new ArgumentNullException("typeFilter");
-            if (registrator == null)
-                throw new ArgumentNullException("registrator");
+            Guard.AssertNotNull(typeFilter, "typeFilter");
+            Guard.AssertNotNull(registrator, "registrator");
 
             _registrationEntries.Add(new RegistrationEntry(typeFilter, registrator, _container));
             return this;
@@ -62,10 +61,8 @@ namespace TecX.Unity.AutoRegistration
             Predicate<Type> typeFilter,
             IRegistrationOptions registrationOptions)
         {
-            if (typeFilter == null)
-                throw new ArgumentNullException("typeFilter");
-            if (registrationOptions == null)
-                throw new ArgumentNullException("registrationOptions");
+            Guard.AssertNotNull(typeFilter, "typeFilter");
+            Guard.AssertNotNull(registrationOptions, "registrationOptions");
 
             _registrationEntries.Add(new RegistrationEntry(
                                          typeFilter,
@@ -93,8 +90,7 @@ namespace TecX.Unity.AutoRegistration
         /// <returns>Auto registration</returns>
         public virtual IAutoRegistration ExcludeAssemblies(Predicate<Assembly> filter)
         {
-            if (filter == null)
-                throw new ArgumentNullException("filter");
+            Guard.AssertNotNull(filter, "filter");
 
             _excludedAssemblyFilters.Add(filter);
             return this;
@@ -107,8 +103,7 @@ namespace TecX.Unity.AutoRegistration
         /// <returns>Auto registration</returns>
         public virtual IAutoRegistration Exclude(Predicate<Type> filter)
         {
-            if (filter == null)
-                throw new ArgumentNullException("filter");
+            Guard.AssertNotNull(filter, "filter");
 
             _excludedTypeFilters.Add(filter);
             return this;
