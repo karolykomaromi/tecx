@@ -1,0 +1,55 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using Moq;
+
+using TecX.Common;
+
+namespace TecX.TestTools.Extensions
+{
+    public static class LiteralExtensions
+    {
+        public static void Times(this int i, Action action)
+        {
+            for(int j = 0; j < i; j++)
+            {
+                action();
+            }
+        }
+
+        public static TimeSpan Minutes(this int i)
+        {
+            return TimeSpan.FromMinutes(i);
+        }
+
+        public static TimeSpan Seconds(this int i)
+        {
+            return TimeSpan.FromSeconds(i);
+        }
+
+        public static TimeSpan Hours(this int i)
+        {
+            return TimeSpan.FromHours(i);
+        }
+
+        public static void Pass(this TimeSpan ts)
+        {
+
+            var previousTime = TimeProvider.Current.UtcNow;
+
+            (previousTime + ts).Freeze();
+        }
+
+        public static void Freeze(this DateTime dt)
+        {
+
+            var timeProviderStub = new Mock<TimeProvider>();
+
+            timeProviderStub.SetupGet(tp => tp.UtcNow).Returns(dt);
+
+            TimeProvider.Current = timeProviderStub.Object;
+        }
+    }
+}
