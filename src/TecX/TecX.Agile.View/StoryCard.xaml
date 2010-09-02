@@ -28,7 +28,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <TextBox
-            x:Name="Name" 
+            x:Name="TaskName" 
             Style="{StaticResource HiddenTextBoxStyle}"
             Grid.ColumnSpan="3" />
         <Rectangle

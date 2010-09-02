@@ -71,9 +71,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06 Caliburn.Micro", "06 Cal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.View", "TecX.Agile.View\TecX.Agile.View.csproj", "{09B2D14D-9911-4CDA-A175-43754A2AAAFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity", "TecX.Unity\TecX.Unity.csproj", "{69621991-8933-41FD-8493-87E7FA5A26FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.Test", "TecX.Unity.Test\TecX.Unity.Test.csproj", "{943AD349-5431-4B9F-9DF4-A6DF5390B484}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.Test.Contract", "TecX.Unity.Test.Contract\TecX.Unity.Test.Contract.csproj", "{D133B7BA-C075-4426-A255-2E145E5988E2}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 23
+		SccNumberOfProjects = 26
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -165,6 +171,18 @@ Global
 		SccProjectTopLevelParentUniqueName22 = TecX.sln
 		SccProjectName22 = TecX.Agile.View
 		SccLocalPath22 = TecX.Agile.View
+		SccProjectUniqueName23 = TecX.Unity\\TecX.Unity.csproj
+		SccProjectTopLevelParentUniqueName23 = TecX.sln
+		SccProjectName23 = TecX.Unity
+		SccLocalPath23 = TecX.Unity
+		SccProjectUniqueName24 = TecX.Unity.Test\\TecX.Unity.Test.csproj
+		SccProjectTopLevelParentUniqueName24 = TecX.sln
+		SccProjectName24 = TecX.Unity.Test
+		SccLocalPath24 = TecX.Unity.Test
+		SccProjectUniqueName25 = TecX.Unity.Test.Contract\\TecX.Unity.Test.Contract.csproj
+		SccProjectTopLevelParentUniqueName25 = TecX.sln
+		SccProjectName25 = TecX.Unity.Test.Contract
+		SccLocalPath25 = TecX.Unity.Test.Contract
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -398,6 +416,36 @@ Global
 		{09B2D14D-9911-4CDA-A175-43754A2AAAFE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{09B2D14D-9911-4CDA-A175-43754A2AAAFE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{09B2D14D-9911-4CDA-A175-43754A2AAAFE}.Release|x86.ActiveCfg = Release|Any CPU
+		{69621991-8933-41FD-8493-87E7FA5A26FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69621991-8933-41FD-8493-87E7FA5A26FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69621991-8933-41FD-8493-87E7FA5A26FE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{69621991-8933-41FD-8493-87E7FA5A26FE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{69621991-8933-41FD-8493-87E7FA5A26FE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{69621991-8933-41FD-8493-87E7FA5A26FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69621991-8933-41FD-8493-87E7FA5A26FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69621991-8933-41FD-8493-87E7FA5A26FE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{69621991-8933-41FD-8493-87E7FA5A26FE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{69621991-8933-41FD-8493-87E7FA5A26FE}.Release|x86.ActiveCfg = Release|Any CPU
+		{943AD349-5431-4B9F-9DF4-A6DF5390B484}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{943AD349-5431-4B9F-9DF4-A6DF5390B484}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{943AD349-5431-4B9F-9DF4-A6DF5390B484}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{943AD349-5431-4B9F-9DF4-A6DF5390B484}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{943AD349-5431-4B9F-9DF4-A6DF5390B484}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{943AD349-5431-4B9F-9DF4-A6DF5390B484}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{943AD349-5431-4B9F-9DF4-A6DF5390B484}.Release|Any CPU.Build.0 = Release|Any CPU
+		{943AD349-5431-4B9F-9DF4-A6DF5390B484}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{943AD349-5431-4B9F-9DF4-A6DF5390B484}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{943AD349-5431-4B9F-9DF4-A6DF5390B484}.Release|x86.ActiveCfg = Release|Any CPU
+		{D133B7BA-C075-4426-A255-2E145E5988E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D133B7BA-C075-4426-A255-2E145E5988E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D133B7BA-C075-4426-A255-2E145E5988E2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D133B7BA-C075-4426-A255-2E145E5988E2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D133B7BA-C075-4426-A255-2E145E5988E2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D133B7BA-C075-4426-A255-2E145E5988E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D133B7BA-C075-4426-A255-2E145E5988E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D133B7BA-C075-4426-A255-2E145E5988E2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D133B7BA-C075-4426-A255-2E145E5988E2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D133B7BA-C075-4426-A255-2E145E5988E2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -407,12 +455,15 @@ Global
 		{45BE1494-E6F4-415F-8206-2856FBD28F66} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{266522EB-9DCB-451A-8CD7-678188DCB5F6} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{A763CC8F-835E-444C-9A9F-88E7A443C1B2} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
+		{69621991-8933-41FD-8493-87E7FA5A26FE} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{41DA2181-3591-447B-A183-E79D34AA7907} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{16914DD0-5805-4250-879B-26FEB00FA7BD} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{FE8DE41C-47CE-4DE5-BDAF-8CCF2F8A854E} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{5C1D555E-0F85-4B00-9410-E4C5404636AA} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{A5CEF853-8C98-4CE6-AD43-E78D86A4235E} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
+		{943AD349-5431-4B9F-9DF4-A6DF5390B484} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
+		{D133B7BA-C075-4426-A255-2E145E5988E2} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{0505E426-7710-4783-8D70-6B6DD1667ADB} = {E1D2BCBC-4FA7-4B80-B80D-1E2FF04F9EB8}
 		{DA32E74A-CC64-45F7-8602-C08FC93BF8B7} = {E1D2BCBC-4FA7-4B80-B80D-1E2FF04F9EB8}
 		{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
