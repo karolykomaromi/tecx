@@ -9,6 +9,7 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Composite.UnityExtensions;
 
 using TecX.Common.Event.Unity;
+using TecX.Unity.AutoRegistration;
 
 namespace TecX.Agile.Planner
 {
@@ -31,6 +32,8 @@ namespace TecX.Agile.Planner
             //Stuff
 
             Container.AddNewExtension<EventAggregatorContainerExtension>();
+
+            //Container.ConfigureAutoRegistration().ExcludeSystemAssemblies()
         }
 
         protected override IModuleCatalog GetModuleCatalog()
