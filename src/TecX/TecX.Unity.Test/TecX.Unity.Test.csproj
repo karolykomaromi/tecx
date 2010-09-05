@@ -73,7 +73,7 @@
     <Compile Include="TestObjects\TestCache.cs" />
     <Compile Include="TestObjects\TestCustomerRepository.cs" />
     <Compile Include="TestObjects\TestLogger.cs" />
-    <Compile Include="UnityExtensionFixture.cs" />
+    <Compile Include="ClozeInjectionConstructorFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
