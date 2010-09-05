@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Microsoft.Practices.Unity;
 
@@ -35,10 +36,13 @@ namespace TecX.Unity.AutoRegistration
         /// <value>Target type.</value>
         public Type To { get; private set; }
 
+        public IEnumerable<InjectionMember> InjectionMembers { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RegistrationOptions"/> class
         /// </summary>
-        public RegistrationOptions(Type from, Type to, string name, LifetimeManager lifetimeManager)
+        public RegistrationOptions(Type from, Type to, string name, LifetimeManager lifetimeManager,
+            params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(to, "to");
@@ -49,6 +53,8 @@ namespace TecX.Unity.AutoRegistration
             To = to;
             Name = name;
             LifetimeManager = lifetimeManager;
+
+            InjectionMembers = injectionMembers ?? new InjectionMember[0];
         }
     }
 }
