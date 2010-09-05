@@ -17,12 +17,13 @@ namespace TecX.Unity.AutoRegistration
         /// <typeparam name="TAttr">Type of the attribute.</typeparam>
         /// <param name="type">Target type.</param>
         /// <returns>True if type is decorated with specified attribute, otherwise false</returns>
-        public static bool DecoratedWith<TAttr>(this Type type)
+        public static bool DecoratedWith<TAttr>(Type type)
             where TAttr : Attribute
         {
             Guard.AssertNotNull(type, "type");
 
-            return type.GetCustomAttributes(false).Any(a => a.GetType() == typeof(TAttr));
+            return type.GetCustomAttributes(false)
+                .Any(a => a.GetType() == typeof(TAttr));
         }
 
         /// <summary>
@@ -31,11 +32,13 @@ namespace TecX.Unity.AutoRegistration
         /// <typeparam name="TContract">Type of the interface.</typeparam>
         /// <param name="type">Target type.</param>
         /// <returns>True if type implements specified interface, otherwise false</returns>
-        public static bool Implements<TContract>(this Type type) where TContract : class
+        public static bool Implements<TContract>(Type type) 
+            where TContract : class
         {
             Guard.AssertNotNull(type, "type");
 
-            return type.GetInterfaces().Any(i => i == typeof(TContract));
+            return type.GetInterfaces()
+                .Any(i => i == typeof(TContract));
         }
 
         /// <summary>
@@ -53,8 +56,10 @@ namespace TecX.Unity.AutoRegistration
                 throw new ArgumentException("Provided contract has to be an interface", "contract");
             if (!contract.IsGenericTypeDefinition)
                 throw new ArgumentException("Provided contract has to be an open generic", "contract");
-            
-            return type.GetInterfaces().Any(i => i.IsGenericType && (i.GetGenericTypeDefinition() == contract));
+
+            return type.GetInterfaces()
+                .Any(i => i.IsGenericType && 
+                    (i.GetGenericTypeDefinition() == contract));
         }
 
         /// <summary>
@@ -68,8 +73,9 @@ namespace TecX.Unity.AutoRegistration
         {
             Guard.AssertNotNull(type, "type");
 
-            return type.GetInterfaces().Any(i => i.Name.StartsWith("I") 
-                && i.Name.Remove(0, 1) == type.Name);
+            return type.GetInterfaces()
+                .Any(i => i.Name.StartsWith("I") && 
+                    i.Name.Remove(0, 1) == type.Name);
         }
 
         /// <summary>
@@ -77,7 +83,7 @@ namespace TecX.Unity.AutoRegistration
         /// </summary>
         /// <param name="type">Target type.</param>
         /// <returns>True if type implements single interface, otherwise false</returns>
-        public static bool ImplementsSingleInterface(this Type type)
+        public static bool ImplementsSingleInterface(Type type)
         {
             Guard.AssertNotNull(type, "type");
 
@@ -89,7 +95,7 @@ namespace TecX.Unity.AutoRegistration
         /// </summary>
         /// <param name="type">Target type.</param>
         /// <returns>Always returns true if type is not null</returns>
-        public static bool Any(this Type type)
+        public static bool Any(Type type)
         {
             Guard.AssertNotNull(type, "type");
 
@@ -104,7 +110,7 @@ namespace TecX.Unity.AutoRegistration
         /// <returns>
         /// 	<c>true</c> if generic method parameter type is equal to method argument type; otherwise, <c>false</c>.
         /// </returns>
-        public static bool Is<T>(this Type type)
+        public static bool Is<T>(Type type)
         {
             Guard.AssertNotNull(type, "type");
 
@@ -119,23 +125,11 @@ namespace TecX.Unity.AutoRegistration
         /// <returns>
         /// 	<c>true</c> if is assignable from the specified type; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsAssignableFrom<T>(this Type type)
+        public static bool IsAssignableFrom<T>(Type type)
         {
             Guard.AssertNotNull(type, "type");
 
-            return type.IsAssignableFrom(typeof (T));
-        }
-
-        /// <summary>
-        /// Returns true for any assembly that is not null
-        /// </summary>
-        /// <param name="assembly">Target assembly.</param>
-        /// <returns>Always returns true if assembly is not null</returns>
-        public static bool AnyAssembly(this Assembly assembly)
-        {
-            Guard.AssertNotNull(assembly, "assembly");
-
-            return true;
+            return type.IsAssignableFrom(typeof(T));
         }
 
         /// <summary>
@@ -146,11 +140,11 @@ namespace TecX.Unity.AutoRegistration
         /// <returns>
         /// 	<c>true</c> if the specified assembly contains type; otherwise, <c>false</c>.
         /// </returns>
-        public static bool ContainsType<T>(this Assembly assembly)
+        public static bool ContainsType<T>(Assembly assembly)
         {
             Guard.AssertNotNull(assembly, "assembly");
 
-            return typeof (T).Assembly == assembly;
+            return typeof(T).Assembly == assembly;
         }
     }
 }

@@ -64,20 +64,25 @@
     <Compile Include="TestObjects\HandlerFor.cs" />
     <Compile Include="TestObjects\ICache.cs" />
     <Compile Include="TestObjects\ICustomerRepository.cs" />
+    <Compile Include="TestObjects\IIntroduction.cs" />
+    <Compile Include="TestObjects\ILogger.cs" />
+    <Compile Include="TestObjects\Introduction.cs" />
     <Compile Include="TestObjects\IOrderRepository.cs" />
+    <Compile Include="TestObjects\LoggerAttribute.cs" />
     <Compile Include="TestObjects\MyLifetimeManager.cs" />
     <Compile Include="TestObjects\TestCache.cs" />
     <Compile Include="TestObjects\TestCustomerRepository.cs" />
     <Compile Include="TestObjects\TestLogger.cs" />
+    <Compile Include="UnityExtensionFixture.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
+      <Project>{23E54945-0126-43BE-A3FC-5F61AF5BDFF3}</Project>
+      <Name>TecX.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.TestTools\TecX.TestTools.csproj">
       <Project>{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}</Project>
       <Name>TecX.TestTools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TecX.Unity.Test.Contract\TecX.Unity.Test.Contract.csproj">
-      <Project>{D133B7BA-C075-4426-A255-2E145E5988E2}</Project>
-      <Name>TecX.Unity.Test.Contract</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Unity\TecX.Unity.csproj">
       <Project>{69621991-8933-41FD-8493-87E7FA5A26FE}</Project>

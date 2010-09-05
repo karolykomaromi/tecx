@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,7 +8,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
 using TecX.Unity.AutoRegistration;
-using TecX.Unity.Test.Contract;
 using TecX.Unity.Test.TestObjects;
 using TecX.TestTools.Extensions;
 
@@ -19,10 +17,12 @@ namespace TecX.Unity.Test
     [TestClass]
     public class AutoRegistrationFixture
     {
+        private delegate void RegistrationCallback(Type from, Type to, string name, 
+            LifetimeManager lifetime, InjectionMember[] ims);
+
         private Mock<IUnityContainer> _containerMock;
         private List<RegisterEvent> _registered;
         private IUnityContainer _container;
-        private delegate void RegistrationCallback(Type from, Type to, string name, LifetimeManager lifetime, InjectionMember[] ims);
         private IUnityContainer _realContainer;
 
         private static string _knownExternalAssembly = "Microsoft.Practices.Unity.Interception";
@@ -41,7 +41,7 @@ namespace TecX.Unity.Test
             int index = directories.IndexOf("trunk");
 
             //access to modified closure is alright here
-            LiteralExtensions.Times((directories.Length - index - 1), () => unityLibFolder += @"..\");
+            (directories.Length - index - 1).Times(() => unityLibFolder += @"..\");
 
             unityLibFolder += @"lib\Unity2\";
 
@@ -56,18 +56,16 @@ namespace TecX.Unity.Test
             _containerMock = new Mock<IUnityContainer>();
             _registered = new List<RegisterEvent>();
             var setup = _containerMock
-                .Setup(c => c.RegisterType(It.IsAny<Type>(), It.IsAny<Type>(), It.IsAny<string>(), It.IsAny<LifetimeManager>()));
-            var callback = new RegistrationCallback((from, to, name, lifetime, ips) =>
-            {
-                _registered.Add(new RegisterEvent(from, to, name, lifetime));
-                _realContainer.RegisterType(from, to, name, lifetime);
-            });
-
-            // Using reflection, because current version of Moq doesn't support callbacks with more than 4 arguments
-            setup
-                .GetType()
-                .GetMethod("SetCallbackWithArguments", BindingFlags.NonPublic | BindingFlags.Instance)
-                .Invoke(setup, new object[] { callback });
+                .Setup(c => c.RegisterType(
+                    It.IsAny<Type>(),
+                    It.IsAny<Type>(),
+                    It.IsAny<string>(),
+                    It.IsAny<LifetimeManager>()))
+                .Callback((Type from, Type to, string name, LifetimeManager lifetime) =>
+                              {
+                                  _registered.Add(new RegisterEvent(from, to, name, lifetime));
+                                  _realContainer.RegisterType(from, to, name, lifetime);
+                              });
 
             _container = _containerMock.Object;
         }
@@ -173,11 +171,11 @@ namespace TecX.Unity.Test
         public void WhenRegistrationObjectIsPassedRequestedTypeRegisteredAsExpected()
         {
             const string registrationName = "TestName";
-
-            var registration = Then.Register();
-            registration.Interfaces = new[] { typeof(ICache) };
-            registration.LifetimeManager = new ContainerControlledLifetimeManager();
-            registration.Name = registrationName;
+            
+            RegistrationOptionsBuilder registration = Then.Register();
+            registration.As(t => new[] {typeof (ICache)});
+            registration.UsingLifetime<ContainerControlledLifetimeManager>();
+            registration.WithName(registrationName);
 
             _container
                 .ConfigureAutoRegistration()
@@ -240,14 +238,20 @@ namespace TecX.Unity.Test
         {
             Assert.AreEqual(
                 "Customer",
-                new RegistrationOptions { Type = typeof(CustomerRepository) }
+                new RegistrationOptionsBuilder()
+                    .ForType(typeof(CustomerRepository))
                     .WithPartName(WellKnownAppParts.DesignPatterns.Repository)
+                    .Build()
+                    .First()
                     .Name);
 
             Assert.AreEqual(
                 "Test",
-                new RegistrationOptions { Type = typeof(TestCache) }
+                new RegistrationOptionsBuilder()
+                    .ForType(typeof(TestCache))
                     .WithPartName("Cache")
+                    .Build()
+                    .First()
                     .Name);
         }
 
@@ -265,15 +269,6 @@ namespace TecX.Unity.Test
                 Name = name;
                 Lifetime = lifetime;
             }
-        }
-
-        public class Introduction : IIntroduction
-        {
-
-        }
-
-        public interface IIntroduction
-        {
         }
 
         private void Example()
