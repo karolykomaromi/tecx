@@ -14,6 +14,8 @@ namespace TecX.Unity.AutoRegistration
 
         private Type _type;
 
+        private readonly List<Func<Type, InjectionMember>> _injectionMembers = new List<Func<Type, InjectionMember>>();
+
         private Func<Type, IEnumerable<Type>> _interfacesToRegisterAsResolver = t => new List<Type>(t.GetInterfaces());
         private Func<Type, string> _nameToRegisterWithResolver = t => String.Empty;
         private Func<Type, LifetimeManager> _lifetimeManagerToRegisterWithResolver = t => new TransientLifetimeManager();
@@ -222,6 +224,20 @@ namespace TecX.Unity.AutoRegistration
 
         #endregion Abstraction
 
+        #region c'tor Arguments
+
+        public RegistrationOptionsBuilder WithCtorArg(string name, object value)
+        {
+            Guard.AssertNotEmpty(name, "name");
+            Guard.AssertNotNull(value, "value");
+
+            _injectionMembers.Add(t => new ClozeInjectionConstructur(name, value));
+
+            return this;
+        }
+
+        #endregion c'tor Arguments
+        
         public RegistrationOptionsBuilder ForType(Type type)
         {
             Guard.AssertNotNull(type, "type");
@@ -241,8 +257,8 @@ namespace TecX.Unity.AutoRegistration
             {
                 registrations.Add(
                     new RegistrationOptions(abstraction, 
-                        _type, 
-                        _nameToRegisterWithResolver(_type), _lifetimeManagerToRegisterWithResolver(_type)));
+                                            _type, 
+                                            _nameToRegisterWithResolver(_type), _lifetimeManagerToRegisterWithResolver(_type)));
 
             }
 
