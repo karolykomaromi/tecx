@@ -59,7 +59,7 @@
     <Compile Include="AutoRegistration\Then.cs" />
     <Compile Include="AutoRegistration\WellKnownAppParts.cs" />
     <Compile Include="ParameterMatcher.cs" />
-    <Compile Include="CtorArgsInjectionConstructur.cs" />
+    <Compile Include="ClozeInjectionConstructur.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
