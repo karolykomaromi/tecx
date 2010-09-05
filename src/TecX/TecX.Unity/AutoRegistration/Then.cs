@@ -9,9 +9,9 @@ namespace TecX.Unity.AutoRegistration
         /// Creates new registration options
         /// </summary>
         /// <returns>Fluent registration options</returns>
-        public static IFluentRegistration Register()
+        public static RegistrationOptionsBuilder Register()
         {
-            return new RegistrationOptions();
+            return new RegistrationOptionsBuilder();
         }
     }
 }
