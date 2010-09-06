@@ -116,7 +116,7 @@ namespace TecX.Unity.Test
             Assert.AreEqual(typeof(TraceLogger), registration.To);
             Assert.AreEqual(typeof(ILogger), registration.From);
             Assert.AreEqual(typeof(TransientLifetimeManager), registration.LifetimeManager.GetType());
-            Assert.IsNull(registration.InjectionMembers);
+            Assert.AreEqual(0, registration.InjectionMembers.Length);
         }
 
         [TestMethod]

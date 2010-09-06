@@ -21,9 +21,6 @@ namespace TecX.Unity.Test
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            //TODO weberse get the current path, climb up until you reach src, get up one more
-            //level then descend to lib\Unity2 and then load the PIAB assembly
-
             string[] directories = context.DeploymentDirectory.Split(new[] { @"\" },
                 StringSplitOptions.RemoveEmptyEntries);
 

@@ -59,6 +59,7 @@
     <Compile Include="AutoRegistration\Filter.cs" />
     <Compile Include="AutoRegistration\Filters.cs" />
     <Compile Include="AutoRegistration\FolderAssemblyLocator.cs" />
+    <Compile Include="AutoRegistration\From.cs" />
     <Compile Include="AutoRegistration\IAutoRegistration.cs" />
     <Compile Include="AutoRegistration\If.cs" />
     <Compile Include="AutoRegistration\RegistrationEntry.cs" />
