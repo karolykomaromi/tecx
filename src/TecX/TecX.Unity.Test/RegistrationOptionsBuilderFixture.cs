@@ -75,7 +75,7 @@ namespace TecX.Unity.Test
             Assert.AreEqual(string.Empty, options.Name);
             Assert.AreEqual(typeof(TraceLogger), options.To);
             Assert.AreEqual(typeof(TransientLifetimeManager), options.LifetimeManager.GetType());
-            Assert.IsNull(options.InjectionMembers);
+            Assert.AreEqual(0, options.InjectionMembers.Length);
         }
 
         [TestMethod]
@@ -250,6 +250,21 @@ namespace TecX.Unity.Test
             Assert.AreEqual(typeof(TransientLifetimeManager), option.LifetimeManager.GetType());
             Assert.AreEqual(1, option.InjectionMembers.Length);
             Assert.AreEqual(typeof(ClozeInjectionConstructur), option.InjectionMembers[0].GetType());
+        }
+
+        [TestMethod]
+        public void WhenRegisteredWithCtor_InjectionConstructorIsUsed()
+        {
+            var builder = Then.Register()
+                .MappingTo<SqlRepository>()
+                .As<IRepository>()
+                .WithCtor("abc123");
+
+            var option = builder.Build()
+                .Single();
+
+            Assert.AreEqual(1, option.InjectionMembers.Length);
+            Assert.AreEqual(typeof(InjectionConstructor), option.InjectionMembers[0].GetType());
         }
     }
 }

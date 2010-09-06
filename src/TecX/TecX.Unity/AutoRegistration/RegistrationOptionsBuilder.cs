@@ -15,7 +15,7 @@ namespace TecX.Unity.AutoRegistration
         private Func<Type, IEnumerable<Type>> _abstractions = t => new List<Type>(t.GetInterfaces());
         private Func<Type, string> _name = t => string.Empty;
         private Func<Type, LifetimeManager> _lifetimeManager = t => new TransientLifetimeManager();
-        private List<InjectionMember> _injectionMember = new List<InjectionMember>();
+        private List<InjectionMember> _injectionMembers = new List<InjectionMember>();
 
 
         public RegistrationOptionsBuilder WithName(string name)
@@ -38,7 +38,7 @@ namespace TecX.Unity.AutoRegistration
                     _type, 
                     _name(_type), 
                     _lifetimeManager(_type),
-                    _injectionMember.ToArray());
+                    _injectionMembers.ToArray());
 
                 options.Add(option);
             }
@@ -241,7 +241,7 @@ namespace TecX.Unity.AutoRegistration
 
             ClozeInjectionConstructur ctor = new ClozeInjectionConstructur(name, value);
 
-            _injectionMember.Add(ctor);
+            _injectionMembers.Add(ctor);
 
             return this;
         }
@@ -252,9 +252,19 @@ namespace TecX.Unity.AutoRegistration
 
             ClozeInjectionConstructur ctor = new ClozeInjectionConstructur(ctorArgs);
 
-            _injectionMember.Add(ctor);
+            _injectionMembers.Add(ctor);
 
             return this;
         }
+
+        public RegistrationOptionsBuilder WithCtor(params object[] ctorArgs)
+        {
+            InjectionConstructor ctor = new InjectionConstructor(ctorArgs);
+
+            _injectionMembers.Add(ctor);
+
+            return this;
+        }
+
     }
 }
