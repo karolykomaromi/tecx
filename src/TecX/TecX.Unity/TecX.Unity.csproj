@@ -57,7 +57,7 @@
     <Compile Include="AutoRegistration\RegistrationOptionsBuilder.cs" />
     <Compile Include="AutoRegistration\RegistrationEntry.cs" />
     <Compile Include="AutoRegistration\Then.cs" />
-    <Compile Include="AutoRegistration\WellKnownAppParts.cs" />
+    <Compile Include="WellKnownAppParts.cs" />
     <Compile Include="ParameterMatcher.cs" />
     <Compile Include="ClozeInjectionConstructur.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
