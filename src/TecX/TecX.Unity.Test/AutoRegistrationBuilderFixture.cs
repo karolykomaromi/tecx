@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Microsoft.Practices.Unity.InterceptionExtension;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Practices.Unity;
 
 using Moq;
 
+using TecX.Unity.AutoRegistration;
 using TecX.Unity.Test.TestObjects;
-
-using UnityAutoRegistration;
 
 namespace TecX.Unity.Test
 {
-    /// <summary>
-    /// Zusammenfassungsbeschreibung für RegistrationBuilderFixture
-    /// </summary>
     [TestClass]
     public class AutoRegistrationBuilderFixture
     {
@@ -31,10 +28,12 @@ namespace TecX.Unity.Test
         private readonly IUnityContainer _container;
 
         private readonly List<RegistrationEvent> _registrationEvents;
+        private readonly List<UnityContainerExtension> _containerExtensions;
 
         public AutoRegistrationBuilderFixture() 
         {
             _registrationEvents = new List<RegistrationEvent>();
+            _containerExtensions = new List<UnityContainerExtension>();
 
             _mockContainer = new Mock<IUnityContainer>();
 
@@ -55,6 +54,10 @@ namespace TecX.Unity.Test
 
                         _registrationEvents.Add(registrationEvent);
                     });
+
+            _mockContainer
+                .Setup(c => c.AddExtension(It.IsAny<UnityContainerExtension>()))
+                .Callback<UnityContainerExtension>(ext => _containerExtensions.Add(ext));
 
             _container = _mockContainer.Object;
         }
@@ -78,6 +81,7 @@ namespace TecX.Unity.Test
          public void TestInitialize() 
          {
              _registrationEvents.Clear();
+             _containerExtensions.Clear();
          }
 
         //
@@ -113,6 +117,18 @@ namespace TecX.Unity.Test
             Assert.AreEqual(typeof(ILogger), registration.From);
             Assert.AreEqual(typeof(TransientLifetimeManager), registration.LifetimeManager.GetType());
             Assert.IsNull(registration.InjectionMembers);
+        }
+
+        [TestMethod]
+        public void WhenInterceptionIsConfigured_AddedAsExpected()
+        {
+            var builder = _container.ConfigureAutoRegistration()
+                .WithInterception();
+                
+            builder.ApplyAutoRegistrations();
+
+            Assert.AreEqual(1, _containerExtensions.Count);
+            Assert.AreEqual(typeof(Interception), _containerExtensions[0].GetType());
         }
     }
 }

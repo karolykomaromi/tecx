@@ -39,6 +39,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\Unity2\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Unity2\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,18 +53,20 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="AutoRegistrationBuilder.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="Filter.cs" />
-    <Compile Include="Filters.cs" />
-    <Compile Include="IAutoRegistration.cs" />
-    <Compile Include="If.cs" />
+    <Compile Include="AutoRegistration\AssemblyLocator.cs" />
+    <Compile Include="AutoRegistration\AutoRegistrationBuilder.cs" />
+    <Compile Include="AutoRegistration\Extensions.cs" />
+    <Compile Include="AutoRegistration\Filter.cs" />
+    <Compile Include="AutoRegistration\Filters.cs" />
+    <Compile Include="AutoRegistration\FolderAssemblyLocator.cs" />
+    <Compile Include="AutoRegistration\IAutoRegistration.cs" />
+    <Compile Include="AutoRegistration\If.cs" />
+    <Compile Include="AutoRegistration\RegistrationEntry.cs" />
+    <Compile Include="AutoRegistration\RegistrationOptions.cs" />
+    <Compile Include="AutoRegistration\RegistrationOptionsBuilder.cs" />
+    <Compile Include="AutoRegistration\Then.cs" />
+    <Compile Include="AutoRegistration\WellKnownAppParts.cs" />
     <Compile Include="IFluentInterface.cs" />
-    <Compile Include="RegistrationEntry.cs" />
-    <Compile Include="RegistrationOptions.cs" />
-    <Compile Include="RegistrationOptionsBuilder.cs" />
-    <Compile Include="Then.cs" />
-    <Compile Include="WellKnownAppParts.cs" />
     <Compile Include="ParameterMatcher.cs" />
     <Compile Include="ClozeInjectionConstructur.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

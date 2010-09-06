@@ -1,4 +1,4 @@
-﻿namespace TecX.Unity
+﻿namespace TecX.Unity.AutoRegistration
 {
     /// <summary>
     /// Well known application part names: 

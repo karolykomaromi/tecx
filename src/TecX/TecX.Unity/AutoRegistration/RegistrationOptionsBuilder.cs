@@ -4,9 +4,9 @@ using System.Linq;
 
 using Microsoft.Practices.Unity;
 
-using UnityAutoRegistration;
+using TecX.Common;
 
-namespace TecX.Unity
+namespace TecX.Unity.AutoRegistration
 {
     public class RegistrationOptionsBuilder
     {
@@ -15,7 +15,7 @@ namespace TecX.Unity
         private Func<Type, IEnumerable<Type>> _abstractions = t => new List<Type>(t.GetInterfaces());
         private Func<Type, string> _name = t => string.Empty;
         private Func<Type, LifetimeManager> _lifetimeManager = t => new TransientLifetimeManager();
-        private Func<Type, InjectionMember[]> _injectionMember = t => null;
+        private List<InjectionMember> _injectionMember = new List<InjectionMember>();
 
 
         public RegistrationOptionsBuilder WithName(string name)
@@ -38,7 +38,7 @@ namespace TecX.Unity
                     _type, 
                     _name(_type), 
                     _lifetimeManager(_type),
-                    _injectionMember(_type));
+                    _injectionMember.ToArray());
 
                 options.Add(option);
             }
@@ -227,9 +227,32 @@ namespace TecX.Unity
 
         public RegistrationOptionsBuilder WithoutPartName(string partName)
         {
-            if (partName == null) throw new ArgumentNullException("partName");
+            Guard.AssertNotEmpty(partName, "partName");
 
             _name = t => t.Name.Replace(partName, string.Empty);
+
+            return this;
+        }
+
+        public RegistrationOptionsBuilder WithCtorArg(string name, object value)
+        {
+            Guard.AssertNotEmpty(name, "name");
+            Guard.AssertNotNull(value, "value");
+
+            ClozeInjectionConstructur ctor = new ClozeInjectionConstructur(name, value);
+
+            _injectionMember.Add(ctor);
+
+            return this;
+        }
+
+        public RegistrationOptionsBuilder WithCtorArgs(IEnumerable<KeyValuePair<string, object>> ctorArgs)
+        {
+            Guard.AssertNotNull(ctorArgs, "ctorArgs");
+
+            ClozeInjectionConstructur ctor = new ClozeInjectionConstructur(ctorArgs);
+
+            _injectionMember.Add(ctor);
 
             return this;
         }
