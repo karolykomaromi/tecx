@@ -1,7 +1,7 @@
 ﻿namespace TecX.Unity.Test.TestObjects
 {
-    public class Introduction : IIntroduction
+    [Logger]
+    class TraceLogger : ILogger
     {
-
     }
 }
