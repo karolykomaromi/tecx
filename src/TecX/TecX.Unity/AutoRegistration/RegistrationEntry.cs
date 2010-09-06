@@ -2,9 +2,7 @@
 
 using Microsoft.Practices.Unity;
 
-using UnityAutoRegistration;
-
-namespace TecX.Unity
+namespace TecX.Unity.AutoRegistration
 {
     internal class RegistrationEntry
     {

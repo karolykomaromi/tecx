@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TecX.Unity
+namespace TecX.Unity.AutoRegistration
 {
     public class Filter<T>
         where T : class

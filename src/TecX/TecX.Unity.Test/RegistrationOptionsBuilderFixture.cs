@@ -4,6 +4,7 @@ using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using TecX.Unity.AutoRegistration;
 using TecX.Unity.Test.TestObjects;
 
 using Microsoft.Practices.Unity;
@@ -210,6 +211,45 @@ namespace TecX.Unity.Test
             var option = builder.Build().Single();
 
             Assert.AreEqual(typeof(DummyLifetimeManager), option.LifetimeManager.GetType());
+        }
+
+        [TestMethod]
+        public void WhenRegisteredWithCtorArg_ClozeInjectionConstructorIsUsed()
+        {
+            var builder = Then.Register()
+                .MappingTo<SqlRepository>()
+                .As<IRepository>()
+                .WithCtorArg("connectionString", "abc123");
+
+            var option = builder.Build().Single();
+
+            Assert.AreEqual(typeof(IRepository), option.From);
+            Assert.AreEqual(typeof(SqlRepository), option.To);
+            Assert.AreEqual(string.Empty, option.Name);
+            Assert.AreEqual(typeof(TransientLifetimeManager), option.LifetimeManager.GetType());
+            Assert.AreEqual(1, option.InjectionMembers.Length);
+            Assert.AreEqual(typeof(ClozeInjectionConstructur), option.InjectionMembers[0].GetType());
+        }
+
+        [TestMethod]
+        public void WhenRegisteredWithCtorArgs_ClozeInjectionConstructorIsUsed()
+        {
+            var builder = Then.Register()
+                .MappingTo<SqlRepository>()
+                .As<IRepository>()
+                .WithCtorArgs(new Dictionary<string, object>
+                                  {
+                                      { "connectionString", "abc123" }
+                                  });
+
+            var option = builder.Build().Single();
+
+            Assert.AreEqual(typeof(IRepository), option.From);
+            Assert.AreEqual(typeof(SqlRepository), option.To);
+            Assert.AreEqual(string.Empty, option.Name);
+            Assert.AreEqual(typeof(TransientLifetimeManager), option.LifetimeManager.GetType());
+            Assert.AreEqual(1, option.InjectionMembers.Length);
+            Assert.AreEqual(typeof(ClozeInjectionConstructur), option.InjectionMembers[0].GetType());
         }
     }
 }

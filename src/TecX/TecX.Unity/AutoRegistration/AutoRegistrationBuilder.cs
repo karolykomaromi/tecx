@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using Microsoft.Practices.Unity;
-
 using System.Reflection;
 
-namespace TecX.Unity
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.InterceptionExtension;
+
+namespace TecX.Unity.AutoRegistration
 {
     public class AutoRegistrationBuilder : IAutoRegistration, IFluentInterface
     {
@@ -19,6 +19,8 @@ namespace TecX.Unity
         private readonly List<Func<IEnumerable<Assembly>>> _assemblyLoaders;
 
         private readonly List<RegistrationEntry> _registrationEntries;
+
+        private readonly List<UnityContainerExtension> _containerExtensions;
 
         #endregion Fields
 
@@ -34,6 +36,7 @@ namespace TecX.Unity
             _excludeTypeFilters = new List<Filter<Type>>();
             _assemblyLoaders = new List<Func<IEnumerable<Assembly>>>();
             _registrationEntries = new List<RegistrationEntry>();
+            _containerExtensions = new List<UnityContainerExtension>();
         }
 
         #endregion c'tor
@@ -99,6 +102,15 @@ namespace TecX.Unity
             return this;
         }
 
+        public IAutoRegistration WithInterception()
+        {
+            Interception interception = new Interception();
+
+            _containerExtensions.Add(interception);
+
+            return this;
+        }
+
         public IAutoRegistration LoadAssemblies(Func<IEnumerable<Assembly>> assemblyLoader)
         {
             if (assemblyLoader == null) throw new ArgumentNullException("assemblyLoader");
@@ -108,7 +120,7 @@ namespace TecX.Unity
             return this;
         }
 
-        public IEnumerable<Assembly> LoadAdditionalAssemblies(IEnumerable<Func<IEnumerable<Assembly>>> assemblyLoaders)
+        private static IEnumerable<Assembly> LoadAdditionalAssemblies(IEnumerable<Func<IEnumerable<Assembly>>> assemblyLoaders)
         {
             if (assemblyLoaders == null) throw new ArgumentNullException("assemblyLoaders");
 
@@ -126,6 +138,11 @@ namespace TecX.Unity
 
         public void ApplyAutoRegistrations()
         {
+            foreach(UnityContainerExtension extension in _containerExtensions)
+            {
+                _container.AddExtension(extension);
+            }
+
             IEnumerable<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
             //filter assemblies you want to ignore

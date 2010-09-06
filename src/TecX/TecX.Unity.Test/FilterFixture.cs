@@ -5,6 +5,7 @@ using System.Reflection;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using TecX.Unity.AutoRegistration;
 using TecX.Unity.Test.TestObjects;
 
 namespace TecX.Unity.Test
@@ -75,10 +76,10 @@ namespace TecX.Unity.Test
                 .OrderBy(t => t.Name);
 
             Assert.AreEqual(4, filtered.Count());
-            Assert.AreEqual("EnhancedTraceLogger", filtered.ElementAt(0).Name);
-            Assert.AreEqual("Logger", filtered.ElementAt(1).Name);
-            Assert.AreEqual("TestLogger", filtered.ElementAt(2).Name);
-            Assert.AreEqual("TraceLogger", filtered.ElementAt(3).Name);
+            Assert.AreEqual(typeof(EnhancedTraceLogger), filtered.ElementAt(0));
+            Assert.AreEqual(typeof(Logger), filtered.ElementAt(1));
+            Assert.AreEqual(typeof(TestLogger), filtered.ElementAt(2));
+            Assert.AreEqual(typeof(TraceLogger), filtered.ElementAt(3));
         }
 
         [TestMethod]

@@ -2,7 +2,7 @@
 
 using Microsoft.Practices.Unity;
 
-namespace TecX.Unity
+namespace TecX.Unity.AutoRegistration
 {
     public class RegistrationOptions
     {

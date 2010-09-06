@@ -2,9 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-using UnityAutoRegistration;
-
-namespace TecX.Unity
+namespace TecX.Unity.AutoRegistration
 {
     public static class Filters
     {
