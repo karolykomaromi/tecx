@@ -49,14 +49,17 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="AutoRegistration\AutoRegistration.cs" />
-    <Compile Include="AutoRegistration\Extension.cs" />
-    <Compile Include="AutoRegistration\IAutoRegistration.cs" />
-    <Compile Include="AutoRegistration\If.cs" />
-    <Compile Include="AutoRegistration\RegistrationOptions.cs" />
-    <Compile Include="AutoRegistration\RegistrationOptionsBuilder.cs" />
-    <Compile Include="AutoRegistration\RegistrationEntry.cs" />
-    <Compile Include="AutoRegistration\Then.cs" />
+    <Compile Include="AutoRegistrationBuilder.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Filter.cs" />
+    <Compile Include="Filters.cs" />
+    <Compile Include="IAutoRegistration.cs" />
+    <Compile Include="If.cs" />
+    <Compile Include="IFluentInterface.cs" />
+    <Compile Include="RegistrationEntry.cs" />
+    <Compile Include="RegistrationOptions.cs" />
+    <Compile Include="RegistrationOptionsBuilder.cs" />
+    <Compile Include="Then.cs" />
     <Compile Include="WellKnownAppParts.cs" />
     <Compile Include="ParameterMatcher.cs" />
     <Compile Include="ClozeInjectionConstructur.cs" />

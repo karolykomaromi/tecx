@@ -1,7 +1,6 @@
 ﻿namespace TecX.Unity.Test.TestObjects
 {
-    public interface ILogger
+    interface ILogger
     {
-        void Log(string message);
     }
 }
