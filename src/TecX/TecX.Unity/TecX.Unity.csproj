@@ -62,6 +62,8 @@
     <Compile Include="AutoRegistration\From.cs" />
     <Compile Include="AutoRegistration\IAutoRegistration.cs" />
     <Compile Include="AutoRegistration\If.cs" />
+    <Compile Include="AutoRegistration\InterceptionOptions.cs" />
+    <Compile Include="AutoRegistration\InterceptionOptionsBuilder.cs" />
     <Compile Include="AutoRegistration\RegistrationEntry.cs" />
     <Compile Include="AutoRegistration\RegistrationOptions.cs" />
     <Compile Include="AutoRegistration\RegistrationOptionsBuilder.cs" />

@@ -123,7 +123,7 @@ namespace TecX.Unity.Test
         public void WhenInterceptionIsConfigured_AddedAsExpected()
         {
             var builder = _container.ConfigureAutoRegistration()
-                .WithInterception();
+                .EnableInterception();
                 
             builder.ApplyAutoRegistrations();
 
