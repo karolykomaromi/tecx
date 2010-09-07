@@ -6,7 +6,7 @@ namespace TecX.Unity.AutoRegistration
 {
     public interface IAutoRegistration
     {
-        void ApplyAutoRegistrations();
+        IAutoRegistration ApplyAutoRegistrations();
 
         IAutoRegistration Exclude(Filter<Assembly> filter);
         IAutoRegistration Exclude(Filter<Type> filter);
@@ -17,6 +17,8 @@ namespace TecX.Unity.AutoRegistration
         IAutoRegistration LoadAssemblies(Func<IEnumerable<Assembly>> assemblyLoader);
         IAutoRegistration LoadAssembly(Func<Assembly> assemblyLoader);
 
-        IAutoRegistration WithInterception();
+        IAutoRegistration Include(Filter<Type> filter, InterceptionOptionsBuilder builder);
+
+        IAutoRegistration EnableInterception();
     }
 }

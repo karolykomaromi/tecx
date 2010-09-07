@@ -6,5 +6,10 @@
         {
             return new RegistrationOptionsBuilder();
         }
+
+        public static InterceptionOptionsBuilder Intercept()
+        {
+            return new InterceptionOptionsBuilder();
+        }
     }
 }

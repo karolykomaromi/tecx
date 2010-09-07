@@ -14,14 +14,14 @@ namespace TecX.Unity.AutoRegistration
 
         private readonly IUnityContainer _container;
 
+        private readonly List<Func<UnityContainerExtension>> _extensionsLoaders;
+
         private readonly List<Filter<Assembly>> _excludeAssemblyFilters;
         private readonly List<Filter<Type>> _excludeTypeFilters;
         private readonly List<Func<IEnumerable<Assembly>>> _assemblyLoaders;
 
         private readonly List<RegistrationEntry> _registrationEntries;
-
-        private readonly List<UnityContainerExtension> _containerExtensions;
-
+        
         #endregion Fields
 
         #region c'tor
@@ -36,7 +36,7 @@ namespace TecX.Unity.AutoRegistration
             _excludeTypeFilters = new List<Filter<Type>>();
             _assemblyLoaders = new List<Func<IEnumerable<Assembly>>>();
             _registrationEntries = new List<RegistrationEntry>();
-            _containerExtensions = new List<UnityContainerExtension>();
+            _extensionsLoaders = new List<Func<UnityContainerExtension>>();
         }
 
         #endregion c'tor
@@ -102,15 +102,6 @@ namespace TecX.Unity.AutoRegistration
             return this;
         }
 
-        public IAutoRegistration WithInterception()
-        {
-            Interception interception = new Interception();
-
-            _containerExtensions.Add(interception);
-
-            return this;
-        }
-
         public IAutoRegistration LoadAssemblies(Func<IEnumerable<Assembly>> assemblyLoader)
         {
             if (assemblyLoader == null) throw new ArgumentNullException("assemblyLoader");
@@ -136,11 +127,11 @@ namespace TecX.Unity.AutoRegistration
             return assemblies;
         }
 
-        public void ApplyAutoRegistrations()
+        public IAutoRegistration ApplyAutoRegistrations()
         {
-            foreach(UnityContainerExtension extension in _containerExtensions)
+            foreach (Func<UnityContainerExtension> extensionLoader in _extensionsLoaders)
             {
-                _container.AddExtension(extension);
+                _container.AddExtension(extensionLoader());
             }
 
             IEnumerable<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies();
@@ -163,8 +154,38 @@ namespace TecX.Unity.AutoRegistration
                     entry.RegisterIfSatisfiesFilter(type);
                 }
             }
+
+            return this;
         } 
 
         #endregion Methods
+
+        public IAutoRegistration Include(Filter<Type> filter, InterceptionOptionsBuilder builder)
+        {
+            if (filter == null) throw new ArgumentNullException("filter");
+            if (builder == null) throw new ArgumentNullException("builder");
+
+            _registrationEntries.Add(new RegistrationEntry(
+                                         filter,
+                                         (type, container) =>
+                                         {
+                                             builder.ApplyForType(type);
+
+                                             InterceptionOptions registration = builder.Build();
+
+                                             container.RegisterType(
+                                                 registration.Type,
+                                                 registration.InjectionMembers);
+                                         },
+                                         _container));
+            return this;
+        }
+
+        public IAutoRegistration EnableInterception()
+        {
+            _extensionsLoaders.Add(() => new Interception());
+
+            return this;
+        }
     }
 }
