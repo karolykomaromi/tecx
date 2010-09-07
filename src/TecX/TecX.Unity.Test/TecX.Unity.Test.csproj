@@ -78,6 +78,7 @@
     <Compile Include="TestObjects\SqlRepository.cs" />
     <Compile Include="TestObjects\TestLogger.cs" />
     <Compile Include="TestObjects\TraceLogger.cs" />
+    <Compile Include="UnityContainerExtensionRegistrationFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
