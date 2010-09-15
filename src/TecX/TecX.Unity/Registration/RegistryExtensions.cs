@@ -30,8 +30,7 @@ namespace TecX.Unity.Registration
             return registry;
         }
 
-        public static IRegistry Include(this IRegistry registry,
-                                                ContainerExtensionOptionsBuilder builder)
+        public static IRegistry Include(this IRegistry registry, ContainerExtensionOptionsBuilder builder)
         {
             Guard.AssertNotNull(registry, "registry");
             Guard.AssertNotNull(builder, "builder");
@@ -44,8 +43,8 @@ namespace TecX.Unity.Registration
             return registry;
         }
 
-        public static IRegistry Include(this IRegistry registry, Filter<Type> filter,
-                                                RegistrationOptionsBuilder builder)
+        public static IRegistry Include(this IRegistry registry, Filter<Type> filter, 
+            RegistrationOptionsBuilder builder)
         {
             Guard.AssertNotNull(registry, "registry");
             Guard.AssertNotNull(filter, "filter");
@@ -55,6 +54,11 @@ namespace TecX.Unity.Registration
                                          filter,
                                          (type, container) =>
                                              {
+                                                 //TODO weberse should prohibit abstract types being registered
+                                                 //as mapping targets
+                                                 if (type.IsAbstract)
+                                                     return;
+
                                                  builder.MappingTo(type);
 
                                                  foreach (RegistrationOptions registration in builder.Build())

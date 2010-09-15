@@ -65,9 +65,14 @@
     <Compile Include="ClozeInjectionConstructorFixture.cs" />
     <Compile Include="RegistrationOptionsBuilderFixture.cs" />
     <Compile Include="TestObjects\AnotherInterceptable.cs" />
+    <Compile Include="TestObjects\ClassA.cs" />
+    <Compile Include="TestObjects\ClassB.cs" />
+    <Compile Include="TestObjects\ClassC.cs" />
+    <Compile Include="TestObjects\CtorTest.cs" />
     <Compile Include="TestObjects\DummyEnumerable.cs" />
     <Compile Include="TestObjects\DummyLifetimeManager.cs" />
     <Compile Include="TestObjects\EnhancedTraceLogger.cs" />
+    <Compile Include="TestObjects\ICtorTest.cs" />
     <Compile Include="TestObjects\IInterceptable.cs" />
     <Compile Include="TestObjects\ILogger.cs" />
     <Compile Include="TestObjects\IncrementIntegerByOneBehavior.cs" />
