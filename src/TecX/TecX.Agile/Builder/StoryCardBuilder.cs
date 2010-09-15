@@ -39,8 +39,6 @@ namespace TecX.Agile.Builder
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region Public Methods
 
         /// <summary>
@@ -112,8 +110,6 @@ namespace TecX.Agile.Builder
         }
 
         #endregion Public Methods
-
-        ////////////////////////////////////////////////////////////
 
         #region ICloneable Members
 

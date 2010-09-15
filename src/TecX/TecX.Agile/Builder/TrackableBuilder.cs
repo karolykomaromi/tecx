@@ -32,8 +32,6 @@
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region Methods
 
         /// <summary>
@@ -109,8 +107,6 @@
         }
 
         #endregion Methods
-
-        ////////////////////////////////////////////////////////////
 
         #region Overrides of EntityBuilder<Trackable>
 

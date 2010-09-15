@@ -89,8 +89,6 @@ namespace TecX.Common.Comparison
 
         #endregion Typewise overloads
 
-        ////////////////////////////////////////////////////////////
-
         #region null Checks
 
         /// <summary>

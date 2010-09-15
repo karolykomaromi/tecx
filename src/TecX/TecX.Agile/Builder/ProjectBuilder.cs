@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using TecX.Common;
+﻿using TecX.Common;
 
 namespace TecX.Agile.Builder
 {
@@ -40,8 +37,6 @@ namespace TecX.Agile.Builder
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region ICloneable Members
 
         /// <summary>
@@ -57,10 +52,8 @@ namespace TecX.Agile.Builder
 
         #endregion ICloneable Members
 
-        ////////////////////////////////////////////////////////////
-
         #region Public Methods
-        
+
         /// <summary>
         /// Sets the legend.
         /// </summary>

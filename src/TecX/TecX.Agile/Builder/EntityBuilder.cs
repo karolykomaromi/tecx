@@ -20,8 +20,6 @@ namespace TecX.Agile.Builder
 
         #endregion Properties
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -56,8 +54,6 @@ namespace TecX.Agile.Builder
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region Public Methods
 
         /// <summary>
@@ -71,8 +67,6 @@ namespace TecX.Agile.Builder
 
         #endregion Public Methods
 
-        ////////////////////////////////////////////////////////////
-
         #region ICloneable Members
 
         /// <summary>
@@ -84,8 +78,6 @@ namespace TecX.Agile.Builder
         public abstract object Clone();
 
         #endregion ICloneable Members
-
-        ////////////////////////////////////////////////////////////
 
         #region Operators
 

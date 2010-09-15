@@ -38,8 +38,6 @@ namespace TecX.Common
 
         #endregion Constants
 
-        ////////////////////////////////////////////////////////////
-
         #region AssertNotNull
 
         /// <summary>
@@ -88,8 +86,6 @@ namespace TecX.Common
 
         #endregion AssertNotNull
 
-        ////////////////////////////////////////////////////////////
-
         #region AssertNotEmpty (string)
 
         /// <summary>
@@ -135,8 +131,6 @@ namespace TecX.Common
         }
 
         #endregion AssertNotEmpty (string)
-
-        ////////////////////////////////////////////////////////////
 
         #region AssertNotEmpty (ICollection)
 
@@ -184,8 +178,6 @@ namespace TecX.Common
 
         #endregion AssertNotEmpty (ICollection)
 
-        ////////////////////////////////////////////////////////////
-
         #region AssertNotEmpty (Guid)
 
         /// <summary>
@@ -215,7 +207,6 @@ namespace TecX.Common
                 throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, NoParamName),
                                                       TypeHelper.ToNullSafeString(message)).WithAdditionalInfos(
                                                           new Dictionary<object, object> {{"arg", arg}});
-
             }
         }
 
@@ -234,8 +225,6 @@ namespace TecX.Common
         }
 
         #endregion AssertNotEmpty (Guid)
-
-        ////////////////////////////////////////////////////////////
 
         #region AssertCondition
 
@@ -289,8 +278,6 @@ namespace TecX.Common
 
         #endregion AssertCondition
 
-        ////////////////////////////////////////////////////////////
-
         #region InvalidSwitchValue
 
         /// <summary>
@@ -310,8 +297,6 @@ namespace TecX.Common
         }
 
         #endregion InvalidSwitchValue
-
-        ////////////////////////////////////////////////////////////
 
         #region AssertIsInRange
 
@@ -359,7 +344,7 @@ namespace TecX.Common
             {
                 throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, NoParamName),
                                                       TypeHelper.ToNullSafeString(message)).WithAdditionalInfos(
-                                                          new Dictionary<object, object> { { "arg", arg } });
+                                                          new Dictionary<object, object> {{"arg", arg}});
             }
         }
 
@@ -385,8 +370,6 @@ namespace TecX.Common
         }
 
         #endregion AssertIsInRange
-
-        ////////////////////////////////////////////////////////////
 
         #region AssertIsType
 
@@ -425,7 +408,6 @@ namespace TecX.Common
             AssertIsType(targetType, value, paramName, message);
         }
 
-
         /// <summary>
         /// Asserts that the <paramref name="value"/> is of the <see cref="Type"/> specified
         /// by <typeparamref name="TTarget"/>
@@ -445,7 +427,6 @@ namespace TecX.Common
 
             AssertIsType<TTarget>(value, paramName, message);
         }
-
 
         /// <summary>
         /// Asserts that the <paramref name="value"/> is of the <see cref="Type"/> specified
@@ -525,8 +506,6 @@ namespace TecX.Common
         }
 
         #endregion AssertIsType
-
-        ////////////////////////////////////////////////////////////
 
         #region Private Methods
 

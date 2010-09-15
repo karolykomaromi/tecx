@@ -19,8 +19,6 @@ namespace TecX.ServiceModel.Unity
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -41,8 +39,6 @@ namespace TecX.ServiceModel.Unity
         }
 
         #endregion c'tor
-
-        ////////////////////////////////////////////////////////////
 
         #region Overrides of ServiceHost
 

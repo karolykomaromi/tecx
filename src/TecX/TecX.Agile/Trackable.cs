@@ -34,8 +34,6 @@ namespace TecX.Agile
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region Properties
 
         /// <summary>
@@ -103,8 +101,6 @@ namespace TecX.Agile
 
         #endregion Properties
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -138,8 +134,6 @@ namespace TecX.Agile
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region Methods
 
         /// <summary>
@@ -159,8 +153,6 @@ namespace TecX.Agile
         }
 
         #endregion Methods
-
-        ////////////////////////////////////////////////////////////
 
         #region Overrides of Features
 

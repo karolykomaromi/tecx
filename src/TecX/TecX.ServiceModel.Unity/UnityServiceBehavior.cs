@@ -22,8 +22,6 @@ namespace TecX.ServiceModel.Unity
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -40,8 +38,6 @@ namespace TecX.ServiceModel.Unity
         }
 
         #endregion c'tor
-
-        ////////////////////////////////////////////////////////////
 
         #region Implementation of IServiceBehavior
 
@@ -73,10 +69,14 @@ namespace TecX.ServiceModel.Unity
         public void AddBindingParameters(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase,
                                          Collection<ServiceEndpoint> endpoints,
                                          BindingParameterCollection bindingParameters)
-        { /* intentionally left blank */ }
+        {
+            /* intentionally left blank */
+        }
 
         public void Validate(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
-        { /* intentionally left blank */ }
+        {
+            /* intentionally left blank */
+        }
 
         #endregion Implementation of IServiceBehavior
     }

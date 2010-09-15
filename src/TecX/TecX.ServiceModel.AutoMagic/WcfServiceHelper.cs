@@ -79,8 +79,6 @@ namespace TecX.ServiceModel.AutoMagic
 
         #endregion Create Proxy
 
-        ////////////////////////////////////////////////////////////
-
         #region Service Metadata Retrieval
 
         /// <summary>
@@ -226,13 +224,13 @@ namespace TecX.ServiceModel.AutoMagic
 
             string wsdl = sb.ToString();
 
-            XElement element = new XElement(Constants.EndpointMetadataExtensionName) { Value = wsdl };
+            XElement element = new XElement(Constants.EndpointMetadataExtensionName) {Value = wsdl};
 
             XElement root = new XElement("root", element);
 
             return root;
         }
-        
+
         /// <summary>
         /// Tries to the get the (A)ddress and (B)inding info from a mex endpoint
         /// </summary>
@@ -267,6 +265,5 @@ namespace TecX.ServiceModel.AutoMagic
         }
 
         #endregion Service Metadata Retrieval
-
     }
 }

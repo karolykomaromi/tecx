@@ -39,8 +39,6 @@ namespace TecX.Agile.Builder
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region ICloneable Members
 
         /// <summary>
@@ -53,8 +51,6 @@ namespace TecX.Agile.Builder
         }
 
         #endregion ICloneable Members
-
-        ////////////////////////////////////////////////////////////
 
         #region Methods
 

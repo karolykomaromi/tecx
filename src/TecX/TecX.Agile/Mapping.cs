@@ -49,8 +49,6 @@ namespace TecX.Agile
 
         #endregion Overrides of Object
 
-        ////////////////////////////////////////////////////////////
-
         #region Implementation of IEquatable<Mapping>
 
         /// <summary>

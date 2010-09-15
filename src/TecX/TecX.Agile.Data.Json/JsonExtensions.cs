@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 
 using Newtonsoft.Json.Linq;
 
 using TecX.Common;
 
-using Convert = System.Convert;
-
 namespace TecX.Agile.Data.Json
 {
     public static class JsonExtensions
     {
-
         #region JToken Extension Methods
 
         /// <summary>
@@ -252,8 +246,6 @@ namespace TecX.Agile.Data.Json
         }
 
         #endregion JToken Extension Methods
-
-        ////////////////////////////////////////////////////////////
 
         #region JObject Extension Methods
 

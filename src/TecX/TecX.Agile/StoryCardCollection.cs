@@ -27,8 +27,6 @@ namespace TecX.Agile
 
         #endregion Constants
 
-        ////////////////////////////////////////////////////////////
-
         #region Fields
 
         /// <summary>
@@ -37,8 +35,6 @@ namespace TecX.Agile
         private readonly Dictionary<Guid, StoryCard> _storyCards;
 
         #endregion Fields
-
-        ////////////////////////////////////////////////////////////
 
         #region Properties
 
@@ -52,8 +48,6 @@ namespace TecX.Agile
 
         #endregion Properties
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -65,8 +59,6 @@ namespace TecX.Agile
         }
 
         #endregion c'tor
-
-        ////////////////////////////////////////////////////////////
 
         #region Methods
 
@@ -121,13 +113,11 @@ namespace TecX.Agile
 
             foreach (StoryCard storyCard in other)
             {
-                Add((StoryCard)storyCard.Clone());
+                Add((StoryCard) storyCard.Clone());
             }
         }
 
         #endregion Methods
-
-        ////////////////////////////////////////////////////////////
 
         #region Implementation of IEnumerable
 

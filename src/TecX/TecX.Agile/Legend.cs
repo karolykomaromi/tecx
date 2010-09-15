@@ -15,8 +15,6 @@ namespace TecX.Agile
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region Properties
 
         public int Count
@@ -25,8 +23,6 @@ namespace TecX.Agile
         }
 
         #endregion Properties
-
-        ////////////////////////////////////////////////////////////
 
         #region Indexer
 
@@ -46,8 +42,6 @@ namespace TecX.Agile
 
         #endregion Indexer
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -59,8 +53,6 @@ namespace TecX.Agile
         }
 
         #endregion c'tor
-
-        ////////////////////////////////////////////////////////////
 
         #region Methods
 
@@ -131,8 +123,6 @@ namespace TecX.Agile
 
         #endregion Methods
 
-        ////////////////////////////////////////////////////////////
-
         #region Implementation of ICloneable
 
         /// <summary>
@@ -148,15 +138,13 @@ namespace TecX.Agile
 
             foreach (Mapping mapping in this)
             {
-                clone.Add(mapping.Name, (byte[])mapping.Color.Clone());
+                clone.Add(mapping.Name, (byte[]) mapping.Color.Clone());
             }
 
             return clone;
         }
 
         #endregion Implementation of ICloneable
-
-        ////////////////////////////////////////////////////////////
 
         #region Implementation of IEquatable<Legend>
 
@@ -222,8 +210,6 @@ namespace TecX.Agile
         }
 
         #endregion
-
-        ////////////////////////////////////////////////////////////
 
         #region Implementation of IEnumerable
 

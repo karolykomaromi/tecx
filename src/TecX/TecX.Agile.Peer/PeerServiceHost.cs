@@ -15,8 +15,6 @@ namespace TecX.Agile.Peer
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -32,16 +30,14 @@ namespace TecX.Agile.Peer
 
             binding.Security.Mode = SecurityMode.None;
 
-            _host = new ServiceHost(typeof(PeerClient));
+            _host = new ServiceHost(typeof (PeerClient));
 
-            _host.AddServiceEndpoint(typeof(IPeerClient), binding, meshAddress);
+            _host.AddServiceEndpoint(typeof (IPeerClient), binding, meshAddress);
 
             _host.Open();
         }
 
         #endregion c'tor
-
-        ////////////////////////////////////////////////////////////
 
         #region Implementation of IDisposable
 

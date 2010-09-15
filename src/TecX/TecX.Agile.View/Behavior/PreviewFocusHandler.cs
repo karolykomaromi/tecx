@@ -13,8 +13,6 @@ namespace TecX.Agile.View.Behavior
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region Overrides of BehaviorHandler
 
         /// <summary>

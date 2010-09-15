@@ -79,8 +79,6 @@ namespace TecX.ServiceModel.AutoMagic
 
         #endregion Implementation of IServiceBehavior
 
-        ////////////////////////////////////////////////////////////
-
         #region Helper Methods
 
         /// <summary>

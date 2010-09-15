@@ -29,8 +29,6 @@ namespace TecX.Agile
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region Properties
 
         /// <summary>
@@ -61,7 +59,6 @@ namespace TecX.Agile
                 _width = value;
             }
         }
-
 
         /// <summary>
         /// Gets and sets the height of the index-card
@@ -96,8 +93,6 @@ namespace TecX.Agile
 
         #endregion Properties
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -105,7 +100,7 @@ namespace TecX.Agile
         /// </summary>
         public Visualizable()
         {
-            Color = new byte[] { 255, 255, 255, 255 };
+            Color = new byte[] {255, 255, 255, 255};
             Height = 0;
             RotationAngle = 0;
             Width = 0;
@@ -121,7 +116,7 @@ namespace TecX.Agile
         {
             Guard.AssertNotNull(original, "original");
 
-            Color = (byte[])original.Color.Clone();
+            Color = (byte[]) original.Color.Clone();
             Height = original.Height;
             RotationAngle = original.RotationAngle;
             Width = original.Width;
@@ -130,8 +125,6 @@ namespace TecX.Agile
         }
 
         #endregion c'tor
-
-        ////////////////////////////////////////////////////////////
 
         #region Methods
 
@@ -143,7 +136,7 @@ namespace TecX.Agile
         {
             Guard.AssertNotNull(other, "other");
 
-            Color = (byte[])other.Color.Clone();
+            Color = (byte[]) other.Color.Clone();
             Height = other.Height;
             RotationAngle = other.RotationAngle;
             Width = other.Width;
@@ -152,8 +145,6 @@ namespace TecX.Agile
         }
 
         #endregion Methods
-
-        ////////////////////////////////////////////////////////////
 
         #region Overrides of Features
 

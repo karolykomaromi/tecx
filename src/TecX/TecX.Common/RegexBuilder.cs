@@ -18,8 +18,6 @@ namespace TecX.Common
 
         #endregion Properties
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -31,8 +29,6 @@ namespace TecX.Common
         }
 
         #endregion c'tor
-
-        ////////////////////////////////////////////////////////////
 
         #region Builder Infrastructure
 
@@ -58,8 +54,6 @@ namespace TecX.Common
         }
 
         #endregion Builder Infrastructure
-
-        ////////////////////////////////////////////////////////////
 
         /// <summary>
         /// Appends an end of string ($) marker to the pattern

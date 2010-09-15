@@ -41,8 +41,6 @@ namespace TecX.Agile.Builder
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region Construction Methods for PlanningArtefact
 
         /// <summary>

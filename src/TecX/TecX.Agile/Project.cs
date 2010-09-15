@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
 
 using TecX.Common;
 using TecX.Common.Comparison;
@@ -16,7 +14,6 @@ namespace TecX.Agile
     [Serializable]
     public class Project : PlanningArtefact, IEquatable<Project>, IEnumerable<Iteration>
     {
-
         #region Fields
 
         private readonly Dictionary<Guid, Iteration> _iterations;
@@ -24,8 +21,6 @@ namespace TecX.Agile
         private Backlog _backlog;
 
         #endregion Fields
-
-        ////////////////////////////////////////////////////////////
 
         #region Properties
 
@@ -67,8 +62,6 @@ namespace TecX.Agile
 
         #endregion Properties
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -95,8 +88,6 @@ namespace TecX.Agile
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region Object Members
 
         public bool Equals(Project other)
@@ -107,7 +98,7 @@ namespace TecX.Agile
             equal &= Backlog.Equals(other.Backlog);
             equal &= Legend.Equals(other.Legend);
             equal &= Compare.AreEqual(_iterations, other._iterations,
-                new DictionaryComparer<Guid, Iteration>());
+                                      new DictionaryComparer<Guid, Iteration>());
 
             return equal;
         }
@@ -173,8 +164,6 @@ namespace TecX.Agile
 
         #endregion Object Members
 
-        ////////////////////////////////////////////////////////////
-
         #region Methods
 
         /// <summary>
@@ -219,8 +208,6 @@ namespace TecX.Agile
         }
 
         #endregion Methods
-
-        ////////////////////////////////////////////////////////////
 
         #region ICloneable Members
 
