@@ -7,7 +7,7 @@ using Microsoft.Practices.Unity;
 
 using Moq;
 
-using TecX.Unity.AutoRegistration;
+using TecX.Unity.Registration;
 using TecX.Unity.Test.TestObjects;
 
 namespace TecX.Unity.Test
@@ -94,7 +94,7 @@ namespace TecX.Unity.Test
         [TestMethod]
         public void CanCreateRegistrationBuilder()
         {
-            AutoRegistrationBuilder builder = _container.ConfigureAutoRegistration();
+            RegistryBuilder builder = _container.ConfigureAutoRegistration();
 
             Assert.IsNotNull(builder);
         }
@@ -122,7 +122,7 @@ namespace TecX.Unity.Test
         [TestMethod]
         public void WhenInterceptionIsConfigured_AddedAsExpected()
         {
-            IAutoRegistration builder = _container
+            IRegistry builder = _container
                 .ConfigureAutoRegistration()
                 .EnableInterception()
                 .ApplyAutoRegistrations();
@@ -136,7 +136,7 @@ namespace TecX.Unity.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            IAutoRegistration registration = container
+            IRegistry registration = container
                 .ConfigureAutoRegistration()
                 .Include(The.Extension<TestExtension>()
                              .WithConfiguration<ITestExtensionConfig>(c => c.Prop1 = true))

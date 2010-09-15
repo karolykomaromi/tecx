@@ -6,7 +6,7 @@ using System.Reflection;
 
 using TecX.Common;
 
-namespace TecX.Unity.AutoRegistration
+namespace TecX.Unity.Registration
 {
     public class FolderAssemblyLocator : AssemblyLocator
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Practices.Unity;
 
-namespace TecX.Unity.AutoRegistration
+namespace TecX.Unity.Registration
 {
     public static class The
     {

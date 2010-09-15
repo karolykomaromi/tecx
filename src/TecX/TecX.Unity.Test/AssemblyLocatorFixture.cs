@@ -7,7 +7,7 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.TestTools.Extensions;
-using TecX.Unity.AutoRegistration;
+using TecX.Unity.Registration;
 
 namespace TecX.Unity.Test
 {

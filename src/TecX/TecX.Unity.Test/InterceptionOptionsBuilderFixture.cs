@@ -6,7 +6,7 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using TecX.Unity.AutoRegistration;
+using TecX.Unity.Registration;
 using TecX.Unity.Test.TestObjects;
 
 namespace TecX.Unity.Test
@@ -14,32 +14,6 @@ namespace TecX.Unity.Test
     [TestClass]
     public class InterceptionOptionsBuilderFixture
     {
-        public InterceptionOptionsBuilderFixture() { }
-
-        public TestContext TestContext { get; set; }
-
-        #region Zusätzliche Testattribute
-        //
-        // Sie können beim Schreiben der Tests folgende zusätzliche Attribute verwenden:
-        //
-        // Verwenden Sie ClassInitialize, um vor Ausführung des ersten Tests in der Klasse Code auszuführen.
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Verwenden Sie ClassCleanup, um nach Ausführung aller Tests in einer Klasse Code auszuführen.
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Mit TestInitialize können Sie vor jedem einzelnen Test Code ausführen. 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Mit TestCleanup können Sie nach jedem einzelnen Test Code ausführen.
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
         [TestMethod]
         public void CanSetupInterceptionForInterface()
         {

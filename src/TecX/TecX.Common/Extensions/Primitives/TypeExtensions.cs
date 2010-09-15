@@ -10,12 +10,21 @@ namespace TecX.Common.Extensions.Primitives
         {
             Guard.AssertNotNull(type, "type");
 
+            var baseTypes = GetBaseTypesInternal(type);
+
+            baseTypes = baseTypes.Except(new[] {type});
+
+            return baseTypes;
+        }
+
+        private static IEnumerable<Type> GetBaseTypesInternal(Type type)
+        {
             if (type.BaseType == null)
             {
                 return new[] { type };
             }
 
-            return GetBaseTypes(type.BaseType)
+            return GetBaseTypesInternal(type.BaseType)
                 .Union(new[] { type });
         }
     }

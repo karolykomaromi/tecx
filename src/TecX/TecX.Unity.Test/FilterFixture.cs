@@ -6,7 +6,7 @@ using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Common.Extensions.Primitives;
-using TecX.Unity.AutoRegistration;
+using TecX.Unity.Registration;
 using TecX.Unity.Test.TestObjects;
 
 namespace TecX.Unity.Test
@@ -14,10 +14,6 @@ namespace TecX.Unity.Test
     [TestClass]
     public class FilterFixture
     {
-        public FilterFixture() { }
-
-        public TestContext TestContext { get; set; }
-
         [TestMethod]
         public void CanFilterByConcreteType()
         {
@@ -118,7 +114,7 @@ namespace TecX.Unity.Test
 
             Filter<Assembly> filter = Filters.ForAssemblies.ContainsType<ILogger>();
 
-            Assembly assembly = assemblies.Single(a => filter.IsMatch(a));
+            Assembly assembly = assemblies.Single(filter.IsMatch);
 
             Assert.IsNotNull(assembly);
             Assert.AreEqual("TecX.Unity.Test", assembly.GetName().Name);
@@ -131,7 +127,7 @@ namespace TecX.Unity.Test
 
             Filter<Assembly> filter = Filters.ForAssemblies.NameContains("TecX.Unity");
 
-            IEnumerable<Assembly> filtered = assemblies.Where(a => filter.IsMatch(a));
+            IEnumerable<Assembly> filtered = assemblies.Where(filter.IsMatch);
 
             Assert.AreEqual(2, filtered.Count());
         }
@@ -155,10 +151,10 @@ namespace TecX.Unity.Test
 
             var types = c.GetType().GetBaseTypes();
 
+            Assert.AreEqual(3, types.Count());
             Assert.AreEqual(typeof(object), types.ElementAt(0));
             Assert.AreEqual(typeof(ClassA), types.ElementAt(1));
             Assert.AreEqual(typeof(ClassB), types.ElementAt(2));
-            Assert.AreEqual(typeof(ClassC), types.ElementAt(3));
         }
 
         [TestMethod]
