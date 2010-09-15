@@ -6,7 +6,7 @@ using Microsoft.Practices.Unity.InterceptionExtension;
 
 using TecX.Common;
 
-namespace TecX.Unity.AutoRegistration
+namespace TecX.Unity.Registration
 {
     public class InterceptionOptions
     {

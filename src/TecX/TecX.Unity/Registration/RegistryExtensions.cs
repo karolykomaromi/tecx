@@ -5,11 +5,11 @@ using Microsoft.Practices.Unity.InterceptionExtension;
 
 using TecX.Common;
 
-namespace TecX.Unity.AutoRegistration
+namespace TecX.Unity.Registration
 {
-    public static class AutoRegistrationExtensions
+    public static class RegistryExtensions
     {
-        public static IAutoRegistration ExcludeSystemAssemblies(this IAutoRegistration registry)
+        public static IRegistry ExcludeSystemAssemblies(this IRegistry registry)
         {
             Guard.AssertNotNull(registry, "registry");
 
@@ -18,7 +18,7 @@ namespace TecX.Unity.AutoRegistration
             return registry;
         }
 
-        public static IAutoRegistration EnableInterception(this IAutoRegistration registry)
+        public static IRegistry EnableInterception(this IRegistry registry)
         {
             Guard.AssertNotNull(registry, "registry");
 
@@ -30,7 +30,7 @@ namespace TecX.Unity.AutoRegistration
             return registry;
         }
 
-        public static IAutoRegistration Include(this IAutoRegistration registry,
+        public static IRegistry Include(this IRegistry registry,
                                                 ContainerExtensionOptionsBuilder builder)
         {
             Guard.AssertNotNull(registry, "registry");
@@ -44,7 +44,7 @@ namespace TecX.Unity.AutoRegistration
             return registry;
         }
 
-        public static IAutoRegistration Include(this IAutoRegistration registry, Filter<Type> filter,
+        public static IRegistry Include(this IRegistry registry, Filter<Type> filter,
                                                 RegistrationOptionsBuilder builder)
         {
             Guard.AssertNotNull(registry, "registry");
@@ -70,7 +70,7 @@ namespace TecX.Unity.AutoRegistration
             return registry;
         }
 
-        public static IAutoRegistration Include(this IAutoRegistration registry, Filter<Type> filter,
+        public static IRegistry Include(this IRegistry registry, Filter<Type> filter,
                                                 InterceptionOptionsBuilder builder)
         {
             Guard.AssertNotNull(registry, "registry");

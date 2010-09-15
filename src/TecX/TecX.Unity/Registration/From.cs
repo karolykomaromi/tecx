@@ -1,6 +1,6 @@
 ﻿using TecX.Common;
 
-namespace TecX.Unity.AutoRegistration
+namespace TecX.Unity.Registration
 {
     public static class From
     {

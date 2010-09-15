@@ -5,7 +5,7 @@ using System.Reflection;
 using TecX.Common;
 using TecX.Common.Extensions.Primitives;
 
-namespace TecX.Unity.AutoRegistration
+namespace TecX.Unity.Registration
 {
     public static class Filters
     {
@@ -26,7 +26,7 @@ namespace TecX.Unity.AutoRegistration
             {
                 Type contract = typeof(TContract);
 
-                if (!contract.IsInterface ||
+                if (!contract.IsInterface &&
                     !contract.IsAbstract)
                 {
                     throw new ArgumentException("Specified Type must be abstract or an interface!");
@@ -34,7 +34,7 @@ namespace TecX.Unity.AutoRegistration
 
                 return new Filter<Type>(
                     t => t.GetInterfaces().Any(i => i == contract) ||
-                         t.GetBaseTypes().Any(a => (Type)a == contract),
+                         t.GetBaseTypes().Any(b => contract == b),
                     string.Format("Type implements contract '{0}'",
                     contract.FullName));
             }

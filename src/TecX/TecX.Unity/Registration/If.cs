@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TecX.Unity.AutoRegistration
+namespace TecX.Unity.Registration
 {
     public static class If
     {

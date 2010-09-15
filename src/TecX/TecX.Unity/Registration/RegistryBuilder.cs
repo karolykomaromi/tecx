@@ -7,9 +7,9 @@ using Microsoft.Practices.Unity;
 
 using TecX.Common;
 
-namespace TecX.Unity.AutoRegistration
+namespace TecX.Unity.Registration
 {
-    public class AutoRegistrationBuilder : IAutoRegistration, IFluentInterface
+    public class RegistryBuilder : IRegistry, IFluentInterface
     {
         #region Fields
 
@@ -23,7 +23,7 @@ namespace TecX.Unity.AutoRegistration
 
         #region c'tor
 
-        public AutoRegistrationBuilder(IUnityContainer container)
+        public RegistryBuilder(IUnityContainer container)
         {
             Guard.AssertNotNull(container, "container");
 
@@ -39,7 +39,7 @@ namespace TecX.Unity.AutoRegistration
 
         #region Methods
 
-        public IAutoRegistration Exclude(Filter<Type> filter)
+        public IRegistry Exclude(Filter<Type> filter)
         {
             Guard.AssertNotNull(filter, "filter");
 
@@ -48,7 +48,7 @@ namespace TecX.Unity.AutoRegistration
             return this;
         }
 
-        public IAutoRegistration Exclude(Filter<Assembly> filter)
+        public IRegistry Exclude(Filter<Assembly> filter)
         {
             Guard.AssertNotNull(filter, "filter");
 
@@ -57,7 +57,7 @@ namespace TecX.Unity.AutoRegistration
             return this;
         }
 
-        public IAutoRegistration LoadAssembly(Func<Assembly> assemblyLoader)
+        public IRegistry LoadAssembly(Func<Assembly> assemblyLoader)
         {
             Guard.AssertNotNull(assemblyLoader, "assemblyLoader");
 
@@ -66,7 +66,7 @@ namespace TecX.Unity.AutoRegistration
             return this;
         }
 
-        public IAutoRegistration LoadAssemblies(Func<IEnumerable<Assembly>> assemblyLoader)
+        public IRegistry LoadAssemblies(Func<IEnumerable<Assembly>> assemblyLoader)
         {
             Guard.AssertNotNull(assemblyLoader, "assemblyLoader");
 
@@ -99,7 +99,7 @@ namespace TecX.Unity.AutoRegistration
             _registrations.Add(registration);
         }
 
-        public IAutoRegistration ApplyAutoRegistrations()
+        public IRegistry ApplyAutoRegistrations()
         {
             IEnumerable<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
