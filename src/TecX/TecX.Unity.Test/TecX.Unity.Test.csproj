@@ -73,9 +73,11 @@
     <Compile Include="TestObjects\IncrementIntegerByOneBehavior.cs" />
     <Compile Include="TestObjects\Interceptable.cs" />
     <Compile Include="TestObjects\IRepository.cs" />
+    <Compile Include="TestObjects\ITestExtensionConfig.cs" />
     <Compile Include="TestObjects\Logger.cs" />
     <Compile Include="TestObjects\LoggerAttribute.cs" />
     <Compile Include="TestObjects\SqlRepository.cs" />
+    <Compile Include="TestObjects\TestExtension.cs" />
     <Compile Include="TestObjects\TestLogger.cs" />
     <Compile Include="TestObjects\TraceLogger.cs" />
     <Compile Include="UnityContainerExtensionRegistrationFixture.cs" />

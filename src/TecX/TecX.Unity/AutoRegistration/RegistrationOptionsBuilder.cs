@@ -15,12 +15,12 @@ namespace TecX.Unity.AutoRegistration
         private Func<Type, IEnumerable<Type>> _abstractions = t => new List<Type>(t.GetInterfaces());
         private Func<Type, string> _name = t => string.Empty;
         private Func<Type, LifetimeManager> _lifetimeManager = t => new TransientLifetimeManager();
-        private List<InjectionMember> _injectionMembers = new List<InjectionMember>();
+        private readonly List<InjectionMember> _injectionMembers = new List<InjectionMember>();
 
 
         public RegistrationOptionsBuilder WithName(string name)
         {
-            if (name == null) throw new ArgumentNullException("name");
+            Guard.AssertNotNull(name, "name");
 
             _name = t => name;
 
@@ -54,7 +54,7 @@ namespace TecX.Unity.AutoRegistration
 
         public RegistrationOptionsBuilder MappingTo(Type type)
         {
-            if (type == null) throw new ArgumentNullException("type");
+            Guard.AssertNotNull(type, "type");
 
             _type = type;
 

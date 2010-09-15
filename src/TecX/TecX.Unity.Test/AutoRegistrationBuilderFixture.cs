@@ -122,10 +122,10 @@ namespace TecX.Unity.Test
         [TestMethod]
         public void WhenInterceptionIsConfigured_AddedAsExpected()
         {
-            var builder = _container.ConfigureAutoRegistration()
-                .EnableInterception();
-                
-            builder.ApplyAutoRegistrations();
+            IAutoRegistration builder = _container
+                .ConfigureAutoRegistration()
+                .EnableInterception()
+                .ApplyAutoRegistrations();
 
             Assert.AreEqual(1, _containerExtensions.Count);
             Assert.AreEqual(typeof(Interception), _containerExtensions[0].GetType());
