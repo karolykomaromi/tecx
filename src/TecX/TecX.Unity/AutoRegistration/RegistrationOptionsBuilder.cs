@@ -10,6 +10,8 @@ namespace TecX.Unity.AutoRegistration
 {
     public class RegistrationOptionsBuilder
     {
+        #region Fields
+
         private Type _type;
 
         private Func<Type, IEnumerable<Type>> _abstractions = t => new List<Type>(t.GetInterfaces());
@@ -17,15 +19,9 @@ namespace TecX.Unity.AutoRegistration
         private Func<Type, LifetimeManager> _lifetimeManager = t => new TransientLifetimeManager();
         private readonly List<InjectionMember> _injectionMembers = new List<InjectionMember>();
 
+        #endregion Fields
 
-        public RegistrationOptionsBuilder WithName(string name)
-        {
-            Guard.AssertNotNull(name, "name");
-
-            _name = t => name;
-
-            return this;
-        }
+        #region Builder
 
         public IEnumerable<RegistrationOptions> Build()
         {
@@ -34,9 +30,9 @@ namespace TecX.Unity.AutoRegistration
             foreach (Type from in _abstractions(_type))
             {
                 RegistrationOptions option = new RegistrationOptions(
-                    from, 
-                    _type, 
-                    _name(_type), 
+                    from,
+                    _type,
+                    _name(_type),
                     _lifetimeManager(_type),
                     _injectionMembers.ToArray());
 
@@ -44,6 +40,19 @@ namespace TecX.Unity.AutoRegistration
             }
 
             return options;
+        }
+
+        #endregion Builder
+
+        #region Methods
+
+        public RegistrationOptionsBuilder WithName(string name)
+        {
+            Guard.AssertNotNull(name, "name");
+
+            _name = t => name;
+
+            return this;
         }
 
         public RegistrationOptionsBuilder MappingTo<TTo>()
@@ -71,13 +80,13 @@ namespace TecX.Unity.AutoRegistration
         public RegistrationOptionsBuilder WithIContractName()
         {
             _name = t =>
-                            {
-                                string contractName = t.GetInterfaces()
-                                    .Where(contract => t.Name.EndsWith(contract.Name.Substring(1), StringComparison.OrdinalIgnoreCase))
-                                    .FirstOrDefault().Name;
+                        {
+                            string contractName = t.GetInterfaces()
+                                .Where(contract => t.Name.EndsWith(contract.Name.Substring(1), StringComparison.OrdinalIgnoreCase))
+                                .FirstOrDefault().Name;
 
-                                return t.Name.Remove(t.Name.Length - contractName.Length + 1);
-                            };
+                            return t.Name.Remove(t.Name.Length - contractName.Length + 1);
+                        };
 
             return this;
         }
@@ -95,10 +104,10 @@ namespace TecX.Unity.AutoRegistration
             where T2 : class
         {
             _abstractions = t => new[] 
-                                    { 
-                                        typeof(T1), 
-                                        typeof(T2) 
-                                    };
+                                     { 
+                                         typeof(T1), 
+                                         typeof(T2) 
+                                     };
 
             return this;
         }
@@ -109,11 +118,11 @@ namespace TecX.Unity.AutoRegistration
             where T3 : class
         {
             _abstractions = t => new[] 
-                                    { 
-                                        typeof(T1), 
-                                        typeof(T2), 
-                                        typeof(T3)
-                                    };
+                                     { 
+                                         typeof(T1), 
+                                         typeof(T2), 
+                                         typeof(T3)
+                                     };
 
             return this;
         }
@@ -125,12 +134,12 @@ namespace TecX.Unity.AutoRegistration
             where T4 : class
         {
             _abstractions = t => new[] 
-                                    { 
-                                        typeof(T1), 
-                                        typeof(T2), 
-                                        typeof(T3),
-                                        typeof(T4)
-                                    };
+                                     { 
+                                         typeof(T1), 
+                                         typeof(T2), 
+                                         typeof(T3),
+                                         typeof(T4)
+                                     };
 
             return this;
         }
@@ -143,13 +152,13 @@ namespace TecX.Unity.AutoRegistration
             where T5 : class
         {
             _abstractions = t => new[] 
-                                    { 
-                                        typeof(T1), 
-                                        typeof(T2), 
-                                        typeof(T3),
-                                        typeof(T4),
-                                        typeof(T5)
-                                    };
+                                     { 
+                                         typeof(T1), 
+                                         typeof(T2), 
+                                         typeof(T3),
+                                         typeof(T4),
+                                         typeof(T5)
+                                     };
 
             return this;
         }
@@ -163,14 +172,14 @@ namespace TecX.Unity.AutoRegistration
             where T6 : class
         {
             _abstractions = t => new[] 
-                                    { 
-                                        typeof(T1), 
-                                        typeof(T2), 
-                                        typeof(T3),
-                                        typeof(T4),
-                                        typeof(T5),
-                                        typeof(T6)
-                                    };
+                                     { 
+                                         typeof(T1), 
+                                         typeof(T2), 
+                                         typeof(T3),
+                                         typeof(T4),
+                                         typeof(T5),
+                                         typeof(T6)
+                                     };
 
             return this;
         }
@@ -266,5 +275,6 @@ namespace TecX.Unity.AutoRegistration
             return this;
         }
 
+        #endregion Methods
     }
 }

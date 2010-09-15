@@ -130,5 +130,21 @@ namespace TecX.Unity.Test
             Assert.AreEqual(1, _containerExtensions.Count);
             Assert.AreEqual(typeof(Interception), _containerExtensions[0].GetType());
         }
+
+        [TestMethod]
+        public void WhenAddingExtension_CanConfigureItAsExpected()
+        {
+            IUnityContainer container = new UnityContainer();
+
+            IAutoRegistration registration = container
+                .ConfigureAutoRegistration()
+                .Include(The.Extension<TestExtension>()
+                             .WithConfiguration<ITestExtensionConfig>(c => c.Prop1 = true))
+                .ApplyAutoRegistrations();
+
+            TestExtension extension = container.Resolve<TestExtension>();
+
+            Assert.IsTrue(extension.Prop1);
+        }
     }
 }

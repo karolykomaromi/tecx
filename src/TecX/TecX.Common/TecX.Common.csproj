@@ -72,6 +72,7 @@
     <Compile Include="Extensions\LinqTo\Entities\PredicateExtensions.cs" />
     <Compile Include="Extensions\LinqTo\Objects\PredicateExtensions.cs" />
     <Compile Include="Extensions\Primitives\ObjectExtensions.cs" />
+    <Compile Include="Extensions\Primitives\TypeExtensions.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Comparison\LambdaComparer.cs" />
     <Compile Include="Latch.cs" />

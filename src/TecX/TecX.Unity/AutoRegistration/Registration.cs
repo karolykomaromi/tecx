@@ -6,28 +6,24 @@ using TecX.Common;
 
 namespace TecX.Unity.AutoRegistration
 {
-    internal class Registration
+    public class Registration
     {
         private readonly Filter<Type> _filter;
         private readonly Action<Type, IUnityContainer> _registrator;
-        private readonly IUnityContainer _container;
 
-        public Registration(Filter<Type> filter, Action<Type, IUnityContainer> registrator, 
-            IUnityContainer container)
+        public Registration(Filter<Type> filter, Action<Type, IUnityContainer> registrator)
         {
             Guard.AssertNotNull(filter, "filter");
             Guard.AssertNotNull(registrator, "registrator");
-            Guard.AssertNotNull(container, "container");
 
             _filter = filter;
             _registrator = registrator;
-            _container = container;
         }
 
-        public virtual void RegisterIfSatisfiesFilter(Type type)
+        public virtual void RegisterIfSatisfiesFilter(Type type, IUnityContainer container)
         {
             if (_filter.IsMatch(type))
-                _registrator(type, _container);
+                _registrator(type, container);
         }
     }
 }

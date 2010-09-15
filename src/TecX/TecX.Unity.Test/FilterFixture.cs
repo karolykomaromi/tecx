@@ -5,43 +5,18 @@ using System.Reflection;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using TecX.Common.Extensions.Primitives;
 using TecX.Unity.AutoRegistration;
 using TecX.Unity.Test.TestObjects;
 
 namespace TecX.Unity.Test
 {
-    /// <summary>
-    /// Zusammenfassungsbeschreibung für TypeFilterFixture
-    /// </summary>
     [TestClass]
     public class FilterFixture
     {
         public FilterFixture() { }
 
         public TestContext TestContext { get; set; }
-
-        #region Zusätzliche Testattribute
-        //
-        // Sie können beim Schreiben der Tests folgende zusätzliche Attribute verwenden:
-        //
-        // Verwenden Sie ClassInitialize, um vor Ausführung des ersten Tests in der Klasse Code auszuführen.
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Verwenden Sie ClassCleanup, um nach Ausführung aller Tests in einer Klasse Code auszuführen.
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Mit TestInitialize können Sie vor jedem einzelnen Test Code ausführen. 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Mit TestCleanup können Sie nach jedem einzelnen Test Code ausführen.
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
 
         [TestMethod]
         public void CanFilterByConcreteType()
@@ -172,5 +147,38 @@ namespace TecX.Unity.Test
             //I hate IsAssignableFrom...
             Assert.IsTrue(typeof(ILogger).IsAssignableFrom(typeof(TraceLogger)));
         }
+
+        [TestMethod]
+        public void CanGetAllBaseClasses()
+        {
+            var c = new ClassC();
+
+            var types = c.GetType().GetBaseTypes();
+
+            Assert.AreEqual(typeof(object), types.ElementAt(0));
+            Assert.AreEqual(typeof(ClassA), types.ElementAt(1));
+            Assert.AreEqual(typeof(ClassB), types.ElementAt(2));
+            Assert.AreEqual(typeof(ClassC), types.ElementAt(3));
+        }
+
+        [TestMethod]
+        public void CanFilterByInherits()
+        {
+            Filter<Type> filter = Filters.ForTypes.InheritsFrom(typeof (ClassB));
+
+            Assert.IsTrue(filter.IsMatch(typeof(ClassC)));
+        }
+    }
+
+    class ClassC : ClassB
+    {
+    }
+
+    class ClassB : ClassA
+    {
+    }
+
+    abstract class ClassA
+    {
     }
 }
