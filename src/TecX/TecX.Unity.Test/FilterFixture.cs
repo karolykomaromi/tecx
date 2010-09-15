@@ -165,16 +165,4 @@ namespace TecX.Unity.Test
             Assert.IsTrue(filter.IsMatch(typeof(ClassC)));
         }
     }
-
-    class ClassC : ClassB
-    {
-    }
-
-    class ClassB : ClassA
-    {
-    }
-
-    abstract class ClassA
-    {
-    }
 }
