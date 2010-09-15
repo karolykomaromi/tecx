@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.InterceptionExtension;
 
 using TecX.Common;
 
@@ -15,13 +14,9 @@ namespace TecX.Unity.AutoRegistration
         #region Fields
 
         private readonly IUnityContainer _container;
-
-        private readonly List<Func<UnityContainerExtension>> _extensionsLoaders;
-
         private readonly List<Filter<Assembly>> _excludeAssemblyFilters;
         private readonly List<Filter<Type>> _excludeTypeFilters;
         private readonly List<Func<IEnumerable<Assembly>>> _assemblyLoaders;
-
         private readonly List<Registration> _registrations;
 
         #endregion Fields
@@ -36,11 +31,8 @@ namespace TecX.Unity.AutoRegistration
 
             _excludeAssemblyFilters = new List<Filter<Assembly>>();
             _excludeTypeFilters = new List<Filter<Type>>();
-
             _assemblyLoaders = new List<Func<IEnumerable<Assembly>>>();
-
             _registrations = new List<Registration>();
-            _extensionsLoaders = new List<Func<UnityContainerExtension>>();
         }
 
         #endregion c'tor
@@ -65,77 +57,11 @@ namespace TecX.Unity.AutoRegistration
             return this;
         }
 
-        public IAutoRegistration ExcludeSystemAssemblies()
-        {
-            _excludeAssemblyFilters.Add(Filters.ForAssemblies.IsSystemAssembly());
-
-            return this;
-        }
-
-        public IAutoRegistration Include(ContainerExtensionOptionsBuilder builder)
-        {
-            Guard.AssertNotNull(builder, "builder");
-
-            RunOnceRegistration registration = new RunOnceRegistration(
-                builder.Build().Registrator,
-                _container);
-
-            _registrations.Add(registration);
-
-            return this;
-        }
-
-        public IAutoRegistration Include(Filter<Type> filter, RegistrationOptionsBuilder builder)
-        {
-            Guard.AssertNotNull(filter, "filter");
-            Guard.AssertNotNull(builder, "builder");
-
-            _registrations.Add(new Registration(
-                                         filter,
-                                         (type, container) =>
-                                         {
-                                             builder.MappingTo(type);
-
-                                             foreach (RegistrationOptions registration in builder.Build())
-                                             {
-                                                 container.RegisterType(
-                                                     registration.From,
-                                                     registration.To,
-                                                     registration.Name,
-                                                     registration.LifetimeManager,
-                                                     registration.InjectionMembers);
-                                             }
-                                         },
-                                         _container));
-            return this;
-        }
-
-        public IAutoRegistration Include(Filter<Type> filter, InterceptionOptionsBuilder builder)
-        {
-            Guard.AssertNotNull(filter, "filter");
-            Guard.AssertNotNull(builder, "builder");
-
-            _registrations.Add(new Registration(
-                                         filter,
-                                         (type, container) =>
-                                         {
-                                             builder.ApplyForType(type);
-
-                                             InterceptionOptions registration = builder.Build();
-
-                                             container.RegisterType(
-                                                 registration.Type,
-                                                 registration.InjectionMembers);
-                                         },
-                                         _container));
-            return this;
-        }
-
         public IAutoRegistration LoadAssembly(Func<Assembly> assemblyLoader)
         {
             Guard.AssertNotNull(assemblyLoader, "assemblyLoader");
 
-            _assemblyLoaders.Add(() => new[] { assemblyLoader() });
+            _assemblyLoaders.Add(() => new[] {assemblyLoader()});
 
             return this;
         }
@@ -149,7 +75,8 @@ namespace TecX.Unity.AutoRegistration
             return this;
         }
 
-        private static IEnumerable<Assembly> LoadAdditionalAssemblies(IEnumerable<Func<IEnumerable<Assembly>>> assemblyLoaders)
+        private static IEnumerable<Assembly> LoadAdditionalAssemblies(
+            IEnumerable<Func<IEnumerable<Assembly>>> assemblyLoaders)
         {
             Guard.AssertNotNull(assemblyLoaders, "assemblyLoaders");
 
@@ -165,15 +92,11 @@ namespace TecX.Unity.AutoRegistration
             return assemblies;
         }
 
-        public IAutoRegistration EnableInterception()
+        public void AddRegistration(Registration registration)
         {
-            RunOnceRegistration registration = new RunOnceRegistration(
-                (t,c)=> c.AddExtension(new Interception()), 
-                _container);
+            Guard.AssertNotNull(registration, "registration");
 
             _registrations.Add(registration);
-
-            return this;
         }
 
         public IAutoRegistration ApplyAutoRegistrations()
@@ -188,14 +111,14 @@ namespace TecX.Unity.AutoRegistration
 
             IEnumerable<Type> types = assemblies.SelectMany(a => a.GetTypes());
 
-            //filter types you want to ignore
+            //filter types you chose to ignore explicitely
             types = types.Where(t => !_excludeTypeFilters.Any(f => f.IsMatch(t)));
 
             foreach (Type type in types)
             {
                 foreach (Registration entry in _registrations)
                 {
-                    entry.RegisterIfSatisfiesFilter(type);
+                    entry.RegisterIfSatisfiesFilter(type, _container);
                 }
             }
 

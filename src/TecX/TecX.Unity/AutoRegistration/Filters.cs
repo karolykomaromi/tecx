@@ -2,6 +2,9 @@
 using System.Linq;
 using System.Reflection;
 
+using TecX.Common;
+using TecX.Common.Extensions.Primitives;
+
 namespace TecX.Unity.AutoRegistration
 {
     public static class Filters
@@ -23,9 +26,15 @@ namespace TecX.Unity.AutoRegistration
             {
                 Type contract = typeof(TContract);
 
-                if (!contract.IsInterface) throw new ArgumentException("Specified Type must be an interface!");
+                if (!contract.IsInterface ||
+                    !contract.IsAbstract)
+                {
+                    throw new ArgumentException("Specified Type must be abstract or an interface!");
+                }
 
-                return new Filter<Type>(t => t.GetInterfaces().Any(i => i == contract),
+                return new Filter<Type>(
+                    t => t.GetInterfaces().Any(i => i == contract) ||
+                         t.GetBaseTypes().Any(a => (Type)a == contract),
                     string.Format("Type implements contract '{0}'",
                     contract.FullName));
             }
@@ -40,32 +49,44 @@ namespace TecX.Unity.AutoRegistration
 
             public static Filter<Type> ImplementsOpenGeneric(Type contract)
             {
-                if (contract == null) throw new ArgumentNullException("contract");
+                Guard.AssertNotNull(contract, "contract");
+
                 if (!contract.IsGenericTypeDefinition)
                     throw new ArgumentException("Provided contract has to be an open generic", "contract");
 
-                return new Filter<Type>(t => t.GetInterfaces().Any(i => i.IsGenericType && (i.GetGenericTypeDefinition() == contract)),
+                return new Filter<Type>(
+                    t => t.GetInterfaces().Any(i => i.IsGenericType &&
+                        (i.GetGenericTypeDefinition() == contract)),
                     string.Format("Type implements open generic '{0}'", contract.FullName));
             }
 
             public static Filter<Type> ImplementsITypeName()
             {
-                return new Filter<Type>(t => t.GetInterfaces().Any(i => i.Name.StartsWith("I") && 
+                return new Filter<Type>(t => t.GetInterfaces().Any(i => i.Name.StartsWith("I") &&
                     i.Name.Substring(1) == t.Name),
                     "Type implements an interface which has same name expect 'I' prefix.");
             }
 
             public static Filter<Type> ImplementsSingleInterface()
             {
-                return new Filter<Type>(t => t.GetInterfaces().Count() == 1, "Type implements a single interface");
+                return new Filter<Type>(t => t.GetInterfaces().Count() == 1,
+                    "Type implements a single interface");
             }
 
             public static Filter<Type> IsAssignableFrom(Type type)
             {
-                if (type == null) throw new ArgumentNullException("type");
+                Guard.AssertNotNull(type, "type");
 
                 return new Filter<Type>(currentType => currentType.IsAssignableFrom(type),
                     string.Format("Type is assignable from '{0}'", type.FullName));
+            }
+
+            public static Filter<Type> InheritsFrom(Type type)
+            {
+                Guard.AssertNotNull(type, "type");
+
+                return new Filter<Type>(type.IsAssignableFrom,
+                    string.Format("Type inherits from '{0}'", type.FullName));
             }
         }
 

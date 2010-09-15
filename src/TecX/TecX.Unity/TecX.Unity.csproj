@@ -55,6 +55,7 @@
     </Compile>
     <Compile Include="AutoRegistration\AssemblyLocator.cs" />
     <Compile Include="AutoRegistration\AutoRegistrationBuilder.cs" />
+    <Compile Include="AutoRegistration\AutoRegistrationExtensions.cs" />
     <Compile Include="AutoRegistration\ContainerExtensionOptions.cs" />
     <Compile Include="AutoRegistration\ContainerExtensionOptionsBuilder.cs" />
     <Compile Include="AutoRegistration\Extensions.cs" />

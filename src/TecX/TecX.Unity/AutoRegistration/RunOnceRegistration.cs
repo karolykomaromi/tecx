@@ -4,22 +4,21 @@ using Microsoft.Practices.Unity;
 
 namespace TecX.Unity.AutoRegistration
 {
-    internal class RunOnceRegistration : Registration
+    public class RunOnceRegistration : Registration
     {
         private bool _ranOnce;
 
-        public RunOnceRegistration(Action<Type, IUnityContainer> registrator, 
-                                   IUnityContainer container) 
-            : base(new Filter<Type>(t => true, "Runs once"), registrator, container)
+        public RunOnceRegistration(Action<Type, IUnityContainer> registrator) 
+            : base(new Filter<Type>(t => true, "Runs once"), registrator)
         {
             _ranOnce = false;
         }
 
-        public override void RegisterIfSatisfiesFilter(Type type)
+        public override void RegisterIfSatisfiesFilter(Type type, IUnityContainer container)
         {
             if(!_ranOnce)
             {
-                base.RegisterIfSatisfiesFilter(type);
+                base.RegisterIfSatisfiesFilter(type, container);
                 _ranOnce = true;
             }
         }
