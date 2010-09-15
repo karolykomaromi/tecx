@@ -15,8 +15,6 @@ namespace TecX.Agile.Data
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         public Project GetProjectBy(Guid id)
         {
             if (id == _currentProject.Id)
@@ -62,7 +60,7 @@ namespace TecX.Agile.Data
 
             ProjectInfo info = projects.SingleOrDefault(p => p.Name == name);
 
-            if(info != null)
+            if (info != null)
             {
                 return info.Id;
             }
@@ -75,6 +73,5 @@ namespace TecX.Agile.Data
         protected abstract bool DoSaveProject(Project project);
 
         public abstract IEnumerable<ProjectInfo> GetExistingProjects();
-
     }
 }

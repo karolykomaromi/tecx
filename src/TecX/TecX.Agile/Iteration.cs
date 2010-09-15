@@ -10,15 +10,12 @@ namespace TecX.Agile
     [Serializable]
     public class Iteration : StoryCardCollection, IEquatable<Iteration>
     {
-
         #region Fields
 
         private Trackable _tracking;
         private Visualizable _view;
 
         #endregion Fields
-
-        ////////////////////////////////////////////////////////////
 
         #region Properties
 
@@ -67,8 +64,6 @@ namespace TecX.Agile
 
         #endregion Properties
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -98,8 +93,6 @@ namespace TecX.Agile
 
         #endregion c'tor
 
-        //////////////////////////////////////////////////////////// 
-
         #region Methods
 
         /// <summary>
@@ -126,8 +119,6 @@ namespace TecX.Agile
         }
 
         #endregion Methods
-
-        ////////////////////////////////////////////////////////////
 
         #region Overrides of Object
 
@@ -178,8 +169,6 @@ namespace TecX.Agile
         }
 
         #endregion Overrides of Object
-
-        ////////////////////////////////////////////////////////////
 
         #region ICloneable Members
 

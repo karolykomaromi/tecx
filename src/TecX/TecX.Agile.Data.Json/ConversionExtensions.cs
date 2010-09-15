@@ -24,8 +24,6 @@ namespace TecX.Agile.Data.Json
 
         #endregion Constants
 
-        ////////////////////////////////////////////////////////////
-
         #region Conversion from JSON
 
         /// <summary>
@@ -73,7 +71,7 @@ namespace TecX.Agile.Data.Json
             Guard.AssertNotNull(storyCardCollection, "storyCardCollection");
             Guard.AssertNotNull(json, "json");
 
-            ((PlanningArtefact)storyCardCollection).FromJson(json);
+            ((PlanningArtefact) storyCardCollection).FromJson(json);
 
             JArray jsonStoryCards;
             if (json.TryGetValue(Agile.Constants.Properties.StoryCardCollection.StoryCards, out jsonStoryCards))
@@ -107,7 +105,7 @@ namespace TecX.Agile.Data.Json
             Guard.AssertNotNull(storycard, "storycard");
             Guard.AssertNotNull(json, "json");
 
-            ((PlanningArtefact)storycard).FromJson(json);
+            ((PlanningArtefact) storycard).FromJson(json);
 
             string strCurrentSide;
             if (json.TryGetValue(Agile.Constants.Properties.StoryCard.CurrentSideUp, out strCurrentSide))
@@ -118,7 +116,8 @@ namespace TecX.Agile.Data.Json
             }
 
             byte[] descriptionHandwritingImage;
-            if (json.TryGetValue(Agile.Constants.Properties.StoryCard.DescriptionHandwritingImage, out descriptionHandwritingImage))
+            if (json.TryGetValue(Agile.Constants.Properties.StoryCard.DescriptionHandwritingImage,
+                                 out descriptionHandwritingImage))
             {
                 storycard.DescriptionHandwritingImage = descriptionHandwritingImage;
             }
@@ -147,7 +146,7 @@ namespace TecX.Agile.Data.Json
             Guard.AssertNotNull(iteration, "iteration");
             Guard.AssertNotNull(json, "json");
 
-            ((StoryCardCollection)iteration).FromJson(json);
+            ((StoryCardCollection) iteration).FromJson(json);
 
             decimal availableEffort;
             if (json.TryGetValue(Agile.Constants.Properties.Iteration.AvailableEffort, out availableEffort))
@@ -185,7 +184,7 @@ namespace TecX.Agile.Data.Json
             Guard.AssertNotNull(backlog, "backlog");
             Guard.AssertNotNull(json, "json");
 
-            ((StoryCardCollection)backlog).FromJson(json);
+            ((StoryCardCollection) backlog).FromJson(json);
 
             return;
         }
@@ -202,7 +201,7 @@ namespace TecX.Agile.Data.Json
             Guard.AssertNotNull(project, "project");
             Guard.AssertNotNull(json, "json");
 
-            ((PlanningArtefact)project).FromJson(json);
+            ((PlanningArtefact) project).FromJson(json);
 
             var jsonLegend = json[Agile.Constants.Properties.Project.Legend] as JObject;
 
@@ -217,7 +216,7 @@ namespace TecX.Agile.Data.Json
                         string key = prop.Name;
 
                         //TODO this sucks. make it robust
-                        string str = ((JValue)prop.Value).ToString().Trim('\"');
+                        string str = ((JValue) prop.Value).ToString().Trim('\"');
 
                         byte[] value = Common.Convert.ToByte(str);
 
@@ -390,8 +389,6 @@ namespace TecX.Agile.Data.Json
 
         #endregion Conversion from JSON
 
-        ////////////////////////////////////////////////////////////
-
         #region Conversion to JSON
 
         /// <summary>
@@ -407,8 +404,10 @@ namespace TecX.Agile.Data.Json
 
             json.AddProperty(Agile.Constants.Properties.PlanningArtefact.Description,
                              TypeHelper.ToNullSafeString(planningArtefact.Description))
-                .AddProperty(Agile.Constants.Properties.PlanningArtefact.Id, TypeHelper.ToNullSafeString(planningArtefact.Id))
-                .AddProperty(Agile.Constants.Properties.PlanningArtefact.Name, TypeHelper.ToNullSafeString(planningArtefact.Name));
+                .AddProperty(Agile.Constants.Properties.PlanningArtefact.Id,
+                             TypeHelper.ToNullSafeString(planningArtefact.Id))
+                .AddProperty(Agile.Constants.Properties.PlanningArtefact.Name,
+                             TypeHelper.ToNullSafeString(planningArtefact.Name));
 
             return json;
         }
@@ -422,7 +421,7 @@ namespace TecX.Agile.Data.Json
         {
             Guard.AssertNotNull(indexCardWithChildren, "storyCardCollection");
 
-            var json = ((PlanningArtefact)indexCardWithChildren).ToJson();
+            var json = ((PlanningArtefact) indexCardWithChildren).ToJson();
 
             JArray storycards = new JArray();
 
@@ -452,13 +451,14 @@ namespace TecX.Agile.Data.Json
         {
             Guard.AssertNotNull(storycard, "storycard");
 
-            var json = ((PlanningArtefact)storycard).ToJson();
+            var json = ((PlanningArtefact) storycard).ToJson();
 
             json.AddProperty(Agile.Constants.Properties.StoryCard.CurrentSideUp,
                              TypeHelper.ToNullSafeString(storycard.CurrentSideUp))
                 .AddProperty(Agile.Constants.Properties.StoryCard.DescriptionHandwritingImage,
                              Common.Convert.ToHex(storycard.DescriptionHandwritingImage))
-                .AddProperty(Agile.Constants.Properties.StoryCard.TaskOwner, TypeHelper.ToNullSafeString(storycard.TaskOwner));
+                .AddProperty(Agile.Constants.Properties.StoryCard.TaskOwner,
+                             TypeHelper.ToNullSafeString(storycard.TaskOwner));
 
             storycard.Tracking.ToJson(json);
             storycard.View.ToJson(json);
@@ -477,7 +477,7 @@ namespace TecX.Agile.Data.Json
         {
             Guard.AssertNotNull(iteration, "iteration");
 
-            var json = ((StoryCardCollection)iteration).ToJson();
+            var json = ((StoryCardCollection) iteration).ToJson();
 
             json.AddProperty(Agile.Constants.Properties.Iteration.AvailableEffort,
                              iteration.AvailableEffort.ToString(
@@ -504,7 +504,7 @@ namespace TecX.Agile.Data.Json
         {
             Guard.AssertNotNull(backlog, "backlog");
 
-            var json = ((StoryCardCollection)backlog).ToJson();
+            var json = ((StoryCardCollection) backlog).ToJson();
 
             return json;
         }
@@ -520,7 +520,7 @@ namespace TecX.Agile.Data.Json
         {
             Guard.AssertNotNull(project, "project");
 
-            var json = ((PlanningArtefact)project).ToJson();
+            var json = ((PlanningArtefact) project).ToJson();
 
             if (project.Legend != null &&
                 project.Legend.Count > 0)
@@ -572,7 +572,8 @@ namespace TecX.Agile.Data.Json
 
             json.AddProperty(Agile.Constants.Properties.Trackable.WorstCaseEstimate,
                              trackable.WorstCaseEstimate.ToString(Constants.Precision, CultureInfo.InvariantCulture))
-                .AddProperty(Agile.Constants.Properties.Trackable.Priority, TypeHelper.ToNullSafeString(trackable.Priority))
+                .AddProperty(Agile.Constants.Properties.Trackable.Priority,
+                             TypeHelper.ToNullSafeString(trackable.Priority))
                 .AddProperty(Agile.Constants.Properties.Trackable.Status, TypeHelper.ToNullSafeString(trackable.Status))
                 .AddProperty(Agile.Constants.Properties.Trackable.MostLikelyEstimate,
                              trackable.MostLikelyEstimate.ToString(Constants.Precision, CultureInfo.InvariantCulture))
@@ -620,7 +621,7 @@ namespace TecX.Agile.Data.Json
                     JObject map = new JObject(
                         new JProperty(Agile.Constants.Properties.Mapping.Name, mapping.Name),
                         new JProperty(Agile.Constants.Properties.Mapping.Color,
-                            Common.Convert.ToHex(mapping.Color)));
+                                      Common.Convert.ToHex(mapping.Color)));
                     array.Add(map);
                 }
 

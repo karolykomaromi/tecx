@@ -22,13 +22,10 @@ namespace TecX.Agile
 
         #endregion Implementation of ICloneable
 
-        ////////////////////////////////////////////////////////////
-
         #region Implementation of IEquatable<T>
 
         public abstract bool Equals(TFeature other);
 
         #endregion Implementation of IEquatable<T>
-
     }
 }

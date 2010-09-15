@@ -18,8 +18,6 @@ namespace TecX.Agile.Data.File
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region Properties
 
         public abstract string FileExtension { get; }
@@ -29,8 +27,6 @@ namespace TecX.Agile.Data.File
         public DirectoryInfo CurrentFolder { get; protected set; }
 
         #endregion Properties
-
-        ////////////////////////////////////////////////////////////
 
         #region c'tor
 
@@ -51,8 +47,6 @@ namespace TecX.Agile.Data.File
         }
 
         #endregion c'tor
-
-        ////////////////////////////////////////////////////////////
 
         public override IEnumerable<ProjectInfo> GetExistingProjects()
         {
@@ -118,6 +112,5 @@ namespace TecX.Agile.Data.File
                 return true;
             }
         }
-
     }
 }

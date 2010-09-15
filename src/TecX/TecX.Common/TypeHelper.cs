@@ -23,8 +23,6 @@ namespace TecX.Common
 
         #endregion Constants
 
-        ////////////////////////////////////////////////////////////
-
         #region String
 
         /// <summary>
@@ -86,7 +84,7 @@ namespace TecX.Common
                 //initialize a StringBuilder as we might have quite a few changes to make to the
                 //format string and make sure that it has a reasonable initial capacity so we do not have to
                 //reallocate and increase the memory reserved for the builder
-                StringBuilder sb = new StringBuilder(format, format.Length + args.Length * DefaultLengthPerStringFormatArg);
+                StringBuilder sb = new StringBuilder(format, format.Length + args.Length*DefaultLengthPerStringFormatArg);
 
                 Regex regex = new Regex(@"{\d+}");
                 var matches = regex.Matches(format);
@@ -174,8 +172,6 @@ namespace TecX.Common
 
         #endregion String
 
-        ////////////////////////////////////////////////////////////
-
         #region Collections
 
         /// <summary>
@@ -224,8 +220,6 @@ namespace TecX.Common
         }
 
         #endregion Collections
-
-        ////////////////////////////////////////////////////////////
 
         #region Other types
 
@@ -358,8 +352,6 @@ namespace TecX.Common
         }
 
         #endregion Other types
-
-        ////////////////////////////////////////////////////////////
 
         #region IsInRange
 

@@ -21,8 +21,6 @@ namespace TecX.Agile
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region Properties
 
         /// <summary>
@@ -34,7 +32,8 @@ namespace TecX.Agile
             set
             {
                 if (_id != Guid.Empty)
-                    throw new InvalidOperationException("The Id of a PlanningArtefact can only be changed once after its creation");
+                    throw new InvalidOperationException(
+                        "The Id of a PlanningArtefact can only be changed once after its creation");
 
                 _id = value;
             }
@@ -52,8 +51,6 @@ namespace TecX.Agile
 
         #endregion Properties
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -67,8 +64,6 @@ namespace TecX.Agile
         }
 
         #endregion c'tor
-
-        ////////////////////////////////////////////////////////////
 
         #region Overrides of Object
 
@@ -104,8 +99,6 @@ namespace TecX.Agile
 
         #endregion Overrides of Object
 
-        ////////////////////////////////////////////////////////////
-
         #region Methods
 
         /// <summary>
@@ -122,8 +115,6 @@ namespace TecX.Agile
         }
 
         #endregion Methods
-
-        ////////////////////////////////////////////////////////////
 
         #region ICloneable Members
 

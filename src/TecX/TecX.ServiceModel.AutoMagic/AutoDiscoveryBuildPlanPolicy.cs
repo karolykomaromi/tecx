@@ -19,11 +19,8 @@ namespace TecX.ServiceModel.AutoMagic
         /// <value>The scopes.</value>
         public Uri[] Scopes { get; set; }
 
-
         #endregion Properties
 
-        ////////////////////////////////////////////////////////////
-        
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoDiscoveryBuildPlanPolicy"/> class
         /// </summary>

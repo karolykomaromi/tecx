@@ -34,8 +34,6 @@ namespace TecX.Agile.Builder
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region Methods
 
         public LegendBuilder With(string name, byte[] color)
@@ -69,8 +67,6 @@ namespace TecX.Agile.Builder
         }
 
         #endregion Methods
-
-        ////////////////////////////////////////////////////////////
 
         #region Overrides of EntityBuilder<Legend>
 

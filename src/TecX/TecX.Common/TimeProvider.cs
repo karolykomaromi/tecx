@@ -17,8 +17,6 @@ namespace TecX.Common
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         static TimeProvider()
@@ -28,18 +26,13 @@ namespace TecX.Common
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         /// <summary>
         /// Gets or sets the current <see cref="TimeProvider"/>
         /// </summary>
         /// <value>The current provider.</value>
         public static TimeProvider Current
         {
-            get
-            {
-                return _current;
-            }
+            get { return _current; }
             set
             {
                 Guard.AssertNotNull(value, "value", "An Ambient Context must never be null");
@@ -75,6 +68,5 @@ namespace TecX.Common
         /// Gets the current date.
         /// </summary>
         public abstract DateTime Today { get; }
-
     }
 }

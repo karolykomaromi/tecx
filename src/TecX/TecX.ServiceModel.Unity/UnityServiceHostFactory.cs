@@ -3,7 +3,6 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Configuration;
 
 using TecX.Common;
 
@@ -21,8 +20,6 @@ namespace TecX.ServiceModel.Unity
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region Properties
 
         public IUnityContainer Container
@@ -32,8 +29,6 @@ namespace TecX.ServiceModel.Unity
 
         #endregion Properties
 
-        ////////////////////////////////////////////////////////////
-        
         #region c'tor
 
         /// <summary>
@@ -49,8 +44,6 @@ namespace TecX.ServiceModel.Unity
         }
 
         #endregion c'tor
-
-        ////////////////////////////////////////////////////////////
 
         #region Overrides of ServiceHostFactory
 

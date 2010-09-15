@@ -20,8 +20,6 @@ namespace TecX.Agile
 
         #endregion Constants
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -45,8 +43,6 @@ namespace TecX.Agile
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region Overrides of PlanningArtefact
 
         /// <summary>
@@ -64,8 +60,6 @@ namespace TecX.Agile
         }
 
         #endregion Overrides of PlanningArtefact
-
-        ////////////////////////////////////////////////////////////
 
         #region Implementation of IEquatable<Backlog>
 

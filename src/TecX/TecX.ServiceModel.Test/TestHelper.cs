@@ -16,12 +16,6 @@ namespace TecX.ServiceModel.Test
     /// </summary>
     internal static class TestHelper
     {
-        #region Constants
-
-        #endregion Constants
-
-        ////////////////////////////////////////////////////////////
-
         /// <summary>
         /// Configures the DI container to use WCF Discovery when resolving <see cref="IAsyncService"/>
         /// </summary>
@@ -80,10 +74,10 @@ namespace TecX.ServiceModel.Test
         /// </summary>
         public static ServiceHost SetupHostForDiscoverableSyncService()
         {
-            ServiceHost host = new ServiceHost(typeof(SyncService), Constants.BaseAddress);
+            ServiceHost host = new ServiceHost(typeof (SyncService), Constants.BaseAddress);
 
             //configure service host
-            host.AddServiceEndpoint(typeof(ISyncService), new NetTcpBinding(SecurityMode.None), String.Empty);
+            host.AddServiceEndpoint(typeof (ISyncService), new NetTcpBinding(SecurityMode.None), String.Empty);
 
             host.Description.Behaviors.Add(new ServiceDiscoveryBehavior());
 

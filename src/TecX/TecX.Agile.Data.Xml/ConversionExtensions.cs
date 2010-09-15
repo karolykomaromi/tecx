@@ -24,10 +24,7 @@ namespace TecX.Agile.Data.Xml
             public const string MappingElementName = "Mapping";
         }
 
-
         #endregion Constants
-
-        ////////////////////////////////////////////////////////////
 
         #region Conversion from XML
 
@@ -76,7 +73,7 @@ namespace TecX.Agile.Data.Xml
             Guard.AssertNotNull(storyCardCollection, "storyCardCollection");
             Guard.AssertNotNull(xml, "xml");
 
-            ((PlanningArtefact)storyCardCollection).FromXml(xml);
+            ((PlanningArtefact) storyCardCollection).FromXml(xml);
 
             IEnumerable<XElement> storycards = xml.Descendants(
                 Agile.Constants.Properties.StoryCardCollection.StoryCards);
@@ -104,7 +101,7 @@ namespace TecX.Agile.Data.Xml
             Guard.AssertNotNull(storycard, "storycard");
             Guard.AssertNotNull(xml, "xml");
 
-            ((PlanningArtefact)storycard).FromXml(xml);
+            ((PlanningArtefact) storycard).FromXml(xml);
 
             string strCurrentSideUp;
             if (xml.TryGetValue(Agile.Constants.Properties.StoryCard.CurrentSideUp, out strCurrentSideUp))
@@ -144,7 +141,7 @@ namespace TecX.Agile.Data.Xml
             Guard.AssertNotNull(iteration, "iteration");
             Guard.AssertNotNull(xml, "xml");
 
-            ((StoryCardCollection)iteration).FromXml(xml);
+            ((StoryCardCollection) iteration).FromXml(xml);
 
             decimal availableEffort;
             if (xml.TryGetValue(Agile.Constants.Properties.Iteration.AvailableEffort, out availableEffort))
@@ -300,7 +297,7 @@ namespace TecX.Agile.Data.Xml
             Guard.AssertNotNull(backlog, "backlog");
             Guard.AssertNotNull(xml, "xml");
 
-            ((StoryCardCollection)backlog).FromXml(xml);
+            ((StoryCardCollection) backlog).FromXml(xml);
 
             return;
         }
@@ -317,7 +314,7 @@ namespace TecX.Agile.Data.Xml
             Guard.AssertNotNull(project, "project");
             Guard.AssertNotNull(xml, "xml");
 
-            ((PlanningArtefact)project).FromXml(xml);
+            ((PlanningArtefact) project).FromXml(xml);
 
             XElement xmlBacklog = xml.Element("Backlog");
             if (xmlBacklog != null)
@@ -348,8 +345,6 @@ namespace TecX.Agile.Data.Xml
         }
 
         #endregion Conversion from XML
-
-        ////////////////////////////////////////////////////////////
 
         #region Conversion to XML
 
@@ -405,7 +400,7 @@ namespace TecX.Agile.Data.Xml
         {
             Guard.AssertNotNull(indexCardWithChildren, "storyCardCollection");
 
-            var xml = ((PlanningArtefact)indexCardWithChildren).ToXml();
+            var xml = ((PlanningArtefact) indexCardWithChildren).ToXml();
 
             if (indexCardWithChildren.StoryCards != null &&
                 indexCardWithChildren.StoryCards.Count() > 0)
@@ -436,13 +431,14 @@ namespace TecX.Agile.Data.Xml
         {
             Guard.AssertNotNull(storycard, "storycard");
 
-            var xml = ((PlanningArtefact)storycard).ToXml();
+            var xml = ((PlanningArtefact) storycard).ToXml();
 
             xml.AddAttribute(Agile.Constants.Properties.StoryCard.CurrentSideUp,
-                             Enum.GetName(typeof(StoryCardSides), storycard.CurrentSideUp))
+                             Enum.GetName(typeof (StoryCardSides), storycard.CurrentSideUp))
                 .AddAttribute(Agile.Constants.Properties.StoryCard.DescriptionHandwritingImage,
                               Common.Convert.ToHex(storycard.DescriptionHandwritingImage))
-                .AddAttribute(Agile.Constants.Properties.StoryCard.TaskOwner, TypeHelper.ToNullSafeString(storycard.TaskOwner));
+                .AddAttribute(Agile.Constants.Properties.StoryCard.TaskOwner,
+                              TypeHelper.ToNullSafeString(storycard.TaskOwner));
 
             storycard.View.ToXml(xml);
             storycard.Tracking.ToXml(xml);
@@ -461,7 +457,7 @@ namespace TecX.Agile.Data.Xml
         {
             Guard.AssertNotNull(iteration, "iteration");
 
-            var xml = ((StoryCardCollection)iteration).ToXml();
+            var xml = ((StoryCardCollection) iteration).ToXml();
 
             xml.AddAttribute(Agile.Constants.Properties.Iteration.AvailableEffort,
                              iteration.AvailableEffort.ToString(
@@ -488,7 +484,7 @@ namespace TecX.Agile.Data.Xml
         {
             Guard.AssertNotNull(backlog, "backlog");
 
-            var xml = ((StoryCardCollection)backlog).ToXml();
+            var xml = ((StoryCardCollection) backlog).ToXml();
 
             return xml;
         }
@@ -504,7 +500,7 @@ namespace TecX.Agile.Data.Xml
         {
             Guard.AssertNotNull(project, "project");
 
-            var xml = ((PlanningArtefact)project).ToXml();
+            var xml = ((PlanningArtefact) project).ToXml();
 
             if (project.Legend != null &&
                 project.Legend.Count > 0)

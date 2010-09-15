@@ -5,7 +5,6 @@ using Microsoft.Practices.Unity;
 
 namespace TecX.ServiceModel.AutoMagic
 {
- 
     public class WcfProxyContainerExtension : UnityContainerExtension, IWcfProxyConfiguration
     {
         #region Overrides of UnityContainerExtension
@@ -16,8 +15,6 @@ namespace TecX.ServiceModel.AutoMagic
         }
 
         #endregion Overrides of UnityContainerExtension
-
-        ////////////////////////////////////////////////////////////
 
         #region IWcfProxyConfiguration Members
 

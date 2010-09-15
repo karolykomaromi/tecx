@@ -20,8 +20,6 @@ namespace TecX.TestTools
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         public NotifyCompletedExpectation(T owner, Action<T> action)
@@ -37,8 +35,6 @@ namespace TecX.TestTools
         }
 
         #endregion c'tor
-
-        ////////////////////////////////////////////////////////////
 
         public void ShouldNotifyVia<TEventArgs>(string eventName)
             where TEventArgs : EventArgs

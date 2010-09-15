@@ -35,8 +35,6 @@
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region ICloneable Members
 
         /// <summary>

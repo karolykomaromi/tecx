@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.ServiceModel;
 using System.ServiceModel.PeerResolvers;
@@ -25,7 +24,7 @@ namespace TecX.Agile.Peer
         public void MoveStoryCard(Guid senderId, Guid storyCardId, double dx, double dy, double angle)
         {
             //message comes from somewhere else -> handle it
-            if(senderId != Id)
+            if (senderId != Id)
             {
                 var args = new MovedStoryCardEventArgs
                                {
@@ -37,7 +36,7 @@ namespace TecX.Agile.Peer
 
                 MovedStoryCard(this, args);
             }
-            //message comes from here -> send it to the mesh
+                //message comes from here -> send it to the mesh
             else
             {
                 _broadcastToMesh.MoveStoryCard(senderId, storyCardId, dx, dy, angle);
@@ -90,8 +89,6 @@ namespace TecX.Agile.Peer
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region Implementation of IDisposable
 
         /// <summary>
@@ -130,8 +127,6 @@ namespace TecX.Agile.Peer
 
         #endregion Implementation of IDisposable
 
-        ////////////////////////////////////////////////////////////
-
         #region EventHandling
 
         /// <summary>
@@ -155,6 +150,5 @@ namespace TecX.Agile.Peer
         }
 
         #endregion EventHandling
-
     }
 }

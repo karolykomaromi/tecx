@@ -18,8 +18,6 @@ namespace TecX.Common.Comparison
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -46,8 +44,6 @@ namespace TecX.Common.Comparison
         }
 
         #endregion c'tor
-
-        ////////////////////////////////////////////////////////////
 
         #region IEqualityComparer Members
 

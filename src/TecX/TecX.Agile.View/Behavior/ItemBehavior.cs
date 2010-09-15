@@ -85,8 +85,6 @@ namespace TecX.Agile.View.Behavior
 
         #endregion Properties
 
-        ////////////////////////////////////////////////////////////
-
         /// <summary>
         /// Called when [behavior enabled].
         /// </summary>

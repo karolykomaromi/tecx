@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace TecX.Common.Event
@@ -15,8 +14,6 @@ namespace TecX.Common.Event
         private readonly object _syncRoot;
 
         #endregion Fields
-
-        ////////////////////////////////////////////////////////////
 
         #region c'tor
 
@@ -34,8 +31,6 @@ namespace TecX.Common.Event
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region Implementation of IEventAggregator
 
         public void Subscribe(object subscriber)
@@ -45,9 +40,9 @@ namespace TecX.Common.Event
             PurgeSubscribers();
 
             bool canSubscribe = AllSubscribers()
-                                     .Where(s => s.IsAlive &&
-                                                 s.Target.Equals(subscriber))
-                                     .Count() == 0;
+                                    .Where(s => s.IsAlive &&
+                                                s.Target.Equals(subscriber))
+                                    .Count() == 0;
 
             if (canSubscribe)
             {
@@ -62,9 +57,9 @@ namespace TecX.Common.Event
             PurgeSubscribers();
 
             var subscribed = AllSubscribers()
-                                .Where(s => s.IsAlive &&
-                                    s.Target.Equals(subscriber))
-                                .FirstOrDefault();
+                .Where(s => s.IsAlive &&
+                            s.Target.Equals(subscriber))
+                .FirstOrDefault();
 
             if (subscribed != null)
             {
@@ -90,7 +85,7 @@ namespace TecX.Common.Event
             }
         }
 
-        public ICancellationToken PublishWithCancelOption<TMessage>(TMessage message) 
+        public ICancellationToken PublishWithCancelOption<TMessage>(TMessage message)
             where TMessage : ICancellationToken
         {
             Publish(message);
@@ -99,8 +94,6 @@ namespace TecX.Common.Event
         }
 
         #endregion Implementation of IEventAggregator
-
-        ////////////////////////////////////////////////////////////
 
         #region Helper
 
@@ -136,6 +129,5 @@ namespace TecX.Common.Event
         }
 
         #endregion Helper
-
     }
 }

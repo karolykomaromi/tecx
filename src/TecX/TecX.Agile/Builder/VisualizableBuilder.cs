@@ -34,8 +34,6 @@ namespace TecX.Agile.Builder
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region Methods
 
         /// <summary>
@@ -47,7 +45,7 @@ namespace TecX.Agile.Builder
         {
             Guard.AssertNotNull(color, "color");
 
-            ConstructedObject.Color = (byte[])color.Clone();
+            ConstructedObject.Color = (byte[]) color.Clone();
 
             return this;
         }
@@ -113,8 +111,6 @@ namespace TecX.Agile.Builder
         }
 
         #endregion Methods
-
-        ////////////////////////////////////////////////////////////
 
         #region Overrides of EntityBuilder<Visualizable>
 

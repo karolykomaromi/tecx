@@ -20,8 +20,6 @@ namespace TecX.Agile
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region Properties
 
         /// <summary>
@@ -79,8 +77,6 @@ namespace TecX.Agile
 
         #endregion Properties
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -111,8 +107,6 @@ namespace TecX.Agile
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////
-
         #region Public Methods
 
         /// <summary>
@@ -126,7 +120,7 @@ namespace TecX.Agile
             base.CopyValuesFrom(anotherStoryCard);
 
             CurrentSideUp = anotherStoryCard.CurrentSideUp;
-            DescriptionHandwritingImage = (byte[])anotherStoryCard.DescriptionHandwritingImage.Clone();
+            DescriptionHandwritingImage = (byte[]) anotherStoryCard.DescriptionHandwritingImage.Clone();
 
             TaskOwner = anotherStoryCard.TaskOwner;
 
@@ -135,8 +129,6 @@ namespace TecX.Agile
         }
 
         #endregion Public Methods
-
-        ////////////////////////////////////////////////////////////
 
         #region Object Members
 
@@ -190,8 +182,6 @@ namespace TecX.Agile
         }
 
         #endregion Object Members
-
-        ////////////////////////////////////////////////////////////
 
         #region Overrides of PlanningArtefact
 

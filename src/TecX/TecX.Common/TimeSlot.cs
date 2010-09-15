@@ -16,8 +16,6 @@ namespace TecX.Common
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region Properties
 
         public DateTime End
@@ -34,8 +32,6 @@ namespace TecX.Common
 
         #endregion Properties
 
-        ////////////////////////////////////////////////////////////
-
         #region c'tor
 
         /// <summary>
@@ -50,8 +46,6 @@ namespace TecX.Common
         }
 
         #endregion c'tor
-
-        ////////////////////////////////////////////////////////////
 
         #region Overrides of Object
 
@@ -69,7 +63,7 @@ namespace TecX.Common
             if (!(obj is TimeSlot))
                 return false;
 
-            TimeSlot other = (TimeSlot)obj;
+            TimeSlot other = (TimeSlot) obj;
 
             return Equals(other);
         }
@@ -88,8 +82,6 @@ namespace TecX.Common
         }
 
         #endregion Overrides of Object
-
-        ////////////////////////////////////////////////////////////
 
         #region Implementation of IEquatable<TimeSlot>
 
@@ -110,8 +102,6 @@ namespace TecX.Common
         }
 
         #endregion Implementation of IEquatable<TimeSlot>
-
-        ////////////////////////////////////////////////////////////
 
         #region Methods
 

@@ -34,16 +34,12 @@ namespace TecX.Common.EntLib
 
         #endregion Constants
 
-        //////////////////////////////////////////////////////////// 
-
         #region Private Members
 
         private readonly DateTime _start;
         private readonly string _operationName;
 
         #endregion Private Members
-
-        ////////////////////////////////////////////////////////////
 
         #region c'tor
 
@@ -59,8 +55,6 @@ namespace TecX.Common.EntLib
         }
 
         #endregion c'tor
-
-        ////////////////////////////////////////////////////////////
 
         #region IDisposable Members
 
@@ -98,8 +92,6 @@ namespace TecX.Common.EntLib
         }
 
         #endregion IDisposable Members
-
-        ////////////////////////////////////////////////////////////
 
         #region Public Methods
 

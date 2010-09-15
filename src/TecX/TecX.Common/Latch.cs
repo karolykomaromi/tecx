@@ -10,8 +10,6 @@
 
         #endregion Fields
 
-        ////////////////////////////////////////////////////////////
-
         #region Properties
 
         public bool IsLatched
@@ -20,8 +18,6 @@
         }
 
         #endregion Properties
-
-        ////////////////////////////////////////////////////////////
 
         #region Methods
 

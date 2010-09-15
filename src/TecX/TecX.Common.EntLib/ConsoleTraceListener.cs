@@ -29,8 +29,6 @@ namespace TecX.Common.EntLib
 
         #endregion c'tor
 
-        ////////////////////////////////////////////////////////////        
-
         #region CustomTraceListener Members
 
         /// <summary>
@@ -83,7 +81,6 @@ namespace TecX.Common.EntLib
             }
         }
 
-
         /// <summary>
         /// Writes trace information, a message, and event information to the listener specific output.
         /// </summary>
@@ -105,8 +102,6 @@ namespace TecX.Common.EntLib
         }
 
         #endregion CustomTraceListener Members
-
-        ////////////////////////////////////////////////////////////
 
         #region Private Methods
 
@@ -156,8 +151,6 @@ namespace TecX.Common.EntLib
         }
 
         #endregion Private Methods
-
-        ////////////////////////////////////////////////////////////
 
         #region Protected Methods
 
