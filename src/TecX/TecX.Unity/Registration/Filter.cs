@@ -1,5 +1,7 @@
 ﻿using System;
 
+using TecX.Common;
+
 namespace TecX.Unity.Registration
 {
     public class Filter<T>
@@ -15,8 +17,8 @@ namespace TecX.Unity.Registration
 
         public Filter(Predicate<T> filter, string description)
         {
-            if (filter == null) throw new ArgumentNullException("filter");
-            if (description == null) throw new ArgumentNullException("description");
+            Guard.AssertNotNull(filter, "filter");
+            Guard.AssertNotEmpty(description, "description");
 
             _filter = filter;
             _description = description;
