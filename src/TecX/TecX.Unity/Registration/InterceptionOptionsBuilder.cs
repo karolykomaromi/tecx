@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 
+using TecX.Common;
+
 namespace TecX.Unity.Registration
 {
     public class InterceptionOptionsBuilder
@@ -72,7 +74,7 @@ namespace TecX.Unity.Registration
 
         public InterceptionOptionsBuilder ApplyForType(Type type)
         {
-            if (type == null) throw new ArgumentNullException("type");
+            Guard.AssertNotNull(type, "type");
 
             _type = type;
 
@@ -104,7 +106,7 @@ namespace TecX.Unity.Registration
 
         public static implicit operator InterceptionOptions(InterceptionOptionsBuilder builder)
         {
-            if (builder == null) throw new ArgumentNullException("builder");
+            Guard.AssertNotNull(builder, "builder");
 
             return builder.Build();
         }

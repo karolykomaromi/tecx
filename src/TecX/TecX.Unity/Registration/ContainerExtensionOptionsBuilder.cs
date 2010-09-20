@@ -9,13 +9,13 @@ namespace TecX.Unity.Registration
     public class ContainerExtensionOptionsBuilder
     {
         private Action<Type, IUnityContainer> _registrator = (t, c) => { };
-        private readonly Type _extensionType;
+        private readonly Func<UnityContainerExtension> _extensionFactory;
 
-        public ContainerExtensionOptionsBuilder(Type extensionType)
+        public ContainerExtensionOptionsBuilder(Func<UnityContainerExtension> extensionFactory)
         {
-            Guard.AssertNotNull(extensionType, "extensionType");
+            Guard.AssertNotNull(extensionFactory, "extensionFactory");
 
-            _extensionType = extensionType;
+            _extensionFactory = extensionFactory;
         }
 
         public ContainerExtensionOptionsBuilder WithConfiguration<TExtensionConfig>(
@@ -26,13 +26,14 @@ namespace TecX.Unity.Registration
                 container => container.Configure<TExtensionConfig>();
 
             Action<Type, IUnityContainer> registrator = (t, c) =>
-                                                             {
-                                                                 //resolve the extension using the container
-                                                                 UnityContainerExtension extension =
-                                                                     (UnityContainerExtension)c.Resolve(_extensionType);
+                                                            {
+                                                                UnityContainerExtension extension = 
+                                                                    _extensionFactory();
+
+                                                                Guard.AssertNotNull(extension, "extension");
 
                                                                  c.AddExtension(extension);
-                                                                 //configure the extension
+                                                                 //configure the extensionFactory
                                                                  configuration(getConfigurator(c));
                                                              };
 

@@ -2,6 +2,8 @@
 
 using Microsoft.Practices.Unity;
 
+using TecX.Common;
+
 namespace TecX.Unity.Registration
 {
     public class RegistrationOptions
@@ -19,9 +21,9 @@ namespace TecX.Unity.Registration
         public RegistrationOptions(Type from, Type to, string name, LifetimeManager lifetimeManager, 
             params InjectionMember[] injectionMembers)
         {
-            if (from == null) throw new ArgumentNullException("from");
-            if (to == null) throw new ArgumentNullException("to");
-            if (lifetimeManager == null) throw new ArgumentNullException("lifetimeManager");
+            Guard.AssertNotNull(from, "from");
+            Guard.AssertNotNull(to, "to");
+            Guard.AssertNotNull(lifetimeManager, "lifetimeManager");
 
             From = from;
             To = to;

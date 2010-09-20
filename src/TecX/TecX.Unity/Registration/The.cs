@@ -5,9 +5,9 @@ namespace TecX.Unity.Registration
     public static class The
     {
         public static ContainerExtensionOptionsBuilder Extension<TExtension>()
-            where TExtension : UnityContainerExtension
+            where TExtension : UnityContainerExtension, new()
         {
-            return new ContainerExtensionOptionsBuilder(typeof(TExtension));
+            return new ContainerExtensionOptionsBuilder(() => new TExtension());
         }
     }
 }
