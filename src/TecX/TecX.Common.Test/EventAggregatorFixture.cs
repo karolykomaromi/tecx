@@ -42,17 +42,19 @@ namespace TecX.Common.Test
 
             eventAggregator.Subscribe(subscriber);
 
-            ParameterizedThreadStart start = new ParameterizedThreadStart(parameter =>
-                                                                              {
-                                                                                  IEventAggregator ea =
-                                                                                      parameter as IEventAggregator;
+            ParameterizedThreadStart start = parameter =>
+                                                 {
+                                                     IEventAggregator ea =
+                                                         parameter as IEventAggregator;
 
-                                                                                  Assert.IsNotNull(ea);
+                                                     Assert.IsNotNull(ea);
 
-                                                                                  ea.Publish(new SimpleMessage());
-                                                                              });
+                                                     ea.Publish(new SimpleMessage());
+                                                 };
 
-            start.Invoke(eventAggregator);
+            Thread thread = new Thread(start);
+
+            thread.Start(eventAggregator);
 
             Assert.IsTrue(subscriber.MessageReceived);
             Assert.AreEqual(1, subscriber.MessageCounter);
