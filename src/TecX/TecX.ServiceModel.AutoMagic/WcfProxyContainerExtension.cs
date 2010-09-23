@@ -1,7 +1,11 @@
 ﻿using System;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
 
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
+
+using TecX.Common;
 
 namespace TecX.ServiceModel.AutoMagic
 {
@@ -26,7 +30,7 @@ namespace TecX.ServiceModel.AutoMagic
         ///   <code>container.Resolve{TTypeToBuild}("name")</code></param>
         /// <param name="scopes"></param>
         /// <returns></returns>
-        public IUnityContainerExtensionConfigurator RegisterType<TTypeToBuild>(string name, params Uri[] scopes)
+        public IWcfProxyConfiguration RegisterForAutoDiscovery<TTypeToBuild>(string name, params Uri[] scopes)
         {
             AutoDiscoveryBuildPlanPolicy policy = new AutoDiscoveryBuildPlanPolicy(scopes);
 
@@ -41,11 +45,45 @@ namespace TecX.ServiceModel.AutoMagic
         /// <param name="scopes"></param>
         /// <typeparam name="TTypeToBuild">The type of the type to build.</typeparam>
         /// <returns>A wcf client that uses auto-discovery to find the service</returns>
-        public IUnityContainerExtensionConfigurator RegisterType<TTypeToBuild>(params Uri[] scopes)
+        public IWcfProxyConfiguration RegisterForAutoDiscovery<TTypeToBuild>(params Uri[] scopes)
         {
-            return RegisterType<TTypeToBuild>(null, scopes);
+            return RegisterForAutoDiscovery<TTypeToBuild>(null, scopes);
         }
 
-        #endregion
+        #endregion IWcfProxyConfiguration Members
+
+
+        public IWcfProxyConfiguration RegisterForUsingAppConfig<TTypeToBuild>(string name, string endpointConfigName)
+        {
+            Guard.AssertNotNull(endpointConfigName, "endpointConfigName");
+
+            AppConfigBuildPlanPolicy policy = new AppConfigBuildPlanPolicy(endpointConfigName);
+
+            Context.Policies.Set<IBuildPlanPolicy>(policy, NamedTypeBuildKey.Make<TTypeToBuild>(name));
+
+            return this;
+        }
+
+        public IWcfProxyConfiguration RegisterForUsingAppConfig<TTypeToBuild>(string endpointConfigName)
+        {
+            return RegisterForUsingAppConfig<TTypeToBuild>(null, endpointConfigName);
+        }
+
+        public IWcfProxyConfiguration RegisterForManualSetup<TTypeToBuild>(string name, EndpointAddress address, Binding binding)
+        {
+            Guard.AssertNotNull(address, "address");
+            Guard.AssertNotNull(binding, "binding");
+
+            ManualSetupBuildPlanPolicy policy = new ManualSetupBuildPlanPolicy(address, binding);
+
+            Context.Policies.Set<IBuildPlanPolicy>(policy, NamedTypeBuildKey.Make<TTypeToBuild>(name));
+
+            return this;
+        }
+
+        public IWcfProxyConfiguration RegisterForManualSetup<TTypeToBuild>(EndpointAddress address, Binding binding)
+        {
+            return RegisterForManualSetup<TTypeToBuild>(null, address, binding);
+        }
     }
 }

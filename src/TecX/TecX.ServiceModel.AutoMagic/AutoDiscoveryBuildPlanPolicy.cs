@@ -3,6 +3,7 @@
 using Microsoft.Practices.ObjectBuilder2;
 
 using TecX.Common.Extensions.Error;
+using TecX.Common;
 
 namespace TecX.ServiceModel.AutoMagic
 {
@@ -11,25 +12,19 @@ namespace TecX.ServiceModel.AutoMagic
     /// </summary>
     public class AutoDiscoveryBuildPlanPolicy : IBuildPlanPolicy
     {
-        #region Properties
-
         /// <summary>
-        /// Gets or sets the scopes used for auto discovery
+        /// Stores the scopes used for auto discovery
         /// </summary>
-        /// <value>The scopes.</value>
-        public Uri[] Scopes { get; set; }
+        private readonly Uri[] _scopes;
 
-        #endregion Properties
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoDiscoveryBuildPlanPolicy"/> class
         /// </summary>
         public AutoDiscoveryBuildPlanPolicy(params Uri[] scopes)
         {
-            Scopes = scopes;
+            _scopes = scopes;
         }
-
-        #region Implementation of IBuildPlanPolicy
 
         /// <summary>
         /// Creates an instance of this build plan's type, or fills in the existing type if passed in.
@@ -37,6 +32,8 @@ namespace TecX.ServiceModel.AutoMagic
         /// <param name="context">Context used to build up the object.</param>
         public void BuildUp(IBuilderContext context)
         {
+            Guard.AssertNotNull(context, "context");
+
             if (context.Existing == null)
             {
                 Type typeToConstruct = context.BuildKey.Type;
@@ -47,10 +44,8 @@ namespace TecX.ServiceModel.AutoMagic
                 }
 
                 //delegate creation of the channel proxy
-                context.Existing = WcfServiceHelper.CreateWcfChannelProxy(typeToConstruct, Scopes);
+                context.Existing = WcfServiceHelper.CreateWcfChannelProxy(typeToConstruct, _scopes);
             }
         }
-
-        #endregion Implementation of IBuildPlanPolicy
     }
 }

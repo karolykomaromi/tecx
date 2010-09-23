@@ -27,7 +27,7 @@ namespace TecX.ServiceModel.Test
             container.AddNewExtension<WcfProxyContainerExtension>();
 
             //tell the extension to take care of calls that ask for resolutions of the type IAsyncService
-            container.Configure<IWcfProxyConfiguration>().RegisterType<IAsyncService>();
+            container.Configure<IWcfProxyConfiguration>().RegisterForAutoDiscovery<IAsyncService>();
 
             return container;
         }

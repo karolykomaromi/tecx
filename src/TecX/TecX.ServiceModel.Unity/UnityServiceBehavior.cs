@@ -11,9 +11,6 @@ using TecX.Common;
 
 namespace TecX.ServiceModel.Unity
 {
-    /// <summary>
-    /// A ServiceBehavior that allows 
-    /// </summary>
     public class UnityServiceBehavior : IServiceBehavior
     {
         #region Fields
