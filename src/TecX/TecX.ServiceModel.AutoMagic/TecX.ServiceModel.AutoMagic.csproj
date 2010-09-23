@@ -50,10 +50,12 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="AppConfigBuildPlanPolicy.cs" />
     <Compile Include="BindingDiscoveryServiceBehavior.cs" />
     <Compile Include="AutoDiscoveryBuildPlanPolicy.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="IWcfProxyConfiguration.cs" />
+    <Compile Include="ManualSetupBuildPlanPolicy.cs" />
     <Compile Include="MetadataExportFailedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxyCreationFailedException.cs" />

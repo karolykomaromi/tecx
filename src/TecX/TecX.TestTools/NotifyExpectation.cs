@@ -9,7 +9,7 @@ using TecX.Common;
 
 namespace TecX.TestTools
 {
-    public class NotifyCompletedExpectation<T>
+    public class NotifyExpectation<T>
     {
         #region Fields
 
@@ -22,7 +22,7 @@ namespace TecX.TestTools
 
         #region c'tor
 
-        public NotifyCompletedExpectation(T owner, Action<T> action)
+        public NotifyExpectation(T owner, Action<T> action)
         {
             Guard.AssertNotNull(owner, "owner");
             Guard.AssertNotNull(action, "action");

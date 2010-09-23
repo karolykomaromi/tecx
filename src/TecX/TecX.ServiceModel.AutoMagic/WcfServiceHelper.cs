@@ -37,7 +37,7 @@ namespace TecX.ServiceModel.AutoMagic
             Guard.AssertNotNull(address, "address");
 
             //get the open type for the channelfactory
-            Type channelFactoryType = typeof (ChannelFactory<>);
+            Type channelFactoryType = typeof(ChannelFactory<>);
 
             //make the generic open type a specific type and thus tell the factory for which contract
             //it will be used
@@ -45,6 +45,28 @@ namespace TecX.ServiceModel.AutoMagic
 
             //create the concrete factory and hand in the binding and address to the constructor
             object channelFactory = Activator.CreateInstance(channelFactoryType, binding, address);
+
+            //get the method that creates the channel
+            MethodInfo createchannel = channelFactory.GetType().GetMethod("CreateChannel", new Type[0]);
+
+            //return the proxy
+            return createchannel.Invoke(channelFactory, null);
+        }
+
+        public static object CreateWcfChannelProxy(Type contract, string endpointConfigurationName)
+        {
+            Guard.AssertNotNull(contract, "contract");
+            Guard.AssertNotNull(endpointConfigurationName, "endpointConfigurationName");
+
+            //get the open type for the channelfactory
+            Type channelFactoryType = typeof(ChannelFactory<>);
+
+            //make the generic open type a specific type and thus tell the factory for which contract
+            //it will be used
+            channelFactoryType = channelFactoryType.MakeGenericType(contract);
+
+            //create the concrete factory and hand in the name of the endpoint configuration to the constructor
+            object channelFactory = Activator.CreateInstance(channelFactoryType, endpointConfigurationName);
 
             //get the method that creates the channel
             MethodInfo createchannel = channelFactory.GetType().GetMethod("CreateChannel", new Type[0]);
@@ -117,7 +139,7 @@ namespace TecX.ServiceModel.AutoMagic
         {
             using (DiscoveryClient discoveryClient = new DiscoveryClient(new UdpDiscoveryEndpoint()))
             {
-                FindCriteria criteria = new FindCriteria(contract) {Duration = new TimeSpan(0, 0, 2)};
+                FindCriteria criteria = new FindCriteria(contract) { Duration = new TimeSpan(0, 0, 2) };
 
                 if (scopes != null && scopes.Count > 0)
                 {
@@ -132,6 +154,7 @@ namespace TecX.ServiceModel.AutoMagic
                 if (availableServices != null &&
                     availableServices.Count > 0)
                 {
+                    //the first available service is used (no guarantees about order or special features)
                     EndpointDiscoveryMetadata svc = availableServices[0];
 
                     XElement element = svc.Extensions.Elements(Constants.EndpointMetadataExtensionName).FirstOrDefault();
@@ -224,7 +247,7 @@ namespace TecX.ServiceModel.AutoMagic
 
             string wsdl = sb.ToString();
 
-            XElement element = new XElement(Constants.EndpointMetadataExtensionName) {Value = wsdl};
+            XElement element = new XElement(Constants.EndpointMetadataExtensionName) { Value = wsdl };
 
             XElement root = new XElement("root", element);
 

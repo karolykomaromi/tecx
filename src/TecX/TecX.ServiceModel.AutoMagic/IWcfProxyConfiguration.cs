@@ -1,6 +1,8 @@
 ﻿using System;
 
 using Microsoft.Practices.Unity;
+using System.ServiceModel.Channels;
+using System.ServiceModel;
 
 namespace TecX.ServiceModel.AutoMagic
 {
@@ -17,7 +19,7 @@ namespace TecX.ServiceModel.AutoMagic
         ///   <code>container.Resolve{TTypeToBuild}("name")</code></param>
         /// <param name="scopes"></param>
         /// <returns></returns>
-        IUnityContainerExtensionConfigurator RegisterType<TTypeToBuild>(string name, params Uri[] scopes);
+        IWcfProxyConfiguration RegisterForAutoDiscovery<TTypeToBuild>(string name, params Uri[] scopes);
 
         /// <summary>
         /// Registers the type with the <see cref="WcfProxyContainerExtension"/>
@@ -25,6 +27,14 @@ namespace TecX.ServiceModel.AutoMagic
         /// <param name="scopes"></param>
         /// <typeparam name="TTypeToBuild">The type of the type to build.</typeparam>
         /// <returns>A wcf client that uses auto-discovery to find the service</returns>
-        IUnityContainerExtensionConfigurator RegisterType<TTypeToBuild>(params Uri[] scopes);
+        IWcfProxyConfiguration RegisterForAutoDiscovery<TTypeToBuild>(params Uri[] scopes);
+
+        IWcfProxyConfiguration RegisterForUsingAppConfig<TTypeToBuild>(string name, string endpointConfigName);
+
+        IWcfProxyConfiguration RegisterForUsingAppConfig<TTypeToBuild>(string endpointConfigName);
+
+        IWcfProxyConfiguration RegisterForManualSetup<TTypeToBuild>(string name, EndpointAddress address, Binding binding);
+
+        IWcfProxyConfiguration RegisterForManualSetup<TTypeToBuild>(EndpointAddress address, Binding binding);
     }
 }

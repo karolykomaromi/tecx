@@ -101,7 +101,7 @@ namespace TecX.ServiceModel.Test
 
                 container.AddNewExtension<WcfProxyContainerExtension>();
 
-                container.Configure<IWcfProxyConfiguration>().RegisterType<ISyncService>();
+                container.Configure<IWcfProxyConfiguration>().RegisterForAutoDiscovery<ISyncService>();
 
                 //resolve and call service
                 ISyncService service = container.Resolve<ISyncService>();
