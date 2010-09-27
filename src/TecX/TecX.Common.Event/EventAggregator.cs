@@ -79,7 +79,7 @@ namespace TecX.Common.Event
 
                     if (subcriber != null)
                     {
-                        //_context.Send(delegate { subcriber.Handle(message); }, null);
+                        //_dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => subscriber.Handle(message)));
                         subcriber.Handle(message);
                     }
                 }
