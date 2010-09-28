@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
+using System.Windows.Threading;
 
 namespace TecX.Common.Event
 {
@@ -10,7 +10,7 @@ namespace TecX.Common.Event
         #region Fields
 
         private readonly List<WeakReference> _subscribers;
-        private readonly SynchronizationContext _context;
+        private readonly Dispatcher _dispatcher;
         private readonly object _syncRoot;
 
         #endregion Fields
@@ -20,11 +20,11 @@ namespace TecX.Common.Event
         /// <summary>
         /// Initializes a new instance of the <see cref="EventAggregator"/> class
         /// </summary>
-        public EventAggregator(SynchronizationContext context)
+        public EventAggregator(Dispatcher dispatcher)
         {
-            Guard.AssertNotNull(context, "context");
+            Guard.AssertNotNull(dispatcher, "dispatcher");
 
-            _context = context;
+            _dispatcher = dispatcher;
             _subscribers = new List<WeakReference>();
             _syncRoot = new object();
         }
@@ -75,12 +75,11 @@ namespace TecX.Common.Event
             {
                 if (reference.IsAlive)
                 {
-                    ISubscribeTo<TMessage> subcriber = reference.Target as ISubscribeTo<TMessage>;
+                    ISubscribeTo<TMessage> subscriber = reference.Target as ISubscribeTo<TMessage>;
 
-                    if (subcriber != null)
+                    if (subscriber != null)
                     {
-                        //_dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => subscriber.Handle(message)));
-                        subcriber.Handle(message);
+                        _dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => subscriber.Handle(message)));
                     }
                 }
             }

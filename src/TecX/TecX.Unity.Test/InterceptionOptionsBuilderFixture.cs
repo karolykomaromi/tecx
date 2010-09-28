@@ -50,6 +50,7 @@ namespace TecX.Unity.Test
                 .ConfigureAutoRegistration()
                 .EnableInterception()
                 .ExcludeSystemAssemblies()
+                .ExcludeUnitTestAssemblies()
                 .Include(If.Is<IInterceptable>(), Then.Intercept()
                                                       .AllImplementors()
                                                       .ByImplementingContract()

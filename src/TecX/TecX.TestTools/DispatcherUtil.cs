@@ -10,7 +10,7 @@ namespace TecX.TestTools
         {
             DispatcherFrame frame = new DispatcherFrame();
 
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(ExitFrame), frame);
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(ExitFrame), frame);
 
             Dispatcher.PushFrame(frame);
         }

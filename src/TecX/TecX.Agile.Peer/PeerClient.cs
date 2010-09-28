@@ -53,7 +53,7 @@ namespace TecX.Agile.Peer
             try
             {
                 if (!NetPeerTcpBinding.IsPnrpAvailable)
-                    throw new InvalidOperationException("PNRP not available on this machine!");
+                    throw new PnrpNotAvailableException();
 
                 Id = Guid.NewGuid();
 
