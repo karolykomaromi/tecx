@@ -18,6 +18,7 @@ namespace TecX.Unity.Test
         public void CanFilterByConcreteType()
         {
             IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => !a.GetName().Name.StartsWith("Microsoft.VisualStudio", StringComparison.OrdinalIgnoreCase))
                 .SelectMany(assembly => assembly.GetTypes());
 
             Filter<Type> filter = If.Is<TestLogger>();
@@ -36,6 +37,7 @@ namespace TecX.Unity.Test
         public void CanFilterByInterface()
         {
             IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => !a.GetName().Name.StartsWith("Microsoft.VisualStudio",StringComparison.OrdinalIgnoreCase))
                 .SelectMany(assembly => assembly.GetTypes());
 
             Filter<Type> filter = If.Implements<ILogger>();

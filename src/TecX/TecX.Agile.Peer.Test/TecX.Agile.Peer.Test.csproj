@@ -53,6 +53,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile.Error\TecX.Agile.Error.csproj">
+      <Project>{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}</Project>
+      <Name>TecX.Agile.Error</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Peer\TecX.Agile.Peer.csproj">
       <Project>{4C9A3BE9-2E8F-44B1-965B-42AD35D36071}</Project>
       <Name>TecX.Agile.Peer</Name>

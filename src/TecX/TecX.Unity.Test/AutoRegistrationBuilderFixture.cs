@@ -105,6 +105,7 @@ namespace TecX.Unity.Test
             var builder = _container.ConfigureAutoRegistration();
 
             builder
+                .ExcludeUnitTestAssemblies()
                 .Include(If.Is<TraceLogger>(), Then.Register())
                 .ApplyAutoRegistrations();
 
@@ -124,6 +125,7 @@ namespace TecX.Unity.Test
         {
             IRegistry builder = _container
                 .ConfigureAutoRegistration()
+                .ExcludeUnitTestAssemblies()
                 .EnableInterception()
                 .ApplyAutoRegistrations();
 
@@ -138,6 +140,7 @@ namespace TecX.Unity.Test
 
             IRegistry registration = container
                 .ConfigureAutoRegistration()
+                .ExcludeUnitTestAssemblies()
                 .Include(The.Extension<TestExtension>()
                              .WithConfiguration<ITestExtensionConfig>(c => c.Prop1 = true))
                 .ApplyAutoRegistrations();

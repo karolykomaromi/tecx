@@ -85,6 +85,7 @@
     <Compile Include="TestObjects\TestExtension.cs" />
     <Compile Include="TestObjects\TestLogger.cs" />
     <Compile Include="TestObjects\TraceLogger.cs" />
+    <Compile Include="UnitTestRegistryExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">

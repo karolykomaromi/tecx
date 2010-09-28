@@ -22,6 +22,9 @@ namespace TecX.Agile.Peer
         /// </summary>
         public PeerServiceHost()
         {
+            if (!NetPeerTcpBinding.IsPnrpAvailable)
+                throw new PnrpNotAvailableException();
+
             Uri meshAddress = new Uri(Constants.MeshAddress);
 
             NetPeerTcpBinding binding = new NetPeerTcpBinding();

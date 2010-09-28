@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TecX.Common.Event;
 using TecX.Common.Event.Unity;
 using TecX.Common.Test.TestClasses;
+using TecX.TestTools;
 
 namespace TecX.Common.Test
 {
@@ -30,6 +31,8 @@ namespace TecX.Common.Test
 
             eventAggregator.Publish(new SimpleMessage());
 
+            DispatcherUtil.DoEvents();
+
             Assert.IsTrue(subscriber.MessageReceived);
             Assert.AreEqual(1, subscriber.MessageCounter);
         }
@@ -45,6 +48,8 @@ namespace TecX.Common.Test
             SimplePublisher publisher = container.Resolve<SimplePublisher>();
 
             publisher.Publish();
+
+            DispatcherUtil.DoEvents();
 
             Assert.IsTrue(subscriber.MessageReceived);
             Assert.AreEqual(1, subscriber.MessageCounter);

@@ -18,26 +18,33 @@ namespace TecX.Agile.Peer.Test
         [TestMethod]
         public void CanExchangeMessagesViaPeer()
         {
-            bool messageReceived = false;
-
-            using (new PeerServiceHost())
+            try
             {
-                PeerClient peer1 = new PeerClient();
+                bool messageReceived = false;
 
-                PeerClient peer2 = new PeerClient();
+                using (new PeerServiceHost())
+                {
+                    PeerClient peer1 = new PeerClient();
 
-                peer1.MovedStoryCard += (s, e) => Assert.Fail("message must not bounce back");
+                    PeerClient peer2 = new PeerClient();
 
-                peer2.MovedStoryCard += (s, e) =>
-                                            {
-                                                messageReceived = true;
-                                            };
+                    peer1.MovedStoryCard += (s, e) => Assert.Fail("message must not bounce back");
 
-                peer1.MoveStoryCard(peer1.Id, Guid.NewGuid(), 1.2, 2.3, 3.4);
+                    peer2.MovedStoryCard += (s, e) =>
+                                                {
+                                                    messageReceived = true;
+                                                };
 
+                    peer1.MoveStoryCard(peer1.Id, Guid.NewGuid(), 1.2, 2.3, 3.4);
+
+                }
+
+                Assert.IsTrue(messageReceived);
             }
-
-            Assert.IsTrue(messageReceived);
+            catch (PnrpNotAvailableException ex)
+            {
+                Assert.Inconclusive(ex.Message);
+            }
         }
     }
 }
