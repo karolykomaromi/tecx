@@ -8,7 +8,7 @@ namespace TecX.Agile.Builder
     /// Base class for implementations of the Builder Pattern
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity to build</typeparam>
-    public abstract class EntityBuilder<TEntity> : ICloneable
+    public abstract class EntityBuilder<TEntity> : ICloneable, IFluentInterface
         where TEntity : ICloneable
     {
         #region Properties

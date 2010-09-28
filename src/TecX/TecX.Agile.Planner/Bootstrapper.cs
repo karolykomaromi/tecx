@@ -9,6 +9,8 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Composite.UnityExtensions;
 
 using TecX.Common.Event.Unity;
+using TecX.Unity.Registration;
+using TecX.Agile.Data;
 
 namespace TecX.Agile.Planner
 {
@@ -30,9 +32,13 @@ namespace TecX.Agile.Planner
             //TODO weberse configure logging, maybe wcf automagic, a repository and all the other funny
             //Stuff
 
-            Container.AddNewExtension<EventAggregatorContainerExtension>();
-
-            //Container.ConfigureAutoRegistration().ExcludeSystemAssemblies()
+            Container
+                .ConfigureRegistrations()
+                .ExcludeSystemAssemblies()
+                .Include(The.Extension<EventAggregatorContainerExtension>())
+                .Include(If.Implements<IRepository>(), 
+                    Then.Register().WithoutPartName(WellKnownAppParts.DesignPatterns.Repository))
+                .ApplyRegistrations();
         }
 
         protected override IModuleCatalog GetModuleCatalog()
