@@ -47,7 +47,7 @@ namespace TecX.Unity.Test
             IUnityContainer container = new UnityContainer();
 
             var registry = container
-                .ConfigureAutoRegistration()
+                .ConfigureRegistrations()
                 .EnableInterception()
                 .ExcludeSystemAssemblies()
                 .ExcludeUnitTestAssemblies()
@@ -56,7 +56,7 @@ namespace TecX.Unity.Test
                                                       .ByImplementingContract()
                                                       .WrapAllWith<IncrementIntegerByOneBehavior>())
                 .Include(If.Implements<IInterceptable>(), Then.Register().WithTypeName())
-                .ApplyAutoRegistrations();
+                .ApplyRegistrations();
 
             IInterceptable interceptable = container.Resolve<IInterceptable>("Interceptable");
 

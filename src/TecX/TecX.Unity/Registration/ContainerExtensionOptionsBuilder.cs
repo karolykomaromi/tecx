@@ -6,7 +6,7 @@ using TecX.Common;
 
 namespace TecX.Unity.Registration
 {
-    public class ContainerExtensionOptionsBuilder
+    public class ContainerExtensionOptionsBuilder : IFluentInterface
     {
         private Action<Type, IUnityContainer> _registrator = (t, c) => { };
         private readonly Func<UnityContainerExtension> _extensionFactory;

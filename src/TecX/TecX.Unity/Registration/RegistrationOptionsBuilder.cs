@@ -8,7 +8,7 @@ using TecX.Common;
 
 namespace TecX.Unity.Registration
 {
-    public class RegistrationOptionsBuilder
+    public class RegistrationOptionsBuilder : IFluentInterface
     {
         #region Fields
 

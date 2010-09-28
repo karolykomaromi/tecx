@@ -6,7 +6,7 @@ namespace TecX.Unity.Registration
 {
     public static class Extensions
     {
-        public static RegistryBuilder ConfigureAutoRegistration(this IUnityContainer container)
+        public static IRegistry ConfigureRegistrations(this IUnityContainer container)
         {
             Guard.AssertNotNull(container, "container");
 

@@ -94,20 +94,20 @@ namespace TecX.Unity.Test
         [TestMethod]
         public void CanCreateRegistrationBuilder()
         {
-            RegistryBuilder builder = _container.ConfigureAutoRegistration();
+            IRegistry registry = _container.ConfigureRegistrations();
 
-            Assert.IsNotNull(builder);
+            Assert.IsNotNull(registry);
         }
 
         [TestMethod]
         public void WhenRegistering_MappingIsRegisteredWithContainer()
         {
-            var builder = _container.ConfigureAutoRegistration();
+            var builder = _container.ConfigureRegistrations();
 
             builder
                 .ExcludeUnitTestAssemblies()
                 .Include(If.Is<TraceLogger>(), Then.Register())
-                .ApplyAutoRegistrations();
+                .ApplyRegistrations();
 
             Assert.AreEqual(1, _registrationEvents.Count);
 
@@ -124,10 +124,10 @@ namespace TecX.Unity.Test
         public void WhenInterceptionIsConfigured_AddedAsExpected()
         {
             IRegistry builder = _container
-                .ConfigureAutoRegistration()
+                .ConfigureRegistrations()
                 .ExcludeUnitTestAssemblies()
                 .EnableInterception()
-                .ApplyAutoRegistrations();
+                .ApplyRegistrations();
 
             Assert.AreEqual(1, _containerExtensions.Count);
             Assert.AreEqual(typeof(Interception), _containerExtensions[0].GetType());
@@ -139,11 +139,11 @@ namespace TecX.Unity.Test
             IUnityContainer container = new UnityContainer();
 
             IRegistry registration = container
-                .ConfigureAutoRegistration()
+                .ConfigureRegistrations()
                 .ExcludeUnitTestAssemblies()
                 .Include(The.Extension<TestExtension>()
                              .WithConfiguration<ITestExtensionConfig>(c => c.Prop1 = true))
-                .ApplyAutoRegistrations();
+                .ApplyRegistrations();
 
             TestExtension extension = container.Resolve<TestExtension>();
 
