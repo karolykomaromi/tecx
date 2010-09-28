@@ -8,7 +8,7 @@ using TecX.Common;
 
 namespace TecX.Unity.Registration
 {
-    public class InterceptionOptionsBuilder
+    public class InterceptionOptionsBuilder : IFluentInterface
     {
         #region Fields
 

@@ -9,7 +9,7 @@ using TecX.Common;
 
 namespace TecX.Unity.Registration
 {
-    public class RegistryBuilder : IRegistry, IFluentInterface
+    public class RegistryBuilder : IRegistry
     {
         #region Fields
 
@@ -99,7 +99,7 @@ namespace TecX.Unity.Registration
             _registrations.Add(registration);
         }
 
-        public IRegistry ApplyAutoRegistrations()
+        public IRegistry ApplyRegistrations()
         {
             IEnumerable<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies();
 

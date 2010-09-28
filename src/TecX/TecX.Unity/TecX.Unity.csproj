@@ -73,7 +73,6 @@
     <Compile Include="Registration\RunOnceRegistration.cs" />
     <Compile Include="Registration\Then.cs" />
     <Compile Include="Registration\WellKnownAppParts.cs" />
-    <Compile Include="IFluentInterface.cs" />
     <Compile Include="ParameterMatcher.cs" />
     <Compile Include="ClozeInjectionConstructur.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

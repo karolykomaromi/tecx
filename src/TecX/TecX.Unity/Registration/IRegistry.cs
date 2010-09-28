@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Reflection;
 
+using TecX.Common;
+
 namespace TecX.Unity.Registration
 {
-    public interface IRegistry
+    public interface IRegistry : IFluentInterface
     {
-        IRegistry ApplyAutoRegistrations();
+        IRegistry ApplyRegistrations();
 
         IRegistry Exclude(Filter<Assembly> filter);
         IRegistry Exclude(Filter<Type> filter);
