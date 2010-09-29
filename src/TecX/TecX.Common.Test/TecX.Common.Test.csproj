@@ -68,6 +68,7 @@
     <Compile Include="ObjectPredicateExtensionsFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexBuilderFixture.cs" />
+    <Compile Include="SpecificationFixture.cs" />
     <Compile Include="TestClasses\CancelingSubscriber.cs" />
     <Compile Include="TestClasses\CancelMessage.cs" />
     <Compile Include="TestClasses\ClassA.cs" />
