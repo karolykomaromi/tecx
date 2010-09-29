@@ -69,7 +69,7 @@
       <Name>TecX.Agile</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
-      <Project>{23E54945-0126-43BE-A3FC-5F61AF5BDFF3}</Project>
+      <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
     </ProjectReference>
   </ItemGroup>
