@@ -79,6 +79,15 @@
     <Compile Include="Latch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexBuilder.cs" />
+    <Compile Include="Specifications\AndSpecification.cs" />
+    <Compile Include="Specifications\CompareToValueSpecification.cs" />
+    <Compile Include="Specifications\CompositeSpecification.cs" />
+    <Compile Include="Specifications\InRangeSpecification.cs" />
+    <Compile Include="Specifications\ISpecification.cs" />
+    <Compile Include="Specifications\NotSpecification.cs" />
+    <Compile Include="Specifications\OrSpecification.cs" />
+    <Compile Include="Specifications\SearchExtensions.cs" />
+    <Compile Include="Specifications\Specification.cs" />
     <Compile Include="TimeProvider.cs" />
     <Compile Include="TimeSlot.cs" />
     <Compile Include="TypeHelper.cs" />
