@@ -4,14 +4,12 @@ using System.ServiceModel.Channels;
 
 using Microsoft.Practices.Unity;
 
-using TecX.Common;
-
 namespace TecX.ServiceModel.AutoMagic
 {
     /// <summary>
     /// configuration interface exposed by the Wcf Proxy extension, it will be used to register new types in the container
     /// </summary>
-    public interface IWcfProxyConfiguration : IUnityContainerExtensionConfigurator, IFluentInterface
+    public interface IWcfProxyConfiguration : IUnityContainerExtensionConfigurator
     {
         /// <summary>
         /// Registers the type with the <see cref="WcfProxyContainerExtension"/>
