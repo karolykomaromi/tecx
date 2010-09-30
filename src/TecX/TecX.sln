@@ -83,9 +83,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Undo", "TecX.Undo\TecX
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "08 Undo", "08 Undo", "{E6BC7155-A2F0-4353-A57C-36A237193155}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Undo.Silverlight", "TecX.Undo\TecX.Undo.Silverlight.csproj", "{14311591-3735-41A0-9DE5-8A72349B60D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Undo.Test", "TecX.Undo.Test\TecX.Undo.Test.csproj", "{148699A6-388F-45A5-A9B5-DA1C2BDDD168}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 27
+		SccNumberOfProjects = 29
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -193,6 +197,14 @@ Global
 		SccProjectTopLevelParentUniqueName26 = TecX.sln
 		SccProjectName26 = TecX.Undo
 		SccLocalPath26 = TecX.Undo
+		SccProjectUniqueName27 = TecX.Undo\\TecX.Undo.Silverlight.csproj
+		SccProjectTopLevelParentUniqueName27 = TecX.sln
+		SccProjectName27 = TecX.Undo
+		SccLocalPath27 = TecX.Undo
+		SccProjectUniqueName28 = TecX.Undo.Test\\TecX.Undo.Test.csproj
+		SccProjectTopLevelParentUniqueName28 = TecX.sln
+		SccProjectName28 = TecX.Undo.Test
+		SccLocalPath28 = TecX.Undo.Test
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -466,6 +478,26 @@ Global
 		{692D5946-BFB5-46EC-A012-5FBF853A93EE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{692D5946-BFB5-46EC-A012-5FBF853A93EE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{692D5946-BFB5-46EC-A012-5FBF853A93EE}.Release|x86.ActiveCfg = Release|Any CPU
+		{14311591-3735-41A0-9DE5-8A72349B60D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14311591-3735-41A0-9DE5-8A72349B60D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14311591-3735-41A0-9DE5-8A72349B60D5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{14311591-3735-41A0-9DE5-8A72349B60D5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{14311591-3735-41A0-9DE5-8A72349B60D5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{14311591-3735-41A0-9DE5-8A72349B60D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14311591-3735-41A0-9DE5-8A72349B60D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14311591-3735-41A0-9DE5-8A72349B60D5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{14311591-3735-41A0-9DE5-8A72349B60D5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{14311591-3735-41A0-9DE5-8A72349B60D5}.Release|x86.ActiveCfg = Release|Any CPU
+		{148699A6-388F-45A5-A9B5-DA1C2BDDD168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{148699A6-388F-45A5-A9B5-DA1C2BDDD168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{148699A6-388F-45A5-A9B5-DA1C2BDDD168}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{148699A6-388F-45A5-A9B5-DA1C2BDDD168}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{148699A6-388F-45A5-A9B5-DA1C2BDDD168}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{148699A6-388F-45A5-A9B5-DA1C2BDDD168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{148699A6-388F-45A5-A9B5-DA1C2BDDD168}.Release|Any CPU.Build.0 = Release|Any CPU
+		{148699A6-388F-45A5-A9B5-DA1C2BDDD168}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{148699A6-388F-45A5-A9B5-DA1C2BDDD168}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{148699A6-388F-45A5-A9B5-DA1C2BDDD168}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -478,6 +510,7 @@ Global
 		{5C1D555E-0F85-4B00-9410-E4C5404636AA} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{A5CEF853-8C98-4CE6-AD43-E78D86A4235E} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{943AD349-5431-4B9F-9DF4-A6DF5390B484} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
+		{148699A6-388F-45A5-A9B5-DA1C2BDDD168} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{45BE1494-E6F4-415F-8206-2856FBD28F66} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{266522EB-9DCB-451A-8CD7-678188DCB5F6} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{23E54945-0126-43BE-A3FC-5F61AF5BDFF3} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
@@ -498,5 +531,6 @@ Global
 		{69621991-8933-41FD-8493-87E7FA5A26FE} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{A763CC8F-835E-444C-9A9F-88E7A443C1B2} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{692D5946-BFB5-46EC-A012-5FBF853A93EE} = {E6BC7155-A2F0-4353-A57C-36A237193155}
+		{14311591-3735-41A0-9DE5-8A72349B60D5} = {E6BC7155-A2F0-4353-A57C-36A237193155}
 	EndGlobalSection
 EndGlobal
