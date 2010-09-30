@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace TecX.Common.Undo
+using TecX.Common;
+using TecX.Undo.History;
+
+namespace TecX.Undo
 {
     /// <summary>
     /// Action Manager is a central class for the Undo Framework.
