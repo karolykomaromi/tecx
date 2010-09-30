@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Common.Extensions.LinqTo.Objects;
 using TecX.Common.Test.TestClasses;
+using TecX.Common.Time;
 
 namespace TecX.Common.Test
 {

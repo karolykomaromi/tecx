@@ -6,6 +6,7 @@ using System.Text;
 using Moq;
 
 using TecX.Common;
+using TecX.Common.Time;
 
 namespace TecX.TestTools.Extensions
 {
