@@ -1,4 +1,4 @@
-namespace TecX.Common.Undo
+namespace TecX.Undo
 {
     public abstract class AbstractAction : IAction
     {
