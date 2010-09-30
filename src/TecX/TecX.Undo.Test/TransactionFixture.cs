@@ -53,7 +53,7 @@ namespace TecX.Undo.Test
             Assert.AreEqual(0, log.ExecutesCount);
             Assert.AreEqual(0, log.UnexecutesCount);
             Assert.AreEqual(0, am.TransactionStack.Count);
-            Assert.AreEqual(false, am.ActionIsExecuting);
+            Assert.AreEqual(false, am.IsActionExecuting);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace TecX.Undo.History
 {
@@ -22,18 +23,20 @@ namespace TecX.Undo.History
 
         #region Events
 
-        public event EventHandler CollectionChanged;
-        protected void RaiseUndoBufferChanged()
+        public event EventHandler UndoBufferChanged = delegate { };
+
+        private void RaiseUndoBufferChanged()
         {
-            if (CollectionChanged != null)
+            if (UndoBufferChanged != null)
             {
-                CollectionChanged(this, new EventArgs());
+                UndoBufferChanged(this, new EventArgs());
             }
         }
 
         #endregion
 
-        private SimpleHistoryNode mCurrentState = new SimpleHistoryNode();
+        private SimpleHistoryNode _currentState = new SimpleHistoryNode();
+
         /// <summary>
         /// "Iterator" to navigate through the sequence, "Cursor"
         /// </summary>
@@ -41,13 +44,13 @@ namespace TecX.Undo.History
         {
             get
             {
-                return mCurrentState;
+                return _currentState;
             }
             set
             {
                 if (value != null)
                 {
-                    mCurrentState = value;
+                    _currentState = value;
                 }
                 else
                 {
@@ -69,7 +72,8 @@ namespace TecX.Undo.History
         /// <returns>true if action was appended, false if it was merged with the previous one</returns>
         public bool AppendAction(IAction newAction)
         {
-            if (CurrentState.PreviousAction != null && CurrentState.PreviousAction.TryToMerge(newAction))
+            if (CurrentState.PreviousAction != null && 
+                CurrentState.PreviousAction.TryToMerge(newAction))
             {
                 RaiseUndoBufferChanged();
                 return false;
@@ -155,14 +159,14 @@ namespace TecX.Undo.History
         /// <summary>
         /// The length of Undo buffer (total number of undoable actions)
         /// </summary>
-        public int Length { get; set; }
+        public int Length { get; private set; }
 
         public IEnumerator<IAction> GetEnumerator()
         {
             return EnumUndoableActions().GetEnumerator();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }

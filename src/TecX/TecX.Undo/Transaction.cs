@@ -17,7 +17,7 @@ namespace TecX.Undo
         {
             Actions = new List<IAction>();
             ActionManager = actionManager;
-            actionManager.OpenTransaction(this);
+            actionManager.BeginTransaction(this);
             IsDelayed = delayed;
         }
 
