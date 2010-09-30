@@ -1,7 +1,4 @@
-﻿using System.Text;
-using System.Threading;
-
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.ObjectBuilder;
 using System.Windows.Threading;
 
@@ -22,12 +19,6 @@ namespace TecX.Common.Event.Unity
         /// </summary>
         public EventAggregatorContainerExtension()
         {
-            //SynchronizationContext context = SynchronizationContext.Current;
-
-            //context = context ?? new SynchronizationContext();
-
-            //IEventAggregator eventAggregator = new EventAggregator(context);
-
             //TODO weberse evaluate using the application dispatcher instead via ctor injection to the
             //container extension
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;

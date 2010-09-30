@@ -70,7 +70,7 @@
     </Compile>
     <Compile Include="ConsoleTraceListener.cs" />
     <Compile Include="DebugTraceListener.cs" />
-    <Compile Include="InMemoryTraceListener.cs" />
+    <Compile Include="MemoryTraceListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimerTracer.cs" />
     <Compile Include="TecXTraceListenerBase.cs" />
