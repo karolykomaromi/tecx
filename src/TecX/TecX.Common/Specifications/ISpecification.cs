@@ -169,7 +169,7 @@ namespace TecX.Common.Specifications
         /// <param name="upperBound">The upper bound.</param>
         /// <returns>The linked specifications</returns>
         ISpecification<TCandidate> And<TSpecification>(IComparable lowerBound, IComparable upperBound)
-            where TSpecification : InRangeSpecification<TCandidate>, new();
+            where TSpecification : RangeSpecification<TCandidate>, new();
 
         #endregion And
 
@@ -325,7 +325,7 @@ namespace TecX.Common.Specifications
         /// <param name="upperBound">The upper bound.</param>
         /// <returns>The linked specifications</returns>
         ISpecification<TCandidate> Or<TSpecification>(IComparable lowerBound, IComparable upperBound)
-            where TSpecification : InRangeSpecification<TCandidate>, new();
+            where TSpecification : RangeSpecification<TCandidate>, new();
 
         #endregion Or
 

@@ -7,17 +7,17 @@
     /// <remarks>
     /// See http://en.wikipedia.org/wiki/Specification_pattern for further information on the pattern
     /// </remarks>
-    /// <typeparam name="T">The type the specification should work on</typeparam>
-    public class OrSpecification<T> : CompositeSpecification<T>
+    /// <typeparam name="TCandidate">The type the specification should work on</typeparam>
+    public class OrSpecification<TCandidate> : CompositeSpecification<TCandidate>
     {
         #region c'tor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrSpecification&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="OrSpecification&lt;TCandidate&gt;"/> class.
         /// </summary>
         /// <param name="leftSide">The first specification</param>
         /// <param name="rightSide">The second specification</param>
-        public OrSpecification(ISpecification<T> leftSide, ISpecification<T> rightSide)
+        public OrSpecification(ISpecification<TCandidate> leftSide, ISpecification<TCandidate> rightSide)
             : base(leftSide, rightSide)
         {
         }
@@ -32,7 +32,7 @@
         /// 	<c>true</c> if the specification is satisfied by the
         /// candidate object; otherwise, <c>false</c>.
         /// </returns>
-        public override bool IsSatisfiedBy(T candidate)
+        public override bool IsSatisfiedBy(TCandidate candidate)
         {
             Guard.AssertNotNull(candidate, "candidate");
 
