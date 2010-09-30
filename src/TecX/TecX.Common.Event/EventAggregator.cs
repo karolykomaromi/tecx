@@ -105,7 +105,7 @@ namespace TecX.Common.Event
             }
         }
 
-        private WeakReference[] AllSubscribers()
+        private IEnumerable<WeakReference> AllSubscribers()
         {
             lock (_syncRoot)
             {

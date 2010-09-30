@@ -22,7 +22,7 @@ namespace TecX.Common.Test
                 .WithOptions
                 .SetAsDefaultCategory()
                 .SendTo
-                .Custom("DefaultTraceListener", typeof (InMemoryTraceListener))
+                .Custom("DefaultTraceListener", typeof (MemoryTraceListener))
                 .FormatWith(
                     new FormatterBuilder()
                         .TextFormatterNamed("DefaultTextFormatter")
@@ -42,7 +42,7 @@ namespace TecX.Common.Test
 
             Assert.IsNotNull(wrapper);
 
-            InMemoryTraceListener listener = wrapper.InnerTraceListener as InMemoryTraceListener;
+            MemoryTraceListener listener = wrapper.InnerTraceListener as MemoryTraceListener;
 
             Assert.IsNotNull(listener);
 
