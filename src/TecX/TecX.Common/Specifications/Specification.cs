@@ -49,7 +49,7 @@ namespace TecX.Common.Specifications
         /// <param name="upperBound">The upper bound.</param>
         /// <returns>The linked specifications</returns>
         public ISpecification<TCandidate> And<TSpecification>(IComparable lowerBound, IComparable upperBound)
-            where TSpecification : InRangeSpecification<TCandidate>, new()
+            where TSpecification : RangeSpecification<TCandidate>, new()
         {
             Guard.AssertNotNull(lowerBound, "lowerBound");
             Guard.AssertNotNull(upperBound, "upperBound");
@@ -564,7 +564,7 @@ namespace TecX.Common.Specifications
         /// <param name="upperBound">The upper bound.</param>
         /// <returns>The linked specifications</returns>
         public ISpecification<TCandidate> Or<TSpecification>(IComparable lowerBound, IComparable upperBound)
-            where TSpecification : InRangeSpecification<TCandidate>, new()
+            where TSpecification : RangeSpecification<TCandidate>, new()
         {
             Guard.AssertNotNull(lowerBound, "lowerBound");
             Guard.AssertNotNull(upperBound, "upperBound");

@@ -122,7 +122,7 @@ namespace TecX.Common.Test
         }
     }
 
-    public class NumberBetween : InRangeSpecification<SearchTestEntity>
+    public class NumberBetween : RangeSpecification<SearchTestEntity>
     {
         public NumberBetween()
         {
