@@ -29,6 +29,6 @@ namespace TecX.Undo.History
 
         IEnumerable<IAction> EnumUndoableActions();
 
-        event EventHandler CollectionChanged;
+        event EventHandler UndoBufferChanged;
     }
 }

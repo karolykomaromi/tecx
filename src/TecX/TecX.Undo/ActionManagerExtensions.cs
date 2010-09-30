@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 
+using TecX.Common;
 using TecX.Undo.Actions;
 
 namespace TecX.Undo
@@ -28,6 +29,20 @@ namespace TecX.Undo
         {
             AddItemAction<T> action = new AddItemAction<T>(list.Add, t => list.Remove(t), item);
             actionManager.Execute(action);
+        }
+
+        public static Transaction CreateTransaction(this ActionManager actionManager)
+        {
+            Guard.AssertNotNull(actionManager, "actionManager");
+
+            return Transaction.Create(actionManager);
+        }
+
+        public static Transaction CreateTransaction(this ActionManager actionManager, bool delayed)
+        {
+            Guard.AssertNotNull(actionManager, "actionManager");
+
+            return Transaction.Create(actionManager, delayed);
         }
     }
 }

@@ -21,36 +21,13 @@ namespace TecX.Undo
     /// </summary>
     public class ActionManager
     {
-        #region c'tor
+        #region Fields
 
-        public ActionManager()
-        {
-            TransactionStack = new Stack<Transaction>();
-            History = new SimpleHistory();
-        }
+        private IActionHistory _history;
 
-        #endregion c'tor
-        
-        #region Events
+        #endregion Fields
 
-        /// <summary>
-        /// Listen to this event to be notified when a new action is added, executed, undone or redone
-        /// </summary>
-        public event EventHandler CollectionChanged = delegate { }; 
-
-        protected void RaiseUndoBufferChanged(object sender, EventArgs e)
-        {
-            if (CollectionChanged != null)
-            {
-                CollectionChanged(this, e);
-            }
-        }
-
-        #endregion
-
-        #region RecordAction
-
-        #region Running
+        #region Properties
 
         /// <summary>
         /// Currently running action (during an Undo or Redo process)
@@ -61,117 +38,19 @@ namespace TecX.Undo
         /// <summary>
         /// Checks if we're inside an Undo or Redo operation
         /// </summary>
-        public bool ActionIsExecuting
+        public bool IsActionExecuting
         {
             get
             {
                 return CurrentAction != null;
             }
         }
-
-        #endregion
-
+      
         /// <summary>
         /// Defines whether we should record an action to the Undo buffer and then execute,
         /// or just execute it without it becoming a part of history
         /// </summary>
         public bool ExecuteImmediatelyWithoutRecording { get; set; }
-
-        /// <summary>
-        /// Central method to add and execute a new action.
-        /// </summary>
-        /// <param name="action">An action to be recorded in the buffer and executed</param>
-        public void RecordAction(IAction action)
-        {
-            Guard.AssertNotNull(action, "action");
-
-            // make sure we're not inside an Undo or Redo operation
-            CheckNotRunningBeforeRecording(action);
-
-            // if we don't want to record actions, just run and forget it
-            if (ExecuteImmediatelyWithoutRecording && action.CanExecute())
-            {
-                action.Execute();
-                return;
-            }
-
-            // Check if we're inside a transaction that is being recorded
-            Transaction currentTransaction = RecordingTransaction;
-            if (currentTransaction != null)
-            {
-                // if we're inside a transaction, just add the action to the transaction's list
-                currentTransaction.Add(action);
-                if (!currentTransaction.IsDelayed)
-                {
-                    action.Execute();
-                }
-            }
-            else
-            {
-                RunActionDirectly(action);
-            }
-        }
-
-        void CheckNotRunningBeforeRecording(IAction candidate)
-        {
-            string candidateActionName = candidate != null ? candidate.ToString() : string.Empty;
-
-            if (CurrentAction != null)
-            {
-                throw new InvalidOperationException
-                (
-                    string.Format
-                    (
-                          "ActionManager.RecordActionDirectly: the ActionManager is currently running "
-                        + "or undoing an action ({0}), and this action (while being executed) attempted "
-                        + "to recursively record another action ({1}), which is not allowed. "
-                        + "You can examine the stack trace of this exception to see what the "
-                        + "executing action did wrong and change this action not to influence the "
-                        + "Undo stack during its execution. Checking if ActionManager.ActionIsExecuting == true "
-                        + "before launching another transaction might help to avoid the problem. Thanks and sorry for the inconvenience.",
-                        CurrentAction.ToString(),
-                        candidateActionName
-                    )
-                );
-            }
-        }
-
-        /// <summary>
-        /// Adds the action to the buffer and runs it
-        /// </summary>
-        void RunActionDirectly(IAction actionToRun)
-        {
-            CheckNotRunningBeforeRecording(actionToRun);
-
-            CurrentAction = actionToRun;
-            try
-            {
-                if (History.AppendAction(actionToRun))
-                {
-                    History.MoveForward();
-                }
-            }
-            finally
-            {
-                CurrentAction = null;    
-            }
-        }
-
-        #endregion
-
-        #region Transactions
-
-        public Transaction CreateTransaction()
-        {
-            return Transaction.Create(this);
-        }
-
-        public Transaction CreateTransaction(bool delayed)
-        {
-            return Transaction.Create(this, delayed);
-        }
-
-        public Stack<Transaction> TransactionStack { get; private set; }
 
         public Transaction RecordingTransaction
         {
@@ -185,7 +64,70 @@ namespace TecX.Undo
             }
         }
 
-        public void OpenTransaction(Transaction t)
+        public Stack<Transaction> TransactionStack { get; private set; }
+
+        public bool CanUndo
+        {
+            get
+            {
+                return History.CanMoveBack;
+            }
+        }
+
+        public bool CanRedo
+        {
+            get
+            {
+                return History.CanMoveForward;
+            }
+        }
+
+        private IActionHistory History
+        {
+            get
+            {
+                return _history;
+            }
+            set
+            {
+                if (_history != null)
+                {
+                    _history.UndoBufferChanged -= RaiseUndoBufferChanged;
+                }
+                _history = value;
+                if (_history != null)
+                {
+                    _history.UndoBufferChanged += RaiseUndoBufferChanged;
+                }
+            }
+        }
+
+        #endregion Properties
+
+        #region Events
+
+        /// <summary>
+        /// Listen to this event to be notified when a new action is added, executed, undone or redone
+        /// </summary>
+        public event EventHandler UndoBufferChanged = delegate { };
+
+        #endregion Events
+
+        #region c'tor
+
+        public ActionManager()
+        {
+            TransactionStack = new Stack<Transaction>();
+            History = new SimpleHistory();
+        }
+
+        #endregion c'tor
+        
+        #region Methods
+
+        #region Transactions
+
+        public void BeginTransaction(Transaction t)
         {
             TransactionStack.Push(t);
         }
@@ -199,7 +141,7 @@ namespace TecX.Undo
                     + " when there is no open transaction (TransactionStack is empty)."
                     + " Please examine the stack trace of this exception to find code"
                     + " which called CommitTransaction one time too many."
-                    + " Normally you don't call OpenTransaction and CommitTransaction directly,"
+                    + " Normally you don't call BeginTransaction and CommitTransaction directly,"
                     + " but use using(var t = Transaction.Create(Root)) instead.");
             }
 
@@ -225,67 +167,7 @@ namespace TecX.Undo
             }
         }
 
-        #endregion
-
-        #region Undo, Redo
-
-        public void Undo()
-        {
-            if (!CanUndo)
-            {
-                return;
-            }
-            if (ActionIsExecuting)
-            {
-                throw new InvalidOperationException(string.Format("ActionManager is currently busy"
-                    + " executing a transaction ({0}). This transaction has called Undo()"
-                    + " which is not allowed until the transaction ends."
-                    + " Please examine the stack trace of this exception to see"
-                    + " what part of your code called Undo.", CurrentAction));
-            }
-            CurrentAction = History.CurrentState.PreviousAction;
-            History.MoveBack();
-            CurrentAction = null;
-        }
-
-        public void Redo()
-        {
-            if (!CanRedo)
-            {
-                return;
-            }
-            if (ActionIsExecuting)
-            {
-                throw new InvalidOperationException(string.Format("ActionManager is currently busy"
-                    + " executing a transaction ({0}). This transaction has called Redo()"
-                    + " which is not allowed until the transaction ends."
-                    + " Please examine the stack trace of this exception to see"
-                    + " what part of your code called Redo.", CurrentAction));
-            }
-            CurrentAction = History.CurrentState.NextAction;
-            History.MoveForward();
-            CurrentAction = null;
-        }
-
-        public bool CanUndo
-        {
-            get
-            {
-                return History.CanMoveBack;
-            }
-        }
-
-        public bool CanRedo
-        {
-            get
-            {
-                return History.CanMoveForward;
-            }
-        }
-
-        #endregion
-
-        #region Buffer
+        #endregion Transactions
 
         public void Clear()
         {
@@ -298,27 +180,132 @@ namespace TecX.Undo
             return History.EnumUndoableActions();
         }
 
-        private IActionHistory _history;
-        internal IActionHistory History
+        /// <summary>
+        /// Central method to add and execute a new action.
+        /// </summary>
+        /// <param name="action">An action to be recorded in the buffer and executed</param>
+        public void RecordAction(IAction action)
         {
-            get
+            Guard.AssertNotNull(action, "action");
+
+            // make sure we're not inside an Undo or Redo operation
+            AssertNotRunningBeforeRecording(action);
+
+            // if we don't want to record actions, just run and forget it
+            if (ExecuteImmediatelyWithoutRecording && action.CanExecute())
             {
-                return _history;
+                action.Execute();
+                return;
             }
-            set
+
+            // Check if we're inside a transaction that is being recorded
+            Transaction currentTransaction = RecordingTransaction;
+            if (currentTransaction != null)
             {
-                if (_history != null)
+                // if we're inside a transaction, just add the action to the transaction's list
+                currentTransaction.Add(action);
+                if (!currentTransaction.IsDelayed)
                 {
-                    _history.CollectionChanged -= RaiseUndoBufferChanged;
+                    action.Execute();
                 }
-                _history = value;
-                if (_history != null)
-                {
-                    _history.CollectionChanged += RaiseUndoBufferChanged;
-                }
+            }
+            else
+            {
+                RunActionDirectly(action);
             }
         }
 
-        #endregion
+        public void Undo()
+        {
+            if (!CanUndo)
+            {
+                return;
+            }
+            if (IsActionExecuting)
+            {
+                throw new InvalidOperationException(string.Format("ActionManager is currently busy"
+                                                                  + " executing a transaction ({0}). This transaction has called Undo()"
+                                                                  + " which is not allowed until the transaction ends."
+                                                                  + " Please examine the stack trace of this exception to see"
+                                                                  + " what part of your code called Undo.", CurrentAction));
+            }
+            CurrentAction = History.CurrentState.PreviousAction;
+            History.MoveBack();
+            CurrentAction = null;
+        }
+
+        public void Redo()
+        {
+            if (!CanRedo)
+            {
+                return;
+            }
+            if (IsActionExecuting)
+            {
+                throw new InvalidOperationException(string.Format("ActionManager is currently busy"
+                                                                  + " executing a transaction ({0}). This transaction has called Redo()"
+                                                                  + " which is not allowed until the transaction ends."
+                                                                  + " Please examine the stack trace of this exception to see"
+                                                                  + " what part of your code called Redo.", CurrentAction));
+            }
+            CurrentAction = History.CurrentState.NextAction;
+            History.MoveForward();
+            CurrentAction = null;
+        }
+
+        private void RaiseUndoBufferChanged(object sender, EventArgs e)
+        {
+            if (UndoBufferChanged != null)
+            {
+                UndoBufferChanged(this, e);
+            }
+        }
+
+        private void AssertNotRunningBeforeRecording(IAction candidate)
+        {
+            string candidateActionName = candidate != null ? candidate.ToString() : string.Empty;
+
+            if (CurrentAction != null)
+            {
+                throw new InvalidOperationException
+                    (
+                    string.Format
+                        (
+                            "ActionManager.RecordActionDirectly: the ActionManager is currently running "
+                            + "or undoing an action ({0}), and this action (while being executed) attempted "
+                            + "to recursively record another action ({1}), which is not allowed. "
+                            + "You can examine the stack trace of this exception to see what the "
+                            + "executing action did wrong and change this action not to influence the "
+                            + "Undo stack during its execution. Checking if ActionManager.IsActionExecuting == true "
+                            + "before launching another transaction might help to avoid the problem. Thanks and sorry for the inconvenience.",
+                            CurrentAction.ToString(),
+                            candidateActionName
+                        )
+                    );
+            }
+        }
+
+        /// <summary>
+        /// Adds the action to the buffer and runs it
+        /// </summary>
+        private void RunActionDirectly(IAction actionToRun)
+        {
+            AssertNotRunningBeforeRecording(actionToRun);
+
+            CurrentAction = actionToRun;
+            try
+            {
+                if (History.AppendAction(actionToRun))
+                {
+                    History.MoveForward();
+                }
+            }
+            finally
+            {
+                CurrentAction = null;
+            }
+        }
+
+        #endregion Methods
     }
 }
