@@ -51,7 +51,7 @@
     <Compile Include="Comparison\DictionaryComparer.cs" />
     <Compile Include="Comparison\LambdaComparer.cs" />
     <Compile Include="Convert.cs" />
-    <Compile Include="DefaultTimeProvider.cs" />
+    <Compile Include="Time\DefaultTimeProvider.cs" />
     <Compile Include="Extensions\Collections\ListExtensions.cs" />
     <Compile Include="Extensions\Error\ExceptionExtensions.cs" />
     <Compile Include="Extensions\LinqTo\Entities\ParameterRebinder.cs" />
@@ -73,10 +73,10 @@
     <Compile Include="Specifications\NotSpecification.cs" />
     <Compile Include="Specifications\OrSpecification.cs" />
     <Compile Include="Specifications\Specification.cs" />
-    <Compile Include="TimeProvider.cs" />
-    <Compile Include="TimeSlot.cs" />
+    <Compile Include="Time\TimeProvider.cs" />
+    <Compile Include="Time\TimeSlot.cs" />
     <Compile Include="TypeHelper.cs" />
-    <Compile Include="ZellersCongruence.cs" />
+    <Compile Include="Time\ZellersCongruence.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

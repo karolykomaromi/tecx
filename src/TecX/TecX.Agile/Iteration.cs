@@ -1,6 +1,7 @@
 ﻿using System;
 
 using TecX.Common;
+using TecX.Common.Time;
 
 namespace TecX.Agile
 {
