@@ -87,9 +87,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Undo.Silverlight", "Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Undo.Test", "TecX.Undo.Test\TecX.Undo.Test.csproj", "{148699A6-388F-45A5-A9B5-DA1C2BDDD168}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.ViewModel", "TecX.Agile.ViewModel\TecX.Agile.ViewModel.csproj", "{E4698C1F-EF98-480C-B923-BB986C2B7F37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.ViewModel.Test", "TecX.Agile.ViewModel.Test\TecX.Agile.ViewModel.Test.csproj", "{3600E042-48AC-4756-9F36-E8642E81EB61}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 29
+		SccNumberOfProjects = 31
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -205,6 +209,14 @@ Global
 		SccProjectTopLevelParentUniqueName28 = TecX.sln
 		SccProjectName28 = TecX.Undo.Test
 		SccLocalPath28 = TecX.Undo.Test
+		SccProjectUniqueName29 = TecX.Agile.ViewModel\\TecX.Agile.ViewModel.csproj
+		SccProjectTopLevelParentUniqueName29 = TecX.sln
+		SccProjectName29 = TecX.Agile.ViewModel
+		SccLocalPath29 = TecX.Agile.ViewModel
+		SccProjectUniqueName30 = TecX.Agile.ViewModel.Test\\TecX.Agile.ViewModel.Test.csproj
+		SccProjectTopLevelParentUniqueName30 = TecX.sln
+		SccProjectName30 = TecX.Agile.ViewModel.Test
+		SccLocalPath30 = TecX.Agile.ViewModel.Test
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -498,6 +510,26 @@ Global
 		{148699A6-388F-45A5-A9B5-DA1C2BDDD168}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{148699A6-388F-45A5-A9B5-DA1C2BDDD168}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{148699A6-388F-45A5-A9B5-DA1C2BDDD168}.Release|x86.ActiveCfg = Release|Any CPU
+		{E4698C1F-EF98-480C-B923-BB986C2B7F37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4698C1F-EF98-480C-B923-BB986C2B7F37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4698C1F-EF98-480C-B923-BB986C2B7F37}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E4698C1F-EF98-480C-B923-BB986C2B7F37}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E4698C1F-EF98-480C-B923-BB986C2B7F37}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E4698C1F-EF98-480C-B923-BB986C2B7F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4698C1F-EF98-480C-B923-BB986C2B7F37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4698C1F-EF98-480C-B923-BB986C2B7F37}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E4698C1F-EF98-480C-B923-BB986C2B7F37}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E4698C1F-EF98-480C-B923-BB986C2B7F37}.Release|x86.ActiveCfg = Release|Any CPU
+		{3600E042-48AC-4756-9F36-E8642E81EB61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3600E042-48AC-4756-9F36-E8642E81EB61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3600E042-48AC-4756-9F36-E8642E81EB61}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3600E042-48AC-4756-9F36-E8642E81EB61}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3600E042-48AC-4756-9F36-E8642E81EB61}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3600E042-48AC-4756-9F36-E8642E81EB61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3600E042-48AC-4756-9F36-E8642E81EB61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3600E042-48AC-4756-9F36-E8642E81EB61}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3600E042-48AC-4756-9F36-E8642E81EB61}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3600E042-48AC-4756-9F36-E8642E81EB61}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -511,6 +543,7 @@ Global
 		{A5CEF853-8C98-4CE6-AD43-E78D86A4235E} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{943AD349-5431-4B9F-9DF4-A6DF5390B484} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{148699A6-388F-45A5-A9B5-DA1C2BDDD168} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
+		{3600E042-48AC-4756-9F36-E8642E81EB61} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{45BE1494-E6F4-415F-8206-2856FBD28F66} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{266522EB-9DCB-451A-8CD7-678188DCB5F6} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{23E54945-0126-43BE-A3FC-5F61AF5BDFF3} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
@@ -523,6 +556,7 @@ Global
 		{6E53CA3A-29FD-46A5-9110-CE0A3A69BB9D} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
 		{4C9A3BE9-2E8F-44B1-965B-42AD35D36071} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
 		{09B2D14D-9911-4CDA-A175-43754A2AAAFE} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
+		{E4698C1F-EF98-480C-B923-BB986C2B7F37} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
 		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC} = {9F74F4C2-9999-4E1D-93DD-413B4E40DE5A}
 		{7D88B6EE-87D9-4FCC-BC90-91A5A6D7804B} = {4E870DA1-42F8-4FF2-8172-5676DAB9959B}
 		{8B37223D-5BE4-482F-B9E1-99D4F40E40BF} = {4E870DA1-42F8-4FF2-8172-5676DAB9959B}
