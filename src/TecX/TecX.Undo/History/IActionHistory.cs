@@ -25,7 +25,7 @@ namespace TecX.Undo.History
         bool CanMoveForward { get; }
         int Length { get; }
 
-        SimpleHistoryNode CurrentState { get; }
+        HistoryNode CurrentState { get; }
 
         IEnumerable<IAction> EnumUndoableActions();
 

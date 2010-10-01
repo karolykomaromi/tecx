@@ -2,31 +2,45 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using TecX.Common;
+
 namespace TecX.Undo
 {
     public sealed class Transaction : IAction, IDisposable
     {
-        readonly List<IAction> Actions;
-        readonly ActionManager ActionManager;
+        #region Fields
+
+        readonly List<IAction> _actions;
+        readonly IActionManager _actionManager;
+
+        #endregion Fields
+
+        #region Properties
+
         bool Aborted { get; set; }
 
         public bool AllowToMergeWithPrevious { get; set; }
         public bool IsDelayed { get; set; }
 
-        Transaction(ActionManager actionManager, bool delayed)
+        #endregion Properties
+
+        #region c'tor
+
+        private Transaction(IActionManager actionManager, bool delayed)
         {
-            Actions = new List<IAction>();
-            ActionManager = actionManager;
+            Guard.AssertNotNull(actionManager, "actionManager");
+
+            _actions = new List<IAction>();
+            _actionManager = actionManager;
+
             actionManager.BeginTransaction(this);
             IsDelayed = delayed;
         }
 
-        public static Transaction Create(ActionManager actionManager, bool delayed)
+        public static Transaction Create(IActionManager actionManager, bool delayed)
         {
-            if (actionManager == null)
-            {
-                throw new ArgumentNullException("actionManager");
-            }
+            Guard.AssertNotNull(actionManager, "actionManager");
+
             return new Transaction(actionManager, delayed);
         }
 
@@ -40,12 +54,14 @@ namespace TecX.Undo
         /// <example>
         /// Recommended usage: using (Transaction.Create(actionManager)) { DoStuff(); }
         /// </example>
-        public static Transaction Create(ActionManager actionManager)
+        public static Transaction Create(IActionManager actionManager)
         {
             return Create(actionManager, true);
         }
 
-        #region IAction implementation
+        #endregion c'tor
+
+        #region Implementation of IAction
 
         public void Execute()
         {
@@ -54,7 +70,7 @@ namespace TecX.Undo
                 IsDelayed = true;
                 return;
             }
-            foreach (var action in Actions)
+            foreach (var action in _actions)
             {
                 action.Execute();
             }
@@ -62,7 +78,7 @@ namespace TecX.Undo
 
         public void UnExecute()
         {
-            foreach (var action in Enumerable.Reverse(Actions))
+            foreach (var action in Enumerable.Reverse(_actions))
             {
                 action.UnExecute();
             }
@@ -70,7 +86,7 @@ namespace TecX.Undo
 
         public bool CanExecute()
         {
-            foreach (var action in Actions)
+            foreach (var action in _actions)
             {
                 if (!action.CanExecute())
                 {
@@ -82,7 +98,7 @@ namespace TecX.Undo
 
         public bool CanUnExecute()
         {
-            foreach (var action in Enumerable.Reverse(Actions))
+            foreach (var action in Enumerable.Reverse(_actions))
             {
                 if (!action.CanUnExecute())
                 {
@@ -97,16 +113,19 @@ namespace TecX.Undo
             return false;
         }
 
-        #endregion
+        #endregion Implementation of IAction
+
+        #region Methods
 
         public void Commit()
         {
-            ActionManager.CommitTransaction();
+            _actionManager.CommitTransaction();
         }
 
         public void Rollback()
         {
-            ActionManager.RollBackTransaction();
+            _actionManager.RollBackTransaction();
+
             Aborted = true;
         }
 
@@ -120,25 +139,23 @@ namespace TecX.Undo
 
         public void Add(IAction actionToAppend)
         {
-            if (actionToAppend == null)
-            {
-                throw new ArgumentNullException("actionToAppend");
-            }
-            Actions.Add(actionToAppend);
+            Guard.AssertNotNull(actionToAppend, "actionToAppend");
+
+            _actions.Add(actionToAppend);
         }
 
         public bool HasActions()
         {
-            return Actions.Count != 0;
+            return _actions.Count != 0;
         }
 
         public void Remove(IAction actionToCancel)
         {
-            if (actionToCancel == null)
-            {
-                throw new ArgumentNullException("actionToCancel");
-            }
-            Actions.Remove(actionToCancel);
+            Guard.AssertNotNull(actionToCancel, "actionToCancel");
+
+            _actions.Remove(actionToCancel);
         }
+
+        #endregion Methods
     }
 }

@@ -52,7 +52,7 @@ namespace TecX.Undo
         /// the following action isn't added to the Undo stack,
         /// but rather mixed together with the current one.
         /// </summary>
-        /// <param name="FollowingAction"></param>
+        /// <param name="followingAction"></param>
         /// <returns>true if the FollowingAction can be merged with the
         /// last action in the Undo stack</returns>
         public virtual bool TryToMerge(IAction followingAction)

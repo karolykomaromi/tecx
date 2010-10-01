@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using TecX.Common;
 
 namespace TecX.Undo.History
 {
@@ -16,10 +17,57 @@ namespace TecX.Undo.History
     /// </summary>
     internal class SimpleHistory : IActionHistory
     {
-        public SimpleHistory()
+        #region Fields
+
+        private HistoryNode _currentState = new HistoryNode();
+
+        #endregion Fields
+
+        #region Properties
+
+        /// <summary>
+        /// "Iterator" to navigate through the sequence, "Cursor"
+        /// </summary>
+        public HistoryNode CurrentState
         {
-            Init();
+            get
+            {
+                return _currentState;
+            }
+            private set
+            {
+                Guard.AssertNotNull(value, "CurrentState");
+
+                _currentState = value;
+            }
         }
+
+        private HistoryNode Head { get; set; }
+
+        public bool CanMoveForward
+        {
+            get
+            {
+                return CurrentState.NextAction != null &&
+                       CurrentState.NextNode != null;
+            }
+        }
+
+        public bool CanMoveBack
+        {
+            get
+            {
+                return CurrentState.PreviousAction != null &&
+                       CurrentState.PreviousNode != null;
+            }
+        }
+
+        /// <summary>
+        /// The length of Undo buffer (total number of undoable actions)
+        /// </summary>
+        public int Length { get; private set; }
+
+        #endregion Properties
 
         #region Events
 
@@ -33,35 +81,18 @@ namespace TecX.Undo.History
             }
         }
 
-        #endregion
+        #endregion Events
 
-        private SimpleHistoryNode _currentState = new SimpleHistoryNode();
+        #region c'tor
 
-        /// <summary>
-        /// "Iterator" to navigate through the sequence, "Cursor"
-        /// </summary>
-        public SimpleHistoryNode CurrentState
+        public SimpleHistory()
         {
-            get
-            {
-                return _currentState;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    _currentState = value;
-                }
-                else
-                {
-                    throw new ArgumentNullException("CurrentState");
-                }
-            }
+            Init();
         }
 
-        public SimpleHistoryNode Head { get; set; }
+        #endregion c'tor
 
-        public IAction LastAction { get; set; }
+        #region Methods
 
         /// <summary>
         /// Adds a new action to the tail after current state. If 
@@ -72,14 +103,15 @@ namespace TecX.Undo.History
         /// <returns>true if action was appended, false if it was merged with the previous one</returns>
         public bool AppendAction(IAction newAction)
         {
-            if (CurrentState.PreviousAction != null && 
+            if (CurrentState.PreviousAction != null &&
                 CurrentState.PreviousAction.TryToMerge(newAction))
             {
                 RaiseUndoBufferChanged();
                 return false;
             }
+
             CurrentState.NextAction = newAction;
-            CurrentState.NextNode = new SimpleHistoryNode(newAction, CurrentState);
+            CurrentState.NextNode = new HistoryNode(newAction, CurrentState);
             return true;
         }
 
@@ -92,16 +124,13 @@ namespace TecX.Undo.History
             RaiseUndoBufferChanged();
         }
 
-        private void Init()
-        {
-            CurrentState = new SimpleHistoryNode();
-            Head = CurrentState;
-        }
-
         public IEnumerable<IAction> EnumUndoableActions()
         {
-            SimpleHistoryNode current = Head;
-            while (current != null && current != CurrentState && current.NextAction != null)
+            HistoryNode current = Head;
+
+            while (current != null &&
+                   current != CurrentState &&
+                   current.NextAction != null)
             {
                 yield return current.NextAction;
                 current = current.NextNode;
@@ -117,6 +146,7 @@ namespace TecX.Undo.History
                     + " CanMoveForward returned false (the current state"
                     + " is the last state in the undo buffer.");
             }
+
             CurrentState.NextAction.Execute();
             CurrentState = CurrentState.NextNode;
             Length += 1;
@@ -132,34 +162,22 @@ namespace TecX.Undo.History
                     + " CanMoveBack returned false (the current state"
                     + " is the last state in the undo buffer.");
             }
+
             CurrentState.PreviousAction.UnExecute();
             CurrentState = CurrentState.PreviousNode;
             Length -= 1;
             RaiseUndoBufferChanged();
         }
 
-        public bool CanMoveForward
+        private void Init()
         {
-            get
-            {
-                return CurrentState.NextAction != null &&
-                    CurrentState.NextNode != null;
-            }
+            CurrentState = new HistoryNode();
+            Head = CurrentState;
         }
 
-        public bool CanMoveBack
-        {
-            get
-            {
-                return CurrentState.PreviousAction != null &&
-                        CurrentState.PreviousNode != null;
-            }
-        }
+        #endregion Methods
 
-        /// <summary>
-        /// The length of Undo buffer (total number of undoable actions)
-        /// </summary>
-        public int Length { get; private set; }
+        #region Implementation of IEnumerable<IAction>
 
         public IEnumerator<IAction> GetEnumerator()
         {
@@ -170,5 +188,7 @@ namespace TecX.Undo.History
         {
             return GetEnumerator();
         }
+
+        #endregion Implementation of IEnumerable<IAction>
     }
 }

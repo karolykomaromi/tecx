@@ -15,7 +15,7 @@ namespace TecX.Undo.Test
         {
             List<string> list = new List<string>();
             AddItemAction<string> action = new AddItemAction<string>(list.Add, s => list.Remove(s), "foo");
-            ActionManager am = new ActionManager();
+            IActionManager am = new ActionManager();
             am.RecordAction(action);
             Assert.AreEqual("foo", list[0]);
             am.Undo();
@@ -28,7 +28,7 @@ namespace TecX.Undo.Test
         public void CallMethodActionWorks()
         {
             bool capturedFlag = false;
-            ActionManager am = new ActionManager();
+            IActionManager am = new ActionManager();
             CallMethodAction action = new CallMethodAction(
                 () => capturedFlag = true,
                 () => capturedFlag = false);
@@ -45,7 +45,7 @@ namespace TecX.Undo.Test
         {
             var instance = new Exception();
             SetPropertyAction action = new SetPropertyAction(instance, "Source", "foo");
-            ActionManager am = new ActionManager();
+            IActionManager am = new ActionManager();
             am.RecordAction(action);
             Assert.AreEqual("foo", instance.Source);
             am.Undo();

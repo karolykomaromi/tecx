@@ -19,7 +19,7 @@ namespace TecX.Undo
     /// 
     /// Then you can also call ActionManager.Undo() or ActionManager.Redo()
     /// </summary>
-    public class ActionManager
+    public class ActionManager : IActionManager
     {
         #region Fields
 
@@ -229,6 +229,7 @@ namespace TecX.Undo
                                                                   + " Please examine the stack trace of this exception to see"
                                                                   + " what part of your code called Undo.", CurrentAction));
             }
+
             CurrentAction = History.CurrentState.PreviousAction;
             History.MoveBack();
             CurrentAction = null;
@@ -248,6 +249,7 @@ namespace TecX.Undo
                                                                   + " Please examine the stack trace of this exception to see"
                                                                   + " what part of your code called Redo.", CurrentAction));
             }
+
             CurrentAction = History.CurrentState.NextAction;
             History.MoveForward();
             CurrentAction = null;

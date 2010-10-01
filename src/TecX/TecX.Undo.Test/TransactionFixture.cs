@@ -1,7 +1,7 @@
 ﻿using System;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using TecX.Undo.Actions;
 using TecX.Undo.Test.TestObjects;
 
 namespace TecX.Undo.Test
@@ -15,15 +15,20 @@ namespace TecX.Undo.Test
         public void Transactions()
         {
             var instance = new Exception { Source = "green" };
-            ActionManager am = new ActionManager();
-            am.SetProperty(instance, "Source", "blue");
+            IActionManager am = new ActionManager();
+
+           SetPropertyAction action = new SetPropertyAction(instance, "Source", "blue");
+
+            am.RecordAction(action);
+
             Assert.AreEqual("blue", instance.Source);
             am.Undo();
             Assert.AreEqual("green", instance.Source);
 
             using (Transaction.Create(am))
             {
-                am.SetProperty(instance, "Source", "red");
+                action = new SetPropertyAction(instance, "Source", "red");
+                am.RecordAction(action);
                 Assert.AreEqual("green", instance.Source);
             }
             Assert.AreEqual(instance.Source, "red");
@@ -52,6 +57,7 @@ namespace TecX.Undo.Test
             }
             Assert.AreEqual(0, log.ExecutesCount);
             Assert.AreEqual(0, log.UnexecutesCount);
+
             Assert.AreEqual(0, am.TransactionStack.Count);
             Assert.AreEqual(false, am.IsActionExecuting);
         }
