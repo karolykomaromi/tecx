@@ -4,9 +4,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Common.Event;
 
-namespace TecX.Common.Test.TestClasses
+namespace TecX.Common.Test.TestObjects
 {
-    class OneTimeSubscriber : ISubscribeTo<SimpleMessage>
+    internal class OneTimeSubscriber : ISubscribeTo<SimpleMessage>
     {
         public int Counter = 0;
 

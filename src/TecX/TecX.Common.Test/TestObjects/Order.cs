@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace TecX.Common.Test.TestClasses
+namespace TecX.Common.Test.TestObjects
 {
-    class Order
+    internal class Order
     {
         public DateTime ShipDate { get; set; }
         public int Id { get; set; }

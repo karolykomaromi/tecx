@@ -20,7 +20,7 @@ namespace TecX.Common.Extensions.LinqTo.Objects
         /// <returns>an expression that returns <c>true</c></returns>
         public static Expression<Func<T, bool>> True<T>()
         {
-            return f => true;
+            return t => true;
         }
 
         /// <summary>
@@ -45,6 +45,9 @@ namespace TecX.Common.Extensions.LinqTo.Objects
             this Expression<Func<T, bool>> left,
             Expression<Func<T, bool>> right)
         {
+            Guard.AssertNotNull(left, "left");
+            Guard.AssertNotNull(right, "right");
+
             var invokedExpression = Expression.Invoke(right, left.Parameters.Cast<Expression>());
 
             return Expression.Lambda<Func<T, bool>>(
@@ -63,6 +66,9 @@ namespace TecX.Common.Extensions.LinqTo.Objects
             this Expression<Func<T, bool>> left,
             Expression<Func<T, bool>> right)
         {
+            Guard.AssertNotNull(left, "left");
+            Guard.AssertNotNull(right, "right");
+
             var invokedExpression = Expression.Invoke(right, left.Parameters.Cast<Expression>());
 
             return Expression.Lambda<Func<T, bool>>(

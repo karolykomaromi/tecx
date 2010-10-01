@@ -1,8 +1,8 @@
 ﻿using TecX.Common.Event;
 
-namespace TecX.Common.Test.TestClasses
+namespace TecX.Common.Test.TestObjects
 {
-    class CancelingSubscriber : ISubscribeTo<CancelMessage>
+    internal class CancelingSubscriber : ISubscribeTo<CancelMessage>
     {
         #region Implementation of ISubscribeTo<in CancelMessage>
 

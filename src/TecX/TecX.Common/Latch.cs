@@ -1,7 +1,7 @@
-﻿namespace TecX.Common
-{
-    public delegate void VoidHandler();
+﻿using System;
 
+namespace TecX.Common
+{   
     public class Latch
     {
         #region Fields
@@ -21,23 +21,25 @@
 
         #region Methods
 
-        public void Increment()
+        private void Increment()
         {
             _count++;
         }
 
-        public void Decrement()
+        private void Decrement()
         {
             _count--;
         }
 
-        public void RunOpThatMightRaiseRunawayEvents(VoidHandler handler)
+        public void RunOpThatMightRaiseRunawayEvents(Action action)
         {
+            Guard.AssertNotNull(action, "action");
+
             Increment();
 
             try
             {
-                handler();
+                action();
             }
             finally
             {
@@ -45,14 +47,16 @@
             }
         }
 
-        public void RunOpProtectedByLatch(VoidHandler handler)
+        public void RunOpProtectedByLatch(Action action)
         {
+            Guard.AssertNotNull(action, "action");
+
             if (IsLatched)
             {
                 return;
             }
 
-            handler();
+            action();
         }
 
         #endregion Methods

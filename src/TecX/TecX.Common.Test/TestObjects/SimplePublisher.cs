@@ -1,8 +1,8 @@
 ﻿using TecX.Common.Event;
 
-namespace TecX.Common.Test.TestClasses
+namespace TecX.Common.Test.TestObjects
 {
-    public class SimplePublisher
+    internal class SimplePublisher
     {
         private readonly IEventAggregator _eventAggregator;
         /// <summary>

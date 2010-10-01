@@ -10,7 +10,12 @@ namespace TecX.Agile.ViewModel
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
+        #region Implementation of INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
+        #endregion Implementation of INotifyPropertyChanged
+
 
         protected void OnPropertyChanged<T>(Expression<Func<T>> propertySelector)
         {

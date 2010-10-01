@@ -13,8 +13,8 @@ namespace TecX.Common.Comparison
     {
         #region Fields
 
-        private readonly Func<T, T, bool> _lambdaComparer;
-        private readonly Func<T, int> _lambdaHash;
+        private readonly Func<T, T, bool> _equals;
+        private readonly Func<T, int> _hash;
 
         #endregion Fields
 
@@ -23,24 +23,24 @@ namespace TecX.Common.Comparison
         /// <summary>
         /// Initializes a new instance of the <see cref="LambdaComparer&lt;T&gt;"/> class.
         /// </summary>
-        /// <param name="lambdaComparer">The lambda comparer.</param>
-        public LambdaComparer(Func<T, T, bool> lambdaComparer) :
-            this(lambdaComparer, o => o.GetNullSafeHashCode())
+        /// <param name="equals">The lambda comparer.</param>
+        public LambdaComparer(Func<T, T, bool> equals) :
+            this(equals, o => o.GetNullSafeHashCode())
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LambdaComparer&lt;T&gt;"/> class.
         /// </summary>
-        /// <param name="lambdaComparer">The function that compares the two values</param>
-        /// <param name="lambdaHash">The function that gets a hash-value for the values</param>
-        public LambdaComparer(Func<T, T, bool> lambdaComparer, Func<T, int> lambdaHash)
+        /// <param name="equals">The function that compares the two values</param>
+        /// <param name="hash">The function that gets a hash-value for the values</param>
+        public LambdaComparer(Func<T, T, bool> equals, Func<T, int> hash)
         {
-            Guard.AssertNotNull(lambdaComparer, "lambdaComparer");
-            Guard.AssertNotNull(lambdaHash, "lambdaHash");
+            Guard.AssertNotNull(equals, "equals");
+            Guard.AssertNotNull(hash, "hash");
 
-            _lambdaComparer = lambdaComparer;
-            _lambdaHash = lambdaHash;
+            _equals = equals;
+            _hash = hash;
         }
 
         #endregion c'tor
@@ -57,7 +57,7 @@ namespace TecX.Common.Comparison
         /// </returns>
         public bool Equals(T x, T y)
         {
-            return _lambdaComparer(x, y);
+            return _equals(x, y);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace TecX.Common.Comparison
         {
             Guard.AssertNotNull(obj, "obj");
 
-            return _lambdaHash(obj);
+            return _hash(obj);
         }
 
         #endregion IEqualityComparer Members
