@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using TecX.Common.Test.TestClasses;
+using TecX.Common.Test.TestObjects;
 
 namespace TecX.Common.Test
 {

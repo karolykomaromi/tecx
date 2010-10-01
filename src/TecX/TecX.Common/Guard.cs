@@ -14,27 +14,33 @@ namespace TecX.Common
     {
         #region Constants
 
-        /// <summary>Argument '{0}' should not be NULL!</summary>
-        private const string ArgumentNullMessage = "Argument '{0}' must not be NULL!";
+        private static class Constants
+        {
+            public static class Messages
+            {
+                /// <summary>Argument '{0}' should not be NULL!</summary>
+                public const string ArgumentNull = "Argument '{0}' must not be NULL!";
 
-        /// <summary>Argument '{0}' should not be empty!</summary>
-        private const string ArgumentEmptyMessage = "Argument '{0}' must not be empty!";
+                /// <summary>Argument '{0}' should not be empty!</summary>
+                public const string ArgumentEmpty = "Argument '{0}' must not be empty!";
 
-        /// <summary>Condition not met!</summary>
-        private const string ConditionNotMetMessage = "Condition not met!";
+                /// <summary>Condition not met!</summary>
+                public const string ConditionNotMet = "Condition not met!";
 
-        /// <summary>Invalid switch value '{0}' for parameter '{1}'.</summary>
-        private const string InvalidSwitchValueMessage = "Invalid switch value '{0}' for parameter '{1}'.";
+                /// <summary>Invalid switch value '{0}' for parameter '{1}'.</summary>
+                public const string InvalidSwitchValue = "Invalid switch value '{0}' for parameter '{1}'.";
 
-        /// <summary>Argument '{0}' with a value of '{1}' is not between '{2}' and '{3}!</summary>
-        private const string ArgumentNotInRangeMessage =
-            "Argument '{0}' with a value of '{1}' is not between '{2}' and '{3}!";
+                /// <summary>Argument '{0}' with a value of '{1}' is not between '{2}' and '{3}!</summary>
+                public const string ArgumentNotInRange =
+                    "Argument '{0}' with a value of '{1}' is not between '{2}' and '{3}!";
 
-        /// <summary>&lt;no parameter name&gt;</summary>
-        private const string NoParamName = "<no parameter name>";
+                /// <summary>&lt;no parameter name&gt;</summary>
+                public const string NoParamName = "<no parameter name>";
 
-        /// <summary>Parameter {0} is not of Type {1}</summary>
-        private const string WrongTypeMessage = "Parameter {0} is not of Type {1}";
+                /// <summary>Parameter {0} is not of Type {1}</summary>
+                public const string WrongType = "Parameter {0} is not of Type {1}";
+            }
+        }
 
         #endregion Constants
 
@@ -49,7 +55,7 @@ namespace TecX.Common
         [DebuggerStepThrough]
         public static void AssertNotNull(object arg, string paramName)
         {
-            AssertNotNull(arg, paramName, ArgumentNullMessage);
+            AssertNotNull(arg, paramName, Constants.Messages.ArgumentNull);
         }
 
         /// <summary>
@@ -65,7 +71,7 @@ namespace TecX.Common
             if (arg == null)
             {
                 throw new ArgumentNullException(
-                    TypeHelper.ToNullSafeString(paramName, NoParamName),
+                    TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
                     TypeHelper.ToNullSafeString(message));
             }
         }
@@ -98,7 +104,7 @@ namespace TecX.Common
         [DebuggerStepThrough]
         public static void AssertNotEmpty(string arg, string paramName)
         {
-            AssertNotEmpty(arg, paramName, ArgumentNullMessage, ArgumentEmptyMessage);
+            AssertNotEmpty(arg, paramName, Constants.Messages.ArgumentNull, Constants.Messages.ArgumentEmpty);
         }
 
         /// <summary>
@@ -144,7 +150,7 @@ namespace TecX.Common
         [DebuggerStepThrough]
         public static void AssertNotEmpty(ICollection arg, string paramName)
         {
-            AssertNotEmpty(arg, paramName, ArgumentNullMessage, ArgumentEmptyMessage);
+            AssertNotEmpty(arg, paramName, Constants.Messages.ArgumentNull, Constants.Messages.ArgumentEmpty);
         }
 
         /// <summary>
@@ -189,7 +195,7 @@ namespace TecX.Common
         [DebuggerStepThrough]
         public static void AssertNotEmpty(Guid arg, string paramName)
         {
-            AssertNotEmpty(arg, paramName, ArgumentEmptyMessage);
+            AssertNotEmpty(arg, paramName, Constants.Messages.ArgumentEmpty);
         }
 
         /// <summary>
@@ -204,7 +210,7 @@ namespace TecX.Common
         {
             if (arg == Guid.Empty)
             {
-                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, NoParamName),
+                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
                                                       TypeHelper.ToNullSafeString(message)).WithAdditionalInfos(
                                                           new Dictionary<object, object> {{"arg", arg}});
             }
@@ -257,7 +263,7 @@ namespace TecX.Common
         {
             if (!condition)
             {
-                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, NoParamName),
+                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
                                                       TypeHelper.ToNullSafeString(message)).WithAdditionalInfos(
                                                           new Dictionary<object, object> {{"arg", arg}});
             }
@@ -273,7 +279,7 @@ namespace TecX.Common
         [DebuggerStepThrough]
         public static void AssertCondition(bool condition, object arg, string paramName)
         {
-            AssertCondition(condition, arg, paramName, ConditionNotMetMessage);
+            AssertCondition(condition, arg, paramName, Constants.Messages.ConditionNotMet);
         }
 
         #endregion AssertCondition
@@ -291,9 +297,9 @@ namespace TecX.Common
         public static void InvalidSwitchValue(object arg, string paramName)
         {
             throw new InvalidOperationException(
-                TypeHelper.SafeFormat(InvalidSwitchValueMessage,
+                TypeHelper.SafeFormat(Constants.Messages.InvalidSwitchValue,
                                       TypeHelper.ToNullSafeString(arg),
-                                      TypeHelper.ToNullSafeString(paramName, NoParamName)));
+                                      TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName)));
         }
 
         #endregion InvalidSwitchValue
@@ -316,7 +322,7 @@ namespace TecX.Common
         public static void AssertIsInRange<T>(T arg, string paramName, T min, T max)
             where T : IComparable
         {
-            AssertIsInRange(arg, paramName, min, max, ArgumentNotInRangeMessage, paramName, arg, min, max);
+            AssertIsInRange(arg, paramName, min, max, Constants.Messages.ArgumentNotInRange, paramName, arg, min, max);
         }
 
         /// <summary>
@@ -342,7 +348,7 @@ namespace TecX.Common
 
             if (!TypeHelper.IsInRange(arg, min, max))
             {
-                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, NoParamName),
+                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
                                                       TypeHelper.ToNullSafeString(message)).WithAdditionalInfos(
                                                           new Dictionary<object, object> {{"arg", arg}});
             }
@@ -386,7 +392,7 @@ namespace TecX.Common
         [DebuggerStepThrough]
         public static void AssertIsType<TTarget>(object value, string paramName)
         {
-            AssertIsType<TTarget>(value, paramName, WrongTypeMessage, paramName, typeof (TTarget).FullName);
+            AssertIsType<TTarget>(value, paramName, Constants.Messages.WrongType, paramName, typeof (TTarget).FullName);
         }
 
         /// <summary>
@@ -444,7 +450,7 @@ namespace TecX.Common
         {
             string targetTypeFullName = (targetType == null ? string.Empty : targetType.FullName);
 
-            AssertIsType(targetType, value, paramName, WrongTypeMessage, paramName, targetTypeFullName);
+            AssertIsType(targetType, value, paramName, Constants.Messages.WrongType, paramName, targetTypeFullName);
         }
 
         /// <summary>
@@ -489,7 +495,7 @@ namespace TecX.Common
 
             if (string.IsNullOrEmpty(message))
             {
-                message = TypeHelper.SafeFormat(WrongTypeMessage, paramName, targetType.FullName);
+                message = TypeHelper.SafeFormat(Constants.Messages.WrongType, paramName, targetType.FullName);
             }
 
             if (!targetType.IsAssignableFrom(sourceType))
@@ -516,7 +522,7 @@ namespace TecX.Common
 
             if (arg.Length == 0)
             {
-                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, NoParamName),
+                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
                                                       TypeHelper.ToNullSafeString(messageEmpty)).WithAdditionalInfos(
                                                           new Dictionary<object, object> {{"arg", arg}});
             }
@@ -529,7 +535,7 @@ namespace TecX.Common
 
             if (arg.Count == 0)
             {
-                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, NoParamName),
+                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
                                                       TypeHelper.ToNullSafeString(messageEmpty)).WithAdditionalInfos(
                                                           new Dictionary<object, object> {{"arg", arg}});
             }

@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Common.Event;
 using TecX.Common.Event.Unity;
-using TecX.Common.Test.TestClasses;
+using TecX.Common.Test.TestObjects;
 using TecX.TestTools;
 
 namespace TecX.Common.Test

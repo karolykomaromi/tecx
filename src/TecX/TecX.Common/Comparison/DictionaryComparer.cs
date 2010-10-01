@@ -18,17 +18,15 @@ namespace TecX.Common.Comparison
             foreach (TKey key in x.Keys)
             {
                 //one dictionary contains elements the other does not contain -> not equal
-                if (x.ContainsKey(key) && y.ContainsKey(key))
+                if (!x.ContainsKey(key) || !y.ContainsKey(key))
                 {
-                    TValue valueFirst = x[key];
-                    TValue valueScnd = y[key];
-
-                    if (!Compare.AreEqual(valueFirst, valueScnd))
-                    {
-                        return false;
-                    }
+                    return false;
                 }
-                else
+
+                TValue valueFirst = x[key];
+                TValue valueScnd = y[key];
+
+                if (!Compare.AreEqual(valueFirst, valueScnd))
                 {
                     return false;
                 }

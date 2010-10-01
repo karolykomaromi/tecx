@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TecX.Common.Extensions.LinqTo.Entities;
-using TecX.Common.Test.TestClasses;
+using TecX.Common.Test.TestObjects;
 using TecX.Common.Time;
 
 namespace TecX.Common.Test

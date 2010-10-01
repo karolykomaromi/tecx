@@ -4,9 +4,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Common.Event;
 
-namespace TecX.Common.Test.TestClasses
+namespace TecX.Common.Test.TestObjects
 {
-    class SimpleSubscriber : ISubscribeTo<SimpleMessage>
+    internal class SimpleSubscriber : ISubscribeTo<SimpleMessage>
     {
         public bool MessageReceived = false;
         public int MessageCounter = 0;

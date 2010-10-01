@@ -14,12 +14,16 @@ namespace TecX.Common
     {
         #region Constants
 
-        /// <summary>
-        /// Stores string to represent a <i>null</i> reference
-        /// </summary>
-        public const string NullString = "<null>";
+        private static class Constants
+        {
+            /// <summary>
+            /// Stores string to represent a <i>null</i> reference
+            /// </summary>
+            public const string NullString = "<null>";
 
-        private const int DefaultLengthPerStringFormatArg = 16;
+            /// <summary>16</summary>
+            public const int DefaultLengthPerStringFormatArg = 16;
+        }
 
         #endregion Constants
 
@@ -84,7 +88,7 @@ namespace TecX.Common
                 //initialize a StringBuilder as we might have quite a few changes to make to the
                 //format string and make sure that it has a reasonable initial capacity so we do not have to
                 //reallocate and increase the memory reserved for the builder
-                StringBuilder sb = new StringBuilder(format, format.Length + args.Length*DefaultLengthPerStringFormatArg);
+                StringBuilder sb = new StringBuilder(format, format.Length + args.Length * Constants.DefaultLengthPerStringFormatArg);
 
                 Regex regex = new Regex(@"{\d+}");
                 var matches = regex.Matches(format);
@@ -183,7 +187,8 @@ namespace TecX.Common
         /// </returns>
         public static bool IsEmpty(ICollection collection)
         {
-            return (collection == null) || (collection.Count == 0);
+            return (collection == null) ||
+                   (collection.Count == 0);
         }
 
         /// <summary>
@@ -199,9 +204,6 @@ namespace TecX.Common
                 return true;
 
             IEnumerator iter = enumerable.GetEnumerator();
-
-            if (iter == null)
-                return true;
 
             if (iter.MoveNext() == false)
                 return true;
@@ -244,8 +246,8 @@ namespace TecX.Common
         public static bool IsEmpty(DateTime dateTime)
         {
             return (dateTime == default(DateTime) ||
-                    (dateTime == DateTime.MaxValue) ||
-                    (dateTime == DateTime.MinValue));
+                   (dateTime == DateTime.MaxValue) ||
+                   (dateTime == DateTime.MinValue));
         }
 
         /// <summary>
