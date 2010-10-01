@@ -4,8 +4,8 @@ namespace TecX.Common.EntLib
 {
     public class MemoryTraceListener : TecXTraceListenerBase
     {
-        private static readonly StringBuilder _messages = new StringBuilder(8192);
-        private static readonly object _syncRoot = new object();
+        private readonly StringBuilder _messages = new StringBuilder(8192);
+        private readonly object _syncRoot = new object();
 
         public string Messages
         {

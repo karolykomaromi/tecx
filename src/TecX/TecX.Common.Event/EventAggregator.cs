@@ -37,6 +37,8 @@ namespace TecX.Common.Event
         {
             Guard.AssertNotNull(subscriber, "subscriber");
 
+            AssertSubscriberImplementsHandlerInterface(subscriber);
+
             PurgeSubscribers();
 
             bool canSubscribe = AllSubscribers()
@@ -126,6 +128,16 @@ namespace TecX.Common.Event
                                    _subscribers.Remove(reference);
                                }
                            });
+        }
+
+        private static void AssertSubscriberImplementsHandlerInterface(object subscriber)
+        {
+            Type[] interfaces = subscriber.GetType()
+                .FindInterfaces((type, criteria) => type.IsGenericType &&
+                                                    type.GetGenericTypeDefinition() == typeof (ISubscribeTo<>), null);
+
+            if(interfaces.Length == 0)
+                throw new ArgumentException("Subscriber must implement ISubscribeTo<TMessage>.", "subscriber");
         }
 
         #endregion Helper
