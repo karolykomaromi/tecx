@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
+using System.Windows.Threading;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Common.Event;
 using TecX.Common.Test.TestClasses;
-using System.Windows.Threading;
 using TecX.TestTools;
 
 namespace TecX.Common.Test
@@ -73,7 +70,7 @@ namespace TecX.Common.Test
         }
 
         [TestMethod]
-        public void CannotSubscribeMultipleTime()
+        public void WhenSubscribingMultipleTimes_RepeatedSubscriptionsAreIgnored()
         {
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 
@@ -95,7 +92,7 @@ namespace TecX.Common.Test
         }
 
         [TestMethod]
-        public void CanCancelMessageProcessing()
+        public void WhenPublishingWithCancelOption_CancellationTokenIsReturned()
         {
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 
@@ -113,7 +110,7 @@ namespace TecX.Common.Test
         }
 
         [TestMethod]
-        public void CanUnsubscribe()
+        public void WhenUnsubscribing_SubscriberIsRemoved()
         {
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 
@@ -133,6 +130,17 @@ namespace TecX.Common.Test
             DispatcherUtil.DoEvents();
 
             Assert.AreEqual(1, subscriber.Counter);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void WhenSubscribingObjectThatDoesNotImplementHandlerInterface_ExceptionIsThrown()
+        {
+            Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+            IEventAggregator eventAggregator = new EventAggregator(dispatcher);
+
+            eventAggregator.Subscribe(new object());
         }
     }
 }
