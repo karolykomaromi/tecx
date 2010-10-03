@@ -40,8 +40,7 @@ namespace TecX.Agile.Modules.Main
         {
             IRegion mainToolBar = _regionManager.Regions[Regions.MainToolBar];
 
-            TextBlock txt = new TextBlock { Text = "Click me!" };
-            RibbonButton btn = new RibbonButton { Content = txt };
+            RibbonButton btn = new RibbonButton { Label = "click me!" };
             RibbonGroup grp = new RibbonGroup { Header = "FirstRibbonGroup" };
             grp.Items.Add(btn);
             RibbonTab tab = new RibbonTab

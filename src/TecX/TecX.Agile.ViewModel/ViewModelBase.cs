@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
+
 using TecX.Common;
 
 namespace TecX.Agile.ViewModel
 {
-    public abstract class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : INotifyPropertyChanged, INotifyPropertyChanging
     {
         #region Implementation of INotifyPropertyChanged
 
@@ -16,6 +14,11 @@ namespace TecX.Agile.ViewModel
 
         #endregion Implementation of INotifyPropertyChanged
 
+        #region Implementation of INotifyPropertyChanging
+
+        public event PropertyChangingEventHandler PropertyChanging = delegate { };
+
+        #endregion Implementation of INotifyPropertyChanging
 
         protected void OnPropertyChanged<T>(Expression<Func<T>> propertySelector)
         {
@@ -30,9 +33,28 @@ namespace TecX.Agile.ViewModel
         {
             Guard.AssertNotEmpty(propertyName, "propertyName");
 
-            if(PropertyChanged != null)
+            if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        protected void OnPropertyChanging<T>(Expression<Func<T>> propertySelector)
+        {
+            Guard.AssertNotNull(propertySelector, "propertySelector");
+
+            string propertyName = GetPropertyName(propertySelector);
+
+            OnPropertyChanging(propertyName);
+        }
+
+        protected void OnPropertyChanging(string propertyName)
+        {
+            Guard.AssertNotEmpty(propertyName, "propertyName");
+
+            if (PropertyChanging != null)
+            {
+                PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
             }
         }
 
@@ -49,6 +71,5 @@ namespace TecX.Agile.ViewModel
 
             return string.Empty;
         }
-
     }
 }
