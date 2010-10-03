@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 
 using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.Presentation.Regions;
@@ -63,6 +64,7 @@ namespace TecX.Agile.Planner
             RegionAdapterMappings mappings = base.ConfigureRegionAdapterMappings();
 
             mappings.RegisterMapping(typeof(Ribbon), Container.Resolve<RibbonRegionAdapter>());
+            mappings.RegisterMapping(typeof(StackPanel), Container.Resolve<StackPanelRegionAdapter>());
 
             return mappings;
         }
