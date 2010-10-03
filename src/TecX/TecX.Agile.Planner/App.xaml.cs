@@ -30,6 +30,7 @@ namespace TecX.Agile.Planner
         private static void RunInReleaseMode()
         {
             AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
+
             try
             {
                 new Bootstrapper().Run();
