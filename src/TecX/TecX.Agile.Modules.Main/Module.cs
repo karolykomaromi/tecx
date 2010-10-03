@@ -42,11 +42,11 @@ namespace TecX.Agile.Modules.Main
 
             TextBlock txt = new TextBlock { Text = "Click me!" };
             RibbonButton btn = new RibbonButton { Content = txt };
-            RibbonGroup grp = new RibbonGroup { Header = "Header" };
+            RibbonGroup grp = new RibbonGroup { Header = "FirstRibbonGroup" };
             grp.Items.Add(btn);
             RibbonTab tab = new RibbonTab
                                 {
-                                    Header = "My first RibbonTab"
+                                    Header = "Main RibbonTab"
                                 };
             tab.Items.Add(grp);
 

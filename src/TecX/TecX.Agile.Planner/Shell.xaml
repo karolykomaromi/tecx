@@ -17,7 +17,7 @@
          <ribbon:Ribbon 
              x:Name="Ribbon" 
             cal:RegionManager.RegionName="{x:Static inf:Regions.MainToolBar}">
-            <ribbon:RibbonTab 
+            <!--<ribbon:RibbonTab 
                 x:Name="HomeTab" 
                 Header="Home">
                 <ribbon:RibbonGroup 
@@ -25,7 +25,7 @@
                     Header="Group1">                     
                 </ribbon:RibbonGroup>
                 
-            </ribbon:RibbonTab>
+            </ribbon:RibbonTab>-->
         </ribbon:Ribbon> 
     </Grid>
 </ribbon:RibbonWindow>
