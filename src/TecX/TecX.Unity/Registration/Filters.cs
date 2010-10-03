@@ -96,7 +96,12 @@ namespace TecX.Unity.Registration
             {
                 Filter<Assembly> filter = new Filter<Assembly>(a =>
                     a.GetName().Name == "mscorlib" ||
-                    a.GetName().Name.StartsWith("System", StringComparison.OrdinalIgnoreCase),
+                    a.GetName().Name.StartsWith("System", StringComparison.OrdinalIgnoreCase) ||
+                    a.GetName().Name.StartsWith("Microsoft.VisualStudio", StringComparison.OrdinalIgnoreCase) ||
+                    a.GetName().Name.StartsWith("vshost", StringComparison.OrdinalIgnoreCase) ||
+                    a.GetName().Name.StartsWith("Presentation", StringComparison.OrdinalIgnoreCase) ||
+                    a.GetName().Name.StartsWith("WindowsBase", StringComparison.OrdinalIgnoreCase) ||
+                    a.GetName().Name.StartsWith("Microsoft.CSharp", StringComparison.OrdinalIgnoreCase),
                     "Exclude system assemblies.");
 
                 return filter;

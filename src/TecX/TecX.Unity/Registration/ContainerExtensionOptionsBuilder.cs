@@ -16,6 +16,18 @@ namespace TecX.Unity.Registration
             Guard.AssertNotNull(extensionFactory, "extensionFactory");
 
             _extensionFactory = extensionFactory;
+
+            Action<Type, IUnityContainer> registrator = (type, container) =>
+                                                            {
+                                                                UnityContainerExtension extension =
+                                                                    _extensionFactory();
+
+                                                                Guard.AssertNotNull(extension, "extension");
+
+                                                                container.AddExtension(extension);
+                                                            };
+
+            _registrator = registrator;
         }
 
         public ContainerExtensionOptionsBuilder WithConfiguration<TExtensionConfig>(
@@ -25,16 +37,16 @@ namespace TecX.Unity.Registration
             Func<IUnityContainer, TExtensionConfig> getConfigurator =
                 container => container.Configure<TExtensionConfig>();
 
-            Action<Type, IUnityContainer> registrator = (t, c) =>
+            Action<Type, IUnityContainer> registrator = (type, container) =>
                                                             {
                                                                 UnityContainerExtension extension = 
                                                                     _extensionFactory();
 
                                                                 Guard.AssertNotNull(extension, "extension");
 
-                                                                 c.AddExtension(extension);
-                                                                 //configure the extensionFactory
-                                                                 configuration(getConfigurator(c));
+                                                                 container.AddExtension(extension);
+
+                                                                 configuration(getConfigurator(container));
                                                              };
 
             _registrator = registrator;
