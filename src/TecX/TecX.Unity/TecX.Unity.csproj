@@ -53,6 +53,15 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="ContextualBinding\ContextualBindingBuildPlanPolicy.cs" />
+    <Compile Include="ContextualBinding\ContextualBindingExtension.cs" />
+    <Compile Include="ContextualBinding\ContextualBindingPostInitStrategy.cs" />
+    <Compile Include="ContextualBinding\ContextualBindingSetupStrategy.cs" />
+    <Compile Include="ContextualBinding\IContextualBindingConfiguration.cs" />
+    <Compile Include="ContextualBinding\IRequest.cs" />
+    <Compile Include="ContextualBinding\IRequestHistory.cs" />
+    <Compile Include="ContextualBinding\RequestHistory.cs" />
+    <Compile Include="ContextualBinding\UnityContainerExtensions.cs" />
     <Compile Include="Registration\AssemblyLocator.cs" />
     <Compile Include="Registration\RegistryBuilder.cs" />
     <Compile Include="Registration\RegistryExtensions.cs" />

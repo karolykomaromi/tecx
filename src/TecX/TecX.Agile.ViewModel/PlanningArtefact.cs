@@ -12,7 +12,6 @@ namespace TecX.Agile.ViewModel
     {
         #region Fields
 
-        private readonly IActionManager _actionManager;
         private Guid _id;
         private string _name;
         private string _description;
@@ -70,11 +69,11 @@ namespace TecX.Agile.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanningArtefact"/> class
         /// </summary>
-        protected PlanningArtefact(IActionManager actionManager)
+        protected PlanningArtefact()
         {
-            Guard.AssertNotNull(actionManager, "actionManager");
-
-            _actionManager = actionManager;
+            _id = Guid.Empty;
+            _name = string.Empty;
+            _description = string.Empty;
         }
 
         #endregion c'tor
