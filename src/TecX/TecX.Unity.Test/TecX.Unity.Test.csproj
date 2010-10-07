@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="AssemblyLocatorFixture.cs" />
     <Compile Include="AutoRegistrationBuilderFixture.cs" />
+    <Compile Include="ContextualBindingExtensionFixture.cs" />
     <Compile Include="FilterFixture.cs" />
     <Compile Include="InterceptionOptionsBuilderFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

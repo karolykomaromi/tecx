@@ -26,16 +26,10 @@ namespace TecX.Agile.ViewModel
 
             string propertyName = GetPropertyName(propertySelector);
 
-            OnPropertyChanged(propertyName);
-        }
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            Guard.AssertNotEmpty(propertyName, "propertyName");
-
-            if (PropertyChanged != null)
+            PropertyChangedEventHandler temporaryHandler = PropertyChanged;
+            if (temporaryHandler != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                temporaryHandler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
@@ -45,16 +39,10 @@ namespace TecX.Agile.ViewModel
 
             string propertyName = GetPropertyName(propertySelector);
 
-            OnPropertyChanging(propertyName);
-        }
-
-        protected void OnPropertyChanging(string propertyName)
-        {
-            Guard.AssertNotEmpty(propertyName, "propertyName");
-
-            if (PropertyChanging != null)
+            PropertyChangingEventHandler temporaryHandler = PropertyChanging;
+            if (temporaryHandler != null)
             {
-                PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
+                temporaryHandler(this, new PropertyChangingEventArgs(propertyName));
             }
         }
 
