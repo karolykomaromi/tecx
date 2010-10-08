@@ -14,6 +14,7 @@ namespace TecX.Unity.ContextualBinding
         #region Fields
 
         private readonly IRequestHistory _history;
+        private Action<object, RegisterEventArgs> _invoker;
 
         #endregion Fields
 
@@ -41,7 +42,7 @@ namespace TecX.Unity.ContextualBinding
 
             Context.Strategies.Add(postInit, UnityBuildStage.PostInitialization);
 
-            //Context.Registering += OnRegistering;
+            Context.Registering += OnRegistering;
 
             InitPostRegistrationHandler();
         }
@@ -79,6 +80,8 @@ namespace TecX.Unity.ContextualBinding
 
             @event.GetRemoveMethod(true).Invoke(Container, new object[] {onRegisteringHandler});
 
+            _invoker = (s, e) => onRegisteringHandler.DynamicInvoke(s, e);
+
             //TODO weberse unsubscribed the UnityDefaultBehaviorExtension.OnRegister handler
             //now I need to create a handler on my own that raises an event after it triggered exactly that handler
             //argh!
@@ -88,28 +91,42 @@ namespace TecX.Unity.ContextualBinding
 
         private void OnRegistering(object sender, RegisterEventArgs e)
         {
+            ContextualBindingBuildPlanPolicy cbb = null;
+
+            NamedTypeBuildKey key = new NamedTypeBuildKey(e.TypeFrom, null);
+
             //we are only interested in the default mappings
             if (e.Name == null)
             {
-                NamedTypeBuildKey key = new NamedTypeBuildKey(e.TypeFrom, null);
-
                 var existing = Context.Policies.Get<IBuildPlanPolicy>(key);
 
                 var policy = existing as ContextualBindingBuildPlanPolicy;
 
                 if (policy != null)
                 {
-                    while (policy.Next != null)
-                    {
-                        policy = policy.Next;
-                    }
-
-                    //TODO weberse can't find out wether the new registration was done
-                    //for contextual binding or just a regular default binding which would
-                    //simply overwrite our previous registrations -> where can I find out if
-                    //I need to do something about this registration?
+                    cbb = policy;
                 }
             }
+
+            _invoker(sender, e);
+
+            if(cbb != null)
+            {
+                while (cbb.Next != null)
+                {
+                    cbb = cbb.Next;
+                }
+
+                var existing = Context.Policies.Get<IBuildPlanPolicy>(key);
+
+                var policy = existing as ContextualBindingBuildPlanPolicy;
+
+                if (policy == null)
+                {
+                    cbb.LastChance = existing;
+                }
+            }
+
         }
 
         #region Implementation of IContextualBindingConfiguration
