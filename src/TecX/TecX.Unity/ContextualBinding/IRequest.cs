@@ -1,4 +1,6 @@
-﻿using Microsoft.Practices.ObjectBuilder2;
+﻿using System;
+
+using Microsoft.Practices.ObjectBuilder2;
 
 using TecX.Common;
 
@@ -7,6 +9,8 @@ namespace TecX.Unity.ContextualBinding
     public interface IRequest
     {
         int Depth { get; }
+
+        Type TypeToBuild { get; }
 
         IRequest Previous { get; }
 
@@ -20,6 +24,11 @@ namespace TecX.Unity.ContextualBinding
         public IRequest Previous { get; private set; }
         public int Depth { get; private set; }
         public IBuilderContext Context { get; private set; }
+
+        public Type TypeToBuild
+        {
+            get { return Context.BuildKey.Type; }
+        }
 
         #endregion Implementation of IRequest
 

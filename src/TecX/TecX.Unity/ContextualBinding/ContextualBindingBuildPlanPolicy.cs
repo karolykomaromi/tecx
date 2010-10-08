@@ -44,7 +44,7 @@ namespace TecX.Unity.ContextualBinding
             {
                 //the top of the stack contains the buildup request
                 //we are currently working on, which is not interesting here
-                if (_to == _history.Peek().Context.BuildKey.Type)
+                if (_to == _history.Peek().TypeToBuild)
                     _history.Pop();
 
                 if (_history.Count > 0)
