@@ -66,6 +66,7 @@
     <Compile Include="ClozeInjectionConstructorFixture.cs" />
     <Compile Include="RegistrationOptionsBuilderFixture.cs" />
     <Compile Include="TestObjects\AnotherInterceptable.cs" />
+    <Compile Include="TestObjects\AnotherService.cs" />
     <Compile Include="TestObjects\ClassA.cs" />
     <Compile Include="TestObjects\ClassB.cs" />
     <Compile Include="TestObjects\ClassC.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="TestObjects\ITestExtensionConfig.cs" />
     <Compile Include="TestObjects\Logger.cs" />
     <Compile Include="TestObjects\LoggerAttribute.cs" />
+    <Compile Include="TestObjects\SomeService.cs" />
     <Compile Include="TestObjects\SqlRepository.cs" />
     <Compile Include="TestObjects\TestExtension.cs" />
     <Compile Include="TestObjects\TestLogger.cs" />

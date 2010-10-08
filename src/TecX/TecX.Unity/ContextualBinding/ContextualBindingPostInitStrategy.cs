@@ -25,7 +25,7 @@ namespace TecX.Unity.ContextualBinding
             Type typeThatWasBuilt = context.OriginalBuildKey.Type;
 
             if (_history.Count > 0 &&
-                typeThatWasBuilt == _history.Peek().Context.BuildKey.Type)
+                typeThatWasBuilt == _history.Peek().TypeToBuild)
             {
                 _history.Pop();
             }

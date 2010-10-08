@@ -22,7 +22,7 @@ namespace TecX.Unity.Test
             container.AddNewExtension<ContextualBindingExtension>();
 
             container.RegisterType<ILogger, TestLogger>(
-                request => typeof(SomeService) == request.Context.BuildKey.Type);
+                request => typeof(SomeService) == request.TypeToBuild);
             
             var svc = container.Resolve<SomeService>();
 
@@ -43,10 +43,10 @@ namespace TecX.Unity.Test
             container.AddNewExtension<ContextualBindingExtension>();
 
             container.RegisterType<ILogger, TestLogger>(
-                request => typeof (SomeService) == request.Context.BuildKey.Type);
+                request => typeof (SomeService) == request.TypeToBuild);
 
             container.RegisterType<ILogger, TraceLogger>(
-                request => typeof (AnotherService) == request.Context.BuildKey.Type);
+                request => typeof (AnotherService) == request.TypeToBuild);
 
             var svc = container.Resolve<SomeService>();
             Assert.IsNotNull(svc.Logger);
@@ -64,7 +64,7 @@ namespace TecX.Unity.Test
             container.AddNewExtension<ContextualBindingExtension>();
 
             container.RegisterType<ILogger, TestLogger>(
-                request => typeof (SomeService) == request.Context.BuildKey.Type);
+                request => typeof (SomeService) == request.TypeToBuild);
 
             container.RegisterType<ILogger, TraceLogger>();
 
@@ -83,32 +83,12 @@ namespace TecX.Unity.Test
             container.RegisterType<ILogger, TraceLogger>();
 
             container.RegisterType<ILogger, TestLogger>(
-                request => typeof(SomeService) == request.Context.BuildKey.Type);
+                request => typeof(SomeService) == request.TypeToBuild);
 
             var svc = container.Resolve<AnotherService>();
 
             Assert.IsNotNull(svc.Logger);
             Assert.IsInstanceOfType(svc.Logger, typeof(TraceLogger));
-        }
-    }
-
-    internal class SomeService
-    {
-        public readonly ILogger Logger;
-
-        public SomeService(ILogger logger)
-        {
-            Logger = logger;
-        }
-    }
-
-    internal class AnotherService
-    {
-        public readonly ILogger Logger;
-
-        public AnotherService(ILogger logger)
-        {
-            Logger = logger;
         }
     }
 }
