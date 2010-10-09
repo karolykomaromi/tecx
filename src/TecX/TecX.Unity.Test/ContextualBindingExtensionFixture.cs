@@ -15,6 +15,7 @@ namespace TecX.Unity.Test
     public class ContextualBindingExtensionFixture
     {
         [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
         public void WhenTypeIsRegisteredWithBindingConstraint_OnlyResolvesOnMatch()
         {
             UnityContainer container = new UnityContainer();
@@ -23,7 +24,7 @@ namespace TecX.Unity.Test
 
             container.RegisterType<ILogger, TestLogger>(
                 request => typeof(SomeService) == request.TypeToBuild);
-            
+
             var svc = container.Resolve<SomeService>();
 
             Assert.IsNotNull(svc);
@@ -31,9 +32,6 @@ namespace TecX.Unity.Test
             Assert.IsInstanceOfType(svc.Logger, typeof(TestLogger));
 
             var svc2 = container.Resolve<AnotherService>();
-
-            Assert.IsNotNull(svc2);
-            Assert.IsNull(svc2.Logger);
         }
 
         [TestMethod]
@@ -43,10 +41,10 @@ namespace TecX.Unity.Test
             container.AddNewExtension<ContextualBindingExtension>();
 
             container.RegisterType<ILogger, TestLogger>(
-                request => typeof (SomeService) == request.TypeToBuild);
+                request => typeof(SomeService) == request.TypeToBuild);
 
             container.RegisterType<ILogger, TraceLogger>(
-                request => typeof (AnotherService) == request.TypeToBuild);
+                request => typeof(AnotherService) == request.TypeToBuild);
 
             var svc = container.Resolve<SomeService>();
             Assert.IsNotNull(svc.Logger);
@@ -64,7 +62,7 @@ namespace TecX.Unity.Test
             container.AddNewExtension<ContextualBindingExtension>();
 
             container.RegisterType<ILogger, TestLogger>(
-                request => typeof (SomeService) == request.TypeToBuild);
+                request => typeof(SomeService) == request.TypeToBuild);
 
             container.RegisterType<ILogger, TraceLogger>();
 
