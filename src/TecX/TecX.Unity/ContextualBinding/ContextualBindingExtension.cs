@@ -7,6 +7,8 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.ObjectBuilder;
 using System.Reflection;
 
+using TecX.Common;
+
 namespace TecX.Unity.ContextualBinding
 {
     public class ContextualBindingExtension : UnityContainerExtension, IContextualBindingConfiguration
@@ -14,7 +16,7 @@ namespace TecX.Unity.ContextualBinding
         #region Fields
 
         private readonly IRequestHistory _history;
-        private Action<object, RegisterEventArgs> _invoker;
+        private readonly IDictionary<NamedTypeBuildKey, ContextualBindingBuildKeyMappingPolicy> _mappings;
 
         #endregion Fields
 
@@ -26,11 +28,10 @@ namespace TecX.Unity.ContextualBinding
         public ContextualBindingExtension()
         {
             _history = new RequestHistory();
+            _mappings = new Dictionary<NamedTypeBuildKey, ContextualBindingBuildKeyMappingPolicy>();
         }
 
         #endregion c'tor
-
-        #region Overrides of UnityContainerExtension
 
         protected override void Initialize()
         {
@@ -42,123 +43,78 @@ namespace TecX.Unity.ContextualBinding
 
             Context.Strategies.Add(postInit, UnityBuildStage.PostInitialization);
 
-            Context.Registering += OnRegistering;
-
-            InitPostRegistrationHandler();
+            Context.Registering += OnRegister;
         }
 
-        private void InitPostRegistrationHandler()
+        private void OnRegister(object sender, RegisterEventArgs e)
         {
-            FieldInfo field = typeof(UnityContainer).GetField("extensions",
-                                                              BindingFlags.NonPublic | BindingFlags.Instance);
+            //we are only interested in default mappings
+            if (e.Name != null)
+                return;
 
-            if (field == null) return;
+            NamedTypeBuildKey key = new NamedTypeBuildKey(e.TypeFrom);
 
-            var extensions = field.GetValue(Container) as List<UnityContainerExtension>;
+            //if we dont have an override registered we dont have to do
+            //anything
+            if (!_mappings.ContainsKey(key))
+                return;
 
-            if (extensions == null) return;
+            var current = Context.Policies.Get<IBuildKeyMappingPolicy>(key);
 
-            UnityDefaultBehaviorExtension ext =
-                extensions.OfType<UnityDefaultBehaviorExtension>().SingleOrDefault();
-
-            if (ext == null) return;
-
-            MethodInfo handler = typeof(UnityDefaultBehaviorExtension).GetMethod("OnRegister",
-                                                                                 BindingFlags.NonPublic |
-                                                                                 BindingFlags.Instance);
-
-            if (handler == null) return;
-
-            EventInfo @event = typeof(UnityContainer).GetEvent("registering",
-                                                               BindingFlags.NonPublic |
-                                                               BindingFlags.Instance);
-
-            if (@event == null) return;
-
-            Delegate onRegisteringHandler = Delegate.CreateDelegate(@event.EventHandlerType, ext,
-                                                                    handler);
-
-            @event.GetRemoveMethod(true).Invoke(Container, new object[] {onRegisteringHandler});
-
-            _invoker = (s, e) => onRegisteringHandler.DynamicInvoke(s, e);
-
-            //TODO weberse unsubscribed the UnityDefaultBehaviorExtension.OnRegister handler
-            //now I need to create a handler on my own that raises an event after it triggered exactly that handler
-            //argh!
-        }
-
-        #endregion Overrides of UnityContainerExtension
-
-        private void OnRegistering(object sender, RegisterEventArgs e)
-        {
-            ContextualBindingBuildPlanPolicy cbb = null;
-
-            NamedTypeBuildKey key = new NamedTypeBuildKey(e.TypeFrom, null);
-
-            //we are only interested in the default mappings
-            if (e.Name == null)
+            //if the currently registered mapping is an override we can leave that one alone
+            if (current != null)
             {
-                var existing = Context.Policies.Get<IBuildPlanPolicy>(key);
+                var contextual = current as ContextualBindingBuildKeyMappingPolicy;
 
-                var policy = existing as ContextualBindingBuildPlanPolicy;
-
-                if (policy != null)
-                {
-                    cbb = policy;
-                }
+                if (contextual != null)
+                    return;
             }
 
-            _invoker(sender, e);
+            //but if it is not a contextual mapping this means someone else
+            //tried to overwrite our mapping so we need to put that one back in place
+            var mapping = _mappings[key];
 
-            if(cbb != null)
+            var m = mapping;
+            while (m.Next != null)
             {
-                while (cbb.Next != null)
-                {
-                    cbb = cbb.Next;
-                }
-
-                var existing = Context.Policies.Get<IBuildPlanPolicy>(key);
-
-                var policy = existing as ContextualBindingBuildPlanPolicy;
-
-                if (policy == null)
-                {
-                    cbb.LastChance = existing;
-                }
+                m = m.Next;
             }
 
+            m.LastChance = current;
+
+            Context.Policies.Set<IBuildKeyMappingPolicy>(mapping, key);
         }
 
         #region Implementation of IContextualBindingConfiguration
 
-        public IContextualBindingConfiguration Register<TTo, TFrom>(Func<IRequest, bool> shouldResolveTo)
+        public IContextualBindingConfiguration Register<TFrom, TTo>(Func<IRequest, bool> shouldResolve)
         {
-            ContextualBindingBuildPlanPolicy policy = new ContextualBindingBuildPlanPolicy(
-                typeof(TTo),
-                typeof(TFrom),
-                shouldResolveTo,
-                _history);
+            Guard.AssertNotNull(shouldResolve, "shouldResolve");
 
-            //get the default build key for the target type
-            NamedTypeBuildKey key = NamedTypeBuildKey.Make<TTo>(null);
+            NamedTypeBuildKey key = new NamedTypeBuildKey(typeof(TFrom));
 
-            var p = Context.Policies.Get<IBuildPlanPolicy>(key);
+            ContextualBindingBuildKeyMappingPolicy policy =
+                new ContextualBindingBuildKeyMappingPolicy(_history, shouldResolve, typeof(TTo));
 
-            if (p != null)
+            var existing = Context.Policies.Get<IBuildKeyMappingPolicy>(key);
+
+            if (existing != null)
             {
-                ContextualBindingBuildPlanPolicy cb = p as ContextualBindingBuildPlanPolicy;
+                var contextual = existing as ContextualBindingBuildKeyMappingPolicy;
 
-                if (cb != null)
+                if (contextual != null)
                 {
-                    policy.Next = cb;
+                    policy.Next = contextual;
                 }
                 else
                 {
-                    policy.LastChance = p;
+                    policy.LastChance = existing;
                 }
             }
 
-            Context.Policies.Set<IBuildPlanPolicy>(policy, key);
+            Context.Policies.Set<IBuildKeyMappingPolicy>(policy, key);
+
+            _mappings[key] = policy;
 
             return this;
         }

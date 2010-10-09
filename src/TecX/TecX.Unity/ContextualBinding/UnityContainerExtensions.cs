@@ -8,7 +8,7 @@ namespace TecX.Unity.ContextualBinding
 {
     public static class UnityContainerExtensions
     {
-        public static IUnityContainer RegisterType<TTo, TFrom>(this IUnityContainer container,
+        public static IUnityContainer RegisterType<TFrom, TTo>(this IUnityContainer container,
                                                                Func<IRequest, bool> shouldResolveTo)
         {
             Guard.AssertNotNull(container, "container");
@@ -19,7 +19,7 @@ namespace TecX.Unity.ContextualBinding
             if (configuration == null)
                 throw new InvalidOperationException("ContextualBindingExtension must be registered with the container!");
 
-            configuration.Register<TTo, TFrom>(shouldResolveTo);
+            configuration.Register<TFrom, TTo>(shouldResolveTo);
 
             return container;
         }

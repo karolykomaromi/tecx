@@ -7,6 +7,6 @@ namespace TecX.Unity.ContextualBinding
 {
     public interface IContextualBindingConfiguration : IUnityContainerExtensionConfigurator
     {
-        IContextualBindingConfiguration Register<TTo, TFrom>(Func<IRequest, bool> shouldResolveTo);
+        IContextualBindingConfiguration Register<TFrom, TTo>(Func<IRequest, bool> shouldResolve);
     }
 }

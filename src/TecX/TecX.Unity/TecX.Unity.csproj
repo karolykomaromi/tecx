@@ -53,7 +53,8 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="ContextualBinding\ContextualBindingBuildPlanPolicy.cs" />
+    <Compile Include="ContextualBinding\ContextualBindingBuildKeyMappingPolicy.cs" />
+    <Compile Include="ContextualBinding\ContextualBindingException.cs" />
     <Compile Include="ContextualBinding\ContextualBindingExtension.cs" />
     <Compile Include="ContextualBinding\ContextualBindingPostInitStrategy.cs" />
     <Compile Include="ContextualBinding\ContextualBindingSetupStrategy.cs" />
