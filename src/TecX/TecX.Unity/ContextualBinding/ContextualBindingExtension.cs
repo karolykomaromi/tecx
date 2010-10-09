@@ -112,6 +112,8 @@ namespace TecX.Unity.ContextualBinding
                 }
             }
 
+            //TODO check out how the lifetime and injection members are handled in the
+            //UnityDefaultBehaviorStrategy and copy that behavior!
             Context.Policies.Set<IBuildKeyMappingPolicy>(policy, key);
 
             _mappings[key] = policy;
