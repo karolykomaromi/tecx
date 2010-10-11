@@ -53,6 +53,17 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="BuildTracking\BuildTreeDisposer.cs" />
+    <Compile Include="BuildTracking\BuildTreeItemNode.cs" />
+    <Compile Include="BuildTracking\BuildTreeRecovery.cs" />
+    <Compile Include="BuildTracking\BuildTreeStore.cs" />
+    <Compile Include="BuildTracking\BuildTreeTracker.cs" />
+    <Compile Include="BuildTracking\DeferredResolutionTracker.cs" />
+    <Compile Include="BuildTracking\DisposableStrategyExtension.cs" />
+    <Compile Include="BuildTracking\IBuildTreeStore.cs" />
+    <Compile Include="BuildTracking\IBuildTreeTracker.cs" />
+    <Compile Include="BuildTracking\LockReader.cs" />
+    <Compile Include="BuildTracking\LockWriter.cs" />
     <Compile Include="ContextualBinding\ContextualBindingBuildKeyMappingPolicy.cs" />
     <Compile Include="ContextualBinding\ContextualBindingException.cs" />
     <Compile Include="ContextualBinding\ContextualBindingExtension.cs" />
