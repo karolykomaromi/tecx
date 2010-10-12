@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity;
 
 using TecX.Common;
 
@@ -11,72 +10,54 @@ namespace TecX.Unity.ContextualBinding
     public class ContextualBindingBuildKeyMappingPolicy : IBuildKeyMappingPolicy
     {
         private readonly IRequestHistory _history;
-        private readonly Func<IRequest, bool> _shouldResolve;
-        private readonly Type _to;
+        private readonly List<ContextualBuildKeyMapping> _mappings;
 
-        public ContextualBindingBuildKeyMappingPolicy Next { get; set; }
         public IBuildKeyMappingPolicy LastChance { get; set; }
 
-        public ContextualBindingBuildKeyMappingPolicy(IRequestHistory history,
-            Func<IRequest, bool> shouldResolve, Type to)
+        public ContextualBindingBuildKeyMappingPolicy(IRequestHistory history)
         {
             Guard.AssertNotNull(history, "history");
-            Guard.AssertNotNull(shouldResolve, "shouldResolve");
-            Guard.AssertNotNull(to, "to");
 
             _history = history;
-            _shouldResolve = shouldResolve;
-            _to = to;
-        }
-
-        public bool ShouldResolve(IRequest request)
-        {
-            Guard.AssertNotNull(request, "request");
-
-            return _shouldResolve(request);
+            _mappings = new List<ContextualBuildKeyMapping>();
         }
 
         #region Implementation of IBuildKeyMappingPolicy
 
         /// <summary>
-        /// Maps the build key.
+        /// Checks wether there is a matching buildkey mapping override registered and uses the first match,
+        /// if any. If no override fits it checks wether there is a last chance default mapping present.
+        /// Throws exception if no matches and no default mapping are found.
         /// </summary>
-        /// <param name="buildKey">The build key to map.</param>
-        /// <param name="context">Current build context. Used for contextual information
-        /// if writing a more sophisticated mapping. This parameter can be null
-        /// (called when getting container registrations).</param>
-        /// <returns>The new build key.</returns>
+        /// <exception cref="ContextualBindingException">If no contextual mapping fits and no default mapping
+        /// registered</exception>
         public NamedTypeBuildKey Map(NamedTypeBuildKey buildKey, IBuilderContext context)
         {
-            if (ShouldResolve(_history.Peek().Previous))
+            foreach (var mapping in _mappings)
             {
-                return new NamedTypeBuildKey(_to);
+                if (mapping.Matches(_history.Current().Parent))
+                {
+                    return mapping.MapTo;
+                }
             }
 
-            if (Next == null &&
-                LastChance != null)
+            if (LastChance != null)
             {
                 return LastChance.Map(buildKey, context);
             }
 
-            var current = Next;
-            while (current != null)
-            {
-                if (current.ShouldResolve(_history.Peek().Previous))
-                {
-                    return new NamedTypeBuildKey(current._to);
-                }
-
-                if (current.Next == null && current.LastChance != null)
-                    return current.LastChance.Map(buildKey, context);
-
-                current = current.Next;
-            }
-
             throw new ContextualBindingException("No contextual mapping that matches the current context was " +
-                "defined and no default mapping could be found.");
+                                                 "defined and no default mapping could be found.");
         }
 
         #endregion
+
+        public void AddMapping(Func<IRequest, bool> matches, Type mapTo)
+        {
+            Guard.AssertNotNull(matches, "matches");
+            Guard.AssertNotNull(mapTo, "mapTo");
+
+            _mappings.Add(new ContextualBuildKeyMapping(matches, mapTo));
+        }
     }
 }
