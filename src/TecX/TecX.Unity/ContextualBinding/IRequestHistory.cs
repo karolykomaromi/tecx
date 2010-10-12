@@ -2,11 +2,11 @@
 {
     public interface IRequestHistory
     {
-        void Push(IRequest request);
+        void Append(IRequest request);
 
-        IRequest Pop();
+        IRequest RemoveCurrent();
 
-        IRequest Peek();
+        IRequest Current();
 
         int Count { get; }
     }

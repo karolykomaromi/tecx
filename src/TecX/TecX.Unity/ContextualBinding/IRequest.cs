@@ -12,7 +12,7 @@ namespace TecX.Unity.ContextualBinding
 
         Type TypeToBuild { get; }
 
-        IRequest Previous { get; }
+        IRequest Parent { get; }
 
         IBuilderContext Context { get; }
     }
@@ -21,7 +21,7 @@ namespace TecX.Unity.ContextualBinding
     {
         #region Implementation of IRequest
 
-        public IRequest Previous { get; private set; }
+        public IRequest Parent { get; private set; }
         public int Depth { get; private set; }
         public IBuilderContext Context { get; private set; }
 
@@ -35,11 +35,11 @@ namespace TecX.Unity.ContextualBinding
         /// <summary>
         /// Initializes a new instance of the <see cref="Request"/> class
         /// </summary>
-        public Request(IRequest previous, int depth, IBuilderContext context)
+        public Request(IRequest parent, int depth, IBuilderContext context)
         {
             Guard.AssertNotNull(context, "context");
 
-            Previous = previous;
+            Parent = parent;
             Depth = depth;
             Context = context;
         }

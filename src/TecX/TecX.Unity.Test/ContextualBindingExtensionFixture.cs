@@ -88,5 +88,27 @@ namespace TecX.Unity.Test
             Assert.IsNotNull(svc.Logger);
             Assert.IsInstanceOfType(svc.Logger, typeof(TraceLogger));
         }
+
+        [TestMethod]
+        public void WhenRegisteringContextualBindingWithLifetimeManager_CorrectLifetimeIsUsed()
+        {
+            IUnityContainer container = new UnityContainer();
+            container.AddNewExtension<ContextualBindingExtension>();
+
+            container.RegisterType<ILogger, TestLogger>(request => typeof (SomeService) == request.TypeToBuild,
+                                                        new ContainerControlledLifetimeManager());
+
+            SomeService svc1 = container.Resolve<SomeService>();
+
+            SomeService svc2 = container.Resolve<SomeService>();
+
+            Assert.IsNotNull(svc1);
+            Assert.IsNotNull(svc2);
+            Assert.IsNotNull(svc1.Logger);
+            Assert.IsNotNull(svc2.Logger);
+            Assert.IsInstanceOfType(svc1.Logger, typeof(TestLogger));
+            Assert.IsInstanceOfType(svc2.Logger, typeof(TestLogger));
+            Assert.AreSame(svc1.Logger, svc2.Logger);
+        }
     }
 }

@@ -4,6 +4,8 @@ using TecX.Common;
 
 namespace TecX.Unity.ContextualBinding
 {
+    //TODO weberse might have to make that thing thread static or at least
+    //thread safe in the future
     internal class RequestHistory : IRequestHistory
     {
         private readonly Stack<IRequest> _history;
@@ -18,21 +20,26 @@ namespace TecX.Unity.ContextualBinding
 
         #region Implementation of IRequestHistory
 
-        public void Push(IRequest request)
+        public void Append(IRequest request)
         {
             Guard.AssertNotNull(request, "request");
 
             _history.Push(request);
         }
 
-        public IRequest Pop()
+        public IRequest RemoveCurrent()
         {
             return _history.Pop();
         }
 
-        public IRequest Peek()
+        public IRequest Current()
         {
-            return _history.Peek();
+            if(_history.Count > 0)
+            {
+                return _history.Peek();
+            }
+
+            return null;
         }
 
         public int Count

@@ -125,7 +125,7 @@ namespace TecX.Unity.BuildTracking
         /// Initializes a new instance of the <see cref="DisposableStrategyExtension"/> class.
         /// </summary>
         public DisposableStrategyExtension()
-            : this(new BuildTreeTracker())
+            : this(new BuildTreeTrackerStrategy())
         {
         }
 
@@ -135,7 +135,7 @@ namespace TecX.Unity.BuildTracking
         /// <param name="buildTreeTracker">
         /// The build tree tracker.
         /// </param>
-        internal DisposableStrategyExtension(IBuildTreeTracker buildTreeTracker)
+        internal DisposableStrategyExtension(IBuildTreeTrackerStrategy buildTreeTracker)
         {
             Guard.AssertNotNull(buildTreeTracker, "buildTreeTracker");
 
@@ -187,6 +187,6 @@ namespace TecX.Unity.BuildTracking
         /// <value>
         /// The tree tracker.
         /// </value>
-        private IBuildTreeTracker TreeTracker { get; set; }
+        private IBuildTreeTrackerStrategy TreeTracker { get; set; }
     }
 }

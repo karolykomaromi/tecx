@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.Remoting.Messaging;
 
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.ObjectBuilder;
-using System.Reflection;
 
 using TecX.Common;
 
@@ -15,8 +14,11 @@ namespace TecX.Unity.ContextualBinding
     {
         #region Fields
 
+        //TODO weberse might have to make that thing thread static or at least
+        //thread safe in the future
         private readonly IRequestHistory _history;
         private readonly IDictionary<NamedTypeBuildKey, ContextualBindingBuildKeyMappingPolicy> _mappings;
+        private readonly IDictionary<NamedTypeBuildKey, IList<LifetimeMapping>> _lifetimeMappings;
 
         #endregion Fields
 
@@ -29,21 +31,27 @@ namespace TecX.Unity.ContextualBinding
         {
             _history = new RequestHistory();
             _mappings = new Dictionary<NamedTypeBuildKey, ContextualBindingBuildKeyMappingPolicy>();
+            _lifetimeMappings = new Dictionary<NamedTypeBuildKey, IList<LifetimeMapping>>();
         }
 
         #endregion c'tor
 
         protected override void Initialize()
         {
-            var setup = new ContextualBindingSetupStrategy(_history);
+            var setup = new RequestTrackerStrategy(_history);
 
             Context.Strategies.Add(setup, UnityBuildStage.Setup);
 
-            var postInit = new ContextualBindingPostInitStrategy(_history);
-
-            Context.Strategies.Add(postInit, UnityBuildStage.PostInitialization);
+            var lifetime = new ContextualBindingLifetimeStrategy(_history, Context, _lifetimeMappings);
+            
+            Context.Strategies.Add(lifetime, UnityBuildStage.Lifetime);
 
             Context.Registering += OnRegister;
+        }
+
+        public override void Remove()
+        {
+            Context.Registering -= OnRegister;
         }
 
         private void OnRegister(object sender, RegisterEventArgs e)
@@ -74,13 +82,7 @@ namespace TecX.Unity.ContextualBinding
             //tried to overwrite our mapping so we need to put that one back in place
             var mapping = _mappings[key];
 
-            var m = mapping;
-            while (m.Next != null)
-            {
-                m = m.Next;
-            }
-
-            m.LastChance = current;
+            mapping.LastChance = current;
 
             Context.Policies.Set<IBuildKeyMappingPolicy>(mapping, key);
         }
@@ -89,12 +91,27 @@ namespace TecX.Unity.ContextualBinding
 
         public IContextualBindingConfiguration Register<TFrom, TTo>(Func<IRequest, bool> shouldResolve)
         {
+            return Register<TFrom, TTo>(shouldResolve, null);
+        }
+
+        public IContextualBindingConfiguration Register<TFrom, TTo>(Func<IRequest, bool> shouldResolve, 
+            LifetimeManager lifetimeManager)
+        {
             Guard.AssertNotNull(shouldResolve, "shouldResolve");
 
             NamedTypeBuildKey key = new NamedTypeBuildKey(typeof(TFrom));
 
-            ContextualBindingBuildKeyMappingPolicy policy =
-                new ContextualBindingBuildKeyMappingPolicy(_history, shouldResolve, typeof(TTo));
+            ContextualBindingBuildKeyMappingPolicy policy;
+            if (!_mappings.TryGetValue(key, out policy))
+            {
+                //mapping doesnt exist -> create one and remember it
+                policy = new ContextualBindingBuildKeyMappingPolicy(_history);
+
+                _mappings[key] = policy;
+            }
+
+            //add the new mapping
+            policy.AddMapping(shouldResolve, typeof(TTo));
 
             var existing = Context.Policies.Get<IBuildKeyMappingPolicy>(key);
 
@@ -102,21 +119,28 @@ namespace TecX.Unity.ContextualBinding
             {
                 var contextual = existing as ContextualBindingBuildKeyMappingPolicy;
 
-                if (contextual != null)
-                {
-                    policy.Next = contextual;
-                }
-                else
+                //if its not already a contextual mapping make the new mapping
+                //the last chance handler of our contextual policy
+                if (contextual == null)
                 {
                     policy.LastChance = existing;
                 }
             }
 
-            //TODO check out how the lifetime and injection members are handled in the
+            //TODO check out how the injection members are handled in the
             //UnityDefaultBehaviorStrategy and copy that behavior!
             Context.Policies.Set<IBuildKeyMappingPolicy>(policy, key);
 
-            _mappings[key] = policy;
+            key = new NamedTypeBuildKey(typeof(TTo));
+
+            IList<LifetimeMapping> lifetimes;
+            if(!_lifetimeMappings.TryGetValue(key, out lifetimes))
+            {
+                lifetimes = new List<LifetimeMapping>();
+                _lifetimeMappings[key] = lifetimes;
+            }
+
+            lifetimes.Add(new LifetimeMapping(shouldResolve, lifetimeManager));
 
             return this;
         }

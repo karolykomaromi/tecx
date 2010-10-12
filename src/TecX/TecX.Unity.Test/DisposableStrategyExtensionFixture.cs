@@ -20,7 +20,7 @@ namespace TecX.Unity.Test
         /// Runs test for disposable strategy extension disposes all instances in fragmented tree.
         /// </summary>
         [TestMethod]
-        public void DisposableStrategyExtensionDisposesAllInstancesInFragmentedTreeTest()
+        public void WhenDisposingFragmentedTree_DisposesAllInstances()
         {
             IFirstDisposable actual;
             ISecondDisposable secondDisposable;
@@ -58,7 +58,7 @@ namespace TecX.Unity.Test
         /// Runs test for disposable strategy extension does not dispose resolved child instance if parent is still in lifetime manager.
         /// </summary>
         [TestMethod]
-        public void DisposableStrategyExtensionDisposesAllInstancesInTreeTest()
+        public void WhenDisposingTree_DisposesAllInstances()
         {
             IFirstDisposable actual;
 
@@ -90,7 +90,7 @@ namespace TecX.Unity.Test
         /// Runs test for disposable strategy extension disposes all instances in tree when child is not unique.
         /// </summary>
         [TestMethod]
-        public void DisposableStrategyExtensionDisposesAllInstancesInTreeWhenChildIsNotUniqueTest()
+        public void WhenChildIsNotUnique_DisposesAllInstances()
         {
             IFirstDisposable actual;
 
@@ -124,7 +124,7 @@ namespace TecX.Unity.Test
         /// Runs test for disposable strategy extension disposes all instances in tree when parent is disposed.
         /// </summary>
         [TestMethod]
-        public void DisposableStrategyExtensionDisposesAllInstancesInTreeWhenParentIsDisposedTest()
+        public void WhenParentIsDisposed_DisposesAllInstances()
         {
             IFirstDisposable actual;
 
@@ -190,7 +190,7 @@ namespace TecX.Unity.Test
         /// Runs test for disposable strategy extension disposes all trees when disposed.
         /// </summary>
         [TestMethod]
-        public void DisposableStrategyExtensionDisposesAllTreesWhenDisposedTest()
+        public void WhenDisposed_ExtensionDisposesAllTrees()
         {
             IFirstDisposable firstDisposable;
             ISecondDisposable secondDisposable;
@@ -221,7 +221,7 @@ namespace TecX.Unity.Test
         /// Runs test for disposable strategy extension disposes built up child instance.
         /// </summary>
         [TestMethod]
-        public void DisposableStrategyExtensionDisposesBuiltUpChildInstanceTest()
+        public void WhenDisposingBuiltUpInstance_DisposesChild()
         {
             ThirdDisposable actual;
 
