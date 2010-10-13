@@ -64,18 +64,6 @@
     <Compile Include="BuildTracking\IBuildTreeTrackerStrategy.cs" />
     <Compile Include="BuildTracking\LockReader.cs" />
     <Compile Include="BuildTracking\LockWriter.cs" />
-    <Compile Include="ContextualBinding\ContextualBindingBuildKeyMappingPolicy.cs" />
-    <Compile Include="ContextualBinding\ContextualBindingException.cs" />
-    <Compile Include="ContextualBinding\ContextualBindingExtension.cs" />
-    <Compile Include="ContextualBinding\ContextualBindingLifetimeStrategy.cs" />
-    <Compile Include="ContextualBinding\LifetimeMapping.cs" />
-    <Compile Include="ContextualBinding\RequestTrackerStrategy.cs" />
-    <Compile Include="ContextualBinding\ContextualBuildKeyMapping.cs" />
-    <Compile Include="ContextualBinding\IContextualBindingConfiguration.cs" />
-    <Compile Include="ContextualBinding\IRequest.cs" />
-    <Compile Include="ContextualBinding\IRequestHistory.cs" />
-    <Compile Include="ContextualBinding\RequestHistory.cs" />
-    <Compile Include="ContextualBinding\UnityContainerExtensions.cs" />
     <Compile Include="Registration\AssemblyLocator.cs" />
     <Compile Include="Registration\RegistryBuilder.cs" />
     <Compile Include="Registration\RegistryExtensions.cs" />
@@ -106,6 +94,9 @@
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ContextualBinding\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

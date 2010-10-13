@@ -1,4 +1,4 @@
-﻿namespace TecX.Unity.Test.TestObjects
+﻿namespace TecX.Unity.ContextualBinding.Test.TestObjects
 {
     internal class SomeService
     {
