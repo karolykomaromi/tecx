@@ -47,11 +47,12 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="ContextualBindingBuildKeyMappingPolicy.cs" />
+    <Compile Include="ContextualBuildKeyMappingPolicy.cs" />
     <Compile Include="ContextualBindingException.cs" />
     <Compile Include="ContextualBindingExtension.cs" />
-    <Compile Include="ContextualBindingLifetimeStrategy.cs" />
+    <Compile Include="ContextualLifetimeStrategy.cs" />
     <Compile Include="ContextualBuildKeyMapping.cs" />
+    <Compile Include="ContextualLifetimeManager.cs" />
     <Compile Include="IContextualBindingConfiguration.cs" />
     <Compile Include="IRequest.cs" />
     <Compile Include="IRequestHistory.cs" />

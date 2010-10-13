@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
 
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
@@ -17,7 +16,7 @@ namespace TecX.Unity.ContextualBinding
         //TODO weberse might have to make that thing thread static or at least
         //thread safe in the future
         private readonly IRequestHistory _history;
-        private readonly IDictionary<NamedTypeBuildKey, ContextualBindingBuildKeyMappingPolicy> _mappings;
+        private readonly IDictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy> _mappings;
         private readonly IDictionary<NamedTypeBuildKey, IList<LifetimeMapping>> _lifetimeMappings;
 
         #endregion Fields
@@ -30,7 +29,7 @@ namespace TecX.Unity.ContextualBinding
         public ContextualBindingExtension()
         {
             _history = new RequestHistory();
-            _mappings = new Dictionary<NamedTypeBuildKey, ContextualBindingBuildKeyMappingPolicy>();
+            _mappings = new Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy>();
             _lifetimeMappings = new Dictionary<NamedTypeBuildKey, IList<LifetimeMapping>>();
         }
 
@@ -42,7 +41,7 @@ namespace TecX.Unity.ContextualBinding
 
             Context.Strategies.Add(setup, UnityBuildStage.Setup);
 
-            var lifetime = new ContextualBindingLifetimeStrategy(_history, Context, _lifetimeMappings);
+            var lifetime = new ContextualLifetimeStrategy(_history, Context, _lifetimeMappings);
             
             Context.Strategies.Add(lifetime, UnityBuildStage.Lifetime);
 
@@ -72,7 +71,7 @@ namespace TecX.Unity.ContextualBinding
             //if the currently registered mapping is an override we can leave that one alone
             if (current != null)
             {
-                var contextual = current as ContextualBindingBuildKeyMappingPolicy;
+                var contextual = current as ContextualBuildKeyMappingPolicy;
 
                 if (contextual != null)
                     return;
@@ -101,11 +100,11 @@ namespace TecX.Unity.ContextualBinding
 
             NamedTypeBuildKey key = new NamedTypeBuildKey(typeof(TFrom));
 
-            ContextualBindingBuildKeyMappingPolicy policy;
+            ContextualBuildKeyMappingPolicy policy;
             if (!_mappings.TryGetValue(key, out policy))
             {
                 //mapping doesnt exist -> create one and remember it
-                policy = new ContextualBindingBuildKeyMappingPolicy(_history);
+                policy = new ContextualBuildKeyMappingPolicy(_history);
 
                 _mappings[key] = policy;
             }
@@ -117,7 +116,7 @@ namespace TecX.Unity.ContextualBinding
 
             if (existing != null)
             {
-                var contextual = existing as ContextualBindingBuildKeyMappingPolicy;
+                var contextual = existing as ContextualBuildKeyMappingPolicy;
 
                 //if its not already a contextual mapping make the new mapping
                 //the last chance handler of our contextual policy
@@ -139,6 +138,8 @@ namespace TecX.Unity.ContextualBinding
                 lifetimes = new List<LifetimeMapping>();
                 _lifetimeMappings[key] = lifetimes;
             }
+
+            lifetimeManager = lifetimeManager ?? new TransientLifetimeManager();
 
             lifetimes.Add(new LifetimeMapping(shouldResolve, lifetimeManager));
 

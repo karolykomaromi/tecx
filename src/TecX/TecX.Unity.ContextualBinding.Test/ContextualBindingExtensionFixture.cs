@@ -98,17 +98,23 @@ namespace TecX.Unity.Test
             container.RegisterType<ILogger, TestLogger>(request => typeof (SomeService) == request.TypeToBuild,
                                                         new ContainerControlledLifetimeManager());
 
+            container.RegisterType<ILogger, TestLogger>(request => typeof (AnotherService) == request.TypeToBuild,
+                                                        new ContainerControlledLifetimeManager());
+
             SomeService svc1 = container.Resolve<SomeService>();
-
             SomeService svc2 = container.Resolve<SomeService>();
+            AnotherService svc3 = container.Resolve<AnotherService>();
+            AnotherService svc4 = container.Resolve<AnotherService>();
 
-            Assert.IsNotNull(svc1);
-            Assert.IsNotNull(svc2);
-            Assert.IsNotNull(svc1.Logger);
-            Assert.IsNotNull(svc2.Logger);
             Assert.IsInstanceOfType(svc1.Logger, typeof(TestLogger));
             Assert.IsInstanceOfType(svc2.Logger, typeof(TestLogger));
             Assert.AreSame(svc1.Logger, svc2.Logger);
+
+            Assert.IsInstanceOfType(svc3.Logger, typeof(TestLogger));
+            Assert.IsInstanceOfType(svc4.Logger, typeof(TestLogger));
+            Assert.AreSame(svc3.Logger, svc4.Logger);
+
+            Assert.AreNotSame(svc2.Logger, svc4.Logger);
         }
     }
 }
