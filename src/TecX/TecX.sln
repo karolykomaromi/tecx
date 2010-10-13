@@ -101,9 +101,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.ViewModel", "Tec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.ViewModel.Test", "TecX.Agile.ViewModel.Test\TecX.Agile.ViewModel.Test.csproj", "{3600E042-48AC-4756-9F36-E8642E81EB61}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.ContextualBinding", "TecX.Unity.ContextualBinding\TecX.Unity.ContextualBinding.csproj", "{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.2010", "..\..\lib\Unity2\src\Unity\Unity.2010.csproj", "{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Interception.2010", "..\..\lib\Unity2\src\Unity.Interception\Unity.Interception.2010.csproj", "{F8186B23-B0E1-4646-B5F3-14357841E2BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.ContextualBinding.Test", "TecX.Unity.ContextualBinding.Test\TecX.Unity.ContextualBinding.Test.csproj", "{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 34
+		SccNumberOfProjects = 38
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -239,6 +247,22 @@ Global
 		SccProjectTopLevelParentUniqueName33 = TecX.sln
 		SccProjectName33 = TecX.Agile.ViewModel.Test
 		SccLocalPath33 = TecX.Agile.ViewModel.Test
+		SccProjectUniqueName34 = TecX.Unity.ContextualBinding\\TecX.Unity.ContextualBinding.csproj
+		SccProjectTopLevelParentUniqueName34 = TecX.sln
+		SccProjectName34 = TecX.Unity.ContextualBinding
+		SccLocalPath34 = TecX.Unity.ContextualBinding
+		SccProjectUniqueName35 = ..\\..\\lib\\Unity2\\src\\Unity\\Unity.2010.csproj
+		SccProjectTopLevelParentUniqueName35 = TecX.sln
+		SccProjectName35 = ../../lib/Unity2/src/Unity
+		SccLocalPath35 = ..\\..\\lib\\Unity2\\src\\Unity
+		SccProjectUniqueName36 = ..\\..\\lib\\Unity2\\src\\Unity.Interception\\Unity.Interception.2010.csproj
+		SccProjectTopLevelParentUniqueName36 = TecX.sln
+		SccProjectName36 = ../../lib/Unity2/src/Unity.Interception
+		SccLocalPath36 = ..\\..\\lib\\Unity2\\src\\Unity.Interception
+		SccProjectUniqueName37 = TecX.Unity.ContextualBinding.Test\\TecX.Unity.ContextualBinding.Test.csproj
+		SccProjectTopLevelParentUniqueName37 = TecX.sln
+		SccProjectName37 = TecX.Unity.ContextualBinding.Test
+		SccLocalPath37 = TecX.Unity.ContextualBinding.Test
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -582,6 +606,46 @@ Global
 		{3600E042-48AC-4756-9F36-E8642E81EB61}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3600E042-48AC-4756-9F36-E8642E81EB61}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3600E042-48AC-4756-9F36-E8642E81EB61}.Release|x86.ActiveCfg = Release|Any CPU
+		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Release|x86.ActiveCfg = Release|Any CPU
+		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Release|x86.ActiveCfg = Release|Any CPU
+		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Release|x86.ActiveCfg = Release|Any CPU
+		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -596,6 +660,7 @@ Global
 		{943AD349-5431-4B9F-9DF4-A6DF5390B484} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{148699A6-388F-45A5-A9B5-DA1C2BDDD168} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{3600E042-48AC-4756-9F36-E8642E81EB61} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
+		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{45BE1494-E6F4-415F-8206-2856FBD28F66} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{266522EB-9DCB-451A-8CD7-678188DCB5F6} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{23E54945-0126-43BE-A3FC-5F61AF5BDFF3} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
@@ -618,6 +683,9 @@ Global
 		{6E05A14A-9374-40FD-B8CA-C33B4108CBDB} = {4E870DA1-42F8-4FF2-8172-5676DAB9959B}
 		{69621991-8933-41FD-8493-87E7FA5A26FE} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{A763CC8F-835E-444C-9A9F-88E7A443C1B2} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
+		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
+		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
+		{F8186B23-B0E1-4646-B5F3-14357841E2BA} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{692D5946-BFB5-46EC-A012-5FBF853A93EE} = {E6BC7155-A2F0-4353-A57C-36A237193155}
 		{14311591-3735-41A0-9DE5-8A72349B60D5} = {E6BC7155-A2F0-4353-A57C-36A237193155}
 		{FA168E91-F953-4C22-9727-4462E9DF74EF} = {BC5057D0-37DD-40FD-98BE-0FF01551FEFE}
