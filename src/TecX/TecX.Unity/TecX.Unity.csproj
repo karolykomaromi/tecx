@@ -84,8 +84,8 @@
     <Compile Include="Registration\RunOnceRegistration.cs" />
     <Compile Include="Registration\Then.cs" />
     <Compile Include="Registration\WellKnownAppParts.cs" />
-    <Compile Include="ParameterMatcher.cs" />
-    <Compile Include="ClozeInjectionConstructur.cs" />
+    <Compile Include="Injection\ParameterMatcher.cs" />
+    <Compile Include="Injection\ClozeInjectionConstructur.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\The.cs" />
   </ItemGroup>
@@ -95,9 +95,7 @@
       <Name>TecX.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ContextualBinding\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

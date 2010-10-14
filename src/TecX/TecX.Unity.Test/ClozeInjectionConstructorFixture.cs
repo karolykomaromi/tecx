@@ -6,6 +6,7 @@ using System.Reflection;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using TecX.Unity.Injection;
 using TecX.Unity.Test.TestObjects;
 
 namespace TecX.Unity.Test
