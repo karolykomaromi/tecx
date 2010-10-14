@@ -4,6 +4,7 @@ using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using TecX.Unity.Injection;
 using TecX.Unity.Registration;
 using TecX.Unity.Test.TestObjects;
 

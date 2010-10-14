@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.Practices.Unity;
 
 using TecX.Common;
+using TecX.Unity.Injection;
 
 namespace TecX.Unity.Registration
 {
