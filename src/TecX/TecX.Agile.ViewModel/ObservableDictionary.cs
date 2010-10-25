@@ -11,12 +11,22 @@ namespace TecX.Agile.ViewModel
 {
     public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, INotifyCollectionChanged
     {
+        #region Fields
+
         private readonly Dictionary<TKey, TValue> _dict;
+
+        #endregion Fields
+
+        #region c'tor
 
         public ObservableDictionary()
         {
             _dict = new Dictionary<TKey, TValue>();
         }
+
+        #endregion c'tor
+
+        #region Implementation of IDictionary<TKey,TValue>
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
@@ -30,42 +40,58 @@ namespace TecX.Agile.ViewModel
 
         public void Add(KeyValuePair<TKey, TValue> item)
         {
-            throw new NotImplementedException();
+            Guard.AssertNotNull(item, "item");
+            Guard.AssertNotNull(item.Key, "item.Key");
+
+            Add(item.Key, item.Value);
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            NotifyCollectionChangedEventArgs args =
+                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
+
+            OnCollectionChanged(args);
         }
 
         public bool Contains(KeyValuePair<TKey, TValue> item)
         {
-            throw new NotImplementedException();
+            Guard.AssertNotNull(item, "item");
+
+            return _dict.Contains(item);
         }
 
-        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        void ICollection<KeyValuePair<TKey,TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            ((ICollection<KeyValuePair<TKey, TValue>>)_dict).CopyTo(array, arrayIndex);
         }
 
+        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
+        {
+            get
+            {
+                return ((ICollection<KeyValuePair<TKey, TValue>>)_dict).IsReadOnly;
+            }
+        }
+        
         public bool Remove(KeyValuePair<TKey, TValue> item)
         {
-            throw new NotImplementedException();
+            Guard.AssertNotNull(item, "item");
+            Guard.AssertNotNull(item.Key, "item.Key");
+
+            return Remove(item.Key);
         }
 
         public int Count
         {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool IsReadOnly
-        {
-            get { throw new NotImplementedException(); }
+            get { return _dict.Count; }
         }
 
         public bool ContainsKey(TKey key)
         {
-            throw new NotImplementedException();
+            Guard.AssertNotNull(key, "key");
+
+            return _dict.ContainsKey(key);
         }
 
         public void Add(TKey key, TValue value)
@@ -87,28 +113,32 @@ namespace TecX.Agile.ViewModel
             TValue value;
             if (_dict.TryGetValue(key, out value))
             {
+                _dict.Remove(key);
+
                 NotifyCollectionChangedEventArgs args =
                     new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, value);
 
                 OnCollectionChanged(args);
+
+                return true;
             }
 
-            return _dict.Remove(key);
+            return false;
         }
 
         public bool TryGetValue(TKey key, out TValue value)
         {
-            throw new NotImplementedException();
+            return _dict.TryGetValue(key, out value);
         }
 
         public TValue this[TKey key]
         {
-            get 
-            { 
+            get
+            {
                 Guard.AssertNotNull(key, "key");
 
                 TValue value;
-                if(_dict.TryGetValue(key, out value))
+                if (_dict.TryGetValue(key, out value))
                 {
                     return value;
                 }
@@ -121,9 +151,9 @@ namespace TecX.Agile.ViewModel
                 Guard.AssertNotNull(key, "key");
 
                 TValue existing;
-                if(_dict.TryGetValue(key, out existing))
+                if (_dict.TryGetValue(key, out existing))
                 {
-                    NotifyCollectionChangedEventArgs args = 
+                    NotifyCollectionChangedEventArgs args =
                         new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, value, existing);
 
                     OnCollectionChanged(args);
@@ -135,13 +165,17 @@ namespace TecX.Agile.ViewModel
 
         public ICollection<TKey> Keys
         {
-            get { throw new NotImplementedException(); }
+            get { return _dict.Keys; }
         }
 
         public ICollection<TValue> Values
         {
-            get { throw new NotImplementedException(); }
+            get { return _dict.Values; }
         }
+
+        #endregion Implementation of IDictionary<TKey,TValue>
+
+        #region Implementation of INotifyCollectionChanged
 
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
@@ -154,5 +188,7 @@ namespace TecX.Agile.ViewModel
                 CollectionChanged(this, args);
             }
         }
+
+        #endregion Implementation of INotifyCollectionChanged
     }
 }

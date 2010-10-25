@@ -15,11 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 Common", "01 Common", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99 Tests", "99 Tests", "{3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 Visual Studio", "02 Visual Studio", "{C02AB11F-1B5F-4803-9B13-5A21000AE5D7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 Domain", "02 Domain", "{C02AB11F-1B5F-4803-9B13-5A21000AE5D7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 WCF", "03 WCF", "{E1D2BCBC-4FA7-4B80-B80D-1E2FF04F9EB8}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 Geneva", "04 Geneva", "{69923832-7A15-43F7-9842-46EC401E28D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 Agile", "05 Agile", "{A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}"
 EndProject
@@ -65,8 +63,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{4E870DA1-4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.ServiceModel.Test", "TecX.ServiceModel.Test\TecX.ServiceModel.Test.csproj", "{A5CEF853-8C98-4CE6-AD43-E78D86A4235E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06 Caliburn.Micro", "06 Caliburn.Micro", "{EBCBFB03-F54A-444E-9A23-82C403C5085F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.View", "TecX.Agile.View\TecX.Agile.View.csproj", "{09B2D14D-9911-4CDA-A175-43754A2AAAFE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity", "TecX.Unity\TecX.Unity.csproj", "{69621991-8933-41FD-8493-87E7FA5A26FE}"
@@ -109,9 +105,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Interception.2010", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.ContextualBinding.Test", "TecX.Unity.ContextualBinding.Test\TecX.Unity.ContextualBinding.Test.csproj", "{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Domain", "TecX.Domain\TecX.Domain.csproj", "{BA7E4C9E-E386-4FE5-A410-B5655CDB05C7}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 38
+		SccNumberOfProjects = 39
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -263,6 +261,10 @@ Global
 		SccProjectTopLevelParentUniqueName37 = TecX.sln
 		SccProjectName37 = TecX.Unity.ContextualBinding.Test
 		SccLocalPath37 = TecX.Unity.ContextualBinding.Test
+		SccProjectUniqueName38 = TecX.Domain\\TecX.Domain.csproj
+		SccProjectTopLevelParentUniqueName38 = TecX.sln
+		SccProjectName38 = TecX.Domain
+		SccLocalPath38 = TecX.Domain
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -646,6 +648,16 @@ Global
 		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|x86.ActiveCfg = Release|Any CPU
+		{BA7E4C9E-E386-4FE5-A410-B5655CDB05C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA7E4C9E-E386-4FE5-A410-B5655CDB05C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA7E4C9E-E386-4FE5-A410-B5655CDB05C7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BA7E4C9E-E386-4FE5-A410-B5655CDB05C7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BA7E4C9E-E386-4FE5-A410-B5655CDB05C7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BA7E4C9E-E386-4FE5-A410-B5655CDB05C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA7E4C9E-E386-4FE5-A410-B5655CDB05C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA7E4C9E-E386-4FE5-A410-B5655CDB05C7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BA7E4C9E-E386-4FE5-A410-B5655CDB05C7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BA7E4C9E-E386-4FE5-A410-B5655CDB05C7}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -665,6 +677,7 @@ Global
 		{266522EB-9DCB-451A-8CD7-678188DCB5F6} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{23E54945-0126-43BE-A3FC-5F61AF5BDFF3} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{F749C03B-EC1A-460E-ACF8-05F70AD7512A} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
+		{BA7E4C9E-E386-4FE5-A410-B5655CDB05C7} = {C02AB11F-1B5F-4803-9B13-5A21000AE5D7}
 		{0505E426-7710-4783-8D70-6B6DD1667ADB} = {E1D2BCBC-4FA7-4B80-B80D-1E2FF04F9EB8}
 		{DA32E74A-CC64-45F7-8602-C08FC93BF8B7} = {E1D2BCBC-4FA7-4B80-B80D-1E2FF04F9EB8}
 		{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300} = {A2ECBC2B-7305-4326-8B33-5F1F45F60FAE}
