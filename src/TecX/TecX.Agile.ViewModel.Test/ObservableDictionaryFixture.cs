@@ -118,5 +118,27 @@ namespace TecX.Agile.ViewModel.Test
             }
             
         }
+
+        [TestMethod]
+        public void WhenClearingDict_RaisesEvent()
+        {
+            var dict = new ObservableDictionary<object, object>();
+
+            object key = new object();
+            object value = new object();
+
+            dict.Add(key, value);
+
+            bool notified = false;
+
+            dict.CollectionChanged += (s, e) =>
+                                          {
+                                              Assert.AreEqual(NotifyCollectionChangedAction.Reset, e.Action);
+                                              notified = true;
+                                          };
+
+            dict.Clear();
+            Assert.IsTrue(notified);
+        }
     }
 }
