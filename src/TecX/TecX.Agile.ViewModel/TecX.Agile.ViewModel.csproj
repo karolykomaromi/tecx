@@ -44,6 +44,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="ObservableDictionary.cs" />
     <Compile Include="PlanningArtefact.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="ViewModelBase.cs" />
