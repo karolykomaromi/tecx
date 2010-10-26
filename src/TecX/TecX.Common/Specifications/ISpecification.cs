@@ -10,7 +10,7 @@ namespace TecX.Common.Specifications
     /// </remarks>
     /// <typeparam name="TCandidate">The type of the candidate objects the specification should
     /// work on</typeparam>
-    public interface ISpecification<TCandidate>
+    public interface ISpecification<TCandidate> : IFluentInterface
     {
         #region Evaluation Method
 
