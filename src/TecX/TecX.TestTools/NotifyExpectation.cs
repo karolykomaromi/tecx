@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using TecX.Common;
 
 namespace TecX.TestTools
@@ -37,8 +38,10 @@ namespace TecX.TestTools
             return new EventExpectation<T, TEventArgs>(_owner, _action, observable);
         }
 
-        public EventExpectation<T, TEventArgs> ShouldNotifyVia<TDelegate, TEventArgs>(Func<EventHandler<TEventArgs>, TDelegate> conversion,
-                                                           Action<TDelegate> addHandler, Action<TDelegate> removeHandler)
+        public EventExpectation<T, TEventArgs> ShouldNotifyVia<TDelegate, TEventArgs>(
+            Func<EventHandler<TEventArgs>, TDelegate> conversion,
+            Action<TDelegate> addHandler,
+            Action<TDelegate> removeHandler)
             where TEventArgs : EventArgs
         {
             Guard.AssertNotNull(conversion, "conversion");
