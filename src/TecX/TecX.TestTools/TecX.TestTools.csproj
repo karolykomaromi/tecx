@@ -70,6 +70,7 @@
     </Compile>
     <Compile Include="DispatcherUtil.cs" />
     <Compile Include="DynamicMethods.cs" />
+    <Compile Include="EventExpectation.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="Extensions\LiteralExtensions.cs" />
     <Compile Include="NotifyChangedExpectation.cs" />
