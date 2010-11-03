@@ -39,19 +39,5 @@ namespace TecX.Undo.Test
             am.Redo();
             Assert.IsTrue(capturedFlag);
         }
-
-        [TestMethod]
-        public void SetPropertyActionWorks()
-        {
-            var instance = new Exception();
-            SetPropertyAction action = new SetPropertyAction(instance, "Source", "foo");
-            IActionManager am = new ActionManager();
-            am.RecordAction(action);
-            Assert.AreEqual("foo", instance.Source);
-            am.Undo();
-            Assert.AreEqual(null, instance.Source);
-            am.Redo();
-            Assert.AreEqual("foo", instance.Source);
-        }
     }
 }

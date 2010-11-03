@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 
+using TecX.Common;
+
 namespace TecX.Undo.Actions
 {
     /// <summary>
@@ -8,45 +10,80 @@ namespace TecX.Undo.Actions
     /// </summary>
     public class SetPropertyAction : AbstractAction
     {
-        public SetPropertyAction(object parentObject, string propertyName, object value)
+        #region Fields
+
+        private readonly object _parentObject;
+        private readonly PropertyInfo _property;
+        private readonly object _oldValue;
+        private readonly object _newValue;
+
+        #endregion Fields
+
+        #region Properties
+
+        public object NewValue
         {
-            ParentObject = parentObject;
-            Property = parentObject.GetType().GetProperty(propertyName);
-            Value = value;
+            get { return _newValue; }
         }
 
-        public object ParentObject { get; set; }
-        public PropertyInfo Property { get; set; }
-        public object Value { get; set; }
-        public object OldValue { get; set; }
+        public object OldValue
+        {
+            get { return _oldValue; }
+        }
+
+        public PropertyInfo Property
+        {
+            get { return _property; }
+        }
+
+        public object ParentObject
+        {
+            get { return _parentObject; }
+        }
+
+        #endregion Properties
+
+        #region c'tor
+
+        public SetPropertyAction(object parentObject, string propertyName, object oldValue, object newValue)
+        {
+            Guard.AssertNotNull(parentObject, "parentObject");
+            Guard.AssertNotEmpty(propertyName, "propertyName");
+
+            _parentObject = parentObject;
+            _property = parentObject.GetType().GetProperty(propertyName);
+            _oldValue = oldValue;
+            _newValue = newValue;
+        }
+
+        #endregion c'tor
 
         protected override void ExecuteCore()
         {
-            OldValue = Property.GetValue(ParentObject, null);
-            Property.SetValue(ParentObject, Value, null);
+            _property.SetValue(_parentObject, _newValue, null);
         }
 
         protected override void UnExecuteCore()
         {
-            Property.SetValue(ParentObject, OldValue, null);
+            _property.SetValue(_parentObject, _oldValue, null);
         }
 
-        /// <summary>
-        /// Subsequent changes of the same property on the same object are consolidated into one action
-        /// </summary>
-        /// <param name="followingAction">Subsequent action that is being recorded</param>
-        /// <returns>true if it agreed to merge with the next action, 
-        /// false if the next action should be recorded separately</returns>
-        public override bool TryToMerge(IAction followingAction)
-        {
-            SetPropertyAction next = followingAction as SetPropertyAction;
-            if (next != null && next.ParentObject == this.ParentObject && next.Property == this.Property)
-            {
-                Value = next.Value;
-                Property.SetValue(ParentObject, Value, null);
-                return true;
-            }
-            return false;
-        }
+        ///// <summary>
+        ///// Subsequent changes of the same property on the same object are consolidated into one action
+        ///// </summary>
+        ///// <param name="followingAction">Subsequent action that is being recorded</param>
+        ///// <returns>true if it agreed to merge with the next action, 
+        ///// false if the next action should be recorded separately</returns>
+        //public override bool TryToMerge(IAction followingAction)
+        //{
+        //    SetPropertyAction next = followingAction as SetPropertyAction;
+        //    if (next != null && next.ParentObject == this.ParentObject && next.Property == this.Property)
+        //    {
+        //        Value = next.Value;
+        //        Property.SetValue(ParentObject, Value, null);
+        //        return true;
+        //    }
+        //    return false;
+        //}
     }
 }
