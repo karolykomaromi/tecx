@@ -8,7 +8,7 @@ using TecX.Undo;
 
 namespace TecX.Agile.ViewModel
 {
-    public class Project : PlanningArtefact
+    public class Project : PlanningArtefactCollection<Iteration>
     {
         private readonly IActionManager _actionManager;
 
@@ -21,5 +21,19 @@ namespace TecX.Agile.ViewModel
 
             _actionManager = actionManager;
         }
+
+        #region Overrides of PlanningArtefactCollection<Iteration>
+
+        protected override void AddCore(Iteration item)
+        {
+            item.Project = this;
+        }
+
+        protected override void RemoveCore(Iteration item)
+        {
+            item.Project = null;
+        }
+
+        #endregion
     }
 }

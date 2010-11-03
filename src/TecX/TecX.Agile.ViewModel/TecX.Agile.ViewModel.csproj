@@ -44,9 +44,15 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Backlog.cs" />
+    <Compile Include="IChangeTracker.cs" />
+    <Compile Include="Iteration.cs" />
     <Compile Include="ObservableDictionary.cs" />
     <Compile Include="PlanningArtefact.cs" />
     <Compile Include="Project.cs" />
+    <Compile Include="PlanningArtefactCollection.cs" />
+    <Compile Include="StoryCard.cs" />
+    <Compile Include="StoryCardCollection.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
