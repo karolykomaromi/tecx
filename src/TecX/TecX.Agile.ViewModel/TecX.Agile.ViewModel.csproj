@@ -38,13 +38,19 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.CoreEx, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Rx\dotNET4\System.CoreEx.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Backlog.cs" />
+    <Compile Include="ChangeTracker.cs" />
     <Compile Include="IChangeTracker.cs" />
     <Compile Include="Iteration.cs" />
     <Compile Include="ObservableDictionary.cs" />
