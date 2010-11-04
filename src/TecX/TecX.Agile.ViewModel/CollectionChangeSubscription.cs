@@ -32,8 +32,7 @@ namespace TecX.Agile.ViewModel
 
             _subscription = changed.Subscribe(x =>
                                   {
-                                      var action = new AddItemToCollectionAction<TArtefact>(x.Collection,
-                                                                                            (TArtefact)x.EventArgs.NewItems[0]);
+                                      var action = new CollectionChangedAction<TArtefact>(x.Collection,x.EventArgs);
 
                                       _actionManager.RecordAction(action);
                                   });

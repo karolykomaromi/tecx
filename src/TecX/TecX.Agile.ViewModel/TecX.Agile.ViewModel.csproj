@@ -51,7 +51,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="AddItemToCollectionAction.cs" />
+    <Compile Include="CollectionChangedAction.cs" />
     <Compile Include="Backlog.cs" />
     <Compile Include="ChangeTracker.cs" />
     <Compile Include="CollectionChangeSubscription.cs" />
