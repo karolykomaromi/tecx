@@ -78,7 +78,7 @@ namespace TecX.Agile.ViewModel.Test
             mockActionManager
                 .Verify(am => am.RecordAction(
                     It.Is<CollectionChangedAction<StoryCard>>(
-                        action => action.Collection == collection && action.EventArgs.NewItems[0] == card)),
+                        action => action.Collection == collection && action.NewItems.First() == card)),
                     Times.Once(),
                     "adding item must trigger AddItemToCollectionAction");
 
@@ -105,7 +105,7 @@ namespace TecX.Agile.ViewModel.Test
             mockActionManager
                 .Verify(am => am.RecordAction(
                     It.Is<CollectionChangedAction<StoryCard>>(
-                        action => action.Collection == collection && action.EventArgs.OldItems[0] == card)),
+                        action => action.Collection == collection && action.OldItems.First() == card)),
                     Times.Once(),
                     "adding item must trigger AddItemToCollectionAction");
 
@@ -119,18 +119,24 @@ namespace TecX.Agile.ViewModel.Test
 
             CollectionChangedAction<StoryCard> undoableAction = null;
 
-            mockActionManager.Setup(
-                ma =>
-                ma.RecordAction(
-                    It.Is<CollectionChangedAction<StoryCard>>(
-                        action => action.EventArgs.Action == NotifyCollectionChangedAction.Add)))
-                .Callback((IAction action) => undoableAction = (CollectionChangedAction<StoryCard>)action);
+            mockActionManager.SetupGet(ma => ma.CurrentAction).Returns(() => undoableAction);
 
             mockActionManager.Setup(
                 ma =>
                 ma.RecordAction(
                     It.Is<CollectionChangedAction<StoryCard>>(
-                        action => action.EventArgs.Action == NotifyCollectionChangedAction.Remove))).Callback(
+                        action => action.Action == NotifyCollectionChangedAction.Add)))
+                .Callback((IAction action) =>
+                              {
+                                  undoableAction = (CollectionChangedAction<StoryCard>) action;
+                                  undoableAction.Execute();
+                              });
+
+            mockActionManager.Setup(
+                ma =>
+                ma.RecordAction(
+                    It.Is<CollectionChangedAction<StoryCard>>(
+                        action => action.Action == NotifyCollectionChangedAction.Remove))).Callback(
                             () => Assert.Fail("undoing action must not issue another action"));
 
             IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
@@ -142,7 +148,7 @@ namespace TecX.Agile.ViewModel.Test
             tracker.Subscribe(collection);
 
             collection.Add(card);
-
+            
             Assert.IsNotNull(undoableAction);
 
             undoableAction.UnExecute();

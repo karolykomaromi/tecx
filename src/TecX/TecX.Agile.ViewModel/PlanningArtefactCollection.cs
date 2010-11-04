@@ -114,6 +114,20 @@ namespace TecX.Agile.ViewModel
             return false;
         }
 
+        public bool Contains(TArtefact item)
+        {
+            Guard.AssertNotNull(item, "item");
+
+            TArtefact existing;
+            if(_artefacts.TryGetValue(item.Id, out existing))
+            {
+                //TODO weberse might need some more enhanced comparison but right now it seems reasonable
+                return true;
+            }
+
+            return false;
+        }
+
         protected abstract void AddCore(TArtefact item);
         protected abstract void RemoveCore(TArtefact item);
 

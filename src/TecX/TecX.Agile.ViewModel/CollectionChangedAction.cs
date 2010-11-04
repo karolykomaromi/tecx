@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 
@@ -11,34 +12,54 @@ namespace TecX.Agile.ViewModel
         where TArtefact : PlanningArtefact
     {
         private readonly PlanningArtefactCollection<TArtefact> _collection;
-        private readonly NotifyCollectionChangedEventArgs _args;
+        private readonly IEnumerable<TArtefact> _newItems;
+        private readonly IEnumerable<TArtefact> _oldItems;
+        private readonly NotifyCollectionChangedAction _action;
 
-        public NotifyCollectionChangedEventArgs EventArgs
-        {
-            get { return _args; }
-        }
 
         public PlanningArtefactCollection<TArtefact> Collection
         {
             get { return _collection; }
         }
 
-        public CollectionChangedAction(PlanningArtefactCollection<TArtefact> collection, NotifyCollectionChangedEventArgs args)
+        public IEnumerable<TArtefact> NewItems
+        {
+            get { return _newItems; }
+        }
+
+        public IEnumerable<TArtefact> OldItems
+        {
+            get { return _oldItems; }
+        }
+
+        public NotifyCollectionChangedAction Action
+        {
+            get { return _action; }
+        }
+
+        public CollectionChangedAction(PlanningArtefactCollection<TArtefact> collection,
+            NotifyCollectionChangedAction action,
+            IEnumerable<TArtefact> newItems,
+            IEnumerable<TArtefact> oldItems)
         {
             Guard.AssertNotNull(collection, "collection");
-            Guard.AssertNotNull(args, "args");
+            Guard.AssertNotNull(newItems, "newItems");
+            Guard.AssertNotNull(oldItems, "oldItems");
 
             _collection = collection;
-            _args = args;
+            _action = action;
+            _newItems = newItems;
+            _oldItems = oldItems;
+
         }
 
         protected override void UnExecuteCore()
         {
-            switch (_args.Action)
+            switch (Action)
             {
                 case NotifyCollectionChangedAction.Add:
                     {
-                        foreach (TArtefact item in _args.OldItems)
+                        foreach (TArtefact item in NewItems)
                         {
                             Collection.Remove(item.Id);
                         }
@@ -47,16 +68,17 @@ namespace TecX.Agile.ViewModel
                 case NotifyCollectionChangedAction.Remove:
                     {
 
-                        foreach (TArtefact item in _args.NewItems)
+                        foreach (TArtefact item in OldItems)
                         {
-                            Collection.Add(item);
+                            if (!Collection.Contains(item))
+                                Collection.Add(item);
                         }
                         break;
                     }
                 case NotifyCollectionChangedAction.Replace:
                     {
-                        TArtefact oldItem = (TArtefact) _args.OldItems[0];
-                        TArtefact newItem = (TArtefact) _args.NewItems[0];
+                        TArtefact oldItem = OldItems.First();
+                        TArtefact newItem = NewItems.First();
 
                         Collection[newItem.Id] = oldItem;
 
@@ -71,19 +93,20 @@ namespace TecX.Agile.ViewModel
 
         protected override void ExecuteCore()
         {
-            switch (_args.Action)
+            switch (Action)
             {
                 case NotifyCollectionChangedAction.Add:
                     {
-                        foreach(TArtefact item in _args.NewItems)
+                        foreach (TArtefact item in NewItems)
                         {
-                            Collection.Add(item);
+                            if (!Collection.Contains(item))
+                                Collection.Add(item);
                         }
                         break;
                     }
                 case NotifyCollectionChangedAction.Remove:
                     {
-                        foreach(TArtefact item in _args.OldItems)
+                        foreach (TArtefact item in OldItems)
                         {
                             Collection.Remove(item.Id);
                         }
@@ -91,8 +114,8 @@ namespace TecX.Agile.ViewModel
                     }
                 case NotifyCollectionChangedAction.Replace:
                     {
-                        TArtefact oldItem = (TArtefact) _args.OldItems[0];
-                        TArtefact newItem = (TArtefact) _args.NewItems[0];
+                        TArtefact oldItem = OldItems.First();
+                        TArtefact newItem = NewItems.First();
 
                         Collection[oldItem.Id] = newItem;
 

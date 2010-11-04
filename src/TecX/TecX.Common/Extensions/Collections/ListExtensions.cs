@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TecX.Common.Extensions.Collections
 {
@@ -25,6 +27,11 @@ namespace TecX.Common.Extensions.Collections
             {
                 list.Add(item);
             }
+        }
+
+        public static IEnumerable<T> AsEnumerable<T>(this IList list)
+        {
+            return list == null || list.Count == 0 ? new T[0] : list.Cast<T>();
         }
     }
 }
