@@ -8,6 +8,7 @@ using TecX.Undo;
 
 namespace TecX.Agile.ViewModel
 {
+    [Serializable]
     public abstract class PlanningArtefact : ViewModelBase
     {
         #region Fields
@@ -61,7 +62,7 @@ namespace TecX.Agile.ViewModel
                 OnPropertyChanged(() => Description);
             }
         }
-
+        
         #endregion Properties
 
         #region c'tor

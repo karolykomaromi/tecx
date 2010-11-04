@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -38,6 +39,46 @@ namespace TecX.Agile.ViewModel.Test
                                              action.Property.Name == "Id")),
                     Times.Once(),
                     "changing Id must trigger an action");
+
+            mockActionManager.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void WhenSubscribingSameItemMoreThanOnce_Throws()
+        {
+            var mockActionManager = new Mock<IActionManager>();
+
+            ChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
+
+            StoryCard card = new StoryCard();
+
+            tracker.Subscribe(card);
+
+            tracker.Subscribe(card);
+        }
+
+        [TestMethod]
+        public void WhenSubscribingStoryCardCollection_TrackerIssuesActionOnAdd()
+        {
+            var mockActionManager = new Mock<IActionManager>();
+
+            IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
+
+            StoryCardCollection collection = new StoryCardCollection();
+
+            StoryCard card = new StoryCard();
+
+            tracker.Subscribe(collection);
+
+            collection.Add(card);
+
+            mockActionManager
+                .Verify(am => am.RecordAction(
+                    It.Is<AddItemToCollectionAction<StoryCard>>(
+                        action => action.Collection == collection && action.Item == card)),
+                    Times.Once(),
+                    "adding item must trigger AddItemToCollectionAction");
 
             mockActionManager.VerifyAll();
         }

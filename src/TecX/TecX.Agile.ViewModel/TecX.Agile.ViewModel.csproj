@@ -43,14 +43,20 @@
       <HintPath>..\..\..\lib\Rx\dotNET4\System.CoreEx.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\Rx\dotNET4\System.Reactive.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="AddItemToCollectionAction.cs" />
     <Compile Include="Backlog.cs" />
     <Compile Include="ChangeTracker.cs" />
+    <Compile Include="CollectionChangeSubscription.cs" />
+    <Compile Include="IChangeSubscription.cs" />
+    <Compile Include="PropertyChangeSubscription.cs" />
     <Compile Include="IChangeTracker.cs" />
     <Compile Include="Iteration.cs" />
     <Compile Include="ObservableDictionary.cs" />
