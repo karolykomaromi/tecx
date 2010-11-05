@@ -67,6 +67,7 @@
     <Compile Include="LatchFixture.cs" />
     <Compile Include="ObjectPredicateExtensionsFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReflectionHelperFixture.cs" />
     <Compile Include="RegexBuilderFixture.cs" />
     <Compile Include="SpecificationFixture.cs" />
     <Compile Include="TestObjects\CancelingSubscriber.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="TestObjects\NumberMatches.cs" />
     <Compile Include="TestObjects\OneTimeSubscriber.cs" />
     <Compile Include="TestObjects\Order.cs" />
+    <Compile Include="TestObjects\ReflectionHelperTestClass.cs" />
     <Compile Include="TestObjects\SearchTestEntity.cs" />
     <Compile Include="TestObjects\SimpleMessage.cs" />
     <Compile Include="TestObjects\SimplePublisher.cs" />
