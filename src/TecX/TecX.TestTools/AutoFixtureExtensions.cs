@@ -42,7 +42,7 @@ namespace TecX.TestTools
 
             foreach (var p in properties)
             {
-                var invoker = DynamicMethods.GenericMethodInvokerMethod(
+                var invoker = ReflectionHelper.GetGenericMethodInvoker(
                     //type on which the generic method should be called
                     typeof(Fixture),
                     //name of the method you want to call
