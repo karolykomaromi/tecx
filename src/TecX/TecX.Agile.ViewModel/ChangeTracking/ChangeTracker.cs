@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 using TecX.Common;
 using TecX.Common.Extensions.Error;
 using TecX.Undo;
 
-namespace TecX.Agile.ViewModel
+namespace TecX.Agile.ViewModel.ChangeTracking
 {
     public class ChangeTracker : IChangeTracker
     {
@@ -78,6 +77,13 @@ namespace TecX.Agile.ViewModel
             Guard.AssertNotNull(collection, "collection");
 
             Unsubscribe((PlanningArtefact)collection);
+
+            IChangeSubscription existing;
+            if(_collectionChangeSubscriptions.TryGetValue(collection.Id, out existing))
+            {
+                _collectionChangeSubscriptions.Remove(collection.Id);
+                existing.Dispose();
+            }
         }
 
         #endregion

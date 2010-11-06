@@ -14,30 +14,29 @@ namespace TecX.Undo.Test
         [TestMethod]
         public void Transactions()
         {
-            Assert.Fail("fix test");
-
+            var instance = new Exception();
             //var instance = new Exception { Source = "green" };
-            //IActionManager am = new ActionManager();
+            IActionManager am = new ActionManager();
 
-            //SetPropertyAction action = new SetPropertyAction(instance, "Source", "blue");
+            SetPropertyAction action = new SetPropertyAction(instance, "Source", "green", "blue");
 
-            //am.RecordAction(action);
+            am.RecordAction(action);
 
-            //Assert.AreEqual("blue", instance.Source);
-            //am.Undo();
-            //Assert.AreEqual("green", instance.Source);
+            Assert.AreEqual("blue", instance.Source);
+            am.Undo();
+            Assert.AreEqual("green", instance.Source);
 
-            //using (Transaction.Create(am))
-            //{
-            //    action = new SetPropertyAction(instance, "Source", "red");
-            //    am.RecordAction(action);
-            //    Assert.AreEqual("green", instance.Source);
-            //}
-            //Assert.AreEqual(instance.Source, "red");
-            //am.Undo();
-            //Assert.AreEqual("green", instance.Source);
-            //am.Redo();
-            //Assert.AreEqual(instance.Source, "red");
+            using (Transaction.Create(am))
+            {
+                action = new SetPropertyAction(instance, "Source", "green", "red");
+                am.RecordAction(action);
+                Assert.AreEqual("green", instance.Source);
+            }
+            Assert.AreEqual(instance.Source, "red");
+            am.Undo();
+            Assert.AreEqual("green", instance.Source);
+            am.Redo();
+            Assert.AreEqual(instance.Source, "red");
         }
 
         [TestMethod]

@@ -51,13 +51,13 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="CollectionChangedAction.cs" />
+    <Compile Include="ChangeTracking\ChangeTracker.cs" />
+    <Compile Include="ChangeTracking\CollectionChangedAction.cs" />
+    <Compile Include="ChangeTracking\CollectionChangeSubscription.cs" />
+    <Compile Include="ChangeTracking\IChangeSubscription.cs" />
+    <Compile Include="ChangeTracking\IChangeTracker.cs" />
+    <Compile Include="ChangeTracking\PropertyChangeSubscription.cs" />
     <Compile Include="Backlog.cs" />
-    <Compile Include="ChangeTracker.cs" />
-    <Compile Include="CollectionChangeSubscription.cs" />
-    <Compile Include="IChangeSubscription.cs" />
-    <Compile Include="PropertyChangeSubscription.cs" />
-    <Compile Include="IChangeTracker.cs" />
     <Compile Include="Iteration.cs" />
     <Compile Include="ObservableDictionary.cs" />
     <Compile Include="PlanningArtefact.cs" />
