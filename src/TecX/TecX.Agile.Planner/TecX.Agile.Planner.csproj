@@ -130,6 +130,10 @@
       <Project>{1EB35F86-DA6C-4691-A2C5-8587129B520D}</Project>
       <Name>TecX.Agile.Modules.Main</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.View\TecX.Agile.View.csproj">
+      <Project>{09B2D14D-9911-4CDA-A175-43754A2AAAFE}</Project>
+      <Name>TecX.Agile.View</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Common.Event.Unity\TecX.Common.Event.Unity.csproj">
       <Project>{A763CC8F-835E-444C-9A9F-88E7A443C1B2}</Project>
       <Name>TecX.Common.Event.Unity</Name>

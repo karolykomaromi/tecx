@@ -7,6 +7,7 @@
         <Setter Property="UndoLimit" Value="1"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Behavior:PreviewFocusBehavior.IsEnabled" Value="True"  />
+        <Setter Property="Behavior:HighlightTextBoxBehavior.IsEnabled" Value="True" />
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="False">
                 <Setter 

@@ -111,6 +111,13 @@ namespace TecX.Agile.View.Behavior
                 {
                     var attachedHandlers = GetAttachedHandlers(element);
 
+                    if(attachedHandlers == null)
+                    {
+                        attachedHandlers = new List<IBehaviorHandler>();
+
+                        SetAttachedHandlers(element, attachedHandlers);
+                    }
+
                     //when turned on
                     if (isEnabled)
                     {

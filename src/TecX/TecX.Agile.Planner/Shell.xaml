@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ribbon="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary" 
         xmlns:cal="clr-namespace:Microsoft.Practices.Composite.Presentation.Regions;assembly=Microsoft.Practices.Composite.Presentation" 
-        xmlns:inf="clr-namespace:TecX.Agile.Infrastructure;assembly=TecX.Agile.Infrastructure"
-        Title="Agile Project Planning" 
+        xmlns:inf="clr-namespace:TecX.Agile.Infrastructure;assembly=TecX.Agile.Infrastructure" xmlns:View="clr-namespace:TecX.Agile.View;assembly=TecX.Agile.View" Title="Agile Project Planning" 
         x:Name="MainWindow"
         Width="800" 
         Height="600">
@@ -12,8 +11,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
+        </Grid.RowDefinitions>        
          <ribbon:Ribbon 
              x:Name="Ribbon" 
             cal:RegionManager.RegionName="{x:Static inf:Regions.MainToolBar}">
@@ -26,6 +24,7 @@
                 </ribbon:RibbonGroup>
                 
             </ribbon:RibbonTab>-->
-        </ribbon:Ribbon> 
+        </ribbon:Ribbon>
+        <View:StoryCard Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </ribbon:RibbonWindow>

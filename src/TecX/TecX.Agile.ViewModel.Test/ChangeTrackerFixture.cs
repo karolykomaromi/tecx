@@ -211,5 +211,29 @@ namespace TecX.Agile.ViewModel.Test
 
             mockActionManager.VerifyAll();
         }
+
+        [TestMethod]
+        public void WhenCallingIntoPropertyChangeSubscriptionHandlerChain_ExecutesAllHandlers()
+        {
+            PropertyChangeHandlerChain chain = new PropertyChangeHandlerChain();
+
+            int handlersCalled = 0;
+
+            chain.Add((parentObject, propertyName, oldValue, newValue) =>
+                          {
+                              handlersCalled++;
+                          });
+
+            chain.Add((parentObject, propertyName, oldValue, newValue) =>
+            {
+                handlersCalled++;
+            });
+
+            StoryCard card = new StoryCard();
+
+            chain.Handle(card, "Name", null, "new name");
+
+            Assert.AreEqual(2, handlersCalled);
+        }
     }
 }
