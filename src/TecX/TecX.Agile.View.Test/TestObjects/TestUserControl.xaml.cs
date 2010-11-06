@@ -12,34 +12,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using TecX.Agile.ViewModel;
-using TecX.Common;
-
-namespace TecX.Agile.View
+namespace TecX.Agile.View.Test.TestObjects
 {
     /// <summary>
-    /// Interaction logic for StoryCard.xaml
+    /// Interaction logic for TestUserControl.xaml
     /// </summary>
-    public partial class StoryCard : UserControl
+    public partial class TestUserControl : UserControl
     {
-        #region c'tor
-
-        public StoryCard()
-            : this(new ViewModel.StoryCard())
+        public TestUserControl(HighlightableViewModel viewModel)
         {
-        }
-
-        public StoryCard(ViewModel.StoryCard storyCard)
-        {
-            Guard.AssertNotNull(storyCard, "storyCard");
-
-            DataContext = storyCard;
+            DataContext = viewModel;
 
             InitializeComponent();
-
         }
-
-        #endregion c'tor
-
     }
 }

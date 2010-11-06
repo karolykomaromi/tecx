@@ -30,17 +30,22 @@ namespace TecX.Agile.ViewModel.ChangeTracking
                 .CombineLatest(changed, (before, after) => new { ParentObject = before.Sender, before.PropertyName, OldValue = before.Value, NewValue = after.Value })
                 .Where(ba => ba.NewValue != ba.OldValue);
 
+
             //TODO weberse instead of hard wiring a single handler we can use some kind of ChangeHandlerChain that contains
             //different handlers (e.g. for P2P distribution of changed properties, tracing information or the like)
-            _subscription = beforeAfter.Subscribe(x =>
-                                                      {
-                                                          var action = new SetPropertyAction(x.ParentObject,
-                                                                                             x.PropertyName,
-                                                                                             x.OldValue, 
-                                                                                             x.NewValue);
+            var handlerChain = new PropertyChangeHandlerChain();
+            handlerChain.Add((parentObject, propertyName, oldValue, newValue) =>
+                                 {
+                                     var action = new SetPropertyAction(parentObject,
+                                                                        propertyName,
+                                                                        oldValue,
+                                                                        newValue);
 
-                                                          _actionManager.RecordAction(action);
-                                                      });
+                                     _actionManager.RecordAction(action);
+                                 });
+
+            _subscription = beforeAfter.Subscribe(x => handlerChain
+                .Handle(x.ParentObject, x.PropertyName, x.OldValue, x.NewValue));
         }
 
         #region Implementation of IDisposable
