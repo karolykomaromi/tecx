@@ -121,8 +121,7 @@ namespace TecX.Agile.ViewModel
             TArtefact existing;
             if(_artefacts.TryGetValue(item.Id, out existing))
             {
-                //TODO weberse might need some more enhanced comparison but right now it seems reasonable
-                return true;
+                return existing.Equals(item);
             }
 
             return false;

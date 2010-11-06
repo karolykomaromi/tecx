@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace TecX.Agile.ViewModel
+﻿namespace TecX.Agile.ViewModel.ChangeTracking
 {
     public interface IChangeTracker
     {

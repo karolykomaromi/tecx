@@ -43,9 +43,9 @@ namespace TecX.Agile.ViewModel.Test
 
             Guid id = Guid.NewGuid();
 
-            StoryCard card = new StoryCard { Id = id };
+            StoryCard card = new StoryCard { Id = id, Name = "old card" };
 
-            StoryCard replacement = new StoryCard { Id = id };
+            StoryCard replacement = new StoryCard { Id = id, Name = "new card" };
 
             collection.Add(card);
 

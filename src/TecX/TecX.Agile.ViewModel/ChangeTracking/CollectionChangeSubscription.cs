@@ -6,7 +6,7 @@ using TecX.Common;
 using TecX.Common.Extensions.Collections;
 using TecX.Undo;
 
-namespace TecX.Agile.ViewModel
+namespace TecX.Agile.ViewModel.ChangeTracking
 {
     public class CollectionChangeSubscription<TArtefact> : IChangeSubscription
         where TArtefact : PlanningArtefact

@@ -6,7 +6,7 @@ using TecX.Common;
 using TecX.Undo;
 using TecX.Undo.Actions;
 
-namespace TecX.Agile.ViewModel
+namespace TecX.Agile.ViewModel.ChangeTracking
 {
     internal class PropertyChangeSubscription : IChangeSubscription
     {
