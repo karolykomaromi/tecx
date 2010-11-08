@@ -8,18 +8,18 @@ namespace TecX.Agile.View.Test.TestObjects
     {
         public string HighlightedControlName { get; set; }
 
-        public void Highlight(string controlName)
+        public void HighlightField(string fieldName)
         {
-            if(HighlightingChanged != null)
+            if(Highlight != null)
             {
-                HighlightingChanged(this, new HighlightEventArgs(controlName));
+                Highlight(this, new HighlightEventArgs(fieldName));
             }
         }
-        public event EventHandler<HighlightEventArgs> HighlightingChanged;
+        public event EventHandler<HighlightEventArgs> Highlight;
 
-        public void NotifyGotFocus(string controlName)
+        public void NotifyFieldHighlighted(string fieldName)
         {
-            HighlightedControlName = controlName;
+            HighlightedControlName = fieldName;
         }
     }
 }

@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.ServiceModel;
 using System.ServiceModel.PeerResolvers;
 
+using TecX.Common;
+
 namespace TecX.Agile.Peer
 {
     /// <summary>
@@ -10,16 +12,30 @@ namespace TecX.Agile.Peer
     /// </summary>
     public class PeerClient : IPeerClient
     {
-        private readonly DuplexChannelFactory<IPeerClientChannel> _channelFactory;
+        #region Fields
 
+        private readonly DuplexChannelFactory<IPeerClientChannel> _channelFactory;
         private readonly IPeerClientChannel _broadcastToMesh;
 
-        public event MovedStoryCardEventHandler MovedStoryCard = delegate { };
+        #endregion Fields
+
+        #region Events
+
+        public event EventHandler<MovedStoryCardEventArgs> MovedStoryCard = delegate { };
+        public event EventHandler<HighlightEventArgs> HighlightedField = delegate { };
+
+        #endregion Events
+
+        #region Properties
 
         /// <summary>
         /// Gets the ID of the client
         /// </summary>
         public Guid Id { get; private set; }
+
+        #endregion Properties
+
+        #region Implementation of IPeerClient
 
         public void MoveStoryCard(Guid senderId, Guid storyCardId, double dx, double dy, double angle)
         {
@@ -43,6 +59,26 @@ namespace TecX.Agile.Peer
             }
         }
 
+        public void Highlight(Guid senderId, Guid artefactId, string fieldName)
+        {
+            Guard.AssertNotEmpty(fieldName, "fieldName");
+
+            //message comes from somewhere else -> handle it
+            if(senderId != Id)
+            {
+                var args = new HighlightEventArgs(artefactId, fieldName);
+
+                HighlightedField(this, args);
+            }
+                //message comes from here -> send it to the mesh
+            else
+            {
+                _broadcastToMesh.Highlight(senderId, artefactId, fieldName);
+            }
+        }
+
+        #endregion Implementation of IPeerClient
+       
         #region c'tor
 
         /// <summary>
@@ -114,7 +150,7 @@ namespace TecX.Agile.Peer
         /// </summary>
         /// <param name="disposing">If <i>false</i>, cleans up native resources.
         /// If <i>true</i> cleans up both managed and native resources</param>
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (disposing)
             {

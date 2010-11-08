@@ -14,7 +14,7 @@ namespace TecX.Agile.ViewModel.ChangeTracking
         private readonly IActionManager _actionManager;
         private readonly Dictionary<Guid, IChangeSubscription> _propertyChangeSubscriptions;
         private readonly Dictionary<Guid, IChangeSubscription> _collectionChangeSubscriptions;
-        private Dictionary<Guid, IChangeSubscription> _rescheduleStoryCardSubscriptions;
+        private readonly Dictionary<Guid, IChangeSubscription> _rescheduleStoryCardSubscriptions;
 
         #endregion Fields
 

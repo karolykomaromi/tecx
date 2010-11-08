@@ -21,7 +21,7 @@ namespace TecX.Agile.View.Test
 
             TestUserControl ctrl = new TestUserControl(highlightable);
 
-            highlightable.Highlight("Txt");
+            highlightable.HighlightField("Txt");
 
             Assert.IsTrue(ctrl.Txt.IsFocused);
         }

@@ -25,7 +25,7 @@ namespace TecX.Agile.View.Behavior
                 if (_highlightable != null)
                 {
                     _name = name;
-                    _highlightable.HighlightingChanged += OnHighlightingChanged;
+                    _highlightable.Highlight += OnHighlight;
 
                     element.GotFocus += OnGotFocus;
                 }
@@ -49,7 +49,7 @@ namespace TecX.Agile.View.Behavior
             if (_highlightable != null &&
                 !string.IsNullOrEmpty(_name))
             {
-                _highlightable.NotifyGotFocus(_name);
+                _highlightable.NotifyFieldHighlighted(_name);
             }
         }
 
@@ -57,7 +57,7 @@ namespace TecX.Agile.View.Behavior
         {
             if (_highlightable != null)
             {
-                _highlightable.HighlightingChanged += OnHighlightingChanged;
+                _highlightable.Highlight += OnHighlight;
                 Element.GotFocus -= OnGotFocus;
                 _highlightable = null;
             }
@@ -65,14 +65,14 @@ namespace TecX.Agile.View.Behavior
 
         #endregion
 
-        private void OnHighlightingChanged(object sender, HighlightEventArgs e)
+        private void OnHighlight(object sender, HighlightEventArgs e)
         {
             Guard.AssertNotNull(e, "e");
-            Guard.AssertNotEmpty(e.ControlName, "e.ControlName");
+            Guard.AssertNotEmpty(e.FieldName, "e.ControlName");
 
             //if the name of the control that should be focused matches that of the control
             //we are currently hooked up to we put the focus on that control
-            if (_name == e.ControlName)
+            if (_name == e.FieldName)
             {
                 Element.Focus();
             }
