@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 
 using TecX.Common;
@@ -10,7 +11,7 @@ using TecX.Common.Extensions.Error;
 
 namespace TecX.Agile.ViewModel
 {
-    public abstract class PlanningArtefactCollection<TArtefact> : PlanningArtefact, 
+    public abstract class PlanningArtefactCollection<TArtefact> : PlanningArtefact,
         IEnumerable<TArtefact>, INotifyCollectionChanged
         where TArtefact : PlanningArtefact
     {
@@ -24,16 +25,21 @@ namespace TecX.Agile.ViewModel
 
         public Project Project { get; internal set; }
 
+        internal IDictionary<Guid, TArtefact> Artefacts
+        {
+            get { return _artefacts; }
+        }
+
         #endregion Properties
 
         #region Indexer
 
         public TArtefact this[Guid id]
         {
-            get 
-            { 
+            get
+            {
                 TArtefact existing;
-                if(_artefacts.TryGetValue(id, out existing))
+                if (_artefacts.TryGetValue(id, out existing))
                 {
                     return existing;
                 }
@@ -42,7 +48,7 @@ namespace TecX.Agile.ViewModel
             set
             {
                 TArtefact existing;
-                if(_artefacts.TryGetValue(id, out existing))
+                if (_artefacts.TryGetValue(id, out existing))
                 {
                     _artefacts[id] = value;
 
@@ -79,7 +85,7 @@ namespace TecX.Agile.ViewModel
             Guard.AssertNotNull(item, "item");
 
             TArtefact existing;
-            if(_artefacts.TryGetValue(item.Id, out existing))
+            if (_artefacts.TryGetValue(item.Id, out existing))
             {
                 throw new InvalidOperationException("Artefact with identical Id already in collection")
                     .WithAdditionalInfos(new Dictionary<object, object>
@@ -96,11 +102,11 @@ namespace TecX.Agile.ViewModel
             var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item);
             OnCollectionChanged(args);
         }
-        
+
         public bool Remove(Guid id)
         {
             TArtefact existing;
-            if(_artefacts.TryGetValue(id, out existing))
+            if (_artefacts.TryGetValue(id, out existing))
             {
                 RemoveCore(existing);
                 bool removed = _artefacts.Remove(id);
@@ -119,7 +125,7 @@ namespace TecX.Agile.ViewModel
             Guard.AssertNotNull(item, "item");
 
             TArtefact existing;
-            if(_artefacts.TryGetValue(item.Id, out existing))
+            if (_artefacts.TryGetValue(item.Id, out existing))
             {
                 return existing.Equals(item);
             }
@@ -127,7 +133,7 @@ namespace TecX.Agile.ViewModel
             return false;
         }
 
-        protected abstract void AddCore(TArtefact item);
+        protected internal abstract void AddCore(TArtefact item);
         protected abstract void RemoveCore(TArtefact item);
 
         #endregion Methods
@@ -154,7 +160,7 @@ namespace TecX.Agile.ViewModel
         {
             Guard.AssertNotNull(args, "args");
 
-            if(CollectionChanged != null)
+            if (CollectionChanged != null)
             {
                 CollectionChanged(this, args);
             }

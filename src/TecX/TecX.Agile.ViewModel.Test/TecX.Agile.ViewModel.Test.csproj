@@ -59,9 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChangeTrackerFixture.cs" />
+    <Compile Include="IterationFixture.cs" />
     <Compile Include="ObservableDictionaryFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PlanningArtefactCollectionFixture.cs" />
+    <Compile Include="StoryCardCollectionFixture.cs" />
     <Compile Include="TestObjects\TestViewModel.cs" />
     <Compile Include="ViewModelBaseFixture.cs" />
   </ItemGroup>

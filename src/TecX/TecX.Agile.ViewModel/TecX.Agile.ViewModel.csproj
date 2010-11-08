@@ -67,6 +67,8 @@
     <Compile Include="PlanningArtefactCollection.cs" />
     <Compile Include="StoryCard.cs" />
     <Compile Include="StoryCardCollection.cs" />
+    <Compile Include="StoryCardPostponedEventArgs.cs" />
+    <Compile Include="StoryCardRescheduledEventArgs.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
