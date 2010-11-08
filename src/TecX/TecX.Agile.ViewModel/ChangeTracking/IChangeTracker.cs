@@ -8,8 +8,12 @@
 
         void Subscribe<TArtefact>(PlanningArtefactCollection<TArtefact> collection)
             where TArtefact : PlanningArtefact;
-
+        
         void Unsubscribe<TArtefact>(PlanningArtefactCollection<TArtefact> collection)
             where TArtefact : PlanningArtefact;
+        
+        void Subscribe(StoryCardCollection collection);
+
+        void Unsubscribe(StoryCardCollection collection);
     }
 }

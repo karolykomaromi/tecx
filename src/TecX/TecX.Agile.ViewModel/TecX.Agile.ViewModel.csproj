@@ -59,6 +59,8 @@
     <Compile Include="ChangeTracking\PropertyChangeHandlerChain.cs" />
     <Compile Include="ChangeTracking\PropertyChangeSubscription.cs" />
     <Compile Include="Backlog.cs" />
+    <Compile Include="ChangeTracking\RescheduleStoryCardAction.cs" />
+    <Compile Include="ChangeTracking\RescheduleStoryCardSubscription.cs" />
     <Compile Include="IHighlightable.cs" />
     <Compile Include="Iteration.cs" />
     <Compile Include="ObservableDictionary.cs" />
