@@ -14,6 +14,7 @@ namespace TecX.Agile.ViewModel.ChangeTracking
         private readonly IActionManager _actionManager;
         private readonly Dictionary<Guid, IChangeSubscription> _propertyChangeSubscriptions;
         private readonly Dictionary<Guid, IChangeSubscription> _collectionChangeSubscriptions;
+        private Dictionary<Guid, IChangeSubscription> _rescheduleStoryCardSubscriptions;
 
         #endregion Fields
 
@@ -26,6 +27,7 @@ namespace TecX.Agile.ViewModel.ChangeTracking
             _actionManager = actionManager;
             _propertyChangeSubscriptions = new Dictionary<Guid, IChangeSubscription>();
             _collectionChangeSubscriptions = new Dictionary<Guid, IChangeSubscription>();
+            _rescheduleStoryCardSubscriptions = new Dictionary<Guid, IChangeSubscription>();
         }
 
         #endregion c'tor
@@ -84,6 +86,22 @@ namespace TecX.Agile.ViewModel.ChangeTracking
                 _collectionChangeSubscriptions.Remove(collection.Id);
                 existing.Dispose();
             }
+        }
+
+        public void Subscribe(StoryCardCollection collection)
+        {
+            Guard.AssertNotNull(collection, "collection");
+
+            Subscribe(((PlanningArtefactCollection<StoryCard>)collection));
+
+            RescheduleStoryCardSubscription subscription = new RescheduleStoryCardSubscription(_actionManager, collection);
+
+            _rescheduleStoryCardSubscriptions.Add(collection.Id, subscription);
+        }
+
+        public void Unsubscribe(StoryCardCollection collection)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

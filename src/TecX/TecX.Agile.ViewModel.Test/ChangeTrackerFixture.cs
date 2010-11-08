@@ -18,7 +18,7 @@ namespace TecX.Agile.ViewModel.Test
     public class ChangeTrackerFixture
     {
         [TestMethod]
-        public void WhenSubscribingStoryCard_TrackerIssuesAction()
+        public void WhenChangingPropertyOnSubscribedStoryCard_TrackerIssuesAction()
         {
             var mockActionManager = new Mock<IActionManager>();
 
@@ -62,13 +62,13 @@ namespace TecX.Agile.ViewModel.Test
         }
 
         [TestMethod]
-        public void WhenSubscribingStoryCardCollection_TrackerIssuesActionOnAdd()
+        public void WhenAddingItemToSubscribedPlanningArtefactCollection_TrackerIssuesAction()
         {
             var mockActionManager = new Mock<IActionManager>();
 
             IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
 
-            StoryCardCollection collection = new StoryCardCollection();
+            PlanningArtefactCollection<StoryCard> collection = new StoryCardCollection();
 
             StoryCard card = new StoryCard();
 
@@ -87,13 +87,13 @@ namespace TecX.Agile.ViewModel.Test
         }
 
         [TestMethod]
-        public void WhenSubscribingStoryCardCollection_TrackerIssuesActionOnRemove()
+        public void WhenRemovingItemFromSubscribedPlanningArtefactCollection_TrackerIssuesAction()
         {
             var mockActionManager = new Mock<IActionManager>();
 
             IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
 
-            StoryCardCollection collection = new StoryCardCollection();
+            PlanningArtefactCollection<StoryCard> collection = new StoryCardCollection();
 
             StoryCard card = new StoryCard();
 
@@ -129,7 +129,7 @@ namespace TecX.Agile.ViewModel.Test
                         action => action.Action == NotifyCollectionChangedAction.Add)))
                 .Callback((IAction action) =>
                               {
-                                  undoableAction = (CollectionChangedAction<StoryCard>) action;
+                                  undoableAction = (CollectionChangedAction<StoryCard>)action;
                                   undoableAction.Execute();
                               });
 
@@ -149,7 +149,7 @@ namespace TecX.Agile.ViewModel.Test
             tracker.Subscribe(collection);
 
             collection.Add(card);
-            
+
             Assert.IsNotNull(undoableAction);
 
             undoableAction.UnExecute();
@@ -164,7 +164,7 @@ namespace TecX.Agile.ViewModel.Test
 
             string name = "old name";
             string newName = "newName";
-            
+
             IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
 
             StoryCard card = new StoryCard();
@@ -179,7 +179,7 @@ namespace TecX.Agile.ViewModel.Test
 
             mockActionManager
                 .Verify(
-                    ma => ma.RecordAction(It.IsAny<SetPropertyAction>()), 
+                    ma => ma.RecordAction(It.IsAny<SetPropertyAction>()),
                     Times.Once());
 
             mockActionManager.VerifyAll();
@@ -206,7 +206,7 @@ namespace TecX.Agile.ViewModel.Test
 
             mockActionManager
                 .Verify(
-                    ma => ma.RecordAction(It.IsAny<CollectionChangedAction<StoryCard>>()), 
+                    ma => ma.RecordAction(It.IsAny<CollectionChangedAction<StoryCard>>()),
                     Times.Once());
 
             mockActionManager.VerifyAll();
@@ -234,6 +234,103 @@ namespace TecX.Agile.ViewModel.Test
             chain.Handle(card, "Name", null, "new name");
 
             Assert.AreEqual(2, handlersCalled);
+        }
+
+        [TestMethod]
+        public void WhenReschedulingItemInStoryCardCollection_TrackerIssuesAction()
+        {
+            var mockActionManager = new Mock<IActionManager>();
+
+            IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
+            
+            Iteration iter1 = new Iteration { Id = Guid.NewGuid() };
+            Iteration iter2 = new Iteration { Id = Guid.NewGuid() };
+            StoryCard card = new StoryCard { Id = Guid.NewGuid() };
+
+            iter1.Add(card);
+
+            tracker.Subscribe(iter1);
+            tracker.Subscribe(iter2);
+
+            iter1.Reschedule(card, iter2);
+
+            mockActionManager
+                .Verify(am =>
+                    am.RecordAction(
+                        It.Is<RescheduleStoryCardAction>(action => action.StoryCard == card &&
+                                                                   action.From == iter1 &&
+                                                                   action.To == iter2)),
+                    Times.Once());
+
+            mockActionManager.VerifyAll();
+        }
+
+        [TestMethod]
+        public void WhenExecutingIssuedRescheduleStoryCardAction_DoesNotIssueTwice()
+        {
+            var mockActionManager = new Mock<IActionManager>();
+
+            IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
+
+            mockActionManager
+                .Setup(am => am.RecordAction(It.IsAny<RescheduleStoryCardAction>()))
+                .Callback((IAction action) => action.Execute());
+
+            Iteration iter1 = new Iteration { Id = Guid.NewGuid() };
+            Iteration iter2 = new Iteration { Id = Guid.NewGuid() };
+            StoryCard card = new StoryCard { Id = Guid.NewGuid() };
+
+            iter1.Add(card);
+
+            tracker.Subscribe(iter1);
+            tracker.Subscribe(iter2);
+
+            iter1.Reschedule(card, iter2);
+
+            mockActionManager
+                .Verify(am =>
+                    am.RecordAction(
+                        It.IsAny<RescheduleStoryCardAction>()),
+                    Times.Once());
+
+            mockActionManager.VerifyAll();
+        }
+
+        [TestMethod]
+        public void WhenUndoingReschedule_TrackerDoesNotIssueAnotherAction()
+        {
+            var mockActionManager = new Mock<IActionManager>();
+
+            IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
+
+            RescheduleStoryCardAction currentAction = null;
+
+            mockActionManager.SetupGet(am => am.CurrentAction).Returns(() => currentAction);
+
+            mockActionManager
+                .Setup(am => am.RecordAction(It.IsAny<RescheduleStoryCardAction>()))
+                .Callback((IAction a) =>
+                {
+                    currentAction = (RescheduleStoryCardAction)a;
+                    a.Execute();
+                });
+
+            Iteration iter1 = new Iteration { Id = Guid.NewGuid() };
+            Iteration iter2 = new Iteration { Id = Guid.NewGuid() };
+            StoryCard card = new StoryCard { Id = Guid.NewGuid() };
+
+            iter1.Add(card);
+
+            tracker.Subscribe(iter1);
+            tracker.Subscribe(iter2);
+
+            iter1.Reschedule(card, iter2);
+
+            currentAction.UnExecute();
+
+            mockActionManager.Verify(am => am.RecordAction(It.IsAny<RescheduleStoryCardAction>()), Times.Once());
+
+            mockActionManager.VerifyAll();
         }
     }
 }
