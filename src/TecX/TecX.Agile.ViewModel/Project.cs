@@ -104,9 +104,4 @@ namespace TecX.Agile.ViewModel
             return null;
         }
     }
-
-    public interface IRemoteUI
-    {
-        void HighlightField(Guid artefactId, string fieldName);
-    }
 }

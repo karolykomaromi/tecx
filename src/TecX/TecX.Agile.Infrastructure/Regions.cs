@@ -9,5 +9,8 @@ namespace TecX.Agile.Infrastructure
     {
         /// <summary>MainToolBar</summary>
         public const string MainToolBar = "MainToolBar";
+
+        /// <summary>Main</summary>
+        public const string Main = "Main";
     }
 }
