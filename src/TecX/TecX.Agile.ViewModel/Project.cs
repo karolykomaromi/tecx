@@ -15,24 +15,8 @@ namespace TecX.Agile.ViewModel
         private readonly IActionManager _actionManager;
 
         private Backlog _backlog;
-
+        
         #endregion Fields
-
-        #region c'tor
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Project"/> class
-        /// </summary>
-        public Project(IActionManager actionManager)
-        {
-            Guard.AssertNotNull(actionManager, "actionManager");
-
-            _actionManager = actionManager;
-
-            _backlog = new Backlog();
-        }
-
-        #endregion c'tor
 
         #region Properties
 
@@ -52,7 +36,25 @@ namespace TecX.Agile.ViewModel
             }
         }
 
+        public IRemoteUI RemoteUI { get; set; }
+
         #endregion Properties
+
+        #region c'tor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Project"/> class
+        /// </summary>
+        public Project(IActionManager actionManager)
+        {
+            Guard.AssertNotNull(actionManager, "actionManager");
+
+            _actionManager = actionManager;
+
+            _backlog = new Backlog();
+        }
+
+        #endregion c'tor
 
         #region Overrides of PlanningArtefactCollection<Iteration>
 
@@ -67,5 +69,44 @@ namespace TecX.Agile.ViewModel
         }
 
         #endregion Overrides of PlanningArtefactCollection<Iteration>
+
+        public void NotifyFieldHighlighted(Guid artefactId, string fieldName)
+        {
+            Guard.AssertNotEmpty(fieldName, "fieldName");
+
+            if(RemoteUI != null)
+            {
+                RemoteUI.HighlightField(artefactId, fieldName);
+            }
+        }
+
+        public TArtefact Find<TArtefact>(Guid id)
+            where TArtefact : PlanningArtefact
+        {
+            if (Id == id)
+                return this as TArtefact;
+
+            if (Backlog.Id == id)
+                return Backlog as TArtefact;
+
+            foreach(Iteration iteration in this)
+            {
+                if (iteration.Id == id)
+                    return iteration as TArtefact;
+
+                foreach(StoryCard storyCard in iteration)
+                {
+                    if (storyCard.Id == id)
+                        return storyCard as TArtefact;
+                }
+            }
+
+            return null;
+        }
+    }
+
+    public interface IRemoteUI
+    {
+        void HighlightField(Guid artefactId, string fieldName);
     }
 }

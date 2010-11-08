@@ -3,8 +3,6 @@ using System.ServiceModel;
 
 namespace TecX.Agile.Peer
 {
-    public delegate void MovedStoryCardEventHandler(object sender, MovedStoryCardEventArgs movedStoryCardEventHandlerArgs);
-
     /// <summary>
     /// Wrapper interface
     /// </summary>
@@ -18,11 +16,15 @@ namespace TecX.Agile.Peer
     [ServiceContract(CallbackContract = typeof(IPeerClient), Namespace = Constants.Namespace)]
     public interface IPeerClient : IDisposable
     {
-        event MovedStoryCardEventHandler MovedStoryCard;
+        event EventHandler<MovedStoryCardEventArgs> MovedStoryCard;
+        event EventHandler<HighlightEventArgs> HighlightedField;
 
         Guid Id { get; }
 
         [OperationContract(IsOneWay = true)]
         void MoveStoryCard(Guid senderId, Guid storyCardId, double dx, double dy, double angle);
+
+        [OperationContract(IsOneWay = true)]
+        void Highlight(Guid senderId, Guid artefactId, string fieldName);
     }
 }

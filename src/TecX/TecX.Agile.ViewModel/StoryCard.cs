@@ -9,25 +9,29 @@ namespace TecX.Agile.ViewModel
     {
         #region Implementation of IHighlightable
 
-        public event EventHandler<HighlightEventArgs> HighlightingChanged = delegate { };
+        public event EventHandler<HighlightEventArgs> Highlight = delegate { };
 
-        public void NotifyGotFocus(string controlName)
+        public void NotifyFieldHighlighted(string fieldName)
         {
             //TODO weberse this will be the place where we notify remote clients that 
             //some field on the ui was highlighted
+            if (Parent != null &&
+                Parent.Project != null)
+            {
+                Parent.Project.NotifyFieldHighlighted(Id, fieldName);
+            }
         }
 
-        public void Highlight(string controlName)
+        public void HighlightField(string fieldName)
         {
-            Guard.AssertNotEmpty(controlName, "controlName");
+            Guard.AssertNotEmpty(fieldName, "controlName");
 
-            HighlightingChanged(this, new HighlightEventArgs(controlName));
+            Highlight(this, new HighlightEventArgs(fieldName));
         }
 
         #endregion Implementation of IHighlightable
 
         public PlanningArtefactCollection<StoryCard> Parent { get; internal set; }
 
-        
     }
 }

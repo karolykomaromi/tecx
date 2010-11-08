@@ -39,17 +39,14 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="HighlightEventArgs.cs" />
     <Compile Include="IPeerClient.cs" />
     <Compile Include="MovedStoryCardEventArgs.cs" />
     <Compile Include="PeerClient.cs" />
@@ -61,6 +58,10 @@
     <ProjectReference Include="..\TecX.Agile.Error\TecX.Agile.Error.csproj">
       <Project>{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}</Project>
       <Name>TecX.Agile.Error</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
+      <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
+      <Name>TecX.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
