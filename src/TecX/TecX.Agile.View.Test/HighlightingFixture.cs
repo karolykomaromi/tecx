@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,20 +9,19 @@ using TecX.Agile.ViewModel;
 
 namespace TecX.Agile.View.Test
 {
-    /// <summary>
-    /// Summary description for UnitTest1
-    /// </summary>
     [TestClass]
     public class HighlightingFixture
     {
         [TestMethod]
         public void WhenTellingViewModelToHighlightTextBox_TextBoxIsFocused()
         {
-            HighlightableViewModel highlightable = new HighlightableViewModel();
+            Guid id = Guid.NewGuid();
 
-            TestUserControl ctrl = new TestUserControl(highlightable);
+            ViewModel.StoryCard card = new ViewModel.StoryCard { Id = id };
 
-            highlightable.HighlightField("Txt");
+            TestUserControl ctrl = new TestUserControl(card);
+
+            HighlightSource.RaiseHighlightField(this, new HighlightEventArgs(id, "Txt"));
 
             Assert.IsTrue(ctrl.Txt.IsFocused);
         }
@@ -29,13 +29,30 @@ namespace TecX.Agile.View.Test
         [TestMethod]
         public void WhenFocussingTextBox_ViewModelIsNotified()
         {
-            HighlightableViewModel highlightable = new HighlightableViewModel();
+            Guid id = Guid.NewGuid();
 
-            TestUserControl ctrl = new TestUserControl(highlightable);
+            ViewModel.StoryCard card = new ViewModel.StoryCard { Id = id };
+
+            TestUserControl ctrl = new TestUserControl(card);
+
+            bool notified = false;
+
+            Action<object, HighlightEventArgs> action = (s, e) =>
+                                                            {
+                                                                Assert.AreEqual(id, e.Id);
+                                                                Assert.AreEqual("Txt", e.FieldName);
+                                                                notified = true;
+                                                            };
+
+            EventHandler<HighlightEventArgs> handler = new EventHandler<HighlightEventArgs>(action);
+
+            HighlightSource.FieldHighlighted += handler;
 
             ctrl.Txt.Focus();
 
-            Assert.AreEqual("Txt", highlightable.HighlightedControlName);
+            Assert.IsTrue(notified);
+
+            HighlightSource.FieldHighlighted -= handler;
         }
     }
 }

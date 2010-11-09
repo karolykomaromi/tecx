@@ -188,7 +188,7 @@ namespace TecX.Agile.ViewModel.Test
         {
             var mockActionManager = new Mock<IActionManager>();
 
-            StoryCardCollection collection = new StoryCardCollection();
+            PlanningArtefactCollection<StoryCard> collection = new StoryCardCollection();
 
             StoryCard card = new StoryCard();
 

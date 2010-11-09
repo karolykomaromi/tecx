@@ -55,7 +55,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HighlightingFixture.cs" />
-    <Compile Include="TestObjects\HighlightableViewModel.cs" />
     <Compile Include="TestObjects\TestUserControl.xaml.cs">
       <DependentUpon>TestUserControl.xaml</DependentUpon>
     </Compile>

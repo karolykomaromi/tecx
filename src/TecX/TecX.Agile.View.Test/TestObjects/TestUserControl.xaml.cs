@@ -19,7 +19,7 @@ namespace TecX.Agile.View.Test.TestObjects
     /// </summary>
     public partial class TestUserControl : UserControl
     {
-        public TestUserControl(HighlightableViewModel viewModel)
+        public TestUserControl(ViewModel.PlanningArtefact viewModel)
         {
             DataContext = viewModel;
 

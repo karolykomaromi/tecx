@@ -5,7 +5,8 @@ using TecX.Common.Extensions.Error;
 
 namespace TecX.Agile.ViewModel
 {
-    public class Iteration : StoryCardCollection, IHighlightable
+    [Serializable]
+    public class Iteration : StoryCardCollection
     {
         public event EventHandler<StoryCardPostponedEventArgs> StoryCardPostponed;
 
@@ -44,30 +45,5 @@ namespace TecX.Agile.ViewModel
                 StoryCardPostponed(this, args);
             }
         }
-
-
-        #region Implementation of IHighlightable
-
-        public event EventHandler<HighlightEventArgs> Highlight = delegate { };
-
-        public void NotifyFieldHighlighted(string fieldName)
-        {
-            //TODO weberse this will be the place where we notify remote clients that 
-            //some field on the ui was highlighted
-            if (Project != null)
-            {
-                Project.NotifyFieldHighlighted(Id, fieldName);
-            }
-        }
-
-        public void HighlightField(string fieldName)
-        {
-            Guard.AssertNotEmpty(fieldName, "controlName");
-
-            Highlight(this, new HighlightEventArgs(fieldName));
-        }
-
-        #endregion Implementation of IHighlightable
-
     }
 }

@@ -1,33 +1,49 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 using TecX.Agile.ViewModel;
-using TecX.Common;
 
 namespace TecX.Agile.View.Behavior
 {
     public class HighlightTextBoxHandler : BehaviorHandler
     {
-        private IHighlightable _highlightable;
-        private string _name;
+        private Guid _id;
+        private string _fieldName;
+        private IDisposable _subscription;
 
         #region Overrides of BehaviorHandler
 
         protected override void DoAttach(FrameworkElement element)
         {
             UserControl ctrl;
-            string name;
+            string fieldName;
             if (UIHelper.TryFindAncestor(element, out ctrl) &&
-                UIHelper.TryGetName(ctrl, element, out name))
+                UIHelper.TryGetName(ctrl, element, out fieldName))
             {
-                _highlightable = ctrl.DataContext as IHighlightable;
+                //TODO weberse if ctrl.DataContext == null should hook up a handler to ctrl.DataContextChanged and
+                //act a soon as the context is available. hook up handlers and remove listener to DataContextChanged
+                PlanningArtefact artefact = ctrl.DataContext as PlanningArtefact;
 
-                if (_highlightable != null)
+                if (artefact != null)
                 {
-                    _name = name;
-                    _highlightable.Highlight += OnHighlight;
+                    _fieldName = fieldName;
+                    _id = artefact.Id;
 
-                    element.GotFocus += OnGotFocus;
+                    Element.GotFocus += OnGotFocus;
+
+                    //whenever a request comes in to highlight a textbox identified by the Id of the underlying PlanningArtefact from the
+                    //DataContext and the name of the field
+                    var highlight = from evt in Observable.FromEvent<HighlightEventArgs>(
+                        handler => HighlightSource.HighlightField += handler,
+                        handler => HighlightSource.HighlightField -= handler)
+                                    where evt.EventArgs.Id == _id &&
+                                          evt.EventArgs.FieldName == _fieldName
+                                    select evt;
+
+                    //...we just set the focus to that control
+                    _subscription = highlight.Subscribe(x => Element.Focus());
                 }
             }
         }
@@ -46,36 +62,21 @@ namespace TecX.Agile.View.Behavior
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
-            if (_highlightable != null &&
-                !string.IsNullOrEmpty(_name))
-            {
-                _highlightable.NotifyFieldHighlighted(_name);
-            }
+            //whenever the textbox receives focus we signal that via an event to the outside world
+            HighlightSource.RaiseFieldHighlighted(Element, new HighlightEventArgs(_id, _fieldName));
         }
 
         protected override void DoDetach()
         {
-            if (_highlightable != null)
-            {
-                _highlightable.Highlight += OnHighlight;
-                Element.GotFocus -= OnGotFocus;
-                _highlightable = null;
-            }
+            Element.GotFocus -= OnGotFocus;
+
+            _subscription.Dispose();
+
+            _subscription = null;
+            _fieldName = null;
+            _id = Guid.Empty;
         }
 
         #endregion
-
-        private void OnHighlight(object sender, HighlightEventArgs e)
-        {
-            Guard.AssertNotNull(e, "e");
-            Guard.AssertNotEmpty(e.FieldName, "e.ControlName");
-
-            //if the name of the control that should be focused matches that of the control
-            //we are currently hooked up to we put the focus on that control
-            if (_name == e.FieldName)
-            {
-                Element.Focus();
-            }
-        }
     }
 }
