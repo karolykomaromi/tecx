@@ -17,15 +17,13 @@ namespace TecX.Agile.ViewModel.Test
         [TestMethod]
         public void WhenPostponingStoryCard_EventIsRaised()
         {
-            var mockActionManager = new Mock<IActionManager>();
-
             Iteration iteration = new Iteration();
 
             StoryCard card = new StoryCard();
 
             iteration.Add(card);
 
-            Project project = new Project(mockActionManager.Object);
+            Project project = new Project();
 
             project.Add(iteration);
 
@@ -43,15 +41,13 @@ namespace TecX.Agile.ViewModel.Test
         [TestMethod]
         public void WhenPostponingStoryCard_NewParentIsSet()
         {
-            var mockActionManager = new Mock<IActionManager>();
-
             Iteration iteration = new Iteration();
 
             StoryCard card = new StoryCard();
 
             iteration.Add(card);
 
-            Project project = new Project(mockActionManager.Object);
+            Project project = new Project();
 
             project.Add(iteration);
 
@@ -63,15 +59,13 @@ namespace TecX.Agile.ViewModel.Test
         [TestMethod]
         public void WhenPostponingStoryCard_IsRemovedFromIteration()
         {
-            var mockActionManager = new Mock<IActionManager>();
-
             Iteration iteration = new Iteration();
 
             StoryCard card = new StoryCard();
 
             iteration.Add(card);
 
-            Project project = new Project(mockActionManager.Object);
+            Project project = new Project();
 
             project.Add(iteration);
 
@@ -83,15 +77,13 @@ namespace TecX.Agile.ViewModel.Test
         [TestMethod]
         public void WhenPostponingStoryCard_IsAddedToBacklog()
         {
-            var mockActionManager = new Mock<IActionManager>();
-
             Iteration iteration = new Iteration();
 
             StoryCard card = new StoryCard();
 
             iteration.Add(card);
 
-            Project project = new Project(mockActionManager.Object);
+            Project project = new Project();
 
             project.Add(iteration);
 

@@ -5,5 +5,7 @@ namespace TecX.Agile.ViewModel
     public interface IRemoteUI
     {
         void HighlightField(Guid artefactId, string fieldName);
+
+        void UpdateProperty(Guid artefactId, string propertyName, object newValue);
     }
 }
