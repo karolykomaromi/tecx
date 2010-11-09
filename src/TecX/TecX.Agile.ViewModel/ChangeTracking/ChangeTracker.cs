@@ -92,7 +92,7 @@ namespace TecX.Agile.ViewModel.ChangeTracking
         {
             Guard.AssertNotNull(collection, "collection");
 
-            Subscribe(((PlanningArtefactCollection<StoryCard>)collection));
+            Subscribe((PlanningArtefactCollection<StoryCard>)collection);
 
             RescheduleStoryCardSubscription subscription = new RescheduleStoryCardSubscription(_actionManager, collection);
 
@@ -101,7 +101,16 @@ namespace TecX.Agile.ViewModel.ChangeTracking
 
         public void Unsubscribe(StoryCardCollection collection)
         {
-            throw new NotImplementedException();
+            Guard.AssertNotNull(collection, "collection");
+
+            Unsubscribe((PlanningArtefactCollection<StoryCard>)collection);
+
+            IChangeSubscription existing;
+            if(_rescheduleStoryCardSubscriptions.TryGetValue(collection.Id, out existing))
+            {
+                _rescheduleStoryCardSubscriptions.Remove(collection.Id);
+                existing.Dispose();
+            }
         }
 
         #endregion

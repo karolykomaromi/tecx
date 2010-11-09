@@ -12,8 +12,6 @@ namespace TecX.Agile.ViewModel
     {
         #region Fields
 
-        private readonly IActionManager _actionManager;
-
         private Backlog _backlog;
         
         #endregion Fields
@@ -36,8 +34,6 @@ namespace TecX.Agile.ViewModel
             }
         }
 
-        public IRemoteUI RemoteUI { get; set; }
-
         #endregion Properties
 
         #region c'tor
@@ -45,12 +41,8 @@ namespace TecX.Agile.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="Project"/> class
         /// </summary>
-        public Project(IActionManager actionManager)
+        public Project()
         {
-            Guard.AssertNotNull(actionManager, "actionManager");
-
-            _actionManager = actionManager;
-
             _backlog = new Backlog();
         }
 
@@ -69,16 +61,6 @@ namespace TecX.Agile.ViewModel
         }
 
         #endregion Overrides of PlanningArtefactCollection<Iteration>
-
-        public void NotifyFieldHighlighted(Guid artefactId, string fieldName)
-        {
-            Guard.AssertNotEmpty(fieldName, "fieldName");
-
-            if(RemoteUI != null)
-            {
-                RemoteUI.HighlightField(artefactId, fieldName);
-            }
-        }
 
         public TArtefact Find<TArtefact>(Guid id)
             where TArtefact : PlanningArtefact
