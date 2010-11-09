@@ -70,16 +70,12 @@ namespace TecX.Common.Event
 
             RunLocked(() =>
             {
-                if (IsNotNull(subscriber) &&
-                    IsNotYetInCollection(subscriber) &&
-                    IsHandlerInterfaceImplemented(subscriber))
-                {
-                    _subscribers.Add(new WeakReference(subscriber));
-                }
-                else
-                {
-                    throw new ArgumentException("Subscriber must implement ISubscribeTo<TMessage>.", "subscriber");
-                }
+                if (IsAlreadyInCollection(subscriber))
+                    return;
+
+                AssertHandlerInterfaceImplemented(subscriber);
+
+                _subscribers.Add(new WeakReference(subscriber));
             });
         }
 
@@ -157,7 +153,7 @@ namespace TecX.Common.Event
         /// <returns>
         /// 	<c>true</c> if <see cref="ISubscribeTo{TMessage}"/>  is implemented; otherwise, <c>false</c>.
         /// </returns>
-        private static bool IsHandlerInterfaceImplemented(object subscriber)
+        private static void AssertHandlerInterfaceImplemented(object subscriber)
         {
             Type[] interfaces = subscriber.GetType()
                     .FindInterfaces((type, criteria) =>
@@ -169,7 +165,8 @@ namespace TecX.Common.Event
                         return false;
                     }, null);
 
-            return interfaces.Length > 0 ? true : false;
+            if (interfaces.Length == 0)
+                throw new ArgumentException("Subscriber must implement ISubscribeTo<TMessage>.", "subscriber");
         }
 
         /// <summary>
@@ -204,10 +201,10 @@ namespace TecX.Common.Event
         /// <returns>
         /// 	<c>true</c> if the subscriber is not registered yet; otherwise, <c>false</c>.
         /// </returns>
-        private bool IsNotYetInCollection(object subscriber)
+        private bool IsAlreadyInCollection(object subscriber)
         {
             var element = _subscribers.Select(o => o).Where(o => o.Target == subscriber).FirstOrDefault();
-            return element == null ? true : false;
+            return element == null ? false : true;
         }
 
         /// <summary>

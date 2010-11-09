@@ -6,21 +6,29 @@ namespace TecX.Agile.ViewModel
 {
     public class HighlightEventArgs : EventArgs
     {
-        private readonly string fieldName;
+        private readonly Guid _id;
+        private readonly string _fieldName;
+
+        public Guid Id
+        {
+            get { return _id; }
+        }
 
         public string FieldName
         {
-            get { return fieldName; }
+            get { return _fieldName; }
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HighlightEventArgs"/> class
         /// </summary>
-        public HighlightEventArgs(string fieldName)
+        public HighlightEventArgs(Guid id, string fieldName)
         {
             Guard.AssertNotEmpty(fieldName, "controlName");
 
-            this.fieldName = fieldName;
+            _id = id;
+            _fieldName = fieldName;
+
         }
     }
 }

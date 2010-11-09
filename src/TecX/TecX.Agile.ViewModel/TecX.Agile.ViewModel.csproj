@@ -62,7 +62,7 @@
     <Compile Include="ChangeTracking\RescheduleStoryCardAction.cs" />
     <Compile Include="ChangeTracking\RescheduleStoryCardSubscription.cs" />
     <Compile Include="HighlightEventArgs.cs" />
-    <Compile Include="IHighlightable.cs" />
+    <Compile Include="HighlightSource.cs" />
     <Compile Include="IRemoteUI.cs" />
     <Compile Include="Iteration.cs" />
     <Compile Include="ObservableDictionary.cs" />
