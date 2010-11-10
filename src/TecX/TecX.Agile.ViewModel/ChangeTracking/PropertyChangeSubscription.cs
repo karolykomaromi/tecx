@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 
 using TecX.Common;
+using TecX.Common.Event;
 using TecX.Undo;
 using TecX.Undo.Actions;
 
@@ -10,12 +11,16 @@ namespace TecX.Agile.ViewModel.ChangeTracking
 {
     internal class PropertyChangeSubscription : IChangeSubscription
     {
+        private readonly IEventAggregator _eventAggregator;
         private readonly IDisposable _subscription;
 
-        public PropertyChangeSubscription(PlanningArtefact item)
+        public PropertyChangeSubscription(PlanningArtefact item, IEventAggregator eventAggregator)
         {
             Guard.AssertNotNull(item, "item");
-            
+            Guard.AssertNotNull(eventAggregator, "eventAggregator");
+
+            _eventAggregator = eventAggregator;
+
             var changing = from evt in Observable.FromEvent<PropertyChangingEventArgs>(item, "PropertyChanging")
                            select new { Sender = (PlanningArtefact)evt.Sender, evt.EventArgs.PropertyName, Value = evt.Sender.GetType().GetProperty(evt.EventArgs.PropertyName).GetValue(evt.Sender, null) };
 
@@ -25,9 +30,9 @@ namespace TecX.Agile.ViewModel.ChangeTracking
             var beforeAfter = changing
                 .CombineLatest(changed, (before, after) => new
                                                                {
-                                                                   ParentObject = before.Sender, 
-                                                                   before.PropertyName, 
-                                                                   OldValue = before.Value, 
+                                                                   ParentObject = before.Sender,
+                                                                   before.PropertyName,
+                                                                   OldValue = before.Value,
                                                                    NewValue = after.Value
                                                                })
                 .Where(ba => ba.NewValue != ba.OldValue);
@@ -50,25 +55,25 @@ namespace TecX.Agile.ViewModel.ChangeTracking
             //    .Handle(x.ParentObject, x.PropertyName, x.OldValue, x.NewValue));
 
             _subscription =
-                beforeAfter.Subscribe(
-                    x =>
-                    EventSource.RaisePropertyChangedEvent(x.ParentObject,
-                                                          new ArtefactPropertyChangedEventArgs(x.ParentObject,
-                                                                                               x.PropertyName,
-                                                                                               x.OldValue, x.NewValue)));
+                beforeAfter.Subscribe(x => _eventAggregator.Publish(
+                                                    new PropertyChanged(
+                                                        x.ParentObject,
+                                                        x.PropertyName,
+                                                        x.OldValue,
+                                                        x.NewValue)));
         }
 
         #region Implementation of IDisposable
 
         public void Dispose()
         {
-            Dispose(true); 
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         private void Dispose(bool disposing)
         {
-            if(disposing)
+            if (disposing)
             {
                 _subscription.Dispose();
             }

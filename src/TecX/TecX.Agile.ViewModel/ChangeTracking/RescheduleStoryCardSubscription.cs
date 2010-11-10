@@ -3,58 +3,66 @@ using System.Linq;
 
 using TecX.Agile.ViewModel.Undo;
 using TecX.Common;
+using TecX.Common.Event;
 using TecX.Undo;
 
 namespace TecX.Agile.ViewModel.ChangeTracking
 {
     public class RescheduleStoryCardSubscription : IChangeSubscription
     {
-        private readonly IActionManager _actionManager;
+        private readonly IEventAggregator _eventAggregator;
         private readonly StoryCardCollection _collection;
         private IDisposable _subscription;
 
-        public RescheduleStoryCardSubscription(IActionManager actionManager, StoryCardCollection collection)
+        public RescheduleStoryCardSubscription(IEventAggregator eventAggregator, StoryCardCollection collection)
         {
-            Guard.AssertNotNull(actionManager, "actionManager");
             Guard.AssertNotNull(collection, "collection");
+            Guard.AssertNotNull(eventAggregator, "eventAggregator");
 
-            _actionManager = actionManager;
+            _eventAggregator = eventAggregator;
             _collection = collection;
 
             var rescheduled =
                 from evt in Observable.FromEvent<StoryCardRescheduledEventArgs>(_collection, "StoryCardRescheduled")
-                select evt;
+                select new { evt.EventArgs.StoryCard, evt.EventArgs.From, evt.EventArgs.To};
 
-            _subscription = rescheduled.Subscribe(evt =>
+            _subscription = rescheduled.Subscribe(x =>
                                                       {
-                                                          var currentAction =
-                                                              _actionManager.CurrentAction as RescheduleStoryCardAction;
+                                                          RescheduledStoryCard rescheduledStoryCard =
+                                                              new RescheduledStoryCard(x.StoryCard, x.From, x.To);
 
-                                                          if(currentAction != null)
-                                                          {
-                                                              if(currentAction.StoryCard == evt.EventArgs.StoryCard &&
-                                                                  currentAction.To == evt.EventArgs.To &&
-                                                                  currentAction.From == evt.EventArgs.From)
-                                                              {
-                                                                  //we are in a redo situation -> dont issue another action
-                                                                  return;
-                                                              }
+                                                          _eventAggregator.Publish(rescheduledStoryCard);
 
-                                                              if(currentAction.StoryCard == evt.EventArgs.StoryCard &&
-                                                                  currentAction.To == evt.EventArgs.From &&
-                                                                  currentAction.From == evt.EventArgs.To)
-                                                              {
-                                                                  //undo -> do nothing
-                                                                  return;
-                                                              }
-                                                          }
+                                                          //TODO weberse this decision must be moved to the appropriate handler!!
 
-                                                          RescheduleStoryCardAction action =
-                                                              new RescheduleStoryCardAction(evt.EventArgs.StoryCard,
-                                                                                            evt.EventArgs.From,
-                                                                                            evt.EventArgs.To);
+                                                          //var currentAction =
+                                                          //    _actionManager.CurrentAction as RescheduleStoryCardAction;
 
-                                                          _actionManager.RecordAction(action);
+                                                          //if(currentAction != null)
+                                                          //{
+                                                          //    if(currentAction.StoryCard == evt.EventArgs.StoryCard &&
+                                                          //        currentAction.To == evt.EventArgs.To &&
+                                                          //        currentAction.From == evt.EventArgs.From)
+                                                          //    {
+                                                          //        //we are in a redo situation -> dont issue another action
+                                                          //        return;
+                                                          //    }
+
+                                                          //    if(currentAction.StoryCard == evt.EventArgs.StoryCard &&
+                                                          //        currentAction.To == evt.EventArgs.From &&
+                                                          //        currentAction.From == evt.EventArgs.To)
+                                                          //    {
+                                                          //        //undo -> do nothing
+                                                          //        return;
+                                                          //    }
+                                                          //}
+
+                                                          //RescheduleStoryCardAction action =
+                                                          //    new RescheduleStoryCardAction(evt.EventArgs.StoryCard,
+                                                          //                                  evt.EventArgs.From,
+                                                          //                                  evt.EventArgs.To);
+
+                                                          //_actionManager.RecordAction(action);
                                                       });
 
         }
