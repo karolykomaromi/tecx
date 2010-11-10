@@ -21,7 +21,7 @@ namespace TecX.Agile.View.Test
 
             TestUserControl ctrl = new TestUserControl(card);
 
-            HighlightSource.RaiseHighlightField(this, new HighlightEventArgs(id, "Txt"));
+            EventSource.RaiseHighlightField(this, new HighlightEventArgs(id, "Txt"));
 
             Assert.IsTrue(ctrl.Txt.IsFocused);
         }
@@ -46,13 +46,13 @@ namespace TecX.Agile.View.Test
 
             EventHandler<HighlightEventArgs> handler = new EventHandler<HighlightEventArgs>(action);
 
-            HighlightSource.FieldHighlighted += handler;
+            EventSource.FieldHighlighted += handler;
 
             ctrl.Txt.Focus();
 
             Assert.IsTrue(notified);
 
-            HighlightSource.FieldHighlighted -= handler;
+            EventSource.FieldHighlighted -= handler;
         }
     }
 }

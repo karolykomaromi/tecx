@@ -36,8 +36,8 @@ namespace TecX.Agile.View.Behavior
                     //whenever a request comes in to highlight a textbox identified by the Id of the underlying PlanningArtefact from the
                     //DataContext and the name of the field
                     var highlight = from evt in Observable.FromEvent<HighlightEventArgs>(
-                        handler => HighlightSource.HighlightField += handler,
-                        handler => HighlightSource.HighlightField -= handler)
+                        handler => EventSource.HighlightField += handler,
+                        handler => EventSource.HighlightField -= handler)
                                     where evt.EventArgs.Id == _id &&
                                           evt.EventArgs.FieldName == _fieldName
                                     select evt;
@@ -63,7 +63,7 @@ namespace TecX.Agile.View.Behavior
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
             //whenever the textbox receives focus we signal that via an event to the outside world
-            HighlightSource.RaiseFieldHighlighted(Element, new HighlightEventArgs(_id, _fieldName));
+            EventSource.RaiseFieldHighlighted(Element, new HighlightEventArgs(_id, _fieldName));
         }
 
         protected override void DoDetach()

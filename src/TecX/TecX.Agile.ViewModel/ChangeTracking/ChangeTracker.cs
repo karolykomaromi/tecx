@@ -44,7 +44,7 @@ namespace TecX.Agile.ViewModel.ChangeTracking
                     .WithAdditionalInfo("item", item);
             }
 
-            PropertyChangeSubscription subscription = new PropertyChangeSubscription(_actionManager, item);
+            PropertyChangeSubscription subscription = new PropertyChangeSubscription(item);
 
             _propertyChangeSubscriptions.Add(item.Id, subscription);
         }
