@@ -1,6 +1,6 @@
 ﻿using TecX.Undo;
 
-namespace TecX.Agile.ViewModel.ChangeTracking
+namespace TecX.Agile.ViewModel.Undo
 {
     public class RescheduleStoryCardAction : AbstractAction
     {

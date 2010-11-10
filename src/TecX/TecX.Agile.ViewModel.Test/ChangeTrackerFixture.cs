@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
 using TecX.Agile.ViewModel.ChangeTracking;
+using TecX.Agile.ViewModel.Undo;
 using TecX.Undo;
 using TecX.Undo.Actions;
 
@@ -16,7 +17,7 @@ namespace TecX.Agile.ViewModel.Test
     public class ChangeTrackerFixture
     {
         [TestMethod]
-        public void WhenChangingPropertyOnSubscribedStoryCard_TrackerIssuesAction()
+        public void WhenChangingPropertyOnSubscribedStoryCard_EventSourceRaisesPropertyChangedEvent()
         {
             var mockActionManager = new Mock<IActionManager>();
 
@@ -29,19 +30,24 @@ namespace TecX.Agile.ViewModel.Test
 
             tracker.Subscribe(card);
 
+            bool notified = false;
+
+            EventHandler<ArtefactPropertyChangedEventArgs> handler = (s, e) =>
+                                                                         {
+                                                                             Assert.AreEqual(card, e.ParentObject);
+                                                                             Assert.AreEqual("Id", e.PropertyName);
+                                                                             Assert.AreEqual<Guid>(id, (Guid)e.OldValue);
+                                                                             Assert.AreEqual<Guid>(newId, (Guid)e.NewValue);
+                                                                             notified = true;
+                                                                         };
+
+            EventSource.PropertyChanged += handler;
+
             card.Id = newId;
 
-            mockActionManager
-                .Verify(am => am.RecordAction(
-                    It.Is<SetPropertyAction>(action =>
-                                             (Guid)action.OldValue == id &&
-                                             (Guid)action.NewValue == newId &&
-                                             action.ParentObject == card &&
-                                             action.Property.Name == "Id")),
-                    Times.Once(),
-                    "changing Id must trigger an action");
+            Assert.IsTrue(notified);
 
-            mockActionManager.VerifyAll();
+            EventSource.PropertyChanged -= handler;
         }
 
         [TestMethod]
@@ -156,7 +162,7 @@ namespace TecX.Agile.ViewModel.Test
         }
 
         [TestMethod]
-        public void WhenUnsubscribingItem_NoMoreActionsAreIssued()
+        public void WhenUnsubscribingItem_EventSourceDoesNotRaiseAnyMoreEvents()
         {
             var mockActionManager = new Mock<IActionManager>();
 
@@ -169,18 +175,21 @@ namespace TecX.Agile.ViewModel.Test
 
             tracker.Subscribe(card);
 
+            int callCounter = 0;
+
+            EventHandler<ArtefactPropertyChangedEventArgs> handler = (s, e) => callCounter++;
+
+            EventSource.PropertyChanged += handler;
+
             card.Name = name;
 
             tracker.Unsubscribe(card);
 
             card.Name = newName;
 
-            mockActionManager
-                .Verify(
-                    ma => ma.RecordAction(It.IsAny<SetPropertyAction>()),
-                    Times.Once());
+            Assert.AreEqual(1, callCounter);
 
-            mockActionManager.VerifyAll();
+            EventSource.PropertyChanged -= handler;
         }
 
         [TestMethod]

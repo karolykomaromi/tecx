@@ -6,7 +6,7 @@ using System.Linq;
 using TecX.Common;
 using TecX.Undo;
 
-namespace TecX.Agile.ViewModel.ChangeTracking
+namespace TecX.Agile.ViewModel.Undo
 {
     public class CollectionChangedAction<TArtefact> : AbstractAction
         where TArtefact : PlanningArtefact

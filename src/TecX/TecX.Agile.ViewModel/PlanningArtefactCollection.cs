@@ -11,8 +11,7 @@ using TecX.Common.Extensions.Error;
 
 namespace TecX.Agile.ViewModel
 {
-    public abstract class PlanningArtefactCollection<TArtefact> : PlanningArtefact,
-        IEnumerable<TArtefact>, INotifyCollectionChanged
+    public abstract class PlanningArtefactCollection<TArtefact> : PlanningArtefact, ICollection<TArtefact>, INotifyCollectionChanged
         where TArtefact : PlanningArtefact
     {
         #region Fields
@@ -133,6 +132,11 @@ namespace TecX.Agile.ViewModel
             return false;
         }
 
+        public int Count
+        {
+            get { return _artefacts.Count; }
+        }
+
         protected internal abstract void AddCore(TArtefact item);
         protected abstract void RemoveCore(TArtefact item);
 
@@ -167,5 +171,34 @@ namespace TecX.Agile.ViewModel
         }
 
         #endregion
+
+        #region Explicit Implementation of ICollection<TArtefact>
+
+        void ICollection<TArtefact>.CopyTo(TArtefact[] array, int arrayIndex)
+        {
+            Guard.AssertNotNull(arrayIndex, "arrayIndex");
+            Guard.AssertIsInRange(arrayIndex, "arrayIndex", 0, Count - 1);
+
+            ((ICollection<TArtefact>)_artefacts).CopyTo(array, arrayIndex);
+        }
+
+        bool ICollection<TArtefact>.IsReadOnly
+        {
+            get { return false; }
+        }
+
+        bool ICollection<TArtefact>.Remove(TArtefact item)
+        {
+            Guard.AssertNotNull(item, "item");
+
+            return Remove(item.Id);
+        }
+
+        void ICollection<TArtefact>.Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion Explicit Implementation of ICollection<TArtefact>
     }
 }
