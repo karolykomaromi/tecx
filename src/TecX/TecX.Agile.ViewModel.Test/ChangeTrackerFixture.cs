@@ -62,7 +62,6 @@ namespace TecX.Agile.ViewModel.Test
         [TestMethod]
         public void WhenAddingItemToSubscribedPlanningArtefactCollection_TrackerIssuesAction()
         {
-            var mockActionManager = new Mock<IActionManager>();
             var mockEventAggregator = new Mock<IEventAggregator>();
 
             IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
@@ -75,20 +74,19 @@ namespace TecX.Agile.ViewModel.Test
 
             collection.Add(card);
 
-            mockActionManager
-                .Verify(am => am.RecordAction(
-                    It.Is<CollectionChangedAction<StoryCard>>(
-                        action => action.Collection == collection && action.NewItems.First() == card)),
+            mockEventAggregator
+                .Verify(ea => ea.Publish(
+                    It.Is<CollectionChanged<StoryCard>>(
+                        msg => msg.Collection == collection && msg.NewItems.First() == card)),
                     Times.Once(),
-                    "adding item must trigger AddItemToCollectionAction");
+                    "adding item must trigger CollectionChanged message");
 
-            mockActionManager.VerifyAll();
+            mockEventAggregator.VerifyAll();
         }
 
         [TestMethod]
         public void WhenRemovingItemFromSubscribedPlanningArtefactCollection_TrackerIssuesAction()
         {
-            var mockActionManager = new Mock<IActionManager>();
             var mockEventAggregator = new Mock<IEventAggregator>();
 
             IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
@@ -103,14 +101,14 @@ namespace TecX.Agile.ViewModel.Test
 
             collection.Remove(card.Id);
 
-            mockActionManager
-                .Verify(am => am.RecordAction(
-                    It.Is<CollectionChangedAction<StoryCard>>(
-                        action => action.Collection == collection && action.OldItems.First() == card)),
+            mockEventAggregator
+                .Verify(ea => ea.Publish(
+                    It.Is<CollectionChanged<StoryCard>>(
+                        msg => msg.Collection == collection && msg.OldItems.First() == card)),
                     Times.Once(),
-                    "adding item must trigger AddItemToCollectionAction");
+                    "removing item must trigger CollectionChanged message");
 
-            mockActionManager.VerifyAll();
+            mockEventAggregator.VerifyAll();
         }
 
         [TestMethod]
