@@ -53,15 +53,19 @@
     </Compile>
     <Compile Include="ArtefactPropertyChangedEventArgs.cs" />
     <Compile Include="ChangeTracking\ChangeTracker.cs" />
+    <Compile Include="ChangeTracking\CollectionChanged.cs" />
     <Compile Include="ChangeTracking\CollectionChangeSubscription.cs" />
     <Compile Include="ChangeTracking\IChangeSubscription.cs" />
     <Compile Include="ChangeTracking\IChangeTracker.cs" />
+    <Compile Include="ChangeTracking\IMessage.cs" />
+    <Compile Include="ChangeTracking\PropertyChanged.cs" />
     <Compile Include="ChangeTracking\PropertyChangeHandlerChain.cs" />
     <Compile Include="ChangeTracking\PropertyChangeSubscription.cs" />
     <Compile Include="Backlog.cs" />
+    <Compile Include="ChangeTracking\RescheduledStoryCard.cs" />
     <Compile Include="ChangeTracking\RescheduleStoryCardSubscription.cs" />
     <Compile Include="HighlightEventArgs.cs" />
-    <Compile Include="EventSource.cs" />
+    <Compile Include="HighlightEventHub.cs" />
     <Compile Include="IRemoteUI.cs" />
     <Compile Include="Iteration.cs" />
     <Compile Include="ObservableDictionary.cs" />
@@ -78,6 +82,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.csproj">
+      <Project>{266522EB-9DCB-451A-8CD7-678188DCB5F6}</Project>
+      <Name>TecX.Common.Event</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>

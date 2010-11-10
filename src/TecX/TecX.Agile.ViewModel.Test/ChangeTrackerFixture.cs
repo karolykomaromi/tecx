@@ -8,8 +8,8 @@ using Moq;
 
 using TecX.Agile.ViewModel.ChangeTracking;
 using TecX.Agile.ViewModel.Undo;
+using TecX.Common.Event;
 using TecX.Undo;
-using TecX.Undo.Actions;
 
 namespace TecX.Agile.ViewModel.Test
 {
@@ -20,8 +20,9 @@ namespace TecX.Agile.ViewModel.Test
         public void WhenChangingPropertyOnSubscribedStoryCard_EventSourceRaisesPropertyChangedEvent()
         {
             var mockActionManager = new Mock<IActionManager>();
+            var mockEventAggregator = new Mock<IEventAggregator>();
 
-            IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
+            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
 
             Guid id = Guid.NewGuid();
             Guid newId = Guid.NewGuid();
@@ -30,24 +31,16 @@ namespace TecX.Agile.ViewModel.Test
 
             tracker.Subscribe(card);
 
-            bool notified = false;
-
-            EventHandler<ArtefactPropertyChangedEventArgs> handler = (s, e) =>
-                                                                         {
-                                                                             Assert.AreEqual(card, e.ParentObject);
-                                                                             Assert.AreEqual("Id", e.PropertyName);
-                                                                             Assert.AreEqual<Guid>(id, (Guid)e.OldValue);
-                                                                             Assert.AreEqual<Guid>(newId, (Guid)e.NewValue);
-                                                                             notified = true;
-                                                                         };
-
-            EventSource.PropertyChanged += handler;
-
             card.Id = newId;
 
-            Assert.IsTrue(notified);
+            mockEventAggregator
+                .Verify(ea => ea.Publish(
+                    It.Is<PropertyChanged>(pc => card == pc.ParentObject &&
+                                                 "Id" == pc.PropertyName &&
+                                                 id == (Guid)pc.OldValue &&
+                                                 newId == (Guid)pc.NewValue)));
 
-            EventSource.PropertyChanged -= handler;
+            mockEventAggregator.VerifyAll();
         }
 
         [TestMethod]
@@ -55,8 +48,9 @@ namespace TecX.Agile.ViewModel.Test
         public void WhenSubscribingSameItemMoreThanOnce_Throws()
         {
             var mockActionManager = new Mock<IActionManager>();
+            var mockEventAggregator = new Mock<IEventAggregator>();
 
-            ChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
+            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
 
             StoryCard card = new StoryCard();
 
@@ -69,8 +63,9 @@ namespace TecX.Agile.ViewModel.Test
         public void WhenAddingItemToSubscribedPlanningArtefactCollection_TrackerIssuesAction()
         {
             var mockActionManager = new Mock<IActionManager>();
+            var mockEventAggregator = new Mock<IEventAggregator>();
 
-            IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
+            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
 
             PlanningArtefactCollection<StoryCard> collection = new StoryCardCollection();
 
@@ -94,8 +89,9 @@ namespace TecX.Agile.ViewModel.Test
         public void WhenRemovingItemFromSubscribedPlanningArtefactCollection_TrackerIssuesAction()
         {
             var mockActionManager = new Mock<IActionManager>();
+            var mockEventAggregator = new Mock<IEventAggregator>();
 
-            IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
+            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
 
             PlanningArtefactCollection<StoryCard> collection = new StoryCardCollection();
 
@@ -121,6 +117,9 @@ namespace TecX.Agile.ViewModel.Test
         public void WhenUndoingAdd_TrackerDoesNotIssueAnotherAction()
         {
             var mockActionManager = new Mock<IActionManager>();
+            var mockEventAggregator = new Mock<IEventAggregator>();
+
+            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
 
             CollectionChangedAction<StoryCard> undoableAction = null;
 
@@ -144,8 +143,6 @@ namespace TecX.Agile.ViewModel.Test
                         action => action.Action == NotifyCollectionChangedAction.Remove))).Callback(
                             () => Assert.Fail("undoing action must not issue another action"));
 
-            IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
-
             StoryCardCollection collection = new StoryCardCollection();
 
             StoryCard card = new StoryCard();
@@ -165,43 +162,41 @@ namespace TecX.Agile.ViewModel.Test
         public void WhenUnsubscribingItem_EventSourceDoesNotRaiseAnyMoreEvents()
         {
             var mockActionManager = new Mock<IActionManager>();
+            var mockEventAggregator = new Mock<IEventAggregator>();
+
+            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
 
             string name = "old name";
             string newName = "newName";
-
-            IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
 
             StoryCard card = new StoryCard();
 
             tracker.Subscribe(card);
 
-            int callCounter = 0;
-
-            EventHandler<ArtefactPropertyChangedEventArgs> handler = (s, e) => callCounter++;
-
-            EventSource.PropertyChanged += handler;
-
+      
             card.Name = name;
 
             tracker.Unsubscribe(card);
 
             card.Name = newName;
 
-            Assert.AreEqual(1, callCounter);
+            mockEventAggregator
+                .Verify(ea => ea.Publish(It.IsAny<PropertyChanged>()), Times.Once());
 
-            EventSource.PropertyChanged -= handler;
+            mockEventAggregator.VerifyAll();
         }
 
         [TestMethod]
         public void WhenUnsubscribingCollection_NoMoreActionsAreIssued()
         {
             var mockActionManager = new Mock<IActionManager>();
+            var mockEventAggregator = new Mock<IEventAggregator>();
+
+            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
 
             PlanningArtefactCollection<StoryCard> collection = new StoryCardCollection();
 
             StoryCard card = new StoryCard();
-
-            IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
 
             tracker.Subscribe(collection);
 
@@ -247,9 +242,10 @@ namespace TecX.Agile.ViewModel.Test
         public void WhenReschedulingItemInStoryCardCollection_TrackerIssuesAction()
         {
             var mockActionManager = new Mock<IActionManager>();
+            var mockEventAggregator = new Mock<IEventAggregator>();
 
-            IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
-            
+            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
+
             Iteration iter1 = new Iteration { Id = Guid.NewGuid() };
             Iteration iter2 = new Iteration { Id = Guid.NewGuid() };
             StoryCard card = new StoryCard { Id = Guid.NewGuid() };
@@ -276,8 +272,9 @@ namespace TecX.Agile.ViewModel.Test
         public void WhenExecutingIssuedRescheduleStoryCardAction_DoesNotIssueTwice()
         {
             var mockActionManager = new Mock<IActionManager>();
+            var mockEventAggregator = new Mock<IEventAggregator>();
 
-            IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
+            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
 
             mockActionManager
                 .Setup(am => am.RecordAction(It.IsAny<RescheduleStoryCardAction>()))
@@ -307,8 +304,9 @@ namespace TecX.Agile.ViewModel.Test
         public void WhenUndoingReschedule_TrackerDoesNotIssueAnotherAction()
         {
             var mockActionManager = new Mock<IActionManager>();
+            var mockEventAggregator = new Mock<IEventAggregator>();
 
-            IChangeTracker tracker = new ChangeTracker(mockActionManager.Object);
+            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
 
             RescheduleStoryCardAction currentAction = null;
 

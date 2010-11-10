@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using TecX.Common;
+using TecX.Common.Event;
 using TecX.Common.Extensions.Error;
 using TecX.Undo;
 
@@ -11,7 +12,7 @@ namespace TecX.Agile.ViewModel.ChangeTracking
     {
         #region Fields
 
-        private readonly IActionManager _actionManager;
+        private readonly IEventAggregator _eventAggregator;
         private readonly Dictionary<Guid, IChangeSubscription> _propertyChangeSubscriptions;
         private readonly Dictionary<Guid, IChangeSubscription> _collectionChangeSubscriptions;
         private readonly Dictionary<Guid, IChangeSubscription> _rescheduleStoryCardSubscriptions;
@@ -20,11 +21,12 @@ namespace TecX.Agile.ViewModel.ChangeTracking
 
         #region c'tor
 
-        public ChangeTracker(IActionManager actionManager)
+        public ChangeTracker(IEventAggregator eventAggregator)
         {
-            Guard.AssertNotNull(actionManager, "actionManager");
+            Guard.AssertNotNull(eventAggregator, "eventAggregator");
 
-            _actionManager = actionManager;
+            _eventAggregator = eventAggregator;
+
             _propertyChangeSubscriptions = new Dictionary<Guid, IChangeSubscription>();
             _collectionChangeSubscriptions = new Dictionary<Guid, IChangeSubscription>();
             _rescheduleStoryCardSubscriptions = new Dictionary<Guid, IChangeSubscription>();
@@ -44,7 +46,7 @@ namespace TecX.Agile.ViewModel.ChangeTracking
                     .WithAdditionalInfo("item", item);
             }
 
-            PropertyChangeSubscription subscription = new PropertyChangeSubscription(item);
+            PropertyChangeSubscription subscription = new PropertyChangeSubscription(item, _eventAggregator);
 
             _propertyChangeSubscriptions.Add(item.Id, subscription);
         }
@@ -68,7 +70,7 @@ namespace TecX.Agile.ViewModel.ChangeTracking
             //will throw if item is already subscribed
             Subscribe((PlanningArtefact)collection);
 
-            CollectionChangeSubscription<TArtefact> subscription = new CollectionChangeSubscription<TArtefact>(_actionManager, collection);
+            CollectionChangeSubscription<TArtefact> subscription = new CollectionChangeSubscription<TArtefact>(_eventAggregator, collection);
 
             _collectionChangeSubscriptions.Add(collection.Id, subscription);
 
@@ -94,7 +96,7 @@ namespace TecX.Agile.ViewModel.ChangeTracking
 
             Subscribe((PlanningArtefactCollection<StoryCard>)collection);
 
-            RescheduleStoryCardSubscription subscription = new RescheduleStoryCardSubscription(_actionManager, collection);
+            RescheduleStoryCardSubscription subscription = new RescheduleStoryCardSubscription(_eventAggregator, collection);
 
             _rescheduleStoryCardSubscriptions.Add(collection.Id, subscription);
         }
