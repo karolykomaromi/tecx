@@ -9,9 +9,13 @@ namespace TecX.Agile.View.Behavior
 {
     public class HighlightTextBoxHandler : BehaviorHandler
     {
+        #region Fields
+
         private Guid _id;
         private string _fieldName;
         private IDisposable _subscription;
+
+        #endregion Fields
 
         #region Overrides of BehaviorHandler
 
