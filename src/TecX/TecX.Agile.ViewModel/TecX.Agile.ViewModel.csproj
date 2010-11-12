@@ -51,7 +51,6 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="ArtefactPropertyChangedEventArgs.cs" />
     <Compile Include="ChangeTracking\ChangeTracker.cs" />
     <Compile Include="ChangeTracking\CollectionChanged.cs" />
     <Compile Include="ChangeTracking\CollectionChangeSubscription.cs" />
@@ -59,7 +58,6 @@
     <Compile Include="ChangeTracking\IChangeTracker.cs" />
     <Compile Include="ChangeTracking\IMessage.cs" />
     <Compile Include="ChangeTracking\PropertyChanged.cs" />
-    <Compile Include="ChangeTracking\PropertyChangeHandlerChain.cs" />
     <Compile Include="ChangeTracking\PropertyChangeSubscription.cs" />
     <Compile Include="Backlog.cs" />
     <Compile Include="ChangeTracking\RescheduledStoryCard.cs" />

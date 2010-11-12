@@ -12,47 +12,6 @@ namespace TecX.Agile.View.Behavior
         #region Properties
 
         /// <summary>
-        /// Value indicating wether a <see cref="UIElement"/> should be considered
-        /// as immobile. This is a <see cref="DependencyProperty"/>
-        /// </summary>
-        public static readonly DependencyProperty IsPinnedProperty =
-            DependencyProperty.RegisterAttached(
-                "IsPinned",
-                typeof (bool),
-                typeof (ItemBehavior),
-                new FrameworkPropertyMetadata(false));
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is pinned.
-        /// </summary>
-        /// <value><c>true</c> if this instance is pinned; otherwise, <c>false</c>.</value>
-        public bool IsPinned
-        {
-            get { return (bool) GetValue(IsPinnedProperty); }
-            set { SetValue(IsPinnedProperty, value); }
-        }
-
-        /// <summary>
-        /// Getter for <see cref="DependencyProperty"/> <see cref="IsPinnedProperty"/>
-        /// </summary>
-        public static bool GetIsPinned(DependencyObject dependencyObject)
-        {
-            Guard.AssertNotNull(dependencyObject, "dependencyObject");
-
-            return (bool) dependencyObject.GetValue(IsPinnedProperty);
-        }
-
-        /// <summary>
-        /// Setter for <see cref="DependencyProperty"/> <see cref="IsPinnedProperty"/>
-        /// </summary>
-        public static void SetIsPinned(DependencyObject dependencyObject, bool value)
-        {
-            Guard.AssertNotNull(dependencyObject, "dependencyObject");
-
-            dependencyObject.SetValue(IsPinnedProperty, value);
-        }
-
-        /// <summary>
         /// TODO add description
         /// This is a dependency property.
         /// </summary>

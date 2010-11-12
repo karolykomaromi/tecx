@@ -112,51 +112,6 @@ namespace TecX.Agile.ViewModel.Test
         }
 
         [TestMethod]
-        public void WhenUndoingAdd_TrackerDoesNotIssueAnotherAction()
-        {
-            var mockActionManager = new Mock<IActionManager>();
-            var mockEventAggregator = new Mock<IEventAggregator>();
-
-            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
-
-            CollectionChangedAction<StoryCard> undoableAction = null;
-
-            mockActionManager.SetupGet(ma => ma.CurrentAction).Returns(() => undoableAction);
-
-            mockActionManager.Setup(
-                ma =>
-                ma.RecordAction(
-                    It.Is<CollectionChangedAction<StoryCard>>(
-                        action => action.Action == NotifyCollectionChangedAction.Add)))
-                .Callback((IAction action) =>
-                              {
-                                  undoableAction = (CollectionChangedAction<StoryCard>)action;
-                                  undoableAction.Execute();
-                              });
-
-            mockActionManager.Setup(
-                ma =>
-                ma.RecordAction(
-                    It.Is<CollectionChangedAction<StoryCard>>(
-                        action => action.Action == NotifyCollectionChangedAction.Remove))).Callback(
-                            () => Assert.Fail("undoing action must not issue another action"));
-
-            StoryCardCollection collection = new StoryCardCollection();
-
-            StoryCard card = new StoryCard();
-
-            tracker.Subscribe(collection);
-
-            collection.Add(card);
-
-            Assert.IsNotNull(undoableAction);
-
-            undoableAction.UnExecute();
-
-            Assert.AreEqual(0, collection.Count());
-        }
-
-        [TestMethod]
         public void WhenUnsubscribingItem_EventSourceDoesNotRaiseAnyMoreEvents()
         {
             var mockActionManager = new Mock<IActionManager>();
@@ -185,9 +140,35 @@ namespace TecX.Agile.ViewModel.Test
         }
 
         [TestMethod]
+        public void WhenReschedulingItemInStoryCardCollection_TrackerIssuesAction()
+        {
+            var mockEventAggregator = new Mock<IEventAggregator>();
+
+            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
+
+            Iteration iter1 = new Iteration { Id = Guid.NewGuid() };
+            Iteration iter2 = new Iteration { Id = Guid.NewGuid() };
+            StoryCard card = new StoryCard { Id = Guid.NewGuid() };
+
+            iter1.Add(card);
+
+            tracker.Subscribe(iter1);
+            tracker.Subscribe(iter2);
+
+            iter1.Reschedule(card, iter2);
+
+            mockEventAggregator
+                .Verify(ea => ea.Publish(It.Is<RescheduledStoryCard>(msg => msg.StoryCard == card &&
+                                                                            msg.From == iter1 &&
+                                                                            msg.To == iter2)),
+                        Times.Once());
+
+            mockEventAggregator.VerifyAll();
+        }
+
+        [TestMethod]
         public void WhenUnsubscribingCollection_NoMoreActionsAreIssued()
         {
-            var mockActionManager = new Mock<IActionManager>();
             var mockEventAggregator = new Mock<IEventAggregator>();
 
             IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
@@ -204,75 +185,30 @@ namespace TecX.Agile.ViewModel.Test
 
             collection.Remove(card.Id);
 
-            mockActionManager
+            mockEventAggregator
                 .Verify(
-                    ma => ma.RecordAction(It.IsAny<CollectionChangedAction<StoryCard>>()),
+                    ea => ea.Publish(It.IsAny<CollectionChanged<StoryCard>>()),
                     Times.Once());
 
-            mockActionManager.VerifyAll();
+            mockEventAggregator.VerifyAll();
         }
 
-        [TestMethod]
-        public void WhenCallingIntoPropertyChangeSubscriptionHandlerChain_ExecutesAllHandlers()
-        {
-            PropertyChangeHandlerChain chain = new PropertyChangeHandlerChain();
 
-            int handlersCalled = 0;
 
-            chain.Add((parentObject, propertyName, oldValue, newValue) =>
-                          {
-                              handlersCalled++;
-                          });
 
-            chain.Add((parentObject, propertyName, oldValue, newValue) =>
-            {
-                handlersCalled++;
-            });
-
-            StoryCard card = new StoryCard();
-
-            chain.Handle(card, "Name", null, "new name");
-
-            Assert.AreEqual(2, handlersCalled);
-        }
 
         [TestMethod]
-        public void WhenReschedulingItemInStoryCardCollection_TrackerIssuesAction()
-        {
-            var mockActionManager = new Mock<IActionManager>();
-            var mockEventAggregator = new Mock<IEventAggregator>();
-
-            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
-
-            Iteration iter1 = new Iteration { Id = Guid.NewGuid() };
-            Iteration iter2 = new Iteration { Id = Guid.NewGuid() };
-            StoryCard card = new StoryCard { Id = Guid.NewGuid() };
-
-            iter1.Add(card);
-
-            tracker.Subscribe(iter1);
-            tracker.Subscribe(iter2);
-
-            iter1.Reschedule(card, iter2);
-
-            mockActionManager
-                .Verify(am =>
-                    am.RecordAction(
-                        It.Is<RescheduleStoryCardAction>(action => action.StoryCard == card &&
-                                                                   action.From == iter1 &&
-                                                                   action.To == iter2)),
-                    Times.Once());
-
-            mockActionManager.VerifyAll();
-        }
-
-        [TestMethod]
+        [Ignore]
         public void WhenExecutingIssuedRescheduleStoryCardAction_DoesNotIssueTwice()
         {
+            //TODO weberse must be migrated when a handler for change message is implemented
+
             var mockActionManager = new Mock<IActionManager>();
             var mockEventAggregator = new Mock<IEventAggregator>();
 
             IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
+
+
 
             mockActionManager
                 .Setup(am => am.RecordAction(It.IsAny<RescheduleStoryCardAction>()))
@@ -299,8 +235,59 @@ namespace TecX.Agile.ViewModel.Test
         }
 
         [TestMethod]
+        [Ignore]
+        public void WhenUndoingAdd_TrackerDoesNotIssueAnotherAction()
+        {
+            //TODO weberse must be migrated when a handler for change message is implemented
+
+            var mockActionManager = new Mock<IActionManager>();
+            var mockEventAggregator = new Mock<IEventAggregator>();
+
+            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
+
+            CollectionChangedAction<StoryCard> undoableAction = null;
+
+            mockActionManager.SetupGet(ma => ma.CurrentAction).Returns(() => undoableAction);
+
+            mockActionManager.Setup(
+                ma =>
+                ma.RecordAction(
+                    It.Is<CollectionChangedAction<StoryCard>>(
+                        action => action.Action == NotifyCollectionChangedAction.Add)))
+                .Callback((IAction action) =>
+                {
+                    undoableAction = (CollectionChangedAction<StoryCard>)action;
+                    undoableAction.Execute();
+                });
+
+            mockActionManager.Setup(
+                ma =>
+                ma.RecordAction(
+                    It.Is<CollectionChangedAction<StoryCard>>(
+                        action => action.Action == NotifyCollectionChangedAction.Remove))).Callback(
+                            () => Assert.Fail("undoing action must not issue another action"));
+
+            StoryCardCollection collection = new StoryCardCollection();
+
+            StoryCard card = new StoryCard();
+
+            tracker.Subscribe(collection);
+
+            collection.Add(card);
+
+            Assert.IsNotNull(undoableAction);
+
+            undoableAction.UnExecute();
+
+            Assert.AreEqual(0, collection.Count());
+        }
+
+        [TestMethod]
+        [Ignore]
         public void WhenUndoingReschedule_TrackerDoesNotIssueAnotherAction()
         {
+            //TODO weberse must be migrated when a handler for change message is implemented
+
             var mockActionManager = new Mock<IActionManager>();
             var mockEventAggregator = new Mock<IEventAggregator>();
 
