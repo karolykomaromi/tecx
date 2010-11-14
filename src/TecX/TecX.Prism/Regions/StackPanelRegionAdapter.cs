@@ -2,8 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-using Microsoft.Practices.Composite.Presentation.Regions;
-using Microsoft.Practices.Composite.Regions;
+using Microsoft.Practices.Prism.Regions;
 
 namespace TecX.Prism.Regions
 {

@@ -5,10 +5,10 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
-using Microsoft.Practices.Composite.Modularity;
-using Microsoft.Practices.Composite.Presentation.Regions;
+using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Composite.UnityExtensions;
 using Microsoft.Windows.Controls.Ribbon;
 
 using TecX.Common.Event.Unity;
@@ -50,14 +50,16 @@ namespace TecX.Agile.Planner
 
         }
 
-        protected override IModuleCatalog GetModuleCatalog()
+        protected override IModuleCatalog CreateModuleCatalog()
         {
             ModuleCatalog catalog = new ModuleCatalog();
 
-            catalog.AddModule(typeof (Modules.Main.Module));
+            //TODO weberse move to ConfigureModuleCatalog? whats new in Prism v4
+            catalog.AddModule(typeof(Modules.Main.Module));
 
             return catalog;
         }
+
 
         protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
         {

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Specialized;
 
-using Microsoft.Practices.Composite.Presentation.Regions;
-using Microsoft.Practices.Composite.Regions;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Windows.Controls.Ribbon;
 
 namespace TecX.Prism.Regions
