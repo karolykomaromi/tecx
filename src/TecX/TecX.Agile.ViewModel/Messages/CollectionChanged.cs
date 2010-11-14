@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 using TecX.Common;
 
-namespace TecX.Agile.ViewModel.ChangeTracking
+namespace TecX.Agile.ViewModel.Messages
 {
     public class CollectionChanged<TArtefact> : IMessage
         where TArtefact : PlanningArtefact

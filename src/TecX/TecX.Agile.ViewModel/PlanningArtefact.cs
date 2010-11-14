@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-using TecX.Common;
-using TecX.Undo;
+using TecX.Agile.ViewModel.ChangeTracking;
 
 namespace TecX.Agile.ViewModel
 {
@@ -62,7 +58,7 @@ namespace TecX.Agile.ViewModel
                 OnPropertyChanged(() => Description);
             }
         }
-        
+
         #endregion Properties
 
         #region c'tor

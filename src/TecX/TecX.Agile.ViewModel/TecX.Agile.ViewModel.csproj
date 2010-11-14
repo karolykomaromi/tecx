@@ -52,21 +52,22 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="ChangeTracking\ChangeTracker.cs" />
-    <Compile Include="ChangeTracking\CollectionChanged.cs" />
     <Compile Include="ChangeTracking\CollectionChangeSubscription.cs" />
     <Compile Include="ChangeTracking\IChangeSubscription.cs" />
     <Compile Include="ChangeTracking\IChangeTracker.cs" />
-    <Compile Include="ChangeTracking\IMessage.cs" />
     <Compile Include="ChangeTracking\PostponeStoryCardSubscription.cs" />
-    <Compile Include="ChangeTracking\PropertyChanged.cs" />
     <Compile Include="ChangeTracking\PropertyChangeSubscription.cs" />
     <Compile Include="Backlog.cs" />
-    <Compile Include="ChangeTracking\RescheduledStoryCard.cs" />
     <Compile Include="ChangeTracking\RescheduleStoryCardSubscription.cs" />
-    <Compile Include="ChangeTracking\StoryCardPostponed.cs" />
     <Compile Include="HighlightEventArgs.cs" />
     <Compile Include="HighlightEventHub.cs" />
     <Compile Include="Iteration.cs" />
+    <Compile Include="IterationCollection.cs" />
+    <Compile Include="Messages\CollectionChanged.cs" />
+    <Compile Include="Messages\IMessage.cs" />
+    <Compile Include="Messages\PropertyChanged.cs" />
+    <Compile Include="Messages\StoryCardPostponed.cs" />
+    <Compile Include="Messages\StoryCardRescheduled.cs" />
     <Compile Include="ObservableDictionary.cs" />
     <Compile Include="PlanningArtefact.cs" />
     <Compile Include="Project.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="StoryCardRescheduledEventArgs.cs" />
     <Compile Include="Undo\CollectionChangedAction.cs" />
     <Compile Include="Undo\RescheduleStoryCardAction.cs" />
+    <Compile Include="Undo\SetPropertyAction.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

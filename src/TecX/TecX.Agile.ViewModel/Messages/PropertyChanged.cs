@@ -1,6 +1,6 @@
 ﻿using TecX.Common;
 
-namespace TecX.Agile.ViewModel.ChangeTracking
+namespace TecX.Agile.ViewModel.Messages
 {
     public class PropertyChanged : IMessage
     {

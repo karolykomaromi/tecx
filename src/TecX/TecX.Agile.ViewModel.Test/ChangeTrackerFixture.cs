@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
 using TecX.Agile.ViewModel.ChangeTracking;
+using TecX.Agile.ViewModel.Messages;
 using TecX.Agile.ViewModel.Undo;
 using TecX.Common.Event;
 using TecX.Undo;
@@ -157,7 +158,7 @@ namespace TecX.Agile.ViewModel.Test
             iter1.Reschedule(card, iter2);
 
             mockEventAggregator
-                .Verify(ea => ea.Publish(It.Is<RescheduledStoryCard>(msg => msg.StoryCard == card &&
+                .Verify(ea => ea.Publish(It.Is<StoryCardRescheduled>(msg => msg.StoryCard == card &&
                                                                             msg.From == iter1 &&
                                                                             msg.To == iter2)),
                         Times.Once());

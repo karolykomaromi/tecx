@@ -58,6 +58,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFixture.cs" />
     <Compile Include="ChangeTrackerFixture.cs" />
     <Compile Include="IterationFixture.cs" />
     <Compile Include="ObservableDictionaryFixture.cs" />
