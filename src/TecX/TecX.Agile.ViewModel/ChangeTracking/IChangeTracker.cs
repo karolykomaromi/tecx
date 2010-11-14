@@ -15,5 +15,7 @@
         void Subscribe(StoryCardCollection collection);
 
         void Unsubscribe(StoryCardCollection collection);
+        void Subscribe(Iteration iteration);
+        void Unsubscribe(Iteration iteration);
     }
 }

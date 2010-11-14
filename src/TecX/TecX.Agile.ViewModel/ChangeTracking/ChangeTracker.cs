@@ -16,6 +16,7 @@ namespace TecX.Agile.ViewModel.ChangeTracking
         private readonly Dictionary<Guid, IChangeSubscription> _propertyChangeSubscriptions;
         private readonly Dictionary<Guid, IChangeSubscription> _collectionChangeSubscriptions;
         private readonly Dictionary<Guid, IChangeSubscription> _rescheduleStoryCardSubscriptions;
+        private readonly Dictionary<Guid, IChangeSubscription> _postponeStoryCardSubscriptions;
 
         #endregion Fields
 
@@ -30,6 +31,7 @@ namespace TecX.Agile.ViewModel.ChangeTracking
             _propertyChangeSubscriptions = new Dictionary<Guid, IChangeSubscription>();
             _collectionChangeSubscriptions = new Dictionary<Guid, IChangeSubscription>();
             _rescheduleStoryCardSubscriptions = new Dictionary<Guid, IChangeSubscription>();
+            _postponeStoryCardSubscriptions = new Dictionary<Guid, IChangeSubscription>();
         }
 
         #endregion c'tor
@@ -111,6 +113,29 @@ namespace TecX.Agile.ViewModel.ChangeTracking
             if(_rescheduleStoryCardSubscriptions.TryGetValue(collection.Id, out existing))
             {
                 _rescheduleStoryCardSubscriptions.Remove(collection.Id);
+                existing.Dispose();
+            }
+        }
+
+        public void Subscribe(Iteration iteration)
+        {
+            Guard.AssertNotNull(iteration, "iteration");
+
+            Subscribe((StoryCardCollection)iteration);
+
+            PostponeStoryCardSubscription subscription = new PostponeStoryCardSubscription(_eventAggregator, iteration);
+
+            _postponeStoryCardSubscriptions.Add(iteration.Id, subscription);
+        }
+
+        public void Unsubscribe(Iteration iteration)
+        {
+            Guard.AssertNotNull(iteration, "iteration");
+
+            IChangeSubscription existing;
+            if(_postponeStoryCardSubscriptions.TryGetValue(iteration.Id, out existing))
+            {
+                _postponeStoryCardSubscriptions.Remove(iteration.Id);
                 existing.Dispose();
             }
         }
