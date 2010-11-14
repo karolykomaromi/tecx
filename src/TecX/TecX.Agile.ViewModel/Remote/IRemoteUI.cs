@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TecX.Agile.ViewModel
+namespace TecX.Agile.ViewModel.Remote
 {
     public interface IRemoteUI
     {

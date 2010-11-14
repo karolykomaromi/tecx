@@ -112,17 +112,6 @@ namespace TecX.Common.Event
             {
                 foreach (var subscriber in GetAllSubscribersFor<TMessage>())
                 {
-                    //TODO weberse what about some message filtering here? define interface IMessageFilter with property ShouldHandle of type Predicate<TMessage>
-                    //and check wether handler implements that interface. would be handy wouldnt it?
-
-                    var filter = subscriber as IMessageFilter<TMessage>;
-
-                    if(filter != null)
-                    {
-                        if (!filter.ShouldHandle(message))
-                            continue;
-                    }
-
                     if (_dispatcher != null)
                         _dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => subscriber.Handle(message)));
                     else

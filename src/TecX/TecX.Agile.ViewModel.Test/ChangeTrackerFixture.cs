@@ -17,9 +17,8 @@ namespace TecX.Agile.ViewModel.Test
     public class ChangeTrackerFixture
     {
         [TestMethod]
-        public void WhenChangingPropertyOnSubscribedStoryCard_EventSourceRaisesPropertyChangedEvent()
+        public void WhenChangingPropertyOnSubscribedStoryCard_TrackerIssuesPropertyChangedMessage()
         {
-            var mockActionManager = new Mock<IActionManager>();
             var mockEventAggregator = new Mock<IEventAggregator>();
 
             IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
@@ -60,7 +59,7 @@ namespace TecX.Agile.ViewModel.Test
         }
 
         [TestMethod]
-        public void WhenAddingItemToSubscribedPlanningArtefactCollection_TrackerIssuesAction()
+        public void WhenAddingItemToSubscribedPlanningArtefactCollection_TrackerIssuesCollectionChangedMessage()
         {
             var mockEventAggregator = new Mock<IEventAggregator>();
 
@@ -85,7 +84,7 @@ namespace TecX.Agile.ViewModel.Test
         }
 
         [TestMethod]
-        public void WhenRemovingItemFromSubscribedPlanningArtefactCollection_TrackerIssuesAction()
+        public void WhenRemovingItemFromSubscribedPlanningArtefactCollection_TrackerIssuesCollectionChangedMessage()
         {
             var mockEventAggregator = new Mock<IEventAggregator>();
 
@@ -112,7 +111,7 @@ namespace TecX.Agile.ViewModel.Test
         }
 
         [TestMethod]
-        public void WhenUnsubscribingItem_EventSourceDoesNotRaiseAnyMoreEvents()
+        public void WhenUnsubscribingItem_TrackerDoesNotIssueAnyMoreMessages()
         {
             var mockActionManager = new Mock<IActionManager>();
             var mockEventAggregator = new Mock<IEventAggregator>();
@@ -126,7 +125,7 @@ namespace TecX.Agile.ViewModel.Test
 
             tracker.Subscribe(card);
 
-      
+
             card.Name = name;
 
             tracker.Unsubscribe(card);
@@ -140,7 +139,7 @@ namespace TecX.Agile.ViewModel.Test
         }
 
         [TestMethod]
-        public void WhenReschedulingItemInStoryCardCollection_TrackerIssuesAction()
+        public void WhenReschedulingItemInStoryCardCollection_TrackerIssuesRescheduledMessage()
         {
             var mockEventAggregator = new Mock<IEventAggregator>();
 
@@ -152,8 +151,8 @@ namespace TecX.Agile.ViewModel.Test
 
             iter1.Add(card);
 
-            tracker.Subscribe(iter1);
-            tracker.Subscribe(iter2);
+            tracker.Subscribe((StoryCardCollection)iter1);
+            tracker.Subscribe((StoryCardCollection)iter2);
 
             iter1.Reschedule(card, iter2);
 
@@ -167,7 +166,7 @@ namespace TecX.Agile.ViewModel.Test
         }
 
         [TestMethod]
-        public void WhenUnsubscribingCollection_NoMoreActionsAreIssued()
+        public void WhenUnsubscribingCollection_TrackeDoesNotIssueAnyMoreMessages()
         {
             var mockEventAggregator = new Mock<IEventAggregator>();
 
@@ -193,8 +192,63 @@ namespace TecX.Agile.ViewModel.Test
             mockEventAggregator.VerifyAll();
         }
 
+        [TestMethod]
+        public void WhenSubscribingIteration_TrackerIssuesPostponedMessage()
+        {
+            var mockEventAggregator = new Mock<IEventAggregator>();
 
+            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
 
+            Project project = new Project();
+            Iteration iteration = new Iteration();
+            StoryCard card = new StoryCard();
+
+            iteration.Add(card);
+            project.Add(iteration);
+
+            tracker.Subscribe(iteration);
+
+            iteration.Postpone(card);
+
+            mockEventAggregator
+                .Verify(
+                    ea => ea.Publish(It.Is<StoryCardPostponed>(msg => msg.StoryCard == card && msg.From == iteration)),
+                    Times.Once());
+
+            mockEventAggregator.VerifyAll();
+        }
+
+        [TestMethod]
+        public void WhenUnsubscribingIteraton_TrackerIssuesNoMoreMessages()
+        {
+            var mockEventAggregator = new Mock<IEventAggregator>();
+
+            IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
+
+            Project project = new Project();
+            Iteration iteration = new Iteration();
+            StoryCard card = new StoryCard();
+            StoryCard card2 = new StoryCard { Id = Guid.NewGuid() };
+
+            iteration.Add(card);
+            iteration.Add(card2);
+            project.Add(iteration);
+
+            tracker.Subscribe(iteration);
+
+            iteration.Postpone(card);
+
+            tracker.Unsubscribe(iteration);
+
+            iteration.Postpone(card2);
+
+            mockEventAggregator
+                .Verify(
+                    ea => ea.Publish(It.Is<StoryCardPostponed>(msg => msg.StoryCard == card && msg.From == iteration)),
+                    Times.Once());
+
+            mockEventAggregator.VerifyAll();
+        }
 
 
         [TestMethod]
@@ -220,8 +274,8 @@ namespace TecX.Agile.ViewModel.Test
 
             iter1.Add(card);
 
-            tracker.Subscribe(iter1);
-            tracker.Subscribe(iter2);
+            tracker.Subscribe((StoryCardCollection)iter1);
+            tracker.Subscribe((StoryCardCollection)iter2);
 
             iter1.Reschedule(card, iter2);
 
@@ -311,8 +365,8 @@ namespace TecX.Agile.ViewModel.Test
 
             iter1.Add(card);
 
-            tracker.Subscribe(iter1);
-            tracker.Subscribe(iter2);
+            tracker.Subscribe((StoryCardCollection)iter1);
+            tracker.Subscribe((StoryCardCollection)iter2);
 
             iter1.Reschedule(card, iter2);
 
