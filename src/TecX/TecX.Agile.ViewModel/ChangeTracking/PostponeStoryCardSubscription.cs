@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using TecX.Agile.ViewModel.Messages;
 using TecX.Common;
 using TecX.Common.Event;
 

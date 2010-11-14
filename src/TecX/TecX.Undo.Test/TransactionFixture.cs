@@ -11,33 +11,7 @@ namespace TecX.Undo.Test
     {
         public TestContext TestContext { get; set; }
 
-        [TestMethod]
-        public void Transactions()
-        {
-            var instance = new Exception();
-            //var instance = new Exception { Source = "green" };
-            IActionManager am = new ActionManager();
 
-            SetPropertyAction action = new SetPropertyAction(instance, "Source", "green", "blue");
-
-            am.RecordAction(action);
-
-            Assert.AreEqual("blue", instance.Source);
-            am.Undo();
-            Assert.AreEqual("green", instance.Source);
-
-            using (Transaction.Create(am))
-            {
-                action = new SetPropertyAction(instance, "Source", "green", "red");
-                am.RecordAction(action);
-                Assert.AreEqual("green", instance.Source);
-            }
-            Assert.AreEqual(instance.Source, "red");
-            am.Undo();
-            Assert.AreEqual("green", instance.Source);
-            am.Redo();
-            Assert.AreEqual(instance.Source, "red");
-        }
 
         [TestMethod]
         public void ThrowingActionInsideTransactionWillRollback()

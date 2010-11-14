@@ -1,8 +1,8 @@
 ﻿using TecX.Common;
 
-namespace TecX.Agile.ViewModel.ChangeTracking
+namespace TecX.Agile.ViewModel.Messages
 {
-    public class RescheduledStoryCard : IMessage
+    public class StoryCardRescheduled : IMessage
     {
         #region Fields
 
@@ -33,7 +33,7 @@ namespace TecX.Agile.ViewModel.ChangeTracking
 
         #region c'tor
 
-        public RescheduledStoryCard(StoryCard storyCard, StoryCardCollection from, StoryCardCollection to)
+        public StoryCardRescheduled(StoryCard storyCard, StoryCardCollection from, StoryCardCollection to)
         {
             Guard.AssertNotNull(storyCard, "storyCard");
             Guard.AssertNotNull(from, "from");

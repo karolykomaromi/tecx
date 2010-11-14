@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using TecX.Agile.ViewModel.Messages;
 using TecX.Agile.ViewModel.Undo;
 using TecX.Common;
 using TecX.Common.Event;
@@ -28,8 +29,8 @@ namespace TecX.Agile.ViewModel.ChangeTracking
 
             _subscription = rescheduled.Subscribe(x =>
                                                       {
-                                                          RescheduledStoryCard rescheduledStoryCard =
-                                                              new RescheduledStoryCard(x.StoryCard, x.From, x.To);
+                                                          StoryCardRescheduled rescheduledStoryCard =
+                                                              new StoryCardRescheduled(x.StoryCard, x.From, x.To);
 
                                                           _eventAggregator.Publish(rescheduledStoryCard);
 

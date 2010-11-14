@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Linq;
 
+using TecX.Agile.ViewModel.Messages;
 using TecX.Agile.ViewModel.Undo;
 using TecX.Common;
 using TecX.Common.Event;

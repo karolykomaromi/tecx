@@ -1,8 +1,9 @@
 ﻿using System.Reflection;
 
 using TecX.Common;
+using TecX.Undo;
 
-namespace TecX.Undo.Actions
+namespace TecX.Agile.ViewModel.Undo
 {
     /// <summary>
     /// This is a sample action that can change any property on any object

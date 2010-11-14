@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using TecX.Agile.ViewModel.ChangeTracking;
 using TecX.Common;
 using TecX.Undo;
 
 namespace TecX.Agile.ViewModel
 {
-    public class Project : PlanningArtefactCollection<Iteration>
+    public class Project : IterationCollection, IEnumerable<PlanningArtefact>
     {
         #region Fields
 
-        private Backlog _backlog;
-        
+        private readonly Backlog _backlog;
+
         #endregion Fields
 
         #region Properties
@@ -21,17 +22,6 @@ namespace TecX.Agile.ViewModel
         public Backlog Backlog
         {
             get { return _backlog; }
-            set
-            {
-                Guard.AssertNotNull(value, "value");
-
-                if (_backlog == value)
-                    return;
-
-                OnPropertyChanging(() => Backlog);
-                _backlog = value;
-                OnPropertyChanged(() => Backlog);
-            }
         }
 
         #endregion Properties
@@ -71,12 +61,12 @@ namespace TecX.Agile.ViewModel
             if (Backlog.Id == id)
                 return Backlog as TArtefact;
 
-            foreach(Iteration iteration in this)
+            foreach (Iteration iteration in this)
             {
                 if (iteration.Id == id)
                     return iteration as TArtefact;
 
-                foreach(StoryCard storyCard in iteration)
+                foreach (StoryCard storyCard in iteration)
                 {
                     if (storyCard.Id == id)
                         return storyCard as TArtefact;
@@ -85,5 +75,31 @@ namespace TecX.Agile.ViewModel
 
             return null;
         }
+
+        #region Implementation of IEnumerable<out PlanningArtefact>
+
+        IEnumerator<PlanningArtefact> IEnumerable<PlanningArtefact>.GetEnumerator()
+        {
+            yield return this;
+
+            yield return _backlog;
+
+            foreach (StoryCard storyCard in Backlog)
+            {
+                yield return storyCard;
+            }
+
+            foreach (Iteration iteration in Project)
+            {
+                yield return iteration;
+
+                foreach (StoryCard storyCard in iteration)
+                {
+                    yield return storyCard;
+                }
+            }
+        }
+
+        #endregion Implementation of IEnumerable<out PlanningArtefact>
     }
 }

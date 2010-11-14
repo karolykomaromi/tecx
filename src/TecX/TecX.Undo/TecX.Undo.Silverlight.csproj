@@ -63,7 +63,6 @@
     <Compile Include="ActionManagerExtensions.cs" />
     <Compile Include="Actions\AddItemAction.cs" />
     <Compile Include="Actions\CallMethodAction.cs" />
-    <Compile Include="Actions\SetPropertyAction.cs" />
     <Compile Include="History\HistoryNode.cs" />
     <Compile Include="History\IActionHistory.cs" />
     <Compile Include="History\SimpleHistory.cs" />

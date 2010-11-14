@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 
+using TecX.Agile.ViewModel.ChangeTracking;
 using TecX.Common;
 using TecX.Common.Extensions.Error;
 
