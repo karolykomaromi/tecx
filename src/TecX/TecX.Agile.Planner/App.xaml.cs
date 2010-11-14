@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-using Microsoft.Practices.Composite.UnityExtensions;
+using Microsoft.Practices.Prism.UnityExtensions;
 
 namespace TecX.Agile.Planner
 {

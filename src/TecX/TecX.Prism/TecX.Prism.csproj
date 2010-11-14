@@ -35,11 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.Composite">
-      <HintPath>..\..\..\lib\Prism2.2\Microsoft.Practices.Composite.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Composite.Presentation">
-      <HintPath>..\..\..\lib\Prism2.2\Microsoft.Practices.Composite.Presentation.dll</HintPath>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\..\..\lib\Prism4\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

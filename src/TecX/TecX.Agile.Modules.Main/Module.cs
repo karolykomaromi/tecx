@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 
-using Microsoft.Practices.Composite.Modularity;
-using Microsoft.Practices.Composite.Regions;
+using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Windows.Controls.Ribbon;
 
 using TecX.Agile.Infrastructure;
