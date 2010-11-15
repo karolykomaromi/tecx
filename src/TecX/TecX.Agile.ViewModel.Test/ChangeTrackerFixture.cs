@@ -76,8 +76,8 @@ namespace TecX.Agile.ViewModel.Test
 
             mockEventAggregator
                 .Verify(ea => ea.Publish(
-                    It.Is<CollectionChanged<StoryCard>>(
-                        msg => msg.Collection == collection && msg.NewItems.First() == card)),
+                    It.Is<StoryCardAdded>(
+                        msg => msg.To == collection && msg.StoryCard == card)),
                     Times.Once(),
                     "adding item must trigger CollectionChanged message");
 
@@ -103,8 +103,8 @@ namespace TecX.Agile.ViewModel.Test
 
             mockEventAggregator
                 .Verify(ea => ea.Publish(
-                    It.Is<CollectionChanged<StoryCard>>(
-                        msg => msg.Collection == collection && msg.OldItems.First() == card)),
+                    It.Is<StoryCardRemoved>(
+                        msg => msg.From == collection && msg.StoryCard == card)),
                     Times.Once(),
                     "removing item must trigger CollectionChanged message");
 
@@ -187,8 +187,13 @@ namespace TecX.Agile.ViewModel.Test
 
             mockEventAggregator
                 .Verify(
-                    ea => ea.Publish(It.IsAny<CollectionChanged<StoryCard>>()),
+                    ea => ea.Publish(It.IsAny<StoryCardAdded>()),
                     Times.Once());
+
+            mockEventAggregator
+                .Verify(
+                    ea => ea.Publish(It.IsAny<StoryCardRemoved>()),
+                    Times.Never());
 
             mockEventAggregator.VerifyAll();
         }

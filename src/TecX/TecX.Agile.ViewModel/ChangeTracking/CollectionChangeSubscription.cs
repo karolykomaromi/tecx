@@ -3,11 +3,10 @@ using System.Collections.Specialized;
 using System.Linq;
 
 using TecX.Agile.ViewModel.Messages;
-using TecX.Agile.ViewModel.Undo;
+
 using TecX.Common;
 using TecX.Common.Event;
 using TecX.Common.Extensions.Collections;
-using TecX.Undo;
 
 namespace TecX.Agile.ViewModel.ChangeTracking
 {
@@ -78,11 +77,114 @@ namespace TecX.Agile.ViewModel.ChangeTracking
 
                                                       //_actionManager.RecordAction(action);
 
-                                                      CollectionChanged<TArtefact> collectionChanged =
-                                                          new CollectionChanged<TArtefact>(x.Collection, x.Action,
-                                                                                           x.NewItems, x.OldItems);
+                                                      StoryCardCollection scc = x.Collection as StoryCardCollection;
 
-                                                      _eventAggregator.Publish(collectionChanged);
+                                                      if(scc != null)
+                                                      {
+                                                          switch(x.Action)
+                                                          {
+                                                              case NotifyCollectionChangedAction.Add:
+                                                                  {
+                                                                      StoryCard newItem =
+                                                                          x.NewItems.First() as StoryCard;
+
+                                                                      StoryCardAdded msg = new StoryCardAdded(newItem, scc);
+
+                                                                      //can't use IMessage and generic publish because EA would get TypeParameter wrong
+                                                                      _eventAggregator.Publish(msg);
+                                                                  }
+                                                                  return;
+                                                              case NotifyCollectionChangedAction.Remove:
+                                                                  {
+                                                                      StoryCard oldItem =
+                                                                          x.OldItems.First() as StoryCard;
+
+                                                                      StoryCardRemoved msg = new StoryCardRemoved(oldItem, scc);
+
+                                                                      //can't use IMessage and generic publish because EA would get TypeParameter wrong
+                                                                      _eventAggregator.Publish(msg);
+                                                                  }
+                                                                  return;
+                                                              case NotifyCollectionChangedAction.Replace:
+                                                                  {
+
+                                                                      StoryCard oldItem =
+                                                                          x.OldItems.First() as StoryCard;
+                                                                      
+                                                                      StoryCard newItem =
+                                                                          x.NewItems.First() as StoryCard;
+
+                                                                      StoryCardReplaced msg = new StoryCardReplaced(oldItem, newItem, scc);
+
+                                                                      //can't use IMessage and generic publish because EA would get TypeParameter wrong
+                                                                      _eventAggregator.Publish(msg);
+                                                                  }
+                                                                  return;
+                                                              case NotifyCollectionChangedAction.Move:
+                                                              case NotifyCollectionChangedAction.Reset:
+                                                              default:
+                                                                  throw new ArgumentOutOfRangeException();
+                                                          }
+                                                      }
+
+                                                      IterationCollection ic = x.Collection as IterationCollection;
+
+                                                      if(ic != null)
+                                                      {
+                                                          switch(x.Action)
+                                                          {
+                                                              case NotifyCollectionChangedAction.Add:
+                                                                  {
+                                                                      Iteration newItem =
+                                                                          x.NewItems.First() as Iteration;
+
+                                                                      IterationAdded msg = new IterationAdded(newItem, ic);
+
+                                                                      //can't use IMessage and generic publish because EA would get TypeParameter wrong
+                                                                      _eventAggregator.Publish(msg);
+                                                                  }
+                                                                  return;
+                                                              case NotifyCollectionChangedAction.Remove:
+                                                                  {
+                                                                      Iteration oldItem =
+                                                                          x.OldItems.First() as Iteration;
+
+                                                                      IterationRemoved msg = new IterationRemoved(oldItem, ic);
+
+                                                                      //can't use IMessage and generic publish because EA would get TypeParameter wrong
+                                                                      _eventAggregator.Publish(msg);
+
+                                                                  }
+                                                                  return;
+                                                              case NotifyCollectionChangedAction.Replace:
+                                                                  {
+                                                                      Iteration oldItem =
+                                                                          x.OldItems.First() as Iteration;
+                                                                      
+                                                                      Iteration newItem =
+                                                                          x.NewItems.First() as Iteration;
+
+                                                                      IterationReplaced msg = new IterationReplaced(oldItem, newItem, ic);
+
+                                                                      //can't use IMessage and generic publish because EA would get TypeParameter wrong
+                                                                      _eventAggregator.Publish(msg);
+
+                                                                  }
+                                                                  return;
+                                                              case NotifyCollectionChangedAction.Move:
+                                                              case NotifyCollectionChangedAction.Reset:
+                                                              default:
+                                                                  throw new ArgumentOutOfRangeException();
+                                                          }
+                                                      }
+
+                                                      throw new NotSupportedException("Only supports StoryCardCollection or IterationCollection");
+
+                                                      //CollectionChanged<TArtefact> collectionChanged =
+                                                      //    new CollectionChanged<TArtefact>(x.Collection, x.Action,
+                                                      //                                     x.NewItems, x.OldItems);
+
+                                                      //_eventAggregator.Publish(collectionChanged);
 
                                                   });
         }

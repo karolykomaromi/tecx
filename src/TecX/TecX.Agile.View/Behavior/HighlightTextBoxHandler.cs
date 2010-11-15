@@ -40,8 +40,8 @@ namespace TecX.Agile.View.Behavior
                     //whenever a request comes in to highlight a textbox identified by the Id of the underlying PlanningArtefact from the
                     //DataContext and the name of the field
                     var highlight = from evt in Observable.FromEvent<HighlightEventArgs>(
-                        handler => HighlightEventHub.HighlightField += handler,
-                        handler => HighlightEventHub.HighlightField -= handler)
+                        handler => HighlightEventHub.HighlightFieldRequested += handler,
+                        handler => HighlightEventHub.HighlightFieldRequested -= handler)
                                     where evt.EventArgs.Id == _id &&
                                           evt.EventArgs.FieldName == _fieldName
                                     select evt;

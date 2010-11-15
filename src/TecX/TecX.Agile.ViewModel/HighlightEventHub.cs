@@ -8,7 +8,7 @@ namespace TecX.Agile.ViewModel
     {
         #region Events
 
-        public static event EventHandler<HighlightEventArgs> HighlightField = delegate { };
+        public static event EventHandler<HighlightEventArgs> HighlightFieldRequested = delegate { };
 
         public static event EventHandler<HighlightEventArgs> FieldHighlighted = delegate { };
 
@@ -24,12 +24,12 @@ namespace TecX.Agile.ViewModel
             FieldHighlighted(sender, args);
         }
 
-        public static void RaiseHighlightField(object sender, HighlightEventArgs args)
+        public static void RaiseHighlightFieldRequested(object sender, HighlightEventArgs args)
         {
             Guard.AssertNotNull(sender, "sender");
             Guard.AssertNotNull(args, "args");
 
-            HighlightField(sender, args);
+            HighlightFieldRequested(sender, args);
         }
 
         #endregion Methods
