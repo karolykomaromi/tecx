@@ -42,7 +42,7 @@ namespace TecX.Agile.View.Behavior
                     var highlight = from evt in Observable.FromEvent<HighlightEventArgs>(
                         handler => HighlightEventHub.HighlightFieldRequested += handler,
                         handler => HighlightEventHub.HighlightFieldRequested -= handler)
-                                    where evt.EventArgs.Id == _id &&
+                                    where evt.EventArgs.ArtefactId == _id &&
                                           evt.EventArgs.FieldName == _fieldName
                                     select evt;
 

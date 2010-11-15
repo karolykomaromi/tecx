@@ -21,8 +21,9 @@ namespace TecX.Agile.Peer
 
         #region Events
 
-        public event EventHandler<MovedStoryCardEventArgs> MovedStoryCard = delegate { };
-        public event EventHandler<HighlightEventArgs> HighlightedField = delegate { };
+        public event EventHandler<StoryCardMovedEventArgs> StoryCardMoved = delegate { };
+        public event EventHandler<FieldHighlightedEventArgs> FieldHighlighted = delegate { };
+        public event EventHandler<UpdatedPropertyEventArgs> PropertyUpdated = delegate { };
 
         #endregion Events
 
@@ -42,7 +43,7 @@ namespace TecX.Agile.Peer
             //message comes from somewhere else -> handle it
             if (senderId != Id)
             {
-                var args = new MovedStoryCardEventArgs
+                var args = new StoryCardMovedEventArgs
                                {
                                    Angle = angle,
                                    DeltaX = dx,
@@ -50,7 +51,7 @@ namespace TecX.Agile.Peer
                                    Id = storyCardId
                                };
 
-                MovedStoryCard(this, args);
+                StoryCardMoved(this, args);
             }
                 //message comes from here -> send it to the mesh
             else
@@ -66,14 +67,30 @@ namespace TecX.Agile.Peer
             //message comes from somewhere else -> handle it
             if(senderId != Id)
             {
-                var args = new HighlightEventArgs(artefactId, fieldName);
+                var args = new FieldHighlightedEventArgs(artefactId, fieldName);
 
-                HighlightedField(this, args);
+                FieldHighlighted(this, args);
             }
                 //message comes from here -> send it to the mesh
             else
             {
                 _broadcastToMesh.Highlight(senderId, artefactId, fieldName);
+            }
+        }
+
+        public void UpdateProperty(Guid senderId, Guid artefactId, string propertyName, object newValue)
+        {
+            Guard.AssertNotEmpty(propertyName, "propertyName");
+
+            if(senderId != Id)
+            {
+                var args = new UpdatedPropertyEventArgs(artefactId, propertyName, newValue);
+
+                PropertyUpdated(this, args);
+            }
+            else
+            {
+                _broadcastToMesh.UpdateProperty(senderId, artefactId, propertyName, newValue);
             }
         }
 
@@ -186,5 +203,36 @@ namespace TecX.Agile.Peer
         }
 
         #endregion EventHandling
+    }
+
+    public class UpdatedPropertyEventArgs : EventArgs
+    {
+        private readonly Guid _artefactId;
+        private readonly string _propertyName;
+        private readonly object _newValue;
+
+        public object NewValue
+        {
+            get { return _newValue; }
+        }
+
+        public string PropertyName
+        {
+            get { return _propertyName; }
+        }
+
+        public Guid ArtefactId
+        {
+            get { return _artefactId; }
+        }
+
+        public UpdatedPropertyEventArgs(Guid artefactId, string propertyName, object newValue)
+        {
+            Guard.AssertNotEmpty(propertyName, "propertyName");
+
+            _artefactId = artefactId;
+            _propertyName = propertyName;
+            _newValue = newValue;
+        }
     }
 }

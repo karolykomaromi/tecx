@@ -37,7 +37,7 @@ namespace TecX.Agile.View.Test
 
             Action<object, HighlightEventArgs> action = (s, e) =>
                                                             {
-                                                                Assert.AreEqual(id, e.Id);
+                                                                Assert.AreEqual(id, e.ArtefactId);
                                                                 Assert.AreEqual("Txt", e.FieldName);
                                                                 notified = true;
                                                             };

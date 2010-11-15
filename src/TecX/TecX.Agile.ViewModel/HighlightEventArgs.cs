@@ -6,12 +6,12 @@ namespace TecX.Agile.ViewModel
 {
     public class HighlightEventArgs : EventArgs
     {
-        private readonly Guid _id;
+        private readonly Guid _artefactId;
         private readonly string _fieldName;
 
-        public Guid Id
+        public Guid ArtefactId
         {
-            get { return _id; }
+            get { return _artefactId; }
         }
 
         public string FieldName
@@ -22,11 +22,11 @@ namespace TecX.Agile.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="HighlightEventArgs"/> class
         /// </summary>
-        public HighlightEventArgs(Guid id, string fieldName)
+        public HighlightEventArgs(Guid artefactId, string fieldName)
         {
-            Guard.AssertNotEmpty(fieldName, "controlName");
+            Guard.AssertNotEmpty(fieldName, "fieldName");
 
-            _id = id;
+            _artefactId = artefactId;
             _fieldName = fieldName;
 
         }
