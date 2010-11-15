@@ -16,8 +16,9 @@ namespace TecX.Agile.Peer
     [ServiceContract(CallbackContract = typeof(IPeerClient), Namespace = Constants.Namespace)]
     public interface IPeerClient : IDisposable
     {
-        event EventHandler<MovedStoryCardEventArgs> MovedStoryCard;
-        event EventHandler<HighlightEventArgs> HighlightedField;
+        event EventHandler<StoryCardMovedEventArgs> StoryCardMoved;
+        event EventHandler<FieldHighlightedEventArgs> FieldHighlighted;
+        event EventHandler<UpdatedPropertyEventArgs> PropertyUpdated;
 
         Guid Id { get; }
 
@@ -26,5 +27,8 @@ namespace TecX.Agile.Peer
 
         [OperationContract(IsOneWay = true)]
         void Highlight(Guid senderId, Guid artefactId, string fieldName);
+
+        [OperationContract(IsOneWay = true)]
+        void UpdateProperty(Guid senderId, Guid artefactId, string propertyName, object newValue);
     }
 }

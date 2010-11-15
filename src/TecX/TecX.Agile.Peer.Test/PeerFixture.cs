@@ -26,9 +26,9 @@ namespace TecX.Agile.Peer.Test
 
                     PeerClient peer2 = new PeerClient();
 
-                    peer1.MovedStoryCard += (s, e) => Assert.Fail("message must not bounce back");
+                    peer1.StoryCardMoved += (s, e) => Assert.Fail("message must not bounce back");
 
-                    peer2.MovedStoryCard += (s, e) =>
+                    peer2.StoryCardMoved += (s, e) =>
                                                 {
                                                     messageReceived = true;
                                                 };
@@ -58,9 +58,9 @@ namespace TecX.Agile.Peer.Test
 
                     PeerClient peer2 = new PeerClient();
 
-                    peer1.HighlightedField += (s, e) => Assert.Fail("message must not bounce back");
+                    peer1.FieldHighlighted += (s, e) => Assert.Fail("message must not bounce back");
 
-                    peer2.HighlightedField += (s, e) =>
+                    peer2.FieldHighlighted += (s, e) =>
                     {
                         messageReceived = true;
                     };

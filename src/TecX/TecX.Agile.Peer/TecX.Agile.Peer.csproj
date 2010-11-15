@@ -46,9 +46,10 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Constants.cs" />
-    <Compile Include="HighlightEventArgs.cs" />
+    <Compile Include="FieldHighlightedEventArgs.cs" />
     <Compile Include="IPeerClient.cs" />
-    <Compile Include="MovedStoryCardEventArgs.cs" />
+    <Compile Include="RingBuffer.cs" />
+    <Compile Include="StoryCardMovedEventArgs.cs" />
     <Compile Include="PeerClient.cs" />
     <Compile Include="PeerServiceHost.cs" />
     <Compile Include="PnrpNotAvailableException.cs" />
