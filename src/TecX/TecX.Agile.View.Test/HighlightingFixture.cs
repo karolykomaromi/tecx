@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Agile.View.Test.TestObjects;
@@ -13,7 +11,7 @@ namespace TecX.Agile.View.Test
     public class HighlightingFixture
     {
         [TestMethod]
-        public void WhenTellingViewModelToHighlightTextBox_TextBoxIsFocused()
+        public void WhenRaisingHighlightRequestedEventOnEventHub_TextBoxIsFocued()
         {
             Guid id = Guid.NewGuid();
 
@@ -21,13 +19,13 @@ namespace TecX.Agile.View.Test
 
             TestUserControl ctrl = new TestUserControl(card);
 
-            HighlightEventHub.RaiseHighlightField(this, new HighlightEventArgs(id, "Txt"));
+            HighlightEventHub.RaiseHighlightFieldRequested(this, new HighlightEventArgs(id, "Txt"));
 
             Assert.IsTrue(ctrl.Txt.IsFocused);
         }
 
         [TestMethod]
-        public void WhenFocussingTextBox_ViewModelIsNotified()
+        public void WhenTextBoxGetsFocus_EventHubRaisesFieldHighlightedEvent()
         {
             Guid id = Guid.NewGuid();
 

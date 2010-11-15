@@ -1,44 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-using TecX.Agile.ViewModel.ChangeTracking;
 using TecX.Agile.ViewModel.Messages;
 using TecX.Common.Event;
 
 namespace TecX.Agile.ViewModel.Remote
 {
-    public class RemoteUI : IRemoteUI, 
+    public class RemoteUI : IDisposable,
         ISubscribeTo<PropertyChanged>,
-        ISubscribeTo<CollectionChanged<StoryCard>>,
-        ISubscribeTo<CollectionChanged<Iteration>>,
         ISubscribeTo<StoryCardRescheduled>,
         ISubscribeTo<StoryCardPostponed>
     {
+        public RemoteUI()
+        {
+            HighlightEventHub.FieldHighlighted += OnFieldHighlighted;
+        }
+
+        private void OnFieldHighlighted(object sender, HighlightEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if(disposing)
+            {
+                HighlightEventHub.FieldHighlighted -= OnFieldHighlighted;
+            }
+        }
+
         #region Implementation of IRemoteUI
 
-        public void HighlightField(Guid artefactId, string fieldName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateProperty(Guid artefactId, string propertyName, object newValue)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Handle(PropertyChanged message)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Handle(CollectionChanged<StoryCard> message)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Handle(CollectionChanged<Iteration> message)
         {
             throw new NotImplementedException();
         }
