@@ -11,6 +11,11 @@
         bool CanUndo { get; }
         bool CanRedo { get; }
 
+        /// <summary>
+        /// Checks if we're inside an Undo or Redo operation
+        /// </summary>
+        bool IsActionExecuting { get; }
+
         void BeginTransaction(Transaction t);
         void CommitTransaction();
         void RollBackTransaction();
