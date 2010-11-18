@@ -16,9 +16,11 @@ namespace TecX.Agile.Modules.Main
 {
     public class Module : IModule
     {
+        public const string ModuleName = "Main";
+
         private readonly IEventAggregator _eventAggregator;
         private readonly IRegionManager _regionManager;
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="Module"/> class
         /// </summary>

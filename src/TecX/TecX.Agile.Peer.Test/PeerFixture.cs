@@ -58,9 +58,9 @@ namespace TecX.Agile.Peer.Test
 
                     PeerClient peer2 = new PeerClient();
 
-                    peer1.FieldHighlighted += (s, e) => Assert.Fail("message must not bounce back");
+                    peer1.IncomingRequestToHighlightField += (s, e) => Assert.Fail("message must not bounce back");
 
-                    peer2.FieldHighlighted += (s, e) =>
+                    peer2.IncomingRequestToHighlightField += (s, e) =>
                     {
                         messageReceived = true;
                     };

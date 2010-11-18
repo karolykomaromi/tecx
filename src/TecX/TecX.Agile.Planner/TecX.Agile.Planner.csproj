@@ -126,6 +126,14 @@
       <Project>{1EB35F86-DA6C-4691-A2C5-8587129B520D}</Project>
       <Name>TecX.Agile.Modules.Main</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Peer\TecX.Agile.Peer.csproj">
+      <Project>{4C9A3BE9-2E8F-44B1-965B-42AD35D36071}</Project>
+      <Name>TecX.Agile.Peer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.csproj">
+      <Project>{E4698C1F-EF98-480C-B923-BB986C2B7F37}</Project>
+      <Name>TecX.Agile.ViewModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.View\TecX.Agile.View.csproj">
       <Project>{09B2D14D-9911-4CDA-A175-43754A2AAAFE}</Project>
       <Name>TecX.Agile.View</Name>

@@ -11,6 +11,8 @@ using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 using Microsoft.Windows.Controls.Ribbon;
 
+using TecX.Agile.Peer;
+using TecX.Agile.ViewModel.Remote;
 using TecX.Common.Event.Unity;
 using TecX.Prism.Regions;
 using TecX.Unity.Registration;
@@ -44,6 +46,8 @@ namespace TecX.Agile.Planner
                 .Include(The.Extension<EventAggregatorContainerExtension>())
                 .Include(If.Implements<IRepository>(),
                     Then.Register().WithoutPartName(WellKnownAppParts.DesignPatterns.Repository))
+                .Include(If.Is<WcfPeerRemoteUI>(), Then.Register().As<IRemoteUI>())
+                .Include(If.Is<PeerClient>(), Then.Register().As<IPeerClient>())
                 .ApplyRegistrations();
 
             base.ConfigureContainer();
@@ -54,10 +58,16 @@ namespace TecX.Agile.Planner
         {
             ModuleCatalog catalog = new ModuleCatalog();
 
-            //TODO weberse move to ConfigureModuleCatalog? whats new in Prism v4
-            catalog.AddModule(typeof(Modules.Main.Module));
-
             return catalog;
+        }
+
+        protected override void ConfigureModuleCatalog()
+        {
+            base.ConfigureModuleCatalog();
+
+            ModuleInfo main = new ModuleInfo(Modules.Main.Module.ModuleName, typeof(Modules.Main.Module).AssemblyQualifiedName);
+
+            ModuleCatalog.AddModule(main);
         }
 
 
