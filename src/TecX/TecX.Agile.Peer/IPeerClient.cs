@@ -17,7 +17,7 @@ namespace TecX.Agile.Peer
     public interface IPeerClient : IDisposable
     {
         event EventHandler<StoryCardMovedEventArgs> StoryCardMoved;
-        event EventHandler<FieldHighlightedEventArgs> FieldHighlighted;
+        event EventHandler<FieldHighlightedEventArgs> IncomingRequestToHighlightField;
         event EventHandler<UpdatedPropertyEventArgs> PropertyUpdated;
 
         Guid Id { get; }

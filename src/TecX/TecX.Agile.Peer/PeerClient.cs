@@ -22,7 +22,7 @@ namespace TecX.Agile.Peer
         #region Events
 
         public event EventHandler<StoryCardMovedEventArgs> StoryCardMoved = delegate { };
-        public event EventHandler<FieldHighlightedEventArgs> FieldHighlighted = delegate { };
+        public event EventHandler<FieldHighlightedEventArgs> IncomingRequestToHighlightField = delegate { };
         public event EventHandler<UpdatedPropertyEventArgs> PropertyUpdated = delegate { };
 
         #endregion Events
@@ -69,7 +69,7 @@ namespace TecX.Agile.Peer
             {
                 var args = new FieldHighlightedEventArgs(artefactId, fieldName);
 
-                FieldHighlighted(this, args);
+                IncomingRequestToHighlightField(this, args);
             }
                 //message comes from here -> send it to the mesh
             else
@@ -203,36 +203,5 @@ namespace TecX.Agile.Peer
         }
 
         #endregion EventHandling
-    }
-
-    public class UpdatedPropertyEventArgs : EventArgs
-    {
-        private readonly Guid _artefactId;
-        private readonly string _propertyName;
-        private readonly object _newValue;
-
-        public object NewValue
-        {
-            get { return _newValue; }
-        }
-
-        public string PropertyName
-        {
-            get { return _propertyName; }
-        }
-
-        public Guid ArtefactId
-        {
-            get { return _artefactId; }
-        }
-
-        public UpdatedPropertyEventArgs(Guid artefactId, string propertyName, object newValue)
-        {
-            Guard.AssertNotEmpty(propertyName, "propertyName");
-
-            _artefactId = artefactId;
-            _propertyName = propertyName;
-            _newValue = newValue;
-        }
     }
 }

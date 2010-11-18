@@ -7,62 +7,31 @@ using TecX.Common.Event;
 
 namespace TecX.Agile.ViewModel.Remote
 {
-    public class WcfPeerRemoteUI : IDisposable,
-        ISubscribeTo<PropertyChanged>,
-        ISubscribeTo<StoryCardRescheduled>,
-        ISubscribeTo<StoryCardPostponed>
+    public class WcfPeerRemoteUI : IRemoteUI
     {
         #region Fields
 
         private readonly IPeerClient _peerClient;
+        private readonly IEventAggregator _eventAggregator;
 
         #endregion Fields
 
         #region c'tor
 
-        public WcfPeerRemoteUI(IPeerClient peerClient)
+        public WcfPeerRemoteUI(IPeerClient peerClient, IEventAggregator eventAggregator)
         {
             Guard.AssertNotNull(peerClient, "peerClient");
+            Guard.AssertNotNull(eventAggregator, "eventAggregator");
 
             _peerClient = peerClient;
+            _eventAggregator = eventAggregator;
 
-            RemoteHighlight.OutgoingNotificationThatFieldWasHighlighted += OnLocalOutgoingNotificationThatFieldWasHighlighted;
-
-            _peerClient.FieldHighlighted += OnRemoteFieldHighlighted;
+            _peerClient.IncomingRequestToHighlightField += OnIncomingRequestToHighlightIncomingRequestToHighlightField;
         }
 
         #endregion c'tor
 
-        #region Implementation of IDisposable
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                RemoteHighlight.OutgoingNotificationThatFieldWasHighlighted -= OnLocalOutgoingNotificationThatFieldWasHighlighted;
-            }
-        }
-
-        #endregion Implementation of IDisposable
-
-        private void OnLocalOutgoingNotificationThatFieldWasHighlighted(object sender, RemoteHighlightEventArgs e)
-        {
-            _peerClient.Highlight(_peerClient.Id, e.ArtefactId, e.FieldName);
-        }
-
-        private void OnRemoteFieldHighlighted(object sender, Peer.FieldHighlightedEventArgs e)
-        {
-            Guard.AssertNotNull(e, "e");
-            Guard.AssertNotEmpty(e.FieldName, "e.FieldName");
-
-            RemoteHighlight.RaiseIncomingRequestToHighlightField(this, new RemoteHighlightEventArgs(e.ArtefactId, e.FieldName));
-        }
+        #region EventAggregator Subscriptions
 
         public void Handle(PropertyChanged message)
         {
@@ -75,12 +44,43 @@ namespace TecX.Agile.ViewModel.Remote
 
         public void Handle(StoryCardRescheduled message)
         {
+            Guard.AssertNotNull(message, "message");
+            Guard.AssertNotNull(message.From, "message.From");
+            Guard.AssertNotNull(message.To, "message.To");
+            Guard.AssertNotNull(message.StoryCard, "message.StoryCard");
+
             throw new NotImplementedException();
         }
 
         public void Handle(StoryCardPostponed message)
         {
+            Guard.AssertNotNull(message, "message");
+            Guard.AssertNotNull(message.From, "message.From");
+            Guard.AssertNotNull(message.StoryCard, "message.StoryCard");
+
             throw new NotImplementedException();
         }
+
+        public void Handle(OutgoingNotificationToHighlightField message)
+        {
+            Guard.AssertNotNull(message, "message");
+            Guard.AssertNotEmpty(message.FieldName, "message.FieldName");
+
+            _peerClient.Highlight(_peerClient.Id, message.ArtefactId, message.FieldName);
+        }
+
+        #endregion EventAggregator Subscriptions
+
+        #region EventHandler
+
+        private void OnIncomingRequestToHighlightIncomingRequestToHighlightField(object sender, FieldHighlightedEventArgs e)
+        {
+            Guard.AssertNotNull(e, "e");
+            Guard.AssertNotEmpty(e.FieldName, "e.FieldName");
+
+            _eventAggregator.Publish(new IncomingRequestToHighlightField(e.ArtefactId, e.FieldName));
+        }
+
+        #endregion EventHandler
     }
 }
