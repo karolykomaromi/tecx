@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 using TecX.Agile.ViewModel;
+using TecX.Agile.ViewModel.Remote;
 
 namespace TecX.Agile.View.Behavior
 {
@@ -39,9 +40,9 @@ namespace TecX.Agile.View.Behavior
 
                     //whenever a request comes in to highlight a textbox identified by the Id of the underlying PlanningArtefact from the
                     //DataContext and the name of the field
-                    var highlight = from evt in Observable.FromEvent<HighlightEventArgs>(
-                        handler => HighlightEventHub.HighlightFieldRequested += handler,
-                        handler => HighlightEventHub.HighlightFieldRequested -= handler)
+                    var highlight = from evt in Observable.FromEvent<RemoteHighlightEventArgs>(
+                        handler => RemoteHighlight.IncomingRequestToHighlightField += handler,
+                        handler => RemoteHighlight.IncomingRequestToHighlightField -= handler)
                                     where evt.EventArgs.ArtefactId == _id &&
                                           evt.EventArgs.FieldName == _fieldName
                                     select evt;
@@ -67,7 +68,7 @@ namespace TecX.Agile.View.Behavior
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
             //whenever the textbox receives focus we signal that via an event to the outside world
-            HighlightEventHub.RaiseFieldHighlighted(Element, new HighlightEventArgs(_id, _fieldName));
+            RemoteHighlight.RaiseOutgoingNotificationThatFieldWasHighlighted(Element, new RemoteHighlightEventArgs(_id, _fieldName));
         }
 
         protected override void DoDetach()

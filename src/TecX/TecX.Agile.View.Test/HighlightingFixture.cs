@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Agile.View.Test.TestObjects;
 using TecX.Agile.ViewModel;
+using TecX.Agile.ViewModel.Remote;
 
 namespace TecX.Agile.View.Test
 {
@@ -19,7 +20,7 @@ namespace TecX.Agile.View.Test
 
             TestUserControl ctrl = new TestUserControl(card);
 
-            HighlightEventHub.RaiseHighlightFieldRequested(this, new HighlightEventArgs(id, "Txt"));
+            RemoteHighlight.RaiseIncomingRequestToHighlightField(this, new RemoteHighlightEventArgs(id, "Txt"));
 
             Assert.IsTrue(ctrl.Txt.IsFocused);
         }
@@ -35,22 +36,22 @@ namespace TecX.Agile.View.Test
 
             bool notified = false;
 
-            Action<object, HighlightEventArgs> action = (s, e) =>
+            Action<object, RemoteHighlightEventArgs> action = (s, e) =>
                                                             {
                                                                 Assert.AreEqual(id, e.ArtefactId);
                                                                 Assert.AreEqual("Txt", e.FieldName);
                                                                 notified = true;
                                                             };
 
-            EventHandler<HighlightEventArgs> handler = new EventHandler<HighlightEventArgs>(action);
+            EventHandler<RemoteHighlightEventArgs> handler = new EventHandler<RemoteHighlightEventArgs>(action);
 
-            HighlightEventHub.FieldHighlighted += handler;
+            RemoteHighlight.OutgoingNotificationThatFieldWasHighlighted += handler;
 
             ctrl.Txt.Focus();
 
             Assert.IsTrue(notified);
 
-            HighlightEventHub.FieldHighlighted -= handler;
+            RemoteHighlight.OutgoingNotificationThatFieldWasHighlighted -= handler;
         }
     }
 }

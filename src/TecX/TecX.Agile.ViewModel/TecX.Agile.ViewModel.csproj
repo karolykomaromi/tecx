@@ -59,8 +59,6 @@
     <Compile Include="ChangeTracking\PropertyChangeSubscription.cs" />
     <Compile Include="Backlog.cs" />
     <Compile Include="ChangeTracking\RescheduleStoryCardSubscription.cs" />
-    <Compile Include="HighlightEventArgs.cs" />
-    <Compile Include="HighlightEventHub.cs" />
     <Compile Include="Iteration.cs" />
     <Compile Include="IterationCollection.cs" />
     <Compile Include="Messages\FieldHighlighted.cs" />
@@ -79,7 +77,11 @@
     <Compile Include="PlanningArtefact.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="PlanningArtefactCollection.cs" />
-    <Compile Include="Remote\RemoteUI.cs" />
+    <Compile Include="Remote\AzureServiceBusRemoteUI.cs" />
+    <Compile Include="Remote\RemoteHighlightEventArgs.cs" />
+    <Compile Include="Remote\RemoteHighlight.cs" />
+    <Compile Include="Remote\MassTransitRemoteUI.cs" />
+    <Compile Include="Remote\WcfPeerRemoteUI.cs" />
     <Compile Include="StoryCard.cs" />
     <Compile Include="StoryCardCollection.cs" />
     <Compile Include="StoryCardPostponedEventArgs.cs" />
