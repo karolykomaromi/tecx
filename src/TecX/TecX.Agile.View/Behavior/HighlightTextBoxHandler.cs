@@ -1,22 +1,36 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
 using TecX.Agile.ViewModel;
-using TecX.Agile.ViewModel.Remote;
+using TecX.Agile.ViewModel.Messages;
+using TecX.Common;
+using TecX.Common.Event;
 
 namespace TecX.Agile.View.Behavior
 {
-    public class HighlightTextBoxHandler : BehaviorHandler
+    public class HighlightTextBoxHandler : BehaviorHandler,
+                                           ISubscribeTo<IncomingRequestToHighlightField>
     {
         #region Fields
 
         private Guid _id;
         private string _fieldName;
-        private IDisposable _subscription;
+        //private IDisposable _subscription;
+        private readonly IEventAggregator _eventAggregator;
 
         #endregion Fields
+
+        #region c'tor
+
+        public HighlightTextBoxHandler(IEventAggregator eventAggregator)
+        {
+            Guard.AssertNotNull(eventAggregator, "eventAggregator");
+
+            _eventAggregator = eventAggregator;
+        }
+
+        #endregion c'tor
 
         #region Overrides of BehaviorHandler
 
@@ -38,17 +52,19 @@ namespace TecX.Agile.View.Behavior
 
                     Element.GotFocus += OnGotFocus;
 
-                    //whenever a request comes in to highlight a textbox identified by the Id of the underlying PlanningArtefact from the
-                    //DataContext and the name of the field
-                    var highlight = from evt in Observable.FromEvent<RemoteHighlightEventArgs>(
-                        handler => RemoteHighlight.IncomingRequestToHighlightField += handler,
-                        handler => RemoteHighlight.IncomingRequestToHighlightField -= handler)
-                                    where evt.EventArgs.ArtefactId == _id &&
-                                          evt.EventArgs.FieldName == _fieldName
-                                    select evt;
+                    ////whenever a request comes in to highlight a textbox identified by the Id of the underlying PlanningArtefact from the
+                    ////DataContext and the name of the field
+                    //var highlight = from evt in Observable.FromEvent<RemoteHighlightEventArgs>(
+                    //    handler => RemoteHighlight.IncomingRequestToHighlightField += handler,
+                    //    handler => RemoteHighlight.IncomingRequestToHighlightField -= handler)
+                    //                where evt.EventArgs.ArtefactId == _id &&
+                    //                      evt.EventArgs.FieldName == _fieldName
+                    //                select evt;
 
-                    //...we just set the focus to that control
-                    _subscription = highlight.Subscribe(x => Element.Focus());
+                    ////...we just set the focus to that control
+                    //_subscription = highlight.Subscribe(x => Element.Focus());
+
+                    _eventAggregator.Subscribe(this);
                 }
             }
         }
@@ -67,19 +83,38 @@ namespace TecX.Agile.View.Behavior
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
+            _eventAggregator.Publish(new OutgoingNotificationToHighlightField(_id, _fieldName));
+
             //whenever the textbox receives focus we signal that via an event to the outside world
-            RemoteHighlight.RaiseOutgoingNotificationThatFieldWasHighlighted(Element, new RemoteHighlightEventArgs(_id, _fieldName));
+            //RemoteHighlight.RaiseOutgoingNotificationThatFieldWasHighlighted(Element, new RemoteHighlightEventArgs(_id, _fieldName));
         }
 
         protected override void DoDetach()
         {
             Element.GotFocus -= OnGotFocus;
 
-            _subscription.Dispose();
+            //_subscription.Dispose();
+            //_subscription = null;
 
-            _subscription = null;
             _fieldName = null;
             _id = Guid.Empty;
+
+            _eventAggregator.Unsubscribe(this);
+        }
+
+        #endregion
+
+        #region Implementation of ISubscribeTo<in IncomingRequestToHighlightField>
+
+        public void Handle(IncomingRequestToHighlightField message)
+        {
+            Guard.AssertNotNull(message, "message");
+            Guard.AssertNotEmpty(message.FieldName, "message.FieldName");
+
+            if (message.ArtefactId == _id && message.FieldName == _fieldName)
+            {
+                Element.Focus();
+            }
         }
 
         #endregion
