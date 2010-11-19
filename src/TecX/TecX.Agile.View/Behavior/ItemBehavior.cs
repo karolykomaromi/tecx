@@ -83,7 +83,7 @@ namespace TecX.Agile.View.Behavior
                         var handler = attachedHandlers.SingleOrDefault(
                             x => typeof (THandler).IsAssignableFrom(x.GetType()));
 
-                        //do nothing if a container handler is already attached
+                        //do nothing if a handler is already attached
                         if (handler != null)
                             return;
 

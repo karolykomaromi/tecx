@@ -61,7 +61,6 @@
     <Compile Include="ChangeTracking\RescheduleStoryCardSubscription.cs" />
     <Compile Include="Iteration.cs" />
     <Compile Include="IterationCollection.cs" />
-    <Compile Include="Messages\FieldHighlighted.cs" />
     <Compile Include="Messages\IncomingRequestToHighlightField.cs" />
     <Compile Include="Messages\IMessage.cs" />
     <Compile Include="Messages\IterationAdded.cs" />
@@ -79,10 +78,7 @@
     <Compile Include="Project.cs" />
     <Compile Include="PlanningArtefactCollection.cs" />
     <Compile Include="Remote\AzureServiceBusRemoteUI.cs" />
-    <Compile Include="Remote\HighlightNotifier.cs" />
     <Compile Include="Remote\IRemoteUI.cs" />
-    <Compile Include="Remote\RemoteHighlightEventArgs.cs" />
-    <Compile Include="Remote\RemoteHighlight.cs" />
     <Compile Include="Remote\MassTransitRemoteUI.cs" />
     <Compile Include="Remote\WcfPeerRemoteUI.cs" />
     <Compile Include="ShellViewModel.cs" />

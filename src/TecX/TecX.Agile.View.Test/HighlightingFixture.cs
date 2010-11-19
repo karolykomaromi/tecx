@@ -14,44 +14,48 @@ namespace TecX.Agile.View.Test
         [TestMethod]
         public void WhenRaisingHighlightRequestedEventOnEventHub_TextBoxIsFocued()
         {
-            Guid id = Guid.NewGuid();
+            Assert.Fail("fix test");
 
-            ViewModel.StoryCard card = new ViewModel.StoryCard { Id = id };
+            //Guid id = Guid.NewGuid();
 
-            TestUserControl ctrl = new TestUserControl(card);
+            //ViewModel.StoryCard card = new ViewModel.StoryCard { Id = id };
 
-            RemoteHighlight.RaiseIncomingRequestToHighlightField(this, new RemoteHighlightEventArgs(id, "Txt"));
+            //TestUserControl ctrl = new TestUserControl(card);
 
-            Assert.IsTrue(ctrl.Txt.IsFocused);
+            //RemoteHighlight.RaiseIncomingRequestToHighlightField(this, new RemoteHighlightEventArgs(id, "Txt"));
+
+            //Assert.IsTrue(ctrl.Txt.IsFocused);
         }
 
         [TestMethod]
         public void WhenTextBoxGetsFocus_EventHubRaisesFieldHighlightedEvent()
         {
-            Guid id = Guid.NewGuid();
+            Assert.Fail("fix test");
 
-            ViewModel.StoryCard card = new ViewModel.StoryCard { Id = id };
+            //Guid id = Guid.NewGuid();
 
-            TestUserControl ctrl = new TestUserControl(card);
+            //ViewModel.StoryCard card = new ViewModel.StoryCard { Id = id };
 
-            bool notified = false;
+            //TestUserControl ctrl = new TestUserControl(card);
 
-            Action<object, RemoteHighlightEventArgs> action = (s, e) =>
-                                                            {
-                                                                Assert.AreEqual(id, e.ArtefactId);
-                                                                Assert.AreEqual("Txt", e.FieldName);
-                                                                notified = true;
-                                                            };
+            //bool notified = false;
 
-            EventHandler<RemoteHighlightEventArgs> handler = new EventHandler<RemoteHighlightEventArgs>(action);
+            //Action<object, RemoteHighlightEventArgs> action = (s, e) =>
+            //                                                {
+            //                                                    Assert.AreEqual(id, e.ArtefactId);
+            //                                                    Assert.AreEqual("Txt", e.FieldName);
+            //                                                    notified = true;
+            //                                                };
 
-            RemoteHighlight.OutgoingNotificationThatFieldWasHighlighted += handler;
+            //EventHandler<RemoteHighlightEventArgs> handler = new EventHandler<RemoteHighlightEventArgs>(action);
 
-            ctrl.Txt.Focus();
+            //RemoteHighlight.OutgoingNotificationThatFieldWasHighlighted += handler;
 
-            Assert.IsTrue(notified);
+            //ctrl.Txt.Focus();
 
-            RemoteHighlight.OutgoingNotificationThatFieldWasHighlighted -= handler;
+            //Assert.IsTrue(notified);
+
+            //RemoteHighlight.OutgoingNotificationThatFieldWasHighlighted -= handler;
         }
     }
 }
