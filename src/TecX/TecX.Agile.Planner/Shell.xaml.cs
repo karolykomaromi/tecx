@@ -33,7 +33,7 @@ namespace TecX.Agile.Planner
             // Insert code required on object creation below this point.
         }
 
-        public Shell(ShellViewModel shellViewModel, EventAggregatorAccessor eventAggregatorAccessor)
+        public Shell(ShellViewModel shellViewModel)
             : this()
         {
             Guard.AssertNotNull(shellViewModel, "shellViewModel");

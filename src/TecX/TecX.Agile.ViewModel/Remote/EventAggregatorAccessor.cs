@@ -3,7 +3,7 @@
 using TecX.Common;
 using TecX.Common.Event;
 
-namespace TecX.Agile.View.Behavior
+namespace TecX.Agile.ViewModel.Remote
 {
     public class EventAggregatorAccessor
     {

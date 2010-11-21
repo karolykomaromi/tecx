@@ -36,66 +36,6 @@ namespace TecX.Agile.Peer
 
         #endregion Properties
 
-        #region Implementation of IPeerClient
-
-        public void MoveStoryCard(Guid senderId, Guid storyCardId, double dx, double dy, double angle)
-        {
-            //message comes from somewhere else -> handle it
-            if (senderId != Id)
-            {
-                var args = new StoryCardMovedEventArgs
-                               {
-                                   Angle = angle,
-                                   DeltaX = dx,
-                                   DeltaY = dy,
-                                   Id = storyCardId
-                               };
-
-                StoryCardMoved(this, args);
-            }
-                //message comes from here -> send it to the mesh
-            else
-            {
-                _broadcastToMesh.MoveStoryCard(senderId, storyCardId, dx, dy, angle);
-            }
-        }
-
-        public void Highlight(Guid senderId, Guid artefactId, string fieldName)
-        {
-            Guard.AssertNotEmpty(fieldName, "fieldName");
-
-            //message comes from somewhere else -> handle it
-            if(senderId != Id)
-            {
-                var args = new FieldHighlightedEventArgs(artefactId, fieldName);
-
-                IncomingRequestToHighlightField(this, args);
-            }
-                //message comes from here -> send it to the mesh
-            else
-            {
-                _broadcastToMesh.Highlight(senderId, artefactId, fieldName);
-            }
-        }
-
-        public void UpdateProperty(Guid senderId, Guid artefactId, string propertyName, object newValue)
-        {
-            Guard.AssertNotEmpty(propertyName, "propertyName");
-
-            if(senderId != Id)
-            {
-                var args = new UpdatedPropertyEventArgs(artefactId, propertyName, newValue);
-
-                PropertyUpdated(this, args);
-            }
-            else
-            {
-                _broadcastToMesh.UpdateProperty(senderId, artefactId, propertyName, newValue);
-            }
-        }
-
-        #endregion Implementation of IPeerClient
-       
         #region c'tor
 
         /// <summary>
@@ -142,6 +82,68 @@ namespace TecX.Agile.Peer
 
         #endregion c'tor
 
+        #region Implementation of IPeerClient
+
+        public void MoveStoryCard(Guid senderId, Guid storyCardId, double dx, double dy, double angle)
+        {
+            //message comes from somewhere else -> handle it
+            if (senderId != Id)
+            {
+                var args = new StoryCardMovedEventArgs
+                               {
+                                   Angle = angle,
+                                   DeltaX = dx,
+                                   DeltaY = dy,
+                                   Id = storyCardId
+                               };
+
+                StoryCardMoved(this, args);
+            }
+                //message comes from here -> send it to the mesh
+            else
+            {
+                _broadcastToMesh.MoveStoryCard(senderId, storyCardId, dx, dy, angle);
+            }
+        }
+
+        public void Highlight(Guid senderId, Guid artefactId, string fieldName)
+        {
+            Guard.AssertNotEmpty(fieldName, "fieldName");
+
+            //message comes from somewhere else -> handle it
+            if(senderId != Id)
+            {
+                var args = new FieldHighlightedEventArgs(artefactId, fieldName);
+
+                IncomingRequestToHighlightField(this, args);
+            }
+                //message comes from here -> send it to the mesh
+            else
+            {
+                //TODO weberse when triggered via the eventaggregator this call fails. might be an issue with wrong
+                //thread? maybe i need to create a peerhost before and make sure that some kind of channel is available?
+                _broadcastToMesh.Highlight(senderId, artefactId, fieldName);
+            }
+        }
+
+        public void UpdateProperty(Guid senderId, Guid artefactId, string propertyName, object newValue)
+        {
+            Guard.AssertNotEmpty(propertyName, "propertyName");
+
+            if(senderId != Id)
+            {
+                var args = new UpdatedPropertyEventArgs(artefactId, propertyName, newValue);
+
+                PropertyUpdated(this, args);
+            }
+            else
+            {
+                _broadcastToMesh.UpdateProperty(senderId, artefactId, propertyName, newValue);
+            }
+        }
+
+        #endregion Implementation of IPeerClient
+
         #region Implementation of IDisposable
 
         /// <summary>
@@ -175,7 +177,7 @@ namespace TecX.Agile.Peer
                 _channelFactory.Close();
             }
 
-            // TODO: clean native resources
+            // clean native resources
         }
 
         #endregion Implementation of IDisposable

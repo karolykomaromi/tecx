@@ -12,7 +12,6 @@ namespace TecX.Agile.View.Behavior
         #region Properties
 
         /// <summary>
-        /// TODO add description
         /// This is a dependency property.
         /// </summary>
         public static readonly DependencyProperty AttachedHandlersProperty =

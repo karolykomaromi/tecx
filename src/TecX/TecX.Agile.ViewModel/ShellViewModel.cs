@@ -12,7 +12,7 @@ namespace TecX.Agile.ViewModel
     {
         private readonly IRemoteUI _remoteUI;
 
-        public ShellViewModel(IRemoteUI remoteUI)
+        public ShellViewModel(IRemoteUI remoteUI, EventAggregatorAccessor eventAggregatorAccessor)
         {
             Guard.AssertNotNull(remoteUI, "remoteUI");
 
