@@ -74,7 +74,7 @@ namespace TecX.Agile.Peer
                 _host.Close();
             }
 
-            // TODO: clean native resources
+            // clean native resources
         }
 
         #endregion Implementation of IDisposable

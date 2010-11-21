@@ -18,7 +18,7 @@ namespace TecX.Agile.ViewModel.Remote
 
         #region c'tor
 
-        public WcfPeerRemoteUI(IPeerClient peerClient, IEventAggregator eventAggregator)
+        public WcfPeerRemoteUI(IPeerClient peerClient, IEventAggregator eventAggregator, PeerServiceHost host)
         {
             Guard.AssertNotNull(peerClient, "peerClient");
             Guard.AssertNotNull(eventAggregator, "eventAggregator");

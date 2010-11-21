@@ -78,6 +78,7 @@
     <Compile Include="Project.cs" />
     <Compile Include="PlanningArtefactCollection.cs" />
     <Compile Include="Remote\AzureServiceBusRemoteUI.cs" />
+    <Compile Include="Remote\EventAggregatorAccessor.cs" />
     <Compile Include="Remote\IRemoteUI.cs" />
     <Compile Include="Remote\MassTransitRemoteUI.cs" />
     <Compile Include="Remote\WcfPeerRemoteUI.cs" />

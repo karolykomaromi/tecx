@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
+using TecX.Agile.ViewModel.Remote;
 using TecX.Common;
 using TecX.Common.Event;
 

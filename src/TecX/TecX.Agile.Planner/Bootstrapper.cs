@@ -48,6 +48,7 @@ namespace TecX.Agile.Planner
                     Then.Register().WithoutPartName(WellKnownAppParts.DesignPatterns.Repository))
                 .Include(If.Is<WcfPeerRemoteUI>(), Then.Register().As<IRemoteUI>())
                 .Include(If.Is<PeerClient>(), Then.Register().As<IPeerClient>())
+                .Include(If.Is<PeerServiceHost>(), Then.Register().UsingSingletonMode())
                 .ApplyRegistrations();
 
             base.ConfigureContainer();
