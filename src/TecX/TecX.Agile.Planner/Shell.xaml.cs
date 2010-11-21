@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 
 using Microsoft.Windows.Controls.Ribbon;
 
+using TecX.Agile.View.Behavior;
 using TecX.Agile.ViewModel;
 using TecX.Common;
 
@@ -32,7 +33,7 @@ namespace TecX.Agile.Planner
             // Insert code required on object creation below this point.
         }
 
-        public Shell(ShellViewModel shellViewModel)
+        public Shell(ShellViewModel shellViewModel, EventAggregatorAccessor eventAggregatorAccessor)
             : this()
         {
             Guard.AssertNotNull(shellViewModel, "shellViewModel");
