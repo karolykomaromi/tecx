@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.ServiceModel.PeerResolvers;
 
 using TecX.Common;
@@ -21,8 +22,13 @@ namespace TecX.Agile.Peer
 
         #region Events
 
+        [field: NonSerialized]
         public event EventHandler<StoryCardMovedEventArgs> StoryCardMoved = delegate { };
+
+        [field: NonSerialized]
         public event EventHandler<FieldHighlightedEventArgs> IncomingRequestToHighlightField = delegate { };
+
+        [field: NonSerialized]
         public event EventHandler<UpdatedPropertyEventArgs> PropertyUpdated = delegate { };
 
         #endregion Events
@@ -51,17 +57,25 @@ namespace TecX.Agile.Peer
                 Id = Guid.NewGuid();
 
                 Uri meshAddress = new Uri(Constants.MeshAddress);
+
                 NetPeerTcpBinding binding = new NetPeerTcpBinding();
 
                 binding.Resolver.Mode = PeerResolverMode.Pnrp;
                 binding.Security.Mode = SecurityMode.None;
 
-                //creates a two-way communication channel
-                _channelFactory = new DuplexChannelFactory<IPeerClientChannel>(
-                    new InstanceContext(this), binding, new EndpointAddress(meshAddress));
+                InstanceContext context = new InstanceContext(this);
 
-                //creates an instance of the communication channel
+                EndpointAddress address = new EndpointAddress(meshAddress);
+
+                _channelFactory = new DuplexChannelFactory<IPeerClientChannel>(context, binding, address);
+
                 _broadcastToMesh = _channelFactory.CreateChannel();
+
+                PeerNode thisPeerNode = _broadcastToMesh.GetProperty<PeerNode>();
+
+                var remoteOnlyMessagePropagationFilter = new RemoteOnlyMessagePropagationFilter();
+
+                thisPeerNode.MessagePropagationFilter = remoteOnlyMessagePropagationFilter;
 
                 IOnlineStatus onlineStatus = _broadcastToMesh.GetProperty<IOnlineStatus>();
 
@@ -121,7 +135,7 @@ namespace TecX.Agile.Peer
             else
             {
                 //TODO weberse when triggered via the eventaggregator this call fails. might be an issue with wrong
-                //thread? maybe i need to create a peerhost before and make sure that some kind of channel is available?
+                //thread?
                 _broadcastToMesh.Highlight(senderId, artefactId, fieldName);
             }
         }
@@ -205,5 +219,24 @@ namespace TecX.Agile.Peer
         }
 
         #endregion EventHandling
+    }
+
+    class RemoteOnlyMessagePropagationFilter : PeerMessagePropagationFilter
+    {
+        public RemoteOnlyMessagePropagationFilter()
+        {
+
+        }
+
+        public override PeerMessagePropagation ShouldMessagePropagate(Message message, PeerMessageOrigination origination)
+        {
+            PeerMessagePropagation destination = PeerMessagePropagation.LocalAndRemote;
+
+            if (origination == PeerMessageOrigination.Local)
+
+                destination = PeerMessagePropagation.Remote;
+
+            return destination;
+        }
     }
 }
