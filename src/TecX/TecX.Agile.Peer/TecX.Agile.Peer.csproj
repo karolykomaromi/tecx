@@ -48,6 +48,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="FieldHighlightedEventArgs.cs" />
     <Compile Include="IPeerClient.cs" />
+    <Compile Include="RemoteOnlyMessagePropagationFilter.cs" />
     <Compile Include="RingBuffer.cs" />
     <Compile Include="StoryCardMovedEventArgs.cs" />
     <Compile Include="PeerClient.cs" />

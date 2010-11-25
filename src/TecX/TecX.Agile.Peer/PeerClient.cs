@@ -1,8 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
 using System.ServiceModel.PeerResolvers;
+using System.Threading;
 
 using TecX.Common;
 
@@ -113,10 +114,10 @@ namespace TecX.Agile.Peer
 
                 StoryCardMoved(this, args);
             }
-                //message comes from here -> send it to the mesh
+            //message comes from here -> send it to the mesh
             else
             {
-                _broadcastToMesh.MoveStoryCard(senderId, storyCardId, dx, dy, angle);
+                RunInSyncContext(() => _broadcastToMesh.MoveStoryCard(senderId, storyCardId, dx, dy, angle));
             }
         }
 
@@ -125,18 +126,19 @@ namespace TecX.Agile.Peer
             Guard.AssertNotEmpty(fieldName, "fieldName");
 
             //message comes from somewhere else -> handle it
-            if(senderId != Id)
+            if (senderId != Id)
             {
                 var args = new FieldHighlightedEventArgs(artefactId, fieldName);
 
                 IncomingRequestToHighlightField(this, args);
             }
-                //message comes from here -> send it to the mesh
+            //message comes from here -> send it to the mesh
             else
             {
+
                 //TODO weberse when triggered via the eventaggregator this call fails. might be an issue with wrong
                 //thread?
-                _broadcastToMesh.Highlight(senderId, artefactId, fieldName);
+                RunInSyncContext(() => _broadcastToMesh.Highlight(senderId, artefactId, fieldName));
             }
         }
 
@@ -144,7 +146,7 @@ namespace TecX.Agile.Peer
         {
             Guard.AssertNotEmpty(propertyName, "propertyName");
 
-            if(senderId != Id)
+            if (senderId != Id)
             {
                 var args = new UpdatedPropertyEventArgs(artefactId, propertyName, newValue);
 
@@ -152,7 +154,7 @@ namespace TecX.Agile.Peer
             }
             else
             {
-                _broadcastToMesh.UpdateProperty(senderId, artefactId, propertyName, newValue);
+                RunInSyncContext(() => _broadcastToMesh.UpdateProperty(senderId, artefactId, propertyName, newValue));
             }
         }
 
@@ -219,24 +221,16 @@ namespace TecX.Agile.Peer
         }
 
         #endregion EventHandling
-    }
 
-    class RemoteOnlyMessagePropagationFilter : PeerMessagePropagationFilter
-    {
-        public RemoteOnlyMessagePropagationFilter()
+        private static void RunInSyncContext(Action action)
         {
+            Guard.AssertNotNull(action, "action");
 
-        }
+            SynchronizationContext current = AsyncOperationManager.SynchronizationContext;
 
-        public override PeerMessagePropagation ShouldMessagePropagate(Message message, PeerMessageOrigination origination)
-        {
-            PeerMessagePropagation destination = PeerMessagePropagation.LocalAndRemote;
+            action();
 
-            if (origination == PeerMessageOrigination.Local)
-
-                destination = PeerMessagePropagation.Remote;
-
-            return destination;
+            AsyncOperationManager.SynchronizationContext = current;
         }
     }
 }
