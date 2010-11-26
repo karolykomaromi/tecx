@@ -27,6 +27,6 @@
                 
             </ribbon:RibbonTab>-->
         </rbn:Ribbon>
-        <view:StoryCard Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="200"/>
+        <view:StoryCard x:Name="storyCard" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="200"/>
     </Grid>
 </rbn:RibbonWindow>

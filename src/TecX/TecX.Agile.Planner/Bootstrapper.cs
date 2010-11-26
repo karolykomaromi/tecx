@@ -12,6 +12,7 @@ using Microsoft.Practices.Unity;
 using Microsoft.Windows.Controls.Ribbon;
 
 using TecX.Agile.Peer;
+using TecX.Agile.ViewModel.ChangeTracking;
 using TecX.Agile.ViewModel.Remote;
 using TecX.Common.Event.Unity;
 using TecX.Prism.Regions;
@@ -48,6 +49,7 @@ namespace TecX.Agile.Planner
                     Then.Register().WithoutPartName(WellKnownAppParts.DesignPatterns.Repository))
                 .Include(If.Is<WcfPeerRemoteUI>(), Then.Register().As<IRemoteUI>())
                 .Include(If.Is<PeerClient>(), Then.Register().As<IPeerClient>())
+                .Include(If.Is<ChangeTracker>(), Then.Register().As<IChangeTracker>())
                 .ApplyRegistrations();
 
             base.ConfigureContainer();

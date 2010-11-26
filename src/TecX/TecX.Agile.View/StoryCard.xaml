@@ -33,7 +33,8 @@
         <TextBox
             x:Name="TaskName" 
             Style="{StaticResource HiddenTextBoxStyle}"
-            Grid.ColumnSpan="3" />
+            Grid.ColumnSpan="3"
+            Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"/>
         <Rectangle
             Grid.ColumnSpan="3"
             Style="{StaticResource TopSeparator}"/>
@@ -50,7 +51,8 @@
             x:Name="TaskOwner" 
             Style="{StaticResource HiddenTextBoxStyle}"
             Grid.Row="1" 
-            Grid.Column="2" />
+            Grid.Column="2"
+            Text="{Binding TaskOwner}"/>
         <TextBlock 
             Text="Mostlikely Estimate"
             Grid.Row="2"
@@ -80,7 +82,8 @@
             Grid.ColumnSpan="6" 
             VerticalContentAlignment="Top"
             AcceptsReturn="True" 
-            AllowDrop="False" />
+            AllowDrop="False"
+            Text="{Binding Description}"/>
         <Grid 
             x:Name="Overlay" 
             Grid.Row="2"

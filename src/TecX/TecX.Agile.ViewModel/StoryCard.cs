@@ -9,6 +9,7 @@ namespace TecX.Agile.ViewModel
         #region Fields
 
         private Color _background;
+        private string _taskOwner;
 
         #endregion Fields
 
@@ -27,6 +28,20 @@ namespace TecX.Agile.ViewModel
                 OnPropertyChanging(() => Background);
                 _background = value;
                 OnPropertyChanged(() => Background);
+            }
+        }
+
+        public string TaskOwner
+        {
+            get { return _taskOwner; }
+            set
+            {
+                if (_taskOwner == value)
+                    return;
+
+                OnPropertyChanging(() => TaskOwner);
+                _taskOwner = value;
+                OnPropertyChanged(() => TaskOwner);
             }
         }
 
