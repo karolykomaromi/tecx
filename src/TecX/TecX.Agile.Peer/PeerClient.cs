@@ -117,7 +117,7 @@ namespace TecX.Agile.Peer
             //message comes from here -> send it to the mesh
             else
             {
-                RunInSyncContext(() => _broadcastToMesh.MoveStoryCard(senderId, storyCardId, dx, dy, angle));
+                RunWithWorkaroundForBclBug(() => _broadcastToMesh.MoveStoryCard(senderId, storyCardId, dx, dy, angle));
             }
         }
 
@@ -135,10 +135,7 @@ namespace TecX.Agile.Peer
             //message comes from here -> send it to the mesh
             else
             {
-
-                //TODO weberse when triggered via the eventaggregator this call fails. might be an issue with wrong
-                //thread?
-                RunInSyncContext(() => _broadcastToMesh.Highlight(senderId, artefactId, fieldName));
+                RunWithWorkaroundForBclBug(() => _broadcastToMesh.Highlight(senderId, artefactId, fieldName));
             }
         }
 
@@ -154,7 +151,7 @@ namespace TecX.Agile.Peer
             }
             else
             {
-                RunInSyncContext(() => _broadcastToMesh.UpdateProperty(senderId, artefactId, propertyName, newValue));
+                RunWithWorkaroundForBclBug(() => _broadcastToMesh.UpdateProperty(senderId, artefactId, propertyName, newValue));
             }
         }
 
@@ -222,7 +219,7 @@ namespace TecX.Agile.Peer
 
         #endregion EventHandling
 
-        private static void RunInSyncContext(Action action)
+        private static void RunWithWorkaroundForBclBug(Action action)
         {
             Guard.AssertNotNull(action, "action");
 
