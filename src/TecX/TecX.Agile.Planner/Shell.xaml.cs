@@ -41,6 +41,9 @@ namespace TecX.Agile.Planner
             _shellViewModel = shellViewModel;
 
             DataContext = shellViewModel;
+
+            shellViewModel.Card = storyCard.DataContext as StoryCard;
         }
+
     }
 }
