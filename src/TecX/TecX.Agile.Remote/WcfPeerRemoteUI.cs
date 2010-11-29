@@ -4,30 +4,28 @@ using TecX.Agile.Infrastructure;
 using TecX.Agile.Infrastructure.Events;
 using TecX.Agile.Peer;
 using TecX.Common;
-using TecX.Common.Event;
 
-namespace TecX.Agile.ViewModel.Remote
+namespace TecX.Agile.Remote
 {
     public class WcfPeerRemoteUI : IRemoteUI
     {
         #region Fields
 
         private readonly IPeerClient _peerClient;
-        private readonly IEventAggregator _eventAggregator;
+        private readonly HighlightMessageFilter _highlightMessageFilter;
 
         #endregion Fields
 
         #region c'tor
 
-        public WcfPeerRemoteUI(IPeerClient peerClient, IEventAggregator eventAggregator)
+        public WcfPeerRemoteUI(IPeerClient peerClient)
         {
             Guard.AssertNotNull(peerClient, "peerClient");
-            Guard.AssertNotNull(eventAggregator, "eventAggregator");
 
             _peerClient = peerClient;
-            _eventAggregator = eventAggregator;
+            _peerClient.IncomingRequestToHighlightField += OnIncomingRequestToHighlightField;
 
-            _peerClient.IncomingRequestToHighlightField += OnIncomingRequestToHighlightIncomingRequestToHighlightField;
+            _highlightMessageFilter = new HighlightMessageFilter();
         }
 
         #endregion c'tor
@@ -67,19 +65,27 @@ namespace TecX.Agile.ViewModel.Remote
             Guard.AssertNotNull(message, "message");
             Guard.AssertNotEmpty(message.FieldName, "message.FieldName");
 
-            _peerClient.Highlight(_peerClient.Id, message.ArtefactId, message.FieldName);
+            if(_highlightMessageFilter.ShouldLetPass(message))
+            {
+                _peerClient.Highlight(_peerClient.Id, message.ArtefactId, message.FieldName);
+            }
         }
 
         #endregion EventAggregator Subscriptions
 
         #region EventHandler
 
-        private void OnIncomingRequestToHighlightIncomingRequestToHighlightField(object sender, FieldHighlightedEventArgs e)
+        private void OnIncomingRequestToHighlightField(object sender, FieldHighlightedEventArgs e)
         {
             Guard.AssertNotNull(e, "e");
             Guard.AssertNotEmpty(e.FieldName, "e.FieldName");
 
-            _eventAggregator.Publish(new IncomingRequestToHighlightField(e.ArtefactId, e.FieldName));
+            _highlightMessageFilter.Enqueue(e.ArtefactId, e.FieldName);
+
+            var commandArgs = new FieldHighlighted(e.ArtefactId, e.FieldName);
+
+            if (Commands.HighlightField.CanExecute(commandArgs))
+                Commands.HighlightField.Execute(commandArgs);
         }
 
         #endregion EventHandler

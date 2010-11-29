@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Text;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using TecX.Common;
+using TecX.Agile.Infrastructure.Events;
+using TecX.Agile.Remote;
 
 namespace TecX.Agile.Peer.Test
 {
@@ -75,6 +75,23 @@ namespace TecX.Agile.Peer.Test
             {
                 Assert.Inconclusive(ex.Message);
             }
+        }
+
+        [TestMethod]
+        public void GivenAnInboundMessageThatWillTriggerAnOutBoundMessage_WhenCheckingWetherToSendOutboundMessage_SaysNo()
+        {
+            Guid artefactId = Guid.NewGuid();
+            const string fieldName = "Description";
+
+            HighlightMessageFilter filter = new HighlightMessageFilter();
+
+            filter.Enqueue(artefactId, fieldName);
+
+            FieldHighlighted outboundMessage = new FieldHighlighted(artefactId, fieldName);
+
+            bool letPass = filter.ShouldLetPass(outboundMessage);
+
+            Assert.IsFalse(letPass);
         }
     }
 }

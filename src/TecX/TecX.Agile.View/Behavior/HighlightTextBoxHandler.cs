@@ -2,22 +2,25 @@
 using System.Windows;
 using System.Windows.Controls;
 
-using TecX.Agile.ViewModel;
+using Microsoft.Practices.Prism.Commands;
+
+using TecX.Agile.Infrastructure;
 using TecX.Agile.Infrastructure.Events;
+using TecX.Agile.ViewModel;
 using TecX.Common;
 using TecX.Common.Event;
 
 namespace TecX.Agile.View.Behavior
 {
-    public class HighlightTextBoxHandler : BehaviorHandler,
-                                           ISubscribeTo<IncomingRequestToHighlightField>
+    public class HighlightTextBoxHandler : BehaviorHandler
     {
         #region Fields
 
         private Guid _id;
         private string _fieldName;
-        //private IDisposable _subscription;
         private readonly IEventAggregator _eventAggregator;
+
+        private readonly DelegateCommand<FieldHighlighted> _highlightFieldCommand;
 
         #endregion Fields
 
@@ -28,6 +31,15 @@ namespace TecX.Agile.View.Behavior
             Guard.AssertNotNull(eventAggregator, "eventAggregator");
 
             _eventAggregator = eventAggregator;
+
+            _highlightFieldCommand = new DelegateCommand<FieldHighlighted>(message =>
+                                                                               {
+                                                                                   if (message.ArtefactId == _id &&
+                                                                                       message.FieldName == _fieldName)
+                                                                                   {
+                                                                                       Element.Focus();
+                                                                                   }
+                                                                               });
         }
 
         #endregion c'tor
@@ -52,19 +64,7 @@ namespace TecX.Agile.View.Behavior
 
                     Element.GotFocus += OnGotFocus;
 
-                    ////whenever a request comes in to highlight a textbox identified by the Id of the underlying PlanningArtefact from the
-                    ////DataContext and the name of the field
-                    //var highlight = from evt in Observable.FromEvent<RemoteHighlightEventArgs>(
-                    //    handler => RemoteHighlight.IncomingRequestToHighlightField += handler,
-                    //    handler => RemoteHighlight.IncomingRequestToHighlightField -= handler)
-                    //                where evt.EventArgs.ArtefactId == _id &&
-                    //                      evt.EventArgs.FieldName == _fieldName
-                    //                select evt;
-
-                    ////...we just set the focus to that control
-                    //_subscription = highlight.Subscribe(x => Element.Focus());
-
-                    _eventAggregator.Subscribe(this);
+                    Commands.HighlightField.RegisterCommand(_highlightFieldCommand);
                 }
             }
         }
@@ -84,37 +84,16 @@ namespace TecX.Agile.View.Behavior
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
             _eventAggregator.Publish(new FieldHighlighted(_id, _fieldName));
-
-            //whenever the textbox receives focus we signal that via an event to the outside world
-            //RemoteHighlight.RaiseOutgoingNotificationThatFieldWasHighlighted(Element, new RemoteHighlightEventArgs(_id, _fieldName));
         }
 
         protected override void DoDetach()
         {
             Element.GotFocus -= OnGotFocus;
 
-            //_subscription.Dispose();
-            //_subscription = null;
-
             _fieldName = null;
             _id = Guid.Empty;
 
-            _eventAggregator.Unsubscribe(this);
-        }
-
-        #endregion
-
-        #region Implementation of ISubscribeTo<in IncomingRequestToHighlightField>
-
-        public void Handle(IncomingRequestToHighlightField message)
-        {
-            Guard.AssertNotNull(message, "message");
-            Guard.AssertNotEmpty(message.FieldName, "message.FieldName");
-
-            if (message.ArtefactId == _id && message.FieldName == _fieldName)
-            {
-                Element.Focus();
-            }
+            Commands.HighlightField.UnregisterCommand(_highlightFieldCommand);
         }
 
         #endregion
