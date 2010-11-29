@@ -61,7 +61,7 @@ namespace TecX.Agile.ViewModel.Remote
             throw new NotImplementedException();
         }
 
-        public void Handle(OutgoingNotificationToHighlightField message)
+        public void Handle(FieldHighlighted message)
         {
             Guard.AssertNotNull(message, "message");
             Guard.AssertNotEmpty(message.FieldName, "message.FieldName");

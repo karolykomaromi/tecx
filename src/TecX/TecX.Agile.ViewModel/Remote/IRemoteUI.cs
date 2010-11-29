@@ -7,7 +7,7 @@ namespace TecX.Agile.ViewModel.Remote
         ISubscribeTo<PropertyChanged>, 
         ISubscribeTo<StoryCardRescheduled>, 
         ISubscribeTo<StoryCardPostponed>, 
-        ISubscribeTo<OutgoingNotificationToHighlightField>
+        ISubscribeTo<FieldHighlighted>
     {
     }
 }

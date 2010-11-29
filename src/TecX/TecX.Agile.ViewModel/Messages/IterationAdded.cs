@@ -2,7 +2,7 @@
 
 namespace TecX.Agile.ViewModel.Messages
 {
-    public class IterationAdded : IMessage
+    public class IterationAdded : IDomainEvent
     {
         private readonly Iteration _iteration;
         private readonly IterationCollection _to;

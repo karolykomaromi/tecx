@@ -2,7 +2,7 @@
 
 namespace TecX.Agile.ViewModel.Messages
 {
-    public class IterationReplaced : IMessage
+    public class IterationReplaced : IDomainEvent
     {
         private readonly Iteration _oldItem;
         private readonly Iteration _newItem;
