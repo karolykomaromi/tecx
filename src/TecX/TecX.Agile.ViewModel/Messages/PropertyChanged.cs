@@ -2,7 +2,7 @@
 
 namespace TecX.Agile.ViewModel.Messages
 {
-    public class PropertyChanged : IMessage
+    public class PropertyChanged : IDomainEvent
     {
         #region Fields
 

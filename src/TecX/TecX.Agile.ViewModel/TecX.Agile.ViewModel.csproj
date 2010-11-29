@@ -65,11 +65,11 @@
     <Compile Include="Iteration.cs" />
     <Compile Include="IterationCollection.cs" />
     <Compile Include="Messages\IncomingRequestToHighlightField.cs" />
-    <Compile Include="Messages\IMessage.cs" />
+    <Compile Include="Messages\IDomainEvent.cs" />
     <Compile Include="Messages\IterationAdded.cs" />
     <Compile Include="Messages\IterationRemoved.cs" />
     <Compile Include="Messages\IterationReplaced.cs" />
-    <Compile Include="Messages\OutgoingNotificationToHighlightField.cs" />
+    <Compile Include="Messages\FieldHighlighted.cs" />
     <Compile Include="Messages\PropertyChanged.cs" />
     <Compile Include="Messages\StoryCardAdded.cs" />
     <Compile Include="Messages\StoryCardPostponed.cs" />

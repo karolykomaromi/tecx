@@ -7,7 +7,7 @@ using TecX.Common;
 
 namespace TecX.Agile.ViewModel.Messages
 {
-    public class StoryCardAdded : IMessage
+    public class StoryCardAdded : IDomainEvent
     {
         private readonly StoryCard _storyCard;
         private readonly StoryCardCollection _to;

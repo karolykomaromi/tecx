@@ -83,7 +83,7 @@ namespace TecX.Agile.View.Behavior
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
-            _eventAggregator.Publish(new OutgoingNotificationToHighlightField(_id, _fieldName));
+            _eventAggregator.Publish(new FieldHighlighted(_id, _fieldName));
 
             //whenever the textbox receives focus we signal that via an event to the outside world
             //RemoteHighlight.RaiseOutgoingNotificationThatFieldWasHighlighted(Element, new RemoteHighlightEventArgs(_id, _fieldName));

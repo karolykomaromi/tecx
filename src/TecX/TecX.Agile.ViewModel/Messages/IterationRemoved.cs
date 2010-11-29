@@ -2,7 +2,7 @@
 
 namespace TecX.Agile.ViewModel.Messages
 {
-    public class IterationRemoved : IMessage
+    public class IterationRemoved : IDomainEvent
     {
         private readonly Iteration _iteration;
         private readonly IterationCollection _from;

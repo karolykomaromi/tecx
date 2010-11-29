@@ -2,7 +2,7 @@
 
 namespace TecX.Agile.ViewModel.Messages
 {
-    public class StoryCardRemoved : IMessage
+    public class StoryCardRemoved : IDomainEvent
     {
         private readonly StoryCard _storyCard;
         private readonly StoryCardCollection _from;

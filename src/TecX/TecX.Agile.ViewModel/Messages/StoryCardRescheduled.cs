@@ -2,7 +2,7 @@
 
 namespace TecX.Agile.ViewModel.Messages
 {
-    public class StoryCardRescheduled : IMessage
+    public class StoryCardRescheduled : IDomainEvent
     {
         #region Fields
 

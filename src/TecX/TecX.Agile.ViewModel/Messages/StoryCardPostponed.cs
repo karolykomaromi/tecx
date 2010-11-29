@@ -2,7 +2,7 @@
 
 namespace TecX.Agile.ViewModel.Messages
 {
-    public class StoryCardPostponed : IMessage
+    public class StoryCardPostponed : IDomainEvent
     {
         private readonly StoryCard _storyCard;
         private readonly Iteration _from;
