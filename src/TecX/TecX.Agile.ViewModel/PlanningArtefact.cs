@@ -1,7 +1,5 @@
 ﻿using System;
 
-using TecX.Agile.ViewModel.ChangeTracking;
-
 namespace TecX.Agile.ViewModel
 {
     [Serializable]

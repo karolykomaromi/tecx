@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E4698C1F-EF98-480C-B923-BB986C2B7F37}</ProjectGuid>
+    <ProjectGuid>{0150B33A-390B-423D-9A2B-59BEDF902A38}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TecX.Agile.ViewModel</RootNamespace>
-    <AssemblyName>TecX.Agile.ViewModel</AssemblyName>
+    <RootNamespace>TecX.Agile.Remote</RootNamespace>
+    <AssemblyName>TecX.Agile.Remote</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -35,43 +35,35 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.CoreEx, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\Rx\dotNET4\System.CoreEx.dll</HintPath>
-    </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Reactive, Version=1.0.2617.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\lib\Rx\dotNET4\System.Reactive.dll</HintPath>
-    </Reference>
-    <Reference Include="WindowsBase" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Backlog.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="Iteration.cs" />
-    <Compile Include="IterationCollection.cs" />
-    <Compile Include="ObservableDictionary.cs" />
-    <Compile Include="PlanningArtefact.cs" />
-    <Compile Include="Project.cs" />
-    <Compile Include="PlanningArtefactCollection.cs" />
-    <Compile Include="StoryCard.cs" />
-    <Compile Include="StoryCardCollection.cs" />
-    <Compile Include="StoryCardPostponedEventArgs.cs" />
-    <Compile Include="StoryCardRescheduledEventArgs.cs" />
-    <Compile Include="ViewModelBase.cs" />
+    <Compile Include="AzureServiceBusRemoteUI.cs" />
+    <Compile Include="MassTransitRemoteUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WcfPeerRemoteUI.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.csproj">
+      <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
+      <Name>TecX.Agile.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Peer\TecX.Agile.Peer.csproj">
       <Project>{4C9A3BE9-2E8F-44B1-965B-42AD35D36071}</Project>
       <Name>TecX.Agile.Peer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.csproj">
+      <Project>{E4698C1F-EF98-480C-B923-BB986C2B7F37}</Project>
+      <Name>TecX.Agile.ViewModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.csproj">
       <Project>{266522EB-9DCB-451A-8CD7-678188DCB5F6}</Project>
@@ -81,15 +73,6 @@
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TecX.Undo\TecX.Undo.csproj">
-      <Project>{692D5946-BFB5-46EC-A012-5FBF853A93EE}</Project>
-      <Name>TecX.Undo</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ChangeTracking\" />
-    <Folder Include="Remote\" />
-    <Folder Include="Undo\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

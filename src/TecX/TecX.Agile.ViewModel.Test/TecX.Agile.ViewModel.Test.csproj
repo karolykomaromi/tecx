@@ -71,6 +71,18 @@
     <Compile Include="ViewModelBaseFixture.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile.ChangeTracking\TecX.Agile.ChangeTracking.csproj">
+      <Project>{E7D68497-0BAC-44D6-95DC-F05A7EB203FC}</Project>
+      <Name>TecX.Agile.ChangeTracking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.csproj">
+      <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
+      <Name>TecX.Agile.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Undo\TecX.Agile.Undo.csproj">
+      <Project>{61A12638-28BA-4A67-AD53-E94D7EE25675}</Project>
+      <Name>TecX.Agile.Undo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.csproj">
       <Project>{E4698C1F-EF98-480C-B923-BB986C2B7F37}</Project>
       <Name>TecX.Agile.ViewModel</Name>

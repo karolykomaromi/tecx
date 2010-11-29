@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Agile.View.Test.TestObjects;
 using TecX.Agile.ViewModel;
-using TecX.Agile.ViewModel.Remote;
+
 
 namespace TecX.Agile.View.Test
 {
