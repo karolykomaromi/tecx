@@ -49,5 +49,19 @@ namespace TecX.Agile.Peer
 
             return contains;
         }
+
+        public bool Remove(T item)
+        {
+            Guard.AssertNotNull(item, "item");
+
+            int index = _items.FindIndex(i => _comparer.Equals(i, item));
+
+            if (index == -1)
+                return false;
+
+            _items.RemoveAt(index);
+
+            return true;
+        }
     }
 }

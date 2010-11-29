@@ -58,9 +58,17 @@
       <Project>{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}</Project>
       <Name>TecX.Agile.Error</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.csproj">
+      <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
+      <Name>TecX.Agile.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Peer\TecX.Agile.Peer.csproj">
       <Project>{4C9A3BE9-2E8F-44B1-965B-42AD35D36071}</Project>
       <Name>TecX.Agile.Peer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Remote\TecX.Agile.Remote.csproj">
+      <Project>{0150B33A-390B-423D-9A2B-59BEDF902A38}</Project>
+      <Name>TecX.Agile.Remote</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>

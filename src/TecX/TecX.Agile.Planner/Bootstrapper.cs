@@ -14,7 +14,7 @@ using Microsoft.Windows.Controls.Ribbon;
 using TecX.Agile.Infrastructure;
 using TecX.Agile.Peer;
 using TecX.Agile.ChangeTracking;
-using TecX.Agile.ViewModel.Remote;
+using TecX.Agile.Remote;
 using TecX.Common.Event.Unity;
 using TecX.Prism.Regions;
 using TecX.Unity.Registration;
