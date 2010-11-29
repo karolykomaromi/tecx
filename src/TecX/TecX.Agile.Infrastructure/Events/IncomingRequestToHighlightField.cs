@@ -2,10 +2,10 @@
 
 using TecX.Common;
 
-namespace TecX.Agile.ViewModel.Messages
+namespace TecX.Agile.Infrastructure.Events
 {
-    public class FieldHighlighted
-    {        
+    public class IncomingRequestToHighlightField : IDomainEvent
+    {
         private readonly Guid _artefactId;
         private readonly string _fieldName;
 
@@ -19,7 +19,7 @@ namespace TecX.Agile.ViewModel.Messages
             get { return _artefactId; }
         }
 
-        public FieldHighlighted(Guid artefactId, string fieldName)
+        public IncomingRequestToHighlightField(Guid artefactId, string fieldName)
         {
             Guard.AssertNotEmpty(fieldName, "fieldName");
 

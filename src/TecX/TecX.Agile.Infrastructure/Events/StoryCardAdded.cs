@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using TecX.Agile.ViewModel;
 using TecX.Common;
 
-namespace TecX.Agile.ViewModel.Messages
+namespace TecX.Agile.Infrastructure.Events
 {
     public class StoryCardAdded : IDomainEvent
     {

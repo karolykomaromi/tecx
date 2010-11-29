@@ -1,13 +1,14 @@
-﻿using TecX.Common;
+﻿using TecX.Agile.ViewModel;
+using TecX.Common;
 
-namespace TecX.Agile.ViewModel.Messages
+namespace TecX.Agile.Infrastructure.Events
 {
-    public class StoryCardPostponed : IDomainEvent
+    public class StoryCardRemoved : IDomainEvent
     {
         private readonly StoryCard _storyCard;
-        private readonly Iteration _from;
+        private readonly StoryCardCollection _from;
 
-        public Iteration From
+        public StoryCardCollection From
         {
             get { return _from; }
         }
@@ -17,7 +18,7 @@ namespace TecX.Agile.ViewModel.Messages
             get { return _storyCard; }
         }
 
-        public StoryCardPostponed(StoryCard storyCard, Iteration from)
+        public StoryCardRemoved(StoryCard storyCard, StoryCardCollection from)
         {
             Guard.AssertNotNull(storyCard, "storyCard");
             Guard.AssertNotNull(from, "from");
@@ -25,6 +26,5 @@ namespace TecX.Agile.ViewModel.Messages
             _storyCard = storyCard;
             _from = from;
         }
-
     }
 }

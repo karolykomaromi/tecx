@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 using TecX.Agile.ViewModel;
-using TecX.Agile.ViewModel.Messages;
+using TecX.Agile.Infrastructure.Events;
 using TecX.Common;
 using TecX.Common.Event;
 

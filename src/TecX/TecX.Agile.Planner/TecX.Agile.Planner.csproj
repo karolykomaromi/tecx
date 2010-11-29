@@ -91,6 +91,7 @@
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ShellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
@@ -118,6 +119,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile.ChangeTracking\TecX.Agile.ChangeTracking.csproj">
+      <Project>{E7D68497-0BAC-44D6-95DC-F05A7EB203FC}</Project>
+      <Name>TecX.Agile.ChangeTracking</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Data\TecX.Agile.Data.csproj">
       <Project>{5A6CB6EB-7298-40B9-91FD-0378798D8F7C}</Project>
       <Name>TecX.Agile.Data</Name>
@@ -133,6 +138,10 @@
     <ProjectReference Include="..\TecX.Agile.Peer\TecX.Agile.Peer.csproj">
       <Project>{4C9A3BE9-2E8F-44B1-965B-42AD35D36071}</Project>
       <Name>TecX.Agile.Peer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Remote\TecX.Agile.Remote.csproj">
+      <Project>{0150B33A-390B-423D-9A2B-59BEDF902A38}</Project>
+      <Name>TecX.Agile.Remote</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.csproj">
       <Project>{E4698C1F-EF98-480C-B923-BB986C2B7F37}</Project>

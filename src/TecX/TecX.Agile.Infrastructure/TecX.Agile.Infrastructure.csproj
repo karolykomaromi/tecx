@@ -48,11 +48,38 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Commands.cs" />
+    <Compile Include="EventAggregatorAccessor.cs" />
+    <Compile Include="Events\FieldHighlighted.cs" />
+    <Compile Include="Events\IDomainEvent.cs" />
+    <Compile Include="Events\IncomingRequestToHighlightField.cs" />
+    <Compile Include="Events\IterationAdded.cs" />
+    <Compile Include="Events\IterationRemoved.cs" />
+    <Compile Include="Events\IterationReplaced.cs" />
+    <Compile Include="Events\PropertyChanged.cs" />
+    <Compile Include="Events\StoryCardAdded.cs" />
+    <Compile Include="Events\StoryCardPostponed.cs" />
+    <Compile Include="Events\StoryCardRemoved.cs" />
+    <Compile Include="Events\StoryCardReplaced.cs" />
+    <Compile Include="Events\StoryCardRescheduled.cs" />
+    <Compile Include="IChangeTracker.cs" />
+    <Compile Include="IRemoteUI.cs" />
     <Compile Include="Regions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Events\" />
+    <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.csproj">
+      <Project>{E4698C1F-EF98-480C-B923-BB986C2B7F37}</Project>
+      <Name>TecX.Agile.ViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.csproj">
+      <Project>{266522EB-9DCB-451A-8CD7-678188DCB5F6}</Project>
+      <Name>TecX.Common.Event</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
+      <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
+      <Name>TecX.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

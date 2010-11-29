@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using TecX.Agile.ViewModel.ChangeTracking;
-using TecX.Common;
-using TecX.Undo;
-
 namespace TecX.Agile.ViewModel
 {
     public class Project : IterationCollection, IEnumerable<PlanningArtefact>

@@ -1,4 +1,4 @@
-﻿namespace TecX.Agile.ViewModel.Messages
+﻿namespace TecX.Agile.Infrastructure.Events
 {
     public interface IDomainEvent
     {

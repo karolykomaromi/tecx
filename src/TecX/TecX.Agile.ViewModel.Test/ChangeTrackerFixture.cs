@@ -6,8 +6,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Moq;
 
-using TecX.Agile.ViewModel.ChangeTracking;
-using TecX.Agile.ViewModel.Messages;
+using TecX.Agile.ChangeTracking;
+using TecX.Agile.Infrastructure;
+using TecX.Agile.Infrastructure.Events;
 using TecX.Agile.ViewModel.Undo;
 using TecX.Common.Event;
 using TecX.Undo;

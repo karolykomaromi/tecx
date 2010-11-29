@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\..\..\lib\Prism4\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -78,6 +81,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.csproj">
+      <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
+      <Name>TecX.Agile.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.csproj">
       <Project>{E4698C1F-EF98-480C-B923-BB986C2B7F37}</Project>
       <Name>TecX.Agile.ViewModel</Name>

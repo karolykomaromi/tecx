@@ -1,6 +1,7 @@
-﻿using TecX.Common;
+﻿using TecX.Agile.ViewModel;
+using TecX.Common;
 
-namespace TecX.Agile.ViewModel.Messages
+namespace TecX.Agile.Infrastructure.Events
 {
     public class StoryCardRescheduled : IDomainEvent
     {
