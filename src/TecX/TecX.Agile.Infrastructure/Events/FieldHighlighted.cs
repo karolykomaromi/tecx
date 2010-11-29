@@ -4,7 +4,7 @@ using TecX.Common;
 
 namespace TecX.Agile.Infrastructure.Events
 {
-    public class FieldHighlighted
+    public class FieldHighlighted : IDomainEvent
     {        
         private readonly Guid _artefactId;
         private readonly string _fieldName;

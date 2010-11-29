@@ -60,11 +60,13 @@
     <Compile Include="Behavior\PreviewFocusHandler.cs" />
     <Compile Include="Behavior\ItemBehavior.cs" />
     <Compile Include="Converter\ColorToSolidColorBrushConverter.cs" />
+    <Compile Include="Converter\StringToDecimalConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoryCard.xaml.cs">
       <DependentUpon>StoryCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIHelper.cs" />
+    <Compile Include="Validation\DecimalOnlyValidationRule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Resources\NamedStyles.xaml">
