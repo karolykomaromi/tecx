@@ -10,6 +10,8 @@ namespace TecX.Agile.ViewModel
 
         private Color _background;
         private string _taskOwner;
+        private decimal _mostLikelyEstimate;
+        private decimal _actualEffort;
 
         #endregion Fields
 
@@ -45,6 +47,34 @@ namespace TecX.Agile.ViewModel
             }
         }
 
+        public decimal MostLikelyEstimate
+        {
+            get { return _mostLikelyEstimate; }
+            set
+            {
+                if (_mostLikelyEstimate == value)
+                    return;
+
+                OnPropertyChanging(() => MostLikelyEstimate);
+                _mostLikelyEstimate = value;
+                OnPropertyChanged(() => MostLikelyEstimate);
+            }
+        }
+
+        public decimal ActualEffort
+        {
+            get { return _actualEffort; }
+            set
+            {
+                if (_actualEffort == value)
+                    return;
+
+                OnPropertyChanging(() => ActualEffort);
+                _actualEffort = value;
+                OnPropertyChanged(() => ActualEffort);
+            }
+        }
+
         #endregion Properties
 
         #region c'tor
@@ -52,6 +82,9 @@ namespace TecX.Agile.ViewModel
         public StoryCard()
         {
             _background = Constants.Colors.Yellow;
+            _taskOwner = string.Empty;
+            _mostLikelyEstimate = 0.0m;
+            _actualEffort = 0.0m;
         }
 
         #endregion c'tor

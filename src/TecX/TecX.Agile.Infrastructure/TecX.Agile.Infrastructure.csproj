@@ -51,7 +51,6 @@
     <Compile Include="EventAggregatorAccessor.cs" />
     <Compile Include="Events\FieldHighlighted.cs" />
     <Compile Include="Events\IDomainEvent.cs" />
-    <Compile Include="Events\IncomingRequestToHighlightField.cs" />
     <Compile Include="Events\IterationAdded.cs" />
     <Compile Include="Events\IterationRemoved.cs" />
     <Compile Include="Events\IterationReplaced.cs" />
