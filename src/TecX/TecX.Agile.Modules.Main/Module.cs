@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Controls;
-
-using Microsoft.Practices.Prism.Modularity;
+﻿using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Windows.Controls.Ribbon;
 
 using TecX.Agile.Infrastructure;
 using TecX.Common;
-using TecX.Common.Event;
 
 namespace TecX.Agile.Modules.Main
 {
@@ -18,18 +11,15 @@ namespace TecX.Agile.Modules.Main
     {
         public const string ModuleName = "Main";
 
-        private readonly IEventAggregator _eventAggregator;
         private readonly IRegionManager _regionManager;
         
         /// <summary>
         /// Initializes a new instance of the <see cref="Module"/> class
         /// </summary>
-        public Module(IEventAggregator eventAggregator, IRegionManager regionManager)
+        public Module(IRegionManager regionManager)
         {
-            Guard.AssertNotNull(eventAggregator, "eventAggregator");
             Guard.AssertNotNull(regionManager, "regionManager");
 
-            _eventAggregator = eventAggregator;
             _regionManager = regionManager;
         }
 
@@ -42,12 +32,16 @@ namespace TecX.Agile.Modules.Main
         {
             IRegion mainToolBar = _regionManager.Regions[Regions.MainToolBar];
 
-            RibbonButton btn = new RibbonButton { Label = "click me!" };
-            RibbonGroup grp = new RibbonGroup { Header = "FirstRibbonGroup" };
-            grp.Items.Add(btn);
+            RibbonButton btnAddStory = new RibbonButton {Label = "Add Story", Command = Commands.AddStoryCard};
+            RibbonButton btnRemoveStory = new RibbonButton {Label = "Remove Story", Command = Commands.RemoveStoryCard};
+
+            RibbonGroup grp = new RibbonGroup { Header = "Story Management" };
+            grp.Items.Add(btnAddStory);
+            grp.Items.Add(btnRemoveStory);
+
             RibbonTab tab = new RibbonTab
                                 {
-                                    Header = "Main RibbonTab"
+                                    Header = "Project"
                                 };
             tab.Items.Add(grp);
 

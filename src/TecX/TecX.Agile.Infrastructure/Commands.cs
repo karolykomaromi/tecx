@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Microsoft.Practices.Prism.Commands;
+﻿using Microsoft.Practices.Prism.Commands;
 
 namespace TecX.Agile.Infrastructure
 {
     public static class Commands
     {
         public static readonly CompositeCommand HighlightField = new CompositeCommand();
+        public static readonly CompositeCommand AddStoryCard = new CompositeCommand();
+        public static readonly CompositeCommand RemoveStoryCard = new CompositeCommand();
     }
 
     public class CommandProxy
@@ -17,6 +14,16 @@ namespace TecX.Agile.Infrastructure
         public CompositeCommand HighlightField
         {
             get { return Commands.HighlightField; }
+        }
+
+        public CompositeCommand AddStoryCard
+        {
+            get { return Commands.AddStoryCard; }
+        }
+
+        public CompositeCommand RemoveStoryCard
+        {
+            get { return Commands.RemoveStoryCard; }
         }
     }
 }

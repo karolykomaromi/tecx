@@ -28,10 +28,11 @@ namespace TecX.Agile.Planner
             get { return _card; }
             set
             {
-                _changeTracker.Unsubscribe(_card);
-                
+                if (_card != null)
+                    _changeTracker.Unsubscribe(_card);
+
                 _card = value;
-                
+
                 _changeTracker.Subscribe(_card);
             }
         }
