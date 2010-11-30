@@ -5,7 +5,8 @@ using TecX.Common;
 namespace TecX.Agile.View.Behavior
 {
     public class RntBehavior : MovementBehaviorBase
-    {        #region Properties
+    {        
+        #region Properties
 
         /// <summary>
         /// This is a dependency property.

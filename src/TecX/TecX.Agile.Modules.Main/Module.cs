@@ -3,6 +3,7 @@ using Microsoft.Practices.Prism.Regions;
 using Microsoft.Windows.Controls.Ribbon;
 
 using TecX.Agile.Infrastructure;
+using TecX.Agile.Modules.Main.View;
 using TecX.Common;
 
 namespace TecX.Agile.Modules.Main
@@ -32,7 +33,7 @@ namespace TecX.Agile.Modules.Main
         {
             IRegion mainToolBar = _regionManager.Regions[Regions.MainToolBar];
 
-            RibbonButton btnAddStory = new RibbonButton {Label = "Add Story", Command = Commands.AddStoryCard};
+            RibbonButton btnAddStory = new RibbonButton {Label = "Add Story", Command = Commands.AddStoryCard };
             RibbonButton btnRemoveStory = new RibbonButton {Label = "Remove Story", Command = Commands.RemoveStoryCard};
 
             RibbonGroup grp = new RibbonGroup { Header = "Story Management" };
@@ -46,6 +47,10 @@ namespace TecX.Agile.Modules.Main
             tab.Items.Add(grp);
 
             mainToolBar.Add(tab);
+
+            IRegion main = _regionManager.Regions[Regions.Main];
+
+            main.Add(new Surface());
         }
 
         #endregion Implementation of IModule
