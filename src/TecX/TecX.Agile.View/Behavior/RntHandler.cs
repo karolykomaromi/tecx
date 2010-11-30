@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 
 using TecX.Agile.Infrastructure;
+using TecX.Common;
 using TecX.Common.Event;
 
 namespace TecX.Agile.View.Behavior
@@ -76,8 +77,8 @@ namespace TecX.Agile.View.Behavior
 
             if (element != null)
             {
-                //Grid layoutRoot = element.FindName("LayoutRoot") as Grid;
-                Panel layoutRoot = element.Content as Panel;
+                Grid layoutRoot = element.FindName("Overlay") as Grid;
+                //Panel layoutRoot = element.Content as Panel;
 
                 if (layoutRoot != null)
                 {
@@ -112,7 +113,8 @@ namespace TecX.Agile.View.Behavior
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
             //ignore click if the item is pinned
-            if (Element.IsPinned() || !Element.IsMouseCaptured)
+            if (Element.IsPinned() || 
+                !Element.IsMouseCaptured)
                 return;
 
             if (e.LeftButton.Equals(MouseButtonState.Pressed))
@@ -148,7 +150,6 @@ namespace TecX.Agile.View.Behavior
             Point dropPoint = e.GetPosition(Tabletop.Surface);
             dropPoint = Tabletop.Surface.PointToScreen(dropPoint);
 
-            //EventAggregator.GetEvent<TabletopItemDropEvent>().Publish(new TabletopItemDropEventArgs(Element, dropPoint));
             _eventAggregator.Publish(new ItemDropped(Element, dropPoint));
         }
 
@@ -178,9 +179,25 @@ namespace TecX.Agile.View.Behavior
 
     internal class ItemDropped
     {
+        private readonly FrameworkElement _element;
+        private readonly Point _dropPoint;
+
+        public Point DropPoint
+        {
+            get { return _dropPoint; }
+        }
+
+        public FrameworkElement Element
+        {
+            get { return _element; }
+        }
+
         public ItemDropped(FrameworkElement element, Point dropPoint)
         {
-            throw new NotImplementedException();
+            Guard.AssertNotNull(element, "element");
+
+            _element = element;
+            _dropPoint = dropPoint;
         }
     }
 }

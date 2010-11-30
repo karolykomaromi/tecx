@@ -4,12 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Converter="clr-namespace:TecX.Agile.View.Converter" 
-             xmlns:Validation="clr-namespace:TecX.Agile.View.Validation" 
-             mc:Ignorable="d" 
+             xmlns:Validation="clr-namespace:TecX.Agile.View.Validation" xmlns:Behavior="clr-namespace:TecX.Agile.View.Behavior" mc:Ignorable="d" 
              d:DesignHeight="200" 
              d:DesignWidth="300"             
              BorderBrush="Black"
-             BorderThickness="1">
+             BorderThickness="1"
+             Behavior:RntBehavior.IsEnabled="true">
     <UserControl.Resources>
         <ResourceDictionary>            
             <ResourceDictionary.MergedDictionaries>
@@ -103,7 +103,6 @@
             AllowDrop="False"
             Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"/>
         <Grid 
-            x:Name="Overlay" 
             Grid.Row="2"
             Grid.RowSpan="2" 
             Grid.ColumnSpan="3" 
@@ -115,5 +114,10 @@
             <Rectangle Style="{StaticResource Separator}" Margin="0,100,0,0" />
             <Rectangle Style="{StaticResource Separator}" Margin="0,125,0,0" />
         </Grid>
+        <Grid            
+            x:Name="Overlay" 
+            Grid.RowSpan="4"
+            Grid.ColumnSpan="3"
+            IsHitTestVisible="false"/>
     </Grid>
 </UserControl>
