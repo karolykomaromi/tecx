@@ -56,17 +56,22 @@
     <Compile Include="Behavior\HighlightTextBoxHandler.cs" />
     <Compile Include="Behavior\HighlightTextBoxBehavior.cs" />
     <Compile Include="Behavior\IBehaviorHandler.cs" />
+    <Compile Include="Behavior\MovementBehaviorBase.cs" />
     <Compile Include="Behavior\PreviewFocusBehavior.cs" />
     <Compile Include="Behavior\PreviewFocusHandler.cs" />
-    <Compile Include="Behavior\ItemBehavior.cs" />
+    <Compile Include="Behavior\BehaviorBase.cs" />
+    <Compile Include="Behavior\RntBehavior.cs" />
+    <Compile Include="Behavior\RntHandler.cs" />
+    <Compile Include="Behavior\TossingBehavior.cs" />
+    <Compile Include="Behavior\TossingHandler.cs" />
     <Compile Include="Converter\ColorToSolidColorBrushConverter.cs" />
-    <Compile Include="Converter\StringToDecimalConverter.cs" />
+    <Compile Include="Converter\StringToDoubleConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoryCard.xaml.cs">
       <DependentUpon>StoryCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIHelper.cs" />
-    <Compile Include="Validation\DecimalOnlyValidationRule.cs" />
+    <Compile Include="Validation\DoubleOnlyValidationRule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Resources\NamedStyles.xaml">

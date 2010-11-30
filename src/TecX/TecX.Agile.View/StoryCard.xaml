@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Converter="clr-namespace:TecX.Agile.View.Converter" xmlns:Validation="clr-namespace:TecX.Agile.View.Validation" mc:Ignorable="d" 
+             xmlns:Converter="clr-namespace:TecX.Agile.View.Converter" 
+             xmlns:Validation="clr-namespace:TecX.Agile.View.Validation" 
+             mc:Ignorable="d" 
              d:DesignHeight="200" 
              d:DesignWidth="300"             
              BorderBrush="Black"
@@ -14,7 +16,7 @@
                 <ResourceDictionary Source="Resources/NamedStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <Converter:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrush_ValueConverter" />
-            <Converter:StringToDecimalConverter x:Key="StringToDecimal_ValueConverter" />
+            <Converter:StringToDoubleConverter x:Key="StringToDouble_ValueConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid 
@@ -43,9 +45,9 @@
             Style="{StaticResource HiddenTextBoxStyle}"
             Grid.Row="1">
             <TextBox.Text>
-                <Binding Path="MostLikelyEstimate" Converter="{StaticResource StringToDecimal_ValueConverter}" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="MostLikelyEstimate" Converter="{StaticResource StringToDouble_ValueConverter}" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <Validation:DecimalOnlyValidationRule/>
+                        <Validation:DoubleOnlyValidationRule/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -56,9 +58,9 @@
             Grid.Row="1" 
             Grid.Column="1">
             <TextBox.Text>
-                <Binding Path="ActualEffort" Converter="{StaticResource StringToDecimal_ValueConverter}" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="ActualEffort" Converter="{StaticResource StringToDouble_ValueConverter}" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <Validation:DecimalOnlyValidationRule/>
+                        <Validation:DoubleOnlyValidationRule/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -68,7 +70,7 @@
             Style="{StaticResource HiddenTextBoxStyle}"
             Grid.Row="1" 
             Grid.Column="2"
-            Text="{Binding TaskOwner}"/>
+            Text="{Binding Path=TaskOwner, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock 
             Text="Mostlikely Estimate"
             Grid.Row="2"
@@ -99,7 +101,7 @@
             VerticalContentAlignment="Top"
             AcceptsReturn="True" 
             AllowDrop="False"
-            Text="{Binding Description}"/>
+            Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"/>
         <Grid 
             x:Name="Overlay" 
             Grid.Row="2"

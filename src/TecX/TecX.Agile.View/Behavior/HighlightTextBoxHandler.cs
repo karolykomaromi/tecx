@@ -59,13 +59,22 @@ namespace TecX.Agile.View.Behavior
 
                 if (artefact != null)
                 {
-                    _fieldName = fieldName;
                     _id = artefact.Id;
-
-                    Element.GotFocus += OnGotFocus;
-
-                    Commands.HighlightField.RegisterCommand(_highlightFieldCommand);
                 }
+
+                ctrl.DataContextChanged += (s, e) =>
+                                               {
+                                                   artefact = ctrl.DataContext as PlanningArtefact;
+
+                                                   if (artefact != null)
+                                                   {
+                                                       _id = artefact.Id;
+                                                   }
+                                               };
+
+                _fieldName = fieldName;
+                Element.GotFocus += OnGotFocus;
+                Commands.HighlightField.RegisterCommand(_highlightFieldCommand);
             }
         }
 
