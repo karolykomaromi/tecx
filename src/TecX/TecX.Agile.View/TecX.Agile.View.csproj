@@ -53,7 +53,7 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Behavior\BehaviorHandler.cs" />
-    <Compile Include="Behavior\Extensions.cs" />
+    <Compile Include="Behavior\FrameworkElementExtensions.cs" />
     <Compile Include="Behavior\HighlightTextBoxHandler.cs" />
     <Compile Include="Behavior\HighlightTextBoxBehavior.cs" />
     <Compile Include="Behavior\IBehaviorHandler.cs" />
