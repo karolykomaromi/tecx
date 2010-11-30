@@ -9,7 +9,7 @@ namespace TecX.Agile.View.Behavior
     /// Used when a transparent element is on top of the current one which and 
     /// cannot be invisible to hit testing
     /// </summary>
-    public class PreviewFocusBehavior : ItemBehavior
+    public class PreviewFocusBehavior : BehaviorBase
     {
         #region Properties
 

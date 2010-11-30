@@ -10,8 +10,8 @@ namespace TecX.Agile.ViewModel
 
         private Color _background;
         private string _taskOwner;
-        private decimal _mostLikelyEstimate;
-        private decimal _actualEffort;
+        private double _mostLikelyEstimate;
+        private double _actualEffort;
 
         #endregion Fields
 
@@ -47,7 +47,7 @@ namespace TecX.Agile.ViewModel
             }
         }
 
-        public decimal MostLikelyEstimate
+        public double MostLikelyEstimate
         {
             get { return _mostLikelyEstimate; }
             set
@@ -61,7 +61,7 @@ namespace TecX.Agile.ViewModel
             }
         }
 
-        public decimal ActualEffort
+        public double ActualEffort
         {
             get { return _actualEffort; }
             set
@@ -83,8 +83,8 @@ namespace TecX.Agile.ViewModel
         {
             _background = Constants.Colors.Yellow;
             _taskOwner = string.Empty;
-            _mostLikelyEstimate = 0.0m;
-            _actualEffort = 0.0m;
+            _mostLikelyEstimate = 0.0;
+            _actualEffort = 0.0;
         }
 
         #endregion c'tor

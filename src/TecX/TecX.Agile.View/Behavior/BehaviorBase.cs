@@ -2,51 +2,46 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 
-using TecX.Agile.Infrastructure;
 using TecX.Common;
-using TecX.Common.Event;
 
 namespace TecX.Agile.View.Behavior
 {
-    public class HighlightTextBoxBehavior : BehaviorBase
+    public abstract class BehaviorBase : DependencyObject
     {
         #region Properties
 
         /// <summary>
         /// This is a dependency property.
         /// </summary>
-        public static readonly DependencyProperty IsEnabledProperty =
+        public static readonly DependencyProperty AttachedHandlersProperty =
             DependencyProperty.RegisterAttached(
-                "IsEnabled",
-                typeof (bool),
-                typeof (HighlightTextBoxBehavior),
-                new FrameworkPropertyMetadata(false, OnBehaviorEnabledChanged));
+                "AttachedHandlers",
+                typeof (IList<IBehaviorHandler>),
+                typeof (BehaviorBase),
+                new FrameworkPropertyMetadata(null));
 
         /// <summary>
-        /// Setter for <see cref="DependencyProperty"/> <see cref="IsEnabledProperty"/>
+        /// Setter for <see cref="DependencyProperty"/> <see cref="AttachedHandlersProperty"/>
         /// </summary>
-        public static void SetIsEnabled(TextBox textBox, bool value)
+        public static void SetAttachedHandlers(DependencyObject dependencyObject, IList<IBehaviorHandler> value)
         {
-            Guard.AssertNotNull(textBox, "textBox");
+            Guard.AssertNotNull(dependencyObject, "dependencyObject");
 
-            textBox.SetValue(IsEnabledProperty, value);
+            dependencyObject.SetValue(AttachedHandlersProperty, value);
         }
 
         /// <summary>
-        /// Getter for <see cref="DependencyProperty"/> <see cref="IsEnabledProperty"/>
+        /// Getter for <see cref="DependencyProperty"/> <see cref="AttachedHandlersProperty"/>
         /// </summary>
-        public static bool GetIsEnabled(TextBox textBox)
+        public static IList<IBehaviorHandler> GetAttachedHandlers(DependencyObject dependencyObject)
         {
-            Guard.AssertNotNull(textBox, "textBox");
+            Guard.AssertNotNull(dependencyObject, "dependencyObject");
 
-            return (bool) textBox.GetValue(IsEnabledProperty);
+            return (IList<IBehaviorHandler>) dependencyObject.GetValue(AttachedHandlersProperty);
         }
 
         #endregion Properties
-
-        #region Methods
 
         /// <summary>
         /// Called when [behavior enabled].
@@ -54,14 +49,15 @@ namespace TecX.Agile.View.Behavior
         /// <param name="dependencyObject">The dependency object.</param>
         /// <param name="args">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> 
         /// instance containing the event data.</param>
-        private static void OnBehaviorEnabledChanged(DependencyObject dependencyObject,
-            DependencyPropertyChangedEventArgs args)
+        protected static void OnBehaviorEnabledChanged<THandler>(DependencyObject dependencyObject,
+                                                                 DependencyPropertyChangedEventArgs args)
+            where THandler : IBehaviorHandler, new()
         {
             //don't do anything when you are in the designer
             if (!DesignerProperties.GetIsInDesignMode(dependencyObject))
             {
-                bool isEnabled = (bool)args.NewValue;
-                bool oldValue = (bool)args.OldValue;
+                bool isEnabled = (bool) args.NewValue;
+                bool oldValue = (bool) args.OldValue;
 
                 //do nothing if the setting did not change
                 if (isEnabled == oldValue)
@@ -73,7 +69,7 @@ namespace TecX.Agile.View.Behavior
                 {
                     var attachedHandlers = GetAttachedHandlers(element);
 
-                    if (attachedHandlers == null)
+                    if(attachedHandlers == null)
                     {
                         attachedHandlers = new List<IBehaviorHandler>();
 
@@ -84,17 +80,13 @@ namespace TecX.Agile.View.Behavior
                     if (isEnabled)
                     {
                         var handler = attachedHandlers.SingleOrDefault(
-                            x => typeof(HighlightTextBoxHandler).IsAssignableFrom(x.GetType()));
+                            x => typeof (THandler).IsAssignableFrom(x.GetType()));
 
                         //do nothing if a handler is already attached
                         if (handler != null)
                             return;
 
-                        //create a new handler that listens to incoming requests via EA
-                        //and publishes outgoing notifications via EA
-                        IEventAggregator eventAggregator = EventAggregatorAccessor.EventAggregator;
-
-                        handler = new HighlightTextBoxHandler(eventAggregator);
+                        handler = new THandler();
 
                         handler.Attach(element);
 
@@ -103,7 +95,7 @@ namespace TecX.Agile.View.Behavior
                     else
                     {
                         var handler = attachedHandlers.SingleOrDefault(
-                            x => typeof(HighlightTextBoxHandler).IsAssignableFrom(x.GetType()));
+                            x => typeof (THandler).IsAssignableFrom(x.GetType()));
 
                         if (handler != null)
                         {
@@ -115,7 +107,5 @@ namespace TecX.Agile.View.Behavior
                 }
             }
         }
-
-        #endregion Methods
     }
 }
