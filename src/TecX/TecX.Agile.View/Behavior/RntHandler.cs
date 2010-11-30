@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -185,10 +182,5 @@ namespace TecX.Agile.View.Behavior
         {
             throw new NotImplementedException();
         }
-    }
-
-    static class Tabletop
-    {
-        public static Canvas Surface { get { throw new NotImplementedException(); } }
     }
 }

@@ -75,6 +75,7 @@
     <Compile Include="StoryCard.xaml.cs">
       <DependentUpon>StoryCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tabletop.cs" />
     <Compile Include="UIHelper.cs" />
     <Compile Include="Validation\DoubleOnlyValidationRule.cs" />
   </ItemGroup>

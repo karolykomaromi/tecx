@@ -9,7 +9,7 @@
         x:Name="MainWindow"
         Width="800" 
         Height="600">
-    <Grid x:Name="LayoutRoot">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -17,16 +17,16 @@
          <rbn:Ribbon 
              x:Name="Ribbon" 
             cal:RegionManager.RegionName="{x:Static inf:Regions.MainToolBar}">
-            <!--<ribbon:RibbonTab 
-                x:Name="HomeTab" 
-                Header="Home">
-                <ribbon:RibbonGroup 
-                    x:Name="Group1" 
-                    Header="Group1">                     
-                </ribbon:RibbonGroup>
-                
-            </ribbon:RibbonTab>-->
         </rbn:Ribbon>
-        <view:StoryCard x:Name="storyCard" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="200"/>
+        <Grid
+            Grid.Row="1"
+            cal:RegionManager.RegionName="{x:Static inf:Regions.Main}">
+            <view:StoryCard 
+                x:Name="storyCard" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Width="300" 
+                Height="200"/>
+        </Grid>
     </Grid>
 </rbn:RibbonWindow>

@@ -56,6 +56,7 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Regions\GridRegionAdapter.cs" />
     <Compile Include="Regions\RibbonRegionAdapter.cs" />
     <Compile Include="Regions\StackPanelRegionAdapter.cs" />
   </ItemGroup>

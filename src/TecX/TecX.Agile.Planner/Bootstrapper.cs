@@ -80,6 +80,7 @@ namespace TecX.Agile.Planner
 
             mappings.RegisterMapping(typeof(Ribbon), Container.Resolve<RibbonRegionAdapter>());
             mappings.RegisterMapping(typeof(StackPanel), Container.Resolve<StackPanelRegionAdapter>());
+            mappings.RegisterMapping(typeof(Grid), Container.Resolve<GridRegionAdapter>());
 
             return mappings;
         }
