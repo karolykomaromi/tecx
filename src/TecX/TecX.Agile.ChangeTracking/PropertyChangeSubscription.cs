@@ -37,6 +37,7 @@ namespace TecX.Agile.ChangeTracking
                                                                    OldValue = before.Value,
                                                                    NewValue = after.Value
                                                                })
+                //make sure you dont combine apples and oranges 
                 .Where(ba => ba.Sender1 == ba.Sender2 && 
                              ba.PropertyName1 == ba.PropertyName2 && 
                              ba.NewValue != ba.OldValue)
