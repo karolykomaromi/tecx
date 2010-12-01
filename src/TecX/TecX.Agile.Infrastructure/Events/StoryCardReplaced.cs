@@ -1,37 +1,32 @@
-﻿using TecX.Agile.ViewModel;
-using TecX.Common;
+﻿using System;
 
 namespace TecX.Agile.Infrastructure.Events
 {
     public class StoryCardReplaced : IDomainEvent
     {
-        private readonly StoryCard _oldItem;
-        private readonly StoryCard _newItem;
-        private readonly StoryCardCollection _collection;
+        private readonly Guid _oldItemId;
+        private readonly Guid _newItemId;
+        private readonly Guid _collection;
 
-        public StoryCardCollection Collection
+        public Guid Collection
         {
             get { return _collection; }
         }
 
-        public StoryCard NewItem
+        public Guid NewItemId
         {
-            get { return _newItem; }
+            get { return _newItemId; }
         }
 
-        public StoryCard OldItem
+        public Guid OldItemId
         {
-            get { return _oldItem; }
+            get { return _oldItemId; }
         }
 
-        public StoryCardReplaced(StoryCard oldItem, StoryCard newItem, StoryCardCollection collection)
+        public StoryCardReplaced(Guid oldItemId, Guid newItemId, Guid collection)
         {
-            Guard.AssertNotNull(oldItem, "oldItem");
-            Guard.AssertNotNull(newItem, "newItem");
-            Guard.AssertNotNull(collection, "collection");
-
-            _oldItem = oldItem;
-            _newItem = newItem;
+            _oldItemId = oldItemId;
+            _newItemId = newItemId;
             _collection = collection;
         }
     }

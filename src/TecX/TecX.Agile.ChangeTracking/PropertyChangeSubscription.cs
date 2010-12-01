@@ -50,7 +50,7 @@ namespace TecX.Agile.ChangeTracking
                                                   if (card != null)
                                                   {
                                                       //but a more specific event that tells us that a card was moved
-                                                      var storyCardMoved = new StoryCardMoved(card, card.X, card.Y, card.Angle);
+                                                      var storyCardMoved = new StoryCardMoved(card.Id, card.X, card.Y, card.Angle);
 
                                                       _eventAggregator.Publish(storyCardMoved);
                                                       return;

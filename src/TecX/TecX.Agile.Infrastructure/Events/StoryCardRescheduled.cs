@@ -1,5 +1,4 @@
-﻿using TecX.Agile.ViewModel;
-using TecX.Common;
+﻿using System;
 
 namespace TecX.Agile.Infrastructure.Events
 {
@@ -7,40 +6,36 @@ namespace TecX.Agile.Infrastructure.Events
     {
         #region Fields
 
-        private readonly StoryCard _storyCard;
-        private readonly StoryCardCollection _from;
-        private readonly StoryCardCollection _to;
+        private readonly Guid _storyCardId;
+        private readonly Guid _from;
+        private readonly Guid _to;
 
         #endregion Fields
 
         #region Properties
 
-        public StoryCardCollection To
+        public Guid To
         {
             get { return _to; }
         }
 
-        public StoryCardCollection From
+        public Guid From
         {
             get { return _from; }
         }
 
-        public StoryCard StoryCard
+        public Guid StoryCardId
         {
-            get { return _storyCard; }
+            get { return _storyCardId; }
         }
 
         #endregion Properties
 
         #region c'tor
 
-        public StoryCardRescheduled(StoryCard storyCard, StoryCardCollection from, StoryCardCollection to)
+        public StoryCardRescheduled(Guid storyCardId, Guid from, Guid to)
         {
-            Guard.AssertNotNull(storyCard, "storyCard");
-            Guard.AssertNotNull(from, "from");
-            Guard.AssertNotNull(to, "to");
-
-            _storyCard = storyCard;
+            _storyCardId = storyCardId;
             _from = from;
             _to = to;
         }

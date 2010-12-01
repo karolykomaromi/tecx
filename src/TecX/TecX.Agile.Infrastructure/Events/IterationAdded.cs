@@ -1,29 +1,25 @@
-﻿using TecX.Agile.ViewModel;
-using TecX.Common;
+﻿using System;
 
 namespace TecX.Agile.Infrastructure.Events
 {
     public class IterationAdded : IDomainEvent
     {
-        private readonly Iteration _iteration;
-        private readonly IterationCollection _to;
+        private readonly Guid _iterationId;
+        private readonly Guid _to;
 
-        public IterationCollection To
+        public Guid To
         {
             get { return _to; }
         }
 
-        public Iteration Iteration
+        public Guid IterationId
         {
-            get { return _iteration; }
+            get { return _iterationId; }
         }
 
-        public IterationAdded(Iteration iteration, IterationCollection to)
+        public IterationAdded(Guid iterationId, Guid to)
         {
-            Guard.AssertNotNull(iteration, "iteration");
-            Guard.AssertNotNull(to, "to");
-
-            _iteration = iteration;
+            _iterationId = iterationId;
             _to = to;
         }
     }

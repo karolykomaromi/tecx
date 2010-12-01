@@ -1,29 +1,25 @@
-﻿using TecX.Agile.ViewModel;
-using TecX.Common;
+﻿using System;
 
 namespace TecX.Agile.Infrastructure.Events
 {
     public class StoryCardRemoved : IDomainEvent
     {
-        private readonly StoryCard _storyCard;
-        private readonly StoryCardCollection _from;
+        private readonly Guid _storyCardId;
+        private readonly Guid _from;
 
-        public StoryCardCollection From
+        public Guid From
         {
             get { return _from; }
         }
 
-        public StoryCard StoryCard
+        public Guid StoryCardId
         {
-            get { return _storyCard; }
+            get { return _storyCardId; }
         }
 
-        public StoryCardRemoved(StoryCard storyCard, StoryCardCollection from)
+        public StoryCardRemoved(Guid storyCardId, Guid from)
         {
-            Guard.AssertNotNull(storyCard, "storyCard");
-            Guard.AssertNotNull(from, "from");
-
-            _storyCard = storyCard;
+            _storyCardId = storyCardId;
             _from = from;
         }
     }

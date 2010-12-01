@@ -27,7 +27,7 @@ namespace TecX.Agile.ChangeTracking
                 select new {evt.EventArgs.From, evt.EventArgs.StoryCard};
 
             _subscription =
-                postponed.Subscribe(x => _eventAggregator.Publish(new StoryCardPostponed(x.StoryCard, x.From)));
+                postponed.Subscribe(x => _eventAggregator.Publish(new StoryCardPostponed(x.StoryCard.Id, x.From.Id)));
         }
 
         #region Implementation of IDisposable
