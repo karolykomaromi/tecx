@@ -1,6 +1,4 @@
 ﻿using System;
-
-using TecX.Agile.ViewModel;
 using TecX.Common;
 
 namespace TecX.Agile.Infrastructure.Events

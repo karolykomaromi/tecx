@@ -54,6 +54,7 @@
     <Compile Include="ChangeTracker.cs" />
     <Compile Include="CollectionChangeSubscription.cs" />
     <Compile Include="IChangeSubscription.cs" />
+    <Compile Include="IChangeTracker.cs" />
     <Compile Include="PostponeStoryCardSubscription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyChangeSubscription.cs" />

@@ -1,6 +1,6 @@
 ﻿using TecX.Agile.ViewModel;
 
-namespace TecX.Agile.Infrastructure
+namespace TecX.Agile.ChangeTracking
 {
     public interface IChangeTracker
     {

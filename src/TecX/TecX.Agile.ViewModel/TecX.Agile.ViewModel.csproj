@@ -72,6 +72,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.csproj">
+      <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
+      <Name>TecX.Agile.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Peer\TecX.Agile.Peer.csproj">
       <Project>{4C9A3BE9-2E8F-44B1-965B-42AD35D36071}</Project>
       <Name>TecX.Agile.Peer</Name>

@@ -1,29 +1,25 @@
-﻿using TecX.Agile.ViewModel;
-using TecX.Common;
+﻿using System;
 
 namespace TecX.Agile.Infrastructure.Events
 {
     public class StoryCardPostponed : IDomainEvent
     {
-        private readonly StoryCard _storyCard;
-        private readonly Iteration _from;
+        private readonly Guid _storyCardId;
+        private readonly Guid _from;
 
-        public Iteration From
+        public Guid From
         {
             get { return _from; }
         }
 
-        public StoryCard StoryCard
+        public Guid StoryCardId
         {
-            get { return _storyCard; }
+            get { return _storyCardId; }
         }
 
-        public StoryCardPostponed(StoryCard storyCard, Iteration from)
+        public StoryCardPostponed(Guid storyCardId, Guid from)
         {
-            Guard.AssertNotNull(storyCard, "storyCard");
-            Guard.AssertNotNull(from, "from");
-
-            _storyCard = storyCard;
+            _storyCardId = storyCardId;
             _from = from;
         }
 

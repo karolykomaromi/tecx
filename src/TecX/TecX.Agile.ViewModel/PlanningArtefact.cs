@@ -3,6 +3,8 @@ using System.Reflection;
 
 using Microsoft.Practices.Prism.Commands;
 
+using TecX.Agile.Infrastructure;
+
 namespace TecX.Agile.ViewModel
 {
     [Serializable]
@@ -76,6 +78,8 @@ namespace TecX.Agile.ViewModel
             _description = string.Empty;
 
             _updatePropertyCommand = new DelegateCommand<Tuple<Guid, string, object, object>>(OnPropertyUpdated);
+
+            Commands.UpdateProperty.RegisterCommand(_updatePropertyCommand);
         }
 
         #endregion c'tor

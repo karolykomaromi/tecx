@@ -88,7 +88,7 @@ namespace TecX.Agile.ChangeTracking
                                                                       StoryCard newItem =
                                                                           x.NewItems.First() as StoryCard;
 
-                                                                      StoryCardAdded msg = new StoryCardAdded(newItem, scc);
+                                                                      StoryCardAdded msg = new StoryCardAdded(newItem.Id, scc.Id);
 
                                                                       //can't use IMessage and generic publish because EA would get TypeParameter wrong
                                                                       _eventAggregator.Publish(msg);
@@ -99,7 +99,7 @@ namespace TecX.Agile.ChangeTracking
                                                                       StoryCard oldItem =
                                                                           x.OldItems.First() as StoryCard;
 
-                                                                      StoryCardRemoved msg = new StoryCardRemoved(oldItem, scc);
+                                                                      StoryCardRemoved msg = new StoryCardRemoved(oldItem.Id, scc.Id);
 
                                                                       //can't use IMessage and generic publish because EA would get TypeParameter wrong
                                                                       _eventAggregator.Publish(msg);
@@ -114,7 +114,7 @@ namespace TecX.Agile.ChangeTracking
                                                                       StoryCard newItem =
                                                                           x.NewItems.First() as StoryCard;
 
-                                                                      StoryCardReplaced msg = new StoryCardReplaced(oldItem, newItem, scc);
+                                                                      StoryCardReplaced msg = new StoryCardReplaced(oldItem.Id, newItem.Id, scc.Id);
 
                                                                       //can't use IMessage and generic publish because EA would get TypeParameter wrong
                                                                       _eventAggregator.Publish(msg);
@@ -138,7 +138,7 @@ namespace TecX.Agile.ChangeTracking
                                                                       Iteration newItem =
                                                                           x.NewItems.First() as Iteration;
 
-                                                                      IterationAdded msg = new IterationAdded(newItem, ic);
+                                                                      IterationAdded msg = new IterationAdded(newItem.Id, ic.Id);
 
                                                                       //can't use IMessage and generic publish because EA would get TypeParameter wrong
                                                                       _eventAggregator.Publish(msg);
@@ -149,7 +149,7 @@ namespace TecX.Agile.ChangeTracking
                                                                       Iteration oldItem =
                                                                           x.OldItems.First() as Iteration;
 
-                                                                      IterationRemoved msg = new IterationRemoved(oldItem, ic);
+                                                                      IterationRemoved msg = new IterationRemoved(oldItem.Id, ic.Id);
 
                                                                       //can't use IMessage and generic publish because EA would get TypeParameter wrong
                                                                       _eventAggregator.Publish(msg);
@@ -164,7 +164,7 @@ namespace TecX.Agile.ChangeTracking
                                                                       Iteration newItem =
                                                                           x.NewItems.First() as Iteration;
 
-                                                                      IterationReplaced msg = new IterationReplaced(oldItem, newItem, ic);
+                                                                      IterationReplaced msg = new IterationReplaced(oldItem.Id, newItem.Id, ic.Id);
 
                                                                       //can't use IMessage and generic publish because EA would get TypeParameter wrong
                                                                       _eventAggregator.Publish(msg);

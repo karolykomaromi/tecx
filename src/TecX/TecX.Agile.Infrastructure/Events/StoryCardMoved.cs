@@ -1,14 +1,12 @@
 ﻿using System;
 
-using TecX.Agile.ViewModel;
-
 namespace TecX.Agile.Infrastructure.Events
 {
     public class StoryCardMoved
     {
         #region Fields
 
-        private readonly StoryCard _storyCard;
+        private readonly Guid _storyCardId;
         private readonly double _x;
         private readonly double _y;
         private readonly double _angle;
@@ -32,18 +30,18 @@ namespace TecX.Agile.Infrastructure.Events
             get { return _x; }
         }
 
-        public StoryCard StoryCard
+        public Guid StoryCardId
         {
-            get { return _storyCard; }
+            get { return _storyCardId; }
         }
 
         #endregion Properties
 
         #region c'tor
 
-        public StoryCardMoved(StoryCard storyCard, double x, double y, double angle)
+        public StoryCardMoved(Guid storyCardId, double x, double y, double angle)
         {
-            _storyCard = storyCard;
+            _storyCardId = storyCardId;
             _x = x;
             _y = y;
             _angle = angle;

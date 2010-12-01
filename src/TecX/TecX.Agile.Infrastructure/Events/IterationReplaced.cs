@@ -1,39 +1,34 @@
-﻿using TecX.Agile.ViewModel;
-using TecX.Common;
+﻿using System;
 
 namespace TecX.Agile.Infrastructure.Events
 {
     public class IterationReplaced : IDomainEvent
     {
-        private readonly Iteration _oldItem;
-        private readonly Iteration _newItem;
-        private readonly IterationCollection _collection;
+        private readonly Guid _oldItemId;
+        private readonly Guid _newItemId;
+        private readonly Guid _collectionId;
 
-        public IterationCollection Collection
+        public Guid CollectionId
         {
-            get { return _collection; }
+            get { return _collectionId; }
         }
 
-        public Iteration NewItem
+        public Guid NewItemId
         {
-            get { return _newItem; }
+            get { return _newItemId; }
         }
 
-        public Iteration OldItem
+        public Guid OldItemId
         {
-            get { return _oldItem; }
+            get { return _oldItemId; }
         }
 
 
-        public IterationReplaced(Iteration oldItem, Iteration newItem, IterationCollection collection)
+        public IterationReplaced(Guid oldItemId, Guid newItemId, Guid collectionId)
         {
-            Guard.AssertNotNull(oldItem, "oldItem");
-            Guard.AssertNotNull(newItem, "newItem");
-            Guard.AssertNotNull(collection, "collection");
-
-            _oldItem = oldItem;
-            _newItem = newItem;
-            _collection = collection;
+            _oldItemId = oldItemId;
+            _newItemId = newItemId;
+            _collectionId = collectionId;
         }
     }
 }

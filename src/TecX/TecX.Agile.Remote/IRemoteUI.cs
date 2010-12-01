@@ -1,7 +1,7 @@
 ﻿using TecX.Agile.Infrastructure.Events;
 using TecX.Common.Event;
 
-namespace TecX.Agile.Infrastructure
+namespace TecX.Agile.Remote
 {
     public interface IRemoteUI : 
         ISubscribeTo<PropertyUpdated>, 

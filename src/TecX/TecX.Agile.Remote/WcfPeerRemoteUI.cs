@@ -54,7 +54,7 @@ namespace TecX.Agile.Remote
             Guard.AssertNotNull(message, "message");
             Guard.AssertNotNull(message.From, "message.From");
             Guard.AssertNotNull(message.To, "message.To");
-            Guard.AssertNotNull(message.StoryCard, "message.StoryCard");
+            Guard.AssertNotNull(message.StoryCardId, "message.StoryCard");
 
             throw new NotImplementedException();
         }
@@ -63,7 +63,7 @@ namespace TecX.Agile.Remote
         {
             Guard.AssertNotNull(message, "message");
             Guard.AssertNotNull(message.From, "message.From");
-            Guard.AssertNotNull(message.StoryCard, "message.StoryCard");
+            Guard.AssertNotNull(message.StoryCardId, "message.StoryCard");
 
             throw new NotImplementedException();
         }
@@ -82,11 +82,11 @@ namespace TecX.Agile.Remote
         public void Handle(StoryCardMoved message)
         {
             Guard.AssertNotNull(message, "message");
-            Guard.AssertNotNull(message.StoryCard, "message.StoryCard");
+            Guard.AssertNotNull(message.StoryCardId, "message.StoryCard");
 
             //TODO weberse filter messages!
 
-            _peerClient.MoveStoryCard(_peerClient.Id, message.StoryCard.Id, message.X, message.Y, message.Angle);
+            _peerClient.MoveStoryCard(_peerClient.Id, message.StoryCardId, message.X, message.Y, message.Angle);
         }
 
         #endregion EventAggregator Subscriptions

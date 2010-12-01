@@ -78,7 +78,7 @@ namespace TecX.Agile.ViewModel.Test
             mockEventAggregator
                 .Verify(ea => ea.Publish(
                     It.Is<StoryCardAdded>(
-                        msg => msg.To == collection && msg.StoryCard == card)),
+                        msg => msg.To == collection.Id && msg.StoryCardId == card.Id)),
                     Times.Once(),
                     "adding item must trigger CollectionChanged message");
 
@@ -105,7 +105,7 @@ namespace TecX.Agile.ViewModel.Test
             mockEventAggregator
                 .Verify(ea => ea.Publish(
                     It.Is<StoryCardRemoved>(
-                        msg => msg.From == collection && msg.StoryCard == card)),
+                        msg => msg.From == collection.Id && msg.StoryCardId == card.Id)),
                     Times.Once(),
                     "removing item must trigger CollectionChanged message");
 
@@ -159,9 +159,9 @@ namespace TecX.Agile.ViewModel.Test
             iter1.Reschedule(card, iter2);
 
             mockEventAggregator
-                .Verify(ea => ea.Publish(It.Is<StoryCardRescheduled>(msg => msg.StoryCard == card &&
-                                                                            msg.From == iter1 &&
-                                                                            msg.To == iter2)),
+                .Verify(ea => ea.Publish(It.Is<StoryCardRescheduled>(msg => msg.StoryCardId == card.Id &&
+                                                                            msg.From == iter1.Id &&
+                                                                            msg.To == iter2.Id)),
                         Times.Once());
 
             mockEventAggregator.VerifyAll();
@@ -219,7 +219,7 @@ namespace TecX.Agile.ViewModel.Test
 
             mockEventAggregator
                 .Verify(
-                    ea => ea.Publish(It.Is<StoryCardPostponed>(msg => msg.StoryCard == card && msg.From == iteration)),
+                    ea => ea.Publish(It.Is<StoryCardPostponed>(msg => msg.StoryCardId == card.Id && msg.From == iteration.Id)),
                     Times.Once());
 
             mockEventAggregator.VerifyAll();
@@ -251,7 +251,7 @@ namespace TecX.Agile.ViewModel.Test
 
             mockEventAggregator
                 .Verify(
-                    ea => ea.Publish(It.Is<StoryCardPostponed>(msg => msg.StoryCard == card && msg.From == iteration)),
+                    ea => ea.Publish(It.Is<StoryCardPostponed>(msg => msg.StoryCardId == card.Id && msg.From == iteration.Id)),
                     Times.Once());
 
             mockEventAggregator.VerifyAll();

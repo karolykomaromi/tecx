@@ -29,7 +29,7 @@ namespace TecX.Agile.ChangeTracking
             _subscription = rescheduled.Subscribe(x =>
                                                       {
                                                           StoryCardRescheduled rescheduledStoryCard =
-                                                              new StoryCardRescheduled(x.StoryCard, x.From, x.To);
+                                                              new StoryCardRescheduled(x.StoryCard.Id, x.From.Id, x.To.Id);
 
                                                           _eventAggregator.Publish(rescheduledStoryCard);
 
