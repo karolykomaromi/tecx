@@ -51,6 +51,7 @@
     <Compile Include="HighlightMessageFilter.cs" />
     <Compile Include="MassTransitRemoteUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyChangedMessageFilter.cs" />
     <Compile Include="WcfPeerRemoteUI.cs" />
   </ItemGroup>
   <ItemGroup>

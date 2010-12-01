@@ -139,19 +139,19 @@ namespace TecX.Agile.Peer
             }
         }
 
-        public void UpdateProperty(Guid senderId, Guid artefactId, string propertyName, object newValue)
+        public void UpdateProperty(Guid senderId, Guid artefactId, string propertyName, object oldValue, object newValue)
         {
             Guard.AssertNotEmpty(propertyName, "propertyName");
 
             if (senderId != Id)
             {
-                var args = new UpdatedPropertyEventArgs(artefactId, propertyName, newValue);
+                var args = new UpdatedPropertyEventArgs(artefactId, propertyName, oldValue, newValue);
 
                 PropertyUpdated(this, args);
             }
             else
             {
-                RunWithWorkaroundForBclBug(() => _broadcastToMesh.UpdateProperty(senderId, artefactId, propertyName, newValue));
+                RunWithWorkaroundForBclBug(() => _broadcastToMesh.UpdateProperty(senderId, artefactId, propertyName, oldValue, newValue));
             }
         }
 

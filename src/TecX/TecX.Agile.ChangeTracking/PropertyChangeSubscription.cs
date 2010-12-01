@@ -59,7 +59,7 @@ namespace TecX.Agile.ChangeTracking
 
                                               _eventAggregator.Publish(
                                                   new PropertyChanged(
-                                                      x.ParentObject,
+                                                      x.ParentObject.Id,
                                                       x.PropertyName,
                                                       x.OldValue,
                                                       x.NewValue));
