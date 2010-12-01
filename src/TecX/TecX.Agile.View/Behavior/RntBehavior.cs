@@ -20,26 +20,26 @@ namespace TecX.Agile.View.Behavior
                     false,
                     FrameworkPropertyMetadataOptions.AffectsArrange |
                     FrameworkPropertyMetadataOptions.AffectsMeasure,
-                    OnBehaviorEnabledChanged<RntHandler>));
+                    OnMovementBehaviorEnabledChanged<RntHandler>));
 
         /// <summary>
         /// Setter for <see cref="DependencyProperty"/> <see cref="IsEnabledProperty"/>
         /// </summary>
-        public static void SetIsEnabled(DependencyObject dependencyObject, bool value)
+        public static void SetIsEnabled(StoryCard storyCard, bool value)
         {
-            Guard.AssertNotNull(dependencyObject, "dependencyObject");
+            Guard.AssertNotNull(storyCard, "storyCard");
 
-            dependencyObject.SetValue(IsEnabledProperty, value);
+            storyCard.SetValue(IsEnabledProperty, value);
         }
 
         /// <summary>
         /// Getter for <see cref="DependencyProperty"/> <see cref="IsEnabledProperty"/>
         /// </summary>
-        public static bool GetIsEnabled(DependencyObject dependencyObject)
+        public static bool GetIsEnabled(StoryCard storyCard)
         {
-            Guard.AssertNotNull(dependencyObject, "dependencyObject");
+            Guard.AssertNotNull(storyCard, "storyCard");
 
-            return (bool) dependencyObject.GetValue(IsEnabledProperty);
+            return (bool) storyCard.GetValue(IsEnabledProperty);
         }
 
         #endregion Properties

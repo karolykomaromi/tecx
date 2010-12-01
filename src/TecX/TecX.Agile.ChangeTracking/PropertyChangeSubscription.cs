@@ -38,12 +38,32 @@ namespace TecX.Agile.ChangeTracking
                 .Where(ba => ba.NewValue != ba.OldValue);
 
             _subscription =
-                beforeAfter.Subscribe(x => _eventAggregator.Publish(
-                                                    new PropertyChanged(
-                                                        x.ParentObject,
-                                                        x.PropertyName,
-                                                        x.OldValue,
-                                                        x.NewValue)));
+                beforeAfter.Subscribe(x =>
+                                          {
+                                              //if we move a storycard we dont want a simple property change notification
+                                              if (x.PropertyName == Infrastructure.Constants.PropertyNames.X ||
+                                                  x.PropertyName == Infrastructure.Constants.PropertyNames.Y ||
+                                                  x.PropertyName == Infrastructure.Constants.PropertyNames.Angle)
+                                              {
+                                                  StoryCard card = x.ParentObject as StoryCard;
+
+                                                  if (card != null)
+                                                  {
+                                                      //but a more specific event that tells us that a card was moved
+                                                      var storyCardMoved = new StoryCardMoved(card, card.X, card.Y, card.Angle);
+
+                                                      _eventAggregator.Publish(storyCardMoved);
+                                                      return;
+                                                  }
+                                              }
+
+                                              _eventAggregator.Publish(
+                                                  new PropertyChanged(
+                                                      x.ParentObject,
+                                                      x.PropertyName,
+                                                      x.OldValue,
+                                                      x.NewValue));
+                                          });
         }
 
         #region Implementation of IDisposable

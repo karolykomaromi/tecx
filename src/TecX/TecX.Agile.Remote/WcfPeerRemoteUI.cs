@@ -71,6 +71,16 @@ namespace TecX.Agile.Remote
             }
         }
 
+        public void Handle(StoryCardMoved message)
+        {
+            Guard.AssertNotNull(message, "message");
+            Guard.AssertNotNull(message.StoryCard, "message.StoryCard");
+
+            //TODO weberse filter messages!
+
+            _peerClient.MoveStoryCard(_peerClient.Id, message.StoryCard.Id, message.X, message.Y, message.Angle);
+        }
+
         #endregion EventAggregator Subscriptions
 
         #region EventHandler

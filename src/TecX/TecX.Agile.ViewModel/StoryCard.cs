@@ -12,6 +12,9 @@ namespace TecX.Agile.ViewModel
         private string _taskOwner;
         private double _mostLikelyEstimate;
         private double _actualEffort;
+        private double _x;
+        private double _angle;
+        private double _y;
 
         #endregion Fields
 
@@ -72,6 +75,48 @@ namespace TecX.Agile.ViewModel
                 OnPropertyChanging(() => ActualEffort);
                 _actualEffort = value;
                 OnPropertyChanged(() => ActualEffort);
+            }
+        }
+
+        public double X
+        {
+            get { return _x; }
+            set
+            {
+                if (_x == value)
+                    return;
+
+                OnPropertyChanging(() => X);
+                _x = value;
+                OnPropertyChanged(() => X);
+            }
+        }
+        
+        public double Y
+        {
+            get { return _y; }
+            set
+            {
+                if (_y == value)
+                    return;
+
+                OnPropertyChanging(() => Y);
+                _y = value;
+                OnPropertyChanged(() => Y);
+            }
+        }
+
+        public double Angle
+        {
+            get { return _angle; }
+            set
+            {
+                if (_angle == value)
+                    return;
+
+                OnPropertyChanging(() => Angle);
+                _angle = value;
+                OnPropertyChanged(() => Angle);
             }
         }
 

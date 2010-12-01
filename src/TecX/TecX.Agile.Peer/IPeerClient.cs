@@ -23,7 +23,7 @@ namespace TecX.Agile.Peer
         Guid Id { get; }
 
         [OperationContract(IsOneWay = true)]
-        void MoveStoryCard(Guid senderId, Guid storyCardId, double dx, double dy, double angle);
+        void MoveStoryCard(Guid senderId, Guid storyCardId, double x, double y, double angle);
 
         [OperationContract(IsOneWay = true)]
         void Highlight(Guid senderId, Guid artefactId, string fieldName);

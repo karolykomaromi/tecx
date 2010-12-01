@@ -7,7 +7,8 @@ namespace TecX.Agile.Infrastructure
         ISubscribeTo<PropertyChanged>, 
         ISubscribeTo<StoryCardRescheduled>, 
         ISubscribeTo<StoryCardPostponed>, 
-        ISubscribeTo<FieldHighlighted>
+        ISubscribeTo<FieldHighlighted>,
+        ISubscribeTo<StoryCardMoved>
     {
     }
 }
