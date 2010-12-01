@@ -113,8 +113,10 @@ namespace TecX.Agile.Remote
 
             _propertyChangedMessageFilter.Enqueue(e.ArtefactId, e.PropertyName, e.OldValue, e.NewValue);
 
-            if(Commands.UpdateProperty.CanExecute(null))
-                Commands.UpdateProperty.Execute(null);
+            var commandArgs = new Tuple<Guid, string, object, object>(e.ArtefactId, e.PropertyName, e.OldValue, e.NewValue);
+
+            if (Commands.UpdateProperty.CanExecute(commandArgs))
+                Commands.UpdateProperty.Execute(commandArgs);
         }
 
         #endregion EventHandler
