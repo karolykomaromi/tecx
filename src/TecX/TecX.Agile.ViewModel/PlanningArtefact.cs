@@ -4,6 +4,8 @@ using System.Reflection;
 using Microsoft.Practices.Prism.Commands;
 
 using TecX.Agile.Infrastructure;
+using TecX.Agile.Infrastructure.Events;
+using TecX.Common;
 
 namespace TecX.Agile.ViewModel
 {
@@ -16,7 +18,7 @@ namespace TecX.Agile.ViewModel
         private string _name;
         private string _description;
 
-        private readonly DelegateCommand<Tuple<Guid, string, object, object>> _updatePropertyCommand;
+        private readonly DelegateCommand<PropertyUpdated> _updatePropertyCommand;
 
         #endregion Fields
 
@@ -77,26 +79,23 @@ namespace TecX.Agile.ViewModel
             _name = string.Empty;
             _description = string.Empty;
 
-            _updatePropertyCommand = new DelegateCommand<Tuple<Guid, string, object, object>>(OnPropertyUpdated);
+            _updatePropertyCommand = new DelegateCommand<PropertyUpdated>(OnPropertyUpdated);
 
             Commands.UpdateProperty.RegisterCommand(_updatePropertyCommand);
         }
 
         #endregion c'tor
 
-        private void OnPropertyUpdated(Tuple<Guid, string, object, object> args)
+        private void OnPropertyUpdated(PropertyUpdated args)
         {
-            Guid artefactId = args.Item1;
-            string propertyName = args.Item2;
-            object oldValue = args.Item3;
-            object newValue = args.Item4;
+            Guard.AssertNotNull(args, "args");
 
-            if (Id != artefactId)
+            if (Id != args.ArtefactId)
                 return;
 
-            PropertyInfo property = GetType().GetProperty(propertyName);
+            PropertyInfo property = GetType().GetProperty(args.PropertyName);
 
-            property.SetValue(this, newValue, null);
+            property.SetValue(this, args.NewValue, null);
         }
     }
 }

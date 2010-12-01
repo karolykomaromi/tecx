@@ -14,6 +14,7 @@ namespace TecX.Agile.Remote
         private readonly IPeerClient _peerClient;
         private readonly HighlightMessageFilter _highlightMessageFilter;
         private readonly PropertyChangedMessageFilter _propertyChangedMessageFilter;
+        private readonly StoryCardMovedMessageFilter _storyCardMovedMessageFilter;
 
         #endregion Fields
 
@@ -27,11 +28,12 @@ namespace TecX.Agile.Remote
 
             _peerClient.IncomingRequestToHighlightField += OnIncomingRequestToHighlightField;
             _peerClient.PropertyUpdated += OnPropertyUpdated;
+            _peerClient.StoryCardMoved += OnStoryCardMoved;
 
             _highlightMessageFilter = new HighlightMessageFilter();
             _propertyChangedMessageFilter = new PropertyChangedMessageFilter();
+            _storyCardMovedMessageFilter = new StoryCardMovedMessageFilter();
         }
-
 
         #endregion c'tor
 
@@ -44,7 +46,7 @@ namespace TecX.Agile.Remote
 
             if (_propertyChangedMessageFilter.ShouldLetPass(message))
             {
-                _peerClient.UpdateProperty(_peerClient.Id, 
+                _peerClient.UpdateProperty(_peerClient.Id,
                     message.ArtefactId, message.PropertyName, message.OldValue, message.NewValue);
             }
         }
@@ -73,7 +75,7 @@ namespace TecX.Agile.Remote
             Guard.AssertNotNull(message, "message");
             Guard.AssertNotEmpty(message.FieldName, "message.FieldName");
 
-            if(_highlightMessageFilter.ShouldLetPass(message))
+            if (_highlightMessageFilter.ShouldLetPass(message))
             {
                 _peerClient.Highlight(_peerClient.Id, message.ArtefactId, message.FieldName);
             }
@@ -85,8 +87,10 @@ namespace TecX.Agile.Remote
             Guard.AssertNotNull(message.StoryCardId, "message.StoryCard");
 
             //TODO weberse filter messages!
-
-            _peerClient.MoveStoryCard(_peerClient.Id, message.StoryCardId, message.X, message.Y, message.Angle);
+            if (_storyCardMovedMessageFilter.ShouldLetPass(message))
+            {
+                _peerClient.MoveStoryCard(_peerClient.Id, message.StoryCardId, message.X, message.Y, message.Angle);
+            }
         }
 
         #endregion EventAggregator Subscriptions
@@ -113,10 +117,22 @@ namespace TecX.Agile.Remote
 
             _propertyChangedMessageFilter.Enqueue(e.ArtefactId, e.PropertyName, e.OldValue, e.NewValue);
 
-            var commandArgs = new Tuple<Guid, string, object, object>(e.ArtefactId, e.PropertyName, e.OldValue, e.NewValue);
+            var commandArgs = new PropertyUpdated(e.ArtefactId, e.PropertyName, e.OldValue, e.NewValue);
 
             if (Commands.UpdateProperty.CanExecute(commandArgs))
                 Commands.UpdateProperty.Execute(commandArgs);
+        }
+
+        private void OnStoryCardMoved(object sender, StoryCardMovedEventArgs e)
+        {
+            Guard.AssertNotNull(e, "e");
+
+            _storyCardMovedMessageFilter.Enqueue(e.StoryCardId, e.X, e.Y, e.Angle);
+
+            var commandArgs = new StoryCardMoved(e.StoryCardId, e.X, e.Y, e.Angle);
+
+            if (Commands.MoveStoryCard.CanExecute(commandArgs))
+                Commands.MoveStoryCard.Execute(commandArgs);
         }
 
         #endregion EventHandler
