@@ -109,38 +109,29 @@ namespace TecX.Agile.Remote
             if (Commands.HighlightField.CanExecute(commandArgs))
                 Commands.HighlightField.Execute(commandArgs);
         }
-
-        private readonly object _locker = new object();
-
         private void OnPropertyUpdated(object sender, UpdatedPropertyEventArgs e)
         {
-            lock (_locker)
-            {
-                Guard.AssertNotNull(e, "e");
-                Guard.AssertNotEmpty(e.PropertyName, "e.PropertyName");
+            Guard.AssertNotNull(e, "e");
+            Guard.AssertNotEmpty(e.PropertyName, "e.PropertyName");
 
-                _propertyChangedMessageFilter.Enqueue(e.ArtefactId, e.PropertyName, e.OldValue, e.NewValue);
+            _propertyChangedMessageFilter.Enqueue(e.ArtefactId, e.PropertyName, e.OldValue, e.NewValue);
 
-                var commandArgs = new PropertyUpdated(e.ArtefactId, e.PropertyName, e.OldValue, e.NewValue);
+            var commandArgs = new PropertyUpdated(e.ArtefactId, e.PropertyName, e.OldValue, e.NewValue);
 
-                if (Commands.UpdateProperty.CanExecute(commandArgs))
-                    Commands.UpdateProperty.Execute(commandArgs);
-            }
+            if (Commands.UpdateProperty.CanExecute(commandArgs))
+                Commands.UpdateProperty.Execute(commandArgs);
         }
 
         private void OnStoryCardMoved(object sender, StoryCardMovedEventArgs e)
         {
-            lock (_locker)
-            {
-                Guard.AssertNotNull(e, "e");
+            Guard.AssertNotNull(e, "e");
 
-                _storyCardMovedMessageFilter.Enqueue(e.StoryCardId, e.X, e.Y, e.Angle);
+            _storyCardMovedMessageFilter.Enqueue(e.StoryCardId, e.X, e.Y, e.Angle);
 
-                var commandArgs = new StoryCardMoved(e.StoryCardId, e.X, e.Y, e.Angle);
+            var commandArgs = new StoryCardMoved(e.StoryCardId, e.X, e.Y, e.Angle);
 
-                if (Commands.MoveStoryCard.CanExecute(commandArgs))
-                    Commands.MoveStoryCard.Execute(commandArgs);
-            }
+            if (Commands.MoveStoryCard.CanExecute(commandArgs))
+                Commands.MoveStoryCard.Execute(commandArgs);
         }
 
         #endregion EventHandler

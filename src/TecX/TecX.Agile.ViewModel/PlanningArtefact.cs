@@ -88,17 +88,14 @@ namespace TecX.Agile.ViewModel
 
         private void OnPropertyUpdated(PropertyUpdated args)
         {
-            lock (args)
-            {
-                Guard.AssertNotNull(args, "args");
+            Guard.AssertNotNull(args, "args");
 
-                if (Id != args.ArtefactId)
-                    return;
+            if (Id != args.ArtefactId)
+                return;
 
-                PropertyInfo property = GetType().GetProperty(args.PropertyName);
+            PropertyInfo property = GetType().GetProperty(args.PropertyName);
 
-                property.SetValue(this, args.NewValue, null);
-            }
+            property.SetValue(this, args.NewValue, null);
         }
     }
 }
