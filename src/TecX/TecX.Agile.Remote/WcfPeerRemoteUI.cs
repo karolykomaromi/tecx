@@ -37,7 +37,7 @@ namespace TecX.Agile.Remote
 
         #region EventAggregator Subscriptions
 
-        public void Handle(PropertyChanged message)
+        public void Handle(PropertyUpdated message)
         {
             Guard.AssertNotNull(message, "message");
             Guard.AssertNotEmpty(message.PropertyName, "message.PropertyName");
@@ -111,7 +111,10 @@ namespace TecX.Agile.Remote
             Guard.AssertNotNull(e, "e");
             Guard.AssertNotEmpty(e.PropertyName, "e.PropertyName");
 
-            _propertyChangedMessageFilter.Enqueue(e.ArtefactId, e.PropertyName, null, e.NewValue);
+            _propertyChangedMessageFilter.Enqueue(e.ArtefactId, e.PropertyName, e.OldValue, e.NewValue);
+
+            if(Commands.UpdateProperty.CanExecute(null))
+                Commands.UpdateProperty.Execute(null);
         }
 
         #endregion EventHandler

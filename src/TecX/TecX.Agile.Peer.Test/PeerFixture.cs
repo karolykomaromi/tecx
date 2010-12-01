@@ -107,7 +107,7 @@ namespace TecX.Agile.Peer.Test
 
             filter.Enqueue(storyCardId, propertyName, oldValue, newValue);
 
-            PropertyChanged outboundMessage = new PropertyChanged(card.Id, propertyName, oldValue, newValue);
+            PropertyUpdated outboundMessage = new PropertyUpdated(card.Id, propertyName, oldValue, newValue);
 
             bool letPass = filter.ShouldLetPass(outboundMessage);
 
