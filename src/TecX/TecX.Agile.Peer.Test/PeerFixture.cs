@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Agile.Infrastructure.Events;
 using TecX.Agile.Remote;
+using TecX.Agile.ViewModel;
 
 namespace TecX.Agile.Peer.Test
 {
@@ -98,7 +99,7 @@ namespace TecX.Agile.Peer.Test
         public void GivenAnInboundPropertyChangeMessage_WhenCheckingWetherToSendReboundMessage_SaysNo()
         {
             Guid storyCardId = Guid.NewGuid();
-            ViewModel.StoryCard card = new ViewModel.StoryCard {Id = storyCardId};
+            StoryCard card = new StoryCard {Id = storyCardId};
             const string propertyName = "Name";
             string oldValue = null;
             string newValue = "Some name";
@@ -108,6 +109,24 @@ namespace TecX.Agile.Peer.Test
             filter.Enqueue(storyCardId, propertyName, oldValue, newValue);
 
             PropertyUpdated outboundMessage = new PropertyUpdated(card.Id, propertyName, oldValue, newValue);
+
+            bool letPass = filter.ShouldLetPass(outboundMessage);
+
+            Assert.IsFalse(letPass);
+        }
+
+        [TestMethod]
+        public void GivenAnInboundStoryCardMovedMessage_WhenCheckingWetherToSendReboundMessage_SaysNo()
+        {
+            Guid storyCardId = Guid.NewGuid();
+            StoryCard card = new StoryCard { Id = storyCardId };
+            double x = 125.0;
+
+            StoryCardMovedMessageFilter filter = new StoryCardMovedMessageFilter();
+
+            filter.Enqueue(storyCardId, x, 0.0, 0.0);
+
+            StoryCardMoved outboundMessage = new StoryCardMoved(storyCardId, x, 0.0, 0.0);
 
             bool letPass = filter.ShouldLetPass(outboundMessage);
 

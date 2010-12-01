@@ -1,6 +1,12 @@
 ﻿using System;
 using System.Windows.Media;
 
+using Microsoft.Practices.Prism.Commands;
+
+using TecX.Agile.Infrastructure;
+using TecX.Agile.Infrastructure.Events;
+using TecX.Common;
+
 namespace TecX.Agile.ViewModel
 {
     [Serializable]
@@ -15,6 +21,8 @@ namespace TecX.Agile.ViewModel
         private double _x;
         private double _angle;
         private double _y;
+
+        private readonly DelegateCommand<StoryCardMoved> _moveStoryCardCommand;
 
         #endregion Fields
 
@@ -130,6 +138,22 @@ namespace TecX.Agile.ViewModel
             _taskOwner = string.Empty;
             _mostLikelyEstimate = 0.0;
             _actualEffort = 0.0;
+
+            _moveStoryCardCommand = new DelegateCommand<StoryCardMoved>(OnStoryCardMoved);
+
+            Commands.MoveStoryCard.RegisterCommand(_moveStoryCardCommand);
+        }
+
+        private void OnStoryCardMoved(StoryCardMoved args)
+        {
+            Guard.AssertNotNull(args, "args");
+
+            if (args.StoryCardId != Id)
+                return;
+
+            X = args.X;
+            Y = args.Y;
+            Angle = args.Angle;
         }
 
         #endregion c'tor

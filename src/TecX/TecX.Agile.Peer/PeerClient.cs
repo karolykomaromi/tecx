@@ -107,9 +107,9 @@ namespace TecX.Agile.Peer
                 var args = new StoryCardMovedEventArgs
                                {
                                    Angle = angle,
-                                   DeltaX = x,
-                                   DeltaY = y,
-                                   Id = storyCardId
+                                   X = x,
+                                   Y = y,
+                                   StoryCardId = storyCardId
                                };
 
                 StoryCardMoved(this, args);
