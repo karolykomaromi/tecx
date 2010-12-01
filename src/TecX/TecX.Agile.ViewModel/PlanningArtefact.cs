@@ -86,11 +86,9 @@ namespace TecX.Agile.ViewModel
 
         #endregion c'tor
 
-        private readonly object _locker = new object();
-
         private void OnPropertyUpdated(PropertyUpdated args)
         {
-            lock (_locker)
+            lock (args)
             {
                 Guard.AssertNotNull(args, "args");
 
