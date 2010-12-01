@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Reflection;
+
+using Microsoft.Practices.Prism.Commands;
 
 namespace TecX.Agile.ViewModel
 {
@@ -10,6 +13,8 @@ namespace TecX.Agile.ViewModel
         private Guid _id;
         private string _name;
         private string _description;
+
+        private readonly DelegateCommand<Tuple<Guid, string, object, object>> _updatePropertyCommand;
 
         #endregion Fields
 
@@ -69,8 +74,25 @@ namespace TecX.Agile.ViewModel
             _id = Guid.Empty;
             _name = string.Empty;
             _description = string.Empty;
+
+            _updatePropertyCommand = new DelegateCommand<Tuple<Guid, string, object, object>>(OnPropertyUpdated);
         }
 
         #endregion c'tor
+
+        private void OnPropertyUpdated(Tuple<Guid, string, object, object> args)
+        {
+            Guid artefactId = args.Item1;
+            string propertyName = args.Item2;
+            object oldValue = args.Item3;
+            object newValue = args.Item4;
+
+            if (Id != artefactId)
+                return;
+
+            PropertyInfo property = GetType().GetProperty(propertyName);
+
+            property.SetValue(this, newValue, null);
+        }
     }
 }

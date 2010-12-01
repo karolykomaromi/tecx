@@ -13,7 +13,6 @@ namespace TecX.Agile.ViewModel
         #region Fields
 
         private readonly Backlog _backlog;
-        private readonly DelegateCommand<Tuple<Guid, string, object, object>> _updatePropertyCommand;
 
         #endregion Fields
 
@@ -34,21 +33,6 @@ namespace TecX.Agile.ViewModel
         public Project()
         {
             _backlog = new Backlog();
-            _updatePropertyCommand = new DelegateCommand<Tuple<Guid, string, object, object>>(OnPropertyUpdated);
-        }
-
-        private void OnPropertyUpdated(Tuple<Guid, string, object, object> args)
-        {
-            Guid artefactId = args.Item1;
-            string propertyName = args.Item2;
-            object oldValue = args.Item3;
-            object newValue = args.Item4;
-
-            PlanningArtefact existing = Find<PlanningArtefact>(artefactId);
-
-            PropertyInfo property = existing.GetType().GetProperty(propertyName);
-
-            property.SetValue(existing, newValue, null);
         }
 
         #endregion c'tor
