@@ -13,7 +13,7 @@ namespace TecX.Agile.ViewModel.Undo
     {
         #region Fields
 
-        private readonly object _parentObject;
+        private readonly PlanningArtefact _parentObject;
         private readonly PropertyInfo _property;
         private readonly object _oldValue;
         private readonly object _newValue;
@@ -37,7 +37,7 @@ namespace TecX.Agile.ViewModel.Undo
             get { return _property; }
         }
 
-        public object ParentObject
+        public PlanningArtefact ParentObject
         {
             get { return _parentObject; }
         }
@@ -46,7 +46,7 @@ namespace TecX.Agile.ViewModel.Undo
 
         #region c'tor
 
-        public SetPropertyAction(object parentObject, string propertyName, object oldValue, object newValue)
+        public SetPropertyAction(PlanningArtefact parentObject, string propertyName, object oldValue, object newValue)
         {
             Guard.AssertNotNull(parentObject, "parentObject");
             Guard.AssertNotEmpty(propertyName, "propertyName");

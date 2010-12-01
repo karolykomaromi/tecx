@@ -36,7 +36,7 @@ namespace TecX.Agile.ViewModel.Test
 
             mockEventAggregator
                 .Verify(ea => ea.Publish(
-                    It.Is<PropertyChanged>(pc => card == pc.ParentObject &&
+                    It.Is<PropertyChanged>(pc => card.Id == pc.ArtefactId &&
                                                  "Id" == pc.PropertyName &&
                                                  id == (Guid)pc.OldValue &&
                                                  newId == (Guid)pc.NewValue)));

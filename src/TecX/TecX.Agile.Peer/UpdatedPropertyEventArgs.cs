@@ -8,7 +8,13 @@ namespace TecX.Agile.Peer
     {
         private readonly Guid _artefactId;
         private readonly string _propertyName;
+        private readonly object _oldValue;
         private readonly object _newValue;
+
+        public object OldValue
+        {
+            get { return _oldValue; }
+        }
 
         public object NewValue
         {
@@ -25,12 +31,13 @@ namespace TecX.Agile.Peer
             get { return _artefactId; }
         }
 
-        public UpdatedPropertyEventArgs(Guid artefactId, string propertyName, object newValue)
+        public UpdatedPropertyEventArgs(Guid artefactId, string propertyName, object oldValue, object newValue)
         {
             Guard.AssertNotEmpty(propertyName, "propertyName");
 
             _artefactId = artefactId;
             _propertyName = propertyName;
+            _oldValue = oldValue;
             _newValue = newValue;
         }
     }

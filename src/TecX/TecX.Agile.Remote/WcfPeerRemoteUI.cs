@@ -13,6 +13,7 @@ namespace TecX.Agile.Remote
 
         private readonly IPeerClient _peerClient;
         private readonly HighlightMessageFilter _highlightMessageFilter;
+        private readonly PropertyChangedMessageFilter _propertyChangedMessageFilter;
 
         #endregion Fields
 
@@ -23,10 +24,14 @@ namespace TecX.Agile.Remote
             Guard.AssertNotNull(peerClient, "peerClient");
 
             _peerClient = peerClient;
+
             _peerClient.IncomingRequestToHighlightField += OnIncomingRequestToHighlightField;
+            _peerClient.PropertyUpdated += OnPropertyUpdated;
 
             _highlightMessageFilter = new HighlightMessageFilter();
+            _propertyChangedMessageFilter = new PropertyChangedMessageFilter();
         }
+
 
         #endregion c'tor
 
@@ -35,10 +40,13 @@ namespace TecX.Agile.Remote
         public void Handle(PropertyChanged message)
         {
             Guard.AssertNotNull(message, "message");
-            Guard.AssertNotNull(message.ParentObject, "message.ParentObject");
             Guard.AssertNotEmpty(message.PropertyName, "message.PropertyName");
 
-            _peerClient.UpdateProperty(_peerClient.Id, message.ParentObject.Id, message.PropertyName, message.NewValue);
+            if (_propertyChangedMessageFilter.ShouldLetPass(message))
+            {
+                _peerClient.UpdateProperty(_peerClient.Id, 
+                    message.ArtefactId, message.PropertyName, message.OldValue, message.NewValue);
+            }
         }
 
         public void Handle(StoryCardRescheduled message)
@@ -96,6 +104,14 @@ namespace TecX.Agile.Remote
 
             if (Commands.HighlightField.CanExecute(commandArgs))
                 Commands.HighlightField.Execute(commandArgs);
+        }
+
+        private void OnPropertyUpdated(object sender, UpdatedPropertyEventArgs e)
+        {
+            Guard.AssertNotNull(e, "e");
+            Guard.AssertNotEmpty(e.PropertyName, "e.PropertyName");
+
+            _propertyChangedMessageFilter.Enqueue(e.ArtefactId, e.PropertyName, null, e.NewValue);
         }
 
         #endregion EventHandler

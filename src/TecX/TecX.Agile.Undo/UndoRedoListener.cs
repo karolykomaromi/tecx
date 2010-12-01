@@ -33,14 +33,13 @@ namespace TecX.Agile.ViewModel.Undo
         public void Handle(PropertyChanged message)
         {
             Guard.AssertNotNull(message, "message");
-            Guard.AssertNotNull(message.ParentObject, "message.ParentObject");
             Guard.AssertNotEmpty(message.PropertyName, "message.PropertyName");
 
             SetPropertyAction running = _actionManager.CurrentAction as SetPropertyAction;
 
             if (running != null &&
                 //TODO weberse use equals with null checks -> helper?
-                running.ParentObject == message.ParentObject &&
+                running.ParentObject.Id == message.ArtefactId &&
                 running.Property.Name == message.PropertyName)
             {
                 if (AreEqual(running.NewValue, message.NewValue) &&
@@ -63,12 +62,14 @@ namespace TecX.Agile.ViewModel.Undo
             //so we dont have to die trying
             if (!_actionManager.IsActionExecuting)
             {
-                SetPropertyAction action = new SetPropertyAction(message.ParentObject,
-                   message.PropertyName,
-                   message.OldValue,
-                   message.NewValue);
+                //TODO weberse implement set action
 
-                _actionManager.RecordAction(action);
+                //SetPropertyAction action = new SetPropertyAction(message.ParentObject,
+                //   message.PropertyName,
+                //   message.OldValue,
+                //   message.NewValue);
+
+                //_actionManager.RecordAction(action);
             }
 
         }

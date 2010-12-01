@@ -29,6 +29,6 @@ namespace TecX.Agile.Peer
         void Highlight(Guid senderId, Guid artefactId, string fieldName);
 
         [OperationContract(IsOneWay = true)]
-        void UpdateProperty(Guid senderId, Guid artefactId, string propertyName, object newValue);
+        void UpdateProperty(Guid senderId, Guid artefactId, string propertyName, object oldValue, object newValue);
     }
 }

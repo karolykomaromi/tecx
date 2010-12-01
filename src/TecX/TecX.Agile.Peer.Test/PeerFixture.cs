@@ -93,5 +93,25 @@ namespace TecX.Agile.Peer.Test
 
             Assert.IsFalse(letPass);
         }
+
+        [TestMethod] 
+        public void GivenAnInboundPropertyChangeMessage_WhenCheckingWetherToSendReboundMessage_SaysNo()
+        {
+            Guid storyCardId = Guid.NewGuid();
+            ViewModel.StoryCard card = new ViewModel.StoryCard {Id = storyCardId};
+            const string propertyName = "Name";
+            string oldValue = null;
+            string newValue = "Some name";
+
+            PropertyChangedMessageFilter filter = new PropertyChangedMessageFilter();
+
+            filter.Enqueue(storyCardId, propertyName, oldValue, newValue);
+
+            PropertyChanged outboundMessage = new PropertyChanged(card.Id, propertyName, oldValue, newValue);
+
+            bool letPass = filter.ShouldLetPass(outboundMessage);
+
+            Assert.IsFalse(letPass);
+        }
     }
 }
