@@ -102,7 +102,7 @@ namespace TecX.Agile.Peer.Test
             StoryCard card = new StoryCard {Id = storyCardId};
             const string propertyName = "Name";
             string oldValue = null;
-            string newValue = "Some name";
+            const string newValue = "Some name";
 
             PropertyChangedMessageFilter filter = new PropertyChangedMessageFilter();
 
@@ -120,7 +120,7 @@ namespace TecX.Agile.Peer.Test
         {
             Guid storyCardId = Guid.NewGuid();
             StoryCard card = new StoryCard { Id = storyCardId };
-            double x = 125.0;
+            const double x = 125.0;
 
             StoryCardMovedMessageFilter filter = new StoryCardMovedMessageFilter();
 
