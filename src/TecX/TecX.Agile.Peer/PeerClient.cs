@@ -99,7 +99,7 @@ namespace TecX.Agile.Peer
 
         #region Implementation of IPeerClient
 
-        public void MoveStoryCard(Guid senderId, Guid storyCardId, double dx, double dy, double angle)
+        public void MoveStoryCard(Guid senderId, Guid storyCardId, double x, double y, double angle)
         {
             //message comes from somewhere else -> handle it
             if (senderId != Id)
@@ -107,8 +107,8 @@ namespace TecX.Agile.Peer
                 var args = new StoryCardMovedEventArgs
                                {
                                    Angle = angle,
-                                   DeltaX = dx,
-                                   DeltaY = dy,
+                                   DeltaX = x,
+                                   DeltaY = y,
                                    Id = storyCardId
                                };
 
@@ -117,7 +117,7 @@ namespace TecX.Agile.Peer
             //message comes from here -> send it to the mesh
             else
             {
-                RunWithWorkaroundForBclBug(() => _broadcastToMesh.MoveStoryCard(senderId, storyCardId, dx, dy, angle));
+                RunWithWorkaroundForBclBug(() => _broadcastToMesh.MoveStoryCard(senderId, storyCardId, x, y, angle));
             }
         }
 

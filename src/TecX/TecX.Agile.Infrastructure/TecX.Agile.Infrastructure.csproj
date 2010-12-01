@@ -48,6 +48,7 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Commands.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="EventAggregatorAccessor.cs" />
     <Compile Include="Events\FieldHighlighted.cs" />
     <Compile Include="Events\IDomainEvent.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Events\IterationReplaced.cs" />
     <Compile Include="Events\PropertyChanged.cs" />
     <Compile Include="Events\StoryCardAdded.cs" />
+    <Compile Include="Events\StoryCardMoved.cs" />
     <Compile Include="Events\StoryCardPostponed.cs" />
     <Compile Include="Events\StoryCardRemoved.cs" />
     <Compile Include="Events\StoryCardReplaced.cs" />

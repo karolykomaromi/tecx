@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 
 using TecX.Agile.Infrastructure;
 using TecX.Common;
@@ -45,8 +47,15 @@ namespace TecX.Agile.View.Behavior
             Element.PreviewMouseLeftButtonDown += OnMouseLeftButtonDown;
             Element.PreviewMouseLeftButtonUp += OnMouseLeftButtonUp;
             Element.PreviewMouseMove += OnMouseMove;
+
+            ViewModel.StoryCard storyCard = Element.DataContext as ViewModel.StoryCard;
+
+            if(storyCard != null)
+            {
+                InitializePositionBindings(element, storyCard);
+            }
         }
-        
+
         protected override void DoDetach()
         {
             Element.PreviewMouseLeftButtonDown -= OnMouseLeftButtonDown;
@@ -70,24 +79,6 @@ namespace TecX.Agile.View.Behavior
         }
 
         #endregion Overrides of BehaviorHandler
-
-        private void AddTranslateOnlyArea(object sender, RoutedEventArgs e)
-        {
-            UserControl element = sender as UserControl;
-
-            if (element != null)
-            {
-                Grid layoutRoot = element.FindName("Overlay") as Grid;
-                //Panel layoutRoot = element.Content as Panel;
-
-                if (layoutRoot != null)
-                {
-                    layoutRoot.Children.Add(_toa);
-                }
-
-                element.Loaded -= AddTranslateOnlyArea;
-            }
-        }
 
         #region EventHandling
 
@@ -175,7 +166,71 @@ namespace TecX.Agile.View.Behavior
         }
 
         #endregion EventHandling
+
+        private void AddTranslateOnlyArea(object sender, RoutedEventArgs e)
+        {
+            UserControl element = sender as UserControl;
+
+            if (element != null)
+            {
+                Grid overlay = element.FindName("Overlay") as Grid;
+                //Panel layoutRoot = element.Content as Panel;
+
+                if (overlay != null)
+                {
+                    overlay.Children.Add(_toa);
+                }
+
+                element.Loaded -= AddTranslateOnlyArea;
+            }
+        }
+
+        private static void InitializePositionBindings(FrameworkElement element, ViewModel.StoryCard storyCard)
+        {
+            Binding bindingX = new Binding(Constants.PropertyNames.X)
+            {
+                Source = storyCard,
+                Mode = BindingMode.TwoWay,
+                NotifyOnSourceUpdated = true,
+                NotifyOnTargetUpdated = true
+            };
+
+            BindingExpressionBase hookForInitialUpdate = BindingOperations.SetBinding(
+                element.Translation(),
+                TranslateTransform.XProperty,
+                bindingX);
+
+            hookForInitialUpdate.UpdateTarget();
+
+            Binding bindingY = new Binding(Constants.PropertyNames.Y)
+            {
+                Source = storyCard,
+                Mode = BindingMode.TwoWay
+            };
+
+            hookForInitialUpdate = BindingOperations.SetBinding(
+                element.Translation(),
+                TranslateTransform.YProperty,
+                bindingY);
+
+            hookForInitialUpdate.UpdateTarget();
+
+            Binding bindingAngle = new Binding(Constants.PropertyNames.Angle)
+            {
+                Source = storyCard,
+                Mode = BindingMode.TwoWay
+            };
+
+            hookForInitialUpdate = BindingOperations.SetBinding(
+                element.Rotation(),
+                RotateTransform.AngleProperty,
+                bindingAngle);
+
+            hookForInitialUpdate.UpdateTarget();
+        }
     }
+
+
 
     internal class ItemDropped
     {
