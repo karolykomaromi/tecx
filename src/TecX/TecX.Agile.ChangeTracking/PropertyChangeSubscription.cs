@@ -30,12 +30,17 @@ namespace TecX.Agile.ChangeTracking
             var beforeAfter = changing
                 .CombineLatest(changed, (before, after) => new
                                                                {
-                                                                   ParentObject = before.Sender,
-                                                                   before.PropertyName,
+                                                                   Sender1 = before.Sender,
+                                                                   Sender2 = after.Sender,
+                                                                   PropertyName1 = before.PropertyName,
+                                                                   PropertyName2 = after.PropertyName,
                                                                    OldValue = before.Value,
                                                                    NewValue = after.Value
                                                                })
-                .Where(ba => ba.NewValue != ba.OldValue);
+                .Where(ba => ba.Sender1 == ba.Sender2 && 
+                             ba.PropertyName1 == ba.PropertyName2 && 
+                             ba.NewValue != ba.OldValue)
+                .Select(ba => new { ParentObject = ba.Sender1, PropertyName = ba.PropertyName1, ba.OldValue, ba.NewValue});
 
             _subscription =
                 beforeAfter.Subscribe(x =>
