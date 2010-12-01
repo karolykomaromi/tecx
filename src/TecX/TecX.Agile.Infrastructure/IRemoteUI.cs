@@ -4,7 +4,7 @@ using TecX.Common.Event;
 namespace TecX.Agile.Infrastructure
 {
     public interface IRemoteUI : 
-        ISubscribeTo<PropertyChanged>, 
+        ISubscribeTo<PropertyUpdated>, 
         ISubscribeTo<StoryCardRescheduled>, 
         ISubscribeTo<StoryCardPostponed>, 
         ISubscribeTo<FieldHighlighted>,

@@ -22,7 +22,7 @@ namespace TecX.Agile.Remote
             _buffer.Add(new Tuple<Guid, string, object, object>(storyCardId, propertyName, oldValue, newValue));
         }
 
-        public bool ShouldLetPass(PropertyChanged outboundMessage)
+        public bool ShouldLetPass(PropertyUpdated outboundMessage)
         {
             Guard.AssertNotNull(outboundMessage, "outboundMessage");
             Guard.AssertNotEmpty((string) outboundMessage.PropertyName, "outboundMessage.PropertyName");

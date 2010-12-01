@@ -6,7 +6,7 @@ using TecX.Undo;
 namespace TecX.Agile.ViewModel.Undo
 {
     public class UndoRedoListener :
-        ISubscribeTo<PropertyChanged>
+        ISubscribeTo<PropertyUpdated>
     {
         #region Fields
 
@@ -30,7 +30,7 @@ namespace TecX.Agile.ViewModel.Undo
 
         #region Event Subscriptions
 
-        public void Handle(PropertyChanged message)
+        public void Handle(PropertyUpdated message)
         {
             Guard.AssertNotNull(message, "message");
             Guard.AssertNotEmpty(message.PropertyName, "message.PropertyName");

@@ -36,7 +36,7 @@ namespace TecX.Agile.ViewModel.Test
 
             mockEventAggregator
                 .Verify(ea => ea.Publish(
-                    It.Is<PropertyChanged>(pc => card.Id == pc.ArtefactId &&
+                    It.Is<PropertyUpdated>(pc => card.Id == pc.ArtefactId &&
                                                  "Id" == pc.PropertyName &&
                                                  id == (Guid)pc.OldValue &&
                                                  newId == (Guid)pc.NewValue)));
@@ -135,7 +135,7 @@ namespace TecX.Agile.ViewModel.Test
             card.Name = newName;
 
             mockEventAggregator
-                .Verify(ea => ea.Publish(It.IsAny<PropertyChanged>()), Times.Once());
+                .Verify(ea => ea.Publish(It.IsAny<PropertyUpdated>()), Times.Once());
 
             mockEventAggregator.VerifyAll();
         }
