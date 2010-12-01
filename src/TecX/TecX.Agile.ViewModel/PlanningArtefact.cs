@@ -86,16 +86,21 @@ namespace TecX.Agile.ViewModel
 
         #endregion c'tor
 
+        private readonly object _locker = new object();
+
         private void OnPropertyUpdated(PropertyUpdated args)
         {
-            Guard.AssertNotNull(args, "args");
+            lock (_locker)
+            {
+                Guard.AssertNotNull(args, "args");
 
-            if (Id != args.ArtefactId)
-                return;
+                if (Id != args.ArtefactId)
+                    return;
 
-            PropertyInfo property = GetType().GetProperty(args.PropertyName);
+                PropertyInfo property = GetType().GetProperty(args.PropertyName);
 
-            property.SetValue(this, args.NewValue, null);
+                property.SetValue(this, args.NewValue, null);
+            }
         }
     }
 }
