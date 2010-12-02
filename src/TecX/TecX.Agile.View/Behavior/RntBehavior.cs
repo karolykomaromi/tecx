@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 using TecX.Common;
 
@@ -25,21 +26,21 @@ namespace TecX.Agile.View.Behavior
         /// <summary>
         /// Setter for <see cref="DependencyProperty"/> <see cref="IsEnabledProperty"/>
         /// </summary>
-        public static void SetIsEnabled(StoryCard storyCard, bool value)
+        public static void SetIsEnabled(UserControl userControl, bool value)
         {
-            Guard.AssertNotNull(storyCard, "storyCard");
+            Guard.AssertNotNull(userControl, "userControl");
 
-            storyCard.SetValue(IsEnabledProperty, value);
+            userControl.SetValue(IsEnabledProperty, value);
         }
 
         /// <summary>
         /// Getter for <see cref="DependencyProperty"/> <see cref="IsEnabledProperty"/>
         /// </summary>
-        public static bool GetIsEnabled(StoryCard storyCard)
+        public static bool GetIsEnabled(UserControl userControl)
         {
-            Guard.AssertNotNull(storyCard, "storyCard");
+            Guard.AssertNotNull(userControl, "userControl");
 
-            return (bool) storyCard.GetValue(IsEnabledProperty);
+            return (bool) userControl.GetValue(IsEnabledProperty);
         }
 
         #endregion Properties
