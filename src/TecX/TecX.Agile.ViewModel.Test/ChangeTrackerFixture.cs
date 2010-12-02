@@ -257,6 +257,54 @@ namespace TecX.Agile.ViewModel.Test
             mockEventAggregator.VerifyAll();
         }
 
+        [TestMethod]
+        public void GivenProject_WhenSubscribingToChangeTracker_SubscribesBacklogAsWell()
+        {
+            var mockEventAggregator = new Mock<IEventAggregator>();
+
+            IChangeTracker changeTracker = new ChangeTracker(mockEventAggregator.Object);
+
+            Project project = new Project();
+
+            changeTracker.Subscribe(project);
+
+            Guid id = Guid.NewGuid();
+
+            StoryCard card = new StoryCard { Id = id };
+
+            project.Backlog.Add(card);
+
+            mockEventAggregator.Verify(ea => ea.Publish(It.Is<StoryCardAdded>(msg => msg.StoryCardId == id)), Times.Once(), "must fire message about added storycard");
+
+            mockEventAggregator.VerifyAll();
+        }
+
+        [TestMethod]
+        public void GivenProject_WhenSubscribingToChangeTracker_SubscribesIterationsAsWell()
+        {
+            var mockEventAggregator = new Mock<IEventAggregator>();
+
+            IChangeTracker changeTracker = new ChangeTracker(mockEventAggregator.Object);
+
+            Project project = new Project();
+
+            Iteration iteration = new Iteration { Id = Guid.NewGuid() };
+
+            project.Add(iteration);
+
+            changeTracker.Subscribe(project);
+
+            Guid id = Guid.NewGuid();
+
+            StoryCard card = new StoryCard { Id = id };
+
+            iteration.Add(card);
+
+            mockEventAggregator.Verify(ea => ea.Publish(It.Is<StoryCardAdded>(msg => msg.StoryCardId == id)), Times.Once(), "must fire message about added storycard");
+
+            mockEventAggregator.VerifyAll();
+        }
+
 
         [TestMethod]
         [Ignore]

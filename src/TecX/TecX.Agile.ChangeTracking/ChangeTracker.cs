@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using TecX.Agile.Infrastructure;
 using TecX.Agile.ViewModel;
 using TecX.Common;
 using TecX.Common.Event;
@@ -138,6 +137,78 @@ namespace TecX.Agile.ChangeTracking
             {
                 _postponeStoryCardSubscriptions.Remove(iteration.Id);
                 existing.Dispose();
+            }
+        }
+
+        public void Subscribe(Project project)
+        {
+            Guard.AssertNotNull(project, "project");
+
+            Subscribe((PlanningArtefactCollection<Iteration>)project);
+
+            if(project.Backlog != null)
+            {
+                Subscribe(project.Backlog);
+
+                if(project.Backlog.Count > 0)
+                {
+                    foreach (StoryCard storyCard in project.Backlog)
+                    {
+                        Subscribe(storyCard);
+                    }
+                }
+            }
+
+            if(project.Count > 0)
+            {
+                foreach (Iteration iteration in project)
+                {
+                    Subscribe(iteration);
+
+                    if(iteration.Count > 0)
+                    {
+                        foreach(StoryCard storyCard in iteration)
+                        {
+                            Subscribe(storyCard);
+                        }
+                    }
+                }
+            }
+        }
+
+        public void Unsubscribe(Project project)
+        {
+            Guard.AssertNotNull(project, "project");
+
+            Unsubscribe((PlanningArtefactCollection<Iteration>)project);
+
+            if (project.Backlog != null)
+            {
+                Unsubscribe(project.Backlog);
+
+                if (project.Backlog.Count > 0)
+                {
+                    foreach (StoryCard storyCard in project.Backlog)
+                    {
+                        Unsubscribe(storyCard);
+                    }
+                }
+            }
+
+            if (project.Count > 0)
+            {
+                foreach (Iteration iteration in project)
+                {
+                    Unsubscribe(iteration);
+
+                    if (iteration.Count > 0)
+                    {
+                        foreach (StoryCard storyCard in iteration)
+                        {
+                            Unsubscribe(storyCard);
+                        }
+                    }
+                }
             }
         }
 
