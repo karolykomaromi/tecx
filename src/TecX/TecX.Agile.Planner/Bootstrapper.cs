@@ -71,6 +71,10 @@ namespace TecX.Agile.Planner
             ModuleInfo main = new ModuleInfo(Modules.Main.Module.ModuleName, typeof(Modules.Main.Module).AssemblyQualifiedName);
 
             ModuleCatalog.AddModule(main);
+
+            ModuleInfo gestures = new ModuleInfo(Modules.Gestures.Module.ModuleName, typeof(Modules.Gestures.Module).AssemblyQualifiedName);
+
+            ModuleCatalog.AddModule(gestures);
         }
 
 

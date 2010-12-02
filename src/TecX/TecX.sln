@@ -111,9 +111,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Remote", "TecX.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Undo", "TecX.Agile.Undo\TecX.Agile.Undo.csproj", "{61A12638-28BA-4A67-AD53-E94D7EE25675}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Modules.Gestures", "TecX.Agile.Modules.Gestures\TecX.Agile.Modules.Gestures.csproj", "{41785223-CF12-4A54-9D09-E017A5C362E9}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 42
+		SccNumberOfProjects = 43
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -281,6 +283,10 @@ Global
 		SccProjectTopLevelParentUniqueName41 = TecX.sln
 		SccProjectName41 = TecX.Agile.Undo
 		SccLocalPath41 = TecX.Agile.Undo
+		SccProjectUniqueName42 = TecX.Agile.Modules.Gestures\\TecX.Agile.Modules.Gestures.csproj
+		SccProjectTopLevelParentUniqueName42 = TecX.sln
+		SccProjectName42 = TecX.Agile.Modules.Gestures
+		SccLocalPath42 = TecX.Agile.Modules.Gestures
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -704,6 +710,16 @@ Global
 		{61A12638-28BA-4A67-AD53-E94D7EE25675}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{61A12638-28BA-4A67-AD53-E94D7EE25675}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{61A12638-28BA-4A67-AD53-E94D7EE25675}.Release|x86.ActiveCfg = Release|Any CPU
+		{41785223-CF12-4A54-9D09-E017A5C362E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41785223-CF12-4A54-9D09-E017A5C362E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41785223-CF12-4A54-9D09-E017A5C362E9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{41785223-CF12-4A54-9D09-E017A5C362E9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{41785223-CF12-4A54-9D09-E017A5C362E9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{41785223-CF12-4A54-9D09-E017A5C362E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41785223-CF12-4A54-9D09-E017A5C362E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41785223-CF12-4A54-9D09-E017A5C362E9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{41785223-CF12-4A54-9D09-E017A5C362E9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{41785223-CF12-4A54-9D09-E017A5C362E9}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -752,5 +768,6 @@ Global
 		{14311591-3735-41A0-9DE5-8A72349B60D5} = {E6BC7155-A2F0-4353-A57C-36A237193155}
 		{FA168E91-F953-4C22-9727-4462E9DF74EF} = {BC5057D0-37DD-40FD-98BE-0FF01551FEFE}
 		{1EB35F86-DA6C-4691-A2C5-8587129B520D} = {83F73BB7-5B6F-469E-9376-AF196CFFA146}
+		{41785223-CF12-4A54-9D09-E017A5C362E9} = {83F73BB7-5B6F-469E-9376-AF196CFFA146}
 	EndGlobalSection
 EndGlobal
