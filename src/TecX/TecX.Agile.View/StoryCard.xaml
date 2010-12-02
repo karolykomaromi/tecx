@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Converter="clr-namespace:TecX.Agile.View.Converter" 
-             xmlns:Validation="clr-namespace:TecX.Agile.View.Validation" xmlns:Behavior="clr-namespace:TecX.Agile.View.Behavior" mc:Ignorable="d" 
+             xmlns:Validation="clr-namespace:TecX.Agile.View.Validation" 
+             xmlns:Behavior="clr-namespace:TecX.Agile.View.Behavior" mc:Ignorable="d" 
              d:DesignHeight="200" 
              d:DesignWidth="300"             
              BorderBrush="Black"
              BorderThickness="1"
-             Behavior:RntBehavior.IsEnabled="true">
+             Behavior:RntBehavior.IsEnabled="True">
     <UserControl.Resources>
         <ResourceDictionary>            
             <ResourceDictionary.MergedDictionaries>
