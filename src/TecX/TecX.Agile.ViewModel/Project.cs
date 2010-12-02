@@ -6,6 +6,10 @@ using System.Text;
 
 using Microsoft.Practices.Prism.Commands;
 
+using TecX.Agile.Infrastructure;
+using TecX.Agile.Infrastructure.Events;
+using TecX.Common;
+
 namespace TecX.Agile.ViewModel
 {
     public class Project : IterationCollection, IEnumerable<PlanningArtefact>
@@ -13,6 +17,8 @@ namespace TecX.Agile.ViewModel
         #region Fields
 
         private readonly Backlog _backlog;
+
+        private readonly DelegateCommand<StoryCardAdded> _addStoryCardCommand;
 
         #endregion Fields
 
@@ -32,7 +38,11 @@ namespace TecX.Agile.ViewModel
         /// </summary>
         public Project()
         {
-            _backlog = new Backlog();
+            _backlog = new Backlog { Id = Guid.NewGuid() };
+
+            _addStoryCardCommand = new DelegateCommand<StoryCardAdded>(OnAddStoryCard);
+
+            Commands.AddStoryCard.RegisterCommand(_addStoryCardCommand);
         }
 
         #endregion c'tor
@@ -50,6 +60,8 @@ namespace TecX.Agile.ViewModel
         }
 
         #endregion Overrides of PlanningArtefactCollection<Iteration>
+
+        #region Methods
 
         public TArtefact Find<TArtefact>(Guid id)
             where TArtefact : PlanningArtefact
@@ -74,6 +86,19 @@ namespace TecX.Agile.ViewModel
 
             return null;
         }
+
+        private void OnAddStoryCard(StoryCardAdded args)
+        {
+            Guard.AssertNotNull(args, "args");
+
+            StoryCard card = new StoryCard { Id = args.StoryCardId, X = args.X, Y = args.Y, Angle = args.Angle };
+
+            StoryCardCollection parent = Find<StoryCardCollection>(args.To) ?? _backlog;
+
+            parent.Add(card);
+        }
+
+        #endregion Methods
 
         #region Implementation of IEnumerable<out PlanningArtefact>
 

@@ -8,7 +8,13 @@ namespace TecX.Agile.View
 {
     public static class Tabletop
     {
-        #region Properties
+        #region Fields
+
+        private static Canvas _surface;
+
+        #endregion Fields
+
+        #region DependencyProperties
 
         /// <summary>
         /// This is a dependency property.
@@ -21,17 +27,6 @@ namespace TecX.Agile.View
                 new FrameworkPropertyMetadata(
                     false,
                     OnDependencyPropertyChanged));
-
-        private static void OnDependencyPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            if ((bool)args.NewValue)
-            {
-                Canvas canvas = dependencyObject as Canvas;
-
-                if (canvas != null)
-                    Surface = canvas;
-            }
-        }
 
         /// <summary>
         /// Setter for <see cref="DependencyProperty"/> <see cref="IsSurfaceProperty"/>
@@ -52,8 +47,9 @@ namespace TecX.Agile.View
 
             return (bool)canvas.GetValue(IsSurfaceProperty);
         }
+        #endregion DependencyProperties
 
-        private static Canvas _surface;
+        #region Properties
 
         public static Canvas Surface
         {
@@ -78,5 +74,19 @@ namespace TecX.Agile.View
 
         #endregion Properties
 
+        #region EventHandling
+
+        private static void OnDependencyPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            if ((bool)args.NewValue)
+            {
+                Canvas canvas = dependencyObject as Canvas;
+
+                if (canvas != null)
+                    Surface = canvas;
+            }
+        }
+
+        #endregion EventHandling
     }
 }

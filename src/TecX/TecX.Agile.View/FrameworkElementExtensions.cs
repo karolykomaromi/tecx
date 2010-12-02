@@ -2,9 +2,10 @@
 using System.Windows;
 using System.Windows.Media;
 
+using TecX.Agile.View.Behavior;
 using TecX.Common;
 
-namespace TecX.Agile.View.Behavior
+namespace TecX.Agile.View
 {
     public static class FrameworkElementExtensions
     {
