@@ -5,8 +5,8 @@ using TecX.Common;
 
 namespace TecX.Agile.View.Behavior
 {
-    public class RntBehavior : MovementBehaviorBase
-    {        
+    public class TouchBehavior : MovementBehaviorBase
+    {
         #region DependencyProperties
 
         /// <summary>
@@ -16,12 +16,12 @@ namespace TecX.Agile.View.Behavior
             DependencyProperty.RegisterAttached(
                 "IsEnabled",
                 typeof (bool),
-                typeof (RntBehavior),
+                typeof (TouchBehavior),
                 new FrameworkPropertyMetadata(
                     false,
                     FrameworkPropertyMetadataOptions.AffectsArrange |
                     FrameworkPropertyMetadataOptions.AffectsMeasure,
-                    OnMovementBehaviorEnabledChanged<RntHandler>));
+                    OnMovementBehaviorEnabledChanged<TouchHandler>));
 
         /// <summary>
         /// Setter for <see cref="DependencyProperty"/> <see cref="IsEnabledProperty"/>
