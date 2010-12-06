@@ -49,6 +49,7 @@
     </Compile>
     <Compile Include="Comparison\Compare.cs" />
     <Compile Include="Comparison\DictionaryComparer.cs" />
+    <Compile Include="Comparison\EpsilonComparer.cs" />
     <Compile Include="Comparison\LambdaComparer.cs" />
     <Compile Include="Convert.cs" />
     <Compile Include="ReflectionHelper.cs" />
