@@ -27,13 +27,19 @@ namespace TecX.Agile.View.Test
 
             Assert.AreEqual(100, p2.X);
 
-            //TODO weberse mist! tan hat eine periode von 180° wie kriege ich da jetzt ein Vorzeichen raus?
-            //var atan = Math.Atan(-(matrix.M21 / matrix.M11));
             var atan = Math.Atan(matrix.M12 / matrix.M22);
 
-            var degrees = GeometryHelper.ToDegrees(atan);
+            var degrees = -GeometryHelper.ToDegrees(atan);
 
-            Assert.IsTrue(EpsilonComparer.AreEqual(270 % 180, degrees));
+            matrix = Matrix.Identity;
+
+            matrix.Rotate(90);
+
+            atan = Math.Atan(matrix.M12 / matrix.M22);
+
+            double degrees2 = -GeometryHelper.ToDegrees(atan);
+
+            Assert.IsFalse(EpsilonComparer.AreEqual(degrees, degrees2));
 
         }
 
