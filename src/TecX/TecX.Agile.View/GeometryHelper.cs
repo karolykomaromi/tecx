@@ -238,7 +238,11 @@ namespace TecX.Agile.View
         /// <returns>The angle expressed in radians</returns>
         public static double ToRadians(double degrees)
         {
-            return degrees * Math.PI / 180;
+            double angle = (degrees * Math.PI / 180) % 360;
+
+            angle = angle < 0 ? angle + 360.0 : angle;
+
+            return angle;
         }
 
         /// <summary>
@@ -248,7 +252,11 @@ namespace TecX.Agile.View
         /// <returns>The angle expressed in degrees</returns>
         public static double ToDegrees(double radians)
         {
-            return radians * 180 / Math.PI;
+            double angle = (radians * 180 / Math.PI) % 360;
+
+            angle = angle < 0 ? angle + 360.0 : angle;
+
+            return angle;
         }
 
         /// <summary>
