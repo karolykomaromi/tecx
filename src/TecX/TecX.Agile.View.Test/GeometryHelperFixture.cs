@@ -19,28 +19,61 @@ namespace TecX.Agile.View.Test
         {
             Matrix matrix = Matrix.Identity;
 
-            matrix.Rotate(270);
+            for (double angle = 0.0; angle < 360.0; angle += 5.0)
+            {
+                matrix.Rotate(angle);
 
-            Point point = new Point(0, 100);
+                double rotationAngle = GetRotationAngleFromMatrix(matrix);
+                
+                Assert.IsTrue(EpsilonComparer.AreEqual(angle, rotationAngle));
 
-            Point p2 = matrix.Transform(point);
-
-            Assert.AreEqual(100, p2.X);
-
-            var atan = Math.Atan(matrix.M12 / matrix.M22);
-
-            var degrees = -GeometryHelper.ToDegrees(atan);
+                matrix = Matrix.Identity;
+            }
 
             matrix = Matrix.Identity;
+            matrix.Rotate(123.0);
+            matrix.Scale(2.3, 4.5);
+            matrix.Translate(136, 234);
 
-            matrix.Rotate(90);
+            double a = GetRotationAngleFromMatrix(matrix);
 
-            atan = Math.Atan(matrix.M12 / matrix.M22);
+            Assert.IsTrue(EpsilonComparer.AreEqual(123.0, a));
 
-            double degrees2 = -GeometryHelper.ToDegrees(atan);
 
-            Assert.IsFalse(EpsilonComparer.AreEqual(degrees, degrees2));
+            //Matrix matrix = Matrix.Identity;
 
+            //matrix.Rotate(270);
+
+            //double degrees = GetRotationAngleFromMatrix(matrix);
+
+            //Assert.IsTrue(EpsilonComparer.AreEqual(270, degrees));
+
+            //matrix = Matrix.Identity;
+
+            //matrix.Rotate(90);
+
+            //double degrees2 = GetRotationAngleFromMatrix(matrix);
+
+            //Assert.IsTrue(EpsilonComparer.AreEqual(90, degrees2));
+
+        }
+
+        public static double GetRotationAngleFromMatrix(Matrix matrix)
+        {
+            double s11 = Math.Sign(matrix.M11);
+            double s22 = Math.Sign(matrix.M22);
+
+            double quadrantCorrectionFactor = s11 < 0 && s22 < 0 ? -180.0 : 0;
+
+            double atan = Math.Atan(matrix.M12 / matrix.M22);
+
+            double degrees = GeometryHelper.ToDegrees(atan);
+
+            degrees = degrees + quadrantCorrectionFactor;
+
+            degrees = degrees < 0 ? degrees + 360.0 : degrees;
+
+            return degrees;
         }
 
         [TestMethod]
@@ -75,11 +108,21 @@ namespace TecX.Agile.View.Test
             Assert.AreEqual(1000, p2.X);
             Assert.AreEqual(1500, p2.Y);
 
-            double scaleX = Math.Sign(matrix.M11) * Math.Sqrt((Math.Pow(matrix.M11, 2.0) + Math.Pow(matrix.M21, 2.0)));
-            double scaleY = Math.Sign(matrix.M22) * Math.Sqrt((Math.Pow(matrix.M12, 2.0) + Math.Pow(matrix.M22, 2.0)));
+            double scaleX = GetScaleFactorX(matrix);
+            double scaleY = GetScaleFactorY(matrix);
 
             Assert.AreEqual(100, scaleX);
             Assert.AreEqual(150, scaleY);
+        }
+
+        private static double GetScaleFactorY(Matrix matrix)
+        {
+            return Math.Sign(matrix.M22) * Math.Sqrt((Math.Pow(matrix.M12, 2.0) + Math.Pow(matrix.M22, 2.0)));
+        }
+
+        private static double GetScaleFactorX(Matrix matrix)
+        {
+            return Math.Sign(matrix.M11) * Math.Sqrt((Math.Pow(matrix.M11, 2.0) + Math.Pow(matrix.M21, 2.0)));
         }
     }
 }
