@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -6,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 
 using TecX.Agile.Infrastructure;
+using TecX.Common.Comparison;
 using TecX.Common.Event;
 
 namespace TecX.Agile.View.Behavior
@@ -186,46 +189,91 @@ namespace TecX.Agile.View.Behavior
 
         private static void InitializePositionBindings(FrameworkElement element, ViewModel.StoryCard storyCard)
         {
-            Binding bindingX = new Binding(Constants.PropertyNames.X)
-            {
-                Source = storyCard,
-                Mode = BindingMode.TwoWay,
-                NotifyOnSourceUpdated = true,
-                NotifyOnTargetUpdated = true
-            };
+            var transform = from evt in Observable.FromEvent<EventArgs>(element.Transform(), "Changed")
+                            let matrix = ((MatrixTransform)evt.Sender).Matrix
+                            let angle = GeometryHelper.GetRotationAngleFromMatrix(matrix)
+                            where !EpsilonComparer.AreEqual(storyCard.Angle, angle) ||
+                                  !EpsilonComparer.AreEqual(storyCard.X, matrix.OffsetX) ||
+                                  !EpsilonComparer.AreEqual(storyCard.Y, matrix.OffsetY)
+                            select
+                                new
+                                    {
+                                        X = matrix.OffsetX,
+                                        Y = matrix.OffsetY,
+                                        Angle = angle
+                                    };
 
-            BindingExpressionBase hookForInitialUpdate = BindingOperations.SetBinding(
-                element.Translation(),
-                TranslateTransform.XProperty,
-                bindingX);
+            var subT = transform.Subscribe(x =>
+                                               {
+                                                   storyCard.X = x.X;
+                                                   storyCard.Y = x.Y;
+                                                   storyCard.Angle = x.Angle;
+                                               });
 
-            hookForInitialUpdate.UpdateTarget();
+            var position = from evt in Observable.FromEvent<PropertyChangedEventArgs>(storyCard, "PropertyChanged")
+                           let name = evt.EventArgs.PropertyName
+                           let matrix = element.Transform().Matrix
+                           let angle = GeometryHelper.GetRotationAngleFromMatrix(matrix)
+                           where (name == Constants.PropertyNames.X && !EpsilonComparer.AreEqual(matrix.OffsetX, storyCard.X)) ||
+                                 (name == Constants.PropertyNames.Y && !EpsilonComparer.AreEqual(angle, storyCard.Angle)) ||
+                                 (name == Constants.PropertyNames.Angle && !EpsilonComparer.AreEqual(matrix.OffsetY, storyCard.Y))
+                           select new
+                                      {
+                                          storyCard.X,
+                                          storyCard.Y,
+                                          storyCard.Angle
+                                      };
 
-            Binding bindingY = new Binding(Constants.PropertyNames.Y)
-            {
-                Source = storyCard,
-                Mode = BindingMode.TwoWay
-            };
+            var subP = position.Subscribe(x =>
+                                              {
+                                                  Matrix m = Matrix.Identity;
 
-            hookForInitialUpdate = BindingOperations.SetBinding(
-                element.Translation(),
-                TranslateTransform.YProperty,
-                bindingY);
+                                                  m.Rotate(x.Angle);
+                                                  m.Translate(x.X, x.Y);
 
-            hookForInitialUpdate.UpdateTarget();
+                                                  element.Transform().Matrix = m;
+                                              });
 
-            Binding bindingAngle = new Binding(Constants.PropertyNames.Angle)
-            {
-                Source = storyCard,
-                Mode = BindingMode.TwoWay
-            };
+            //Binding bindingX = new Binding(Constants.PropertyNames.X)
+            //{
+            //    Source = storyCard,
+            //    Mode = BindingMode.TwoWay,
+            //    NotifyOnSourceUpdated = true,
+            //    NotifyOnTargetUpdated = true
+            //};
 
-            hookForInitialUpdate = BindingOperations.SetBinding(
-                element.Rotation(),
-                RotateTransform.AngleProperty,
-                bindingAngle);
+            //BindingExpressionBase hookForInitialUpdate = BindingOperations.SetBinding(
+            //    element.Translation(),
+            //    TranslateTransform.XProperty,
+            //    bindingX);
 
-            hookForInitialUpdate.UpdateTarget();
+            //hookForInitialUpdate.UpdateTarget();
+
+            //Binding bindingY = new Binding(Constants.PropertyNames.Y)
+            //{
+            //    Source = storyCard,
+            //    Mode = BindingMode.TwoWay
+            //};
+
+            //hookForInitialUpdate = BindingOperations.SetBinding(
+            //    element.Translation(),
+            //    TranslateTransform.YProperty,
+            //    bindingY);
+
+            //hookForInitialUpdate.UpdateTarget();
+
+            //Binding bindingAngle = new Binding(Constants.PropertyNames.Angle)
+            //{
+            //    Source = storyCard,
+            //    Mode = BindingMode.TwoWay
+            //};
+
+            //hookForInitialUpdate = BindingOperations.SetBinding(
+            //    element.Rotation(),
+            //    RotateTransform.AngleProperty,
+            //    bindingAngle);
+
+            //hookForInitialUpdate.UpdateTarget();
         }
     }
 }

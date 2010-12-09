@@ -23,7 +23,7 @@ namespace TecX.Agile.View.Test
             {
                 matrix.Rotate(angle);
 
-                double rotationAngle = GetRotationAngleFromMatrix(matrix);
+                double rotationAngle = GeometryHelper.GetRotationAngleFromMatrix(matrix);
                 
                 Assert.IsTrue(EpsilonComparer.AreEqual(angle, rotationAngle));
 
@@ -35,7 +35,7 @@ namespace TecX.Agile.View.Test
             matrix.Scale(2.3, 4.5);
             matrix.Translate(136, 234);
 
-            double a = GetRotationAngleFromMatrix(matrix);
+            double a = GeometryHelper.GetRotationAngleFromMatrix(matrix);
 
             Assert.IsTrue(EpsilonComparer.AreEqual(123.0, a));
 
@@ -56,24 +56,6 @@ namespace TecX.Agile.View.Test
 
             //Assert.IsTrue(EpsilonComparer.AreEqual(90, degrees2));
 
-        }
-
-        public static double GetRotationAngleFromMatrix(Matrix matrix)
-        {
-            double s11 = Math.Sign(matrix.M11);
-            double s22 = Math.Sign(matrix.M22);
-
-            double quadrantCorrectionFactor = s11 < 0 && s22 < 0 ? -180.0 : 0;
-
-            double atan = Math.Atan(matrix.M12 / matrix.M22);
-
-            double degrees = GeometryHelper.ToDegrees(atan);
-
-            degrees = degrees + quadrantCorrectionFactor;
-
-            degrees = degrees < 0 ? degrees + 360.0 : degrees;
-
-            return degrees;
         }
 
         [TestMethod]
@@ -108,21 +90,11 @@ namespace TecX.Agile.View.Test
             Assert.AreEqual(1000, p2.X);
             Assert.AreEqual(1500, p2.Y);
 
-            double scaleX = GetScaleFactorX(matrix);
-            double scaleY = GetScaleFactorY(matrix);
+            double scaleX = GeometryHelper.GetScaleFactorX(matrix);
+            double scaleY = GeometryHelper.GetScaleFactorY(matrix);
 
             Assert.AreEqual(100, scaleX);
             Assert.AreEqual(150, scaleY);
-        }
-
-        private static double GetScaleFactorY(Matrix matrix)
-        {
-            return Math.Sign(matrix.M22) * Math.Sqrt((Math.Pow(matrix.M12, 2.0) + Math.Pow(matrix.M22, 2.0)));
-        }
-
-        private static double GetScaleFactorX(Matrix matrix)
-        {
-            return Math.Sign(matrix.M11) * Math.Sqrt((Math.Pow(matrix.M11, 2.0) + Math.Pow(matrix.M21, 2.0)));
         }
     }
 }
