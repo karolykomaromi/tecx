@@ -168,7 +168,7 @@ namespace TecX.Agile.View
         public static Point PolygonCentroid(Point[] polygon)
         {
             Guard.AssertNotNull(polygon, "polygon");
-            Guard.AssertIsInRange(polygon.Length, "polygon.Length", 3, int.MaxValue, "Cannot compute " +
+            Guard.AssertIsInRange(polygon.Length, "polygon.Length", 3, Int32.MaxValue, "Cannot compute " +
                                                                                      "centroid of degenerated polygon (polygon with less than 3 vertices).");
 
             if (polygon[0] != polygon.Last())
@@ -488,6 +488,34 @@ namespace TecX.Agile.View
 
             //move and rotate the 
             return new Transition(displacement.X, displacement.Y, angle);
+        }
+
+        public static double GetRotationAngleFromMatrix(Matrix matrix)
+        {
+            double s11 = Math.Sign(matrix.M11);
+            double s22 = Math.Sign(matrix.M22);
+
+            double quadrantCorrectionFactor = s11 < 0 && s22 < 0 ? -180.0 : 0;
+
+            double atan = Math.Atan(matrix.M12 / matrix.M22);
+
+            double degrees = ToDegrees(atan);
+
+            degrees = degrees + quadrantCorrectionFactor;
+
+            degrees = degrees < 0 ? degrees + 360.0 : degrees;
+
+            return degrees;
+        }
+
+        public static double GetScaleFactorY(Matrix matrix)
+        {
+            return Math.Sign(matrix.M22) * Math.Sqrt((Math.Pow(matrix.M12, 2.0) + Math.Pow(matrix.M22, 2.0)));
+        }
+
+        public static double GetScaleFactorX(Matrix matrix)
+        {
+            return Math.Sign(matrix.M11) * Math.Sqrt((Math.Pow(matrix.M11, 2.0) + Math.Pow(matrix.M21, 2.0)));
         }
     }
 

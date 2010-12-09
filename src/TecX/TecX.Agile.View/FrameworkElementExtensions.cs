@@ -9,6 +9,13 @@ namespace TecX.Agile.View
 {
     public static class FrameworkElementExtensions
     {
+        public static MatrixTransform Transform(this FrameworkElement element)
+        {
+            Guard.AssertNotNull(element, "element");
+
+            return (MatrixTransform) element.RenderTransform;
+        }
+
         /// <summary>
         /// Gets the translation for the specified element.
         /// </summary>
