@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 
 using TecX.Agile.View.Behavior;
 using TecX.Common;
+using TecX.Common.Comparison;
 
 namespace TecX.Agile.View
 {
@@ -15,43 +15,6 @@ namespace TecX.Agile.View
 
             return (MatrixTransform) element.RenderTransform;
         }
-
-        /// <summary>
-        /// Gets the translation for the specified element.
-        /// </summary>
-        /// <param name="element">The element.</param>
-        /// <returns></returns>
-        public static TranslateTransform Translation(this FrameworkElement element)
-        {
-            Guard.AssertNotNull(element, "element");
-
-            return (element.RenderTransform as TransformGroup).Children[2] as TranslateTransform;
-        }
-
-        /// <summary>
-        /// Gets the rotation for the specified element.
-        /// </summary>
-        /// <param name="element">The element.</param>
-        /// <returns></returns>
-        public static RotateTransform Rotation(this FrameworkElement element)
-        {
-            Guard.AssertNotNull(element, "element");
-
-            return (element.RenderTransform as TransformGroup).Children[0] as RotateTransform;
-        }
-
-        /// <summary>
-        /// Gets the scale for the specified element.
-        /// </summary>
-        /// <param name="element">The element.</param>
-        /// <returns></returns>
-        public static ScaleTransform Scale(this FrameworkElement element)
-        {
-            Guard.AssertNotNull(element, "element");
-
-            return (element.RenderTransform as TransformGroup).Children[1] as ScaleTransform;
-        }
-
 
         /// <summary>
         /// Gets the local center for the specified element.
@@ -81,8 +44,6 @@ namespace TecX.Agile.View
             Point centerOnSurface = surface.PointFromScreen(center);
 
             return centerOnSurface;
-
-            throw new NotImplementedException();
         }
 
 
@@ -100,18 +61,6 @@ namespace TecX.Agile.View
             bool isPinned = (bool)element.GetValue(MovementBehaviorBase.IsPinnedProperty);
 
             return isPinned;
-        }
-
-        /// <summary>
-        /// Moves the specified element.
-        /// </summary>
-        /// <param name="element">The element.</param>
-        /// <param name="vector">The vector.</param>
-        public static void Move(this FrameworkElement element, Vector vector)
-        {
-            Guard.AssertNotNull(element, "element");
-
-            element.Move(vector.X, vector.Y);
         }
 
         /// <summary>
@@ -138,14 +87,18 @@ namespace TecX.Agile.View
         {
             Guard.AssertNotNull(element, "element");
 
-            var translation = element.Translation();
+            Matrix matrix = element.Transform().Matrix;
 
-            translation.X += dx;
-            translation.Y += dy;
+            if(!EpsilonComparer.IsAlmostZero(angle))
+            {
+                Point center = element.CenterOnSurface();
 
-            var rotation = element.Rotation();
+                matrix.RotateAt(angle, center.X, center.Y);
+            }
 
-            rotation.Angle = (rotation.Angle + angle) % 360;
+            matrix.Translate(dx, dy);
+
+            element.Transform().Matrix = matrix;
         }
     }
 }

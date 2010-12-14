@@ -79,68 +79,12 @@ namespace TecX.Agile.View.Behavior
         {
             Guard.AssertNotNull(element, "element");
 
-            if (element.RenderTransform == null ||
-                element.RenderTransform == Transform.Identity)
+            if(element.RenderTransform == null || element.RenderTransform == Transform.Identity)
             {
-                InitTransforms(element);
+                element.RenderTransform = new MatrixTransform(Matrix.Identity);
             }
-
-            var group = element.RenderTransform as TransformGroup;
-
-            if (group == null)
-                ThrowTransformsException(group);
-
-            int count = group.Children.Count;
-
-            if (count != 3)
-                ThrowTransformsException(group);
-
-            RotateTransform rotation = group.Children[0] as RotateTransform;
-
-            if (rotation == null)
-                ThrowTransformsException(group);
-
-            ScaleTransform scale = group.Children[1] as ScaleTransform;
-
-            if (scale == null)
-                ThrowTransformsException(group);
-
-            TranslateTransform translation = group.Children[2] as TranslateTransform;
-
-            if (translation == null)
-                ThrowTransformsException(group);
-
-            element.Loaded += OnLoaded;
 
             SetAttachedHandlers(element, new List<IBehaviorHandler>());
-        }
-        /// <summary>
-        /// Initializes the centers for scale and rotation after a <see cref="FrameworkElement"/>
-        /// was loaded.
-        /// </summary>
-        private static void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            var element = sender as FrameworkElement;
-
-            if (element != null)
-            {
-                if (!DesignerProperties.GetIsInDesignMode(element))
-                {
-                    var rotation = element.Rotation();
-
-                    var center = element.Center();
-
-                    rotation.CenterX = center.X;
-                    rotation.CenterY = center.Y;
-
-                    var scale = element.Scale();
-
-                    scale.CenterX = center.X;
-                    scale.CenterY = center.Y;
-                }
-
-                element.Loaded -= OnLoaded;
-            }
         }
 
         /// <summary>
@@ -156,26 +100,5 @@ namespace TecX.Agile.View.Behavior
                                                 "The order of the elements in the group matter!")
                 .WithAdditionalInfo("transform", transform);
         }
-
-        /// <summary>
-        /// Sets the element's <see cref="UIElement.RenderTransform"/> property
-        /// according to the behaviors prerequisites.
-        /// </summary>
-        /// <param name="element">The element.</param>
-        private static void InitTransforms(UIElement element)
-        {
-            var group = new TransformGroup
-            {
-                Children =
-                                    {
-                                        new RotateTransform(),
-                                        new ScaleTransform(),
-                                        new TranslateTransform()
-                                    }
-            };
-
-            element.RenderTransform = group;
-        }
-
     }
 }
