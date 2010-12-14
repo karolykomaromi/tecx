@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace TecX.Agile.View.Behavior
 {
@@ -47,45 +48,31 @@ namespace TecX.Agile.View.Behavior
 
         private void OnManipulationDelta(object sender, ManipulationDeltaEventArgs e)
         {
-            // Get the Rectangle and its RenderTransform matrix.
+            Matrix matrix = Element.Transform().Matrix;
 
-            //Rectangle rectToMove = e.OriginalSource as Rectangle;
-            //Matrix rectsMatrix = ((MatrixTransform)rectToMove.RenderTransform).Matrix;
+            // Rotate
+            matrix.RotateAt(e.DeltaManipulation.Rotation,
+                                 e.ManipulationOrigin.X,
+                                 e.ManipulationOrigin.Y);
 
-            Element.Rotation().Angle += e.DeltaManipulation.Rotation;
-            //TODO weberse what about using another center for the rotation?
-
-            //// Rotate the Rectangle.
-            //rectsMatrix.RotateAt(e.DeltaManipulation.Rotation,
-            //                     e.ManipulationOrigin.X,
-            //                     e.ManipulationOrigin.Y);
-
-
+            //TODO weberse dont want to scale the card right now. dont think that is a good idea
             //// Resize the Rectangle.  Keep it square 
             //// so use only the X value of Scale.
-            //rectsMatrix.ScaleAt(e.DeltaManipulation.Scale.X,
-            //                    e.DeltaManipulation.Scale.X,
-            //                    e.ManipulationOrigin.X,
-            //                    e.ManipulationOrigin.Y);
-            //TODO weberse dont want to scale the card right now. dont think that is a good idea
+            //matrix.ScaleAt(e.DeltaManipulation.Scale.X,
+            //               e.DeltaManipulation.Scale.X,
+            //               e.ManipulationOrigin.X,
+            //               e.ManipulationOrigin.Y);
 
+            //move
+            matrix.Translate(e.DeltaManipulation.Translation.X,
+                                  e.DeltaManipulation.Translation.Y);
 
-            //// Move the Rectangle.
-            //rectsMatrix.Translate(e.DeltaManipulation.Translation.X,
-            //                      e.DeltaManipulation.Translation.Y);
-            Element.Translation().X += e.DeltaManipulation.Translation.X;
-            Element.Translation().Y += e.DeltaManipulation.Translation.Y;
+            // Apply the changes
+            Element.Transform().Matrix = matrix;
 
+            Rect containingRect = new Rect(((FrameworkElement)e.ManipulationContainer).RenderSize);
 
-            // Apply the changes to the Rectangle.
-            //rectToMove.RenderTransform = new MatrixTransform(rectsMatrix);
-
-            Rect containingRect =
-                new Rect(((FrameworkElement)e.ManipulationContainer).RenderSize);
-
-            Rect shapeBounds =
-                Element.RenderTransform.TransformBounds(
-                    new Rect(Element.RenderSize));
+            Rect shapeBounds = Element.RenderTransform.TransformBounds(new Rect(Element.RenderSize));
 
             // Check if the rectangle is completely in the window.
             // If it is not and intertia is occuring, stop the manipulation.

@@ -162,16 +162,16 @@ namespace TecX.Agile.View.Behavior
 
         private void OnStoryboardCompleted(object sender, EventArgs e)
         {
-            //TODO use getvalue?
-            if (_translationXAnimation.KeyFrames.Count > 0)
-                Element.Translation().X = _translationXAnimation.KeyFrames[_translationXAnimation.KeyFrames.Count - 1].Value;
+            //TODO weberse must use matrixtransform
+            //if (_translationXAnimation.KeyFrames.Count > 0)
+            //    Element.Translation().X = _translationXAnimation.KeyFrames[_translationXAnimation.KeyFrames.Count - 1].Value;
 
-            if (_translationYAnimation.KeyFrames.Count > 0)
-                Element.Translation().Y = _translationYAnimation.KeyFrames[_translationYAnimation.KeyFrames.Count - 1].Value;
+            //if (_translationYAnimation.KeyFrames.Count > 0)
+            //    Element.Translation().Y = _translationYAnimation.KeyFrames[_translationYAnimation.KeyFrames.Count - 1].Value;
 
-            //if the card was only translated you don't have to update the rotation angle!
-            if (_rotationAnimation.KeyFrames.Count > 0)
-                Element.Rotation().Angle = _rotationAnimation.KeyFrames[_rotationAnimation.KeyFrames.Count - 1].Value;
+            ////if the card was only translated you don't have to update the rotation angle!
+            //if (_rotationAnimation.KeyFrames.Count > 0)
+            //    Element.Rotation().Angle = _rotationAnimation.KeyFrames[_rotationAnimation.KeyFrames.Count - 1].Value;
 
             //clear the keyframes, they are no longer needed
             ClearAnimationKeyFrames();
@@ -208,7 +208,10 @@ namespace TecX.Agile.View.Behavior
                 //setting up the vector for the initial moment of the tossing RNT
                 _initialVector = _recentPoints.Last() - Element.CenterOnSurface();
 
-                _initialAngle = Element.Rotation().Angle;
+                //_initialAngle = Element.Rotation().Angle;
+
+                _initialAngle = GeometryHelper.GetRotationAngleFromMatrix(Element.Transform().Matrix);
+
                 _endTime = DateTime.Now;
 
                 if (!MovementBehaviorBase.GetIsPinned(Element))
@@ -243,9 +246,11 @@ namespace TecX.Agile.View.Behavior
             {
                 //Yippie-Ki-Yay ... stops the card from jumping if
                 //you click on label or resizerhandle
-                Element.Rotation().Angle = (double)Element.Rotation().GetValue(RotateTransform.AngleProperty);
-                Element.Translation().X = (double)Element.Translation().GetValue(TranslateTransform.XProperty);
-                Element.Translation().Y = (double)Element.Translation().GetValue(TranslateTransform.YProperty);
+
+                //TODO weberse must use matrixtransform
+                //Element.Rotation().Angle = (double)Element.Rotation().GetValue(RotateTransform.AngleProperty);
+                //Element.Translation().X = (double)Element.Translation().GetValue(TranslateTransform.XProperty);
+                //Element.Translation().Y = (double)Element.Translation().GetValue(TranslateTransform.YProperty);
 
                 //TODO weberse use tabletop here?
                 Point dropPoint = Application.Current.MainWindow.PointToScreen(actual);
@@ -282,8 +287,10 @@ namespace TecX.Agile.View.Behavior
 
             //its easier to access the translation if you
             //give it a name
-            Element.RegisterName(Constants.TranslationAnimationName, Element.Translation());
-            Element.RegisterName(Constants.RotationAnimationName, Element.Rotation());
+
+            //TODO weberse must use matrixtransform
+            //Element.RegisterName(Constants.TranslationAnimationName, Element.Translation());
+            //Element.RegisterName(Constants.RotationAnimationName, Element.Rotation());
 
             _translationXAnimation = new DoubleAnimationUsingKeyFrames();
             _translationYAnimation = new DoubleAnimationUsingKeyFrames();
@@ -348,7 +355,8 @@ namespace TecX.Agile.View.Behavior
             Point localCenter = Element.CenterOnSurface();
 
             //movement is relative to the last position
-            Point previousPoint = new Point(Element.Translation().X, Element.Translation().Y);
+            //Point previousPoint = new Point(Element.Translation().X, Element.Translation().Y);
+            Point previousPoint = new Point(Element.Transform().Matrix.OffsetX, Element.Transform().Matrix.OffsetY);
 
             double stoppingDistance = 0;
 
@@ -403,7 +411,8 @@ namespace TecX.Agile.View.Behavior
             //for the animation we need to keep a local copy
             //of the card center point that we can move
             Point localCenter = Element.CenterOnSurface();
-            double localRotationAngle = Element.Rotation().Angle;
+            //double localRotationAngle = Element.Rotation().Angle;
+            double localRotationAngle = GeometryHelper.GetRotationAngleFromMatrix(Element.Transform().Matrix);
 
             //movement is relative to the last position
             Point previousPoint = Element.CenterOnSurface();
@@ -507,9 +516,10 @@ namespace TecX.Agile.View.Behavior
 
             if (_translationXAnimation.KeyFrames.Count == 0)
             {
-                _translationXAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(Element.Translation().X + vDisplacement.X));
-                _translationYAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(Element.Translation().Y + vDisplacement.Y));
-                _rotationAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(Element.Rotation().Angle + angle));
+                //TODO weberse use matrixtransform
+                //_translationXAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(Element.Translation().X + vDisplacement.X));
+                //_translationYAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(Element.Translation().Y + vDisplacement.Y));
+                //_rotationAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(Element.Rotation().Angle + angle));
             }
             else
             {

@@ -13,20 +13,20 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>        
-         <rbn:Ribbon 
+        </Grid.RowDefinitions>
+        <rbn:Ribbon 
              x:Name="Ribbon" 
             cal:RegionManager.RegionName="{x:Static inf:Regions.MainToolBar}">
         </rbn:Ribbon>
         <Grid
             Grid.Row="1"
             cal:RegionManager.RegionName="{x:Static inf:Regions.Main}">
-            <view:StoryCard 
-                x:Name="storyCard" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
-                Width="300" 
-                Height="200"/>
+            <Canvas>
+                <view:StoryCard 
+                    x:Name="storyCard" 
+                    Width="300" 
+                    Height="200"/>
+            </Canvas>
         </Grid>
     </Grid>
 </rbn:RibbonWindow>
