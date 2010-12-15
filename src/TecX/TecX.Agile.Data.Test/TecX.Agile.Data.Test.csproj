@@ -61,6 +61,7 @@
     <Compile Include="FileRepositoryFixture.cs" />
     <Compile Include="JsonConversionFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TfsRepositoryFixture.cs" />
     <Compile Include="XmlConversionFixture.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +72,10 @@
     <ProjectReference Include="..\TecX.Agile.Data.Json\TecX.Agile.Data.Json.csproj">
       <Project>{6E05A14A-9374-40FD-B8CA-C33B4108CBDB}</Project>
       <Name>TecX.Agile.Data.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Data.Tfs\TecX.Agile.Data.Tfs.csproj">
+      <Project>{1A3E51FF-8DA1-4D8D-B7A3-4E6B3625A955}</Project>
+      <Name>TecX.Agile.Data.Tfs</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Data.Xml\TecX.Agile.Data.Xml.csproj">
       <Project>{7D88B6EE-87D9-4FCC-BC90-91A5A6D7804B}</Project>

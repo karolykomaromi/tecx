@@ -62,7 +62,7 @@ namespace TecX.Agile.Data.Tfs
                     TfsTeamProjectCollection teamProjectCollection = configurationServer.GetTeamProjectCollection(collectionId);
 
                     // Print the name of the team project collection
-                    Console.WriteLine(@"Collection: " + teamProjectCollection.Name);
+                    //Console.WriteLine(@"Collection: " + teamProjectCollection.Name);
 
                     // Get a catalog of team projects for the collection
                     ReadOnlyCollection<CatalogNode> projectNodes = collectionNode.QueryChildren(
@@ -74,7 +74,23 @@ namespace TecX.Agile.Data.Tfs
                     {
                         //Console.WriteLine(@" Team Project: " + projectNode.Resource.DisplayName);
 
-                        ProjectInfo info = new ProjectInfo { Name = projectNode.Resource.DisplayName };
+
+                        //get last modified
+                        //TeamFoundationServer tfs = new TeamFoundationServer(@"http://localhost:8080/tfs");
+                        //VersionControlServer vcs = tfs.GetService<VersionControlServer>();
+                        //string projectName = @"$/VersionControlAutomation_Basic";
+
+                        //IEnumerable ie = vcs.QueryHistory(projectName, VersionSpec.Latest, 0, RecursionType.Full, string.Empty, null, null, 1, false, false);
+                        //IEnumerator e = ie.GetEnumerator();
+                        //if (e.MoveNext())
+                        //{
+                        //    Console.WriteLine(string.Format("Latest changeset in project {0} is : {1}", projectName, ((Changeset)e.Current).ChangesetId));
+                        //}
+
+
+                        Guid id = new Guid(projectNode.Resource.Properties["ProjectId"]);
+                        
+                        ProjectInfo info = new ProjectInfo { Name = projectNode.Resource.DisplayName, Id =  id};
 
                         projects.Add(info);
                     }
