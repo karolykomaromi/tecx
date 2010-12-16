@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.Framework.Client;
 using Microsoft.TeamFoundation.Framework.Common;
+using Microsoft.TeamFoundation.WorkItemTracking.Client;
 
 using TecX.Common;
 using TecX.Common.Extensions.Error;
@@ -61,6 +62,10 @@ namespace TecX.Agile.Data.Tfs
                     Guid collectionId = new Guid(collectionNode.Resource.Properties["InstanceId"]);
                     TfsTeamProjectCollection teamProjectCollection = configurationServer.GetTeamProjectCollection(collectionId);
 
+                    WorkItemStore workItemStore = new WorkItemStore(teamProjectCollection);
+
+                    // workItemStore.Projects[0].Uri => getreferencing ...
+
                     // Print the name of the team project collection
                     //Console.WriteLine(@"Collection: " + teamProjectCollection.Name);
 
@@ -73,8 +78,7 @@ namespace TecX.Agile.Data.Tfs
                     foreach (CatalogNode projectNode in projectNodes)
                     {
                         //Console.WriteLine(@" Team Project: " + projectNode.Resource.DisplayName);
-
-
+                        
                         //get last modified
                         //TeamFoundationServer tfs = new TeamFoundationServer(@"http://localhost:8080/tfs");
                         //VersionControlServer vcs = tfs.GetService<VersionControlServer>();
