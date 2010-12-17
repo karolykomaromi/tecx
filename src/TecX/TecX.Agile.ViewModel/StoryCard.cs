@@ -94,9 +94,9 @@ namespace TecX.Agile.ViewModel
                 if (_x == value)
                     return;
 
-                OnPropertyChanging(() => X);
+                OnPropertyChanging(Infrastructure.Constants.PropertyNames.X);
                 _x = value;
-                OnPropertyChanged(() => X);
+                OnPropertyChanged(Infrastructure.Constants.PropertyNames.X);
             }
         }
         
@@ -108,9 +108,9 @@ namespace TecX.Agile.ViewModel
                 if (_y == value)
                     return;
 
-                OnPropertyChanging(() => Y);
+                OnPropertyChanging(Infrastructure.Constants.PropertyNames.Y);
                 _y = value;
-                OnPropertyChanged(() => Y);
+                OnPropertyChanged(Infrastructure.Constants.PropertyNames.Y);
             }
         }
 
@@ -122,9 +122,9 @@ namespace TecX.Agile.ViewModel
                 if (_angle == value)
                     return;
 
-                OnPropertyChanging(() => Angle);
+                OnPropertyChanging(Infrastructure.Constants.PropertyNames.Angle);
                 _angle = value;
-                OnPropertyChanged(() => Angle);
+                OnPropertyChanged(Infrastructure.Constants.PropertyNames.Angle);
             }
         }
 

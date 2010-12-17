@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
 
 using TecX.Common;
-using TecX.Common.Extensions.Error;
 
 namespace TecX.Agile.View.Behavior
 {
@@ -64,17 +62,7 @@ namespace TecX.Agile.View.Behavior
 
             OnBehaviorEnabledChanged<THandler>(dependencyObject, args);
         }
-
-        //transformgroup rotate, scale, translate
-        /// <summary>
-        /// Asserts that certain preconditions to use a <see cref="FrameworkElement"/>
-        /// as a host for this behavior are met. First of all the element's
-        /// <see cref="UIElement.RenderTransform"/> property must be set to a
-        /// <see cref="TransformGroup"/> containing a <see cref="RotateTransform"/>,
-        /// a <see cref="ScaleTransform"/> and a <see cref="TranslateTransform"/>
-        /// as children. The order of these children is important!
-        /// </summary>
-        /// <param name="element">The element.</param>
+        
         private static void AssertPreconditions(FrameworkElement element)
         {
             Guard.AssertNotNull(element, "element");
@@ -85,20 +73,6 @@ namespace TecX.Agile.View.Behavior
             }
 
             SetAttachedHandlers(element, new List<IBehaviorHandler>());
-        }
-
-        /// <summary>
-        /// Throws an exception that explains the preconditions for using
-        /// this <see cref="UIElement"/> as a host for this behavior
-        /// </summary>
-        /// <param name="transform">The transform.</param>
-        private static void ThrowTransformsException(Transform transform)
-        {
-            throw new InvalidOperationException("The UIElement's RenderTransform " +
-                                                "property is not set to a TransformGroup containing a " +
-                                                "RotateTransform, ScaleTransform and TranslateTransform. " +
-                                                "The order of the elements in the group matter!")
-                .WithAdditionalInfo("transform", transform);
         }
     }
 }
