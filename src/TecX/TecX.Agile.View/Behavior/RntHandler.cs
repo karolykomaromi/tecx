@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -22,6 +21,8 @@ namespace TecX.Agile.View.Behavior
 
         private bool _isTranslated;
         private Point _previous;
+        private static IDisposable _storyCardChangeSubscription;
+        private static IDisposable _transformChangeSubscription;
 
         #endregion Fields
 
@@ -52,7 +53,7 @@ namespace TecX.Agile.View.Behavior
 
             ViewModel.StoryCard storyCard = Element.DataContext as ViewModel.StoryCard;
 
-            if(storyCard != null)
+            if (storyCard != null)
             {
                 InitializePositionBindings(element, storyCard);
             }
@@ -106,7 +107,7 @@ namespace TecX.Agile.View.Behavior
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
             //ignore click if the item is pinned
-            if (Element.IsPinned() || 
+            if (Element.IsPinned() ||
                 !Element.IsMouseCaptured)
                 return;
 
@@ -116,7 +117,7 @@ namespace TecX.Agile.View.Behavior
                 Point actual = e.GetPosition(Tabletop.Surface);
 
                 //ApplyRNT(actual);
-                Transition by = GeometryHelper.CalculateRntStep(actual, _previous, 
+                Transition by = GeometryHelper.CalculateRntStep(actual, _previous,
                     Element.CenterOnSurface(), _isTranslated);
 
                 Element.Move(by.X, by.Y, by.Angle);
@@ -189,91 +190,73 @@ namespace TecX.Agile.View.Behavior
 
         private static void InitializePositionBindings(FrameworkElement element, ViewModel.StoryCard storyCard)
         {
-            //var transform = from evt in Observable.FromEvent<EventArgs>(element.Transform(), "Changed")
-            //                let matrix = ((MatrixTransform)evt.Sender).Matrix
-            //                let angle = GeometryHelper.GetRotationAngleFromMatrix(matrix)
-            //                where !EpsilonComparer.AreEqual(storyCard.Angle, angle) ||
-            //                      !EpsilonComparer.AreEqual(storyCard.X, matrix.OffsetX) ||
-            //                      !EpsilonComparer.AreEqual(storyCard.Y, matrix.OffsetY)
-            //                select
-            //                    new
-            //                        {
-            //                            X = matrix.OffsetX,
-            //                            Y = matrix.OffsetY,
-            //                            Angle = angle
-            //                        };
+            Matrix initialMatrix = element.Transform().Matrix;
 
-            //var subT = transform.Subscribe(x =>
-            //                                   {
-            //                                       storyCard.X = x.X;
-            //                                       storyCard.Y = x.Y;
-            //                                       storyCard.Angle = x.Angle;
-            //                                   });
+            if (storyCard.X != default(double))
+            {
+                initialMatrix.OffsetX = storyCard.X;
+            }
+            else
+            {
+                storyCard.X = initialMatrix.OffsetX;
+            }
 
-            //var position = from evt in Observable.FromEvent<PropertyChangedEventArgs>(storyCard, "PropertyChanged")
-            //               let name = evt.EventArgs.PropertyName
-            //               let matrix = element.Transform().Matrix
-            //               let angle = GeometryHelper.GetRotationAngleFromMatrix(matrix)
-            //               where (name == Constants.PropertyNames.X && !EpsilonComparer.AreEqual(matrix.OffsetX, storyCard.X)) ||
-            //                     (name == Constants.PropertyNames.Y && !EpsilonComparer.AreEqual(angle, storyCard.Angle)) ||
-            //                     (name == Constants.PropertyNames.Angle && !EpsilonComparer.AreEqual(matrix.OffsetY, storyCard.Y))
-            //               select new
-            //                          {
-            //                              storyCard.X,
-            //                              storyCard.Y,
-            //                              storyCard.Angle
-            //                          };
+            if (storyCard.Y != default(double))
+            {
+                initialMatrix.OffsetY = storyCard.Y;
+            }
+            else
+            {
+                storyCard.Y = initialMatrix.OffsetY;
+            }
 
-            //var subP = position.Subscribe(x =>
-            //                                  {
-            //                                      Matrix m = Matrix.Identity;
+            if (storyCard.Angle != default(double))
+            {
+                Point center = element.CenterOnSurface();
 
-            //                                      m.Rotate(x.Angle);
-            //                                      m.Translate(x.X, x.Y);
+                initialMatrix.RotateAt(storyCard.Angle, center.X, center.Y);
+            }
+            else
+            {
+                storyCard.Angle = GeometryHelper.GetRotationAngleFromMatrix(initialMatrix);
+            }
 
-            //                                      element.Transform().Matrix = m;
-            //                                  });
+            var transform = from evt in Observable.FromEvent<EventArgs>(element.Transform(), "Changed")
+                            let matrix = ((MatrixTransform)evt.Sender).Matrix
+                            let angle = GeometryHelper.GetRotationAngleFromMatrix(matrix)
+                            where !EpsilonComparer.AreEqual(storyCard.X, matrix.OffsetX) ||
+                                  !EpsilonComparer.AreEqual(storyCard.Y, matrix.OffsetY) ||
+                                  !EpsilonComparer.AreEqual(storyCard.Angle, angle) 
+                            select
+                                new
+                                    {
+                                        X = matrix.OffsetX,
+                                        Y = matrix.OffsetY,
+                                        Angle = angle
+                                    };
 
-            //Binding bindingX = new Binding(Constants.PropertyNames.X)
-            //{
-            //    Source = storyCard,
-            //    Mode = BindingMode.TwoWay,
-            //    NotifyOnSourceUpdated = true,
-            //    NotifyOnTargetUpdated = true
-            //};
+            _transformChangeSubscription = transform.Subscribe(fromMatrix =>
+                                                                   {
+                                                                       storyCard.X = fromMatrix.X;
+                                                                       storyCard.Y = fromMatrix.Y;
+                                                                       storyCard.Angle = fromMatrix.Angle;
+                                                                   });
 
-            //BindingExpressionBase hookForInitialUpdate = BindingOperations.SetBinding(
-            //    element.Translation(),
-            //    TranslateTransform.XProperty,
-            //    bindingX);
+            var position = from evt in Observable.FromEvent<PropertyChangedEventArgs>(storyCard, "PropertyChanged")
+                           let name = evt.EventArgs.PropertyName
+                           let matrix = element.Transform().Matrix
+                           let angle = GeometryHelper.GetRotationAngleFromMatrix(matrix)
+                           where (name == Constants.PropertyNames.X && !EpsilonComparer.AreEqual(matrix.OffsetX, storyCard.X)) ||
+                                 (name == Constants.PropertyNames.Y && !EpsilonComparer.AreEqual(angle, storyCard.Angle)) ||
+                                 (name == Constants.PropertyNames.Angle && !EpsilonComparer.AreEqual(matrix.OffsetY, storyCard.Y))
+                           select new
+                                      {
+                                          X = storyCard.X - matrix.OffsetX,
+                                          Y = storyCard.Y - matrix.OffsetY,
+                                          Angle = storyCard.Angle - angle
+                                      };
 
-            //hookForInitialUpdate.UpdateTarget();
-
-            //Binding bindingY = new Binding(Constants.PropertyNames.Y)
-            //{
-            //    Source = storyCard,
-            //    Mode = BindingMode.TwoWay
-            //};
-
-            //hookForInitialUpdate = BindingOperations.SetBinding(
-            //    element.Translation(),
-            //    TranslateTransform.YProperty,
-            //    bindingY);
-
-            //hookForInitialUpdate.UpdateTarget();
-
-            //Binding bindingAngle = new Binding(Constants.PropertyNames.Angle)
-            //{
-            //    Source = storyCard,
-            //    Mode = BindingMode.TwoWay
-            //};
-
-            //hookForInitialUpdate = BindingOperations.SetBinding(
-            //    element.Rotation(),
-            //    RotateTransform.AngleProperty,
-            //    bindingAngle);
-
-            //hookForInitialUpdate.UpdateTarget();
+            _storyCardChangeSubscription = position.Subscribe(delta => element.Move(delta.X, delta.Y, delta.Angle));
         }
     }
 }

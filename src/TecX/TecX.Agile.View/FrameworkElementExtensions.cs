@@ -85,6 +85,10 @@ namespace TecX.Agile.View
         /// <param name="angle">The angle.</param>
         public static void Move(this FrameworkElement element, double dx, double dy, double angle)
         {
+            //ok, this is a really fragile construct!
+            //must change matrix for translation and rotation angle along the lines of 
+            //property changes i.e. one after the other or the change tracking will blow up
+            //and the changes won't be transmitted correctly to remote clients
             Guard.AssertNotNull(element, "element");
 
             Matrix matrix = element.Transform().Matrix;
@@ -94,9 +98,15 @@ namespace TecX.Agile.View
                 Point center = element.CenterOnSurface();
 
                 matrix.RotateAt(angle, center.X, center.Y);
+
+                element.Transform().Matrix = matrix;
             }
 
-            matrix.Translate(dx, dy);
+            matrix.Translate(dx, 0.0);
+
+            element.Transform().Matrix = matrix;
+
+            matrix.Translate(0.0, dy);
 
             element.Transform().Matrix = matrix;
         }
