@@ -32,6 +32,9 @@ namespace TecX.Agile.Peer
         [field: NonSerialized]
         public event EventHandler<UpdatedPropertyEventArgs> PropertyUpdated = delegate { };
 
+        [field: NonSerialized]
+        public event EventHandler<CaretMovedEventArgs> CaretMoved = delegate { };
+
         #endregion Events
 
         #region Properties
@@ -98,6 +101,20 @@ namespace TecX.Agile.Peer
         #endregion c'tor
 
         #region Implementation of IPeerClient
+
+        public void MoveCaret(Guid senderId, Guid artefactId, int caretIndex)
+        {
+            if(senderId != Id)
+            {
+                var args = new CaretMovedEventArgs {ArtefactId = artefactId, CaretIndex = caretIndex};
+
+                CaretMoved(this, args);
+            }
+            else
+            {
+                RunWithWorkaroundForBclBug(() => _broadcastToMesh.MoveCaret(senderId, artefactId, caretIndex));
+            }
+        }
 
         public void MoveStoryCard(Guid senderId, Guid storyCardId, double x, double y, double angle)
         {

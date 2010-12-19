@@ -30,5 +30,11 @@ namespace TecX.Agile.Peer
 
         [OperationContract(IsOneWay = true)]
         void UpdateProperty(Guid senderId, Guid artefactId, string propertyName, object oldValue, object newValue);
+
+        [OperationContract(IsOneWay = true)]
+        void MoveCaret(Guid senderId, Guid artefactId, int caretIndex);
+
+        [field: NonSerialized]
+        event EventHandler<CaretMovedEventArgs> CaretMoved;
     }
 }

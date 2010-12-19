@@ -50,6 +50,7 @@
     <Compile Include="Commands.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="EventAggregatorAccessor.cs" />
+    <Compile Include="Events\CaretMoved.cs" />
     <Compile Include="Events\FieldHighlighted.cs" />
     <Compile Include="Events\IDomainEvent.cs" />
     <Compile Include="Events\IterationAdded.cs" />

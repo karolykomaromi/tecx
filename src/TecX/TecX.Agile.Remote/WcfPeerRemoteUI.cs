@@ -29,6 +29,7 @@ namespace TecX.Agile.Remote
             _peerClient.IncomingRequestToHighlightField += OnIncomingRequestToHighlightField;
             _peerClient.PropertyUpdated += OnPropertyUpdated;
             _peerClient.StoryCardMoved += OnStoryCardMoved;
+            _peerClient.CaretMoved += OnCaretMoved;
 
             _highlightMessageFilter = new HighlightMessageFilter();
             _propertyChangedMessageFilter = new PropertyChangedMessageFilter();
@@ -84,13 +85,18 @@ namespace TecX.Agile.Remote
         public void Handle(StoryCardMoved message)
         {
             Guard.AssertNotNull(message, "message");
-            Guard.AssertNotNull(message.StoryCardId, "message.StoryCard");
 
-            //TODO weberse filter messages!
             if (_storyCardMovedMessageFilter.ShouldLetPass(message))
             {
                 _peerClient.MoveStoryCard(_peerClient.Id, message.StoryCardId, message.X, message.Y, message.Angle);
             }
+        }
+
+        public void Handle(CaretMoved message)
+        {
+            Guard.AssertNotNull(message, "message");
+
+            _peerClient.MoveCaret(_peerClient.Id, message.ArtefactId, message.CaretIndex);
         }
 
         #endregion EventAggregator Subscriptions
@@ -132,6 +138,16 @@ namespace TecX.Agile.Remote
 
             if (Commands.MoveStoryCard.CanExecute(commandArgs))
                 Commands.MoveStoryCard.Execute(commandArgs);
+        }
+
+        private void OnCaretMoved(object sender, CaretMovedEventArgs e)
+        {
+            Guard.AssertNotNull(e, "e");
+
+            var commandArgs = new CaretMoved(e.ArtefactId, e.CaretIndex);
+
+            if (Commands.MoveCaret.CanExecute(commandArgs))
+                Commands.MoveCaret.Execute(commandArgs);
         }
 
         #endregion EventHandler

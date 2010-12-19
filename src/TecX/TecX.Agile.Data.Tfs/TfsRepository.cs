@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -47,58 +48,97 @@ namespace TecX.Agile.Data.Tfs
 
             try
             {
-                TfsConfigurationServer configurationServer =
-                    TfsConfigurationServerFactory.GetConfigurationServer(_tfsUri);
+                Uri defaultCollectionUri = new Uri(_tfsUri.ToString() + @"/DefaultCollection");
 
-                // Get the catalog of team project collections
-                ReadOnlyCollection<CatalogNode> collectionNodes = configurationServer.CatalogNode.QueryChildren(
-                    new[] { CatalogResourceTypes.ProjectCollection },
+                TfsTeamProjectCollection teamProjectCollection = new TfsTeamProjectCollection(defaultCollectionUri);
+
+
+
+                ReadOnlyCollection<CatalogNode> projectNodes = teamProjectCollection.CatalogNode.QueryChildren(
+                    new[] { CatalogResourceTypes.TeamProject },
                     false, CatalogQueryOptions.None);
 
-                // List the team project collections
-                foreach (CatalogNode collectionNode in collectionNodes)
+                Uri projectUri = new Uri(projectNodes.Single().Resource.Properties["ProjectUri"]);
+
+                WorkItemStore workItemStore = new WorkItemStore(teamProjectCollection);
+
+                //WorkItem item = workItemStore.GetWorkItem(projectUri);
+
+                WorkItemCollection workItems = workItemStore.Query("SELECT * FROM WorkItems");
+
+                foreach (WorkItem workItem in workItems)
                 {
-                    // Use the InstanceId property to get the team project collection
-                    Guid collectionId = new Guid(collectionNode.Resource.Properties["InstanceId"]);
-                    TfsTeamProjectCollection teamProjectCollection = configurationServer.GetTeamProjectCollection(collectionId);
-
-                    WorkItemStore workItemStore = new WorkItemStore(teamProjectCollection);
-
-                    // workItemStore.Projects[0].Uri => getreferencing ...
-
-                    // Print the name of the team project collection
-                    //Console.WriteLine(@"Collection: " + teamProjectCollection.Name);
-
-                    // Get a catalog of team projects for the collection
-                    ReadOnlyCollection<CatalogNode> projectNodes = collectionNode.QueryChildren(
-                        new[] { CatalogResourceTypes.TeamProject },
-                        false, CatalogQueryOptions.None);
-
-                    // List the team projects in the collection
-                    foreach (CatalogNode projectNode in projectNodes)
+                    foreach(var bla in workItem.Fields)
                     {
-                        //Console.WriteLine(@" Team Project: " + projectNode.Resource.DisplayName);
                         
-                        //get last modified
-                        //TeamFoundationServer tfs = new TeamFoundationServer(@"http://localhost:8080/tfs");
-                        //VersionControlServer vcs = tfs.GetService<VersionControlServer>();
-                        //string projectName = @"$/VersionControlAutomation_Basic";
-
-                        //IEnumerable ie = vcs.QueryHistory(projectName, VersionSpec.Latest, 0, RecursionType.Full, string.Empty, null, null, 1, false, false);
-                        //IEnumerator e = ie.GetEnumerator();
-                        //if (e.MoveNext())
-                        //{
-                        //    Console.WriteLine(string.Format("Latest changeset in project {0} is : {1}", projectName, ((Changeset)e.Current).ChangesetId));
-                        //}
-
-
-                        Guid id = new Guid(projectNode.Resource.Properties["ProjectId"]);
-                        
-                        ProjectInfo info = new ProjectInfo { Name = projectNode.Resource.DisplayName, Id =  id};
-
-                        projects.Add(info);
                     }
                 }
+
+                //WorkItem[] items = new WorkItem[workItems.Count];
+
+                //((ICollection)workItems).CopyTo(items, 0);
+
+                //WorkItem project = null;
+                //foreach(WorkItem workItem in items)
+                //{
+                //    if (workItem.Uri == new Uri(projectUri))
+                //        project = workItem;
+                //}
+
+                //if(project != null)
+                //{
+
+                //}
+
+                //// Get the catalog of team project collections
+                //ReadOnlyCollection<CatalogNode> teamProjectCollections = configurationServer.CatalogNode.QueryChildren(
+                //    new[] { CatalogResourceTypes.ProjectCollection },
+                //    false, CatalogQueryOptions.None);
+
+                //// List the team project collections
+                //foreach (CatalogNode collectionNode in teamProjectCollections)
+                //{
+                //    // Use the InstanceId property to get the team project collection
+                //    Guid collectionId = new Guid(collectionNode.Resource.Properties["InstanceId"]);
+
+                //    TfsTeamProjectCollection teamProjectCollection = configurationServer.GetTeamProjectCollection(collectionId)
+
+                //    // Print the name of the team project collection
+                //    //Console.WriteLine(@"Collection: " + teamProjectCollection.Name);
+
+                //    // Get a catalog of team projects for the collection
+                //    ReadOnlyCollection<CatalogNode> projectNodes = collectionNode.QueryChildren(
+                //        new[] { CatalogResourceTypes.TeamProject },
+                //        false, CatalogQueryOptions.None);
+
+                //    // List the team projects in the collection
+                //    foreach (CatalogNode projectNode in projectNodes)
+                //    {
+
+                //        //Console.WriteLine(@" Team Project: " + projectNode.Resource.DisplayName);
+
+                //        //get last modified
+                //        //TeamFoundationServer tfs = new TeamFoundationServer(@"http://localhost:8080/tfs");
+                //        //VersionControlServer vcs = tfs.GetService<VersionControlServer>();
+                //        //string projectName = @"$/VersionControlAutomation_Basic";
+
+                //        //IEnumerable ie = vcs.QueryHistory(projectName, VersionSpec.Latest, 0, RecursionType.Full, string.Empty, null, null, 1, false, false);
+                //        //IEnumerator e = ie.GetEnumerator();
+                //        //if (e.MoveNext())
+                //        //{
+                //        //    Console.WriteLine(string.Format("Latest changeset in project {0} is : {1}", projectName, ((Changeset)e.Current).ChangesetId));
+                //        //}
+
+
+
+
+                //        Guid id = new Guid(projectNode.Resource.Properties["ProjectId"]);
+
+                //        ProjectInfo info = new ProjectInfo { Name = projectNode.Resource.DisplayName, Id =  id};
+
+                //        projects.Add(info);
+                //    }
+                //}
             }
             catch (Exception ex)
             {
