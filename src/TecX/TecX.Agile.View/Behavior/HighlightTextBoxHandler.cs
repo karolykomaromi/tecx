@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 using Microsoft.Practices.Prism.Commands;
 
@@ -18,9 +19,12 @@ namespace TecX.Agile.View.Behavior
 
         private Guid _id;
         private string _fieldName;
+        private TextBox _textBox;
+
         private readonly IEventAggregator _eventAggregator;
 
         private readonly DelegateCommand<FieldHighlighted> _highlightFieldCommand;
+        private readonly DelegateCommand<CaretMoved> _moveCaretCommand;
 
         #endregion Fields
 
@@ -40,6 +44,14 @@ namespace TecX.Agile.View.Behavior
                                                                                        Element.Focus();
                                                                                    }
                                                                                });
+
+            _moveCaretCommand = new DelegateCommand<CaretMoved>(message =>
+                                                                    {
+                                                                        if(message.ArtefactId == _id)
+                                                                        {
+                                                                            _textBox.CaretIndex = message.CaretIndex;
+                                                                        }
+                                                                    });
         }
 
         #endregion c'tor
@@ -48,6 +60,13 @@ namespace TecX.Agile.View.Behavior
 
         protected override void DoAttach(FrameworkElement element)
         {
+            TextBox textBox = element as TextBox;
+
+            if (textBox == null)
+                return;
+
+            _textBox = textBox;
+
             UserControl ctrl;
             string fieldName;
             if (UIHelper.TryFindAncestor(element, out ctrl) &&
@@ -73,8 +92,20 @@ namespace TecX.Agile.View.Behavior
                                                };
 
                 _fieldName = fieldName;
+
                 Element.GotFocus += OnGotFocus;
+                Element.KeyUp += OnKeyUp;
+
                 Commands.HighlightField.RegisterCommand(_highlightFieldCommand);
+                Commands.MoveCaret.RegisterCommand(_moveCaretCommand);
+            }
+        }
+
+        private void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if(Element.IsFocused)
+            {
+                _eventAggregator.Publish(new CaretMoved(_id, _textBox.CaretIndex));
             }
         }
 
@@ -101,8 +132,10 @@ namespace TecX.Agile.View.Behavior
 
             _fieldName = null;
             _id = Guid.Empty;
+            _textBox = null;
 
             Commands.HighlightField.UnregisterCommand(_highlightFieldCommand);
+            Commands.MoveCaret.UnregisterCommand(_moveCaretCommand);
         }
 
         #endregion

@@ -8,7 +8,8 @@ namespace TecX.Agile.Remote
         ISubscribeTo<StoryCardRescheduled>, 
         ISubscribeTo<StoryCardPostponed>, 
         ISubscribeTo<FieldHighlighted>,
-        ISubscribeTo<StoryCardMoved>
+        ISubscribeTo<StoryCardMoved>,
+        ISubscribeTo<CaretMoved>
     {
     }
 }
