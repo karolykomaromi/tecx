@@ -30,6 +30,9 @@
 
             /// <summary>5</summary>
             public const byte Color = 5;
+
+            /// <summary>6</summary>
+            public const byte Int32 = 6;
         }
     }
 }
