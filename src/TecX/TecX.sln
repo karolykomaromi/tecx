@@ -115,9 +115,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Modules.Gestures
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Data.Tfs", "TecX.Agile.Data.Tfs\TecX.Agile.Data.Tfs.csproj", "{1A3E51FF-8DA1-4D8D-B7A3-4E6B3625A955}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Serialization", "TecX.Agile.Serialization\TecX.Agile.Serialization.csproj", "{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10 Silverlight", "10 Silverlight", "{F7D51B9C-3DBA-4D43-94EB-149EA91D770A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Serialization.Test", "TecX.Agile.Serialization.Test\TecX.Agile.Serialization.Test.csproj", "{4CBCB9FF-3BD1-40FF-858F-7355F0D485AB}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 44
+		SccNumberOfProjects = 46
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -293,6 +299,14 @@ Global
 		SccProjectTopLevelParentUniqueName43 = TecX.sln
 		SccProjectName43 = TecX.Agile.Data.Tfs
 		SccLocalPath43 = TecX.Agile.Data.Tfs
+		SccProjectUniqueName44 = TecX.Agile.Serialization\\TecX.Agile.Serialization.csproj
+		SccProjectTopLevelParentUniqueName44 = TecX.sln
+		SccProjectName44 = TecX.Agile.Serialization
+		SccLocalPath44 = TecX.Agile.Serialization
+		SccProjectUniqueName45 = TecX.Agile.Serialization.Test\\TecX.Agile.Serialization.Test.csproj
+		SccProjectTopLevelParentUniqueName45 = TecX.sln
+		SccProjectName45 = TecX.Agile.Serialization.Test
+		SccLocalPath45 = TecX.Agile.Serialization.Test
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -736,6 +750,26 @@ Global
 		{1A3E51FF-8DA1-4D8D-B7A3-4E6B3625A955}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1A3E51FF-8DA1-4D8D-B7A3-4E6B3625A955}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1A3E51FF-8DA1-4D8D-B7A3-4E6B3625A955}.Release|x86.ActiveCfg = Release|Any CPU
+		{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}.Release|x86.ActiveCfg = Release|Any CPU
+		{4CBCB9FF-3BD1-40FF-858F-7355F0D485AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CBCB9FF-3BD1-40FF-858F-7355F0D485AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CBCB9FF-3BD1-40FF-858F-7355F0D485AB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4CBCB9FF-3BD1-40FF-858F-7355F0D485AB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4CBCB9FF-3BD1-40FF-858F-7355F0D485AB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4CBCB9FF-3BD1-40FF-858F-7355F0D485AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CBCB9FF-3BD1-40FF-858F-7355F0D485AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CBCB9FF-3BD1-40FF-858F-7355F0D485AB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4CBCB9FF-3BD1-40FF-858F-7355F0D485AB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4CBCB9FF-3BD1-40FF-858F-7355F0D485AB}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -752,6 +786,7 @@ Global
 		{3600E042-48AC-4756-9F36-E8642E81EB61} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{8A9CDA60-166B-4B5A-82B7-5B6313C6368A} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
+		{4CBCB9FF-3BD1-40FF-858F-7355F0D485AB} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{45BE1494-E6F4-415F-8206-2856FBD28F66} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{266522EB-9DCB-451A-8CD7-678188DCB5F6} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{23E54945-0126-43BE-A3FC-5F61AF5BDFF3} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
@@ -786,5 +821,6 @@ Global
 		{FA168E91-F953-4C22-9727-4462E9DF74EF} = {BC5057D0-37DD-40FD-98BE-0FF01551FEFE}
 		{1EB35F86-DA6C-4691-A2C5-8587129B520D} = {83F73BB7-5B6F-469E-9376-AF196CFFA146}
 		{41785223-CF12-4A54-9D09-E017A5C362E9} = {83F73BB7-5B6F-469E-9376-AF196CFFA146}
+		{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
 	EndGlobalSection
 EndGlobal
