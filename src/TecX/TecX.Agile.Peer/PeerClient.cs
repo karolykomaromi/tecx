@@ -102,17 +102,19 @@ namespace TecX.Agile.Peer
 
         #region Implementation of IPeerClient
 
-        public void MoveCaret(Guid senderId, Guid artefactId, int caretIndex)
+        public void MoveCaret(Guid senderId, Guid artefactId, string fieldName, int caretIndex)
         {
+            Guard.AssertNotEmpty(fieldName, "fieldName");
+
             if(senderId != Id)
             {
-                var args = new CaretMovedEventArgs {ArtefactId = artefactId, CaretIndex = caretIndex};
+                var args = new CaretMovedEventArgs(artefactId, fieldName, caretIndex);
 
                 CaretMoved(this, args);
             }
             else
             {
-                RunWithWorkaroundForBclBug(() => _broadcastToMesh.MoveCaret(senderId, artefactId, caretIndex));
+                RunWithWorkaroundForBclBug(() => _broadcastToMesh.MoveCaret(senderId, artefactId, fieldName, caretIndex));
             }
         }
 
@@ -121,13 +123,7 @@ namespace TecX.Agile.Peer
             //message comes from somewhere else -> handle it
             if (senderId != Id)
             {
-                var args = new StoryCardMovedEventArgs
-                               {
-                                   Angle = angle,
-                                   X = x,
-                                   Y = y,
-                                   StoryCardId = storyCardId
-                               };
+                var args = new StoryCardMovedEventArgs(storyCardId, x, y, angle);
 
                 StoryCardMoved(this, args);
             }

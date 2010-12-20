@@ -47,7 +47,8 @@ namespace TecX.Agile.View.Behavior
 
             _moveCaretCommand = new DelegateCommand<CaretMoved>(message =>
                                                                     {
-                                                                        if(message.ArtefactId == _id)
+                                                                        if (message.ArtefactId == _id &&
+                                                                            message.FieldName == _fieldName)
                                                                         {
                                                                             _textBox.CaretIndex = message.CaretIndex;
                                                                         }
@@ -103,9 +104,9 @@ namespace TecX.Agile.View.Behavior
 
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
-            if(Element.IsFocused)
+            if (Element.IsFocused)
             {
-                _eventAggregator.Publish(new CaretMoved(_id, _textBox.CaretIndex));
+                _eventAggregator.Publish(new CaretMoved(_id, _fieldName, _textBox.CaretIndex));
             }
         }
 
