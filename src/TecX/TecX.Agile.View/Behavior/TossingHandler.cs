@@ -22,6 +22,9 @@ namespace TecX.Agile.View.Behavior
             /// <summary>AnimatedRotateTransform</summary>
             public const string RotationAnimationName = "AnimatedRotateTransform";
 
+            /// <summary>TossingAnimation</summary>
+            public const string TossingAnimation = "TossingAnimation";
+
             /// <summary>3</summary>
             public const int RecentPointBufferSize = 3;
 
@@ -106,6 +109,8 @@ namespace TecX.Agile.View.Behavior
         /// Gets and sets flag indicating wether the item is currently tossed
         /// </summary>
         private bool _isTossed;
+
+        private MatrixAnimationUsingKeyFrames _tossingAnimation;
 
         #endregion Fields
 
@@ -291,37 +296,45 @@ namespace TecX.Agile.View.Behavior
             //TODO weberse must use matrixtransform
             //Element.RegisterName(Constants.TranslationAnimationName, Element.Translation());
             //Element.RegisterName(Constants.RotationAnimationName, Element.Rotation());
+            Element.RegisterName(Constants.TossingAnimation, Element.Transform());
 
-            _translationXAnimation = new DoubleAnimationUsingKeyFrames();
-            _translationYAnimation = new DoubleAnimationUsingKeyFrames();
-            _rotationAnimation = new DoubleAnimationUsingKeyFrames();
+            //_translationXAnimation = new DoubleAnimationUsingKeyFrames();
+            //_translationYAnimation = new DoubleAnimationUsingKeyFrames();
+            //_rotationAnimation = new DoubleAnimationUsingKeyFrames();
+
+            _tossingAnimation = new MatrixAnimationUsingKeyFrames();
 
             //if you want to access and change a value after its animation
             //you have to choose FillBehavior.Stop
-            _translationXAnimation.FillBehavior = FillBehavior.Stop;
-            _translationYAnimation.FillBehavior = FillBehavior.Stop;
-            _rotationAnimation.FillBehavior = FillBehavior.Stop;
+            //_translationXAnimation.FillBehavior = FillBehavior.Stop;
+            //_translationYAnimation.FillBehavior = FillBehavior.Stop;
+            //_rotationAnimation.FillBehavior = FillBehavior.Stop;
+            _tossingAnimation.FillBehavior = FillBehavior.Stop;
 
             //link the animation with the property it should change (here the X and Y values
             //of the translation and the rotation angle of the card)
-            Storyboard.SetTargetName(_translationXAnimation, Constants.TranslationAnimationName);
-            Storyboard.SetTargetProperty(_translationXAnimation,
-                                         new PropertyPath(TranslateTransform.XProperty));
+            //Storyboard.SetTargetName(_translationXAnimation, Constants.TranslationAnimationName);
+            //Storyboard.SetTargetProperty(_translationXAnimation,
+            //                             new PropertyPath(TranslateTransform.XProperty));
 
 
-            Storyboard.SetTargetName(_translationYAnimation, Constants.TranslationAnimationName);
-            Storyboard.SetTargetProperty(_translationYAnimation,
-                                         new PropertyPath(TranslateTransform.YProperty));
+            //Storyboard.SetTargetName(_translationYAnimation, Constants.TranslationAnimationName);
+            //Storyboard.SetTargetProperty(_translationYAnimation,
+            //                             new PropertyPath(TranslateTransform.YProperty));
 
-            Storyboard.SetTargetName(_rotationAnimation, Constants.RotationAnimationName);
-            Storyboard.SetTargetProperty(_rotationAnimation,
-                                         new PropertyPath(RotateTransform.AngleProperty));
+            //Storyboard.SetTargetName(_rotationAnimation, Constants.RotationAnimationName);
+            //Storyboard.SetTargetProperty(_rotationAnimation,
+            //                             new PropertyPath(RotateTransform.AngleProperty));
+
+            Storyboard.SetTargetName(_tossingAnimation, Constants.TossingAnimation);
+            Storyboard.SetTargetProperty(_tossingAnimation, new PropertyPath(MatrixTransform.MatrixProperty));
 
             //don't forget to add the animations to the Storyboard or nothin
             //will happen
-            _storyboard.Children.Add(_translationXAnimation);
-            _storyboard.Children.Add(_translationYAnimation);
-            _storyboard.Children.Add(_rotationAnimation);
+            //_storyboard.Children.Add(_translationXAnimation);
+            //_storyboard.Children.Add(_translationYAnimation);
+            //_storyboard.Children.Add(_rotationAnimation);
+            _storyboard.Children.Add(_tossingAnimation);
 
             _storyboard.Begin(Element, true);
             _storyboard.Stop(Element);
@@ -368,8 +381,26 @@ namespace TecX.Agile.View.Behavior
 
                 Point actualPoint = previousPoint + _tossingVector;
 
-                _translationXAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(actualPoint.X));
-                _translationYAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(actualPoint.Y));
+                //_translationXAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(actualPoint.X));
+                //_translationYAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(actualPoint.Y));
+                //TODO weberse 2010-12-20 must use last keyframe as offset or matrixtransform if first keyframe
+                int count;
+                Matrix matrix;
+                if((count = _tossingAnimation.KeyFrames.Count) == 0)
+                {
+                    matrix = Element.Transform().Matrix;
+                }
+                else
+                {
+                    MatrixKeyFrame lastKeyFrame = _tossingAnimation.KeyFrames[count - 1];
+                    matrix = lastKeyFrame.Value;
+                }
+
+                //TODO weberse 2010-12-20 do i have to make this analog to FrameworkElementExtensions.Move and divide it into separate
+                //steps in order not to mess up the change tracking?
+                matrix.Translate(_tossingVector.X, _tossingVector.Y);
+                _tossingAnimation.KeyFrames.Add(new DiscreteMatrixKeyFrame(matrix));
+
                 stoppingDistance += (previousPoint - actualPoint).Length;
 
                 previousPoint = actualPoint;
@@ -391,13 +422,14 @@ namespace TecX.Agile.View.Behavior
 
             _isTossed = false;
 
-            double animationTime = CalculateAnimationTime(stoppingDistance);
+            TimeSpan animationTime = CalculateAnimationTime(stoppingDistance);
 
-            _translationXAnimation.Duration = TimeSpan.FromSeconds(animationTime);
-            _translationYAnimation.Duration = TimeSpan.FromSeconds(animationTime);
+            //_translationXAnimation.Duration = TimeSpan.FromSeconds(animationTime);
+            //_translationYAnimation.Duration = TimeSpan.FromSeconds(animationTime);
+            _tossingAnimation.Duration = animationTime;
 
             //only start the animation if the card would actually move but allow us to
-            //interupt it
+            //interupt it)
             if (stoppingDistance > 0)
                 _storyboard.Begin(Element, true);
         }
@@ -469,11 +501,13 @@ namespace TecX.Agile.View.Behavior
 
             //if the card stops because it hits a window border the time is
             //not calculated properly and the movement might appear unnaturaly slow
-            double animationTime = CalculateAnimationTime(stoppingDistance);
+            TimeSpan animationTime = CalculateAnimationTime(stoppingDistance);
 
-            _translationXAnimation.Duration = TimeSpan.FromSeconds(animationTime);
-            _translationYAnimation.Duration = TimeSpan.FromSeconds(animationTime);
-            _rotationAnimation.Duration = TimeSpan.FromSeconds(animationTime);
+            //_translationXAnimation.Duration = TimeSpan.FromSeconds(animationTime);
+            //_translationYAnimation.Duration = TimeSpan.FromSeconds(animationTime);
+            //_rotationAnimation.Duration = TimeSpan.FromSeconds(animationTime);
+            _tossingAnimation.Duration = animationTime;
+
 
             //only start the animation if the card would actually move but allow us to
             //interupt it
@@ -483,20 +517,32 @@ namespace TecX.Agile.View.Behavior
 
         private Point ResetInvalidTossingMove(Point point)
         {
-            Vector displacement = GeometryHelper.GetPointOutsideShapeDisplacement(point, Tabletop.Surface);
+            //int last = _translationXAnimation.KeyFrames.Count - 1;
 
-            int last = _translationXAnimation.KeyFrames.Count - 1;
+            //double lastValidX = _translationXAnimation.KeyFrames[last].Value + displacement.X;
+            //double lastValidY = _translationYAnimation.KeyFrames[last].Value + displacement.Y;
 
-            double lastValidX = _translationXAnimation.KeyFrames[last].Value + displacement.X;
-            double lastValidY = _translationYAnimation.KeyFrames[last].Value + displacement.Y;
+            //_translationXAnimation.KeyFrames.Remove(_translationXAnimation.KeyFrames[last]);
+            //_translationYAnimation.KeyFrames.Remove(_translationYAnimation.KeyFrames[last]);
 
-            _translationXAnimation.KeyFrames.Remove(_translationXAnimation.KeyFrames[last]);
-            _translationYAnimation.KeyFrames.Remove(_translationYAnimation.KeyFrames[last]);
+            //_translationXAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(lastValidX));
+            //_translationYAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(lastValidY));
 
-            _translationXAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(lastValidX));
-            _translationYAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(lastValidY));
+            int last = _tossingAnimation.KeyFrames.Count - 1;
 
-            point += displacement;
+            if(last > -1)
+            {
+                Vector displacement = GeometryHelper.GetPointOutsideShapeDisplacement(point, Tabletop.Surface);
+
+                Matrix lastValid = _tossingAnimation.KeyFrames[last].Value;
+
+                lastValid.Translate(displacement.X, displacement.Y);
+
+                _tossingAnimation.KeyFrames.RemoveAt(last);
+                _tossingAnimation.KeyFrames.Add(new DiscreteMatrixKeyFrame(lastValid));
+
+                point += displacement;
+            }
 
             return point;
         }
@@ -514,26 +560,43 @@ namespace TecX.Agile.View.Behavior
 
             Vector vDisplacement = vEnd * scalar;
 
-            if (_translationXAnimation.KeyFrames.Count == 0)
+            //if (_translationXAnimation.KeyFrames.Count == 0)
+            //{
+            //    //TODO weberse use matrixtransform
+            //    //_translationXAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(Element.Translation().X + vDisplacement.X));
+            //    //_translationYAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(Element.Translation().Y + vDisplacement.Y));
+            //    //_rotationAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(Element.Rotation().Angle + angle));
+            //}
+            //else
+            //{
+            //    int last = _translationXAnimation.KeyFrames.Count - 1;
+
+            //    _translationXAnimation.KeyFrames.Add(
+            //        new LinearDoubleKeyFrame(_translationXAnimation.KeyFrames[last].Value + vDisplacement.X));
+            //    _translationYAnimation.KeyFrames.Add(
+            //        new LinearDoubleKeyFrame(_translationYAnimation.KeyFrames[last].Value + vDisplacement.Y));
+            //    _rotationAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(_rotationAnimation.KeyFrames[last].Value + angle));
+            //}
+
+            int count;
+            Matrix matrix;
+            if((count = _tossingAnimation.KeyFrames.Count) == 0)
             {
-                //TODO weberse use matrixtransform
-                //_translationXAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(Element.Translation().X + vDisplacement.X));
-                //_translationYAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(Element.Translation().Y + vDisplacement.Y));
-                //_rotationAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(Element.Rotation().Angle + angle));
+                matrix = Element.Transform().Matrix;
             }
             else
             {
-                int last = _translationXAnimation.KeyFrames.Count - 1;
-
-                _translationXAnimation.KeyFrames.Add(
-                    new LinearDoubleKeyFrame(_translationXAnimation.KeyFrames[last].Value + vDisplacement.X));
-                _translationYAnimation.KeyFrames.Add(
-                    new LinearDoubleKeyFrame(_translationYAnimation.KeyFrames[last].Value + vDisplacement.Y));
-                _rotationAnimation.KeyFrames.Add(new LinearDoubleKeyFrame(_rotationAnimation.KeyFrames[last].Value + angle));
+                MatrixKeyFrame keyFrame = _tossingAnimation.KeyFrames[count - 1];
+                matrix = keyFrame.Value;
             }
+
+            matrix.Translate(vDisplacement.X, vDisplacement.Y);
+            matrix.RotateAt(angle, localCenter.X, localCenter.Y);
+
+            _tossingAnimation.KeyFrames.Add(new DiscreteMatrixKeyFrame(matrix));
         }
 
-        private double CalculateAnimationTime(double stoppingDistance)
+        private TimeSpan CalculateAnimationTime(double stoppingDistance)
         {
             //calculate the duration of the animation based on the speed of the
             //tossing gesture
@@ -545,14 +608,18 @@ namespace TecX.Agile.View.Behavior
             //prohibits a divide-by-zero error
             double v0 = s0 / (time != 0 ? time : 1);
 
-            return (stoppingDistance * Constants.DecelerationConstant / v0) * 2 * Constants.CurrentFriction;
+            double duration = (stoppingDistance * Constants.DecelerationConstant / v0) * 2 * Constants.CurrentFriction;
+
+            return TimeSpan.FromSeconds(duration);
         }
 
         private void ClearAnimationKeyFrames()
         {
-            _translationXAnimation.KeyFrames.Clear();
-            _translationYAnimation.KeyFrames.Clear();
-            _rotationAnimation.KeyFrames.Clear();
+            //_translationXAnimation.KeyFrames.Clear();
+            //_translationYAnimation.KeyFrames.Clear();
+            //_rotationAnimation.KeyFrames.Clear();
+
+            _tossingAnimation.KeyFrames.Clear();
         }
 
         #endregion

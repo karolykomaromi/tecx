@@ -96,7 +96,7 @@ namespace TecX.Agile.Remote
         {
             Guard.AssertNotNull(message, "message");
 
-            _peerClient.MoveCaret(_peerClient.Id, message.ArtefactId, message.CaretIndex);
+            _peerClient.MoveCaret(_peerClient.Id, message.ArtefactId, message.FieldName, message.CaretIndex);
         }
 
         #endregion EventAggregator Subscriptions
@@ -144,7 +144,7 @@ namespace TecX.Agile.Remote
         {
             Guard.AssertNotNull(e, "e");
 
-            var commandArgs = new CaretMoved(e.ArtefactId, e.CaretIndex);
+            var commandArgs = new CaretMoved(e.ArtefactId, e.FieldName, e.CaretIndex);
 
             if (Commands.MoveCaret.CanExecute(commandArgs))
                 Commands.MoveCaret.Execute(commandArgs);

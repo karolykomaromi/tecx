@@ -7,7 +7,7 @@ namespace TecX.Agile.Peer
     {
         public RemoteOnlyMessagePropagationFilter()
         {
-
+            //explicit default constructor required by framework
         }
 
         public override PeerMessagePropagation ShouldMessagePropagate(Message message, PeerMessageOrigination origination)

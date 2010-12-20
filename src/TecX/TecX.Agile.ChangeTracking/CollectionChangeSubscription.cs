@@ -42,41 +42,6 @@ namespace TecX.Agile.ChangeTracking
                                                   {
                                                       //TODO weberse this decision must be moved to a handler of the CollectionChanged<T> message!!
 
-                                                      //var currentAction = _actionManager.CurrentAction as CollectionChangedAction<TArtefact>;
-                                                      //if (currentAction != null)
-                                                      //{
-                                                      //    if (currentAction.Collection == x.Collection)
-                                                      //    {
-                                                      //        //TODO weberse what about replace?
-                                                      //        if (((currentAction.Action == NotifyCollectionChangedAction.Add &&
-                                                      //              x.Action == NotifyCollectionChangedAction.Remove) ||
-                                                      //             (currentAction.Action == NotifyCollectionChangedAction.Remove &&
-                                                      //              x.Action == NotifyCollectionChangedAction.Add)) &&
-                                                      //            currentAction.OldItems.SequenceEqual(x.NewItems) &&
-                                                      //            currentAction.NewItems.SequenceEqual(x.OldItems))
-                                                      //        {
-                                                      //            //undo -> do nothing
-                                                      //            return;
-                                                      //        }
-
-                                                      //        if (currentAction.Action == x.Action &&
-                                                      //            currentAction.NewItems.SequenceEqual(x.NewItems) &&
-                                                      //            currentAction.OldItems.SequenceEqual(x.OldItems))
-                                                      //        {
-                                                      //            //redo -> do nothing
-                                                      //            return;
-                                                      //        }
-                                                      //    }
-                                                      //}
-
-                                                      //var action = new CollectionChangedAction<TArtefact>(
-                                                      //    x.Collection,
-                                                      //    x.Action,
-                                                      //    x.NewItems,
-                                                      //    x.OldItems);
-
-                                                      //_actionManager.RecordAction(action);
-
                                                       StoryCardCollection scc = x.Collection as StoryCardCollection;
 
                                                       if(scc != null)
@@ -179,13 +144,6 @@ namespace TecX.Agile.ChangeTracking
                                                       }
 
                                                       throw new NotSupportedException("Only supports StoryCardCollection or IterationCollection");
-
-                                                      //CollectionChanged<TArtefact> collectionChanged =
-                                                      //    new CollectionChanged<TArtefact>(x.Collection, x.Action,
-                                                      //                                     x.NewItems, x.OldItems);
-
-                                                      //_eventAggregator.Publish(collectionChanged);
-
                                                   });
         }
 

@@ -215,7 +215,6 @@ namespace TecX.Agile.Data.Json
                     {
                         string key = prop.Name;
 
-                        //TODO this sucks. make it robust
                         string str = ((JValue) prop.Value).ToString().Trim('\"');
 
                         byte[] value = Common.Convert.ToByte(str);
