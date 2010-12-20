@@ -56,13 +56,13 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
-    <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="BinaryFormatter.cs" />
+    <Compile Include="BinaryReaderWriterExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="IBinarySerializable.cs" />
     <Compile Include="IntToBytes.cs" />
