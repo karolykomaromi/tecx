@@ -6,6 +6,7 @@ using System.Reflection;
 using Ploeh.AutoFixture;
 
 using TecX.Common;
+using TecX.Common.Reflection;
 
 namespace TecX.TestTools
 {
@@ -42,7 +43,7 @@ namespace TecX.TestTools
 
             foreach (var p in properties)
             {
-                var invoker = TecX.Common.ReflectionHelper.GetGenericMethodInvoker(
+                var invoker = ReflectionHelper.GetGenericMethodInvoker(
                     //type on which the generic method should be called
                     typeof(Fixture),
                     //name of the method you want to call
