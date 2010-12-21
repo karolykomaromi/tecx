@@ -9,7 +9,7 @@ namespace TecX.Prism.Regions
     public class GridRegionAdapter : RegionAdapterBase<Grid>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="RibbonRegionAdapter"/> class
+        /// Initializes a new instance of the <see cref="GridRegionAdapter"/> class
         /// </summary>
         public GridRegionAdapter(IRegionBehaviorFactory regionBehaviorFactory)
             : base(regionBehaviorFactory)
