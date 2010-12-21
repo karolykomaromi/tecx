@@ -57,6 +57,12 @@
     <Compile Include="FluentNotifyFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FluentNotifyChangedFixture.cs" />
+    <Compile Include="TestObjects\AsyncTestClass.cs" />
+    <Compile Include="TestObjects\CompletedEventArgs.cs" />
+    <Compile Include="TestObjects\CompletedEventHandler.cs" />
+    <Compile Include="TestObjects\ComplexChild.cs" />
+    <Compile Include="TestObjects\ComplexParent.cs" />
+    <Compile Include="TestObjects\MyClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.TestTools\TecX.TestTools.csproj">

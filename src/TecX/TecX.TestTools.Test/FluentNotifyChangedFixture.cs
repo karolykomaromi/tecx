@@ -1,9 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using TecX.TestTools.Test.TestObjects;
 
 namespace TecX.TestTools.Test
 {
@@ -59,32 +60,6 @@ namespace TecX.TestTools.Test
             var sut = new MyClass();
             // Exercise system and verify outcome
             sut.ShouldNotifyOn(s => s.MyDerivedProperty).When(s => s.MyProperty = "Some new value");
-        }
-
-        private class MyClass : INotifyPropertyChanged
-        {
-            private string _myProperty;
-
-            public string MyProperty
-            {
-                get { return _myProperty; }
-                set
-                {
-                    if (value == _myProperty)
-                        return;
-
-                    _myProperty = value;
-                    PropertyChanged(this, new PropertyChangedEventArgs("MyProperty"));
-                    PropertyChanged(this, new PropertyChangedEventArgs("MyDerivedProperty"));
-                }
-            }
-
-            public string MyDerivedProperty
-            {
-                get { return MyProperty + "Derived"; }
-            }
-
-            public event PropertyChangedEventHandler PropertyChanged = delegate { };
         }
     }
 }
