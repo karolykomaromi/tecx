@@ -51,7 +51,7 @@ namespace TecX.Agile.Serialization.Messages
 
         public override int GetTypeId()
         {
-            return Constants.TypeIds.PropertyUpdated;
+            return Constants.MessageTypeIds.PropertyUpdated;
         }
 
         #endregion

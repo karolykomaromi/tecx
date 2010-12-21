@@ -22,8 +22,43 @@ namespace TecX.Agile.Serialization.Test
         {
             _fixture = new Fixture();
             _formatter = new BinaryFormatter();
-            _formatter.Register<StoryCardMoved>(Constants.TypeIds.StoryCardMoved);
-            _formatter.Register<PropertyUpdated>(Constants.TypeIds.PropertyUpdated);
+            _formatter.Register<StoryCardMoved>(Constants.MessageTypeIds.StoryCardMoved);
+            _formatter.Register<PropertyUpdated>(Constants.MessageTypeIds.PropertyUpdated);
+            _formatter.Register<CaretMoved>(Constants.MessageTypeIds.CaretMoved);
+            _formatter.Register<FieldHighlighted>(Constants.MessageTypeIds.FieldHighlighted);
+        }
+
+        [TestMethod]
+        public void GivenFieldHighlightedMessage_WhenSerializingAndDeserializing_WorksAsExpected()
+        {
+            var message = _fixture.CreateAnonymous<FieldHighlighted>();
+
+            var serialized = _formatter.Serialize(message);
+
+            FieldHighlighted deserialized = _formatter.Deserialize(serialized) as FieldHighlighted;
+
+            Assert.IsNotNull(deserialized);
+
+            Assert.AreEqual(message.SenderId, deserialized.SenderId);
+            Assert.AreEqual(message.ArtefactId, deserialized.ArtefactId);
+            Assert.AreEqual(message.FieldName, deserialized.FieldName);
+        }
+
+        [TestMethod]
+        public void GivenCaretMovedMessage_WhenSerializingAndDeserializing_WorksAsExpected()
+        {
+            var message = _fixture.CreateAnonymous<CaretMoved>();
+
+            var serialized = _formatter.Serialize(message);
+
+            CaretMoved deserialized = _formatter.Deserialize(serialized) as CaretMoved;
+
+            Assert.IsNotNull(deserialized);
+
+            Assert.AreEqual(message.SenderId, deserialized.SenderId);
+            Assert.AreEqual(message.ArtefactId, deserialized.ArtefactId);
+            Assert.AreEqual(message.FieldName, deserialized.FieldName);
+            Assert.AreEqual(message.CaretIndex, deserialized.CaretIndex);
         }
 
         [TestMethod]
