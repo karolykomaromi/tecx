@@ -1,6 +1,11 @@
 ﻿using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
+
+#if SILVERLIGHT
+
+#else
 using Microsoft.Windows.Controls.Ribbon;
+#endif
 
 using TecX.Agile.Infrastructure;
 using TecX.Agile.Modules.Main.View;
@@ -13,7 +18,7 @@ namespace TecX.Agile.Modules.Main
         public const string ModuleName = "Main";
 
         private readonly IRegionManager _regionManager;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Module"/> class
         /// </summary>
@@ -31,6 +36,11 @@ namespace TecX.Agile.Modules.Main
         /// </summary>
         public void Initialize()
         {
+
+#if SILVERLIGHT
+
+#else
+
             IRegion mainToolBar = _regionManager.Regions[Regions.MainToolBar];
 
             RibbonButton btnAddStory = new RibbonButton {Label = "Add Story", Command = Commands.AddStoryCard };
@@ -47,6 +57,8 @@ namespace TecX.Agile.Modules.Main
             tab.Items.Add(grp);
 
             mainToolBar.Add(tab);
+            
+#endif
 
             IRegion main = _regionManager.Regions[Regions.Main];
 

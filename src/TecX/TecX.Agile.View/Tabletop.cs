@@ -24,7 +24,11 @@ namespace TecX.Agile.View
                 "IsSurface",
                 typeof(bool),
                 typeof(Tabletop),
+#if SILVERLIGHT
+                new PropertyMetadata(
+#else
                 new FrameworkPropertyMetadata(
+#endif
                     false,
                     OnDependencyPropertyChanged));
 

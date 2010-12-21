@@ -50,7 +50,11 @@ namespace TecX.Common.Event
 
             // just one rough  possibility to purge dead subscriptions
             // runs every minute - needs to be adjusted for other apps.
+#if SILVERLIGHT
+            var dispatcherTimer = new DispatcherTimer();
+#else
             var dispatcherTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
+#endif
             dispatcherTimer.Tick += RemoveDeadReferences;
             dispatcherTimer.Interval = TimeSpan.FromMinutes(1);
             dispatcherTimer.Start();
@@ -113,7 +117,11 @@ namespace TecX.Common.Event
                 foreach (var subscriber in GetAllSubscribersFor<TMessage>())
                 {
                     if (_dispatcher != null)
+#if SILVERLIGHT
+                        _dispatcher.BeginInvoke(new Action(() => subscriber.Handle(message)));
+#else
                         _dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => subscriber.Handle(message)));
+#endif
                     else
                         subscriber.Handle(message);
                 }

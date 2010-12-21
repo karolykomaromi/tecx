@@ -64,6 +64,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\..\..\lib\Prism4\Silverlight4\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.UnityExtensions">
+      <HintPath>..\..\..\lib\Prism4\Silverlight4\Microsoft.Practices.Prism.UnityExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Silverlight">
+      <HintPath>..\..\..\lib\Unity2\Silverlight\Microsoft.Practices.Unity.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -79,6 +88,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
@@ -99,6 +109,10 @@
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile.Modules.Main\TecX.Agile.Modules.Main.Silverlight.csproj">
+      <Project>{4A0B047E-C4FC-4840-9B23-26FF735F6EC5}</Project>
+      <Name>TecX.Agile.Modules.Main.Silverlight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Serialization\TecX.Agile.Serialization.csproj">
       <Project>{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}</Project>
       <Name>TecX.Agile.Serialization</Name>
