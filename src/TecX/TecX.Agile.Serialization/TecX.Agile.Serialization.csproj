@@ -67,6 +67,7 @@
     <Compile Include="IBinarySerializable.cs" />
     <Compile Include="IntToBytes.cs" />
     <Compile Include="Messages\PropertyUpdated.cs" />
+    <Compile Include="Messages\PushMessage.cs" />
     <Compile Include="Messages\StoryCardMoved.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

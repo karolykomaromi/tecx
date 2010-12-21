@@ -5,7 +5,7 @@ using TecX.Common;
 
 namespace TecX.Agile.Serialization.Messages
 {
-    public class PropertyUpdated : IBinarySerializable
+    public class PropertyUpdated : PushMessage
     {
         public string PropertyName { get; set; }
         public Guid ArtefactId { get; set; }
@@ -22,9 +22,11 @@ namespace TecX.Agile.Serialization.Messages
 
         #region Implementation of IBinarySerializable
 
-        public void WriteDataTo(BinaryWriter writer)
+        public override void WriteDataTo(BinaryWriter writer)
         {
             Guard.AssertNotNull(writer, "writer");
+
+            base.WriteDataTo(writer);
 
             writer.Write(ArtefactId);
             writer.Write(PropertyName);
@@ -33,9 +35,11 @@ namespace TecX.Agile.Serialization.Messages
             writer.WriteUnkown(NewValue);
         }
 
-        public void SetDataFrom(BinaryReader reader)
+        public override void SetDataFrom(BinaryReader reader)
         {
             Guard.AssertNotNull(reader, "reader");
+
+            base.SetDataFrom(reader);
 
             ArtefactId = reader.ReadGuid();
             PropertyName = reader.ReadString();
@@ -45,7 +49,7 @@ namespace TecX.Agile.Serialization.Messages
             NewValue = reader.ReadUnknown();
         }
 
-        public int GetTypeId()
+        public override int GetTypeId()
         {
             return Constants.TypeIds.PropertyUpdated;
         }
