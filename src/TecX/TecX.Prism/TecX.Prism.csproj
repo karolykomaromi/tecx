@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.Prism">
-      <HintPath>..\..\..\lib\Prism4\Microsoft.Practices.Prism.dll</HintPath>
+      <HintPath>..\..\..\lib\Prism4\NET40\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -48,7 +48,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
