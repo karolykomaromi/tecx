@@ -16,12 +16,20 @@ namespace TecX.Agile.Serialization.Test
         [TestMethod]
         public void GivenStoryCardMovedMessage_WhenSerializingAndDeserializing_WorksAsExpected()
         {
+            Guid senderId = Guid.NewGuid();
             Guid storyCardId = Guid.NewGuid();
             const double x = 1.2;
             const double y = 2.3;
             const double angle = 3.4;
 
-            StoryCardMoved message = new StoryCardMoved { StoryCardId = storyCardId, Angle = angle, X = x, Y = y };
+            StoryCardMoved message = new StoryCardMoved
+                                         {
+                                             SenderId = senderId,
+                                             StoryCardId = storyCardId, 
+                                             Angle = angle, 
+                                             X = x, 
+                                             Y = y
+                                         };
 
             BinaryFormatter formatter = new BinaryFormatter();
 
@@ -33,6 +41,7 @@ namespace TecX.Agile.Serialization.Test
 
             Assert.IsNotNull(deserialized);
 
+            Assert.AreEqual(senderId, deserialized.SenderId);
             Assert.AreEqual(storyCardId, deserialized.StoryCardId);
             Assert.AreEqual(angle, deserialized.Angle);
             Assert.AreEqual(x, deserialized.X);
@@ -42,41 +51,17 @@ namespace TecX.Agile.Serialization.Test
         [TestMethod]
         public void GivenPropertyUpdatedMessageWithNullValues_WhenSerializingAndDeserializing_WorksAsExpected()
         {
+            Guid senderId = Guid.NewGuid();
             Guid artefactId = Guid.NewGuid();
             const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
-
-            PropertyUpdated message = new PropertyUpdated { ArtefactId = artefactId, PropertyName = propertyName, OldValue = null, NewValue = null };
-
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            formatter.Register<PropertyUpdated>(Constants.TypeIds.PropertyUpdated);
-
-            var serialized = formatter.Serialize(message);
-
-            PropertyUpdated deserialized = formatter.Deserialize(serialized) as PropertyUpdated;
-
-            Assert.IsNotNull(deserialized);
-
-            Assert.AreEqual(artefactId, deserialized.ArtefactId);
-            Assert.AreEqual(propertyName, deserialized.PropertyName);
-            Assert.IsNull(deserialized.OldValue);
-            Assert.IsNull(deserialized.NewValue);
-        }
-
-        [TestMethod]
-        public void GivenPropertyUpdatedMessageWithDecimalValues_WhenSerializingAndDeserializing_WorksAsExpected()
-        {
-            Guid artefactId = Guid.NewGuid();
-            const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
-            const decimal old = 123.4m;
-            const decimal @new = 234.5m;
 
             PropertyUpdated message = new PropertyUpdated
                                           {
+                                              SenderId = senderId,
                                               ArtefactId = artefactId,
                                               PropertyName = propertyName,
-                                              OldValue = old,
-                                              NewValue = @new
+                                              OldValue = null,
+                                              NewValue = null
                                           };
 
             BinaryFormatter formatter = new BinaryFormatter();
@@ -89,6 +74,42 @@ namespace TecX.Agile.Serialization.Test
 
             Assert.IsNotNull(deserialized);
 
+            Assert.AreEqual(senderId, deserialized.SenderId);
+            Assert.AreEqual(artefactId, deserialized.ArtefactId);
+            Assert.AreEqual(propertyName, deserialized.PropertyName);
+            Assert.IsNull(deserialized.OldValue);
+            Assert.IsNull(deserialized.NewValue);
+        }
+
+        [TestMethod]
+        public void GivenPropertyUpdatedMessageWithDecimalValues_WhenSerializingAndDeserializing_WorksAsExpected()
+        {
+            Guid senderId = Guid.NewGuid();
+            Guid artefactId = Guid.NewGuid();
+            const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
+            const decimal old = 123.4m;
+            const decimal @new = 234.5m;
+
+            PropertyUpdated message = new PropertyUpdated
+                                            {
+                                                SenderId = senderId,
+                                                ArtefactId = artefactId,
+                                                PropertyName = propertyName,
+                                                OldValue = old,
+                                                NewValue = @new
+                                            };
+
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            formatter.Register<PropertyUpdated>(Constants.TypeIds.PropertyUpdated);
+
+            var serialized = formatter.Serialize(message);
+
+            PropertyUpdated deserialized = formatter.Deserialize(serialized) as PropertyUpdated;
+
+            Assert.IsNotNull(deserialized);
+
+            Assert.AreEqual(senderId, deserialized.SenderId);
             Assert.AreEqual(artefactId, deserialized.ArtefactId);
             Assert.AreEqual(propertyName, deserialized.PropertyName);
             Assert.AreEqual(old, deserialized.OldValue);
@@ -98,18 +119,20 @@ namespace TecX.Agile.Serialization.Test
         [TestMethod]
         public void GivenPropertyUpdatedMessageWithInt32Values_WhenSerializingAndDeserializing_WorksAsExpected()
         {
+            Guid senderId = Guid.NewGuid();
             Guid artefactId = Guid.NewGuid();
             const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
             const int old = 123;
             const int @new = 234;
 
             PropertyUpdated message = new PropertyUpdated
-            {
-                ArtefactId = artefactId,
-                PropertyName = propertyName,
-                OldValue = old,
-                NewValue = @new
-            };
+                                                {
+                                                    SenderId = senderId,
+                                                    ArtefactId = artefactId,
+                                                    PropertyName = propertyName,
+                                                    OldValue = old,
+                                                    NewValue = @new
+                                                };
 
             BinaryFormatter formatter = new BinaryFormatter();
 
@@ -121,6 +144,7 @@ namespace TecX.Agile.Serialization.Test
 
             Assert.IsNotNull(deserialized);
 
+            Assert.AreEqual(senderId, deserialized.SenderId);
             Assert.AreEqual(artefactId, deserialized.ArtefactId);
             Assert.AreEqual(propertyName, deserialized.PropertyName);
             Assert.AreEqual(old, deserialized.OldValue);
@@ -130,18 +154,20 @@ namespace TecX.Agile.Serialization.Test
         [TestMethod]
         public void GivenPropertyUpdatedMessageWithStringValues_WhenSerializingAndDeserializing_WorksAsExpected()
         {
+            Guid senderId = Guid.NewGuid();
             Guid artefactId = Guid.NewGuid();
             const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
             const string old = "ard";
             const string @new = "zdf";
 
             PropertyUpdated message = new PropertyUpdated
-            {
-                ArtefactId = artefactId,
-                PropertyName = propertyName,
-                OldValue = old,
-                NewValue = @new
-            };
+                                            {
+                                                SenderId = senderId,
+                                                ArtefactId = artefactId,
+                                                PropertyName = propertyName,
+                                                OldValue = old,
+                                                NewValue = @new
+                                            };
 
             BinaryFormatter formatter = new BinaryFormatter();
 
@@ -153,6 +179,7 @@ namespace TecX.Agile.Serialization.Test
 
             Assert.IsNotNull(deserialized);
 
+            Assert.AreEqual(senderId, deserialized.SenderId);
             Assert.AreEqual(artefactId, deserialized.ArtefactId);
             Assert.AreEqual(propertyName, deserialized.PropertyName);
             Assert.AreEqual(old, deserialized.OldValue);
@@ -162,18 +189,20 @@ namespace TecX.Agile.Serialization.Test
         [TestMethod]
         public void GivenPropertyUpdatedMessageWithGuidValues_WhenSerializingAndDeserializing_WorksAsExpected()
         {
+            Guid senderId = Guid.NewGuid();
             Guid artefactId = Guid.NewGuid();
             const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
             Guid old = Guid.NewGuid();
             Guid @new = Guid.Empty;
 
             PropertyUpdated message = new PropertyUpdated
-            {
-                ArtefactId = artefactId,
-                PropertyName = propertyName,
-                OldValue = old,
-                NewValue = @new
-            };
+                                            {
+                                                SenderId = senderId,
+                                                ArtefactId = artefactId,
+                                                PropertyName = propertyName,
+                                                OldValue = old,
+                                                NewValue = @new
+                                            };
 
             BinaryFormatter formatter = new BinaryFormatter();
 
@@ -185,6 +214,7 @@ namespace TecX.Agile.Serialization.Test
 
             Assert.IsNotNull(deserialized);
 
+            Assert.AreEqual(senderId, deserialized.SenderId);
             Assert.AreEqual(artefactId, deserialized.ArtefactId);
             Assert.AreEqual(propertyName, deserialized.PropertyName);
             Assert.AreEqual(old, deserialized.OldValue);
@@ -194,18 +224,20 @@ namespace TecX.Agile.Serialization.Test
         [TestMethod]
         public void GivenPropertyUpdatedMessageWithDoubleValues_WhenSerializingAndDeserializing_WorksAsExpected()
         {
+            Guid senderId = Guid.NewGuid();
             Guid artefactId = Guid.NewGuid();
             const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
             const double old = 123.4;
             const double @new = 234.5;
 
             PropertyUpdated message = new PropertyUpdated
-            {
-                ArtefactId = artefactId,
-                PropertyName = propertyName,
-                OldValue = old,
-                NewValue = @new
-            };
+                                                {
+                                                    SenderId = senderId,
+                                                    ArtefactId = artefactId,
+                                                    PropertyName = propertyName,
+                                                    OldValue = old,
+                                                    NewValue = @new
+                                                };
 
             BinaryFormatter formatter = new BinaryFormatter();
 
@@ -217,6 +249,7 @@ namespace TecX.Agile.Serialization.Test
 
             Assert.IsNotNull(deserialized);
 
+            Assert.AreEqual(senderId, deserialized.SenderId);
             Assert.AreEqual(artefactId, deserialized.ArtefactId);
             Assert.AreEqual(propertyName, deserialized.PropertyName);
             Assert.AreEqual(old, deserialized.OldValue);
@@ -226,18 +259,20 @@ namespace TecX.Agile.Serialization.Test
         [TestMethod]
         public void GivenPropertyUpdatedMessageWithColorValues_WhenSerializingAndDeserializing_WorksAsExpected()
         {
+            Guid senderId = Guid.NewGuid();
             Guid artefactId = Guid.NewGuid();
             const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
             Color old = Color.FromArgb(1, 2, 3, 4);
             Color @new = Color.FromArgb(2, 3, 4, 5);
 
             PropertyUpdated message = new PropertyUpdated
-            {
-                ArtefactId = artefactId,
-                PropertyName = propertyName,
-                OldValue = old,
-                NewValue = @new
-            };
+                                                {
+                                                    SenderId = senderId,
+                                                    ArtefactId = artefactId,
+                                                    PropertyName = propertyName,
+                                                    OldValue = old,
+                                                    NewValue = @new
+                                                };
 
             BinaryFormatter formatter = new BinaryFormatter();
 
@@ -249,6 +284,7 @@ namespace TecX.Agile.Serialization.Test
 
             Assert.IsNotNull(deserialized);
 
+            Assert.AreEqual(senderId, deserialized.SenderId);
             Assert.AreEqual(artefactId, deserialized.ArtefactId);
             Assert.AreEqual(propertyName, deserialized.PropertyName);
             Assert.AreEqual(old, deserialized.OldValue);

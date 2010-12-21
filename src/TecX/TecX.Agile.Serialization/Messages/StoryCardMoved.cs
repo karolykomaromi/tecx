@@ -5,7 +5,7 @@ using TecX.Common;
 
 namespace TecX.Agile.Serialization.Messages
 {
-    public class StoryCardMoved : IBinarySerializable
+    public class StoryCardMoved : PushMessage
     {
         public Guid StoryCardId { get; set; }
         public double X { get; set; }
@@ -22,27 +22,31 @@ namespace TecX.Agile.Serialization.Messages
 
         #region Implementation of IBinarySerializable
 
-        public void WriteDataTo(BinaryWriter writer)
+        public override void WriteDataTo(BinaryWriter writer)
         {
             Guard.AssertNotNull(writer, "writer");
 
-            writer.Write(StoryCardId.ToByteArray());
+            base.WriteDataTo(writer);
+
+            writer.Write(StoryCardId);
             writer.Write(X);
             writer.Write(Y);
             writer.Write(Angle);
         }
 
-        public void SetDataFrom(BinaryReader reader)
+        public override void SetDataFrom(BinaryReader reader)
         {
             Guard.AssertNotNull(reader, "reader");
 
-            StoryCardId = new Guid(reader.ReadBytes(16));
+            base.SetDataFrom(reader);
+
+            StoryCardId = reader.ReadGuid();
             X = reader.ReadDouble();
             Y = reader.ReadDouble();
             Angle = reader.ReadDouble();
         }
 
-        public int GetTypeId()
+        public override int GetTypeId()
         {
             return Constants.TypeIds.StoryCardMoved;
         }
