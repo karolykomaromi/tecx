@@ -2,13 +2,20 @@
 {
     public static class Constants
     {
-        public static class TypeIds
+        public static class MessageTypeIds
         {
             /// <summary>1</summary>
-            public const int StoryCardMoved = 1;
+            public const int CaretMoved = 1;
 
             /// <summary>2</summary>
-            public const int PropertyUpdated = 2;
+            public const int FieldHighlighted = 2;
+
+            /// <summary>21</summary>
+            public const int StoryCardMoved = 21;
+
+            /// <summary>32</summary>
+            public const int PropertyUpdated = 32;
+
         }
 
         public static class DataTypes

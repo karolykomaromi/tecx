@@ -48,7 +48,7 @@ namespace TecX.Agile.Serialization.Messages
 
         public override int GetTypeId()
         {
-            return Constants.TypeIds.StoryCardMoved;
+            return Constants.MessageTypeIds.StoryCardMoved;
         }
 
         #endregion
