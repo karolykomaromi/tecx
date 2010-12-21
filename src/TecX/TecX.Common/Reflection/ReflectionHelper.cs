@@ -3,21 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
 
 using TecX.Common.Extensions.Error;
 
-namespace TecX.Common
+namespace TecX.Common.Reflection
 {
     public delegate object DynamicMethodInvoker(object target, params object[] arguments);
 
     public delegate void DynamicPropertySetter(object target, object value);
 
     public delegate object DynamicPropertyGetter(object target);
-
-    public class MethodNotFoundException : Exception
-    {
-    }
 
     public static class ReflectionHelper
     {
