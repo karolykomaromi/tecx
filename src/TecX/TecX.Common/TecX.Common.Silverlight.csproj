@@ -64,6 +64,7 @@
     </Compile>
     <Compile Include="Comparison\Compare.cs" />
     <Compile Include="Comparison\DictionaryComparer.cs" />
+    <Compile Include="Comparison\EpsilonComparer.cs" />
     <Compile Include="Convert.cs" />
     <Compile Include="Extensions\Collections\ListExtensions.cs" />
     <Compile Include="Extensions\Error\ExceptionExtensions.cs" />
