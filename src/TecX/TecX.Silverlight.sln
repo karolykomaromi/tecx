@@ -31,9 +31,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Planner.Silverli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Planner.Silverlight.Web", "TecX.Agile.Planner.Silverlight.Web\TecX.Agile.Planner.Silverlight.Web.csproj", "{46527F02-4901-4189-B735-C681B34A4358}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Common", "TecX.Common\TecX.Common.csproj", "{F749C03B-EC1A-460E-ACF8-05F70AD7512A}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
+		SccNumberOfProjects = 9
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -65,6 +67,10 @@ Global
 		SccProjectTopLevelParentUniqueName7 = TecX.Silverlight.sln
 		SccProjectName7 = TecX.Agile.Planner.Silverlight.Web
 		SccLocalPath7 = TecX.Agile.Planner.Silverlight.Web
+		SccProjectUniqueName8 = TecX.Common\\TecX.Common.csproj
+		SccProjectTopLevelParentUniqueName8 = TecX.Silverlight.sln
+		SccProjectName8 = TecX.Common
+		SccLocalPath8 = TecX.Common
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -148,6 +154,16 @@ Global
 		{46527F02-4901-4189-B735-C681B34A4358}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{46527F02-4901-4189-B735-C681B34A4358}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{46527F02-4901-4189-B735-C681B34A4358}.Release|x86.ActiveCfg = Release|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,6 +171,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4CBCB9FF-3BD1-40FF-858F-7355F0D485AB} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{23E54945-0126-43BE-A3FC-5F61AF5BDFF3} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{14311591-3735-41A0-9DE5-8A72349B60D5} = {E6BC7155-A2F0-4353-A57C-36A237193155}
 		{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
 		{24846DEB-FA0F-4C6D-A7A3-01805C4FA2FC} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
