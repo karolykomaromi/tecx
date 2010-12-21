@@ -9,7 +9,7 @@ using TecX.Agile.Serialization;
 using TecX.Agile.Serialization.Messages;
 using TecX.Common;
 
-namespace TecX.Agile.Planner.Silverlight
+namespace TecX.Agile.Planner
 {
     public class ShellViewModel
     {

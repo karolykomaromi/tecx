@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 using TecX.Common;
 
-namespace TecX.Agile.Planner.Silverlight
+namespace TecX.Agile.Planner
 {
     public partial class Shell : UserControl
     {
