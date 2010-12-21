@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Threading;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using TecX.TestTools.Test.TestObjects;
 
 namespace TecX.TestTools.Test
 {
@@ -64,25 +65,6 @@ namespace TecX.TestTools.Test
                     ev => sut.Completed -= ev)
                 .WithArgs(args => { throw new Exception(); })
                 .AssertExpectations();
-        }
-    }
-
-    public class CompletedEventArgs : EventArgs
-    {
-        public string Prop1 { get; set; }
-    }
-
-    public delegate void CompletedEventHandler(object sender, CompletedEventArgs e);
-
-    public class AsyncTestClass
-    {
-        public event CompletedEventHandler Completed = delegate { };
-
-        public void DoWork(string a, string b)
-        {
-            Thread.Sleep(1200);
-
-            Completed(null, new CompletedEventArgs { Prop1 = a + b });
         }
     }
 }
