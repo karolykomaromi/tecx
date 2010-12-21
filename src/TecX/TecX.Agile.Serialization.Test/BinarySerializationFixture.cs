@@ -6,6 +6,8 @@ using System.Windows.Media;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Ploeh.AutoFixture;
+
 using TecX.Agile.Serialization.Messages;
 
 namespace TecX.Agile.Serialization.Test
@@ -13,70 +15,51 @@ namespace TecX.Agile.Serialization.Test
     [TestClass]
     public class BinarySerializationFixture
     {
+        private readonly Fixture _fixture;
+        private readonly BinaryFormatter _formatter;
+
+        public BinarySerializationFixture()
+        {
+            _fixture = new Fixture();
+            _formatter = new BinaryFormatter();
+            _formatter.Register<StoryCardMoved>(Constants.TypeIds.StoryCardMoved);
+            _formatter.Register<PropertyUpdated>(Constants.TypeIds.PropertyUpdated);
+        }
+
         [TestMethod]
         public void GivenStoryCardMovedMessage_WhenSerializingAndDeserializing_WorksAsExpected()
         {
-            Guid senderId = Guid.NewGuid();
-            Guid storyCardId = Guid.NewGuid();
-            const double x = 1.2;
-            const double y = 2.3;
-            const double angle = 3.4;
+            var message = _fixture.CreateAnonymous<StoryCardMoved>();
 
-            StoryCardMoved message = new StoryCardMoved
-                                         {
-                                             SenderId = senderId,
-                                             StoryCardId = storyCardId, 
-                                             Angle = angle, 
-                                             X = x, 
-                                             Y = y
-                                         };
+            var serialized = _formatter.Serialize(message);
 
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            formatter.Register<StoryCardMoved>(Constants.TypeIds.StoryCardMoved);
-
-            var serialized = formatter.Serialize(message);
-
-            StoryCardMoved deserialized = formatter.Deserialize(serialized) as StoryCardMoved;
+            StoryCardMoved deserialized = _formatter.Deserialize(serialized) as StoryCardMoved;
 
             Assert.IsNotNull(deserialized);
 
-            Assert.AreEqual(senderId, deserialized.SenderId);
-            Assert.AreEqual(storyCardId, deserialized.StoryCardId);
-            Assert.AreEqual(angle, deserialized.Angle);
-            Assert.AreEqual(x, deserialized.X);
-            Assert.AreEqual(y, deserialized.Y);
+            Assert.AreEqual(message.SenderId, deserialized.SenderId);
+            Assert.AreEqual(message.StoryCardId, deserialized.StoryCardId);
+            Assert.AreEqual(message.Angle, deserialized.Angle);
+            Assert.AreEqual(message.X, deserialized.X);
+            Assert.AreEqual(message.Y, deserialized.Y);
         }
 
         [TestMethod]
         public void GivenPropertyUpdatedMessageWithNullValues_WhenSerializingAndDeserializing_WorksAsExpected()
         {
-            Guid senderId = Guid.NewGuid();
-            Guid artefactId = Guid.NewGuid();
-            const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
+            PropertyUpdated message = _fixture.CreateAnonymous<PropertyUpdated>();
+            message.OldValue = null;
+            message.NewValue = null;
 
-            PropertyUpdated message = new PropertyUpdated
-                                          {
-                                              SenderId = senderId,
-                                              ArtefactId = artefactId,
-                                              PropertyName = propertyName,
-                                              OldValue = null,
-                                              NewValue = null
-                                          };
+            var serialized = _formatter.Serialize(message);
 
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            formatter.Register<PropertyUpdated>(Constants.TypeIds.PropertyUpdated);
-
-            var serialized = formatter.Serialize(message);
-
-            PropertyUpdated deserialized = formatter.Deserialize(serialized) as PropertyUpdated;
+            PropertyUpdated deserialized = _formatter.Deserialize(serialized) as PropertyUpdated;
 
             Assert.IsNotNull(deserialized);
 
-            Assert.AreEqual(senderId, deserialized.SenderId);
-            Assert.AreEqual(artefactId, deserialized.ArtefactId);
-            Assert.AreEqual(propertyName, deserialized.PropertyName);
+            Assert.AreEqual(message.SenderId, deserialized.SenderId);
+            Assert.AreEqual(message.ArtefactId, deserialized.ArtefactId);
+            Assert.AreEqual(message.PropertyName, deserialized.PropertyName);
             Assert.IsNull(deserialized.OldValue);
             Assert.IsNull(deserialized.NewValue);
         }
@@ -84,211 +67,122 @@ namespace TecX.Agile.Serialization.Test
         [TestMethod]
         public void GivenPropertyUpdatedMessageWithDecimalValues_WhenSerializingAndDeserializing_WorksAsExpected()
         {
-            Guid senderId = Guid.NewGuid();
-            Guid artefactId = Guid.NewGuid();
-            const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
-            const decimal old = 123.4m;
-            const decimal @new = 234.5m;
 
-            PropertyUpdated message = new PropertyUpdated
-                                            {
-                                                SenderId = senderId,
-                                                ArtefactId = artefactId,
-                                                PropertyName = propertyName,
-                                                OldValue = old,
-                                                NewValue = @new
-                                            };
+            PropertyUpdated message = _fixture.CreateAnonymous<PropertyUpdated>();
+            message.OldValue = 123.4m;
+            message.NewValue = 234.5m;
 
-            BinaryFormatter formatter = new BinaryFormatter();
+            var serialized = _formatter.Serialize(message);
 
-            formatter.Register<PropertyUpdated>(Constants.TypeIds.PropertyUpdated);
-
-            var serialized = formatter.Serialize(message);
-
-            PropertyUpdated deserialized = formatter.Deserialize(serialized) as PropertyUpdated;
+            PropertyUpdated deserialized = _formatter.Deserialize(serialized) as PropertyUpdated;
 
             Assert.IsNotNull(deserialized);
 
-            Assert.AreEqual(senderId, deserialized.SenderId);
-            Assert.AreEqual(artefactId, deserialized.ArtefactId);
-            Assert.AreEqual(propertyName, deserialized.PropertyName);
-            Assert.AreEqual(old, deserialized.OldValue);
-            Assert.AreEqual(@new, deserialized.NewValue);
+            Assert.AreEqual(message.SenderId, deserialized.SenderId);
+            Assert.AreEqual(message.ArtefactId, deserialized.ArtefactId);
+            Assert.AreEqual(message.PropertyName, deserialized.PropertyName);
+            Assert.AreEqual(message.OldValue, deserialized.OldValue);
+            Assert.AreEqual(message.NewValue, deserialized.NewValue);
         }
 
         [TestMethod]
         public void GivenPropertyUpdatedMessageWithInt32Values_WhenSerializingAndDeserializing_WorksAsExpected()
         {
-            Guid senderId = Guid.NewGuid();
-            Guid artefactId = Guid.NewGuid();
-            const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
-            const int old = 123;
-            const int @new = 234;
+            PropertyUpdated message = _fixture.CreateAnonymous<PropertyUpdated>();
+            message.OldValue = 123;
+            message.NewValue = 234;
 
-            PropertyUpdated message = new PropertyUpdated
-                                                {
-                                                    SenderId = senderId,
-                                                    ArtefactId = artefactId,
-                                                    PropertyName = propertyName,
-                                                    OldValue = old,
-                                                    NewValue = @new
-                                                };
+            var serialized = _formatter.Serialize(message);
 
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            formatter.Register<PropertyUpdated>(Constants.TypeIds.PropertyUpdated);
-
-            var serialized = formatter.Serialize(message);
-
-            PropertyUpdated deserialized = formatter.Deserialize(serialized) as PropertyUpdated;
+            PropertyUpdated deserialized = _formatter.Deserialize(serialized) as PropertyUpdated;
 
             Assert.IsNotNull(deserialized);
 
-            Assert.AreEqual(senderId, deserialized.SenderId);
-            Assert.AreEqual(artefactId, deserialized.ArtefactId);
-            Assert.AreEqual(propertyName, deserialized.PropertyName);
-            Assert.AreEqual(old, deserialized.OldValue);
-            Assert.AreEqual(@new, deserialized.NewValue);
+            Assert.AreEqual(message.SenderId, deserialized.SenderId);
+            Assert.AreEqual(message.ArtefactId, deserialized.ArtefactId);
+            Assert.AreEqual(message.PropertyName, deserialized.PropertyName);
+            Assert.AreEqual(message.OldValue, deserialized.OldValue);
+            Assert.AreEqual(message.NewValue, deserialized.NewValue);
         }
 
         [TestMethod]
         public void GivenPropertyUpdatedMessageWithStringValues_WhenSerializingAndDeserializing_WorksAsExpected()
         {
-            Guid senderId = Guid.NewGuid();
-            Guid artefactId = Guid.NewGuid();
-            const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
-            const string old = "ard";
-            const string @new = "zdf";
+            PropertyUpdated message = _fixture.CreateAnonymous<PropertyUpdated>();
+            message.OldValue = "ard";
+            message.NewValue = "zdf";
 
-            PropertyUpdated message = new PropertyUpdated
-                                            {
-                                                SenderId = senderId,
-                                                ArtefactId = artefactId,
-                                                PropertyName = propertyName,
-                                                OldValue = old,
-                                                NewValue = @new
-                                            };
+            var serialized = _formatter.Serialize(message);
 
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            formatter.Register<PropertyUpdated>(Constants.TypeIds.PropertyUpdated);
-
-            var serialized = formatter.Serialize(message);
-
-            PropertyUpdated deserialized = formatter.Deserialize(serialized) as PropertyUpdated;
+            PropertyUpdated deserialized = _formatter.Deserialize(serialized) as PropertyUpdated;
 
             Assert.IsNotNull(deserialized);
 
-            Assert.AreEqual(senderId, deserialized.SenderId);
-            Assert.AreEqual(artefactId, deserialized.ArtefactId);
-            Assert.AreEqual(propertyName, deserialized.PropertyName);
-            Assert.AreEqual(old, deserialized.OldValue);
-            Assert.AreEqual(@new, deserialized.NewValue);
+            Assert.AreEqual(message.SenderId, deserialized.SenderId);
+            Assert.AreEqual(message.ArtefactId, deserialized.ArtefactId);
+            Assert.AreEqual(message.PropertyName, deserialized.PropertyName);
+            Assert.AreEqual(message.OldValue, deserialized.OldValue);
+            Assert.AreEqual(message.NewValue, deserialized.NewValue);
         }
 
         [TestMethod]
         public void GivenPropertyUpdatedMessageWithGuidValues_WhenSerializingAndDeserializing_WorksAsExpected()
         {
-            Guid senderId = Guid.NewGuid();
-            Guid artefactId = Guid.NewGuid();
-            const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
-            Guid old = Guid.NewGuid();
-            Guid @new = Guid.Empty;
+            PropertyUpdated message = _fixture.CreateAnonymous<PropertyUpdated>();
+            message.OldValue = Guid.NewGuid();
+            message.NewValue = Guid.Empty;
 
-            PropertyUpdated message = new PropertyUpdated
-                                            {
-                                                SenderId = senderId,
-                                                ArtefactId = artefactId,
-                                                PropertyName = propertyName,
-                                                OldValue = old,
-                                                NewValue = @new
-                                            };
+            var serialized = _formatter.Serialize(message);
 
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            formatter.Register<PropertyUpdated>(Constants.TypeIds.PropertyUpdated);
-
-            var serialized = formatter.Serialize(message);
-
-            PropertyUpdated deserialized = formatter.Deserialize(serialized) as PropertyUpdated;
+            PropertyUpdated deserialized = _formatter.Deserialize(serialized) as PropertyUpdated;
 
             Assert.IsNotNull(deserialized);
 
-            Assert.AreEqual(senderId, deserialized.SenderId);
-            Assert.AreEqual(artefactId, deserialized.ArtefactId);
-            Assert.AreEqual(propertyName, deserialized.PropertyName);
-            Assert.AreEqual(old, deserialized.OldValue);
-            Assert.AreEqual(@new, deserialized.NewValue);
+            Assert.AreEqual(message.SenderId, deserialized.SenderId);
+            Assert.AreEqual(message.ArtefactId, deserialized.ArtefactId);
+            Assert.AreEqual(message.PropertyName, deserialized.PropertyName);
+            Assert.AreEqual(message.OldValue, deserialized.OldValue);
+            Assert.AreEqual(message.NewValue, deserialized.NewValue);
         }
 
         [TestMethod]
         public void GivenPropertyUpdatedMessageWithDoubleValues_WhenSerializingAndDeserializing_WorksAsExpected()
         {
-            Guid senderId = Guid.NewGuid();
-            Guid artefactId = Guid.NewGuid();
-            const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
-            const double old = 123.4;
-            const double @new = 234.5;
+            PropertyUpdated message = _fixture.CreateAnonymous<PropertyUpdated>();
+            message.OldValue = 123.4;
+            message.NewValue = 234.5;
 
-            PropertyUpdated message = new PropertyUpdated
-                                                {
-                                                    SenderId = senderId,
-                                                    ArtefactId = artefactId,
-                                                    PropertyName = propertyName,
-                                                    OldValue = old,
-                                                    NewValue = @new
-                                                };
+            var serialized = _formatter.Serialize(message);
 
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            formatter.Register<PropertyUpdated>(Constants.TypeIds.PropertyUpdated);
-
-            var serialized = formatter.Serialize(message);
-
-            PropertyUpdated deserialized = formatter.Deserialize(serialized) as PropertyUpdated;
+            PropertyUpdated deserialized = _formatter.Deserialize(serialized) as PropertyUpdated;
 
             Assert.IsNotNull(deserialized);
 
-            Assert.AreEqual(senderId, deserialized.SenderId);
-            Assert.AreEqual(artefactId, deserialized.ArtefactId);
-            Assert.AreEqual(propertyName, deserialized.PropertyName);
-            Assert.AreEqual(old, deserialized.OldValue);
-            Assert.AreEqual(@new, deserialized.NewValue);
+            Assert.AreEqual(message.SenderId, deserialized.SenderId);
+            Assert.AreEqual(message.ArtefactId, deserialized.ArtefactId);
+            Assert.AreEqual(message.PropertyName, deserialized.PropertyName);
+            Assert.AreEqual(message.OldValue, deserialized.OldValue);
+            Assert.AreEqual(message.NewValue, deserialized.NewValue);
         }
 
         [TestMethod]
         public void GivenPropertyUpdatedMessageWithColorValues_WhenSerializingAndDeserializing_WorksAsExpected()
         {
-            Guid senderId = Guid.NewGuid();
-            Guid artefactId = Guid.NewGuid();
-            const string propertyName = "GivenPropertyUpdatedMessage_WhenSerializingAndDeserializing_WorksAsExpected";
-            Color old = Color.FromArgb(1, 2, 3, 4);
-            Color @new = Color.FromArgb(2, 3, 4, 5);
+            PropertyUpdated message = _fixture.CreateAnonymous<PropertyUpdated>();
+            message.OldValue = Color.FromArgb(1, 2, 3, 4);
+            message.NewValue = Color.FromArgb(2, 3, 4, 5);
 
-            PropertyUpdated message = new PropertyUpdated
-                                                {
-                                                    SenderId = senderId,
-                                                    ArtefactId = artefactId,
-                                                    PropertyName = propertyName,
-                                                    OldValue = old,
-                                                    NewValue = @new
-                                                };
+            var serialized = _formatter.Serialize(message);
 
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            formatter.Register<PropertyUpdated>(Constants.TypeIds.PropertyUpdated);
-
-            var serialized = formatter.Serialize(message);
-
-            PropertyUpdated deserialized = formatter.Deserialize(serialized) as PropertyUpdated;
+            PropertyUpdated deserialized = _formatter.Deserialize(serialized) as PropertyUpdated;
 
             Assert.IsNotNull(deserialized);
 
-            Assert.AreEqual(senderId, deserialized.SenderId);
-            Assert.AreEqual(artefactId, deserialized.ArtefactId);
-            Assert.AreEqual(propertyName, deserialized.PropertyName);
-            Assert.AreEqual(old, deserialized.OldValue);
-            Assert.AreEqual(@new, deserialized.NewValue);
+            Assert.AreEqual(message.SenderId, deserialized.SenderId);
+            Assert.AreEqual(message.ArtefactId, deserialized.ArtefactId);
+            Assert.AreEqual(message.PropertyName, deserialized.PropertyName);
+            Assert.AreEqual(message.OldValue, deserialized.OldValue);
+            Assert.AreEqual(message.NewValue, deserialized.NewValue);
         }
 
     }
