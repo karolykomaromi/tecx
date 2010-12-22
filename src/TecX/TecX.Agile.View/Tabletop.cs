@@ -45,7 +45,7 @@ namespace TecX.Agile.View
         /// <summary>
         /// Getter for <see cref="DependencyProperty"/> <see cref="IsSurfaceProperty"/>
         /// </summary>
-        public static bool GetIsEnabled(Canvas canvas)
+        public static bool GetIsSurface(Canvas canvas)
         {
             Guard.AssertNotNull(canvas, "canvas");
 
@@ -63,7 +63,7 @@ namespace TecX.Agile.View
                 {
                     throw new InvalidOperationException(
                         "Surface not initialized. Either set the property directly or use" +
-                        "use the Tabletop.IsSurfaceProperty DependencyProperty to declare a Canvas as the default drawing plain.");
+                        "the Tabletop.IsSurfaceProperty DependencyProperty to declare a Canvas as the default drawing plain.");
                 }
 
                 return _surface;
