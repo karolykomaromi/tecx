@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4A0B047E-C4FC-4840-9B23-26FF735F6EC5}</ProjectGuid>
+    <ProjectGuid>{08821645-7472-4DBB-8271-8AEADF7FC109}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TecX.Agile.Modules.Main</RootNamespace>
-    <AssemblyName>TecX.Agile.Modules.Main</AssemblyName>
+    <RootNamespace>TecX.Agile.View</RootNamespace>
+    <AssemblyName>TecX.Agile.View</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
@@ -32,7 +32,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Bin\Debug\Silverlight\</OutputPath>
+    <OutputPath>Bin\Debug</OutputPath>
     <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
@@ -50,9 +50,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.Prism">
-      <HintPath>..\..\..\lib\Prism4\Silverlight4\Microsoft.Practices.Prism.dll</HintPath>
-    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -65,34 +62,16 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Module.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\Surface.xaml.cs">
-      <DependentUpon>Surface.xaml</DependentUpon>
+    <Compile Include="..\TecX.Agile.View\Tabletop.cs">
+      <Link>Tabletop.cs</Link>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\Surface.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.Silverlight.csproj">
-      <Project>{CBE42FA1-1F42-45F0-9C02-66DC3B801997}</Project>
-      <Name>TecX.Agile.Infrastructure.Silverlight</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TecX.Agile.View.Silverlight\TecX.Agile.View.Silverlight.csproj">
-      <Project>{08821645-7472-4DBB-8271-8AEADF7FC109}</Project>
-      <Name>TecX.Agile.View.Silverlight</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.Silverlight.csproj">
       <Project>{23E54945-0126-43BE-A3FC-5F61AF5BDFF3}</Project>
       <Name>TecX.Common.Silverlight</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

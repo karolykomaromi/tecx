@@ -45,11 +45,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Peer.Silverlight
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Modules.Main.Silverlight", "TecX.Agile.Modules.Main\TecX.Agile.Modules.Main.Silverlight.csproj", "{4A0B047E-C4FC-4840-9B23-26FF735F6EC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.View.Silverlight", "TecX.Agile.View\TecX.Agile.View.Silverlight.csproj", "{F4293042-5B43-4CB3-91FC-55470B5CD0EE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.ViewModel.Silverlight", "TecX.Agile.ViewModel\TecX.Agile.ViewModel.Silverlight.csproj", "{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.ChangeTracking.Silverlight", "TecX.Agile.ChangeTracking\TecX.Agile.ChangeTracking.Silverlight.csproj", "{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.View.Silverlight", "TecX.Agile.View.Silverlight\TecX.Agile.View.Silverlight.csproj", "{08821645-7472-4DBB-8271-8AEADF7FC109}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -113,18 +113,18 @@ Global
 		SccProjectTopLevelParentUniqueName14 = TecX.Silverlight.sln
 		SccProjectName14 = TecX.Agile.Modules.Main
 		SccLocalPath14 = TecX.Agile.Modules.Main
-		SccProjectUniqueName15 = TecX.Agile.View\\TecX.Agile.View.Silverlight.csproj
+		SccProjectUniqueName15 = TecX.Agile.ViewModel\\TecX.Agile.ViewModel.Silverlight.csproj
 		SccProjectTopLevelParentUniqueName15 = TecX.Silverlight.sln
-		SccProjectName15 = TecX.Agile.View
-		SccLocalPath15 = TecX.Agile.View
-		SccProjectUniqueName16 = TecX.Agile.ViewModel\\TecX.Agile.ViewModel.Silverlight.csproj
+		SccProjectName15 = TecX.Agile.ViewModel
+		SccLocalPath15 = TecX.Agile.ViewModel
+		SccProjectUniqueName16 = TecX.Agile.ChangeTracking\\TecX.Agile.ChangeTracking.Silverlight.csproj
 		SccProjectTopLevelParentUniqueName16 = TecX.Silverlight.sln
-		SccProjectName16 = TecX.Agile.ViewModel
-		SccLocalPath16 = TecX.Agile.ViewModel
-		SccProjectUniqueName17 = TecX.Agile.ChangeTracking\\TecX.Agile.ChangeTracking.Silverlight.csproj
+		SccProjectName16 = TecX.Agile.ChangeTracking
+		SccLocalPath16 = TecX.Agile.ChangeTracking
+		SccProjectUniqueName17 = TecX.Agile.View.Silverlight\\TecX.Agile.View.Silverlight.csproj
 		SccProjectTopLevelParentUniqueName17 = TecX.Silverlight.sln
-		SccProjectName17 = TecX.Agile.ChangeTracking
-		SccLocalPath17 = TecX.Agile.ChangeTracking
+		SccProjectName17 = TecX.Agile.View.Silverlight
+		SccLocalPath17 = TecX.Agile.View.Silverlight
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -278,16 +278,6 @@ Global
 		{4A0B047E-C4FC-4840-9B23-26FF735F6EC5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4A0B047E-C4FC-4840-9B23-26FF735F6EC5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4A0B047E-C4FC-4840-9B23-26FF735F6EC5}.Release|x86.ActiveCfg = Release|Any CPU
-		{F4293042-5B43-4CB3-91FC-55470B5CD0EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4293042-5B43-4CB3-91FC-55470B5CD0EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4293042-5B43-4CB3-91FC-55470B5CD0EE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{F4293042-5B43-4CB3-91FC-55470B5CD0EE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{F4293042-5B43-4CB3-91FC-55470B5CD0EE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F4293042-5B43-4CB3-91FC-55470B5CD0EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4293042-5B43-4CB3-91FC-55470B5CD0EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4293042-5B43-4CB3-91FC-55470B5CD0EE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{F4293042-5B43-4CB3-91FC-55470B5CD0EE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{F4293042-5B43-4CB3-91FC-55470B5CD0EE}.Release|x86.ActiveCfg = Release|Any CPU
 		{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -308,6 +298,16 @@ Global
 		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}.Release|x86.ActiveCfg = Release|Any CPU
+		{08821645-7472-4DBB-8271-8AEADF7FC109}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08821645-7472-4DBB-8271-8AEADF7FC109}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08821645-7472-4DBB-8271-8AEADF7FC109}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{08821645-7472-4DBB-8271-8AEADF7FC109}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{08821645-7472-4DBB-8271-8AEADF7FC109}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{08821645-7472-4DBB-8271-8AEADF7FC109}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08821645-7472-4DBB-8271-8AEADF7FC109}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08821645-7472-4DBB-8271-8AEADF7FC109}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{08821645-7472-4DBB-8271-8AEADF7FC109}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{08821645-7472-4DBB-8271-8AEADF7FC109}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -327,8 +327,8 @@ Global
 		{7AB4EC41-0D97-4333-90EC-68CEDDE56674} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
 		{62BB35DD-922B-4CBC-BACC-33BC6C05D8E7} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
 		{4A0B047E-C4FC-4840-9B23-26FF735F6EC5} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
-		{F4293042-5B43-4CB3-91FC-55470B5CD0EE} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
 		{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
 		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
+		{08821645-7472-4DBB-8271-8AEADF7FC109} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
 	EndGlobalSection
 EndGlobal
