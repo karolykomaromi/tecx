@@ -47,10 +47,11 @@ namespace TecX.Agile.ViewModel
                 if (_artefacts.TryGetValue(id, out existing))
                 {
                     _artefacts[id] = value;
-
-                    var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, value,
-                                                                    existing);
-
+#if SILVERLIGHT
+                    var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, value, existing, -1);
+#else
+                    var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, value, existing);
+#endif
                     OnCollectionChanged(args);
                 }
                 else
@@ -94,8 +95,11 @@ namespace TecX.Agile.ViewModel
             _artefacts.Add(item.Id, item);
 
             AddCore(item);
-
+#if SILVERLIGHT
+            var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, -1);
+#else
             var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item);
+#endif
             OnCollectionChanged(args);
         }
 
@@ -107,7 +111,11 @@ namespace TecX.Agile.ViewModel
                 RemoveCore(existing);
                 bool removed = _artefacts.Remove(id);
 
+#if SILVERLIGHT
+                var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, existing, -1);
+#else
                 var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, existing);
+#endif
                 OnCollectionChanged(args);
 
                 return removed;
