@@ -49,9 +49,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.View.Silverlight
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.ViewModel.Silverlight", "TecX.Agile.ViewModel\TecX.Agile.ViewModel.Silverlight.csproj", "{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.ChangeTracking.Silverlight", "TecX.Agile.ChangeTracking\TecX.Agile.ChangeTracking.Silverlight.csproj", "{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 17
+		SccNumberOfProjects = 18
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -119,6 +121,10 @@ Global
 		SccProjectTopLevelParentUniqueName16 = TecX.Silverlight.sln
 		SccProjectName16 = TecX.Agile.ViewModel
 		SccLocalPath16 = TecX.Agile.ViewModel
+		SccProjectUniqueName17 = TecX.Agile.ChangeTracking\\TecX.Agile.ChangeTracking.Silverlight.csproj
+		SccProjectTopLevelParentUniqueName17 = TecX.Silverlight.sln
+		SccProjectName17 = TecX.Agile.ChangeTracking
+		SccLocalPath17 = TecX.Agile.ChangeTracking
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -292,6 +298,16 @@ Global
 		{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6}.Release|x86.ActiveCfg = Release|Any CPU
+		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -313,5 +329,6 @@ Global
 		{4A0B047E-C4FC-4840-9B23-26FF735F6EC5} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
 		{F4293042-5B43-4CB3-91FC-55470B5CD0EE} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
 		{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
+		{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
 	EndGlobalSection
 EndGlobal
