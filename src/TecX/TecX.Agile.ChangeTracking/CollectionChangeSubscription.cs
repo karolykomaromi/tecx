@@ -85,8 +85,6 @@ namespace TecX.Agile.ChangeTracking
                                                                       _eventAggregator.Publish(msg);
                                                                   }
                                                                   return;
-                                                              case NotifyCollectionChangedAction.Move:
-                                                              case NotifyCollectionChangedAction.Reset:
                                                               default:
                                                                   throw new ArgumentOutOfRangeException();
                                                           }
@@ -136,8 +134,6 @@ namespace TecX.Agile.ChangeTracking
 
                                                                   }
                                                                   return;
-                                                              case NotifyCollectionChangedAction.Move:
-                                                              case NotifyCollectionChangedAction.Reset:
                                                               default:
                                                                   throw new ArgumentOutOfRangeException();
                                                           }
