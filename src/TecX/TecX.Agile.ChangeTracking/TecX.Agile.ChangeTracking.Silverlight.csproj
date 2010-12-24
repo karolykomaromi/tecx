@@ -51,17 +51,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
-    <Reference Include="System.CoreEx, Version=1.0.2787.204, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
+    <Reference Include="System.CoreEx">
+      <HintPath>..\..\..\lib\Rx\Silverlight4\System.CoreEx.dll</HintPath>
     </Reference>
-    <Reference Include="System.Interactive, Version=1.0.2787.204, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
+    <Reference Include="System.Observable">
+      <HintPath>..\..\..\lib\Rx\Silverlight4\System.Observable.dll</HintPath>
     </Reference>
-    <Reference Include="System.Observable, Version=1.0.0.204, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reactive, Version=1.0.2787.204, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
+    <Reference Include="System.Reactive">
+      <HintPath>..\..\..\lib\Rx\Silverlight4\System.Reactive.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
