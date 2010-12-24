@@ -51,6 +51,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
+    <Reference Include="System.CoreEx">
+      <HintPath>..\..\..\lib\Rx\Silverlight4\System.CoreEx.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Observable">
+      <HintPath>..\..\..\lib\Rx\Silverlight4\System.Observable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive">
+      <HintPath>..\..\..\lib\Rx\Silverlight4\System.Reactive.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -61,6 +70,21 @@
   <ItemGroup>
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="..\TecX.Agile.View\Behavior\BehaviorBase.cs">
+      <Link>Behavior\BehaviorBase.cs</Link>
+    </Compile>
+    <Compile Include="..\TecX.Agile.View\Behavior\BehaviorHandler.cs">
+      <Link>Behavior\BehaviorHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\TecX.Agile.View\Behavior\IBehaviorHandler.cs">
+      <Link>Behavior\IBehaviorHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\TecX.Agile.View\Converter\ColorToSolidColorBrushConverter.cs">
+      <Link>Converter\ColorToSolidColorBrushConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\TecX.Agile.View\Converter\StringToDoubleConverter.cs">
+      <Link>Converter\StringToDoubleConverter.cs</Link>
     </Compile>
     <Compile Include="..\TecX.Agile.View\Tabletop.cs">
       <Link>Tabletop.cs</Link>

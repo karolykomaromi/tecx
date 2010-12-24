@@ -19,7 +19,12 @@ namespace TecX.Agile.View.Behavior
                 "AttachedHandlers",
                 typeof (IList<IBehaviorHandler>),
                 typeof (BehaviorBase),
+#if SILVERLIGHT
+                new PropertyMetadata(null));
+#else
                 new FrameworkPropertyMetadata(null));
+#endif
+
 
         /// <summary>
         /// Setter for <see cref="DependencyProperty"/> <see cref="AttachedHandlersProperty"/>
