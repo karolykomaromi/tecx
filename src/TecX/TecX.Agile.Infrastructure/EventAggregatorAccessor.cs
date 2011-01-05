@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 using TecX.Common;
 using TecX.Common.Event;
@@ -13,6 +14,9 @@ namespace TecX.Agile.Infrastructure
         {
             get
             {
+                if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+                    return new NullEventAggregator();
+
                 if (_eventAggregator == null)
                 {
                     throw new InvalidOperationException("The property EventAggregator was not initialized. You must either set this static property" +
@@ -35,6 +39,30 @@ namespace TecX.Agile.Infrastructure
             Guard.AssertNotNull(eventAggregator, "eventAggregator");
 
             _eventAggregator = eventAggregator;
+        }
+
+        private class NullEventAggregator : IEventAggregator
+        {
+            #region Implementation of IEventAggregator
+
+            public void Subscribe(object subscriber)
+            {
+            }
+
+            public void Unsubscribe(object subscriber)
+            {
+            }
+
+            public void Publish<TMessage>(TMessage message)
+            {
+            }
+
+            public ICancellationToken PublishWithCancelOption<TMessage>(TMessage message) where TMessage : ICancellationToken
+            {
+                return message;
+            }
+
+            #endregion
         }
     }
 }

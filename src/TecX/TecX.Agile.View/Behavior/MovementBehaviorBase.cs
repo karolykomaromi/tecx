@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 using TecX.Common;
 
 namespace TecX.Agile.View.Behavior
 {
-    public class MovementBehaviorBase : BehaviorBase
+    public abstract class MovementBehaviorBase : System.Windows.Interactivity.Behavior<UserControl>
     {
         #region DependencyProperties
 
@@ -45,22 +44,11 @@ namespace TecX.Agile.View.Behavior
 
         #endregion DependencyProperties
 
-        protected static void OnMovementBehaviorEnabledChanged<THandler>(DependencyObject dependencyObject,
-                                                                 DependencyPropertyChangedEventArgs args)
-            where THandler : IBehaviorHandler, new()
+        protected override void OnAttached()
         {
-            FrameworkElement element = dependencyObject as FrameworkElement;
+            base.OnAttached();
 
-            if(element != null)
-            {
-                AssertPreconditions(element);
-            }
-            else
-            {
-                throw new InvalidOperationException("Can't attach a MovementBehavior to an object that is not a FrameworkElement");
-            }
-
-            OnBehaviorEnabledChanged<THandler>(dependencyObject, args);
+            AssertPreconditions(AssociatedObject);
         }
         
         private static void AssertPreconditions(FrameworkElement element)
@@ -71,8 +59,6 @@ namespace TecX.Agile.View.Behavior
             {
                 element.RenderTransform = new MatrixTransform(Matrix.Identity);
             }
-
-            SetAttachedHandlers(element, new List<IBehaviorHandler>());
         }
     }
 }
