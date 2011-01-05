@@ -50,6 +50,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\..\..\lib\Prism4\Silverlight4\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.CoreEx">
       <HintPath>..\..\..\lib\Rx\Silverlight4\System.CoreEx.dll</HintPath>
@@ -89,13 +92,33 @@
     <Compile Include="..\TecX.Agile.View\Tabletop.cs">
       <Link>Tabletop.cs</Link>
     </Compile>
+    <Compile Include="Behavior\HighlightFieldBehavior.cs" />
+    <Compile Include="Behavior\HighlightFieldHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.Silverlight.csproj">
+      <Project>{CBE42FA1-1F42-45F0-9C02-66DC3B801997}</Project>
+      <Name>TecX.Agile.Infrastructure.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.Silverlight.csproj">
+      <Project>{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6}</Project>
+      <Name>TecX.Agile.ViewModel.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.Silverlight.csproj">
+      <Project>{33B0228B-8D74-4EC2-B8D0-87E46C7E17C0}</Project>
+      <Name>TecX.Common.Event.Silverlight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.Silverlight.csproj">
       <Project>{23E54945-0126-43BE-A3FC-5F61AF5BDFF3}</Project>
       <Name>TecX.Common.Silverlight</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Resources\NamedStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
