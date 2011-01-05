@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -116,6 +117,9 @@ namespace TecX.Agile.View.Behavior
         protected override void OnAttached()
         {
             base.OnAttached();
+
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+                return;
 
             AssociatedObject.PreviewMouseLeftButtonDown += OnPreviewMouseLeftButtonDown;
             AssociatedObject.PreviewMouseLeftButtonUp += OnPreviewMouseLeftButtonUp;
