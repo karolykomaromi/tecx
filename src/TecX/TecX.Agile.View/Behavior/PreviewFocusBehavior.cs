@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 using TecX.Common;
 
@@ -9,52 +12,65 @@ namespace TecX.Agile.View.Behavior
     /// Used when a transparent element is on top of the current one which and 
     /// cannot be invisible to hit testing
     /// </summary>
-    public class PreviewFocusBehavior : BehaviorBase
+    public class PreviewFocusBehavior : System.Windows.Interactivity.Behavior<TextBox>
     {
-        #region Properties
+        #region DependencyProperties
 
-        /// <summary>
-        /// This is a dependency property.
-        /// </summary>
-        public static readonly DependencyProperty IsEnabledProperty =
-            DependencyProperty.RegisterAttached(
-                "IsEnabled",
-                typeof (bool),
-                typeof (PreviewFocusBehavior),
-                new FrameworkPropertyMetadata(false, OnBehaviorEnabledChanged<PreviewFocusHandler>));
+        public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
+            "IsEnabled",
+            typeof(bool),
+            typeof(PreviewFocusBehavior),
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.None, OnEnabledChanged));
 
-        /// <summary>
-        /// Setter for <see cref="DependencyProperty"/> <see cref="IsEnabledProperty"/>
-        /// </summary>
-        public static void SetIsEnabled(DependencyObject dependencyObject, bool value)
+        public static bool GetIsEnabled(TextBox tb)
         {
-            Guard.AssertNotNull(dependencyObject, "dependencyObject");
+            Guard.AssertNotNull(tb, "tb");
 
-            dependencyObject.SetValue(IsEnabledProperty, value);
+            return (bool)tb.GetValue(IsEnabledProperty);
         }
 
-        /// <summary>
-        /// Getter for <see cref="DependencyProperty"/> <see cref="IsEnabledProperty"/>
-        /// </summary>
-        public static bool GetIsEnabled(DependencyObject dependencyObject)
+        public static void SetIsEnabled(TextBox tb, bool isEnabled)
         {
-            Guard.AssertNotNull(dependencyObject, "dependencyObject");
+            Guard.AssertNotNull(tb, "tb");
 
-            return (bool) dependencyObject.GetValue(IsEnabledProperty);
+            tb.SetValue(IsEnabledProperty, isEnabled);
         }
 
-        #endregion Properties
-
-        #region c'tor
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PreviewFocusBehavior"/> class
-        /// </summary>
-        public PreviewFocusBehavior()
+        private static void OnEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+                return;
+
+            TextBox tb = d as TextBox;
+
+            if (tb == null)
+                return;
+
+            var behavior = new PreviewFocusBehavior();
+
+            behavior.Attach(tb);
         }
 
-        #endregion c'tor
+        #endregion DependencyProperties
 
+
+        protected override void OnAttached()
+        {
+            base.OnAttached();
+
+            AssociatedObject.PreviewMouseLeftButtonDown += OnPreviewMouseLeftButtonDown;
+        }
+
+        protected override void OnDetaching()
+        {
+            base.OnDetaching();
+
+            AssociatedObject.PreviewMouseLeftButtonDown -= OnPreviewMouseLeftButtonDown;
+        }
+
+        private void OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            AssociatedObject.Focus();
+        }
     }
 }
