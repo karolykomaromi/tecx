@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -47,6 +48,9 @@ namespace TecX.Agile.View.Behavior
         protected override void OnAttached()
         {
             base.OnAttached();
+
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+                return;
 
             AssertPreconditions(AssociatedObject);
         }

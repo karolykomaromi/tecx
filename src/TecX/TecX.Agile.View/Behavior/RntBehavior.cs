@@ -42,6 +42,9 @@ namespace TecX.Agile.View.Behavior
         {
             base.OnAttached();
 
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+                return;
+
             AssociatedObject.Loaded += AddTranslateOnlyArea;
 
             AssociatedObject.MouseEnter += OnMouseEnter;

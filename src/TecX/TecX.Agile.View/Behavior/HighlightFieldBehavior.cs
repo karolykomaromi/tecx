@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interactivity;
 
 using Microsoft.Practices.Prism.Commands;
 
@@ -48,9 +50,21 @@ namespace TecX.Agile.View.Behavior
             if (tb == null)
                 return;
 
-            var behavior = new HighlightFieldBehavior();
+            var behaviors = Interaction.GetBehaviors(tb);
 
-            behavior.Attach(tb);
+            if (e.NewValue is bool == false)
+            {
+                foreach (var pfb in behaviors.ToArray().OfType<HighlightFieldBehavior>())
+                {
+                    behaviors.Remove(pfb);
+                }
+            }
+            else
+            {
+                var behavior = new HighlightFieldBehavior();
+
+                behaviors.Add(behavior);
+            }
         }
 
         #endregion DependencyProperties
@@ -98,7 +112,9 @@ namespace TecX.Agile.View.Behavior
 
         protected override void OnAttached()
         {
-            if (DesignerProperties.GetIsInDesignMode(this))
+            base.OnAttached();
+
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
                 return;
 
             UserControl ctrl;
