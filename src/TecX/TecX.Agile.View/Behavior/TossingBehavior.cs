@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 using TecX.Agile.Infrastructure;
+using TecX.Agile.View.Animation;
 using TecX.Common.Event;
 
 namespace TecX.Agile.View.Behavior
@@ -285,6 +286,8 @@ namespace TecX.Agile.View.Behavior
             _storyboard.Completed += OnStoryboardCompleted;
         }
 
+        #endregion Initialization
+
         private void AddMousePoint(Point actual)
         {
             //add the current mouse position to the list
@@ -340,7 +343,7 @@ namespace TecX.Agile.View.Behavior
                 //TODO weberse 2010-12-20 do i have to make this analog to FrameworkElementExtensions.Move and divide it into separate
                 //steps in order not to mess up the change tracking?
                 matrix.Translate(_tossingVector.X, _tossingVector.Y);
-                _tossingAnimation.KeyFrames.Add(new DiscreteMatrixKeyFrame(matrix));
+                _tossingAnimation.KeyFrames.Add(new LinearMatrixKeyFrame(matrix));
 
                 stoppingDistance += (previousPoint - actualPoint).Length;
 
@@ -463,7 +466,7 @@ namespace TecX.Agile.View.Behavior
                 lastValid.Translate(displacement.X, displacement.Y);
 
                 _tossingAnimation.KeyFrames.RemoveAt(last);
-                _tossingAnimation.KeyFrames.Add(new DiscreteMatrixKeyFrame(lastValid));
+                _tossingAnimation.KeyFrames.Add(new LinearMatrixKeyFrame(lastValid));
 
                 point += displacement;
             }
@@ -499,7 +502,7 @@ namespace TecX.Agile.View.Behavior
             matrix.Translate(vDisplacement.X, vDisplacement.Y);
             matrix.RotateAt(angle, localCenter.X, localCenter.Y);
 
-            _tossingAnimation.KeyFrames.Add(new DiscreteMatrixKeyFrame(matrix));
+            _tossingAnimation.KeyFrames.Add(new LinearMatrixKeyFrame(matrix));
         }
 
         private TimeSpan CalculateAnimationTime(double stoppingDistance)
@@ -524,6 +527,5 @@ namespace TecX.Agile.View.Behavior
             _tossingAnimation.KeyFrames.Clear();
         }
 
-        #endregion
     }
 }

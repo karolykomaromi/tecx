@@ -517,6 +517,29 @@ namespace TecX.Agile.View
         {
             return Math.Sign(matrix.M11) * Math.Sqrt((Math.Pow(matrix.M11, 2.0) + Math.Pow(matrix.M21, 2.0)));
         }
+
+        public static Matrix InterpolateMatrix(Matrix from, Matrix to, double progress)
+        {
+            double angleFrom = GetRotationAngleFromMatrix(from);
+            double angleTo = GetRotationAngleFromMatrix(to);
+
+            double xFrom = from.OffsetX;
+            double xTo = to.OffsetX;
+
+            double yFrom = from.OffsetY;
+            double yTo = to.OffsetY;
+
+            double angleInterpolated = angleFrom + ((angleTo - angleFrom) * progress);
+            double xInterpolated = xFrom + ((xTo - xFrom) * progress);
+            double yInterpolated = yFrom + ((yTo - yFrom) * progress);
+
+            Matrix interpolated = Matrix.Identity;
+
+            interpolated.Rotate(angleInterpolated);
+            interpolated.Translate(xInterpolated, yInterpolated);
+
+            return interpolated;
+        }
     }
 
     /// <summary>

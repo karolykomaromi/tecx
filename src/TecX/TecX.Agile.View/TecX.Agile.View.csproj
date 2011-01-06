@@ -63,6 +63,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Animation\LinearMatrixKeyFrame.cs" />
     <Compile Include="Behavior\HighlightFieldBehavior.cs" />
     <Compile Include="Behavior\ItemDropped.cs" />
     <Compile Include="Behavior\MovementBehaviorBase.cs" />
