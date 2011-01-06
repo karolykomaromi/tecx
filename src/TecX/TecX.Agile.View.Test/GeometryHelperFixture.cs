@@ -24,7 +24,7 @@ namespace TecX.Agile.View.Test
                 matrix.Rotate(angle);
 
                 double rotationAngle = GeometryHelper.GetRotationAngleFromMatrix(matrix);
-                
+
                 Assert.IsTrue(EpsilonComparer.AreEqual(angle, rotationAngle));
 
                 matrix = Matrix.Identity;
@@ -95,6 +95,42 @@ namespace TecX.Agile.View.Test
 
             Assert.AreEqual(100, scaleX);
             Assert.AreEqual(150, scaleY);
+        }
+
+        [TestMethod]
+        public void GivenMatrix_WhenInterpolating_GetsKeyFrames()
+        {
+            Matrix from = Matrix.Identity;
+            Matrix to = Matrix.Identity;
+
+            to.Rotate(90);
+            to.Translate(60, 60);
+
+            Matrix interpolated = GeometryHelper.InterpolateMatrix(from, to, 0.0);
+
+            Assert.AreEqual(from, interpolated);
+
+            interpolated = GeometryHelper.InterpolateMatrix(from, to, 1.0);
+
+            Assert.AreEqual(to, interpolated);
+            
+            interpolated = GeometryHelper.InterpolateMatrix(from, to, 0.25);
+
+            Assert.IsTrue(EpsilonComparer.AreEqual(22.5, GeometryHelper.GetRotationAngleFromMatrix(interpolated)));
+            Assert.AreEqual(15, interpolated.OffsetX);
+            Assert.AreEqual(15, interpolated.OffsetY);
+
+            interpolated = GeometryHelper.InterpolateMatrix(from, to, 0.5);
+
+            Assert.AreEqual(45, GeometryHelper.GetRotationAngleFromMatrix(interpolated));
+            Assert.AreEqual(30, interpolated.OffsetX);
+            Assert.AreEqual(30, interpolated.OffsetY);
+            
+            interpolated = GeometryHelper.InterpolateMatrix(from, to, 0.75);
+
+            Assert.IsTrue(EpsilonComparer.AreEqual(67.5, GeometryHelper.GetRotationAngleFromMatrix(interpolated)));
+            Assert.AreEqual(45, interpolated.OffsetX);
+            Assert.AreEqual(45, interpolated.OffsetY);
         }
     }
 }
