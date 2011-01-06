@@ -6,6 +6,8 @@ using TecX.Common;
 
 namespace TecX.Agile.View
 {
+    //TODO weberse 2011-01-06 what about wrapping the canvas in an 
+    //interface to allow the viewmodel to add and remove items?
     public static class Tabletop
     {
         #region Fields
