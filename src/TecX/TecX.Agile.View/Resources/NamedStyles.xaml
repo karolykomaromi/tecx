@@ -6,8 +6,14 @@
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="UndoLimit" Value="1"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Behavior:HighlightFieldBehavior.IsEnabled" Value="True"/>
-        <Setter Property="Behavior:PreviewFocusBehavior.IsEnabled" Value="True"/>
+        <Setter Property="Behavior:StyleUseableBehaviors.Behaviors">
+            <Setter.Value>
+                <Behavior:StyleUseableBehaviorCollection>
+                    <Behavior:HighlightFieldBehavior/>
+                    <Behavior:PreviewFocusBehavior/>
+                </Behavior:StyleUseableBehaviorCollection>
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="False">
                 <Setter 
