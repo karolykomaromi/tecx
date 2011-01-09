@@ -66,6 +66,7 @@
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Browser" />
@@ -74,27 +75,23 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="..\TecX.Agile.View\Behavior\BehaviorBase.cs">
-      <Link>Behavior\BehaviorBase.cs</Link>
-    </Compile>
-    <Compile Include="..\TecX.Agile.View\Behavior\BehaviorHandler.cs">
-      <Link>Behavior\BehaviorHandler.cs</Link>
-    </Compile>
-    <Compile Include="..\TecX.Agile.View\Behavior\IBehaviorHandler.cs">
-      <Link>Behavior\IBehaviorHandler.cs</Link>
-    </Compile>
-    <Compile Include="..\TecX.Agile.View\Converter\ColorToSolidColorBrushConverter.cs">
-      <Link>Converter\ColorToSolidColorBrushConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\TecX.Agile.View\Converter\StringToDoubleConverter.cs">
-      <Link>Converter\StringToDoubleConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\TecX.Agile.View\Tabletop.cs">
-      <Link>Tabletop.cs</Link>
-    </Compile>
     <Compile Include="Behavior\HighlightFieldBehavior.cs" />
-    <Compile Include="Behavior\HighlightFieldHandler.cs" />
+    <Compile Include="Behavior\ItemDropped.cs" />
+    <Compile Include="Behavior\MovementBehaviorBase.cs" />
+    <Compile Include="Behavior\RntBehavior.cs" />
+    <Compile Include="Behavior\TranslateOnlyArea.xaml.cs">
+      <DependentUpon>TranslateOnlyArea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converter\ColorToSolidColorBrushConverter.cs" />
+    <Compile Include="Converter\StringToDoubleConverter.cs" />
+    <Compile Include="FrameworkElementExtensions.cs" />
+    <Compile Include="GeometryHelper.cs" />
+    <Compile Include="MatrixHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoryCard.xaml.cs">
+      <DependentUpon>StoryCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tabletop.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.Silverlight.csproj">
@@ -115,11 +112,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Behavior\TranslateOnlyArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\NamedStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="StoryCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

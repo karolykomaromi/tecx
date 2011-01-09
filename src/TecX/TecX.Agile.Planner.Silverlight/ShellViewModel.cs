@@ -30,11 +30,11 @@ namespace TecX.Agile.Planner
 
         #region c'tor
 
-        public ShellViewModel(Dispatcher dispatcher)
+        public ShellViewModel(Func<Dispatcher> dispatcherFactory)
         {
-            Guard.AssertNotNull(dispatcher, "dispatcher");
+            Guard.AssertNotNull(dispatcherFactory, "dispatcherFactory");
 
-            _dispatcher = dispatcher;
+            _dispatcher = dispatcherFactory();
         }
 
         #endregion c'tor

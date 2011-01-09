@@ -78,6 +78,8 @@
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Controls.Navigation, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
@@ -117,9 +119,21 @@
       <Project>{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}</Project>
       <Name>TecX.Agile.Serialization</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.View.Silverlight\TecX.Agile.View.Silverlight.csproj">
+      <Project>{08821645-7472-4DBB-8271-8AEADF7FC109}</Project>
+      <Name>TecX.Agile.View.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.Silverlight.csproj">
+      <Project>{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6}</Project>
+      <Name>TecX.Agile.ViewModel.Silverlight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.Silverlight.csproj">
       <Project>{23E54945-0126-43BE-A3FC-5F61AF5BDFF3}</Project>
       <Name>TecX.Common.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Prism\TecX.Prism.Silverlight.csproj">
+      <Project>{743152AC-675E-45DA-B7BB-1F6A7C3F4CEE}</Project>
+      <Name>TecX.Prism.Silverlight</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />

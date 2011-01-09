@@ -80,6 +80,7 @@
     <Compile Include="Missing\INotifyPropertyChanging.cs" />
     <Compile Include="Missing\PropertyChangingEventArgs.cs" />
     <Compile Include="Missing\PropertyChangingEventHandler.cs" />
+    <Compile Include="Missing\Vector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexBuilder.cs" />
     <Compile Include="Missing\SerializableAttribute.cs" />

@@ -14,7 +14,11 @@ namespace TecX.Agile.Infrastructure
         {
             get
             {
+#if SILVERLIGHT
+                if(DesignerProperties.IsInDesignTool)
+#else
                 if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+#endif
                     return new NullEventAggregator();
 
                 if (_eventAggregator == null)
