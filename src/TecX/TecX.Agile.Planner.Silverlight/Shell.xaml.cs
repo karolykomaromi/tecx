@@ -23,13 +23,13 @@ namespace TecX.Agile.Planner
             Loaded += OnLoaded;
         }
 
-        //public Shell(ShellViewModel viewModel)
-        //    : this()
-        //{
-        //    Guard.AssertNotNull(viewModel, "viewModel");
+        public Shell(ShellViewModel viewModel)
+            : this()
+        {
+            Guard.AssertNotNull(viewModel, "viewModel");
 
-        //    DataContext = _viewModel = viewModel;
-        //}
+            DataContext = _viewModel = viewModel;
+        }
 
         #endregion c'tor
 

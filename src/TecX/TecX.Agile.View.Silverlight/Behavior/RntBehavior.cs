@@ -226,26 +226,27 @@ namespace TecX.Agile.View.Behavior
                 storyCard.Angle = GeometryHelper.GetRotationAngleFromMatrix(initialMatrix);
             }
 
-            var transform = from evt in Observable.FromEvent<EventArgs>(element.Transform(), "Changed")
-                            let matrix = ((MatrixTransform)evt.Sender).Matrix
-                            let angle = GeometryHelper.GetRotationAngleFromMatrix(matrix)
-                            where !EpsilonComparer.AreEqual(storyCard.X, matrix.OffsetX) ||
-                                  !EpsilonComparer.AreEqual(storyCard.Y, matrix.OffsetY) ||
-                                  !EpsilonComparer.AreEqual(storyCard.Angle, angle)
-                            select
-                                new
-                                {
-                                    X = matrix.OffsetX,
-                                    Y = matrix.OffsetY,
-                                    Angle = angle
-                                };
+            //TODO weberse 2010-01-09 dependencyobject doesnt have a changed event in silverlight...
+            //var transform = from evt in Observable.FromEvent<EventArgs>(element.Transform(), "Changed")
+            //                let matrix = ((MatrixTransform)evt.Sender).Matrix
+            //                let angle = GeometryHelper.GetRotationAngleFromMatrix(matrix)
+            //                where !EpsilonComparer.AreEqual(storyCard.X, matrix.OffsetX) ||
+            //                      !EpsilonComparer.AreEqual(storyCard.Y, matrix.OffsetY) ||
+            //                      !EpsilonComparer.AreEqual(storyCard.Angle, angle)
+            //                select
+            //                    new
+            //                    {
+            //                        X = matrix.OffsetX,
+            //                        Y = matrix.OffsetY,
+            //                        Angle = angle
+            //                    };
 
-            _transformChangeSubscription = transform.Subscribe(fromMatrix =>
-            {
-                storyCard.X = fromMatrix.X;
-                storyCard.Y = fromMatrix.Y;
-                storyCard.Angle = fromMatrix.Angle;
-            });
+            //_transformChangeSubscription = transform.Subscribe(fromMatrix =>
+            //{
+            //    storyCard.X = fromMatrix.X;
+            //    storyCard.Y = fromMatrix.Y;
+            //    storyCard.Angle = fromMatrix.Angle;
+            //});
 
             var position = from evt in Observable.FromEvent<PropertyChangedEventArgs>(storyCard, "PropertyChanged")
                            let name = evt.EventArgs.PropertyName
