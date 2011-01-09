@@ -111,9 +111,21 @@
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile.ChangeTracking\TecX.Agile.ChangeTracking.Silverlight.csproj">
+      <Project>{DBE7949F-8925-45D6-9166-B7DE0CE8FF4F}</Project>
+      <Name>TecX.Agile.ChangeTracking.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.Silverlight.csproj">
+      <Project>{CBE42FA1-1F42-45F0-9C02-66DC3B801997}</Project>
+      <Name>TecX.Agile.Infrastructure.Silverlight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Modules.Main\TecX.Agile.Modules.Main.Silverlight.csproj">
       <Project>{4A0B047E-C4FC-4840-9B23-26FF735F6EC5}</Project>
       <Name>TecX.Agile.Modules.Main.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Remote\TecX.Agile.Remote.Silverlight.csproj">
+      <Project>{7AB4EC41-0D97-4333-90EC-68CEDDE56674}</Project>
+      <Name>TecX.Agile.Remote.Silverlight</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Serialization\TecX.Agile.Serialization.csproj">
       <Project>{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}</Project>
@@ -126,6 +138,14 @@
     <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.Silverlight.csproj">
       <Project>{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6}</Project>
       <Name>TecX.Agile.ViewModel.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Common.Event.Unity\TecX.Common.Event.Unity.Silverlight.csproj">
+      <Project>{09C2958B-0C95-4304-BC79-098F91F887D4}</Project>
+      <Name>TecX.Common.Event.Unity.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.Silverlight.csproj">
+      <Project>{33B0228B-8D74-4EC2-B8D0-87E46C7E17C0}</Project>
+      <Name>TecX.Common.Event.Silverlight</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.Silverlight.csproj">
       <Project>{23E54945-0126-43BE-A3FC-5F61AF5BDFF3}</Project>

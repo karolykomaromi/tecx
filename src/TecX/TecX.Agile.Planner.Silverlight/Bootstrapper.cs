@@ -11,8 +11,14 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 
 using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.UnityExtensions;
+
+using TecX.Agile.ChangeTracking;
+using TecX.Agile.Remote;
+using TecX.Common.Event.Unity;
+using TecX.Prism.Regions;
 
 namespace TecX.Agile.Planner
 {
@@ -31,8 +37,12 @@ namespace TecX.Agile.Planner
         {
             base.ConfigureContainer();
 
-            Container.RegisterInstance<Dispatcher>(Deployment.Current.Dispatcher,
+            Container.AddNewExtension<EventAggregatorContainerExtension>();
+
+            Container.RegisterInstance(Deployment.Current.Dispatcher,
                                                    new ContainerControlledLifetimeManager());
+
+            Container.RegisterType<IChangeTracker, ChangeTracker>();
         }
 
         protected override IModuleCatalog CreateModuleCatalog()
@@ -42,13 +52,23 @@ namespace TecX.Agile.Planner
             return catalog;
         }
 
+        protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
+        {
+            RegionAdapterMappings mappings = base.ConfigureRegionAdapterMappings();
+
+            mappings.RegisterMapping(typeof(StackPanel), Container.Resolve<StackPanelRegionAdapter>());
+            mappings.RegisterMapping(typeof(Grid), Container.Resolve<GridRegionAdapter>());
+
+            return mappings;
+        }
+
         protected override void ConfigureModuleCatalog()
         {
-            //base.ConfigureModuleCatalog();
+            base.ConfigureModuleCatalog();
 
-            //ModuleInfo main = new ModuleInfo(Modules.Main.Module.ModuleName, typeof(Modules.Main.Module).AssemblyQualifiedName);
+            ModuleInfo main = new ModuleInfo(Modules.Main.Module.ModuleName, typeof(Modules.Main.Module).AssemblyQualifiedName);
 
-            //ModuleCatalog.AddModule(main);
+            ModuleCatalog.AddModule(main);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System.Windows;
+
+using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.ObjectBuilder;
 using System.Windows.Threading;
 
@@ -21,7 +23,11 @@ namespace TecX.Common.Event.Unity
         {
             //TODO weberse evaluate using the application dispatcher instead via ctor injection to the
             //container extension
+#if SILVERLIGHT
+            Dispatcher dispatcher = Deployment.Current.Dispatcher;
+#else
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+#endif
             
             IEventAggregator eventAggregator = new EventAggregator(dispatcher);
 
