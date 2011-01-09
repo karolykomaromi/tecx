@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 
 using TecX.Common;
@@ -22,13 +23,13 @@ namespace TecX.Agile.Planner
             Loaded += OnLoaded;
         }
 
-        public Shell(ShellViewModel viewModel)
-            : this()
-        {
-            Guard.AssertNotNull(viewModel, "viewModel");
+        //public Shell(ShellViewModel viewModel)
+        //    : this()
+        //{
+        //    Guard.AssertNotNull(viewModel, "viewModel");
 
-            DataContext = _viewModel = viewModel;
-        }
+        //    DataContext = _viewModel = viewModel;
+        //}
 
         #endregion c'tor
 
@@ -36,7 +37,10 @@ namespace TecX.Agile.Planner
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _viewModel.InitializeSocketConnection();
+            if (DesignerProperties.GetIsInDesignMode(this))
+                return;
+
+            //_viewModel.InitializeSocketConnection();
         }
 
         #endregion EventHandling

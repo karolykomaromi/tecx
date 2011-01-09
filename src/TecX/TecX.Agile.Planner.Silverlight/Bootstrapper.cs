@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
@@ -26,6 +27,14 @@ namespace TecX.Agile.Planner
             return shell;
         }
 
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+
+            Container.RegisterInstance<Dispatcher>(Deployment.Current.Dispatcher,
+                                                   new ContainerControlledLifetimeManager());
+        }
+
         protected override IModuleCatalog CreateModuleCatalog()
         {
             IModuleCatalog catalog = new ModuleCatalog();
@@ -35,11 +44,11 @@ namespace TecX.Agile.Planner
 
         protected override void ConfigureModuleCatalog()
         {
-            base.ConfigureModuleCatalog();
+            //base.ConfigureModuleCatalog();
 
-            ModuleInfo main = new ModuleInfo(Modules.Main.Module.ModuleName, typeof(Modules.Main.Module).AssemblyQualifiedName);
+            //ModuleInfo main = new ModuleInfo(Modules.Main.Module.ModuleName, typeof(Modules.Main.Module).AssemblyQualifiedName);
 
-            ModuleCatalog.AddModule(main);
+            //ModuleCatalog.AddModule(main);
         }
     }
 }
