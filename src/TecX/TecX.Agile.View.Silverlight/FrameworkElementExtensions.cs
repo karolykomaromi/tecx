@@ -17,6 +17,39 @@ namespace TecX.Agile.View
 {
     public static class FrameworkElementExtensions
     {
+        public static readonly DependencyProperty TransformProperty = DependencyProperty.RegisterAttached(
+            "Transform",
+            typeof(IMatrixTransform),
+            typeof(FrameworkElementExtensions),
+            new PropertyMetadata(null));
+
+        public static IMatrixTransform GetTransform(FrameworkElement element)
+        {
+            Guard.AssertNotNull(element, "element");
+
+            IMatrixTransform transform = element.GetValue(TransformProperty) as IMatrixTransform;
+
+            if (transform == null)
+            {
+                MatrixTransform mt = element.RenderTransform as MatrixTransform;
+
+                transform = new MatrixTransformWrapper(mt);
+
+                SetTransform(element, transform);
+            }
+
+            return transform;
+        }
+
+        public static void SetTransform(FrameworkElement element, IMatrixTransform value)
+        {
+            Guard.AssertNotNull(element, "element");
+            Guard.AssertNotNull(value, "value");
+
+            element.SetValue(TransformProperty, value);
+        }
+
+
         public static Point PointToScreen(this FrameworkElement element, Point point)
         {
             Guard.AssertNotNull(element, "element");
@@ -54,13 +87,11 @@ namespace TecX.Agile.View
             //}
         }
 
-        public static MatrixTransform Transform(this FrameworkElement element)
+        public static IMatrixTransform Transform(this FrameworkElement element)
         {
             Guard.AssertNotNull(element, "element");
 
-            MatrixTransform transform = element.RenderTransform as MatrixTransform;
-
-            return transform;
+            return GetTransform(element);
         }
 
         public static void Move(this FrameworkElement element, double dx, double dy, double angle)
@@ -109,9 +140,49 @@ namespace TecX.Agile.View
         {
             Guard.AssertNotNull(element, "element");
 
-            bool isPinned =  MovementBehaviorBase.GetIsPinned(element);
+            bool isPinned = MovementBehaviorBase.GetIsPinned(element);
 
             return isPinned;
         }
+    }
+
+    public class MatrixTransformWrapper : IMatrixTransform
+    {
+        private readonly MatrixTransform _matrixTransform;
+
+        public MatrixTransformWrapper(MatrixTransform matrixTransform)
+        {
+            Guard.AssertNotNull(matrixTransform, "matrixTransform");
+
+            _matrixTransform = matrixTransform;
+        }
+
+        public Matrix Matrix
+        {
+            get { return _matrixTransform.Matrix; }
+            set
+            {
+                if (_matrixTransform.Matrix == value)
+                    return;
+
+                _matrixTransform.Matrix = value;
+                Changed(this, EventArgs.Empty);
+            }
+        }
+
+        public MatrixTransform Transform
+        {
+            get { return _matrixTransform; }
+        }
+
+        public event EventHandler Changed = delegate { };
+    }
+
+    public interface IMatrixTransform
+    {
+        Matrix Matrix { get; set; }
+        MatrixTransform Transform { get; }
+
+        event EventHandler Changed;
     }
 }

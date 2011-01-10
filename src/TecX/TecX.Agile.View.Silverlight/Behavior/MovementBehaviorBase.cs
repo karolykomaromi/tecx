@@ -74,10 +74,18 @@ namespace TecX.Agile.View.Behavior
 
             MatrixTransform existing = element.RenderTransform as MatrixTransform;
 
-            if(existing == null)
+            if (existing == null)
             {
                 MatrixTransform transform = new MatrixTransform { Matrix = Matrix.Identity };
                 element.RenderTransform = transform;
+            }
+            else
+            {
+                if (existing.Matrix == Matrix.Identity)
+                {
+                    MatrixTransform transform = new MatrixTransform { Matrix = Matrix.Identity };
+                    element.RenderTransform = transform;
+                }
             }
         }
     }
