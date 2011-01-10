@@ -23,6 +23,7 @@ namespace TecX.Agile.View.Behavior
         private Point _previous;
         private IDisposable _storyCardChangeSubscription;
         private IDisposable _transformChangeSubscription;
+        private bool _isCaptured;
 
         #endregion Fields
 
@@ -45,7 +46,7 @@ namespace TecX.Agile.View.Behavior
             if (DesignerProperties.GetIsInDesignMode(AssociatedObject))
                 return;
 
-            AssociatedObject.Loaded += AddTranslateOnlyArea;
+            AssociatedObject.Loaded += OnLoaded;
 
             AssociatedObject.MouseEnter += OnMouseEnter;
             AssociatedObject.MouseLeave += OnMouseLeave;
@@ -114,7 +115,7 @@ namespace TecX.Agile.View.Behavior
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
             //ignore click if the item is pinned
-            if (AssociatedObject.IsPinned())
+            if (AssociatedObject.IsPinned() || !_isCaptured)
                 return;
 
             //the actual point is set to the absolute coordinates of the mouse click
@@ -141,6 +142,7 @@ namespace TecX.Agile.View.Behavior
 
             //release the captured mouse input
             AssociatedObject.ReleaseMouseCapture();
+            _isCaptured = false;
 
             //fire the drop-event
 
@@ -167,19 +169,19 @@ namespace TecX.Agile.View.Behavior
 
             if (AssociatedObject.IsEnabled)
             {
-                AssociatedObject.CaptureMouse();
+                _isCaptured = AssociatedObject.CaptureMouse();
             }
         }
 
         #endregion EventHandling
 
-        private void AddTranslateOnlyArea(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            UserControl element = sender as UserControl;
+            UserControl ctrl = sender as UserControl;
 
-            if (element != null)
+            if (ctrl != null)
             {
-                Grid overlay = element.FindName("Overlay") as Grid;
+                Grid overlay = ctrl.FindName("Overlay") as Grid;
                 //Panel layoutRoot = element.Content as Panel;
 
                 if (overlay != null)
@@ -187,7 +189,15 @@ namespace TecX.Agile.View.Behavior
                     overlay.Children.Add(_toa);
                 }
 
-                element.Loaded -= AddTranslateOnlyArea;
+                var textBoxes = UIHelper.FindChildren<TextBox>(ctrl);
+
+                foreach (var tb in textBoxes)
+                {
+                    tb.AddHandler(UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(OnMouseLeftButtonDown), true);
+                    tb.AddHandler(UIElement.MouseLeftButtonUpEvent, new MouseButtonEventHandler(OnMouseLeftButtonUp), true);
+                }
+
+                ctrl.Loaded -= OnLoaded;
             }
         }
 
@@ -227,26 +237,26 @@ namespace TecX.Agile.View.Behavior
             }
 
             //TODO weberse 2010-01-09 dependencyobject doesnt have a changed event in silverlight...
-            //var transform = from evt in Observable.FromEvent<EventArgs>(element.Transform(), "Changed")
-            //                let matrix = ((MatrixTransform)evt.Sender).Matrix
-            //                let angle = GeometryHelper.GetRotationAngleFromMatrix(matrix)
-            //                where !EpsilonComparer.AreEqual(storyCard.X, matrix.OffsetX) ||
-            //                      !EpsilonComparer.AreEqual(storyCard.Y, matrix.OffsetY) ||
-            //                      !EpsilonComparer.AreEqual(storyCard.Angle, angle)
-            //                select
-            //                    new
-            //                    {
-            //                        X = matrix.OffsetX,
-            //                        Y = matrix.OffsetY,
-            //                        Angle = angle
-            //                    };
+            var transform = from evt in Observable.FromEvent<EventArgs>(element.Transform(), "Changed")
+                            let matrix = ((IMatrixTransform)evt.Sender).Matrix
+                            let angle = GeometryHelper.GetRotationAngleFromMatrix(matrix)
+                            where !EpsilonComparer.AreEqual(storyCard.X, matrix.OffsetX) ||
+                                  !EpsilonComparer.AreEqual(storyCard.Y, matrix.OffsetY) ||
+                                  !EpsilonComparer.AreEqual(storyCard.Angle, angle)
+                            select
+                                new
+                                {
+                                    X = matrix.OffsetX,
+                                    Y = matrix.OffsetY,
+                                    Angle = angle
+                                };
 
-            //_transformChangeSubscription = transform.Subscribe(fromMatrix =>
-            //{
-            //    storyCard.X = fromMatrix.X;
-            //    storyCard.Y = fromMatrix.Y;
-            //    storyCard.Angle = fromMatrix.Angle;
-            //});
+            _transformChangeSubscription = transform.Subscribe(fromMatrix =>
+            {
+                storyCard.X = fromMatrix.X;
+                storyCard.Y = fromMatrix.Y;
+                storyCard.Angle = fromMatrix.Angle;
+            });
 
             var position = from evt in Observable.FromEvent<PropertyChangedEventArgs>(storyCard, "PropertyChanged")
                            let name = evt.EventArgs.PropertyName

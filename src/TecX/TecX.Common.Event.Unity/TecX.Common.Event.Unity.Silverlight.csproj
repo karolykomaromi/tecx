@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{08821645-7472-4DBB-8271-8AEADF7FC109}</ProjectGuid>
+    <ProjectGuid>{09C2958B-0C95-4304-BC79-098F91F887D4}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TecX.Agile.View</RootNamespace>
-    <AssemblyName>TecX.Agile.View</AssemblyName>
+    <RootNamespace>TecX.Common.Event.Unity</RootNamespace>
+    <AssemblyName>TecX.Common.Event.Unity</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
@@ -50,83 +50,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.Prism">
-      <HintPath>..\..\..\lib\Prism4\Silverlight4\Microsoft.Practices.Prism.dll</HintPath>
+    <Reference Include="Microsoft.Practices.Unity.Silverlight">
+      <HintPath>..\..\..\lib\Unity2\Silverlight\Microsoft.Practices.Unity.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="System.CoreEx">
-      <HintPath>..\..\..\lib\Rx\Silverlight4\System.CoreEx.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Observable">
-      <HintPath>..\..\..\lib\Rx\Silverlight4\System.Observable.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive">
-      <HintPath>..\..\..\lib\Rx\Silverlight4\System.Reactive.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Net" />
-    <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Behavior\HighlightFieldBehavior.cs" />
-    <Compile Include="Behavior\ItemDropped.cs" />
-    <Compile Include="Behavior\MovementBehaviorBase.cs" />
-    <Compile Include="Behavior\RntBehavior.cs" />
-    <Compile Include="Behavior\TranslateOnlyArea.xaml.cs">
-      <DependentUpon>TranslateOnlyArea.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Converter\ColorToSolidColorBrushConverter.cs" />
-    <Compile Include="Converter\StringToDoubleConverter.cs" />
-    <Compile Include="FrameworkElementExtensions.cs" />
-    <Compile Include="GeometryHelper.cs" />
-    <Compile Include="MatrixHelper.cs" />
+    <Compile Include="EventAggregatorContainerExtension.cs" />
+    <Compile Include="EventAggregatorSubscriptionStrategy.cs" />
+    <Compile Include="IEventAggregatorConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StoryCard.xaml.cs">
-      <DependentUpon>StoryCard.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Tabletop.cs" />
-    <Compile Include="UIHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.Silverlight.csproj">
-      <Project>{CBE42FA1-1F42-45F0-9C02-66DC3B801997}</Project>
-      <Name>TecX.Agile.Infrastructure.Silverlight</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.Silverlight.csproj">
-      <Project>{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6}</Project>
-      <Name>TecX.Agile.ViewModel.Silverlight</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.Silverlight.csproj">
       <Project>{33B0228B-8D74-4EC2-B8D0-87E46C7E17C0}</Project>
       <Name>TecX.Common.Event.Silverlight</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TecX.Common\TecX.Common.Silverlight.csproj">
-      <Project>{23E54945-0126-43BE-A3FC-5F61AF5BDFF3}</Project>
-      <Name>TecX.Common.Silverlight</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Page Include="Behavior\TranslateOnlyArea.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\NamedStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="StoryCard.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
