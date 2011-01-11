@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 
 using TecX.Common;
 
@@ -20,7 +22,6 @@ namespace TecX.Agile.View
             DataContext = storyCard;
 
             InitializeComponent();
-
         }
 
         #endregion c'tor
