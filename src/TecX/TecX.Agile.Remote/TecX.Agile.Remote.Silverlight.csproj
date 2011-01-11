@@ -50,6 +50,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -77,6 +78,10 @@
     <ProjectReference Include="..\TecX.Agile.Peer\TecX.Agile.Peer.Silverlight.csproj">
       <Project>{62BB35DD-922B-4CBC-BACC-33BC6C05D8E7}</Project>
       <Name>TecX.Agile.Peer.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Serialization\TecX.Agile.Serialization.csproj">
+      <Project>{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}</Project>
+      <Name>TecX.Agile.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.Silverlight.csproj">
       <Project>{33B0228B-8D74-4EC2-B8D0-87E46C7E17C0}</Project>
