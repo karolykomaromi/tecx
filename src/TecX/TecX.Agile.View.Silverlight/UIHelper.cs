@@ -8,7 +8,7 @@ namespace TecX.Agile.View
 {
     public static class UIHelper
     {
-        private static T FindAncestor<T>(DependencyObject dependencyObject)
+        public static T FindAncestor<T>(DependencyObject dependencyObject)
             where T : class
         {
             Guard.AssertNotNull(dependencyObject, "dependencyObject");
