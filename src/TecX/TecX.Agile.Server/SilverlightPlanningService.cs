@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 
 using TecX.Agile.Peer;
 using TecX.Agile.Push;
@@ -15,7 +16,7 @@ using Constants = TecX.Agile.Peer.Constants;
 
 namespace TecX.Agile.Server
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "SilverlightPlanningService" in both code and config file together.
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class SilverlightPlanningService : ISilverlightPlanningService
     {
         #region Fields
@@ -44,8 +45,6 @@ namespace TecX.Agile.Server
             _peerClient.IncomingRequestToHighlightField += OnIncomingRequestToHighlightField;
             _peerClient.CaretMoved += OnCaretMoved;
             _peerClient.StoryCardMoved += OnStoryCardMoved;
-            
-            _socketServer.Start();
         }
 
         private void InitializeBinaryFormatter()

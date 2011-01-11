@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
+using System.Threading;
 
 using TecX.Agile.Peer;
 using TecX.Agile.Push;
@@ -11,24 +9,44 @@ namespace TecX.Agile.Server
 {
     class Program
     {
-        private static class Constants
-        {
-            public static readonly Uri BaseAddress = new Uri("http://localhost:12345/SilverlightPlanningService", UriKind.Absolute);
-        }
-
         static void Main(string[] args)
         {
-            IPeerClient peerClient = new PeerClient();
-            ISocketServer socketServer = new SocketServer();
+            ServiceHost host = null;
+            Thread thread = null;
 
-            ISilverlightPlanningService service = new SilverlightPlanningService(peerClient, socketServer);
+            try
+            {
+                IPeerClient peerClient = new PeerClient();
+                ISocketServer socketServer = new SocketServer();
 
-            ServiceHost host = new ServiceHost(service, Constants.BaseAddress);
+                ISilverlightPlanningService service = new SilverlightPlanningService(peerClient, socketServer);
 
-            host.Open();
+                host = new ServiceHost(service);
 
-            Console.WriteLine("Silverlight Server running. Press any key to exit.");
-            Console.Read();
+                host.Open();
+
+                ThreadStart start = new ThreadStart(socketServer.Start);
+
+                thread = new Thread(start);
+
+                thread.Start();
+
+                Console.WriteLine("Silverlight Server running.");
+                Console.WriteLine("Press any key to exit.");
+                Console.Read();
+            }
+            finally
+            {
+                if(host != null)
+                {
+                    host.Close();
+                }
+
+                if(thread != null)
+                {
+                    thread.Abort();
+                }
+            }
         }
     }
 }
