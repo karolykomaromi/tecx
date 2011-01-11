@@ -8,9 +8,7 @@
     xmlns:Converter="clr-namespace:TecX.Agile.View.Converter"
     mc:Ignorable="d" 
     d:DesignHeight="200" 
-    d:DesignWidth="300"             
-    BorderBrush="Black"
-    BorderThickness="1">
+    d:DesignWidth="300">
     <Interactivity:Interaction.Behaviors>
         <Behavior:RntBehavior/>
     </Interactivity:Interaction.Behaviors>
@@ -23,7 +21,10 @@
             <Converter:StringToDoubleConverter x:Key="StringToDouble_ValueConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid 
+    <Border                    
+        BorderBrush="Black"
+        BorderThickness="1">
+        <Grid 
         Background="{Binding Path=Background, Converter={StaticResource ColorToSolidColorBrush_ValueConverter}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" MinHeight="25"/>
@@ -117,7 +118,7 @@
             Grid.RowSpan="2" 
             Grid.ColumnSpan="3" 
             IsHitTestVisible="False">
-            <Rectangle Style="{StaticResource Separator}" Margin="0,25,0,0" />
+            <Rectangle x:Name="_sep1" Style="{StaticResource Separator}" Margin="0,25,0,0" />
             <Rectangle Style="{StaticResource Separator}" Margin="0,50,0,0" />
             <Rectangle Style="{StaticResource Separator}" Margin="0,75,0,0" />
             <Rectangle Style="{StaticResource Separator}" Margin="0,100,0,0" />
@@ -128,5 +129,6 @@
             Grid.RowSpan="4"
             Grid.ColumnSpan="3"
             IsHitTestVisible="false"/>
-    </Grid>
+        </Grid>
+    </Border>
 </UserControl>

@@ -10,13 +10,17 @@
     <Style x:Key="TopSeparator" TargetType="Rectangle">
         <Setter Property="Stroke" Value="Red" />
         <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="Width" Value="300" />
+        <Setter Property="Height" Value="0.5"/>
         <Setter Property="VerticalAlignment" Value="Bottom" />
         <Setter Property="IsHitTestVisible" Value="False"/>
     </Style>
     <Style x:Key="Separator" TargetType="Rectangle">
         <Setter Property="Stroke" Value="DarkGray" />
-        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeThickness" Value="1" />        
         <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Width" Value="300" />
+        <Setter Property="Height" Value="0.5"/>
         <Setter Property="IsHitTestVisible" Value="False"/>
     </Style>
 </ResourceDictionary>
