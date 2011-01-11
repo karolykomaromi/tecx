@@ -12,7 +12,7 @@ namespace TecX.Agile.Push
     /// <summary>
     /// Sends push messages via a socket
     /// </summary>
-    public class SocketServer
+    public class SocketServer : ISocketServer
     {
         #region Events
 

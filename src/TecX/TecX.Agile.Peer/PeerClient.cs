@@ -60,7 +60,7 @@ namespace TecX.Agile.Peer
 
                 Id = Guid.NewGuid();
 
-                Uri meshAddress = new Uri(Constants.MeshAddress);
+                Uri meshAddress = new Uri(Constants.MeshAddress, UriKind.Absolute);
 
                 NetPeerTcpBinding binding = new NetPeerTcpBinding();
 
@@ -106,9 +106,9 @@ namespace TecX.Agile.Peer
         {
             Guard.AssertNotEmpty(fieldName, "fieldName");
 
-            if(senderId != Id)
+            if (senderId != Id)
             {
-                var args = new CaretMovedEventArgs(artefactId, fieldName, caretIndex);
+                var args = new CaretMovedEventArgs(senderId, artefactId, fieldName, caretIndex);
 
                 CaretMoved(this, args);
             }
@@ -123,7 +123,7 @@ namespace TecX.Agile.Peer
             //message comes from somewhere else -> handle it
             if (senderId != Id)
             {
-                var args = new StoryCardMovedEventArgs(storyCardId, x, y, angle);
+                var args = new StoryCardMovedEventArgs(senderId, storyCardId, x, y, angle);
 
                 StoryCardMoved(this, args);
             }
@@ -141,7 +141,7 @@ namespace TecX.Agile.Peer
             //message comes from somewhere else -> handle it
             if (senderId != Id)
             {
-                var args = new FieldHighlightedEventArgs(artefactId, fieldName);
+                var args = new FieldHighlightedEventArgs(senderId, artefactId, fieldName);
 
                 IncomingRequestToHighlightField(this, args);
             }
@@ -158,7 +158,7 @@ namespace TecX.Agile.Peer
 
             if (senderId != Id)
             {
-                var args = new UpdatedPropertyEventArgs(artefactId, propertyName, oldValue, newValue);
+                var args = new UpdatedPropertyEventArgs(senderId, artefactId, propertyName, oldValue, newValue);
 
                 PropertyUpdated(this, args);
             }
