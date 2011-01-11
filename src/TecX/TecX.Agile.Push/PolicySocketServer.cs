@@ -19,6 +19,9 @@ namespace TecX.Agile.Push
 
             /// <summary>PolicyFilePath</summary>
             public const string PolicyFilePath = "PolicyFilePath";
+
+            /// <summary>"SocketClientAccessPolicy.xml"</summary>
+            public const string DefaultPolicyFileName = "SocketClientAccessPolicy.xml";
         }
 
         #endregion Constants
@@ -73,6 +76,9 @@ namespace TecX.Agile.Push
         private void InitializePolicy()
         {
             string path = ConfigurationManager.AppSettings[Constants.PolicyFilePath];
+
+            if (string.IsNullOrEmpty(path))
+                path = Constants.DefaultPolicyFileName;
 
             _policy = File.ReadAllBytes(path);
 
