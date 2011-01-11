@@ -12,24 +12,28 @@ namespace TecX.Agile.Server
         static void Main(string[] args)
         {
             ServiceHost host = null;
-            Thread thread = null;
+            Thread serverThread = null;
+            Thread policyThread = null;
 
             try
             {
                 IPeerClient peerClient = new PeerClient();
                 ISocketServer socketServer = new SocketServer();
+                PolicySocketServer policyServer = new PolicySocketServer();
+
+                serverThread = new Thread(socketServer.Start);
+
+                serverThread.Start();
+
+                policyThread = new Thread(policyServer.Start);
+
+                policyThread.Start();
 
                 ISilverlightPlanningService service = new SilverlightPlanningService(peerClient, socketServer);
 
                 host = new ServiceHost(service);
 
                 host.Open();
-
-                ThreadStart start = new ThreadStart(socketServer.Start);
-
-                thread = new Thread(start);
-
-                thread.Start();
 
                 Console.WriteLine("Silverlight Server running.");
                 Console.WriteLine("Press any key to exit.");
@@ -42,9 +46,14 @@ namespace TecX.Agile.Server
                     host.Close();
                 }
 
-                if(thread != null)
+                if(serverThread != null)
                 {
-                    thread.Abort();
+                    serverThread.Abort();
+                }
+
+                if(policyThread != null)
+                {
+                    policyThread.Abort();
                 }
             }
         }
