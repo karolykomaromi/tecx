@@ -6,8 +6,14 @@ namespace TecX.Agile.Peer
 {
     public class FieldHighlightedEventArgs : EventArgs
     {
+        private readonly Guid _senderId;
         private readonly Guid _artefactId;
         private readonly string _fieldName;
+
+        public Guid SenderId
+        {
+            get { return _senderId; }
+        }
 
         public string FieldName
         {
@@ -19,10 +25,11 @@ namespace TecX.Agile.Peer
             get { return _artefactId; }
         }
 
-        public FieldHighlightedEventArgs(Guid artefactId, string fieldName)
+        public FieldHighlightedEventArgs(Guid senderId, Guid artefactId, string fieldName)
         {
             Guard.AssertNotEmpty(fieldName, "fieldName");
 
+            _senderId = senderId;
             _artefactId = artefactId;
             _fieldName = fieldName;
         }
