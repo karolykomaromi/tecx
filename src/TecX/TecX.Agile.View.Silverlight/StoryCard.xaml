@@ -40,7 +40,11 @@
             x:Name="TaskName" 
             Style="{StaticResource HiddenTextBoxStyle}"
             Grid.ColumnSpan="3"
-            Text="{Binding Path=Name, UpdateSourceTrigger=Default}"/>
+            Text="{Binding Path=Name, UpdateSourceTrigger=Default}">
+            <Interactivity:Interaction.Behaviors>
+                <Behavior:TextBoxHideBehavior/>
+            </Interactivity:Interaction.Behaviors>
+        </TextBox>
         <Rectangle
             Grid.ColumnSpan="3"
             Style="{StaticResource TopSeparator}"/>
@@ -49,6 +53,9 @@
             Style="{StaticResource HiddenTextBoxStyle}"
             Grid.Row="1"
             Text="{Binding Path=MostLikelyEstimate, Converter={StaticResource StringToDouble_ValueConverter}, UpdateSourceTrigger=Default}">
+            <Interactivity:Interaction.Behaviors>
+                <Behavior:TextBoxHideBehavior/>
+            </Interactivity:Interaction.Behaviors>
         </TextBox>
         <TextBox 
             x:Name="ActualEffort" 
@@ -56,13 +63,20 @@
             Grid.Row="1" 
             Grid.Column="1"
             Text="{Binding Path=ActualEffort, Converter={StaticResource StringToDouble_ValueConverter}, UpdateSourceTrigger=Default}">
+            <Interactivity:Interaction.Behaviors>
+                <Behavior:TextBoxHideBehavior/>
+            </Interactivity:Interaction.Behaviors>
         </TextBox>
         <TextBox 
             x:Name="TaskOwner" 
             Style="{StaticResource HiddenTextBoxStyle}"
             Grid.Row="1" 
             Grid.Column="2"
-            Text="{Binding Path=TaskOwner, UpdateSourceTrigger=Default}"/>
+            Text="{Binding Path=TaskOwner, UpdateSourceTrigger=Default}">
+            <Interactivity:Interaction.Behaviors>
+                <Behavior:TextBoxHideBehavior/>
+            </Interactivity:Interaction.Behaviors>
+        </TextBox>
         <TextBlock 
             Text="Mostlikely Estimate"
             Grid.Row="2"
@@ -93,7 +107,11 @@
             VerticalContentAlignment="Top"
             AcceptsReturn="True" 
             AllowDrop="False"
-            Text="{Binding Path=Description, UpdateSourceTrigger=Default}"/>
+            Text="{Binding Path=Description, UpdateSourceTrigger=Default}">
+            <Interactivity:Interaction.Behaviors>
+                <Behavior:TextBoxHideBehavior/>
+            </Interactivity:Interaction.Behaviors>
+        </TextBox>
         <Grid 
             Grid.Row="2"
             Grid.RowSpan="2" 

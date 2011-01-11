@@ -81,6 +81,7 @@
     <Compile Include="Behavior\ItemDropped.cs" />
     <Compile Include="Behavior\MovementBehaviorBase.cs" />
     <Compile Include="Behavior\RntBehavior.cs" />
+    <Compile Include="Behavior\TextBoxHideBehavior.cs" />
     <Compile Include="Behavior\TranslateOnlyArea.xaml.cs">
       <DependentUpon>TranslateOnlyArea.xaml</DependentUpon>
     </Compile>
