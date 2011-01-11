@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
+using TecX.Agile.ViewModel;
 using TecX.Common;
 
 namespace TecX.Agile.Planner
@@ -29,6 +30,8 @@ namespace TecX.Agile.Planner
             Guard.AssertNotNull(viewModel, "viewModel");
 
             DataContext = _viewModel = viewModel;
+
+            _viewModel.Card = storyCard.DataContext as StoryCard;
         }
 
         #endregion c'tor
@@ -40,7 +43,7 @@ namespace TecX.Agile.Planner
             if (DesignerProperties.GetIsInDesignMode(this))
                 return;
 
-            //_viewModel.InitializeSocketConnection();
+            _viewModel.InitializeConnection();
         }
 
         #endregion EventHandling

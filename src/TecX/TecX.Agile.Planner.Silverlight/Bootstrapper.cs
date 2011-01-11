@@ -39,8 +39,9 @@ namespace TecX.Agile.Planner
 
             Container.AddNewExtension<EventAggregatorContainerExtension>();
 
-            Container.RegisterInstance(Deployment.Current.Dispatcher,
-                                                   new ContainerControlledLifetimeManager());
+            Container.RegisterInstance(Deployment.Current.Dispatcher, new ContainerControlledLifetimeManager());
+
+            Container.RegisterType<IRemoteUI, SocketRemoteUI>();
 
             Container.RegisterType<IChangeTracker, ChangeTracker>();
         }
