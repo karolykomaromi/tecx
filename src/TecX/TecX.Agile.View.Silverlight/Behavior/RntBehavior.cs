@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -158,6 +159,10 @@ namespace TecX.Agile.View.Behavior
             if (AssociatedObject.IsPinned())
                 return;
 
+            //if you click inside a textbox the box captures the mouse. so you must release
+            //capture before you can tell the usercontrol to capture input
+            ((UIElement)sender).ReleaseMouseCapture();
+
             //set the previous mouse point to the absolute coordinates of the event
             _previous = e.GetPosition(Tabletop.Surface);
 
@@ -166,40 +171,33 @@ namespace TecX.Agile.View.Behavior
                 _isTranslated = true;
 
             //capture the mouse input
-
             if (AssociatedObject.IsEnabled)
             {
                 _isCaptured = AssociatedObject.CaptureMouse();
             }
         }
 
-        #endregion EventHandling
-
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            UserControl ctrl = sender as UserControl;
+            Grid overlay = AssociatedObject.FindName("Overlay") as Grid;
 
-            if (ctrl != null)
+            if (overlay != null)
             {
-                Grid overlay = ctrl.FindName("Overlay") as Grid;
-                //Panel layoutRoot = element.Content as Panel;
-
-                if (overlay != null)
-                {
-                    overlay.Children.Add(_toa);
-                }
-
-                var textBoxes = UIHelper.FindChildren<TextBox>(ctrl);
-
-                foreach (var tb in textBoxes)
-                {
-                    tb.AddHandler(UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(OnMouseLeftButtonDown), true);
-                    tb.AddHandler(UIElement.MouseLeftButtonUpEvent, new MouseButtonEventHandler(OnMouseLeftButtonUp), true);
-                }
-
-                ctrl.Loaded -= OnLoaded;
+                overlay.Children.Add(_toa);
             }
+
+            var textBoxes = UIHelper.FindChildren<TextBox>(AssociatedObject);
+
+            foreach (var tb in textBoxes)
+            {
+                tb.AddHandler(UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(OnMouseLeftButtonDown), true);
+                tb.AddHandler(UIElement.MouseLeftButtonUpEvent, new MouseButtonEventHandler(OnMouseLeftButtonUp), true);
+            }
+
+            AssociatedObject.Loaded -= OnLoaded;
         }
+
+        #endregion EventHandling
 
         private void InitializePositionBindings(FrameworkElement element, ViewModel.StoryCard storyCard)
         {
