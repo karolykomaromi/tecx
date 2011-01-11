@@ -98,8 +98,7 @@
             Grid.Row="2"
             Grid.RowSpan="2" 
             Grid.ColumnSpan="3" 
-            IsHitTestVisible="False" 
-            Canvas.ZIndex="50">
+            IsHitTestVisible="False">
             <Rectangle Style="{StaticResource Separator}" Margin="0,25,0,0" />
             <Rectangle Style="{StaticResource Separator}" Margin="0,50,0,0" />
             <Rectangle Style="{StaticResource Separator}" Margin="0,75,0,0" />
