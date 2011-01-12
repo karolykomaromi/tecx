@@ -126,6 +126,8 @@ namespace TecX.Agile.Server
 
         public void MoveStoryCard(Guid senderId, Guid storyCardId, double x, double y, double angle)
         {
+            Console.WriteLine("MoveStoryCard({0},{1},{2},{3},{4})", senderId, storyCardId, x, y, angle);
+
             _peerClient.MoveStoryCard(senderId, storyCardId, x, y, angle);
 
             StoryCardMoved message = new StoryCardMoved

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.ServiceModel;
 using System.Windows;
 
 using TecX.Agile.Infrastructure;
 using TecX.Agile.Infrastructure.Events;
 using TecX.Agile.Serialization;
+using TecX.Agile.Server;
 using TecX.Common;
 using TecX.Common.Extensions.Error;
 
@@ -22,15 +24,39 @@ namespace TecX.Agile.Remote
 
             /// <summary>2048</summary>
             public const int DefaultResponseBufferSize = 2048;
+
+            /// <summary>
+            /// http://localhost:8732/Design_Time_Addresses/TecX.Agile.Server/SilverlightPlanningService/
+            /// </summary>
+            public const string DefaultEndpointAddress = @"http://localhost:8732/Design_Time_Addresses/TecX.Agile.Server/SilverlightPlanningService/";
         }
 
         #endregion Constants
+
+        #region Fields
+
+        private IAsyncSilverlightPlanningService _proxy;
+
+        private readonly Guid _id;
+
+        #endregion Fields
+
+        #region Properties
+
+        public Guid Id
+        {
+            get { return _id; }
+        }
+
+        #endregion Properties
 
         #region c'tor
 
         public SocketRemoteUI()
         {
             InitializeSocketConnection();
+
+            _id = Guid.NewGuid();
         }
 
         #endregion c'tor
@@ -39,6 +65,13 @@ namespace TecX.Agile.Remote
 
         public void Handle(PropertyUpdated message)
         {
+            _proxy.BeginUpdateProperty(_id, 
+                                       message.ArtefactId, 
+                                       message.PropertyName, 
+                                       message.OldValue, 
+                                       message.NewValue, 
+                                       null, 
+                                       null);
         }
 
         public void Handle(StoryCardRescheduled message)
@@ -51,14 +84,37 @@ namespace TecX.Agile.Remote
 
         public void Handle(FieldHighlighted message)
         {
+            _proxy.BeginHighlight(_id,
+                                  message.ArtefactId,
+                                  message.FieldName,
+                                  null,
+                                  null);
         }
 
         public void Handle(StoryCardMoved message)
         {
+            _proxy.BeginMoveStoryCard(_id,
+                                      message.StoryCardId,
+                                      message.X,
+                                      message.Y,
+                                      message.Angle,
+                                      ar =>
+                                          {
+                                              _proxy.EndMoveStoryCard(ar);
+
+                                              Console.WriteLine("StoryCardMoved");
+                                          },
+                                      null);
         }
 
         public void Handle(CaretMoved message)
         {
+            _proxy.BeginMoveCaret(_id,
+                                  message.ArtefactId,
+                                  message.FieldName,
+                                  message.CaretIndex,
+                                  null,
+                                  null);
         }
 
         #endregion Implementation of IRemoteUI
@@ -95,28 +151,34 @@ namespace TecX.Agile.Remote
 
                 if (message != null)
                 {
-                    StoryCardMoved storyCardMoved = message as StoryCardMoved;
+                    var scm = message as Serialization.Messages.StoryCardMoved;
 
-                    if (storyCardMoved != null)
+                    if (scm != null && scm.SenderId != _id)
                     {
+                        StoryCardMoved storyCardMoved = new StoryCardMoved(scm.StoryCardId, scm.X, scm.Y, scm.Angle);
+
                         if (Commands.MoveStoryCard.CanExecute(storyCardMoved))
                             Commands.MoveStoryCard.Execute(storyCardMoved);
                     }
 
-                    CaretMoved caretMoved = message as CaretMoved;
+                    var cm = message as Serialization.Messages.CaretMoved;
 
-                    if (caretMoved != null)
+                    if (cm != null && cm.SenderId != _id)
                     {
+                        CaretMoved caretMoved = new CaretMoved(cm.ArtefactId, cm.FieldName, cm.CaretIndex);
+
                         if (Commands.MoveCaret.CanExecute(caretMoved))
                             Commands.MoveCaret.Execute(caretMoved);
 
                         return;
                     }
 
-                    PropertyUpdated propertyUpdated = message as PropertyUpdated;
+                    var pu = message as Serialization.Messages.PropertyUpdated;
 
-                    if (propertyUpdated != null)
+                    if (pu != null && pu.SenderId != _id)
                     {
+                        PropertyUpdated propertyUpdated = new PropertyUpdated(pu.ArtefactId, pu.PropertyName, pu.OldValue, pu.NewValue);
+
                         if (Commands.UpdateProperty.CanExecute(propertyUpdated))
                             Commands.UpdateProperty.Execute(propertyUpdated);
                     }
@@ -130,37 +192,6 @@ namespace TecX.Agile.Remote
 
             Socket socket = (Socket)e.UserToken;
             socket.ReceiveAsync(e);
-
-            //    StringReader sr = null;
-            //    try
-            //    {
-            //        string data = Encoding.UTF8.GetString(e.Buffer, e.Offset, e.BytesTransferred);
-            //        sr = new StringReader(data);
-            //        //Get initial team data
-            //        if (_Teams == null && data.Contains("Teams"))
-            //        {
-            //            XmlSerializer xs = new XmlSerializer(typeof(Teams));
-            //            _Teams = (Teams)xs.Deserialize(sr);
-            //            this.Dispatcher.BeginInvoke(UpdateBoard);
-            //        }
-
-            //        //Get updated score data
-            //        if (data.Contains("ScoreData"))
-            //        {
-            //            XmlSerializer xs = new XmlSerializer(typeof(ScoreData));
-            //            ScoreData scoreData = (ScoreData)xs.Deserialize(sr);
-            //            ScoreDataHandler handler = new ScoreDataHandler(UpdateScoreData);
-            //            this.Dispatcher.BeginInvoke(handler, new object[] { scoreData });
-            //        }
-            //    }
-            //    catch { }
-            //    finally
-            //    {
-            //        if (sr != null) sr.Close();
-            //    }
-            //    //Prepare to receive more data
-            //    Socket socket = (Socket)e.UserToken;
-            //    socket.ReceiveAsync(e);
         }
 
         #endregion EventHandling
@@ -183,6 +214,16 @@ namespace TecX.Agile.Remote
 
                 args.Completed += OnSocketConnectCompleted;
                 socket.ConnectAsync(args);
+
+                BasicHttpBinding binding = new BasicHttpBinding();
+
+                EndpointAddress address = new EndpointAddress(Constants.DefaultEndpointAddress);
+
+                ChannelFactory<IAsyncSilverlightPlanningService> factory = new ChannelFactory<IAsyncSilverlightPlanningService>(binding, address);
+
+                IAsyncSilverlightPlanningService proxy = factory.CreateChannel();
+
+                _proxy = proxy;
             }
             else
             {
