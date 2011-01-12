@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
 
 namespace TecX.Agile.Server
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "ISilverlightPlanningService" in both code and config file together.
-    [ServiceContract]
+    [ServiceContract(Namespace = "http://tecx.codeplex.com/agile/peer")]
     public interface ISilverlightPlanningService
     {
         [OperationContract(IsOneWay = true)]
