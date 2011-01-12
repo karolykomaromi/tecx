@@ -19,6 +19,7 @@ namespace TecX.Agile.Push
                         server.Start();
 
                         Console.WriteLine("Press any key to exit");
+                        Console.WriteLine("------------------------------");
                         Console.Read();
                     }
                     finally
@@ -36,6 +37,7 @@ namespace TecX.Agile.Push
                 policyServer.Start();
 
                 Console.WriteLine("Press any key to exit");
+                Console.WriteLine("------------------------------");
                 Console.Read();
             }
         }
