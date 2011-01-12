@@ -22,6 +22,9 @@ namespace TecX.Agile.Push
 
             /// <summary>"SocketClientAccessPolicy.xml"</summary>
             public const string DefaultPolicyFileName = "SocketClientAccessPolicy.xml";
+
+            /// <summary>943</summary>
+            public const int Port = 943;
         }
 
         #endregion Constants
@@ -30,8 +33,6 @@ namespace TecX.Agile.Push
 
         private static readonly ManualResetEvent TcpClientConnected = new ManualResetEvent(false);
 
-        private TcpListener _listener;
-        private TcpClient _client;
         private byte[] _receiveBuffer;
         private byte[] _policy;
         private int _receivedLength;
@@ -48,8 +49,9 @@ namespace TecX.Agile.Push
             {
                 //Using TcpListener which is a wrapper around a Socket
                 //Allowed port is 943 for Silverlight sockets policy data
-                _listener = new TcpListener(IPAddress.Any, 943);
-                _listener.Start();
+                TcpListener listener = new TcpListener(IPAddress.Any, Constants.Port);
+
+                listener.Start();
 
                 Console.WriteLine("Policy server listening...");
 
@@ -59,8 +61,10 @@ namespace TecX.Agile.Push
 
                     Console.WriteLine("Waiting for client connection...");
 
-                    _listener.BeginAcceptTcpClient(OnBeginAccept, null);
-                    TcpClientConnected.WaitOne(); //Block until client connects
+                    listener.BeginAcceptTcpClient(OnAcceptTcpClientCompleted, listener);
+
+                    //Block until client connects
+                    TcpClientConnected.WaitOne(); 
                 }
             }
             catch (Exception)
@@ -89,25 +93,32 @@ namespace TecX.Agile.Push
 
         #region EventHandling
 
-        private void OnBeginAccept(IAsyncResult ar)
+        private void OnAcceptTcpClientCompleted(IAsyncResult ar)
         {
-            _client = _listener.EndAcceptTcpClient(ar);
-            _client.Client.BeginReceive(_receiveBuffer, 0, Constants.PolicyRequestString.Length, SocketFlags.None,
-                                       new AsyncCallback(OnReceiveComplete), null);
+            TcpListener listener = (TcpListener)ar.AsyncState;
+
+            TcpClient client = listener.EndAcceptTcpClient(ar);
+
+            client.Client.BeginReceive(_receiveBuffer, 0, Constants.PolicyRequestString.Length, SocketFlags.None,
+                                       new AsyncCallback(OnReceiveComplete), client);
         }
 
         private void OnReceiveComplete(IAsyncResult ar)
         {
+            TcpClient client = null;
+
             try
             {
-                _receivedLength += _client.Client.EndReceive(ar);
+                client = (TcpClient)ar.AsyncState;
+
+                _receivedLength += client.Client.EndReceive(ar);
                 //See if there's more data that we need to grab
                 if (_receivedLength < Constants.PolicyRequestString.Length)
                 {
                     //Need to grab more data to receive remaining data
-                    _client.Client.BeginReceive(_receiveBuffer, _receivedLength,
+                    client.Client.BeginReceive(_receiveBuffer, _receivedLength,
                                                Constants.PolicyRequestString.Length - _receivedLength,
-                                               SocketFlags.None, new AsyncCallback(OnReceiveComplete), null);
+                                               SocketFlags.None, new AsyncCallback(OnReceiveComplete), client);
                     return;
                 }
 
@@ -116,32 +127,40 @@ namespace TecX.Agile.Push
                 if (StringComparer.InvariantCultureIgnoreCase.Compare(request, Constants.PolicyRequestString) != 0)
                 {
                     //Data received isn't valid so close
-                    _client.Client.Close();
+                    client.Client.Close();
+
                     return;
                 }
+
                 //Valid request received....send policy file
-                _client.Client.BeginSend(_policy, 0, _policy.Length, SocketFlags.None,
-                                        new AsyncCallback(OnSendComplete), null);
+                client.Client.BeginSend(_policy, 0, _policy.Length, SocketFlags.None,
+                                        new AsyncCallback(OnSendComplete), client);
             }
             catch (Exception)
             {
-                _client.Client.Close();
+                if (client != null)
+                    client.Client.Close();
             }
 
             _receivedLength = 0;
             TcpClientConnected.Set(); //Allow waiting thread to proceed
         }
 
-        private void OnSendComplete(IAsyncResult ar)
+        private static void OnSendComplete(IAsyncResult ar)
         {
+            TcpClient client = null;
+
             try
             {
-                _client.Client.EndSendFile(ar);
+                client = (TcpClient)ar.AsyncState;
+
+                client.Client.EndSend(ar);
             }
             finally
             {
                 //Close client socket
-                _client.Client.Close();
+                if (client != null)
+                    client.Client.Close();
             }
         }
 

@@ -14,6 +14,16 @@ namespace TecX.Agile.Push
     /// </summary>
     public class SocketServer : ISocketServer
     {
+        #region Constants
+
+        private static class Constants
+        {
+            /// <summary>4530</summary>
+            public const int Port = 4530;
+        }
+
+        #endregion Constants
+
         #region Events
 
         public event EventHandler ServerReady = delegate { };
@@ -27,8 +37,6 @@ namespace TecX.Agile.Push
         #region Fields
 
         private readonly List<Stream> _clientStreams;
-
-        private TcpListener _listener;
 
         private static readonly ManualResetEvent TcpClientConnected = new ManualResetEvent(false);
 
@@ -53,24 +61,35 @@ namespace TecX.Agile.Push
         /// </summary>
         public void Start()
         {
-            //Allowed port range 4502-4532
-            _listener = new TcpListener(IPAddress.Any, 4530);
+            TcpListener listener = null;
 
-            _listener.Start();
-
-            Console.WriteLine("Server listening...");
-
-            while (true)
+            try
             {
-                TcpClientConnected.Reset();
+                //Allowed port range 4502-4532
+                listener = new TcpListener(IPAddress.Any, Constants.Port);
 
-                _listener.BeginAcceptTcpClient(OnBeginAccept, null);
+                listener.Start();
 
-                Console.WriteLine("Waiting for client connection...");
+                Console.WriteLine("Server listening...");
 
-                OnServerReady();
+                while (true)
+                {
+                    TcpClientConnected.Reset();
 
-                TcpClientConnected.WaitOne(); //Block until client connects
+                    listener.BeginAcceptTcpClient(OnAcceptTcpClientCompleted, listener);
+
+                    Console.WriteLine("Waiting for client connection...");
+
+                    OnServerReady();
+
+                    //Block until client connects
+                    TcpClientConnected.WaitOne();
+                }
+            }
+            finally
+            {
+                if (listener != null)
+                    listener.Stop();
             }
         }
 
@@ -88,8 +107,9 @@ namespace TecX.Agile.Push
 
             _clientStreams.Clear();
 
-            _listener.Stop();
-            _listener = null;
+            //TODO weberse 2011-01-12 find a way to kill the listener without requiring a hard coded reference
+            //_listener.Stop();
+            //_listener = null;
 
             Console.WriteLine("Server stopped");
         }
@@ -115,13 +135,14 @@ namespace TecX.Agile.Push
         /// <summary>
         /// Called when a client connects
         /// </summary>
-        /// <param name="asyncResult">The async result.</param>
-        private void OnBeginAccept(IAsyncResult asyncResult)
+        /// <param name="ar">The async result.</param>
+        private void OnAcceptTcpClientCompleted(IAsyncResult ar)
         {
             TcpClientConnected.Set(); //Allow waiting thread to proceed
 
-            TcpListener listener = _listener;
-            TcpClient client = listener.EndAcceptTcpClient(asyncResult);
+            TcpListener listener = (TcpListener)ar.AsyncState;
+
+            TcpClient client = listener.EndAcceptTcpClient(ar);
 
             if (client.Connected)
             {
