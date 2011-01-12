@@ -100,11 +100,13 @@ namespace TecX.Agile.Remote
                                       message.Angle,
                                       ar =>
                                           {
-                                              _proxy.EndMoveStoryCard(ar);
+                                              var proxy = (IAsyncSilverlightPlanningService) ar.AsyncState;
+
+                                              proxy.EndMoveStoryCard(ar);
 
                                               Console.WriteLine("StoryCardMoved");
                                           },
-                                      null);
+                                      _proxy);
         }
 
         public void Handle(CaretMoved message)
