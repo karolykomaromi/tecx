@@ -53,7 +53,8 @@ namespace TecX.Agile.ChangeTracking
                                                                       StoryCard newItem =
                                                                           x.NewItems.First() as StoryCard;
 
-                                                                      StoryCardAdded msg = new StoryCardAdded(newItem.Id, scc.Id);
+                                                                      StoryCardAdded msg = 
+                                                                          new StoryCardAdded(newItem.Id, scc.Id, newItem.X, newItem.Y, newItem.Angle);
 
                                                                       //can't use IMessage and generic publish because EA would get TypeParameter wrong
                                                                       _eventAggregator.Publish(msg);

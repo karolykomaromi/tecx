@@ -210,10 +210,12 @@ namespace TecX.Agile.Modules.Gestures.ViewModel
             //TODO need to decide which corner of the bounds to use dependent on which gesture was used
             //return gestureBounds.TopLeft;
 
-            Point center = GeometryHelper.CenterPoint(gestureBounds);
+            var topLeft = Tabletop.Surface.PointFromScreen(gestureBounds.TopLeft);
+            var bottomRight = Tabletop.Surface.PointFromScreen(gestureBounds.BottomRight);
 
-            center.X += gestureBounds.TopLeft.X;
-            center.Y += gestureBounds.TopLeft.Y;
+            var vector = (bottomRight - topLeft)/2;
+
+            Point center = topLeft + vector;
 
             return center;
         }

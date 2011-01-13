@@ -36,7 +36,6 @@ namespace TecX.Agile.View
             DataContext = storyCard;
 
             InitializeComponent();
-
         }
 
         #endregion c'tor

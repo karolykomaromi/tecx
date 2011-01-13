@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Moq;
 
+using TecX.Agile.Infrastructure.Services;
 using TecX.TestTools;
 using TecX.Undo;
 
@@ -17,13 +18,15 @@ namespace TecX.Agile.ViewModel.Test
         [TestMethod]
         public void WhenPostponingStoryCard_EventIsRaised()
         {
+            var mockShowThingsService = new Mock<IShowThings>();
+
             Iteration iteration = new Iteration();
 
             StoryCard card = new StoryCard();
 
             iteration.Add(card);
 
-            Project project = new Project();
+            Project project = new Project(mockShowThingsService.Object);
 
             project.Add(iteration);
 
@@ -41,13 +44,15 @@ namespace TecX.Agile.ViewModel.Test
         [TestMethod]
         public void WhenPostponingStoryCard_NewParentIsSet()
         {
+            var mockShowThingsService = new Mock<IShowThings>();
+
             Iteration iteration = new Iteration();
 
             StoryCard card = new StoryCard();
 
             iteration.Add(card);
 
-            Project project = new Project();
+            Project project = new Project(mockShowThingsService.Object);
 
             project.Add(iteration);
 
@@ -59,13 +64,15 @@ namespace TecX.Agile.ViewModel.Test
         [TestMethod]
         public void WhenPostponingStoryCard_IsRemovedFromIteration()
         {
+            var mockShowThingsService = new Mock<IShowThings>();
+
             Iteration iteration = new Iteration();
 
             StoryCard card = new StoryCard();
 
             iteration.Add(card);
 
-            Project project = new Project();
+            Project project = new Project(mockShowThingsService.Object);
 
             project.Add(iteration);
 
@@ -77,13 +84,14 @@ namespace TecX.Agile.ViewModel.Test
         [TestMethod]
         public void WhenPostponingStoryCard_IsAddedToBacklog()
         {
+            var mockShowThingsService = new Mock<IShowThings>();
             Iteration iteration = new Iteration();
 
             StoryCard card = new StoryCard();
 
             iteration.Add(card);
 
-            Project project = new Project();
+            Project project = new Project(mockShowThingsService.Object);
 
             project.Add(iteration);
 

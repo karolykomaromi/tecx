@@ -9,7 +9,9 @@
              xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
              mc:Ignorable="d" 
              d:DesignHeight="200" 
-             d:DesignWidth="300"             
+             d:DesignWidth="300"
+            Width="300" 
+            Height="200"             
              BorderBrush="Black"
              BorderThickness="1">
     <Interactivity:Interaction.Behaviors>

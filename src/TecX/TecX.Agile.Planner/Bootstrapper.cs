@@ -6,6 +6,8 @@ using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 
+using TecX.Agile.Infrastructure.Services;
+using TecX.Agile.Modules.Main.Services;
 using TecX.Agile.Peer;
 using TecX.Agile.ChangeTracking;
 using TecX.Agile.Remote;
@@ -46,6 +48,8 @@ namespace TecX.Agile.Planner
                 .Include(If.Is<PeerClient>(), Then.Register().As<IPeerClient>())
                 .Include(If.Is<ChangeTracker>(), Then.Register().As<IChangeTracker>())
                 .ApplyRegistrations();
+
+            Container.RegisterType<IShowThings, ShowThingsService>(new ContainerControlledLifetimeManager());
 
             base.ConfigureContainer();
 

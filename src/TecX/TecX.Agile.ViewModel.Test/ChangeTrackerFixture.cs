@@ -9,6 +9,7 @@ using Moq;
 using TecX.Agile.ChangeTracking;
 using TecX.Agile.Infrastructure;
 using TecX.Agile.Infrastructure.Events;
+using TecX.Agile.Infrastructure.Services;
 using TecX.Agile.ViewModel.Undo;
 using TecX.Common.Event;
 using TecX.Undo;
@@ -203,10 +204,11 @@ namespace TecX.Agile.ViewModel.Test
         public void WhenSubscribingIteration_TrackerIssuesPostponedMessage()
         {
             var mockEventAggregator = new Mock<IEventAggregator>();
+            var mockShowThingsService = new Mock<IShowThings>();
 
             IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
 
-            Project project = new Project();
+            Project project = new Project(mockShowThingsService.Object);
             Iteration iteration = new Iteration();
             StoryCard card = new StoryCard();
 
@@ -229,10 +231,11 @@ namespace TecX.Agile.ViewModel.Test
         public void WhenUnsubscribingIteraton_TrackerIssuesNoMoreMessages()
         {
             var mockEventAggregator = new Mock<IEventAggregator>();
+            var mockShowThingsService = new Mock<IShowThings>();
 
             IChangeTracker tracker = new ChangeTracker(mockEventAggregator.Object);
 
-            Project project = new Project();
+            Project project = new Project(mockShowThingsService.Object);
             Iteration iteration = new Iteration();
             StoryCard card = new StoryCard();
             StoryCard card2 = new StoryCard { Id = Guid.NewGuid() };
@@ -261,10 +264,11 @@ namespace TecX.Agile.ViewModel.Test
         public void GivenProject_WhenSubscribingToChangeTracker_SubscribesBacklogAsWell()
         {
             var mockEventAggregator = new Mock<IEventAggregator>();
+            var mockShowThingsService = new Mock<IShowThings>();
 
             IChangeTracker changeTracker = new ChangeTracker(mockEventAggregator.Object);
 
-            Project project = new Project();
+            Project project = new Project(mockShowThingsService.Object);
 
             changeTracker.Subscribe(project);
 
@@ -283,10 +287,11 @@ namespace TecX.Agile.ViewModel.Test
         public void GivenProject_WhenSubscribingToChangeTracker_SubscribesIterationsAsWell()
         {
             var mockEventAggregator = new Mock<IEventAggregator>();
+            var mockShowThingsService = new Mock<IShowThings>();
 
             IChangeTracker changeTracker = new ChangeTracker(mockEventAggregator.Object);
 
-            Project project = new Project();
+            Project project = new Project(mockShowThingsService.Object);
 
             Iteration iteration = new Iteration { Id = Guid.NewGuid() };
 

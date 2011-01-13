@@ -64,8 +64,8 @@
     <Compile Include="Events\StoryCardRescheduled.cs" />
     <Compile Include="Regions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IDisplayText.cs" />
-    <Compile Include="Services\IShowViewModels.cs" />
+    <Compile Include="Services\IShowText.cs" />
+    <Compile Include="Services\IShowThings.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

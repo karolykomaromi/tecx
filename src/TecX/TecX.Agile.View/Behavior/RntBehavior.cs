@@ -45,7 +45,7 @@ namespace TecX.Agile.View.Behavior
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
                 return;
 
-            AssociatedObject.Loaded += AddTranslateOnlyArea;
+            AssociatedObject.Loaded += OnLoaded;
 
             AssociatedObject.MouseEnter += OnMouseEnter;
             AssociatedObject.MouseLeave += OnMouseLeave;
@@ -53,13 +53,6 @@ namespace TecX.Agile.View.Behavior
             AssociatedObject.PreviewMouseLeftButtonDown += OnMouseLeftButtonDown;
             AssociatedObject.PreviewMouseLeftButtonUp += OnMouseLeftButtonUp;
             AssociatedObject.PreviewMouseMove += OnMouseMove;
-
-            ViewModel.StoryCard storyCard = AssociatedObject.DataContext as ViewModel.StoryCard;
-
-            if (storyCard != null)
-            {
-                InitializePositionBindings(AssociatedObject, storyCard);
-            }
         }
 
         protected override void OnDetaching()
@@ -177,21 +170,27 @@ namespace TecX.Agile.View.Behavior
 
         #endregion EventHandling
 
-        private void AddTranslateOnlyArea(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
             UserControl element = sender as UserControl;
 
             if (element != null)
             {
                 Grid overlay = element.FindName("Overlay") as Grid;
-                //Panel layoutRoot = element.Content as Panel;
 
                 if (overlay != null)
                 {
                     overlay.Children.Add(_toa);
                 }
 
-                element.Loaded -= AddTranslateOnlyArea;
+                element.Loaded -= OnLoaded;
+            }
+
+            ViewModel.StoryCard storyCard = AssociatedObject.DataContext as ViewModel.StoryCard;
+
+            if (storyCard != null)
+            {
+                InitializePositionBindings(AssociatedObject, storyCard);
             }
         }
 
@@ -227,6 +226,8 @@ namespace TecX.Agile.View.Behavior
             {
                 storyCard.Angle = GeometryHelper.GetRotationAngleFromMatrix(initialMatrix);
             }
+
+            AssociatedObject.Transform().Matrix = initialMatrix;
 
             var transform = from evt in Observable.FromEvent<EventArgs>(element.Transform(), "Changed")
                             let matrix = ((MatrixTransform)evt.Sender).Matrix
