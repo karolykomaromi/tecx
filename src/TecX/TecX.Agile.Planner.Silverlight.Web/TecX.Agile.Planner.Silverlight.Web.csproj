@@ -41,16 +41,12 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activation" />
-    <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -82,18 +78,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TecX.Agile.Peer\TecX.Agile.Peer.csproj">
-      <Project>{4C9A3BE9-2E8F-44B1-965B-42AD35D36071}</Project>
-      <Name>TecX.Agile.Peer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TecX.Agile.Push\TecX.Agile.Push.csproj">
-      <Project>{24846DEB-FA0F-4C6D-A7A3-01805C4FA2FC}</Project>
-      <Name>TecX.Agile.Push</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TecX.Agile.Serialization\TecX.Agile.Serialization.csproj">
-      <Project>{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002}</Project>
-      <Name>TecX.Agile.Serialization</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Server\TecX.Agile.Server.csproj">
       <Project>{465326B4-D8B1-4DC8-A14E-D701D7E5F936}</Project>
       <Name>TecX.Agile.Server</Name>
@@ -105,7 +89,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
-    <Folder Include="Service\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
