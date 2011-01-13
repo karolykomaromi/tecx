@@ -12,6 +12,8 @@ namespace TecX.Agile.Infrastructure
         public static readonly CompositeCommand UpdateProperty = new CompositeCommand();
         public static readonly CompositeCommand MoveStoryCard = new CompositeCommand();
 
+        public static readonly CompositeCommand DisplayText = new CompositeCommand();
+
         public static readonly CompositeCommand Undo = new CompositeCommand();
         public static readonly CompositeCommand Redo = new CompositeCommand();
     }
