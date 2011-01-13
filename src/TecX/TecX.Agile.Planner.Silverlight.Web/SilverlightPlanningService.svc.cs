@@ -1,22 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using System.Threading;
+using System.ServiceModel.Activation;
 
 using TecX.Agile.Peer;
 using TecX.Agile.Push;
 using TecX.Agile.Serialization;
 using TecX.Agile.Serialization.Messages;
+using TecX.Agile.Server;
 using TecX.Common;
 
-using Constants = TecX.Agile.Peer.Constants;
-
-namespace TecX.Agile.Server
+namespace TecX.Agile.Silverlight.Service
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    //[AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class SilverlightPlanningService : ISilverlightPlanningService
     {
         #region Fields
@@ -29,13 +23,13 @@ namespace TecX.Agile.Server
 
         #region c'tor
 
-        public SilverlightPlanningService(IPeerClient peerClient, ISocketServer socketServer)
+        public SilverlightPlanningService(ISocketServer socketServer, IPeerClient peerClient)
         {
-            Guard.AssertNotNull(peerClient, "peerClient");
             Guard.AssertNotNull(socketServer, "socketServer");
+            Guard.AssertNotNull(peerClient, "peerClient");
 
-            _peerClient = peerClient;
             _socketServer = socketServer;
+            _peerClient = peerClient;
 
             _formatter = new BinaryFormatter();
 
@@ -62,13 +56,13 @@ namespace TecX.Agile.Server
         private void OnStoryCardMoved(object sender, StoryCardMovedEventArgs e)
         {
             StoryCardMoved message = new StoryCardMoved
-                                         {
-                                             SenderId = e.SenderId,
-                                             StoryCardId = e.StoryCardId,
-                                             X = e.X,
-                                             Y = e.Y,
-                                             Angle = e.Angle
-                                         };
+            {
+                SenderId = e.SenderId,
+                StoryCardId = e.StoryCardId,
+                X = e.X,
+                Y = e.Y,
+                Angle = e.Angle
+            };
 
             byte[] serialized = _formatter.Serialize(message);
 
@@ -78,12 +72,12 @@ namespace TecX.Agile.Server
         private void OnCaretMoved(object sender, CaretMovedEventArgs e)
         {
             CaretMoved message = new CaretMoved
-                                     {
-                                         SenderId = e.SenderId,
-                                         ArtefactId = e.ArtefactId,
-                                         CaretIndex = e.CaretIndex,
-                                         FieldName = e.FieldName
-                                     };
+            {
+                SenderId = e.SenderId,
+                ArtefactId = e.ArtefactId,
+                CaretIndex = e.CaretIndex,
+                FieldName = e.FieldName
+            };
 
             byte[] serialized = _formatter.Serialize(message);
 
@@ -93,11 +87,11 @@ namespace TecX.Agile.Server
         private void OnIncomingRequestToHighlightField(object sender, FieldHighlightedEventArgs e)
         {
             FieldHighlighted message = new FieldHighlighted
-                                           {
-                                               SenderId = e.SenderId, 
-                                               ArtefactId = e.ArtefactId, 
-                                               FieldName = e.FieldName
-                                           };
+            {
+                SenderId = e.SenderId,
+                ArtefactId = e.ArtefactId,
+                FieldName = e.FieldName
+            };
 
             byte[] serialized = _formatter.Serialize(message);
 
@@ -107,13 +101,13 @@ namespace TecX.Agile.Server
         private void OnPropertyUpdated(object sender, UpdatedPropertyEventArgs e)
         {
             PropertyUpdated message = new PropertyUpdated
-                                          {
-                                              SenderId = e.SenderId,
-                                              ArtefactId = e.ArtefactId,
-                                              PropertyName = e.PropertyName,
-                                              OldValue = e.OldValue,
-                                              NewValue = e.NewValue
-                                          };
+            {
+                SenderId = e.SenderId,
+                ArtefactId = e.ArtefactId,
+                PropertyName = e.PropertyName,
+                OldValue = e.OldValue,
+                NewValue = e.NewValue
+            };
 
             byte[] serialized = _formatter.Serialize(message);
 
@@ -131,13 +125,13 @@ namespace TecX.Agile.Server
             _peerClient.MoveStoryCard(senderId, storyCardId, x, y, angle);
 
             StoryCardMoved message = new StoryCardMoved
-                                         {
-                                             SenderId = senderId,
-                                             StoryCardId = storyCardId,
-                                             X = x,
-                                             Y = y,
-                                             Angle = angle
-                                         };
+            {
+                SenderId = senderId,
+                StoryCardId = storyCardId,
+                X = x,
+                Y = y,
+                Angle = angle
+            };
 
             byte[] serialized = _formatter.Serialize(message);
 
@@ -149,11 +143,11 @@ namespace TecX.Agile.Server
             _peerClient.Highlight(senderId, artefactId, fieldName);
 
             FieldHighlighted message = new FieldHighlighted
-                                           {
-                                               SenderId = senderId,
-                                               ArtefactId = artefactId,
-                                               FieldName = fieldName
-                                           };
+            {
+                SenderId = senderId,
+                ArtefactId = artefactId,
+                FieldName = fieldName
+            };
 
             byte[] serialized = _formatter.Serialize(message);
 
@@ -165,13 +159,13 @@ namespace TecX.Agile.Server
             _peerClient.UpdateProperty(senderId, artefactId, propertyName, oldValue, newValue);
 
             PropertyUpdated message = new PropertyUpdated
-                                          {
-                                              SenderId = senderId,
-                                              ArtefactId = artefactId,
-                                              PropertyName = propertyName,
-                                              OldValue = oldValue,
-                                              NewValue = newValue
-                                          };
+            {
+                SenderId = senderId,
+                ArtefactId = artefactId,
+                PropertyName = propertyName,
+                OldValue = oldValue,
+                NewValue = newValue
+            };
 
             byte[] serialized = _formatter.Serialize(message);
 
@@ -183,12 +177,12 @@ namespace TecX.Agile.Server
             _peerClient.MoveCaret(senderId, artefactId, fieldName, caretIndex);
 
             CaretMoved message = new CaretMoved
-                                     {
-                                         SenderId = senderId,
-                                         ArtefactId = artefactId,
-                                         CaretIndex = caretIndex,
-                                         FieldName = fieldName
-                                     };
+            {
+                SenderId = senderId,
+                ArtefactId = artefactId,
+                CaretIndex = caretIndex,
+                FieldName = fieldName
+            };
 
             byte[] serialized = _formatter.Serialize(message);
 

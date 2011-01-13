@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Windows;
 
 using TecX.Agile.Infrastructure;
@@ -28,7 +29,7 @@ namespace TecX.Agile.Remote
             /// <summary>
             /// http://localhost:8732/Design_Time_Addresses/TecX.Agile.Server/SilverlightPlanningService/
             /// </summary>
-            public const string DefaultEndpointAddress = @"http://localhost:8732/Design_Time_Addresses/TecX.Agile.Server/SilverlightPlanningService/";
+            public const string DefaultEndpointAddress = @"http://localhost:8732/SilverlightPlanningService/";
         }
 
         #endregion Constants
@@ -217,7 +218,10 @@ namespace TecX.Agile.Remote
                 args.Completed += OnSocketConnectCompleted;
                 socket.ConnectAsync(args);
 
-                BasicHttpBinding binding = new BasicHttpBinding();
+                BinaryMessageEncodingBindingElement binaryEncoding = new BinaryMessageEncodingBindingElement();
+                HttpTransportBindingElement httpTransport = new HttpTransportBindingElement();
+
+                Binding binding = new CustomBinding(new BindingElement[] { binaryEncoding, httpTransport });
 
                 EndpointAddress address = new EndpointAddress(Constants.DefaultEndpointAddress);
 

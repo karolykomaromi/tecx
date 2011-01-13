@@ -12,7 +12,7 @@ namespace TecX.ServiceModel.Unity
     /// ServiceHostFactory that can be used by IIS to host a service configured with
     /// Unity
     /// </summary>
-    public class UnityServiceHostFactory : ServiceHostFactory
+    public abstract class UnityServiceHostFactory : ServiceHostFactory
     {
         #region Fields
 
@@ -41,7 +41,11 @@ namespace TecX.ServiceModel.Unity
         public UnityServiceHostFactory()
         {
             _container = new UnityContainer();
+
+            ConfigureContainer(_container);
         }
+
+        protected abstract void ConfigureContainer(IUnityContainer container);
 
         #endregion c'tor
 
