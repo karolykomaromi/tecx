@@ -30,7 +30,7 @@ namespace TecX.Agile.View.Behavior
 
         #region Properties
 
-        public string FieldName { get; set; }
+        public string UniqueFieldName { get; set; }
 
         #endregion Properties
 
@@ -77,7 +77,7 @@ namespace TecX.Agile.View.Behavior
             _highlightFieldCommand = new DelegateCommand<FieldHighlighted>(message =>
             {
                 if (message.ArtefactId == _artefactId &&
-                    message.FieldName == FieldName)
+                    message.FieldName == UniqueFieldName)
                 {
                     AssociatedObject.Focus();
                 }
@@ -86,7 +86,7 @@ namespace TecX.Agile.View.Behavior
             _moveCaretCommand = new DelegateCommand<CaretMoved>(message =>
             {
                 if (message.ArtefactId == _artefactId &&
-                    message.FieldName == FieldName)
+                    message.FieldName == UniqueFieldName)
                 {
                     AssociatedObject.Select(message.CaretIndex, 0);
                 }
@@ -130,7 +130,7 @@ namespace TecX.Agile.View.Behavior
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
-            _eventAggregator.Publish(new FieldHighlighted(_artefactId, FieldName));
+            _eventAggregator.Publish(new FieldHighlighted(_artefactId, UniqueFieldName));
         }
 
         private void OnKeyUp(object sender, KeyEventArgs e)
@@ -140,7 +140,7 @@ namespace TecX.Agile.View.Behavior
             if (focusedElement != null &&
                 focusedElement == AssociatedObject)
             {
-                _eventAggregator.Publish(new CaretMoved(_artefactId, FieldName, AssociatedObject.SelectionStart));
+                _eventAggregator.Publish(new CaretMoved(_artefactId, UniqueFieldName, AssociatedObject.SelectionStart));
             }
         }
 
@@ -163,7 +163,7 @@ namespace TecX.Agile.View.Behavior
                 if (behavior != null)
                     return;
 
-                behavior = new HighlightFieldBehavior { FieldName = fieldName };
+                behavior = new HighlightFieldBehavior { UniqueFieldName = fieldName };
 
                 behaviors.Add(behavior);
             }

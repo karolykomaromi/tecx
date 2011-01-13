@@ -26,80 +26,84 @@
         BorderThickness="1">
         <Grid 
         Background="{Binding Path=Background, Converter={StaticResource ColorToSolidColorBrush_ValueConverter}}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*" MinHeight="25"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="12*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <TextBox
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" MinHeight="25"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="12*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBox
             x:Name="TaskName" 
             Style="{StaticResource HiddenTextBoxStyle}"
             Grid.ColumnSpan="3"
             Text="{Binding Path=Name, UpdateSourceTrigger=Default}">
-            <Interactivity:Interaction.Behaviors>
-                <Behavior:TextBoxHideBehavior/>
-            </Interactivity:Interaction.Behaviors>
-        </TextBox>
-        <Rectangle
+                <Interactivity:Interaction.Behaviors>
+                    <Behavior:TextBoxHideBehavior/>
+                    <Behavior:HighlightFieldBehavior UniqueFieldName="TaskName"/>
+                </Interactivity:Interaction.Behaviors>
+            </TextBox>
+            <Rectangle
             Grid.ColumnSpan="3"
             Style="{StaticResource TopSeparator}"/>
-        <TextBox 
+            <TextBox 
             x:Name="MostLikelyEstimate"
             Style="{StaticResource HiddenTextBoxStyle}"
             Grid.Row="1"
             Text="{Binding Path=MostLikelyEstimate, Converter={StaticResource StringToDouble_ValueConverter}, UpdateSourceTrigger=Default}">
-            <Interactivity:Interaction.Behaviors>
-                <Behavior:TextBoxHideBehavior/>
-            </Interactivity:Interaction.Behaviors>
-        </TextBox>
-        <TextBox 
+                <Interactivity:Interaction.Behaviors>
+                    <Behavior:TextBoxHideBehavior/>
+                    <Behavior:HighlightFieldBehavior UniqueFieldName="MostLikelyEstimate"/>
+                </Interactivity:Interaction.Behaviors>
+            </TextBox>
+            <TextBox 
             x:Name="ActualEffort" 
             Style="{StaticResource HiddenTextBoxStyle}"
             Grid.Row="1" 
             Grid.Column="1"
             Text="{Binding Path=ActualEffort, Converter={StaticResource StringToDouble_ValueConverter}, UpdateSourceTrigger=Default}">
-            <Interactivity:Interaction.Behaviors>
-                <Behavior:TextBoxHideBehavior/>
-            </Interactivity:Interaction.Behaviors>
-        </TextBox>
-        <TextBox 
+                <Interactivity:Interaction.Behaviors>
+                    <Behavior:TextBoxHideBehavior/>
+                    <Behavior:HighlightFieldBehavior UniqueFieldName="ActualEffort"/>
+                </Interactivity:Interaction.Behaviors>
+            </TextBox>
+            <TextBox 
             x:Name="TaskOwner" 
             Style="{StaticResource HiddenTextBoxStyle}"
             Grid.Row="1" 
             Grid.Column="2"
             Text="{Binding Path=TaskOwner, UpdateSourceTrigger=Default}">
-            <Interactivity:Interaction.Behaviors>
-                <Behavior:TextBoxHideBehavior/>
-            </Interactivity:Interaction.Behaviors>
-        </TextBox>
-        <TextBlock 
+                <Interactivity:Interaction.Behaviors>
+                    <Behavior:TextBoxHideBehavior/>
+                    <Behavior:HighlightFieldBehavior UniqueFieldName="TaskOwner"/>
+                </Interactivity:Interaction.Behaviors>
+            </TextBox>
+            <TextBlock 
             Text="Mostlikely Estimate"
             Grid.Row="2"
             FontSize="8"/>
-        <Rectangle 
+            <Rectangle 
             Grid.Row="1"
             Grid.ColumnSpan="3"
             VerticalAlignment="Bottom"
             Canvas.ZIndex="50"
             IsHitTestVisible="False"
             Style="{StaticResource Separator}" />
-        <TextBlock
+            <TextBlock
             Text="Actual Effort"
             Grid.Row="2"
             Grid.Column="1"
             FontSize="8" />
-        <TextBlock
+            <TextBlock
             Text="Task Owner"
             Grid.Row="2"
             Grid.Column="2"
             FontSize="8"/>
-        <TextBox 
+            <TextBox 
             x:Name="Description" 
             Style="{StaticResource HiddenTextBoxStyle}"
             TextWrapping="Wrap" 
@@ -109,22 +113,23 @@
             AcceptsReturn="True" 
             AllowDrop="False"
             Text="{Binding Path=Description, UpdateSourceTrigger=Default}">
-            <Interactivity:Interaction.Behaviors>
-                <Behavior:TextBoxHideBehavior/>
-            </Interactivity:Interaction.Behaviors>
-        </TextBox>
-        <Grid 
+                <Interactivity:Interaction.Behaviors>
+                    <Behavior:TextBoxHideBehavior/>
+                    <Behavior:HighlightFieldBehavior UniqueFieldName="Description"/>
+                </Interactivity:Interaction.Behaviors>
+            </TextBox>
+            <Grid 
             Grid.Row="2"
             Grid.RowSpan="2" 
             Grid.ColumnSpan="3" 
             IsHitTestVisible="False">
-            <Rectangle x:Name="_sep1" Style="{StaticResource Separator}" Margin="0,25,0,0" />
-            <Rectangle Style="{StaticResource Separator}" Margin="0,50,0,0" />
-            <Rectangle Style="{StaticResource Separator}" Margin="0,75,0,0" />
-            <Rectangle Style="{StaticResource Separator}" Margin="0,100,0,0" />
-            <Rectangle Style="{StaticResource Separator}" Margin="0,125,0,0" />
-        </Grid>
-        <Grid            
+                <Rectangle x:Name="_sep1" Style="{StaticResource Separator}" Margin="0,25,0,0" />
+                <Rectangle Style="{StaticResource Separator}" Margin="0,50,0,0" />
+                <Rectangle Style="{StaticResource Separator}" Margin="0,75,0,0" />
+                <Rectangle Style="{StaticResource Separator}" Margin="0,100,0,0" />
+                <Rectangle Style="{StaticResource Separator}" Margin="0,125,0,0" />
+            </Grid>
+            <Grid            
             x:Name="Overlay" 
             Grid.RowSpan="4"
             Grid.ColumnSpan="3"

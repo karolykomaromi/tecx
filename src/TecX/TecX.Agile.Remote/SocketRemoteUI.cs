@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.ServiceModel;
@@ -57,13 +58,15 @@ namespace TecX.Agile.Remote
 
         public SocketRemoteUI()
         {
-            InitializeSocketConnection();
-
             _id = Guid.NewGuid();
 
             _formatter = new BinaryFormatter();
 
             InitializeBinaryFormatter();
+
+            InitializeSocketConnection();
+
+            InitializeWcfConnection();
         }
 
         #endregion c'tor
@@ -77,7 +80,11 @@ namespace TecX.Agile.Remote
                                        message.PropertyName,
                                        message.OldValue,
                                        message.NewValue,
-                                       null,
+                                       ar =>
+                                       {
+                                           var proxy = (ISilverlightPlanningServiceAsync)ar.AsyncState;
+                                           proxy.EndUpdateProperty(ar);
+                                       },
                                        null);
         }
 
@@ -94,8 +101,12 @@ namespace TecX.Agile.Remote
             _proxy.BeginHighlight(_id,
                                   message.ArtefactId,
                                   message.FieldName,
-                                  null,
-                                  null);
+                                  ar =>
+                                  {
+                                      var proxy = (ISilverlightPlanningServiceAsync)ar.AsyncState;
+                                      proxy.EndHighlight(ar);
+                                  },
+                                  _proxy);
         }
 
         public void Handle(StoryCardMoved message)
@@ -108,10 +119,7 @@ namespace TecX.Agile.Remote
                                       ar =>
                                       {
                                           var proxy = (ISilverlightPlanningServiceAsync)ar.AsyncState;
-
                                           proxy.EndMoveStoryCard(ar);
-
-                                          Console.WriteLine("StoryCardMoved");
                                       },
                                       _proxy);
         }
@@ -122,8 +130,12 @@ namespace TecX.Agile.Remote
                                   message.ArtefactId,
                                   message.FieldName,
                                   message.CaretIndex,
-                                  null,
-                                  null);
+                                  ar =>
+                                  {
+                                      var proxy = (ISilverlightPlanningServiceAsync)ar.AsyncState;
+                                      proxy.EndMoveCaret(ar);
+                                  },
+                                  _proxy);
         }
 
         #endregion Implementation of IRemoteUI
@@ -238,28 +250,52 @@ namespace TecX.Agile.Remote
 
                     args.Completed += OnSocketConnectCompleted;
                     socket.ConnectAsync(args);
-
-                    BinaryMessageEncodingBindingElement binaryEncoding = new BinaryMessageEncodingBindingElement();
-                    HttpTransportBindingElement httpTransport = new HttpTransportBindingElement();
-
-                    Binding binding = new CustomBinding(new BindingElement[] { binaryEncoding, httpTransport });
-
-                    EndpointAddress address = new EndpointAddress(Constants.DefaultEndpointAddress);
-
-                    ChannelFactory<ISilverlightPlanningServiceAsync> factory = new ChannelFactory<ISilverlightPlanningServiceAsync>(binding, address);
-
-                    ISilverlightPlanningServiceAsync proxy = factory.CreateChannel();
-
-                    _proxy = proxy;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    ex.WithAdditionalInfos(new Dictionary<object, object>
+                                               {
+                                                   {"port", Constants.DefaultPolicyServerPort},
+                                                   {"addressFamily", AddressFamily.InterNetwork},
+                                                   {"socketType", SocketType.Stream},
+                                                   {"protocolType", ProtocolType.Tcp},
+                                                   {"host", Application.Current.Host.Source.DnsSafeHost}
+                                               });
+
                     throw;
                 }
             }
             else
             {
                 throw new InvalidOperationException("Can't setup socket connection");
+            }
+        }
+
+        private void InitializeWcfConnection()
+        {
+            try
+            {
+                BinaryMessageEncodingBindingElement binaryEncoding = new BinaryMessageEncodingBindingElement();
+                HttpTransportBindingElement httpTransport = new HttpTransportBindingElement();
+
+                Binding binding = new CustomBinding(new BindingElement[] { binaryEncoding, httpTransport });
+
+                EndpointAddress address = new EndpointAddress(Constants.DefaultEndpointAddress);
+
+                ChannelFactory<ISilverlightPlanningServiceAsync> factory = new ChannelFactory<ISilverlightPlanningServiceAsync>(binding, address);
+
+                ISilverlightPlanningServiceAsync proxy = factory.CreateChannel();
+
+                _proxy = proxy;
+            }
+            catch (Exception ex)
+            {
+                ex.WithAdditionalInfos(new Dictionary<object, object>
+                                           {
+                                               {"address", Constants.DefaultEndpointAddress}
+                                           });
+
+                throw;
             }
         }
 
