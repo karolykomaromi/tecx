@@ -1,12 +1,6 @@
 ﻿using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
-
-#if SILVERLIGHT
-
-#else
 using Microsoft.Practices.Unity;
-using Microsoft.Windows.Controls.Ribbon;
-#endif
 
 using TecX.Agile.Infrastructure;
 using TecX.Agile.Infrastructure.Services;
@@ -42,35 +36,18 @@ namespace TecX.Agile.Modules.Main
         /// </summary>
         public void Initialize()
         {
-
-#if SILVERLIGHT
-
-#else
             _container.RegisterType<IShowViewModels, ShowViewModelService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IDisplayText, DisplayTextService>(new ContainerControlledLifetimeManager());
 
-            IRegion mainToolBar = _regionManager.Regions[Regions.MainToolBar];
-
-            RibbonButton btnAddStory = new RibbonButton {Label = "Add Story", Command = Commands.AddStoryCard };
-            RibbonButton btnRemoveStory = new RibbonButton {Label = "Remove Story", Command = Commands.RemoveStoryCard};
-
-            RibbonGroup grp = new RibbonGroup { Header = "Story Management" };
-            grp.Items.Add(btnAddStory);
-            grp.Items.Add(btnRemoveStory);
-
-            RibbonTab tab = new RibbonTab
-                                {
-                                    Header = "Project"
-                                };
-            tab.Items.Add(grp);
-
-            mainToolBar.Add(tab);
-            
-#endif
-
             IRegion main = _regionManager.Regions[Regions.Main];
-
+            
             main.Add(new Surface());
+
+            IRegion surface = _regionManager.Regions[Regions.Surface];
+
+            InfoTextArea infoTextArea = _container.Resolve<InfoTextArea>();
+
+            surface.Add(infoTextArea);
         }
 
         #endregion Implementation of IModule

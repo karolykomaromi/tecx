@@ -4,10 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"             
              xmlns:View="clr-namespace:TecX.Agile.View;assembly=TecX.Agile.View" 
+             xmlns:cal="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism" 
+             xmlns:inf="clr-namespace:TecX.Agile.Infrastructure;assembly=TecX.Agile.Infrastructure" 
              mc:Ignorable="d" 
              d:DesignHeight="300" 
              d:DesignWidth="300">
-    <Grid>
-        <Canvas x:Name="_surface" View:Tabletop.IsSurface="true" />
+    <Grid
+        cal:RegionManager.RegionName="{x:Static inf:Regions.Surface}">
+        <Canvas 
+            x:Name="_surface" 
+            View:Tabletop.IsSurface="true" />
     </Grid>
 </UserControl>

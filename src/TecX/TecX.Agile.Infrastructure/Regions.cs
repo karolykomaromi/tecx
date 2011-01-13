@@ -7,8 +7,8 @@ namespace TecX.Agile.Infrastructure
 {
     public static class Regions
     {
-        /// <summary>MainToolBar</summary>
-        public const string MainToolBar = "MainToolBar";
+        /// <summary>Surface</summary>
+        public const string Surface = "Surface";
 
         /// <summary>Main</summary>
         public const string Main = "Main";

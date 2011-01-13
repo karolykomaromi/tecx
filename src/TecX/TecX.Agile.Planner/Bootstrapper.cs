@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
-using Microsoft.Windows.Controls.Ribbon;
 
-using TecX.Agile.Infrastructure;
 using TecX.Agile.Peer;
 using TecX.Agile.ChangeTracking;
 using TecX.Agile.Remote;
@@ -82,7 +76,6 @@ namespace TecX.Agile.Planner
         {
             RegionAdapterMappings mappings = base.ConfigureRegionAdapterMappings();
 
-            mappings.RegisterMapping(typeof(Ribbon), Container.Resolve<RibbonRegionAdapter>());
             mappings.RegisterMapping(typeof(StackPanel), Container.Resolve<StackPanelRegionAdapter>());
             mappings.RegisterMapping(typeof(Grid), Container.Resolve<GridRegionAdapter>());
 
