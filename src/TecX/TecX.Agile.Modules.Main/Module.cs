@@ -4,10 +4,13 @@ using Microsoft.Practices.Prism.Regions;
 #if SILVERLIGHT
 
 #else
+using Microsoft.Practices.Unity;
 using Microsoft.Windows.Controls.Ribbon;
 #endif
 
 using TecX.Agile.Infrastructure;
+using TecX.Agile.Infrastructure.Services;
+using TecX.Agile.Modules.Main.Services;
 using TecX.Agile.Modules.Main.View;
 using TecX.Common;
 
@@ -18,15 +21,18 @@ namespace TecX.Agile.Modules.Main
         public const string ModuleName = "Main";
 
         private readonly IRegionManager _regionManager;
+        private readonly IUnityContainer _container;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Module"/> class
         /// </summary>
-        public Module(IRegionManager regionManager)
+        public Module(IRegionManager regionManager, IUnityContainer container)
         {
             Guard.AssertNotNull(regionManager, "regionManager");
+            Guard.AssertNotNull(container, "container");
 
             _regionManager = regionManager;
+            _container = container;
         }
 
         #region Implementation of IModule
@@ -40,6 +46,8 @@ namespace TecX.Agile.Modules.Main
 #if SILVERLIGHT
 
 #else
+            _container.RegisterType<IShowViewModels, ShowViewModelService>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IDisplayText, DisplayTextService>(new ContainerControlledLifetimeManager());
 
             IRegion mainToolBar = _regionManager.Regions[Regions.MainToolBar];
 
