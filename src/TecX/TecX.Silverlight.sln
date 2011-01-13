@@ -59,9 +59,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Peer", "TecX.Agi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Error", "TecX.Agile.Error\TecX.Agile.Error.csproj", "{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.ServiceModel.Unity", "TecX.ServiceModel.Unity\TecX.ServiceModel.Unity.csproj", "{0505E426-7710-4783-8D70-6B6DD1667ADB}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 22
+		SccNumberOfProjects = 23
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -149,6 +151,10 @@ Global
 		SccProjectTopLevelParentUniqueName21 = TecX.Silverlight.sln
 		SccProjectName21 = TecX.Agile.Error
 		SccLocalPath21 = TecX.Agile.Error
+		SccProjectUniqueName22 = TecX.ServiceModel.Unity\\TecX.ServiceModel.Unity.csproj
+		SccProjectTopLevelParentUniqueName22 = TecX.Silverlight.sln
+		SccProjectName22 = TecX.ServiceModel.Unity
+		SccLocalPath22 = TecX.ServiceModel.Unity
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -372,6 +378,16 @@ Global
 		{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}.Release|x86.ActiveCfg = Release|Any CPU
+		{0505E426-7710-4783-8D70-6B6DD1667ADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0505E426-7710-4783-8D70-6B6DD1667ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0505E426-7710-4783-8D70-6B6DD1667ADB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0505E426-7710-4783-8D70-6B6DD1667ADB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0505E426-7710-4783-8D70-6B6DD1667ADB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0505E426-7710-4783-8D70-6B6DD1667ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0505E426-7710-4783-8D70-6B6DD1667ADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0505E426-7710-4783-8D70-6B6DD1667ADB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0505E426-7710-4783-8D70-6B6DD1667ADB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0505E426-7710-4783-8D70-6B6DD1667ADB}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -381,6 +397,7 @@ Global
 		{F749C03B-EC1A-460E-ACF8-05F70AD7512A} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{33B0228B-8D74-4EC2-B8D0-87E46C7E17C0} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{09C2958B-0C95-4304-BC79-098F91F887D4} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
+		{0505E426-7710-4783-8D70-6B6DD1667ADB} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{4CBCB9FF-3BD1-40FF-858F-7355F0D485AB} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{14311591-3735-41A0-9DE5-8A72349B60D5} = {E6BC7155-A2F0-4353-A57C-36A237193155}
 		{C2A50DDD-9E5E-470D-A2DB-3386AE8FC002} = {F7D51B9C-3DBA-4D43-94EB-149EA91D770A}
