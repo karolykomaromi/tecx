@@ -111,9 +111,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Modules.Gestures
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Data.Tfs", "TecX.Agile.Data.Tfs\TecX.Agile.Data.Tfs.csproj", "{1A3E51FF-8DA1-4D8D-B7A3-4E6B3625A955}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Moduls.Speech", "TecX.Agile.Moduls.Speech\TecX.Agile.Moduls.Speech.csproj", "{14949F38-1BE4-4733-9B72-49D7454AF88F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Modules.SysInfo", "TecX.Agile.Modules.SysInfo\TecX.Agile.Modules.SysInfo.csproj", "{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 42
+		SccNumberOfProjects = 44
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -281,6 +285,14 @@ Global
 		SccProjectTopLevelParentUniqueName41 = TecX.sln
 		SccProjectName41 = TecX.Agile.Data.Tfs
 		SccLocalPath41 = TecX.Agile.Data.Tfs
+		SccProjectUniqueName42 = TecX.Agile.Moduls.Speech\\TecX.Agile.Moduls.Speech.csproj
+		SccProjectTopLevelParentUniqueName42 = TecX.sln
+		SccProjectName42 = TecX.Agile.Moduls.Speech
+		SccLocalPath42 = TecX.Agile.Moduls.Speech
+		SccProjectUniqueName43 = TecX.Agile.Modules.SysInfo\\TecX.Agile.Modules.SysInfo.csproj
+		SccProjectTopLevelParentUniqueName43 = TecX.sln
+		SccProjectName43 = TecX.Agile.Modules.SysInfo
+		SccLocalPath43 = TecX.Agile.Modules.SysInfo
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -704,6 +716,26 @@ Global
 		{1A3E51FF-8DA1-4D8D-B7A3-4E6B3625A955}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1A3E51FF-8DA1-4D8D-B7A3-4E6B3625A955}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1A3E51FF-8DA1-4D8D-B7A3-4E6B3625A955}.Release|x86.ActiveCfg = Release|Any CPU
+		{14949F38-1BE4-4733-9B72-49D7454AF88F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14949F38-1BE4-4733-9B72-49D7454AF88F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14949F38-1BE4-4733-9B72-49D7454AF88F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{14949F38-1BE4-4733-9B72-49D7454AF88F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{14949F38-1BE4-4733-9B72-49D7454AF88F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{14949F38-1BE4-4733-9B72-49D7454AF88F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14949F38-1BE4-4733-9B72-49D7454AF88F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14949F38-1BE4-4733-9B72-49D7454AF88F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{14949F38-1BE4-4733-9B72-49D7454AF88F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{14949F38-1BE4-4733-9B72-49D7454AF88F}.Release|x86.ActiveCfg = Release|Any CPU
+		{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -752,5 +784,7 @@ Global
 		{FA168E91-F953-4C22-9727-4462E9DF74EF} = {BC5057D0-37DD-40FD-98BE-0FF01551FEFE}
 		{1EB35F86-DA6C-4691-A2C5-8587129B520D} = {83F73BB7-5B6F-469E-9376-AF196CFFA146}
 		{41785223-CF12-4A54-9D09-E017A5C362E9} = {83F73BB7-5B6F-469E-9376-AF196CFFA146}
+		{14949F38-1BE4-4733-9B72-49D7454AF88F} = {83F73BB7-5B6F-469E-9376-AF196CFFA146}
+		{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0} = {83F73BB7-5B6F-469E-9376-AF196CFFA146}
 	EndGlobalSection
 EndGlobal
