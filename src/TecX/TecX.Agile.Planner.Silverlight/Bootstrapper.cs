@@ -16,6 +16,8 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Prism.UnityExtensions;
 
 using TecX.Agile.ChangeTracking;
+using TecX.Agile.Infrastructure.Services;
+using TecX.Agile.Modules.Main.Services;
 using TecX.Agile.Remote;
 using TecX.Common.Event.Unity;
 using TecX.Prism.Regions;
@@ -41,9 +43,11 @@ namespace TecX.Agile.Planner
 
             Container.RegisterInstance(Deployment.Current.Dispatcher, new ContainerControlledLifetimeManager());
 
-            Container.RegisterType<IRemoteUI, SocketRemoteUI>();
+            Container.RegisterType<IRemoteUI, SocketRemoteUI>(new ContainerControlledLifetimeManager());
 
-            Container.RegisterType<IChangeTracker, ChangeTracker>();
+            Container.RegisterType<IChangeTracker, ChangeTracker>(new ContainerControlledLifetimeManager());
+
+            Container.RegisterType<IShowThings, ShowThingsService>(new ContainerControlledLifetimeManager());
         }
 
         protected override IModuleCatalog CreateModuleCatalog()

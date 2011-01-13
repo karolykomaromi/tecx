@@ -53,6 +53,9 @@
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\..\..\lib\Prism4\Silverlight4\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Silverlight">
+      <HintPath>..\..\..\lib\Unity2\Silverlight\Microsoft.Practices.Unity.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -67,11 +70,20 @@
     </Compile>
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DisplayTextService.cs" />
+    <Compile Include="Services\ShowThingsService.cs" />
+    <Compile Include="View\InfoTextArea.xaml.cs">
+      <DependentUpon>InfoTextArea.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Surface.xaml.cs">
       <DependentUpon>Surface.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\InfoTextArea.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Surface.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -85,6 +97,10 @@
     <ProjectReference Include="..\TecX.Agile.View.Silverlight\TecX.Agile.View.Silverlight.csproj">
       <Project>{08821645-7472-4DBB-8271-8AEADF7FC109}</Project>
       <Name>TecX.Agile.View.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.Silverlight.csproj">
+      <Project>{4FFA16CA-5F2F-43E9-AEF6-DFCBD00941C6}</Project>
+      <Name>TecX.Agile.ViewModel.Silverlight</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.Silverlight.csproj">
       <Project>{23E54945-0126-43BE-A3FC-5F61AF5BDFF3}</Project>
