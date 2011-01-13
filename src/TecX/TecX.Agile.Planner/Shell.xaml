@@ -1,7 +1,6 @@
-﻿<rbn:RibbonWindow x:Class="TecX.Agile.Planner.Shell"
+﻿<Window x:Class="TecX.Agile.Planner.Shell"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:rbn="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary" 
         xmlns:cal="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism" 
         xmlns:inf="clr-namespace:TecX.Agile.Infrastructure;assembly=TecX.Agile.Infrastructure" 
         xmlns:view="clr-namespace:TecX.Agile.View;assembly=TecX.Agile.View" 
@@ -9,24 +8,13 @@
         x:Name="MainWindow"
         Width="800" 
         Height="600">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <rbn:Ribbon 
-             x:Name="Ribbon" 
-            cal:RegionManager.RegionName="{x:Static inf:Regions.MainToolBar}">
-        </rbn:Ribbon>
-        <Grid
-            Grid.Row="1"
-            cal:RegionManager.RegionName="{x:Static inf:Regions.Main}">
-            <Canvas>
-                <view:StoryCard 
+    <Grid
+        cal:RegionManager.RegionName="{x:Static inf:Regions.Main}">
+        <Canvas>
+            <view:StoryCard 
                     x:Name="storyCard" 
                     Width="300" 
                     Height="200"/>
-            </Canvas>
-        </Grid>
+        </Canvas>
     </Grid>
-</rbn:RibbonWindow>
+</Window>

@@ -7,6 +7,8 @@ namespace TecX.Agile.Infrastructure.Services
 {
     public interface IDisplayText
     {
+        string Text { get; }
+
         void Show(string text);
     }
 }

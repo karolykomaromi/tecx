@@ -63,6 +63,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DisplayTextService.cs" />
     <Compile Include="Services\ShowViewModelService.cs" />
+    <Compile Include="View\InfoTextArea.xaml.cs">
+      <DependentUpon>InfoTextArea.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Surface.xaml.cs">
       <DependentUpon>Surface.xaml</DependentUpon>
     </Compile>
@@ -71,6 +74,10 @@
     <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.csproj">
       <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
       <Name>TecX.Agile.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.csproj">
+      <Project>{E4698C1F-EF98-480C-B923-BB986C2B7F37}</Project>
+      <Name>TecX.Agile.ViewModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.View\TecX.Agile.View.csproj">
       <Project>{09B2D14D-9911-4CDA-A175-43754A2AAAFE}</Project>
@@ -89,6 +96,10 @@
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\InfoTextArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Surface.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
