@@ -121,15 +121,25 @@ namespace TecX.Agile.Push
         {
             Guard.AssertNotEmpty(message, "message");
 
-            foreach (NetworkStream writer in _clientStreams.ToArray())
+            foreach (NetworkStream stream in _clientStreams.ToArray())
             {
                 try
                 {
-                    writer.BeginWrite(message, 0, message.Length, ar => OnMessageSent(), null);
+                    stream.BeginWrite(message, 
+                                      0, 
+                                      message.Length, 
+                                      ar => {
+                                                NetworkStream s = (NetworkStream) ar.AsyncState;
+
+                                                int bytesWritten = s.EndRead(ar);
+
+                                                OnMessageSent();
+                                            },
+                                      stream);
                 }
                 catch (Exception ex)
                 {
-                    _clientStreams.Remove(writer);
+                    _clientStreams.Remove(stream);
 
                     throw;
                 }
