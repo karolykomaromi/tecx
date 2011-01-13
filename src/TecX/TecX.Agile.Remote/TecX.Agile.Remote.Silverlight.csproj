@@ -65,7 +65,7 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="HighlightMessageFilter.cs" />
-    <Compile Include="IAsyncSilverlightPlanningService.cs" />
+    <Compile Include="ISilverlightPlanningServiceAsync.cs" />
     <Compile Include="IRemoteUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyChangedMessageFilter.cs" />

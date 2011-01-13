@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -36,7 +35,7 @@ namespace TecX.Agile.Push
 
         #region Fields
 
-        private readonly List<Stream> _clientStreams;
+        private readonly List<NetworkStream> _clientStreams;
 
         private static readonly ManualResetEvent TcpClientConnected = new ManualResetEvent(false);
 
@@ -49,7 +48,7 @@ namespace TecX.Agile.Push
         /// </summary>
         public SocketServer()
         {
-            _clientStreams = new List<Stream>();
+            _clientStreams = new List<NetworkStream>();
         }
 
         #endregion c'tor
@@ -70,7 +69,7 @@ namespace TecX.Agile.Push
 
                 listener.Start();
 
-                Console.WriteLine("Server listening...");
+                Console.WriteLine(@"Server listening...");
 
                 while (true)
                 {
@@ -78,7 +77,7 @@ namespace TecX.Agile.Push
 
                     listener.BeginAcceptTcpClient(OnAcceptTcpClientCompleted, listener);
 
-                    Console.WriteLine("Waiting for client connection...");
+                    Console.WriteLine(@"Waiting for client connection...");
 
                     OnServerReady();
 
@@ -98,9 +97,9 @@ namespace TecX.Agile.Push
         /// </summary>
         public void Stop()
         {
-            Console.WriteLine("Stopping server...");
+            Console.WriteLine(@"Stopping server...");
 
-            foreach (Stream clientStream in _clientStreams)
+            foreach (NetworkStream clientStream in _clientStreams)
             {
                 clientStream.Close();
             }
@@ -111,7 +110,7 @@ namespace TecX.Agile.Push
             //_listener.Stop();
             //_listener = null;
 
-            Console.WriteLine("Server stopped");
+            Console.WriteLine(@"Server stopped");
         }
 
         /// <summary>
@@ -122,9 +121,18 @@ namespace TecX.Agile.Push
         {
             Guard.AssertNotEmpty(message, "message");
 
-            foreach (Stream writer in _clientStreams)
+            foreach (NetworkStream writer in _clientStreams.ToArray())
             {
-                writer.BeginWrite(message, 0, message.Length, ar => OnMessageSent(), null);
+                try
+                {
+                    writer.BeginWrite(message, 0, message.Length, ar => OnMessageSent(), null);
+                }
+                catch (Exception ex)
+                {
+                    _clientStreams.Remove(writer);
+
+                    throw;
+                }
             }
         }
 
@@ -146,9 +154,9 @@ namespace TecX.Agile.Push
 
             if (client.Connected)
             {
-                Console.WriteLine("Client connected...");
+                Console.WriteLine(@"Client connected...");
 
-                Stream stream = client.GetStream();
+                NetworkStream stream = client.GetStream();
 
                 _clientStreams.Add(stream);
 

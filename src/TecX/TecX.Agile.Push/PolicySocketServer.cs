@@ -64,7 +64,7 @@ namespace TecX.Agile.Push
                     listener.BeginAcceptTcpClient(OnAcceptTcpClientCompleted, listener);
 
                     //Block until client connects
-                    TcpClientConnected.WaitOne(); 
+                    TcpClientConnected.WaitOne();
                 }
             }
             catch (Exception)
@@ -82,9 +82,20 @@ namespace TecX.Agile.Push
             string path = ConfigurationManager.AppSettings[Constants.PolicyFilePath];
 
             if (string.IsNullOrEmpty(path))
+            {
                 path = Constants.DefaultPolicyFileName;
+            }
 
-            _policy = File.ReadAllBytes(path);
+            if (File.Exists(path))
+            {
+                _policy = File.ReadAllBytes(path);
+            }
+            else
+            {
+                UTF8Encoding encoding = new UTF8Encoding();
+
+                _policy = encoding.GetBytes(Properties.Resources.SocketClientAccessPolicy);
+            }
 
             _receiveBuffer = new byte[Constants.PolicyRequestString.Length];
         }
@@ -136,7 +147,7 @@ namespace TecX.Agile.Push
                 client.Client.BeginSend(_policy, 0, _policy.Length, SocketFlags.None,
                                         new AsyncCallback(OnSendComplete), client);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 if (client != null)
                     client.Client.Close();
@@ -155,6 +166,10 @@ namespace TecX.Agile.Push
                 client = (TcpClient)ar.AsyncState;
 
                 client.Client.EndSend(ar);
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
             finally
             {

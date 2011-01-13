@@ -27,16 +27,16 @@ namespace TecX.Agile.Remote
             public const int DefaultResponseBufferSize = 2048;
 
             /// <summary>
-            /// http://localhost:8732/Design_Time_Addresses/TecX.Agile.Server/SilverlightPlanningService/
+            /// http://localhost:64794/SilverlightPlanningService.svc
             /// </summary>
-            public const string DefaultEndpointAddress = @"http://localhost:8732/SilverlightPlanningService/";
+            public const string DefaultEndpointAddress = @"http://localhost:64794/SilverlightPlanningService.svc";
         }
 
         #endregion Constants
 
         #region Fields
 
-        private IAsyncSilverlightPlanningService _proxy;
+        private ISilverlightPlanningServiceAsync _proxy;
 
         private readonly Guid _id;
 
@@ -66,12 +66,12 @@ namespace TecX.Agile.Remote
 
         public void Handle(PropertyUpdated message)
         {
-            _proxy.BeginUpdateProperty(_id, 
-                                       message.ArtefactId, 
-                                       message.PropertyName, 
-                                       message.OldValue, 
-                                       message.NewValue, 
-                                       null, 
+            _proxy.BeginUpdateProperty(_id,
+                                       message.ArtefactId,
+                                       message.PropertyName,
+                                       message.OldValue,
+                                       message.NewValue,
+                                       null,
                                        null);
         }
 
@@ -100,13 +100,13 @@ namespace TecX.Agile.Remote
                                       message.Y,
                                       message.Angle,
                                       ar =>
-                                          {
-                                              var proxy = (IAsyncSilverlightPlanningService) ar.AsyncState;
+                                      {
+                                          var proxy = (ISilverlightPlanningServiceAsync)ar.AsyncState;
 
-                                              proxy.EndMoveStoryCard(ar);
+                                          proxy.EndMoveStoryCard(ar);
 
-                                              Console.WriteLine("StoryCardMoved");
-                                          },
+                                          Console.WriteLine("StoryCardMoved");
+                                      },
                                       _proxy);
         }
 
@@ -128,12 +128,19 @@ namespace TecX.Agile.Remote
         {
             if (e.SocketError == SocketError.Success)
             {
-                byte[] response = new byte[Constants.DefaultResponseBufferSize];
-                e.SetBuffer(response, 0, response.Length);
-                e.Completed -= OnSocketConnectCompleted;
-                e.Completed += OnSocketReceive;
-                Socket socket = (Socket)e.UserToken;
-                socket.ReceiveAsync(e);
+                try
+                {
+                    byte[] response = new byte[Constants.DefaultResponseBufferSize];
+                    e.SetBuffer(response, 0, response.Length);
+                    e.Completed -= OnSocketConnectCompleted;
+                    e.Completed += OnSocketReceive;
+                    Socket socket = (Socket)e.UserToken;
+                    socket.ReceiveAsync(e);
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
             }
             else
             {
@@ -206,30 +213,37 @@ namespace TecX.Agile.Remote
             if (Application.Current != null &&
                 Application.Current.Host.Source != null)
             {
-                DnsEndPoint endPoint = new DnsEndPoint(Application.Current.Host.Source.DnsSafeHost, Constants.DefaultPolicyServerPort);
-                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                try
+                {
+                    DnsEndPoint endPoint = new DnsEndPoint(Application.Current.Host.Source.DnsSafeHost, Constants.DefaultPolicyServerPort);
+                    Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-                SocketAsyncEventArgs args = new SocketAsyncEventArgs
-                                                {
-                                                    UserToken = socket,
-                                                    RemoteEndPoint = endPoint
-                                                };
+                    SocketAsyncEventArgs args = new SocketAsyncEventArgs
+                                                    {
+                                                        UserToken = socket,
+                                                        RemoteEndPoint = endPoint
+                                                    };
 
-                args.Completed += OnSocketConnectCompleted;
-                socket.ConnectAsync(args);
+                    args.Completed += OnSocketConnectCompleted;
+                    socket.ConnectAsync(args);
 
-                BinaryMessageEncodingBindingElement binaryEncoding = new BinaryMessageEncodingBindingElement();
-                HttpTransportBindingElement httpTransport = new HttpTransportBindingElement();
+                    BinaryMessageEncodingBindingElement binaryEncoding = new BinaryMessageEncodingBindingElement();
+                    HttpTransportBindingElement httpTransport = new HttpTransportBindingElement();
 
-                Binding binding = new CustomBinding(new BindingElement[] { binaryEncoding, httpTransport });
+                    Binding binding = new CustomBinding(new BindingElement[] { binaryEncoding, httpTransport });
 
-                EndpointAddress address = new EndpointAddress(Constants.DefaultEndpointAddress);
+                    EndpointAddress address = new EndpointAddress(Constants.DefaultEndpointAddress);
 
-                ChannelFactory<IAsyncSilverlightPlanningService> factory = new ChannelFactory<IAsyncSilverlightPlanningService>(binding, address);
+                    ChannelFactory<ISilverlightPlanningServiceAsync> factory = new ChannelFactory<ISilverlightPlanningServiceAsync>(binding, address);
 
-                IAsyncSilverlightPlanningService proxy = factory.CreateChannel();
+                    ISilverlightPlanningServiceAsync proxy = factory.CreateChannel();
 
-                _proxy = proxy;
+                    _proxy = proxy;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
             else
             {
