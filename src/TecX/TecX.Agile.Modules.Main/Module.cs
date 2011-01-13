@@ -36,8 +36,8 @@ namespace TecX.Agile.Modules.Main
         /// </summary>
         public void Initialize()
         {
-            _container.RegisterType<IShowViewModels, ShowViewModelService>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<IDisplayText, DisplayTextService>(new ContainerControlledLifetimeManager());
+            //_container.RegisterType<IShowThings, ShowThingsService>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IShowText, DisplayTextService>(new ContainerControlledLifetimeManager());
 
             IRegion main = _regionManager.Regions[Regions.Main];
             

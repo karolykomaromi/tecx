@@ -5,7 +5,7 @@ using TecX.Agile.ViewModel;
 
 namespace TecX.Agile.Modules.Main.Services
 {
-    public class DisplayTextService : ViewModelBase, IDisplayText
+    public class DisplayTextService : ViewModelBase, IShowText
     {
         private string _text;
         private readonly Timer _timer;

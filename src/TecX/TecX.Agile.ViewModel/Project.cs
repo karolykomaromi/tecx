@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 
 using Microsoft.Practices.Prism.Commands;
 
 using TecX.Agile.Infrastructure;
 using TecX.Agile.Infrastructure.Events;
+using TecX.Agile.Infrastructure.Services;
 using TecX.Common;
 
 namespace TecX.Agile.ViewModel
 {
     public class Project : IterationCollection, IEnumerable<PlanningArtefact>
     {
+        private readonly IShowThings _showThingsService;
+
         #region Fields
 
         private readonly Backlog _backlog;
@@ -36,8 +36,12 @@ namespace TecX.Agile.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="Project"/> class
         /// </summary>
-        public Project()
+        public Project(IShowThings showThingsService)
         {
+            Guard.AssertNotNull(showThingsService, "showThingsService");
+
+            _showThingsService = showThingsService;
+
             _backlog = new Backlog { Id = Guid.NewGuid() };
 
             _addStoryCardCommand = new DelegateCommand<StoryCardAdded>(OnAddStoryCard);
@@ -96,6 +100,8 @@ namespace TecX.Agile.ViewModel
             StoryCardCollection parent = Find<StoryCardCollection>(args.To) ?? _backlog;
 
             parent.Add(card);
+
+            _showThingsService.Show(card);
         }
 
         #endregion Methods

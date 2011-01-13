@@ -45,14 +45,8 @@ namespace TecX.Agile.Infrastructure.Events
 
         #region c'tor
 
-        public StoryCardAdded(Guid storyCardId, Guid to)
-            : this(storyCardId, to, 0.0, 0.0, 0.0)
-        {
-        }
-
         public StoryCardAdded(Guid storyCardId, Guid to, double x, double y, double angle)
         {
-
             _storyCardId = storyCardId;
             _to = to;
             _x = x;

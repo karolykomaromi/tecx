@@ -7,18 +7,17 @@
              d:DesignHeight="300" 
              d:DesignWidth="300"
              Loaded="OnLoaded"
-             Panel.ZIndex="-100">
-    <Grid>
-        <InkCanvas
+             Panel.ZIndex="-100"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch">
+    <InkCanvas
             x:Name="_canvas" 
-            Background="Transparent"
             Cursor="Arrow"
             ForceCursor="True"
             EditingMode="GestureOnly"
             Gesture="OnGestureRecognized">
-            <InkCanvas.DefaultDrawingAttributes>
-                <DrawingAttributes Color="GreenYellow" />
-            </InkCanvas.DefaultDrawingAttributes>
-        </InkCanvas>
-    </Grid>
+        <InkCanvas.DefaultDrawingAttributes>
+            <DrawingAttributes Color="GreenYellow" />
+        </InkCanvas.DefaultDrawingAttributes>
+    </InkCanvas>
 </UserControl>

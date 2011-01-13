@@ -2,6 +2,7 @@
 
 using TecX.Agile.ChangeTracking;
 using TecX.Agile.Infrastructure;
+using TecX.Agile.Infrastructure.Services;
 using TecX.Agile.Remote;
 using TecX.Agile.ViewModel;
 using TecX.Common;
@@ -16,6 +17,7 @@ namespace TecX.Agile.Planner
 
         private readonly IRemoteUI _remoteUI;
         private readonly IChangeTracker _changeTracker;
+        private readonly IShowThings _showThingsService;
         private Project _currentProject;
         private StoryCard _card;
 
@@ -60,16 +62,18 @@ namespace TecX.Agile.Planner
 
         #region c'tor
 
-        public ShellViewModel(IRemoteUI remoteUI, IChangeTracker changeTracker, EventAggregatorAccessor eventAggregatorAccessor)
+        public ShellViewModel(IRemoteUI remoteUI, IChangeTracker changeTracker, IShowThings showThingsService, EventAggregatorAccessor eventAggregatorAccessor)
         {
             Guard.AssertNotNull(remoteUI, "remoteUI");
             Guard.AssertNotNull(changeTracker, "changeTracker");
+            Guard.AssertNotNull(showThingsService, "showThingsService");
 
             _remoteUI = remoteUI;
             _changeTracker = changeTracker;
+            _showThingsService = showThingsService;
 
             //TODO weberse initialization of current project must be moved somewhere else
-            CurrentProject = new Project { Id = Guid.NewGuid() };
+            CurrentProject = new Project(_showThingsService) { Id = Guid.NewGuid() };
         }
 
         #endregion c'tor

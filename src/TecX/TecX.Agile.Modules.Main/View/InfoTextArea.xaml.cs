@@ -22,9 +22,9 @@ namespace TecX.Agile.Modules.Main.View
     /// </summary>
     public partial class InfoTextArea : UserControl
     {
-        private readonly IDisplayText _displayTextService;
+        private readonly IShowText _displayTextService;
 
-        public InfoTextArea(IDisplayText displayTextService)
+        public InfoTextArea(IShowText displayTextService)
         {
             Guard.AssertNotNull(displayTextService, "displayTextService");
 
