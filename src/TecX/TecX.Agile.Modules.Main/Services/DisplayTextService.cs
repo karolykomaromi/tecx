@@ -1,4 +1,13 @@
-﻿using System.Timers;
+﻿#if SILVERLIGHT
+
+using System.Threading;
+
+#else
+
+using System;
+using System.Timers;
+
+#endif
 
 using TecX.Agile.Infrastructure.Services;
 using TecX.Agile.ViewModel;
@@ -8,7 +17,6 @@ namespace TecX.Agile.Modules.Main.Services
     public class DisplayTextService : ViewModelBase, IShowText
     {
         private string _text;
-        private readonly Timer _timer;
 
         public string Text
         {
@@ -23,6 +31,30 @@ namespace TecX.Agile.Modules.Main.Services
                 OnPropertyChanged(() => Text);
             }
         }
+
+#if SILVERLIGHT
+
+        private Timer _timer;
+
+        public void Show(string text)
+        {
+            Text = text;
+
+            _timer = new Timer(OnElapsed);
+
+        }
+
+        private void OnElapsed(object state)
+        {
+            Text = string.Empty;
+
+            _timer.Dispose();
+
+            _timer = null;
+        }
+
+#else
+        private readonly Timer _timer;
 
         public DisplayTextService()
         {
@@ -44,5 +76,6 @@ namespace TecX.Agile.Modules.Main.Services
 
             _timer.Elapsed -= OnElapsed;
         }
+#endif
     }
 }

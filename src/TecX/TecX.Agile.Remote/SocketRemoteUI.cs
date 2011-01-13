@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Windows;
+using System.Windows.Threading;
 
 using TecX.Agile.Infrastructure;
 using TecX.Agile.Infrastructure.Events;
@@ -41,6 +42,8 @@ namespace TecX.Agile.Remote
 
         private readonly Guid _id;
 
+        private readonly Dispatcher _dispatcher;
+
         private readonly BinaryFormatter _formatter;
 
         #endregion Fields
@@ -56,8 +59,11 @@ namespace TecX.Agile.Remote
 
         #region c'tor
 
-        public SocketRemoteUI()
+        public SocketRemoteUI(Dispatcher dispatcher)
         {
+            Guard.AssertNotNull(dispatcher, "dispatcher");
+
+            _dispatcher = dispatcher;
             _id = Guid.NewGuid();
 
             _formatter = new BinaryFormatter();
@@ -183,8 +189,24 @@ namespace TecX.Agile.Remote
                     {
                         StoryCardMoved storyCardMoved = new StoryCardMoved(scm.StoryCardId, scm.X, scm.Y, scm.Angle);
 
-                        if (Commands.MoveStoryCard.CanExecute(storyCardMoved))
-                            Commands.MoveStoryCard.Execute(storyCardMoved);
+                        _dispatcher.BeginInvoke(() =>
+                                                    {
+                                                        if (Commands.MoveStoryCard.CanExecute(storyCardMoved))
+                                                            Commands.MoveStoryCard.Execute(storyCardMoved);
+                                                    });
+                    }
+
+                    var hl = message as Serialization.Messages.FieldHighlighted;
+
+                    if (hl != null && hl.SenderId != _id)
+                    {
+                        FieldHighlighted fieldHighlighted = new FieldHighlighted(hl.ArtefactId, hl.FieldName);
+
+                        _dispatcher.BeginInvoke(() =>
+                                                    {
+                                                        if (Commands.HighlightField.CanExecute(fieldHighlighted))
+                                                            Commands.HighlightField.Execute(fieldHighlighted);
+                                                    });
                     }
 
                     var cm = message as Serialization.Messages.CaretMoved;
@@ -193,8 +215,11 @@ namespace TecX.Agile.Remote
                     {
                         CaretMoved caretMoved = new CaretMoved(cm.ArtefactId, cm.FieldName, cm.CaretIndex);
 
-                        if (Commands.MoveCaret.CanExecute(caretMoved))
-                            Commands.MoveCaret.Execute(caretMoved);
+                        _dispatcher.BeginInvoke(() =>
+                                                    {
+                                                        if (Commands.MoveCaret.CanExecute(caretMoved))
+                                                            Commands.MoveCaret.Execute(caretMoved);
+                                                    });
 
                         return;
                     }
@@ -205,8 +230,11 @@ namespace TecX.Agile.Remote
                     {
                         PropertyUpdated propertyUpdated = new PropertyUpdated(pu.ArtefactId, pu.PropertyName, pu.OldValue, pu.NewValue);
 
-                        if (Commands.UpdateProperty.CanExecute(propertyUpdated))
-                            Commands.UpdateProperty.Execute(propertyUpdated);
+                        _dispatcher.BeginInvoke(() =>
+                                                    {
+                                                        if (Commands.UpdateProperty.CanExecute(propertyUpdated))
+                                                            Commands.UpdateProperty.Execute(propertyUpdated);
+                                                    });
                     }
                 }
             }
