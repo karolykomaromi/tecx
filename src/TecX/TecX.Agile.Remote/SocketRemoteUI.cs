@@ -40,6 +40,8 @@ namespace TecX.Agile.Remote
 
         private readonly Guid _id;
 
+        private readonly BinaryFormatter _formatter;
+
         #endregion Fields
 
         #region Properties
@@ -58,6 +60,10 @@ namespace TecX.Agile.Remote
             InitializeSocketConnection();
 
             _id = Guid.NewGuid();
+
+            _formatter = new BinaryFormatter();
+
+            InitializeBinaryFormatter();
         }
 
         #endregion c'tor
@@ -155,9 +161,7 @@ namespace TecX.Agile.Remote
 
             try
             {
-                var formatter = new BinaryFormatter();
-
-                var message = formatter.Deserialize(e.Buffer);
+                var message = _formatter.Deserialize(e.Buffer);
 
                 if (message != null)
                 {
@@ -207,6 +211,14 @@ namespace TecX.Agile.Remote
         #endregion EventHandling
 
         #region Initialization
+
+        private void InitializeBinaryFormatter()
+        {
+            _formatter.Register<Serialization.Messages.StoryCardMoved>(Serialization.Constants.MessageTypeIds.StoryCardMoved);
+            _formatter.Register<Serialization.Messages.PropertyUpdated>(Serialization.Constants.MessageTypeIds.PropertyUpdated);
+            _formatter.Register<Serialization.Messages.CaretMoved>(Serialization.Constants.MessageTypeIds.CaretMoved);
+            _formatter.Register<Serialization.Messages.FieldHighlighted>(Serialization.Constants.MessageTypeIds.FieldHighlighted);
+        }
 
         private void InitializeSocketConnection()
         {
