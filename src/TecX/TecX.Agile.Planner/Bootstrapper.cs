@@ -50,6 +50,7 @@ namespace TecX.Agile.Planner
                 .ApplyRegistrations();
 
             Container.RegisterType<IShowThings, ShowThingsService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IShowText, ShowTextService>(new ContainerControlledLifetimeManager());
 
             base.ConfigureContainer();
 
