@@ -77,7 +77,8 @@ namespace TecX.Agile.View.Behavior
             _highlightFieldCommand = new DelegateCommand<FieldHighlighted>(message =>
             {
                 if (message.ArtefactId == _artefactId &&
-                    message.FieldName == UniqueFieldName)
+                    message.FieldName == UniqueFieldName &&
+                    FocusManager.GetFocusedElement() != AssociatedObject)
                 {
                     AssociatedObject.Focus();
                 }
@@ -86,7 +87,8 @@ namespace TecX.Agile.View.Behavior
             _moveCaretCommand = new DelegateCommand<CaretMoved>(message =>
             {
                 if (message.ArtefactId == _artefactId &&
-                    message.FieldName == UniqueFieldName)
+                    message.FieldName == UniqueFieldName &&
+                    message.CaretIndex != AssociatedObject.SelectionStart)
                 {
                     AssociatedObject.Select(message.CaretIndex, 0);
                 }
