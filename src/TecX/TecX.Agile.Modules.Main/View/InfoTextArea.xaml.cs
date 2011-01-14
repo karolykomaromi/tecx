@@ -18,6 +18,8 @@ namespace TecX.Agile.Modules.Main.View
 
             _showTextService = showTextService;
 
+            DataContext = showTextService;
+
             InitializeComponent();
         }
     }

@@ -6,15 +6,16 @@ using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 
+using TecX.Agile.ChangeTracking;
+using TecX.Agile.Data;
 using TecX.Agile.Infrastructure.Services;
+using TecX.Agile.Modules.Main;
 using TecX.Agile.Modules.Main.Services;
 using TecX.Agile.Peer;
-using TecX.Agile.ChangeTracking;
 using TecX.Agile.Remote;
 using TecX.Common.Event.Unity;
 using TecX.Prism.Regions;
 using TecX.Unity.Registration;
-using TecX.Agile.Data;
 
 namespace TecX.Agile.Planner
 {
@@ -43,7 +44,7 @@ namespace TecX.Agile.Planner
                 .ExcludeSystemAssemblies()
                 .Include(The.Extension<EventAggregatorContainerExtension>())
                 .Include(If.Implements<IRepository>(),
-                    Then.Register().WithoutPartName(WellKnownAppParts.DesignPatterns.Repository))
+                         Then.Register().WithoutPartName(WellKnownAppParts.DesignPatterns.Repository))
                 .Include(If.Is<WcfPeerRemoteUI>(), Then.Register().As<IRemoteUI>())
                 .Include(If.Is<PeerClient>(), Then.Register().As<IPeerClient>())
                 .Include(If.Is<ChangeTracker>(), Then.Register().As<IChangeTracker>())
@@ -53,7 +54,6 @@ namespace TecX.Agile.Planner
             Container.RegisterType<IShowText, ShowTextService>(new ContainerControlledLifetimeManager());
 
             base.ConfigureContainer();
-
         }
 
         protected override IModuleCatalog CreateModuleCatalog()
@@ -67,13 +67,19 @@ namespace TecX.Agile.Planner
         {
             base.ConfigureModuleCatalog();
 
-            ModuleInfo main = new ModuleInfo(Modules.Main.Module.ModuleName, typeof(Modules.Main.Module).AssemblyQualifiedName);
+            ModuleInfo main = new ModuleInfo(Module.ModuleName, typeof (Module).AssemblyQualifiedName);
 
             ModuleCatalog.AddModule(main);
 
-            ModuleInfo gestures = new ModuleInfo(Modules.Gestures.Module.ModuleName, typeof(Modules.Gestures.Module).AssemblyQualifiedName);
+            ModuleInfo gestures = new ModuleInfo(Modules.Gestures.Module.ModuleName,
+                                                 typeof (Modules.Gestures.Module).AssemblyQualifiedName);
 
             ModuleCatalog.AddModule(gestures);
+
+            ModuleInfo systemInfo = new ModuleInfo(Modules.SysInfo.Module.ModuleName,
+                                                   typeof (Modules.SysInfo.Module).AssemblyQualifiedName);
+
+            ModuleCatalog.AddModule(systemInfo);
         }
 
 
@@ -81,8 +87,8 @@ namespace TecX.Agile.Planner
         {
             RegionAdapterMappings mappings = base.ConfigureRegionAdapterMappings();
 
-            mappings.RegisterMapping(typeof(StackPanel), Container.Resolve<StackPanelRegionAdapter>());
-            mappings.RegisterMapping(typeof(Grid), Container.Resolve<GridRegionAdapter>());
+            mappings.RegisterMapping(typeof (StackPanel), Container.Resolve<StackPanelRegionAdapter>());
+            mappings.RegisterMapping(typeof (Grid), Container.Resolve<GridRegionAdapter>());
 
             return mappings;
         }

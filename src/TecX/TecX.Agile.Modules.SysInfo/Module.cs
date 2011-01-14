@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Reflection;
+using System.Linq;
 using System.Text;
 
 using Microsoft.Practices.Prism.Commands;
@@ -13,9 +13,37 @@ namespace TecX.Agile.Modules.SysInfo
 {
     public class Module : IModule
     {
+        #region Constants
+
+        private static class Constants
+        {
+            /// <summary>SystemInfo</summary>
+            public const string ModuleName = "SystemInfo";
+            
+            /// <summary>10</summary>
+            public const int MaxNumAssemblies = 10;
+        }
+
+        #endregion Constants
+
+        #region Fields
+
         private string _systemInfo;
         private readonly IShowText _showTextService;
         private readonly DelegateCommand _showSystemInfoCommand;
+
+        #endregion Fields
+
+        #region Properties
+
+        public static string ModuleName
+        {
+            get { return Constants.ModuleName; }
+        }
+
+        #endregion Properties
+
+        #region c'tor
 
         public Module(IShowText showTextService)
         {
@@ -28,21 +56,26 @@ namespace TecX.Agile.Modules.SysInfo
             Commands.ShowSystemInfo.RegisterCommand(_showSystemInfoCommand);
         }
 
+        #endregion c'tor
+
         public void Initialize()
         {
+
             StringBuilder sb = new StringBuilder(1024);
 
-            sb.AppendLine("         WPF         ")
-              .AppendLine("---------------------");
+            sb.AppendLine("WPF").AppendLine();
 
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            
-            foreach(var assembly in assemblies)
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray();
+
+            for (int i = 0; i < Constants.MaxNumAssemblies; i++)
             {
-                sb.Append(assembly.FullName);
+                sb.AppendLine(assemblies[i].FullName);
             }
 
-            _systemInfo = sb.ToString();
+            if (assemblies.Length > Constants.MaxNumAssemblies)
+                sb.AppendLine("...");
+
+                _systemInfo = sb.ToString();
         }
 
         private void OnShowSystemInfo()

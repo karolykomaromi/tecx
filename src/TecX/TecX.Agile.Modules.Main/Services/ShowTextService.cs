@@ -58,7 +58,7 @@ namespace TecX.Agile.Modules.Main.Services
 
         public ShowTextService()
         {
-            _timer = new Timer(10000.0);
+            _timer = new Timer(6000.0);
         }
 
         public void Show(string text)
