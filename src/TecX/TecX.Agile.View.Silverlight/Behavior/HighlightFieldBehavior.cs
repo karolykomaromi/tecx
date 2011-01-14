@@ -10,6 +10,7 @@ using Microsoft.Practices.Prism.Commands;
 
 using TecX.Agile.Infrastructure;
 using TecX.Agile.Infrastructure.Events;
+using TecX.Agile.ViewModel;
 using TecX.Common;
 using TecX.Common.Event;
 
@@ -17,7 +18,7 @@ namespace TecX.Agile.View.Behavior
 {
     public class HighlightFieldBehavior : System.Windows.Interactivity.Behavior<TextBox>
     {
-        #region Fields 
+        #region Fields
 
         private readonly IEventAggregator _eventAggregator;
 
@@ -97,20 +98,37 @@ namespace TecX.Agile.View.Behavior
 
         #endregion c'tor
 
-        #region Overrides of Behavior<T> 
+        #region Overrides of Behavior<T>
 
         protected override void OnAttached()
         {
             base.OnAttached();
 
-            //TODO weberse 2010-12-27 extract from datacontext of parent usercontrol
-            _artefactId = Guid.Empty;
+            AssociatedObject.Loaded += OnLoaded;
 
             AssociatedObject.GotFocus += OnGotFocus;
             AssociatedObject.KeyUp += OnKeyUp;
 
             Commands.HighlightField.RegisterCommand(_highlightFieldCommand);
             Commands.MoveCaret.RegisterCommand(_moveCaretCommand);
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            UserControl parent;
+            PlanningArtefact pa;
+            if (UIHelper.TryFindAncestor(AssociatedObject, out parent) &&
+                (pa = parent.DataContext as PlanningArtefact) != null)
+            {
+                _artefactId = pa.Id;
+            }
+            else
+            {
+                throw new InvalidOperationException("Can't attach this behavior to a control whose parent " +
+                    "UserControl does not have a PlanningArtefact as its DataContext");
+            }
+
+            AssociatedObject.Loaded -= OnLoaded;
         }
 
         protected override void OnDetaching()
@@ -128,7 +146,7 @@ namespace TecX.Agile.View.Behavior
 
         #endregion Overrides of Behavior<T>
 
-        #region EventHandling 
+        #region EventHandling
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
