@@ -43,8 +43,10 @@ namespace TecX.Agile.Remote
         private readonly Guid _id;
 
         private readonly Dispatcher _dispatcher;
-
         private readonly BinaryFormatter _formatter;
+        private readonly StoryCardMovedMessageFilter _storyCardMovedMessageFilter;
+        private readonly PropertyChangedMessageFilter _propertyChangedMessageFilter;
+        private readonly HighlightMessageFilter _highlightMessageFilter;
 
         #endregion Fields
 
@@ -65,8 +67,11 @@ namespace TecX.Agile.Remote
 
             _dispatcher = dispatcher;
             _id = Guid.NewGuid();
-
             _formatter = new BinaryFormatter();
+
+            _storyCardMovedMessageFilter = new StoryCardMovedMessageFilter();
+            _propertyChangedMessageFilter = new PropertyChangedMessageFilter();
+            _highlightMessageFilter = new HighlightMessageFilter();
 
             InitializeBinaryFormatter();
 
@@ -81,6 +86,9 @@ namespace TecX.Agile.Remote
 
         public void Handle(PropertyUpdated message)
         {
+            if (!_propertyChangedMessageFilter.ShouldLetPass(message))
+                return;
+
             _proxy.BeginUpdateProperty(_id,
                                        message.ArtefactId,
                                        message.PropertyName,
@@ -104,6 +112,9 @@ namespace TecX.Agile.Remote
 
         public void Handle(FieldHighlighted message)
         {
+            if (!_highlightMessageFilter.ShouldLetPass(message))
+                return;
+
             _proxy.BeginHighlight(_id,
                                   message.ArtefactId,
                                   message.FieldName,
@@ -117,6 +128,9 @@ namespace TecX.Agile.Remote
 
         public void Handle(StoryCardMoved message)
         {
+            if (!_storyCardMovedMessageFilter.ShouldLetPass(message))
+                return;
+
             _proxy.BeginMoveStoryCard(_id,
                                       message.StoryCardId,
                                       message.X,
@@ -189,6 +203,8 @@ namespace TecX.Agile.Remote
                     {
                         StoryCardMoved storyCardMoved = new StoryCardMoved(scm.StoryCardId, scm.X, scm.Y, scm.Angle);
 
+                        _storyCardMovedMessageFilter.Enqueue(scm.StoryCardId, scm.X, scm.Y, scm.Angle);
+
                         _dispatcher.BeginInvoke(() =>
                                                     {
                                                         if (Commands.MoveStoryCard.CanExecute(storyCardMoved))
@@ -201,6 +217,8 @@ namespace TecX.Agile.Remote
                     if (hl != null && hl.SenderId != _id)
                     {
                         FieldHighlighted fieldHighlighted = new FieldHighlighted(hl.ArtefactId, hl.FieldName);
+
+                        _highlightMessageFilter.Enqueue(hl.ArtefactId, hl.FieldName);
 
                         _dispatcher.BeginInvoke(() =>
                                                     {
@@ -229,6 +247,8 @@ namespace TecX.Agile.Remote
                     if (pu != null && pu.SenderId != _id)
                     {
                         PropertyUpdated propertyUpdated = new PropertyUpdated(pu.ArtefactId, pu.PropertyName, pu.OldValue, pu.NewValue);
+
+                        _propertyChangedMessageFilter.Enqueue(pu.ArtefactId, pu.PropertyName, pu.OldValue, pu.NewValue);
 
                         _dispatcher.BeginInvoke(() =>
                                                     {
