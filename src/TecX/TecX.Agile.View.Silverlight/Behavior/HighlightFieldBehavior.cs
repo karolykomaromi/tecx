@@ -80,7 +80,7 @@ namespace TecX.Agile.View.Behavior
                     message.FieldName == UniqueFieldName &&
                     FocusManager.GetFocusedElement() != AssociatedObject)
                 {
-                    AssociatedObject.Focus();
+                    bool success = AssociatedObject.Focus();
                 }
             });
 

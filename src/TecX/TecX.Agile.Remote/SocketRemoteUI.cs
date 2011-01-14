@@ -46,7 +46,7 @@ namespace TecX.Agile.Remote
         private readonly BinaryFormatter _formatter;
         private readonly StoryCardMovedMessageFilter _storyCardMovedMessageFilter;
         private readonly PropertyChangedMessageFilter _propertyChangedMessageFilter;
-        private readonly HighlightMessageFilter _highlightMessageFilter;
+        private readonly HighlightMessageFilter _outgoingHighlightMessageFilter;
 
         #endregion Fields
 
@@ -71,7 +71,7 @@ namespace TecX.Agile.Remote
 
             _storyCardMovedMessageFilter = new StoryCardMovedMessageFilter();
             _propertyChangedMessageFilter = new PropertyChangedMessageFilter();
-            _highlightMessageFilter = new HighlightMessageFilter();
+            _outgoingHighlightMessageFilter = new HighlightMessageFilter();
 
             InitializeBinaryFormatter();
 
@@ -112,7 +112,7 @@ namespace TecX.Agile.Remote
 
         public void Handle(FieldHighlighted message)
         {
-            if (!_highlightMessageFilter.ShouldLetPass(message))
+            if (!_outgoingHighlightMessageFilter.ShouldLetPass(message))
                 return;
 
             _proxy.BeginHighlight(_id,
@@ -210,6 +210,8 @@ namespace TecX.Agile.Remote
                                                         if (Commands.MoveStoryCard.CanExecute(storyCardMoved))
                                                             Commands.MoveStoryCard.Execute(storyCardMoved);
                                                     });
+
+                        return;
                     }
 
                     var hl = message as Serialization.Messages.FieldHighlighted;
@@ -218,13 +220,15 @@ namespace TecX.Agile.Remote
                     {
                         FieldHighlighted fieldHighlighted = new FieldHighlighted(hl.ArtefactId, hl.FieldName);
 
-                        _highlightMessageFilter.Enqueue(hl.ArtefactId, hl.FieldName);
+                        _outgoingHighlightMessageFilter.Enqueue(hl.ArtefactId, hl.FieldName);
 
                         _dispatcher.BeginInvoke(() =>
                                                     {
                                                         if (Commands.HighlightField.CanExecute(fieldHighlighted))
                                                             Commands.HighlightField.Execute(fieldHighlighted);
                                                     });
+
+                        return;
                     }
 
                     var cm = message as Serialization.Messages.CaretMoved;
@@ -255,6 +259,8 @@ namespace TecX.Agile.Remote
                                                         if (Commands.UpdateProperty.CanExecute(propertyUpdated))
                                                             Commands.UpdateProperty.Execute(propertyUpdated);
                                                     });
+
+                        return;
                     }
                 }
             }
