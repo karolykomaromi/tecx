@@ -27,8 +27,8 @@ rmdir TecX.Agile.Undo\bin /S /Q
 rmdir TecX.Agile.View\bin /S /Q
 rmdir TecX.Agile.View.Silverlight\bin /S /Q
 rmdir TecX.Agile.View.Test\bin /S /Q
-rmdir TecX.Agile.ViewMormdir\bin /S /Q
-rmdir TecX.Agile.ViewMormdir.Test\bin /S /Q
+rmdir TecX.Agile.ViewModel\bin /S /Q
+rmdir TecX.Agile.ViewModel.Test\bin /S /Q
 rmdir TecX.Common\bin /S /Q
 rmdir TecX.Common.EntLib\bin /S /Q
 rmdir TecX.Common.EntLib.Test\bin /S /Q
@@ -36,11 +36,10 @@ rmdir TecX.Common.Event\bin /S /Q
 rmdir TecX.Common.Event.Unity\bin /S /Q
 rmdir TecX.Common.Test\bin /S /Q
 rmdir TecX.Common.Undo\bin /S /Q
-rmdir TecX.Domain\bin /S /Q
 rmdir TecX.Prism\bin /S /Q
-rmdir TecX.ServiceMormdir.AutoMagic\bin /S /Q
-rmdir TecX.ServiceMormdir.Test\bin /S /Q
-rmdir TecX.ServiceMormdir.Unity\bin /S /Q
+rmdir TecX.ServiceModel.AutoMagic\bin /S /Q
+rmdir TecX.ServiceModel.Test\bin /S /Q
+rmdir TecX.ServiceModel.Unity\bin /S /Q
 rmdir TecX.TestTools\bin /S /Q
 rmdir TecX.TestTools.Test\bin /S /Q
 rmdir TecX.Undo\bin /S /Q
@@ -50,8 +49,6 @@ rmdir TecX.Unity.ContextualBinding\bin /S /Q
 rmdir TecX.Unity.ContextualBinding.Test\bin /S /Q
 rmdir TecX.Unity.Test\bin /S /Q
 rmdir TecX.Unity.Test.Contract\bin /S /Q
-rmdir TecX.Unity.Test.ExternalAssembly\bin /S /Q
-rmdir TexC.Agile.Data\bin /S /Q
 
 
 rmdir TecX.Agile\obj /S /Q
@@ -83,8 +80,8 @@ rmdir TecX.Agile.Undo\obj /S /Q
 rmdir TecX.Agile.View\obj /S /Q
 rmdir TecX.Agile.View.Silverlight\obj /S /Q
 rmdir TecX.Agile.View.Test\obj /S /Q
-rmdir TecX.Agile.ViewMormdir\obj /S /Q
-rmdir TecX.Agile.ViewMormdir.Test\obj /S /Q
+rmdir TecX.Agile.ViewModel\obj /S /Q
+rmdir TecX.Agile.ViewModel.Test\obj /S /Q
 rmdir TecX.Common\obj /S /Q
 rmdir TecX.Common.EntLib\obj /S /Q
 rmdir TecX.Common.EntLib.Test\obj /S /Q
@@ -92,11 +89,10 @@ rmdir TecX.Common.Event\obj /S /Q
 rmdir TecX.Common.Event.Unity\obj /S /Q
 rmdir TecX.Common.Test\obj /S /Q
 rmdir TecX.Common.Undo\obj /S /Q
-rmdir TecX.Domain\obj /S /Q
 rmdir TecX.Prism\obj /S /Q
-rmdir TecX.ServiceMormdir.AutoMagic\obj /S /Q
-rmdir TecX.ServiceMormdir.Test\obj /S /Q
-rmdir TecX.ServiceMormdir.Unity\obj /S /Q
+rmdir TecX.ServiceModel.AutoMagic\obj /S /Q
+rmdir TecX.ServiceModel.Test\obj /S /Q
+rmdir TecX.ServiceModel.Unity\obj /S /Q
 rmdir TecX.TestTools\obj /S /Q
 rmdir TecX.TestTools.Test\obj /S /Q
 rmdir TecX.Undo\obj /S /Q
@@ -106,5 +102,3 @@ rmdir TecX.Unity.ContextualBinding\obj /S /Q
 rmdir TecX.Unity.ContextualBinding.Test\obj /S /Q
 rmdir TecX.Unity.Test\obj /S /Q
 rmdir TecX.Unity.Test.Contract\obj /S /Q
-rmdir TecX.Unity.Test.ExternalAssembly\obj /S /Q
-rmdir TexC.Agile.Data\obj /S /Q

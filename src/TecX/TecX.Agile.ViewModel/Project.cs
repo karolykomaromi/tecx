@@ -12,13 +12,9 @@ namespace TecX.Agile.ViewModel
 {
     public class Project : IterationCollection, IEnumerable<PlanningArtefact>
     {
-        private readonly IShowThings _showThingsService;
-
         #region Fields
 
         private readonly Backlog _backlog;
-
-        private readonly DelegateCommand<StoryCardAdded> _addStoryCardCommand;
 
         #endregion Fields
 
@@ -36,17 +32,9 @@ namespace TecX.Agile.ViewModel
         /// <summary>
         /// Initializes a new instance of the <see cref="Project"/> class
         /// </summary>
-        public Project(IShowThings showThingsService)
+        public Project()
         {
-            Guard.AssertNotNull(showThingsService, "showThingsService");
-
-            _showThingsService = showThingsService;
-
             _backlog = new Backlog { Id = Guid.NewGuid() };
-
-            _addStoryCardCommand = new DelegateCommand<StoryCardAdded>(OnAddStoryCard);
-
-            Commands.AddStoryCard.RegisterCommand(_addStoryCardCommand);
         }
 
         #endregion c'tor
@@ -89,19 +77,6 @@ namespace TecX.Agile.ViewModel
             }
 
             return null;
-        }
-
-        private void OnAddStoryCard(StoryCardAdded args)
-        {
-            Guard.AssertNotNull(args, "args");
-
-            StoryCard card = new StoryCard { Id = args.StoryCardId, X = args.X, Y = args.Y, Angle = args.Angle };
-
-            StoryCardCollection parent = Find<StoryCardCollection>(args.To) ?? _backlog;
-
-            parent.Add(card);
-
-            _showThingsService.Show(card);
         }
 
         #endregion Methods

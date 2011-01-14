@@ -18,7 +18,7 @@ namespace TecX.Agile.ViewModel.Test
         [TestMethod]
         public void WhenPostponingStoryCard_EventIsRaised()
         {
-            var mockShowThingsService = new Mock<IShowThings>();
+            
 
             Iteration iteration = new Iteration();
 
@@ -26,7 +26,7 @@ namespace TecX.Agile.ViewModel.Test
 
             iteration.Add(card);
 
-            Project project = new Project(mockShowThingsService.Object);
+            Project project = new Project();
 
             project.Add(iteration);
 
@@ -44,7 +44,7 @@ namespace TecX.Agile.ViewModel.Test
         [TestMethod]
         public void WhenPostponingStoryCard_NewParentIsSet()
         {
-            var mockShowThingsService = new Mock<IShowThings>();
+            
 
             Iteration iteration = new Iteration();
 
@@ -52,7 +52,7 @@ namespace TecX.Agile.ViewModel.Test
 
             iteration.Add(card);
 
-            Project project = new Project(mockShowThingsService.Object);
+            Project project = new Project();
 
             project.Add(iteration);
 
@@ -64,7 +64,7 @@ namespace TecX.Agile.ViewModel.Test
         [TestMethod]
         public void WhenPostponingStoryCard_IsRemovedFromIteration()
         {
-            var mockShowThingsService = new Mock<IShowThings>();
+            
 
             Iteration iteration = new Iteration();
 
@@ -72,7 +72,7 @@ namespace TecX.Agile.ViewModel.Test
 
             iteration.Add(card);
 
-            Project project = new Project(mockShowThingsService.Object);
+            Project project = new Project();
 
             project.Add(iteration);
 
@@ -84,14 +84,14 @@ namespace TecX.Agile.ViewModel.Test
         [TestMethod]
         public void WhenPostponingStoryCard_IsAddedToBacklog()
         {
-            var mockShowThingsService = new Mock<IShowThings>();
+            
             Iteration iteration = new Iteration();
 
             StoryCard card = new StoryCard();
 
             iteration.Add(card);
 
-            Project project = new Project(mockShowThingsService.Object);
+            Project project = new Project();
 
             project.Add(iteration);
 

@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
 using TecX.Agile.Infrastructure.Services;
 using TecX.Common;
@@ -22,13 +10,13 @@ namespace TecX.Agile.Modules.Main.View
     /// </summary>
     public partial class InfoTextArea : UserControl
     {
-        private readonly IShowText _displayTextService;
+        private readonly IShowText _showTextService;
 
-        public InfoTextArea(IShowText displayTextService)
+        public InfoTextArea(IShowText showTextService)
         {
-            Guard.AssertNotNull(displayTextService, "displayTextService");
+            Guard.AssertNotNull(showTextService, "showTextService");
 
-            _displayTextService = displayTextService;
+            _showTextService = showTextService;
 
             InitializeComponent();
         }

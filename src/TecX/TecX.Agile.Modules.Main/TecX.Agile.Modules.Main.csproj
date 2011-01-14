@@ -61,7 +61,7 @@
     </Compile>
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DisplayTextService.cs" />
+    <Compile Include="Services\ShowTextService.cs" />
     <Compile Include="Services\ShowThingsService.cs" />
     <Compile Include="View\InfoTextArea.xaml.cs">
       <DependentUpon>InfoTextArea.xaml</DependentUpon>
