@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 
+using TecX.Agile.Infrastructure;
 using TecX.Agile.ViewModel;
 using TecX.Common;
 
@@ -30,6 +31,5 @@ namespace TecX.Agile.Planner
 
             shellViewModel.Card = storyCard.DataContext as StoryCard;
         }
-
     }
 }

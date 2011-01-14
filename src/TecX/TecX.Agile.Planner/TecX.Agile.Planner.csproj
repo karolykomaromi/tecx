@@ -133,6 +133,10 @@
       <Project>{1EB35F86-DA6C-4691-A2C5-8587129B520D}</Project>
       <Name>TecX.Agile.Modules.Main</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Modules.SysInfo\TecX.Agile.Modules.SysInfo.csproj">
+      <Project>{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}</Project>
+      <Name>TecX.Agile.Modules.SysInfo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Peer\TecX.Agile.Peer.csproj">
       <Project>{4C9A3BE9-2E8F-44B1-965B-42AD35D36071}</Project>
       <Name>TecX.Agile.Peer</Name>
