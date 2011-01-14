@@ -48,6 +48,8 @@ namespace TecX.Agile.Planner
             Container.RegisterType<IChangeTracker, ChangeTracker>(new ContainerControlledLifetimeManager());
 
             Container.RegisterType<IShowThings, ShowThingsService>(new ContainerControlledLifetimeManager());
+
+            Container.RegisterType<IShowText, ShowTextService > (new ContainerControlledLifetimeManager());
         }
 
         protected override IModuleCatalog CreateModuleCatalog()
