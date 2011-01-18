@@ -16,7 +16,7 @@ using TecX.Common.Event;
 
 namespace TecX.Agile.View.Behavior
 {
-    public class HighlightFieldBehavior : System.Windows.Interactivity.Behavior<TextBox>
+    public class HighlightFieldBehavior : Behavior<TextBox>
     {
         #region Fields
 
@@ -150,7 +150,19 @@ namespace TecX.Agile.View.Behavior
 
         private void OnGotFocus(object sender, RoutedEventArgs e)
         {
+#if DEBUG
+            lock (_lock)
+            {
+                if (IsLastFocused(AssociatedObject))
+                    return;
+            }
+#endif
+
             _eventAggregator.Publish(new FieldHighlighted(_artefactId, UniqueFieldName));
+
+#if DEBUG
+            RunLocked(() => SetLastFocused(AssociatedObject));
+#endif
         }
 
         private void OnKeyUp(object sender, KeyEventArgs e)
@@ -190,5 +202,38 @@ namespace TecX.Agile.View.Behavior
         }
 
         #endregion EventHandling
+
+#if DEBUG
+        private static readonly object _lock = new object();
+
+        private static void RunLocked(Action action)
+        {
+            lock (_lock)
+            {
+                action();
+            }
+        }
+
+        private static WeakReference _lastFocused;
+
+        private static void SetLastFocused(TextBox textBox)
+        {
+            _lastFocused = new WeakReference(textBox);
+        }
+
+        private static bool IsLastFocused(TextBox textBox)
+        {
+            lock (_lock)
+            {
+                if (_lastFocused != null &&
+                    _lastFocused.IsAlive)
+                {
+                    return ReferenceEquals(_lastFocused.Target, textBox);
+                }
+
+                return false;
+            }
+        }
+#endif
     }
 }
