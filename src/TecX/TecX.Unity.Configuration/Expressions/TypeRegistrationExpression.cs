@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -11,11 +12,36 @@ namespace TecX.Unity.Configuration.Expressions
 {
     public class TypeRegistrationExpression<TFrom, TTo> : RegistrationExpression<TypeRegistrationExpression<TFrom, TTo>>
     {
+        private readonly List<Func<InjectionMember>> _enrichments;
+
+        protected InjectionMember[] Enrichments
+        {
+            get
+            {
+                return _enrichments
+                    .Select(enrichment => enrichment())
+                    .Where(e => e != null)
+                    .ToArray();
+            }
+        }
+
+        public TypeRegistrationExpression()
+        {
+            _enrichments = new List<Func<InjectionMember>>();
+        }
+
+        public void AddEnrichment(Func<InjectionMember> enrichment)
+        {
+            Guard.AssertNotNull(enrichment, "enrichment");
+
+            _enrichments.Add(enrichment);
+        }
+
         public TypeRegistrationExpression<TFrom, TTo> ConstructedBy(Func<IUnityContainer, Type, string, object> factoryMethod)
         {
             Guard.AssertNotNull(factoryMethod, "factoryMethod");
 
-            InjectionFactory factory = new InjectionFactory(factoryMethod);
+            AddEnrichment(() => new InjectionFactory(factoryMethod));
 
             return this;
         }
@@ -24,7 +50,7 @@ namespace TecX.Unity.Configuration.Expressions
         {
             Guard.AssertNotNull(factoryMethod, "factoryMethod");
 
-            InjectionFactory factory = new InjectionFactory(factoryMethod);
+            AddEnrichment(() => new InjectionFactory(factoryMethod));
 
             return this;
         }
@@ -46,7 +72,7 @@ namespace TecX.Unity.Configuration.Expressions
                     parameterTypes.Add(parameterInfo.ParameterType);
                 }
 
-                InjectionConstructor ic = new InjectionConstructor(parameterTypes.ToArray());
+                AddEnrichment(() => new InjectionConstructor(parameterTypes.ToArray()));
             }
 
             return this;
@@ -54,7 +80,7 @@ namespace TecX.Unity.Configuration.Expressions
 
         public override Registration Compile()
         {
-            throw new NotImplementedException();
+            return new TypeRegistration(typeof(TFrom), typeof(TTo), null, Lifetime, Enrichments);
         }
     }
 }

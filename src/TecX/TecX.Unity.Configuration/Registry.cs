@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using TecX.Common;
+using TecX.Unity.Configuration.Conventions;
 using TecX.Unity.Configuration.Expressions;
 
 namespace TecX.Unity.Configuration
@@ -55,6 +56,19 @@ namespace TecX.Unity.Configuration
             Guard.AssertNotNull(registry, "registry");
 
             _actions.Add(registry.ConfigureRegistrationGraph);
+        }
+
+        /// <summary>
+        /// Designates a policy for scanning assemblies to auto
+        /// register types
+        /// </summary>
+        /// <returns></returns>
+        public void Scan(Action<IAssemblyScanner> action)
+        {
+            var scanner = new AssemblyScanner();
+            action(scanner);
+
+            _actions.Add(graph => graph.AddScanner(scanner));
         }
 
         internal void AddExpression(Action<RegistrationGraph> alteration)
