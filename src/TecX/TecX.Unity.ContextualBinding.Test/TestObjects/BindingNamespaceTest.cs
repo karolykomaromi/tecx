@@ -1,6 +1,6 @@
 ﻿namespace TecX.Unity.ContextualBinding.Test.TestObjects
 {
-    interface ILogger
+    public class BindingNamespaceTest
     {
     }
 }
