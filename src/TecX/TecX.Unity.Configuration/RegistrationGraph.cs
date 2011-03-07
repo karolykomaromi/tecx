@@ -7,13 +7,24 @@ using System.Text;
 using Microsoft.Practices.Unity;
 
 using TecX.Common;
+using TecX.Unity.Configuration.Conventions;
 
 namespace TecX.Unity.Configuration
 {
     public class RegistrationGraph : IContainerConfigurator
     {
+        #region Fields
+
         private readonly RegistrationFamilyCollection _registrations;
         private readonly List<Registry> _registries;
+        private readonly List<AssemblyScanner> _scanners;
+        private readonly WeakReference<TypePool> _types;
+
+        #endregion Fields
+
+        #region Properties
+
+        public TypePool Types { get { return _types.Value; } }
 
         public List<Registry> Registries
         {
@@ -25,11 +36,19 @@ namespace TecX.Unity.Configuration
             get { return _registrations; }
         }
 
+        #endregion Properties
+
+        #region c'tor
+
         public RegistrationGraph()
         {
             _registrations = new RegistrationFamilyCollection();
             _registries = new List<Registry>();
+            _scanners = new List<AssemblyScanner>();
+            _types = new WeakReference<TypePool>(() => new TypePool(this));
         }
+
+        #endregion c'tor
 
         public RegistrationFamily FindFamily(Type pluginType)
         {
@@ -59,6 +78,18 @@ namespace TecX.Unity.Configuration
             {
                 family.Configure(container);
             }
+        }
+
+        public void AddScanner(AssemblyScanner scanner)
+        {
+            Guard.AssertNotNull(scanner, "scanner");
+
+            _scanners.Add(scanner);
+        }
+
+        public void Seal()
+        {
+            _scanners.ForEach(scanner => scanner.ScanForAll(this));
         }
     }
 }

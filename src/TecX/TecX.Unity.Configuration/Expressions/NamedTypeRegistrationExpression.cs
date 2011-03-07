@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Microsoft.Practices.Unity;
+
 using TecX.Common;
 
 namespace TecX.Unity.Configuration.Expressions
@@ -34,7 +36,7 @@ namespace TecX.Unity.Configuration.Expressions
 
         public override Registration Compile()
         {
-            throw new NotImplementedException();
+            return new TypeRegistration(typeof (TFrom), typeof (TTo), Name, Lifetime, Enrichments);
         }
     }
 }
