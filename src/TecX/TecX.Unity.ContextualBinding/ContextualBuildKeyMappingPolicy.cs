@@ -9,55 +9,70 @@ namespace TecX.Unity.ContextualBinding
 {
     public class ContextualBuildKeyMappingPolicy : IBuildKeyMappingPolicy
     {
-        private readonly IRequestHistory _history;
+        #region Fields
+
+        private readonly IBindingContext _bindingContext;
         private readonly List<ContextualBuildKeyMapping> _mappings;
+
+        #endregion Fields
+
+        #region Properties
 
         public IBuildKeyMappingPolicy LastChance { get; set; }
 
-        public ContextualBuildKeyMappingPolicy(IRequestHistory history)
-        {
-            Guard.AssertNotNull(history, "history");
+        #endregion Properties
 
-            _history = history;
+        #region c'tor
+
+        public ContextualBuildKeyMappingPolicy(IBindingContext bindingContext)
+        {
+            if (bindingContext == null) throw new ArgumentNullException("bindingContext");
+
+            _bindingContext = bindingContext;
+
             _mappings = new List<ContextualBuildKeyMapping>();
         }
 
+        #endregion c'tor
+
         #region Implementation of IBuildKeyMappingPolicy
 
-        /// <summary>
-        /// Checks wether there is a matching buildkey mapping override registered and uses the first match,
-        /// if any. If no override fits it checks wether there is a last chance default mapping present.
-        /// Throws exception if no matches and no default mapping are found.
-        /// </summary>
-        /// <exception cref="ContextualBindingException">If no contextual mapping fits and no default mapping
-        /// registered</exception>
-        public NamedTypeBuildKey Map(NamedTypeBuildKey buildKey, IBuilderContext context)
+        public NamedTypeBuildKey Map(NamedTypeBuildKey buildKey, IBuilderContext builderContext)
         {
+            if (buildKey == null) throw new ArgumentNullException("buildKey");
+            if (builderContext == null) throw new ArgumentNullException("builderContext");
+
             foreach (var mapping in _mappings)
             {
-                if (mapping.Matches(_history.Current().Parent))
+                if (mapping.Matches(_bindingContext, builderContext))
                 {
-                    return mapping.MapTo;
+                    return mapping.BuildKey;
                 }
             }
 
             if (LastChance != null)
             {
-                return LastChance.Map(buildKey, context);
+                return LastChance.Map(buildKey, builderContext);
             }
 
             throw new ContextualBindingException("No contextual mapping that matches the current context was " +
                                                  "defined and no default mapping could be found.");
         }
 
-        #endregion
+        #endregion Implementation of IBuildKeyMappingPolicy
 
-        public void AddMapping(Func<IRequest, bool> matches, Type mapTo)
+        #region Methods
+
+        public void AddMapping(Predicate<IBindingContext, IBuilderContext> matches, Type mapTo, string uniqueMappingName)
         {
-            Guard.AssertNotNull(matches, "matches");
-            Guard.AssertNotNull(mapTo, "mapTo");
+            //guards
+            if (matches == null) throw new ArgumentNullException("matches");
+            if (mapTo == null) throw new ArgumentNullException("mapTo");
+            if (uniqueMappingName == null) throw new ArgumentNullException("uniqueMappingName");
 
-            _mappings.Add(new ContextualBuildKeyMapping(matches, mapTo));
+            _mappings.Add(new ContextualBuildKeyMapping(matches, mapTo, uniqueMappingName));
         }
+
+        #endregion Methods
     }
 }

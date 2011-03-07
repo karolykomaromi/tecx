@@ -50,16 +50,11 @@
     <Compile Include="ContextualBuildKeyMappingPolicy.cs" />
     <Compile Include="ContextualBindingException.cs" />
     <Compile Include="ContextualBindingExtension.cs" />
-    <Compile Include="ContextualLifetimeStrategy.cs" />
     <Compile Include="ContextualBuildKeyMapping.cs" />
-    <Compile Include="ContextualLifetimeManager.cs" />
+    <Compile Include="IBindingContext.cs" />
     <Compile Include="IContextualBindingConfiguration.cs" />
-    <Compile Include="IRequest.cs" />
-    <Compile Include="IRequestHistory.cs" />
-    <Compile Include="LifetimeMapping.cs" />
+    <Compile Include="Predicate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestHistory.cs" />
-    <Compile Include="RequestTrackerStrategy.cs" />
     <Compile Include="UnityContainerExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

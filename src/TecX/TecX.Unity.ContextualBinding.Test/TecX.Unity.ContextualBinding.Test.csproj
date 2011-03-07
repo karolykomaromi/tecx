@@ -49,14 +49,13 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContextualBindingExtensionFixture.cs" />
+    <Compile Include="ContextualBindingFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestObjects\AnotherService.cs" />
-    <Compile Include="TestObjects\ILogger.cs" />
-    <Compile Include="TestObjects\LoggerAttribute.cs" />
-    <Compile Include="TestObjects\SomeService.cs" />
-    <Compile Include="TestObjects\TestLogger.cs" />
-    <Compile Include="TestObjects\TraceLogger.cs" />
+    <Compile Include="TestObjects\BindingNamespaceTest.cs" />
+    <Compile Include="TestObjects\IMyInterface.cs" />
+    <Compile Include="TestObjects\MyClass.cs" />
+    <Compile Include="TestObjects\MyOtherClass.cs" />
+    <Compile Include="TestObjects\MyParameterLessClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\lib\Unity2\src\Unity.Interception\Unity.Interception.2010.csproj">
