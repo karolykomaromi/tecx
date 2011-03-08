@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.Practices.Unity;
 
 using TecX.Common;
+using TecX.Unity.Configuration.Common;
 
 namespace TecX.Unity.Configuration
 {

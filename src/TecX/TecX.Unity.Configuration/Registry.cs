@@ -71,6 +71,28 @@ namespace TecX.Unity.Configuration
             _actions.Add(graph => graph.AddScanner(scanner));
         }
 
+        public static bool IsPublicRegistry(Type type)
+        {
+            Guard.AssertNotNull(type, "type");
+
+            if (type.Assembly == typeof(Registry).Assembly)
+            {
+                return false;
+            }
+
+            if (!typeof(Registry).IsAssignableFrom(type))
+            {
+                return false;
+            }
+
+            if (type.IsInterface || type.IsAbstract || type.IsGenericType)
+            {
+                return false;
+            }
+
+            return (type.GetConstructor(new Type[0]) != null);
+        }
+
         internal void AddExpression(Action<RegistrationGraph> alteration)
         {
             Guard.AssertNotNull(alteration, "alteration");
