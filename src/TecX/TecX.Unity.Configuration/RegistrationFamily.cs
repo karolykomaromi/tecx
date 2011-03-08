@@ -24,6 +24,14 @@ namespace TecX.Unity.Configuration
 
         public Type From { get { return _from; } }
 
+        public IEnumerable<Registration> Registrations
+        {
+            get 
+            {
+                return _registrations;
+            }
+        }
+
         #endregion Properties
 
         #region c'tor

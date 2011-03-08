@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using TecX.Common;
 using TecX.Unity.Configuration.Common;
-using TecX.Unity.Configuration.Conventions;
 
-namespace TecX.Unity.Configuration
+namespace TecX.Unity.Configuration.Extensions
 {
     public static class TypeExtensions
     {

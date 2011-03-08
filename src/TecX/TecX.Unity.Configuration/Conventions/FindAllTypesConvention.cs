@@ -5,6 +5,7 @@ using System.Text;
 
 using TecX.Common;
 using TecX.Unity.Configuration.Common;
+using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Conventions
 {

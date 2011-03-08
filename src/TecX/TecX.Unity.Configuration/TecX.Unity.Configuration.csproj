@@ -65,6 +65,8 @@
     <Compile Include="Expressions\OpenGenericFamilyExpression.cs" />
     <Compile Include="Expressions\RegistrationExpression.cs" />
     <Compile Include="Expressions\NamedTypeRegistrationExpression.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="GenericsPluginGraph.cs" />
     <Compile Include="IContainerConfigurator.cs" />
     <Compile Include="InstanceRegistration.cs" />
@@ -74,8 +76,6 @@
     <Compile Include="RegistrationFamilyCollection.cs" />
     <Compile Include="RegistrationGraph.cs" />
     <Compile Include="Registry.cs" />
-    <Compile Include="StringExtensions.cs" />
-    <Compile Include="TypeExtensions.cs" />
     <Compile Include="TypePool.cs" />
     <Compile Include="TypeRegistration.cs" />
   </ItemGroup>

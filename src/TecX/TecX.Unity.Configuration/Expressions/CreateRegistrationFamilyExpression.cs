@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Microsoft.Practices.ObjectBuilder2;
+using Microsoft.Practices.Unity;
+
 using TecX.Common;
 
 namespace TecX.Unity.Configuration.Expressions
@@ -97,6 +100,20 @@ namespace TecX.Unity.Configuration.Expressions
             });
 
             return expression;
+        }
+
+        public CreateRegistrationFamilyExpression<TFrom> LifetimeIs(Func<LifetimeManager> lifetime)
+        {
+            Guard.AssertNotNull(lifetime, "lifetime");
+
+            _alterations.Add(family =>
+                                 {
+                                     var lt = lifetime;
+
+                                     family.Registrations.ForEach(registration => registration.Lifetime = lt());
+                                 });
+
+            return this;
         }
     }
 }
