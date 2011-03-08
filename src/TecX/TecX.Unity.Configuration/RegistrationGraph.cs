@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.Practices.Unity;
 
 using TecX.Common;
+using TecX.Unity.Configuration.Common;
 using TecX.Unity.Configuration.Conventions;
 
 namespace TecX.Unity.Configuration

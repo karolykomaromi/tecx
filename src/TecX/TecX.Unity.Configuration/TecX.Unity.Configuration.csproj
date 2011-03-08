@@ -45,13 +45,19 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Cache.cs" />
+    <Compile Include="Common\Cache.cs" />
+    <Compile Include="Common\CompositeFilter.cs" />
+    <Compile Include="Common\CompositePredicate.cs" />
+    <Compile Include="Common\Constructor.cs" />
+    <Compile Include="Common\WeakReference.cs" />
     <Compile Include="Conventions\AssemblyScanner.cs" />
-    <Compile Include="Conventions\CompositeFilter.cs" />
-    <Compile Include="Conventions\CompositePredicate.cs" />
+    <Compile Include="Conventions\ConfigureConventionExpression.cs" />
+    <Compile Include="Conventions\FindAllTypesConvention.cs" />
+    <Compile Include="Conventions\FindRegistriesConvention.cs" />
+    <Compile Include="Conventions\FirstInterfaceConvention.cs" />
+    <Compile Include="Conventions\GenericConnectionConvention.cs" />
     <Compile Include="Conventions\IAssemblyScanner.cs" />
     <Compile Include="Conventions\IRegistrationConvention.cs" />
-    <Compile Include="Conventions\WeakReference.cs" />
     <Compile Include="Expressions\CreateRegistrationFamilyExpression.cs" />
     <Compile Include="Expressions\InstanceRegistrationExpression.cs" />
     <Compile Include="Expressions\TypeRegistrationExpression.cs" />
@@ -59,6 +65,7 @@
     <Compile Include="Expressions\OpenGenericFamilyExpression.cs" />
     <Compile Include="Expressions\RegistrationExpression.cs" />
     <Compile Include="Expressions\NamedTypeRegistrationExpression.cs" />
+    <Compile Include="GenericsPluginGraph.cs" />
     <Compile Include="IContainerConfigurator.cs" />
     <Compile Include="InstanceRegistration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,6 +75,7 @@
     <Compile Include="RegistrationGraph.cs" />
     <Compile Include="Registry.cs" />
     <Compile Include="StringExtensions.cs" />
+    <Compile Include="TypeExtensions.cs" />
     <Compile Include="TypePool.cs" />
     <Compile Include="TypeRegistration.cs" />
   </ItemGroup>

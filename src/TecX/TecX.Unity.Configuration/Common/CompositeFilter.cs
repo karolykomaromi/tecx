@@ -1,4 +1,4 @@
-﻿namespace TecX.Unity.Configuration.Conventions
+﻿namespace TecX.Unity.Configuration.Common
 {
     public class CompositeFilter<T>
     {
@@ -8,11 +8,13 @@
         public CompositePredicate<T> Includes
         {
             get { return _includes; }
+            set { }
         }
 
         public CompositePredicate<T> Excludes
         {
             get { return _excludes; }
+            set { }
         }
 
         public CompositeFilter()

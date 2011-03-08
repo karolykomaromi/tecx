@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 
 using TecX.Common;
+using TecX.Unity.Configuration.Common;
 using TecX.Unity.Configuration.Conventions;
 
 namespace TecX.Unity.Configuration

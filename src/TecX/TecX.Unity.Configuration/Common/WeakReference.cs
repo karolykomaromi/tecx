@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TecX.Unity.Configuration.Conventions
+namespace TecX.Unity.Configuration.Common
 {
     public class WeakReference<T>
     {
