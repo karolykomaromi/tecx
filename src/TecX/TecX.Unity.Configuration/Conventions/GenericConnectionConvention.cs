@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using TecX.Unity.Configuration.Extensions;
+
 namespace TecX.Unity.Configuration.Conventions
 {
     public class GenericConnectionConvention : IRegistrationConvention

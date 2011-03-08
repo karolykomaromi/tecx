@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using TecX.Unity.Configuration.Extensions;
+
 namespace TecX.Unity.Configuration.Common
 {
     public class Cache<TKey, TValue> : IEnumerable<TValue> where TValue : class

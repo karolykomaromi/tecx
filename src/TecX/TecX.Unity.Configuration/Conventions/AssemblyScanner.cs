@@ -7,6 +7,7 @@ using System.Reflection;
 
 using TecX.Common;
 using TecX.Unity.Configuration.Common;
+using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Conventions
 {
@@ -132,7 +133,7 @@ namespace TecX.Unity.Configuration.Conventions
 
         public void LookForRegistries()
         {
-            Convention<FindRegistriesScanner>();
+            Convention<FindRegistriesConvention>();
         }
 
         public FindAllTypesConvention AddAllTypesOf<TPlugin>()

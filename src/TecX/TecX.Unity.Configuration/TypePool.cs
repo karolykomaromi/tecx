@@ -17,6 +17,8 @@ namespace TecX.Unity.Configuration
         {
             Guard.AssertNotNull(graph, "graph");
 
+            _types = new Cache<Assembly, Type[]>();
+
             _types.OnMissing = assembly =>
             {
                 try
@@ -30,7 +32,6 @@ namespace TecX.Unity.Configuration
                 }
             };
 
-            _types = new Cache<Assembly, Type[]>();
         }
 
         public IEnumerable<Type> For(IEnumerable<Assembly> assemblies, CompositeFilter<Type> filter)

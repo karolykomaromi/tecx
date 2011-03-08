@@ -7,6 +7,7 @@ using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Unity.Configuration.Expressions;
+using TecX.Unity.Configuration.Test.TestObjects;
 
 namespace TecX.Unity.Configuration.Test
 {
@@ -95,27 +96,5 @@ namespace TecX.Unity.Configuration.Test
 
             Assert.AreSame(r1, r2);
         }
-    }
-
-    public class MyClassWithCtorParams : IMyInterface
-    {
-        public string Name { get; set; }
-
-        public MyClassWithCtorParams()
-        {
-        }
-
-        public MyClassWithCtorParams(string name)
-        {
-            Name = name;
-        }
-    }
-
-    public class MyClass : IMyInterface
-    {
-    }
-
-    public interface IMyInterface
-    {
     }
 }

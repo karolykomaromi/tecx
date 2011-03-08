@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 
+using TecX.Unity.Configuration.Extensions;
+
 namespace TecX.Unity.Configuration.Conventions
 {
     public class FirstInterfaceConvention : IRegistrationConvention
