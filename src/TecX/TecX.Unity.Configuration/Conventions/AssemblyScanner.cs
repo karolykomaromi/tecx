@@ -279,22 +279,5 @@ namespace TecX.Unity.Configuration.Conventions
                 }
             }
         }
-
-        internal void ScanForAll(RegistrationGraph graph)
-        {
-            Guard.AssertNotNull(graph, "graph");
-
-            var registry = new Registry();
-
-            graph.Types.For(_assemblies, _filter).Each(
-                type =>
-                {
-                    _conventions.Each(c => c.Process(type, registry));
-                });
-
-            registry.ConfigureRegistrationGraph(graph);
-
-            //_postScanningActions.Each(x => x(pluginGraph));
-        }
     }
 }

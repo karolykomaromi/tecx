@@ -7,18 +7,20 @@ namespace TecX.Unity.Configuration.Common
 {
     public static class Constructor
     {
-        public static bool HasConstructors(Type pluggedType)
+        public static bool HasConstructors(Type type)
         {
-            Guard.AssertNotNull(pluggedType, "pluggedType");
+            Guard.AssertNotNull(type, "type");
 
-            return GetGreediestConstructor(pluggedType) != null;
+            return GetGreediestConstructor(type) != null;
         }
 
-        private static ConstructorInfo GetGreediestConstructor(Type pluggedType)
+        public static ConstructorInfo GetGreediestConstructor(Type type)
         {
+            Guard.AssertNotNull(type, "type");
+
             ConstructorInfo returnValue = null;
 
-            foreach (ConstructorInfo constructor in pluggedType.GetConstructors())
+            foreach (ConstructorInfo constructor in type.GetConstructors())
             {
                 if (returnValue == null)
                 {

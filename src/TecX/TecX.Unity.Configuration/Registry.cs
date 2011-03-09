@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Microsoft.Practices.Unity;
+
 using TecX.Common;
 using TecX.Unity.Configuration.Conventions;
 using TecX.Unity.Configuration.Expressions;
@@ -36,6 +38,23 @@ namespace TecX.Unity.Configuration
         public OpenGenericFamilyExpression For(Type from)
         {
             return new OpenGenericFamilyExpression(from, this);
+        }
+
+        public void AddType(Type from, Type to, string name)
+        {
+            Guard.AssertNotNull(from, "from");
+            Guard.AssertNotNull(to, "to");
+            Guard.AssertNotEmpty(name, "name");
+
+            _actions.Add(graph =>
+                             {
+                                 var family = graph.FindFamily(from);
+
+                                 var registration = new TypeRegistration(from, to, name, new TransientLifetimeManager(),
+                                                                         new InjectionMember[0]);
+
+                                 family.AddRegistration(registration);
+                             });
         }
 
         /// <summary>

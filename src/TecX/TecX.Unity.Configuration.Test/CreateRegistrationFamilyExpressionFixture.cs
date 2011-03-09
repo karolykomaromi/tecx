@@ -23,9 +23,9 @@ namespace TecX.Unity.Configuration.Test
 
             graph.Configure(x =>
                                 {
-                                    var family = x.For<IMyInterface>().Use<MyClass>().AsSingleton();
+                                    x.For<IMyInterface>().Use<MyClass>().AsSingleton();
 
-                                    family.LifetimeIs(() => new TransientLifetimeManager());
+                                    x.For<IMyInterface>().LifetimeIs(() => new TransientLifetimeManager());
                                 });
 
             graph.Configure(container);
@@ -34,6 +34,7 @@ namespace TecX.Unity.Configuration.Test
             IMyInterface r2 = container.Resolve<IMyInterface>();
 
             Assert.AreNotSame(r1, r2);
+
         }
     }
 }

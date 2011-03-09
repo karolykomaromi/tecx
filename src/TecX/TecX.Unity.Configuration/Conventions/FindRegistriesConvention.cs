@@ -7,11 +7,11 @@ namespace TecX.Unity.Configuration.Conventions
 {
     public class FindRegistriesConvention : IRegistrationConvention
     {
-        public void Process(Type type, Registry configuration)
+        public void Process(Type type, Registry registry)
         {
             if (Registry.IsPublicRegistry(type))
             {
-                //configuration.Configure(x => x.ImportRegistry(type));
+                //registry.Configure(x => x.ImportRegistry(type));
             }
         }
     }
