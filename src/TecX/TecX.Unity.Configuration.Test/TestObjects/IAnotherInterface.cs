@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TecX.Unity.Configuration.Test.TestObjects
 {
-    public class MyOtherClass : IMyInterface, IAnotherInterface
+    public interface IAnotherInterface
     {
     }
 }

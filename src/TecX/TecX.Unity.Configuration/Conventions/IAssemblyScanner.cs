@@ -192,9 +192,5 @@ namespace TecX.Unity.Configuration.Conventions
         /// </summary>
         ConfigureConventionExpression SingleImplementationsOfInterface();
 
-
-
-
-        void Configure(Registry registry);
     }
 }

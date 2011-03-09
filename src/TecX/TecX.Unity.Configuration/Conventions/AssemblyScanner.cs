@@ -256,28 +256,17 @@ namespace TecX.Unity.Configuration.Conventions
             return false;
         }
 
-        public void Configure(Registry registry)
+        internal void ScanForAll(RegistrationGraph pluginGraph)
         {
-            Guard.AssertNotNull(registry, "registry");
+            var registry = new Registry();
 
-            var types = new List<Type>();
-
-            foreach (Assembly assembly in _assemblies)
-            {
-                foreach (Type exportedType in assembly.GetExportedTypes())
+            pluginGraph.Types.For(_assemblies, _filter).Each(
+                type =>
                 {
-                    if (_filter.Matches(exportedType))
-                        types.Fill(exportedType);
-                }
-            }
+                    _conventions.Each(c => c.Process(type, registry));
+                });
 
-            foreach(Type type in types)
-            {
-                foreach (IRegistrationConvention convention in _conventions)
-                {
-                    convention.Process(type, registry);
-                }
-            }
+            registry.ConfigureRegistrationGraph(pluginGraph);
         }
     }
 }

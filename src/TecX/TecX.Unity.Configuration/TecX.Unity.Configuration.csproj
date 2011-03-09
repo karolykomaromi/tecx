@@ -67,6 +67,7 @@
     <Compile Include="Expressions\NamedTypeRegistrationExpression.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Extensions\UnityContainerExtensions.cs" />
     <Compile Include="GenericsPluginGraph.cs" />
     <Compile Include="IContainerConfigurator.cs" />
     <Compile Include="InstanceRegistration.cs" />

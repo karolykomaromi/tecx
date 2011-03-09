@@ -2,6 +2,7 @@
 using System.Reflection;
 
 using TecX.Common;
+using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Common
 {
@@ -33,6 +34,21 @@ namespace TecX.Unity.Configuration.Common
             }
 
             return returnValue;
+        }
+
+        public static bool CanBeAutoFilled(ConstructorInfo ctor)
+        {
+            if (ctor == null) return false;
+
+            foreach (ParameterInfo parameter in ctor.GetParameters())
+            {
+                if (!parameter.ParameterType.IsAutoFillable())
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
