@@ -7,7 +7,7 @@ namespace TecX.Unity.Configuration.Conventions
 {
     public class FirstInterfaceConvention : IRegistrationConvention
     {
-        public void Process(Type type, Registry configuration)
+        public void Process(Type type, Registry registry)
         {
             if (!type.IsConcrete() ||
                 !type.CanBeCreated())
@@ -18,7 +18,7 @@ namespace TecX.Unity.Configuration.Conventions
             Type interfaceType = type.AllInterfaces().FirstOrDefault();
             if (interfaceType != null)
             {
-                //configuration.AddType(interfaceType, type);
+                //registry.AddType(interfaceType, type);
             }
         }
     }

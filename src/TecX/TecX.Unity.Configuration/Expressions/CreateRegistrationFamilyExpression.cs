@@ -106,6 +106,15 @@ namespace TecX.Unity.Configuration.Expressions
         {
             Guard.AssertNotNull(lifetime, "lifetime");
 
+            //_children.Add(graph =>
+            //{
+            //    RegistrationFamily family = graph.FindFamily(_from);
+
+            //    var lt = lifetime;
+
+            //    family.Registrations.ForEach(registration => registration.Lifetime = lt());
+            //});
+
             _alterations.Add(family =>
                                  {
                                      var lt = lifetime;

@@ -75,6 +75,15 @@ namespace TecX.Unity.Configuration
         {
             Guard.AssertNotNull(container, "container");
 
+            Registry registry = new Registry();
+
+            foreach (AssemblyScanner scanner in _scanners)
+            {
+                scanner.Configure(registry);
+            }
+
+            registry.ConfigureRegistrationGraph(this);
+
             foreach(RegistrationFamily family in _registrations)
             {
                 family.Configure(container);
@@ -86,11 +95,6 @@ namespace TecX.Unity.Configuration
             Guard.AssertNotNull(scanner, "scanner");
 
             _scanners.Add(scanner);
-        }
-
-        public void Seal()
-        {
-            _scanners.ForEach(scanner => scanner.ScanForAll(this));
         }
     }
 }

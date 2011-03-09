@@ -21,13 +21,13 @@ namespace TecX.Unity.Configuration.Conventions
             }
         }
 
-        public void Process(Type type, Registry configuration)
+        public void Process(Type type, Registry registry)
         {
             var interfaceTypes = type.FindInterfacesThatClose(_openType);
 
             foreach (var interfaceType in interfaceTypes)
             {
-                var family = configuration.For(interfaceType);
+                var family = registry.For(interfaceType);
 
                 //ConfigureFamily(family);
 

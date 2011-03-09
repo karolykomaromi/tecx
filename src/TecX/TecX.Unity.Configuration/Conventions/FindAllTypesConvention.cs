@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using TecX.Common;
 using TecX.Unity.Configuration.Common;
@@ -12,24 +9,23 @@ namespace TecX.Unity.Configuration.Conventions
 
     public class FindAllTypesConvention : IRegistrationConvention
     {
-        private readonly Type _pluginType;
-        //private Func<Type, string> _getName = type => PluginCache.GetPlugin(type).ConcreteKey;
-        private Func<Type, string> _getName = type => string.Empty;
+        private readonly Type _from;
+        private Func<Type, string> _getName = type => type.AssemblyQualifiedName;
 
-        public FindAllTypesConvention(Type pluginType)
+        public FindAllTypesConvention(Type from)
         {
-            Guard.AssertNotNull(pluginType, "pluginType");
+            Guard.AssertNotNull(from, "from");
 
-            _pluginType = pluginType;
+            _from = from;
         }
 
-        public void Process(Type type, Registry configuration)
+        public void Process(Type type, Registry registry)
         {
-            if (type.CanBeCastTo(_pluginType) && Constructor.HasConstructors(type))
+            if (type.CanBeCastTo(_from) && Constructor.HasConstructors(type))
             {
                 string name = _getName(type);
 
-                //configuration.AddType(_pluginType, type, name);
+                registry.AddType(_from, type, name);
             }
         }
 
