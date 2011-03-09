@@ -6,7 +6,7 @@ using System.Linq;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using TecX.Unity.Configuration.Expressions;
+using TecX.Unity.Configuration.Extensions;
 using TecX.Unity.Configuration.Test.TestObjects;
 
 namespace TecX.Unity.Configuration.Test
@@ -19,16 +19,12 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            RegistrationGraph graph = new RegistrationGraph();
-
-            graph.Configure(x =>
+            container.Configure(r =>
                                 {
-                                    x.For<IMyInterface>().Use<MyClass>().AsSingleton();
+                                    r.For<IMyInterface>().Use<MyClass>().AsSingleton();
 
-                                    x.For<IMyInterface>().LifetimeIs(() => new TransientLifetimeManager());
+                                    r.For<IMyInterface>().LifetimeIs(() => new TransientLifetimeManager());
                                 });
-
-            graph.Configure(container);
 
             IMyInterface r1 = container.Resolve<IMyInterface>();
             IMyInterface r2 = container.Resolve<IMyInterface>();

@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TecX.Unity.Configuration.Common;
 using TecX.Unity.Configuration.Conventions;
 using TecX.Unity.Configuration.Test.TestObjects;
+using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Test
 {
@@ -20,9 +21,7 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            RegistrationGraph graph = new RegistrationGraph();
-
-            graph.Configure(r =>
+            container.Configure(r =>
                 r.Scan(x =>
                 {
                     x.With(new FindAllTypesConvention(typeof(IMyInterface)));
@@ -32,11 +31,33 @@ namespace TecX.Unity.Configuration.Test
                     x.Exclude(t => t.Name == "MyClassWithCtorParams");
                 }));
 
-            graph.Configure(container);
-
             IEnumerable<IMyInterface> allResults = container.ResolveAll<IMyInterface>();
 
             Assert.AreEqual(2, allResults.Count());
+        }
+
+        [TestMethod]
+        public void CanApplyFirstInterfaceConvention()
+        {
+            IUnityContainer container = new UnityContainer();
+
+            container.Configure(r =>
+                r.Scan(s =>
+                {
+                    s.RegisterConcreteTypesAgainstTheFirstInterface();
+
+                    s.AssemblyContainingType<IMyInterface>();
+
+                    s.Exclude(t => t.Name == "MyClassWithCtorParams");
+                }));
+
+            IEnumerable<IMyInterface> results = container.ResolveAll<IMyInterface>();
+
+            Assert.AreEqual(2, results.Count());
+
+            IEnumerable<IAnotherInterface> others = container.ResolveAll<IAnotherInterface>();
+
+            Assert.AreEqual(1, others.Count());
         }
     }
 }

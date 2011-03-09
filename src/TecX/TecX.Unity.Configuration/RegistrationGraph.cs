@@ -9,6 +9,7 @@ using Microsoft.Practices.Unity;
 using TecX.Common;
 using TecX.Unity.Configuration.Common;
 using TecX.Unity.Configuration.Conventions;
+using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration
 {
@@ -68,21 +69,17 @@ namespace TecX.Unity.Configuration
 
             action(registry);
 
-            registry.ConfigureRegistrationGraph(this);
+            _registries.Fill(registry);
         }
 
         public void Configure(IUnityContainer container)
         {
             Guard.AssertNotNull(container, "container");
-
-            Registry registry = new Registry();
-
+            
             foreach (AssemblyScanner scanner in _scanners)
             {
-                scanner.Configure(registry);
+                scanner.ScanForAll(this);
             }
-
-            registry.ConfigureRegistrationGraph(this);
 
             foreach(RegistrationFamily family in _registrations)
             {
@@ -94,7 +91,7 @@ namespace TecX.Unity.Configuration
         {
             Guard.AssertNotNull(scanner, "scanner");
 
-            _scanners.Add(scanner);
+            _scanners.Fill(scanner);
         }
     }
 }

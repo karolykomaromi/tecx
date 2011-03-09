@@ -85,6 +85,7 @@ namespace TecX.Unity.Configuration
         public void Scan(Action<IAssemblyScanner> action)
         {
             var scanner = new AssemblyScanner();
+
             action(scanner);
 
             _actions.Add(graph => graph.AddScanner(scanner));
@@ -131,6 +132,14 @@ namespace TecX.Unity.Configuration
             _actions.ForEach(action => action(graph));
 
             graph.Registries.Add(this);
+        }
+
+        public RegistrationGraph Build()
+        {
+            var graph = new RegistrationGraph();
+            ConfigureRegistrationGraph(graph);
+
+            return graph;
         }
     }
 }
