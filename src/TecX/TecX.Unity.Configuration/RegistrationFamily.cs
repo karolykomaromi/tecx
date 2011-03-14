@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Microsoft.Practices.Unity;
 
@@ -23,14 +20,6 @@ namespace TecX.Unity.Configuration
         #region Properties
 
         public Type From { get { return _from; } }
-
-        public IEnumerable<Registration> Registrations
-        {
-            get 
-            {
-                return _registrations;
-            }
-        }
 
         #endregion Properties
 
@@ -60,6 +49,26 @@ namespace TecX.Unity.Configuration
             foreach (Registration registration in _registrations)
             {
                 registration.Configure(container);
+            }
+        }
+
+        public void LifetimeIs(Func<LifetimeManager> lifetime)
+        {
+            Guard.AssertNotNull(lifetime, "lifetime");
+
+            foreach (Registration registration in _registrations)
+            {
+                registration.Lifetime = lifetime();
+            }
+        }
+
+        public void LifetimeIs(Lifetime.Lifetime lifetime)
+        {
+            Guard.AssertNotNull(lifetime, "lifetime");
+
+            foreach (Registration registration in _registrations)
+            {
+                registration.Lifetime = lifetime;
             }
         }
     }

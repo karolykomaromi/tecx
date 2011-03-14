@@ -10,7 +10,6 @@ namespace TecX.Unity.Configuration.Expressions
 {
     public class CreateRegistrationFamilyExpression<TFrom>
     {
-        private readonly Registry _registry;
         private readonly Type _from;
         private readonly List<Action<RegistrationFamily>> _alterations;
         private readonly List<Action<RegistrationGraph>> _children;
@@ -19,13 +18,12 @@ namespace TecX.Unity.Configuration.Expressions
         {
             Guard.AssertNotNull(registry, "registry");
 
-            _registry = registry;
             _from = typeof(TFrom);
 
             _alterations = new List<Action<RegistrationFamily>>();
             _children = new List<Action<RegistrationGraph>>();
 
-            _registry.AddExpression(graph =>
+            registry.AddExpression(graph =>
             {
                 RegistrationFamily family = graph.FindFamily(_from);
 
@@ -102,25 +100,26 @@ namespace TecX.Unity.Configuration.Expressions
             return expression;
         }
 
+        public CreateRegistrationFamilyExpression<TFrom> LifetimeIs<TLifetime>()
+            where TLifetime : Lifetime.Lifetime, new()
+        {
+            return LifetimeIs(new TLifetime());
+        }
+
+        public CreateRegistrationFamilyExpression<TFrom> LifetimeIs(Lifetime.Lifetime lifetime)
+        {
+            Guard.AssertNotNull(lifetime, "lifetime");
+
+            _alterations.Add(family => family.LifetimeIs(lifetime));
+
+            return this;
+        }
+
         public CreateRegistrationFamilyExpression<TFrom> LifetimeIs(Func<LifetimeManager> lifetime)
         {
             Guard.AssertNotNull(lifetime, "lifetime");
 
-            //_children.Add(graph =>
-            //{
-            //    RegistrationFamily family = graph.FindFamily(_from);
-
-            //    var lt = lifetime;
-
-            //    family.Registrations.ForEach(registration => registration.Lifetime = lt());
-            //});
-
-            _alterations.Add(family =>
-                                 {
-                                     var lt = lifetime;
-
-                                     family.Registrations.ForEach(registration => registration.Lifetime = lt());
-                                 });
+            _alterations.Add(family => family.LifetimeIs(lifetime));
 
             return this;
         }
