@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-using TecX.Unity.Configuration.Expressions;
 using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Conventions
@@ -29,8 +25,7 @@ namespace TecX.Unity.Configuration.Conventions
             foreach (var interfaceType in interfaceTypes)
             {
                 //TODO weberse 2011-03-09 how can I register open generic types?
-
-                //registry.AddType(type, interfaceType, Guid.NewGuid().ToString());
+                registry.AddType(type, interfaceType, Guid.NewGuid().ToString());
             }
         }
     }

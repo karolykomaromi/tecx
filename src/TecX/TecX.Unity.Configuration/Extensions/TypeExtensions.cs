@@ -14,7 +14,10 @@ namespace TecX.Unity.Configuration.Extensions
             Guard.AssertNotNull(pluggedType, "pluggedType");
             Guard.AssertNotNull(templateType, "templateType");
 
-            if (!pluggedType.IsConcrete()) yield break;
+            if (!pluggedType.IsConcrete())
+            {
+                yield break;
+            }
 
             if (templateType.IsInterface)
             {
@@ -28,13 +31,17 @@ namespace TecX.Unity.Configuration.Extensions
                 yield return pluggedType.BaseType;
             }
 
-            if (pluggedType.BaseType == typeof(object)) yield break;
+            if (pluggedType.BaseType == typeof(object))
+            {
+                yield break;
+            }
 
             foreach (var interfaceType in FindInterfacesThatClose(pluggedType.BaseType, templateType))
             {
                 yield return interfaceType;
             }
         }
+
         public static bool IsInNamespace(this Type type, string nameSpace)
         {
             Guard.AssertNotNull(type, "type");
@@ -75,12 +82,6 @@ namespace TecX.Unity.Configuration.Extensions
             return type.IsConcrete() && Constructor.HasConstructors(type);
         }
 
-        /// <summary>
-        /// Determines if the pluggedType can be upcast to the pluginType
-        /// </summary>
-        /// <param name="pluginType"></param>
-        /// <param name="pluggedType"></param>
-        /// <returns></returns>
         public static bool CanBeCastTo(this Type pluggedType, Type pluginType)
         {
             if (pluggedType == null) return false;
