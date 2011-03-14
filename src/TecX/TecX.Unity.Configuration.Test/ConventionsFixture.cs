@@ -59,5 +59,24 @@ namespace TecX.Unity.Configuration.Test
 
             Assert.AreEqual(1, others.Count());
         }
+
+        [TestMethod]
+        public void CanApplyGenericConnectionConvention()
+        {
+            IUnityContainer container = new UnityContainer();
+
+            container.Configure(r =>
+                {
+                    var convention = new GenericConnectionConvention(typeof(IRepository<>));
+
+                    r.Scan(s =>
+                        {
+                            s.With(convention);
+                            s.AssemblyContainingType(typeof(IRepository<>));
+                        });
+                });
+
+            var result = container.ResolveAll<IRepository<string>>();
+        }
     }
 }
