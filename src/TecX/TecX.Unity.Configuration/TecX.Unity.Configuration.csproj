@@ -71,6 +71,11 @@
     <Compile Include="GenericsPluginGraph.cs" />
     <Compile Include="IContainerConfigurator.cs" />
     <Compile Include="InstanceRegistration.cs" />
+    <Compile Include="Lifetime\ExternallyControlled.cs" />
+    <Compile Include="Lifetime\Lifetime.cs" />
+    <Compile Include="Lifetime\PerCall.cs" />
+    <Compile Include="Lifetime\PerThread.cs" />
+    <Compile Include="Lifetime\Singleton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration.cs" />
     <Compile Include="RegistrationFamily.cs" />
