@@ -32,9 +32,9 @@ namespace TecX.Unity.Configuration.Expressions
             });
         }
 
-        public TypeRegistrationExpression<TFrom, TTo> Use<TTo>()
+        public TypeRegistrationExpression Use<TTo>()
         {
-            var expression = new TypeRegistrationExpression<TFrom, TTo>();
+            var expression = new TypeRegistrationExpression(_from, typeof(TTo));
 
             _alterations.Add(family => 
             {
@@ -66,9 +66,9 @@ namespace TecX.Unity.Configuration.Expressions
             return expression;
         }
 
-        public NamedTypeRegistrationExpression<TFrom, TTo> Add<TTo>()
+        public NamedTypeRegistrationExpression Add<TTo>()
         {
-            var expression = new NamedTypeRegistrationExpression<TFrom, TTo>();
+            var expression = new NamedTypeRegistrationExpression(_from, typeof(TTo));
 
             _alterations.Add(family =>
             {

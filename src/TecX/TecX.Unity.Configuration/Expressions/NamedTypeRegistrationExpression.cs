@@ -6,7 +6,7 @@ using TecX.Common;
 
 namespace TecX.Unity.Configuration.Expressions
 {
-    public class NamedTypeRegistrationExpression<TFrom, TTo> : TypeRegistrationExpression<TFrom, TTo>
+    public class NamedTypeRegistrationExpression : TypeRegistrationExpression
     {
         private string _name;
 
@@ -20,12 +20,13 @@ namespace TecX.Unity.Configuration.Expressions
             }
         }
 
-        public NamedTypeRegistrationExpression()
+        public NamedTypeRegistrationExpression(Type from, Type to)
+            : base(from, to)
         {
             Name = Guid.NewGuid().ToString();
         }
 
-        public NamedTypeRegistrationExpression<TFrom, TTo> Named(string name)
+        public NamedTypeRegistrationExpression Named(string name)
         {
             Guard.AssertNotEmpty(name, "name");
 
@@ -36,7 +37,7 @@ namespace TecX.Unity.Configuration.Expressions
 
         public override Registration Compile()
         {
-            return new TypeRegistration(typeof (TFrom), typeof (TTo), Name, Lifetime, Enrichments);
+            return new TypeRegistration(From, To, Name, Lifetime, Enrichments);
         }
     }
 }
