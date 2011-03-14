@@ -10,9 +10,21 @@ using TecX.Common;
 
 namespace TecX.Unity.Configuration.Expressions
 {
-    public class TypeRegistrationExpression<TFrom, TTo> : RegistrationExpression<TypeRegistrationExpression<TFrom, TTo>>
+    public class TypeRegistrationExpression : RegistrationExpression<TypeRegistrationExpression>
     {
+        #region Fields
+
         private readonly List<Func<InjectionMember>> _enrichments;
+        private readonly Type _from;
+        private readonly Type _to;
+
+        #endregion Fields
+
+        #region Properties
+
+        protected Type From { get { return _from; } }
+
+        protected Type To { get { return _to; } }
 
         protected InjectionMember[] Enrichments
         {
@@ -25,10 +37,22 @@ namespace TecX.Unity.Configuration.Expressions
             }
         }
 
-        public TypeRegistrationExpression()
+        #endregion Properties
+
+        #region c'tor
+
+        public TypeRegistrationExpression(Type from, Type to)
         {
+            Guard.AssertNotNull(from, "from");
+            Guard.AssertNotNull(to, "to");
+
+            _from = from;
+            _to = to;
+
             _enrichments = new List<Func<InjectionMember>>();
         }
+
+        #endregion c'tor
 
         public void AddEnrichment(Func<InjectionMember> enrichment)
         {
@@ -37,7 +61,7 @@ namespace TecX.Unity.Configuration.Expressions
             _enrichments.Add(enrichment);
         }
 
-        public TypeRegistrationExpression<TFrom, TTo> ConstructedBy(Func<IUnityContainer, Type, string, object> factoryMethod)
+        public TypeRegistrationExpression ConstructedBy(Func<IUnityContainer, Type, string, object> factoryMethod)
         {
             Guard.AssertNotNull(factoryMethod, "factoryMethod");
 
@@ -46,7 +70,7 @@ namespace TecX.Unity.Configuration.Expressions
             return this;
         }
 
-        public TypeRegistrationExpression<TFrom, TTo> ConstructedBy(Func<IUnityContainer, object> factoryMethod)
+        public TypeRegistrationExpression ConstructedBy(Func<IUnityContainer, object> factoryMethod)
         {
             Guard.AssertNotNull(factoryMethod, "factoryMethod");
 
@@ -55,7 +79,7 @@ namespace TecX.Unity.Configuration.Expressions
             return this;
         }
 
-        public TypeRegistrationExpression<TFrom, TTo> SelectConstructor(Expression<Func<TTo>> expression)
+        public TypeRegistrationExpression SelectConstructor(Expression<Func<object>> expression)
         {
             Guard.AssertNotNull(expression, "expression");
 
@@ -80,7 +104,7 @@ namespace TecX.Unity.Configuration.Expressions
 
         public override Registration Compile()
         {
-            return new TypeRegistration(typeof(TFrom), typeof(TTo), null, Lifetime, Enrichments);
+            return new TypeRegistration(_from, _to, null, Lifetime, Enrichments);
         }
     }
 }

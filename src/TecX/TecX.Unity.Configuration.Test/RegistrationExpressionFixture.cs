@@ -19,7 +19,7 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            TypeRegistrationExpression<IMyInterface, MyClass> expression = new TypeRegistrationExpression<IMyInterface, MyClass>();
+            TypeRegistrationExpression expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClass));
 
             expression.Compile().Configure(container);
 
@@ -34,7 +34,7 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            NamedTypeRegistrationExpression<IMyInterface, MyClass> expression = new NamedTypeRegistrationExpression<IMyInterface, MyClass>();
+            NamedTypeRegistrationExpression expression = new NamedTypeRegistrationExpression(typeof(IMyInterface), typeof(MyClass));
 
             expression.Name = "1";
 
@@ -51,7 +51,7 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            var expression = new TypeRegistrationExpression<IMyInterface, MyClassWithCtorParams>();
+            var expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClassWithCtorParams));
 
             expression.ConstructedBy(c => new MyClassWithCtorParams("1"));
 
@@ -68,7 +68,7 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            var expression = new TypeRegistrationExpression<IMyInterface, MyClassWithCtorParams>();
+            var expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClassWithCtorParams));
 
             expression.SelectConstructor(() => new MyClassWithCtorParams());
 
@@ -85,7 +85,7 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            var expression = new TypeRegistrationExpression<IMyInterface, MyClass>();
+            var expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClass));
 
             expression.LifetimeIs(() => new ContainerControlledLifetimeManager());
 
