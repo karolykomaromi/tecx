@@ -4,13 +4,16 @@ using TecX.Common;
 
 namespace TecX.Unity.Configuration.Expressions
 {
-    public class NamedInstanceRegistrationExpression<TFrom> : InstanceRegistrationExpression<TFrom>
+    public class NamedInstanceRegistrationExpression : InstanceRegistrationExpression
     {
         private string _name;
 
         public string Name
         {
-            get { return _name; }
+            get
+            {
+                return _name;
+            }
             set
             {
                 Guard.AssertNotEmpty(value, "Name");
@@ -18,13 +21,13 @@ namespace TecX.Unity.Configuration.Expressions
             }
         }
 
-        public NamedInstanceRegistrationExpression(object instance) 
-            : base(instance)
+        public NamedInstanceRegistrationExpression(Type from, object instance) 
+            : base(from, instance)
         {
             Name = Guid.NewGuid().ToString();
         }
 
-        public NamedInstanceRegistrationExpression<TFrom> Named(string name)
+        public NamedInstanceRegistrationExpression Named(string name)
         {
             Guard.AssertNotEmpty(name, "name");
 
@@ -35,7 +38,7 @@ namespace TecX.Unity.Configuration.Expressions
 
         public override Registration Compile()
         {
-            throw new NotImplementedException();
+            return new InstanceRegistration(From, Name, Instance, Lifetime);
         }
     }
 }

@@ -9,11 +9,20 @@ namespace TecX.Unity.Configuration.Expressions
     public abstract class RegistrationExpression<TRegistrationExpression> : RegistrationExpression
         where TRegistrationExpression : RegistrationExpression
     {
+        private Func<LifetimeManager> _lifetimeFactory;
+
+        public LifetimeManager Lifetime { get { return _lifetimeFactory(); } }
+
+        protected RegistrationExpression()
+        {
+            _lifetimeFactory = () => new TransientLifetimeManager();
+        }
+
         public TRegistrationExpression LifetimeIs(Func<LifetimeManager> lifetime)
         {
             Guard.AssertNotNull(lifetime, "lifetime");
 
-            _lifetimeFactory = lifetime;
+            LifetimeIs(lifetime);
 
             return this as TRegistrationExpression;
         }
@@ -26,27 +35,6 @@ namespace TecX.Unity.Configuration.Expressions
 
     public abstract class RegistrationExpression
     {
-        #region Fields
-
-        protected Func<LifetimeManager> _lifetimeFactory;
-
-        #endregion Fields
-
-        #region Properties
-
-        public LifetimeManager Lifetime { get { return _lifetimeFactory(); } }
-
-        #endregion Properties
-
-        #region c'tor
-
-        protected RegistrationExpression()
-        {
-            _lifetimeFactory = () => new TransientLifetimeManager();
-        }
-
-        #endregion c'tor
-
         public abstract Registration Compile();
     }
 }

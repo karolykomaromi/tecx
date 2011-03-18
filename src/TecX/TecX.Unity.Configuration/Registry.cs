@@ -141,5 +141,12 @@ namespace TecX.Unity.Configuration
 
             return graph;
         }
+
+        public void Configure(Action<RegistrationGraph> configure)
+        {
+            Guard.AssertNotNull(configure, "configure");
+
+            _actions.Add(configure);
+        }
     }
 }

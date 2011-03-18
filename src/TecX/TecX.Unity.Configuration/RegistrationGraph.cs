@@ -93,5 +93,17 @@ namespace TecX.Unity.Configuration
 
             _scanners.Fill(scanner);
         }
+        public void ImportRegistry(Type type)
+        {
+            Guard.AssertNotNull(type, "type");
+
+            if (Registries.Any(x => x.GetType() == type))
+            {
+                return;
+            }
+
+            var registry = (Registry)Activator.CreateInstance(type);
+            registry.ConfigureRegistrationGraph(this);
+        }
     }
 }
