@@ -55,7 +55,6 @@
     <Compile Include="Conventions\FindAllTypesConvention.cs" />
     <Compile Include="Conventions\FindRegistriesConvention.cs" />
     <Compile Include="Conventions\FirstInterfaceConvention.cs" />
-    <Compile Include="Conventions\GenericConnectionConvention.cs" />
     <Compile Include="Conventions\IAssemblyScanner.cs" />
     <Compile Include="Conventions\IRegistrationConvention.cs" />
     <Compile Include="Expressions\CreateRegistrationFamilyExpression.cs" />

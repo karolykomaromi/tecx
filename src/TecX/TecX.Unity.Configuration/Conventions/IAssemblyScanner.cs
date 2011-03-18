@@ -170,14 +170,11 @@ namespace TecX.Unity.Configuration.Conventions
         /// </summary>
         ConfigureConventionExpression WithDefaultConventions();
 
-        /// <summary>
-        /// Scans for TPlugin's and Concrete Types that close the given open generic type
-        /// </summary>
-        /// <example>
-        /// 
-        /// </example>
-        /// <param name="openGenericType"></param>
-        ConfigureConventionExpression ConnectImplementationsToTypesClosing(Type openGenericType);
+        ///// <summary>
+        ///// Scans for TPlugin's and Concrete Types that close the given open generic type
+        ///// </summary>
+        ///// <param name="openGenericType"></param>
+        //ConfigureConventionExpression ConnectImplementationsToTypesClosing(Type openGenericType);
 
         /// <summary>
         /// Automatically registers all concrete types without primitive arguments

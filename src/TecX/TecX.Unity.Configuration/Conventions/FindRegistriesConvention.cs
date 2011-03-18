@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace TecX.Unity.Configuration.Conventions
 {
@@ -11,7 +8,7 @@ namespace TecX.Unity.Configuration.Conventions
         {
             if (Registry.IsPublicRegistry(type))
             {
-                //registry.Configure(x => x.ImportRegistry(type));
+                registry.Configure(graph => graph.ImportRegistry(type));
             }
         }
     }

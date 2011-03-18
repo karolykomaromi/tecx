@@ -218,16 +218,16 @@ namespace TecX.Unity.Configuration.Conventions
             throw new NotImplementedException();
         }
 
-        public ConfigureConventionExpression ConnectImplementationsToTypesClosing(Type openGenericType)
-        {
-            Guard.AssertNotNull(openGenericType, "openGenericType");
+        //public ConfigureConventionExpression ConnectImplementationsToTypesClosing(Type openGenericType)
+        //{
+        //    Guard.AssertNotNull(openGenericType, "openGenericType");
 
-            var convention = new GenericConnectionConvention(openGenericType);
+        //    var convention = new ImplementsOpenGenericConvention(openGenericType);
 
-            With(convention);
+        //    With(convention);
 
-            return new ConfigureConventionExpression(convention);
-        }
+        //    return new ConfigureConventionExpression(convention);
+        //}
 
         public ConfigureConventionExpression RegisterConcreteTypesAgainstTheFirstInterface()
         {

@@ -62,6 +62,7 @@
     <Compile Include="TestObjects\MyClass.cs" />
     <Compile Include="TestObjects\MyClassWithCtorParams.cs" />
     <Compile Include="TestObjects\MyOtherClass.cs" />
+    <Compile Include="TestObjects\RegistrySubClass.cs" />
     <Compile Include="TestObjects\Repository.cs" />
   </ItemGroup>
   <ItemGroup>

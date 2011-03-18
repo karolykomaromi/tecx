@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
 
 using TecX.Common;
@@ -48,11 +47,11 @@ namespace TecX.Unity.Configuration.Expressions
             return expression;
         }
 
-        public InstanceRegistrationExpression<TFrom> Use(TFrom instance)
+        public InstanceRegistrationExpression Use(TFrom instance)
         {
             Guard.AssertNotNull(instance, "instance");
 
-            var expression = new InstanceRegistrationExpression<TFrom>(instance);
+            var expression = new InstanceRegistrationExpression(typeof(TFrom), instance);
 
             _alterations.Add(family =>
             {
@@ -82,11 +81,11 @@ namespace TecX.Unity.Configuration.Expressions
             return expression;
         }
 
-        public NamedInstanceRegistrationExpression<TFrom> Add(TFrom instance)
+        public NamedInstanceRegistrationExpression Add(TFrom instance)
         {
             Guard.AssertNotNull(instance, "instance");
 
-            var expression = new NamedInstanceRegistrationExpression<TFrom>(instance);
+            var expression = new NamedInstanceRegistrationExpression(typeof(TFrom), instance);
 
             _alterations.Add(family =>
             {

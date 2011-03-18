@@ -61,22 +61,20 @@ namespace TecX.Unity.Configuration.Test
         }
 
         [TestMethod]
-        public void CanApplyGenericConnectionConvention()
+        public void CanApplyFindRegistriesConvention()
         {
             IUnityContainer container = new UnityContainer();
 
-            container.Configure(r =>
-                {
-                    var convention = new GenericConnectionConvention(typeof(IRepository<>));
+            container.Configure(r => r.Scan(s => 
+            {
+                s.With(new FindRegistriesConvention());
 
-                    r.Scan(s =>
-                        {
-                            s.With(convention);
-                            s.AssemblyContainingType(typeof(IRepository<>));
-                        });
-                });
+                s.AssemblyContainingType(typeof(RegistrySubClass));
+            }));
 
-            var result = container.ResolveAll<IRepository<string>>();
+            IRepository<int> repository = container.Resolve<IRepository<int>>();
+
+            Assert.IsNotNull(repository);
         }
     }
 }
