@@ -8,7 +8,7 @@ namespace TecX.Unity.Configuration.Conventions
         {
             if (Registry.IsPublicRegistry(type))
             {
-                registry.Configure(graph => graph.ImportRegistry(type));
+                registry.AddExpression(graph => graph.ImportRegistry(type));
             }
         }
     }
