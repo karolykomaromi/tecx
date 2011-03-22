@@ -32,6 +32,8 @@ namespace TecX.Unity.Configuration.Conventions
 
         #endregion c'tor
 
+        #region Select assemblies to scan
+
         public void Assembly(Assembly assembly)
         {
             Guard.AssertNotNull(assembly, "assembly");
@@ -139,30 +141,24 @@ namespace TecX.Unity.Configuration.Conventions
             }
         }
 
-        public void LookForRegistries()
+        public bool Contains(string assemblyName)
         {
-            Convention<FindRegistriesConvention>();
+            Guard.AssertNotEmpty(assemblyName, "assemblyName");
+
+            foreach (Assembly assembly in _assemblies)
+            {
+                if (assembly.GetName().Name == assemblyName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
-        public FindAllTypesConvention AddAllTypesOf<TPlugin>()
-        {
-            return AddAllTypesOf(typeof(TPlugin));
-        }
+        #endregion Select assemblies to scan
 
-        public FindAllTypesConvention AddAllTypesOf(Type pluginType)
-        {
-            Guard.AssertNotNull(pluginType, "pluginType");
-
-            var filter = new FindAllTypesConvention(pluginType);
-            With(filter);
-
-            return filter;
-        }
-
-        public void IgnoreStructureMapAttributes()
-        {
-            throw new NotImplementedException();
-        }
+        #region Filtering
 
         public void Exclude(Func<Type, bool> exclude)
         {
@@ -207,6 +203,30 @@ namespace TecX.Unity.Configuration.Conventions
             Exclude(type => type == typeof(T));
         }
 
+        #endregion Filtering
+
+        #region Conventions
+
+        public void LookForRegistries()
+        {
+            Convention<FindRegistriesConvention>();
+        }
+
+        public FindAllTypesConvention AddAllTypesOf<TPlugin>()
+        {
+            return AddAllTypesOf(typeof(TPlugin));
+        }
+
+        public FindAllTypesConvention AddAllTypesOf(Type pluginType)
+        {
+            Guard.AssertNotNull(pluginType, "pluginType");
+
+            var filter = new FindAllTypesConvention(pluginType);
+            With(filter);
+
+            return filter;
+        }
+
         public void Convention<T>()
             where T : IRegistrationConvention, new()
         {
@@ -241,33 +261,28 @@ namespace TecX.Unity.Configuration.Conventions
             throw new NotImplementedException();
         }
 
-        public bool Contains(string assemblyName)
+        #endregion Conventions
+
+        #region Infrastructure
+
+        internal void ScanForAll(RegistrationGraph graph)
         {
-            Guard.AssertNotEmpty(assemblyName, "assemblyName");
-
-            foreach (Assembly assembly in _assemblies)
-            {
-                if (assembly.GetName().Name == assemblyName)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        internal void ScanForAll(RegistrationGraph pluginGraph)
-        {
-            Guard.AssertNotNull(pluginGraph, "pluginGraph");
+            Guard.AssertNotNull(graph, "graph");
 
             var registry = new Registry();
 
-            pluginGraph
+            //we iterate over all assemblies that were added to this scanner
+            //we run the exported types from each of these assemblies through the scanners filter
+            //the types that get past the filters are processed by the registered conventions
+            //the conventions take care about registering a type with the container if it fits their scheme
+            graph
                 .Types
                 .For(_assemblies, _filter)
-                .Each(type => this._conventions.Each(c => c.Process(type, registry)));
+                .Each(type => _conventions.Each(c => c.Process(type, registry)));
 
-            registry.ConfigureRegistrationGraph(pluginGraph);
+            registry.ConfigureRegistrationGraph(graph);
         }
+
+        #endregion Infrastructure
     }
 }
