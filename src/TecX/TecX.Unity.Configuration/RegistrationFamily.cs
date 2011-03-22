@@ -61,15 +61,5 @@ namespace TecX.Unity.Configuration
                 registration.Lifetime = lifetime();
             }
         }
-
-        public void LifetimeIs(Lifetime.Lifetime lifetime)
-        {
-            Guard.AssertNotNull(lifetime, "lifetime");
-
-            foreach (Registration registration in _registrations)
-            {
-                registration.Lifetime = lifetime;
-            }
-        }
     }
 }

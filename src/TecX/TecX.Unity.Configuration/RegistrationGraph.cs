@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
 
 using Microsoft.Practices.Unity;
 
@@ -60,7 +58,7 @@ namespace TecX.Unity.Configuration
         /// <summary>
         /// Add configuration to a PluginGraph with the Registry DSL
         /// </summary>
-        /// <param name="action"></param>
+        /// <param name="action">Action that configures a registry</param>
         public void Configure(Action<Registry> action)
         {
             Guard.AssertNotNull(action, "action");
@@ -75,13 +73,13 @@ namespace TecX.Unity.Configuration
         public void Configure(IUnityContainer container)
         {
             Guard.AssertNotNull(container, "container");
-            
+
             foreach (AssemblyScanner scanner in _scanners)
             {
                 scanner.ScanForAll(this);
             }
 
-            foreach(RegistrationFamily family in _registrations)
+            foreach (RegistrationFamily family in _registrations)
             {
                 family.Configure(container);
             }
@@ -93,6 +91,7 @@ namespace TecX.Unity.Configuration
 
             _scanners.Fill(scanner);
         }
+
         public void ImportRegistry(Type type)
         {
             Guard.AssertNotNull(type, "type");
@@ -103,6 +102,7 @@ namespace TecX.Unity.Configuration
             }
 
             var registry = (Registry)Activator.CreateInstance(type);
+
             registry.ConfigureRegistrationGraph(this);
         }
     }

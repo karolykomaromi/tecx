@@ -17,9 +17,7 @@ namespace TecX.Unity.Configuration.Extensions
 
             action(registry);
 
-            RegistrationGraph graph = registry.Build();
-
-            graph.Configure(container);
+            container.AddExtension(registry);
         }
     }
 }

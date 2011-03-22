@@ -5,7 +5,6 @@ using System.Reflection;
 
 using TecX.Common;
 using TecX.Unity.Configuration.Common;
-using TecX.Unity.Configuration.Conventions;
 
 namespace TecX.Unity.Configuration
 {
@@ -17,21 +16,20 @@ namespace TecX.Unity.Configuration
         {
             Guard.AssertNotNull(graph, "graph");
 
-            _types = new Cache<Assembly, Type[]>();
-
-            _types.OnMissing = assembly =>
+            _types = new Cache<Assembly, Type[]>
             {
-                try
+                OnMissing = assembly =>
                 {
-                    return assembly.GetExportedTypes();
-                }
-                catch (Exception ex)
-                {
-                    //graph.Log.RegisterError(170, ex, assembly.FullName);
-                    return new Type[0];
+                    try
+                    {
+                        return assembly.GetExportedTypes();
+                    }
+                    catch (Exception ex)
+                    {
+                        return new Type[0];
+                    }
                 }
             };
-
         }
 
         public IEnumerable<Type> For(IEnumerable<Assembly> assemblies, CompositeFilter<Type> filter)
@@ -39,7 +37,10 @@ namespace TecX.Unity.Configuration
             Guard.AssertNotNull(assemblies, "assemblies");
             Guard.AssertNotNull(filter, "filter");
 
-            return assemblies.SelectMany(x => _types[x].Where(filter.Matches));
+            //if the cache contains information about the exported types of this assembly it will return those
+            //values. otherwise it will use the OnMissing delegate we provided in the constructor to read all exported types
+            //for this assembly.
+            return assemblies.SelectMany(assembly => _types[assembly].Where(filter.Matches));
         }
     }
 }

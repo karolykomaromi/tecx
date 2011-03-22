@@ -2,22 +2,30 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using TecX.Common;
 using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Common
 {
-    public class Cache<TKey, TValue> : IEnumerable<TValue> where TValue : class
+    public class Cache<TKey, TValue> : IEnumerable<TValue> 
+        where TValue : class
     {
+        #region Fields
+
         private readonly object _locker = new object();
         private readonly IDictionary<TKey, TValue> _values;
 
         private Func<TValue, TKey> _getKey = delegate { throw new NotImplementedException(); };
 
         private Func<TKey, TValue> _onMissing = delegate(TKey key)
-        {
-            string message = string.Format("Key '{0}' could not be found", key);
-            throw new KeyNotFoundException(message);
-        };
+            {
+                string message = string.Format("Key '{0}' could not be found", key);
+                throw new KeyNotFoundException(message);
+            };
+
+        #endregion Fields
+
+        #region c'tor
 
         public Cache()
             : this(new Dictionary<TKey, TValue>())
@@ -40,6 +48,8 @@ namespace TecX.Unity.Configuration.Common
             _values = dictionary;
         }
 
+        #endregion c'tor
+
         public Func<TKey, TValue> OnMissing
         {
             set { _onMissing = value; }
@@ -47,8 +57,15 @@ namespace TecX.Unity.Configuration.Common
 
         public Func<TValue, TKey> GetKey
         {
-            get { return _getKey; }
-            set { _getKey = value; }
+            get
+            {
+                return _getKey;
+            }
+            set
+            {
+                Guard.AssertNotNull(value, "GetKey");
+                _getKey = value;
+            }
         }
 
         public int Count
@@ -82,7 +99,9 @@ namespace TecX.Unity.Configuration.Common
                             TValue value = _onMissing(key);
                             //Check to make sure that the onMissing didn't cache this already
                             if (!_values.ContainsKey(key))
+                            {
                                 _values.Add(key, value);
+                            }
                         }
                     }
                 }
@@ -114,10 +133,12 @@ namespace TecX.Unity.Configuration.Common
             return _values.Values.GetEnumerator();
         }
 
-        #endregion
+        #endregion IEnumerable<TValue> Members
 
         public void Fill(TKey key, TValue value)
         {
+            Guard.AssertNotNull(key, "key");
+
             if (_values.ContainsKey(key))
             {
                 return;
@@ -128,6 +149,8 @@ namespace TecX.Unity.Configuration.Common
 
         public bool TryRetrieve(TKey key, out TValue value)
         {
+            Guard.AssertNotNull(key, "key");
+
             value = default(TValue);
 
             if (_values.ContainsKey(key))
@@ -141,6 +164,8 @@ namespace TecX.Unity.Configuration.Common
 
         public void Each(Action<TValue> action)
         {
+            Guard.AssertNotNull(action, "action");
+
             lock (_locker)
             {
                 foreach (var pair in _values)
@@ -152,6 +177,8 @@ namespace TecX.Unity.Configuration.Common
 
         public void Each(Action<TKey, TValue> action)
         {
+            Guard.AssertNotNull(action, "action");
+
             foreach (var pair in _values)
             {
                 action(pair.Key, pair.Value);
@@ -160,11 +187,15 @@ namespace TecX.Unity.Configuration.Common
 
         public bool Has(TKey key)
         {
+            Guard.AssertNotNull(key, "key");
+
             return _values.ContainsKey(key);
         }
 
         public bool Exists(Predicate<TValue> predicate)
         {
+            Guard.AssertNotNull(predicate, "predicate");
+
             bool returnValue = false;
 
             Each(delegate(TValue value) { returnValue |= predicate(value); });
@@ -174,6 +205,8 @@ namespace TecX.Unity.Configuration.Common
 
         public TValue Find(Predicate<TValue> predicate)
         {
+            Guard.AssertNotNull(predicate, "predicate");
+
             foreach (var pair in _values)
             {
                 if (predicate(pair.Value))
@@ -195,6 +228,8 @@ namespace TecX.Unity.Configuration.Common
 
         public void Remove(TKey key)
         {
+            Guard.AssertNotNull(key, "key");
+
             if (_values.ContainsKey(key))
             {
                 _values.Remove(key);
@@ -216,6 +251,9 @@ namespace TecX.Unity.Configuration.Common
 
         public void WithValue(TKey key, Action<TValue> action)
         {
+            Guard.AssertNotNull(key, "key");
+            Guard.AssertNotNull(action, "action");
+
             if (_values.ContainsKey(key))
             {
                 action(this[key]);

@@ -8,7 +8,6 @@ using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Unity.Configuration.Extensions;
-using TecX.Unity.Configuration.Lifetime;
 using TecX.Unity.Configuration.Test.TestObjects;
 
 namespace TecX.Unity.Configuration.Test
@@ -26,7 +25,7 @@ namespace TecX.Unity.Configuration.Test
                                 {
                                     r.For<IMyInterface>().Use<MyClass>().AsSingleton();
 
-                                    r.For<IMyInterface>().LifetimeIs(new PerCall());
+                                    r.For<IMyInterface>().LifetimeIs(() => new TransientLifetimeManager());
                                 });
 
             IMyInterface r1 = container.Resolve<IMyInterface>();
@@ -48,19 +47,6 @@ namespace TecX.Unity.Configuration.Test
             Assert.AreNotSame(r1, r2);
             Assert.IsInstanceOfType(r1, typeof(ContainerControlledLifetimeManager));
             Assert.IsInstanceOfType(r2, typeof(ContainerControlledLifetimeManager));
-        }
-
-        [TestMethod]
-        public void CanUseCustomLifetimeClassInsteadOfTediuousLifetimeManager()
-        {
-            Singleton s1 = new Singleton();
-
-            LifetimeManager c1 = s1;
-            LifetimeManager c2 = s1;
-
-            Assert.IsInstanceOfType(c1, typeof(ContainerControlledLifetimeManager));
-            Assert.IsInstanceOfType(c2, typeof(ContainerControlledLifetimeManager));
-            Assert.AreNotSame(c1, c2);
         }
     }
 }
