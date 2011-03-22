@@ -90,11 +90,6 @@ namespace TecX.Unity.Configuration.Conventions
         /// <param name="TPlugin"></param>
         FindAllTypesConvention AddAllTypesOf(Type TPlugin);
 
-        /// <summary>
-        /// Makes this scanning operation ignore all [PluginFamily] and [Pluggable] attributes
-        /// </summary>
-        void IgnoreStructureMapAttributes();
-
         #endregion
 
         #region Filtering types
