@@ -108,13 +108,6 @@ namespace TecX.Unity.Configuration
             _actions.Add(alteration);
         }
 
-        public void Configure(Action<RegistrationGraph> configure)
-        {
-            Guard.AssertNotNull(configure, "configure");
-
-            _actions.Add(configure);
-        }
-
         internal void ConfigureRegistrationGraph(RegistrationGraph graph)
         {
             Guard.AssertNotNull(graph, "graph");
