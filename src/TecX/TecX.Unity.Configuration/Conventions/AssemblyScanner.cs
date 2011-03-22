@@ -13,9 +13,15 @@ namespace TecX.Unity.Configuration.Conventions
 {
     public class AssemblyScanner : IAssemblyScanner
     {
+        #region Fields
+
         private readonly List<Assembly> _assemblies;
         private readonly CompositeFilter<Type> _filter;
         private readonly List<IRegistrationConvention> _conventions;
+
+        #endregion Fields
+
+        #region c'tor
 
         public AssemblyScanner()
         {
@@ -23,6 +29,8 @@ namespace TecX.Unity.Configuration.Conventions
             _filter = new CompositeFilter<Type>();
             _conventions = new List<IRegistrationConvention>();
         }
+
+        #endregion c'tor
 
         public void Assembly(Assembly assembly)
         {
@@ -143,6 +151,8 @@ namespace TecX.Unity.Configuration.Conventions
 
         public FindAllTypesConvention AddAllTypesOf(Type pluginType)
         {
+            Guard.AssertNotNull(pluginType, "pluginType");
+
             var filter = new FindAllTypesConvention(pluginType);
             With(filter);
 
@@ -197,7 +207,8 @@ namespace TecX.Unity.Configuration.Conventions
             Exclude(type => type == typeof(T));
         }
 
-        public void Convention<T>() where T : IRegistrationConvention, new()
+        public void Convention<T>()
+            where T : IRegistrationConvention, new()
         {
             IRegistrationConvention previous = _conventions.FirstOrDefault(scanner => scanner is T);
             if (previous == null)
@@ -213,38 +224,27 @@ namespace TecX.Unity.Configuration.Conventions
             _conventions.Fill(convention);
         }
 
-        public ConfigureConventionExpression WithDefaultConventions()
+        public void WithDefaultConventions()
         {
             throw new NotImplementedException();
         }
 
-        //public ConfigureConventionExpression ConnectImplementationsToTypesClosing(Type openGenericType)
-        //{
-        //    Guard.AssertNotNull(openGenericType, "openGenericType");
-
-        //    var convention = new ImplementsOpenGenericConvention(openGenericType);
-
-        //    With(convention);
-
-        //    return new ConfigureConventionExpression(convention);
-        //}
-
-        public ConfigureConventionExpression RegisterConcreteTypesAgainstTheFirstInterface()
+        public void RegisterConcreteTypesAgainstTheFirstInterface()
         {
             var convention = new FirstInterfaceConvention();
 
             With(convention);
-
-            return new ConfigureConventionExpression(convention);
         }
 
-        public ConfigureConventionExpression SingleImplementationsOfInterface()
+        public void SingleImplementationsOfInterface()
         {
             throw new NotImplementedException();
         }
 
         public bool Contains(string assemblyName)
         {
+            Guard.AssertNotEmpty(assemblyName, "assemblyName");
+
             foreach (Assembly assembly in _assemblies)
             {
                 if (assembly.GetName().Name == assemblyName)
@@ -258,13 +258,14 @@ namespace TecX.Unity.Configuration.Conventions
 
         internal void ScanForAll(RegistrationGraph pluginGraph)
         {
+            Guard.AssertNotNull(pluginGraph, "pluginGraph");
+
             var registry = new Registry();
 
-            pluginGraph.Types.For(_assemblies, _filter).Each(
-                type =>
-                {
-                    _conventions.Each(c => c.Process(type, registry));
-                });
+            pluginGraph
+                .Types
+                .For(_assemblies, _filter)
+                .Each(type => this._conventions.Each(c => c.Process(type, registry)));
 
             registry.ConfigureRegistrationGraph(pluginGraph);
         }

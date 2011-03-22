@@ -99,21 +99,6 @@ namespace TecX.Unity.Configuration.Expressions
             return expression;
         }
 
-        public CreateRegistrationFamilyExpression<TFrom> LifetimeIs<TLifetime>()
-            where TLifetime : Lifetime.Lifetime, new()
-        {
-            return LifetimeIs(new TLifetime());
-        }
-
-        public CreateRegistrationFamilyExpression<TFrom> LifetimeIs(Lifetime.Lifetime lifetime)
-        {
-            Guard.AssertNotNull(lifetime, "lifetime");
-
-            _alterations.Add(family => family.LifetimeIs(lifetime));
-
-            return this;
-        }
-
         public CreateRegistrationFamilyExpression<TFrom> LifetimeIs(Func<LifetimeManager> lifetime)
         {
             Guard.AssertNotNull(lifetime, "lifetime");

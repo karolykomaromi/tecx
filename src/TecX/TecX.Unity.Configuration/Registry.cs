@@ -11,7 +11,7 @@ using TecX.Unity.Configuration.Expressions;
 
 namespace TecX.Unity.Configuration
 {
-    public class Registry
+    public class Registry : UnityContainerExtension
     {
         #region Fields
 
@@ -35,11 +35,6 @@ namespace TecX.Unity.Configuration
             return new CreateRegistrationFamilyExpression<T>(this);
         }
 
-        public OpenGenericFamilyExpression For(Type from)
-        {
-            return new OpenGenericFamilyExpression(from, this);
-        }
-
         public void AddType(Type from, Type to, string name)
         {
             Guard.AssertNotNull(from, "from");
@@ -50,26 +45,22 @@ namespace TecX.Unity.Configuration
                              {
                                  var family = graph.FindFamily(from);
 
-                                 var registration = new TypeRegistration(from, to, name, new TransientLifetimeManager(),
+                                 var registration = new TypeRegistration(from, 
+                                                                         to, 
+                                                                         name, 
+                                                                         new TransientLifetimeManager(),
                                                                          new InjectionMember[0]);
 
                                  family.AddRegistration(registration);
                              });
         }
 
-        /// <summary>
-        /// Imports the configuration from another registry into this registry.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        public void IncludeRegistry<T>() where T : Registry, new()
+        public void IncludeRegistry<T>() 
+            where T : Registry, new()
         {
             _actions.Add(g => new T().ConfigureRegistrationGraph(g));
         }
 
-        /// <summary>
-        /// Imports the configuration from another registry into this registry.
-        /// </summary>
-        /// <param name="registry"></param>
         public void IncludeRegistry(Registry registry)
         {
             Guard.AssertNotNull(registry, "registry");
@@ -77,13 +68,10 @@ namespace TecX.Unity.Configuration
             _actions.Add(registry.ConfigureRegistrationGraph);
         }
 
-        /// <summary>
-        /// Designates a policy for scanning assemblies to auto
-        /// register types
-        /// </summary>
-        /// <returns></returns>
         public void Scan(Action<IAssemblyScanner> action)
         {
+            Guard.AssertNotNull(action, "action");
+
             var scanner = new AssemblyScanner();
 
             action(scanner);
@@ -120,6 +108,13 @@ namespace TecX.Unity.Configuration
             _actions.Add(alteration);
         }
 
+        public void Configure(Action<RegistrationGraph> configure)
+        {
+            Guard.AssertNotNull(configure, "configure");
+
+            _actions.Add(configure);
+        }
+
         internal void ConfigureRegistrationGraph(RegistrationGraph graph)
         {
             Guard.AssertNotNull(graph, "graph");
@@ -134,19 +129,13 @@ namespace TecX.Unity.Configuration
             graph.Registries.Add(this);
         }
 
-        public RegistrationGraph Build()
+        protected override void Initialize()
         {
-            var graph = new RegistrationGraph();
+            RegistrationGraph graph = new RegistrationGraph();
+
             ConfigureRegistrationGraph(graph);
 
-            return graph;
-        }
-
-        public void Configure(Action<RegistrationGraph> configure)
-        {
-            Guard.AssertNotNull(configure, "configure");
-
-            _actions.Add(configure);
+            graph.Configure(Container);
         }
     }
 }

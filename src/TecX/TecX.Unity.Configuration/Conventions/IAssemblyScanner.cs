@@ -168,26 +168,20 @@ namespace TecX.Unity.Configuration.Conventions
         /// class named "Something" that implements "ISomething" will be automatically 
         /// added to TPlugin "ISomething"
         /// </summary>
-        ConfigureConventionExpression WithDefaultConventions();
-
-        ///// <summary>
-        ///// Scans for TPlugin's and Concrete Types that close the given open generic type
-        ///// </summary>
-        ///// <param name="openGenericType"></param>
-        //ConfigureConventionExpression ConnectImplementationsToTypesClosing(Type openGenericType);
-
+        void WithDefaultConventions();
+        
         /// <summary>
         /// Automatically registers all concrete types without primitive arguments
         /// against its first interface, if any
         /// </summary>
-        ConfigureConventionExpression RegisterConcreteTypesAgainstTheFirstInterface();
+        void RegisterConcreteTypesAgainstTheFirstInterface();
 
         /// <summary>
         /// Directs the scanning to automatically register any type that is the single
         /// implementation of an interface against that interface.
         /// The filters apply
         /// </summary>
-        ConfigureConventionExpression SingleImplementationsOfInterface();
+        void SingleImplementationsOfInterface();
 
     }
 }

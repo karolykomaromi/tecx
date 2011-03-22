@@ -93,7 +93,7 @@ namespace TecX.Unity.Configuration.Extensions
 
             if (pluginType.IsOpenGeneric())
             {
-                return GenericsPluginGraph.CanBeCast(pluginType, pluggedType);
+                return GenericsHelper.CanBeCast(pluginType, pluggedType);
             }
 
             if (IsOpenGeneric(pluggedType))

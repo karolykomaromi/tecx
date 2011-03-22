@@ -1,7 +1,5 @@
 ﻿using System;
 
-using Microsoft.Practices.Unity;
-
 using TecX.Common;
 
 namespace TecX.Unity.Configuration.Expressions
@@ -12,7 +10,10 @@ namespace TecX.Unity.Configuration.Expressions
 
         public string Name
         {
-            get { return _name; }
+            get
+            {
+                return _name;
+            }
             set
             {
                 Guard.AssertNotEmpty(value, "Name");

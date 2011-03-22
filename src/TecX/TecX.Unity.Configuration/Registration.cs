@@ -9,8 +9,8 @@ namespace TecX.Unity.Configuration
     public abstract class Registration : IContainerConfigurator
     {
         private readonly string _name;
-        private LifetimeManager _lifetime;
         private readonly Type _from;
+        private LifetimeManager _lifetime;
 
         public string Name
         {
@@ -19,7 +19,10 @@ namespace TecX.Unity.Configuration
 
         public LifetimeManager Lifetime
         {
-            get { return _lifetime; }
+            get
+            {
+                return _lifetime;
+            }
             set
             {
                 Guard.AssertNotNull(value, "Lifetime");
