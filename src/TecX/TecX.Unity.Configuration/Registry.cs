@@ -30,9 +30,16 @@ namespace TecX.Unity.Configuration
 
         #endregion c'tor
 
-        public CreateRegistrationFamilyExpression<T> For<T>()
+        public CreateRegistrationFamilyExpression For<T>()
         {
-            return new CreateRegistrationFamilyExpression<T>(this);
+            return this.For(typeof(T));
+        }
+
+        public CreateRegistrationFamilyExpression For(Type from)
+        {
+            Guard.AssertNotNull(from, "from");
+
+            return new CreateRegistrationFamilyExpression(from, this);
         }
 
         public void AddType(Type from, Type to, string name)

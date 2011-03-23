@@ -7,17 +7,18 @@ using TecX.Common;
 
 namespace TecX.Unity.Configuration.Expressions
 {
-    public class CreateRegistrationFamilyExpression<TFrom>
+    public class CreateRegistrationFamilyExpression
     {
         private readonly Type _from;
         private readonly List<Action<RegistrationFamily>> _alterations;
         private readonly List<Action<RegistrationGraph>> _children;
 
-        public CreateRegistrationFamilyExpression(Registry registry)
+        public CreateRegistrationFamilyExpression(Type from, Registry registry)
         {
+            Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(registry, "registry");
 
-            _from = typeof(TFrom);
+            _from = from;
 
             _alterations = new List<Action<RegistrationFamily>>();
             _children = new List<Action<RegistrationGraph>>();
@@ -33,9 +34,16 @@ namespace TecX.Unity.Configuration.Expressions
 
         public TypeRegistrationExpression Use<TTo>()
         {
-            var expression = new TypeRegistrationExpression(_from, typeof(TTo));
+            return Use(typeof(TTo));
+        }
 
-            _alterations.Add(family => 
+        public TypeRegistrationExpression Use(Type to)
+        {
+            Guard.AssertNotNull(to, "to"); 
+            
+            var expression = new TypeRegistrationExpression(_from, to);
+
+            _alterations.Add(family =>
             {
                 var expr = expression;
 
@@ -47,11 +55,11 @@ namespace TecX.Unity.Configuration.Expressions
             return expression;
         }
 
-        public InstanceRegistrationExpression Use(TFrom instance)
+        public InstanceRegistrationExpression Use(object instance)
         {
             Guard.AssertNotNull(instance, "instance");
 
-            var expression = new InstanceRegistrationExpression(typeof(TFrom), instance);
+            var expression = new InstanceRegistrationExpression(_from, instance);
 
             _alterations.Add(family =>
             {
@@ -67,7 +75,14 @@ namespace TecX.Unity.Configuration.Expressions
 
         public NamedTypeRegistrationExpression Add<TTo>()
         {
-            var expression = new NamedTypeRegistrationExpression(_from, typeof(TTo));
+            return Add(typeof(TTo));
+        }
+
+        public NamedTypeRegistrationExpression Add(Type to)
+        {
+            Guard.AssertNotNull(to, "to"); 
+            
+            var expression = new NamedTypeRegistrationExpression(_from, to);
 
             _alterations.Add(family =>
             {
@@ -81,11 +96,11 @@ namespace TecX.Unity.Configuration.Expressions
             return expression;
         }
 
-        public NamedInstanceRegistrationExpression Add(TFrom instance)
+        public NamedInstanceRegistrationExpression Add(object instance)
         {
             Guard.AssertNotNull(instance, "instance");
 
-            var expression = new NamedInstanceRegistrationExpression(typeof(TFrom), instance);
+            var expression = new NamedInstanceRegistrationExpression(_from, instance);
 
             _alterations.Add(family =>
             {
@@ -99,7 +114,7 @@ namespace TecX.Unity.Configuration.Expressions
             return expression;
         }
 
-        public CreateRegistrationFamilyExpression<TFrom> LifetimeIs(Func<LifetimeManager> lifetime)
+        public CreateRegistrationFamilyExpression LifetimeIs(Func<LifetimeManager> lifetime)
         {
             Guard.AssertNotNull(lifetime, "lifetime");
 
