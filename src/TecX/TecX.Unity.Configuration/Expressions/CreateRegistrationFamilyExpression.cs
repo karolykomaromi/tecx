@@ -9,9 +9,15 @@ namespace TecX.Unity.Configuration.Expressions
 {
     public class CreateRegistrationFamilyExpression
     {
+        #region Fields
+
         private readonly Type _from;
         private readonly List<Action<RegistrationFamily>> _alterations;
         private readonly List<Action<RegistrationGraph>> _children;
+
+        #endregion Fields
+
+        #region c'tor
 
         public CreateRegistrationFamilyExpression(Type from, Registry registry)
         {
@@ -24,13 +30,15 @@ namespace TecX.Unity.Configuration.Expressions
             _children = new List<Action<RegistrationGraph>>();
 
             registry.AddExpression(graph =>
-            {
-                RegistrationFamily family = graph.FindFamily(_from);
+                {
+                    RegistrationFamily family = graph.FindFamily(_from);
 
-                _children.ForEach(action => action(graph));
-                _alterations.ForEach(action => action(family));
-            });
+                    _children.ForEach(action => action(graph));
+                    _alterations.ForEach(action => action(family));
+                });
         }
+
+        #endregion c'tor
 
         public TypeRegistrationExpression Use<TTo>()
         {
