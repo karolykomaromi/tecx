@@ -30,6 +30,63 @@ namespace TecX.Unity.Configuration
 
         #endregion c'tor
 
+        public void AddType(Type from, Type to, string name)
+        {
+            Guard.AssertNotNull(from, "from");
+            Guard.AssertNotNull(to, "to");
+            Guard.AssertNotEmpty(name, "name");
+
+            _actions.Add(graph =>
+            {
+                var family = graph.FindFamily(from);
+
+                var registration = new TypeRegistration(from,
+                                                        to,
+                                                        name,
+                                                        new TransientLifetimeManager(),
+                                                        new InjectionMember[0]);
+
+                family.AddRegistration(registration);
+            });
+        }
+
+        public void AddType(Type from, Type to)
+        {
+            Guard.AssertNotNull(from, "from");
+            Guard.AssertNotNull(to, "to");
+
+            _actions.Add(graph =>
+                { 
+                    var family = graph.FindFamily(from);
+
+                    var registration = new TypeRegistration(from, 
+                                                            to, 
+                                                            null, 
+                                                            new TransientLifetimeManager(), 
+                                                            new InjectionMember[0]);
+
+                    family.AddRegistration(registration);
+                });
+        }
+
+        public void AddType(Type type)
+        {
+            Guard.AssertNotNull(type, "type");
+
+            _actions.Add(graph =>
+            {
+                var family = graph.FindFamily(type);
+
+                var registration = new TypeRegistration(type,
+                                                        type,
+                                                        null,
+                                                        new TransientLifetimeManager(),
+                                                        new InjectionMember[0]);
+
+                family.AddRegistration(registration);
+            });
+        }
+
         public CreateRegistrationFamilyExpression For<T>()
         {
             return this.For(typeof(T));
@@ -40,26 +97,6 @@ namespace TecX.Unity.Configuration
             Guard.AssertNotNull(from, "from");
 
             return new CreateRegistrationFamilyExpression(from, this);
-        }
-
-        public void AddType(Type from, Type to, string name)
-        {
-            Guard.AssertNotNull(from, "from");
-            Guard.AssertNotNull(to, "to");
-            Guard.AssertNotEmpty(name, "name");
-
-            _actions.Add(graph =>
-                             {
-                                 var family = graph.FindFamily(from);
-
-                                 var registration = new TypeRegistration(from, 
-                                                                         to, 
-                                                                         name, 
-                                                                         new TransientLifetimeManager(),
-                                                                         new InjectionMember[0]);
-
-                                 family.AddRegistration(registration);
-                             });
         }
 
         public void IncludeRegistry<T>() 
@@ -136,6 +173,13 @@ namespace TecX.Unity.Configuration
             ConfigureRegistrationGraph(graph);
 
             graph.Configure(Container);
+        }
+
+        protected void RegisterAction(Action action)
+        {
+            Guard.AssertNotNull(action, "action");
+
+            _basicActions.Add(action);
         }
     }
 }
