@@ -49,6 +49,8 @@
     <Compile Include="Common\CompositeFilter.cs" />
     <Compile Include="Common\CompositePredicate.cs" />
     <Compile Include="Common\Constructor.cs" />
+    <Compile Include="Common\GenericsHelper.cs" />
+    <Compile Include="Common\TypePool.cs" />
     <Compile Include="Common\WeakReference.cs" />
     <Compile Include="Conventions\AssemblyScanner.cs" />
     <Compile Include="Conventions\FindAllTypesConvention.cs" />
@@ -65,7 +67,6 @@
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\UnityContainerExtensions.cs" />
-    <Compile Include="GenericsHelper.cs" />
     <Compile Include="IContainerConfigurator.cs" />
     <Compile Include="InstanceRegistration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,7 +75,6 @@
     <Compile Include="RegistrationFamilyCollection.cs" />
     <Compile Include="RegistrationGraph.cs" />
     <Compile Include="Registry.cs" />
-    <Compile Include="TypePool.cs" />
     <Compile Include="TypeRegistration.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,9 +4,8 @@ using System.Linq;
 using System.Reflection;
 
 using TecX.Common;
-using TecX.Unity.Configuration.Common;
 
-namespace TecX.Unity.Configuration
+namespace TecX.Unity.Configuration.Common
 {
     public class TypePool
     {

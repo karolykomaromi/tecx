@@ -35,6 +35,22 @@ namespace TecX.Unity.Configuration.Test
         }
 
         [TestMethod]
+        public void CanRegisterMappingForOpenGenericType()
+        {
+            IUnityContainer container = new UnityContainer();
+
+            Registry registry = new Registry();
+
+            registry.For(typeof(IEnumerable<>)).Use(typeof(List<>)).SelectDefaultConstructor();
+
+            container.AddExtension(registry);
+
+            IEnumerable<int> result = container.Resolve<IEnumerable<int>>();
+
+            Assert.IsInstanceOfType(result, typeof(List<int>));
+        }
+
+        [TestMethod]
         public void HowCanIUseAnExpression()
         {
             var nx = Expression.New(typeof(ContainerControlledLifetimeManager));

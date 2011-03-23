@@ -30,6 +30,28 @@ namespace TecX.Unity.Configuration
 
         #endregion c'tor
 
+        public static bool IsPublicRegistry(Type type)
+        {
+            Guard.AssertNotNull(type, "type");
+
+            if (type.Assembly == typeof(Registry).Assembly)
+            {
+                return false;
+            }
+
+            if (!typeof(Registry).IsAssignableFrom(type))
+            {
+                return false;
+            }
+
+            if (type.IsInterface || type.IsAbstract || type.IsGenericType)
+            {
+                return false;
+            }
+
+            return (type.GetConstructor(new Type[0]) != null);
+        }
+
         public void AddType(Type from, Type to, string name)
         {
             Guard.AssertNotNull(from, "from");
@@ -123,26 +145,21 @@ namespace TecX.Unity.Configuration
             _actions.Add(graph => graph.AddScanner(scanner));
         }
 
-        public static bool IsPublicRegistry(Type type)
+        #region Infrastructure
+
+        internal void ConfigureRegistrationGraph(RegistrationGraph graph)
         {
-            Guard.AssertNotNull(type, "type");
+            Guard.AssertNotNull(graph, "graph");
 
-            if (type.Assembly == typeof(Registry).Assembly)
+            if (graph.Registries.Contains(this))
             {
-                return false;
+                return;
             }
 
-            if (!typeof(Registry).IsAssignableFrom(type))
-            {
-                return false;
-            }
+            _basicActions.ForEach(action => action());
+            _actions.ForEach(action => action(graph));
 
-            if (type.IsInterface || type.IsAbstract || type.IsGenericType)
-            {
-                return false;
-            }
-
-            return (type.GetConstructor(new Type[0]) != null);
+            graph.Registries.Add(this);
         }
 
         internal void AddExpression(Action<RegistrationGraph> alteration)
@@ -151,19 +168,12 @@ namespace TecX.Unity.Configuration
 
             _actions.Add(alteration);
         }
-
-        internal void ConfigureRegistrationGraph(RegistrationGraph graph)
+        
+        protected void RegisterAction(Action action)
         {
-            Guard.AssertNotNull(graph, "graph");
+            Guard.AssertNotNull(action, "action");
 
-            if (graph.Registries.Contains(this)) return;
-
-            //graph.Log.StartSource("Registry:  " + GetType().AssemblyQualifiedName);
-
-            _basicActions.ForEach(action => action());
-            _actions.ForEach(action => action(graph));
-
-            graph.Registries.Add(this);
+            _basicActions.Add(action);
         }
 
         protected override void Initialize()
@@ -175,11 +185,6 @@ namespace TecX.Unity.Configuration
             graph.Configure(Container);
         }
 
-        protected void RegisterAction(Action action)
-        {
-            Guard.AssertNotNull(action, "action");
-
-            _basicActions.Add(action);
-        }
+        #endregion Infrastructure
     }
 }

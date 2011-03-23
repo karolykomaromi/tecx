@@ -11,9 +11,9 @@ namespace TecX.Unity.Configuration
     {
         #region Fields
 
+        private static readonly string DefaultRegistrationKey = string.Empty;
         private readonly Type _from;
         private readonly Cache<string, Registration> _registrations;
-        private static readonly string DefaultRegistrationKey = string.Empty;
 
         #endregion Fields
 

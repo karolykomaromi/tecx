@@ -29,7 +29,7 @@ namespace TecX.Unity.Configuration.Test
     {
         public InterceptionRegistry()
         {
-            this.RegisterAction(() => Container.AddNewExtension<Interception>());
+            RegisterAction(() => Container.AddNewExtension<Interception>());
         }
     }
 }
