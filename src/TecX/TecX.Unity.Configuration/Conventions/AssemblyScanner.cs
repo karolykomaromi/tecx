@@ -269,7 +269,7 @@ namespace TecX.Unity.Configuration.Conventions
         {
             Guard.AssertNotNull(graph, "graph");
 
-            var registry = new Registry();
+            Registry registry = new Registry();
 
             //we iterate over all assemblies that were added to this scanner
             //we run the exported types from each of these assemblies through the scanners filter

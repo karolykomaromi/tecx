@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TecX.Unity.Configuration
+namespace TecX.Unity.Configuration.Common
 {
     public static class GenericsHelper
     {

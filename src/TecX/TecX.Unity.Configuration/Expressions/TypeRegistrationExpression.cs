@@ -102,6 +102,13 @@ namespace TecX.Unity.Configuration.Expressions
             return this;
         }
 
+        public TypeRegistrationExpression SelectDefaultConstructor()
+        {
+            this.AddEnrichment(() => new InjectionConstructor());
+
+            return this;
+        }
+
         public override Registration Compile()
         {
             return new TypeRegistration(_from, _to, null, Lifetime, Enrichments);
