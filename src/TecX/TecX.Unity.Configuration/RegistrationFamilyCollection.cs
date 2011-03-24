@@ -20,7 +20,7 @@ namespace TecX.Unity.Configuration
         {
             get
             {
-                var families = new RegistrationFamily[_registrationFamilies.Count];
+                RegistrationFamily[] families = new RegistrationFamily[_registrationFamilies.Count];
 
                 _registrationFamilies.Values.CopyTo(families, 0);
 

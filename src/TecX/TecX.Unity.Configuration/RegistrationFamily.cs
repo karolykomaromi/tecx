@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 using Microsoft.Practices.Unity;
 
@@ -7,7 +9,7 @@ using TecX.Unity.Configuration.Common;
 
 namespace TecX.Unity.Configuration
 {
-    public class RegistrationFamily : IContainerConfigurator
+    public class RegistrationFamily : IEnumerable<Registration>
     {
         #region Fields
 
@@ -42,16 +44,6 @@ namespace TecX.Unity.Configuration
             _registrations[registration.Name ?? DefaultRegistrationKey] = registration;
         }
 
-        public void Configure(IUnityContainer container)
-        {
-            Guard.AssertNotNull(container, "container");
-
-            foreach (Registration registration in _registrations)
-            {
-                registration.Configure(container);
-            }
-        }
-
         public void LifetimeIs(Func<LifetimeManager> lifetime)
         {
             Guard.AssertNotNull(lifetime, "lifetime");
@@ -61,5 +53,19 @@ namespace TecX.Unity.Configuration
                 registration.Lifetime = lifetime();
             }
         }
+
+        #region Implementation of IEnumerable<Registration>
+
+        public IEnumerator<Registration> GetEnumerator()
+        {
+            return _registrations.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        #endregion Implementation of IEnumerable<Registration>
     }
 }

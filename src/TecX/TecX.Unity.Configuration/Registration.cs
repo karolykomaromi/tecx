@@ -8,9 +8,15 @@ namespace TecX.Unity.Configuration
 {
     public abstract class Registration : IContainerConfigurator
     {
+        #region Fields
+
         private readonly string _name;
         private readonly Type _from;
         private LifetimeManager _lifetime;
+
+        #endregion Fields
+
+        #region Properties
 
         public string Name
         {
@@ -36,6 +42,10 @@ namespace TecX.Unity.Configuration
             get { return _from; }
         }
 
+        #endregion Properties
+
+        #region c'tor
+
         protected Registration(Type from, string name, LifetimeManager lifetime)
         {
             Guard.AssertNotNull(from, "from");
@@ -45,6 +55,8 @@ namespace TecX.Unity.Configuration
             _name = name;
             _lifetime = lifetime;
         }
+
+        #endregion c'tor
 
         public abstract void Configure(IUnityContainer container);
     }

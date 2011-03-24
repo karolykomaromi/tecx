@@ -10,7 +10,7 @@ namespace TecX.Unity.Configuration.Conventions
     public class FindAllTypesConvention : IRegistrationConvention
     {
         private readonly Type _from;
-        private Func<Type, string> _getName = type => type.AssemblyQualifiedName;
+        private Func<Type, string> _getName = type => type.FullName;
 
         public FindAllTypesConvention(Type from)
         {

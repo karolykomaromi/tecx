@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Microsoft.Practices.Unity;
 
@@ -65,43 +63,6 @@ namespace TecX.Unity.Configuration
                 var registration = new TypeRegistration(from,
                                                         to,
                                                         name,
-                                                        new TransientLifetimeManager(),
-                                                        new InjectionMember[0]);
-
-                family.AddRegistration(registration);
-            });
-        }
-
-        public void AddType(Type from, Type to)
-        {
-            Guard.AssertNotNull(from, "from");
-            Guard.AssertNotNull(to, "to");
-
-            _actions.Add(graph =>
-                { 
-                    var family = graph.FindFamily(from);
-
-                    var registration = new TypeRegistration(from, 
-                                                            to, 
-                                                            null, 
-                                                            new TransientLifetimeManager(), 
-                                                            new InjectionMember[0]);
-
-                    family.AddRegistration(registration);
-                });
-        }
-
-        public void AddType(Type type)
-        {
-            Guard.AssertNotNull(type, "type");
-
-            _actions.Add(graph =>
-            {
-                var family = graph.FindFamily(type);
-
-                var registration = new TypeRegistration(type,
-                                                        type,
-                                                        null,
                                                         new TransientLifetimeManager(),
                                                         new InjectionMember[0]);
 

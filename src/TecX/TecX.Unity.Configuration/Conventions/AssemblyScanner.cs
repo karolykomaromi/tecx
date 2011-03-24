@@ -18,6 +18,7 @@ namespace TecX.Unity.Configuration.Conventions
         private readonly List<Assembly> _assemblies;
         private readonly CompositeFilter<Type> _filter;
         private readonly List<IRegistrationConvention> _conventions;
+        private readonly List<Action<RegistrationGraph>> _postScanningActions;
 
         #endregion Fields
 
@@ -28,6 +29,7 @@ namespace TecX.Unity.Configuration.Conventions
             _assemblies = new List<Assembly>();
             _filter = new CompositeFilter<Type>();
             _conventions = new List<IRegistrationConvention>();
+            _postScanningActions = new List<Action<RegistrationGraph>>();
         }
 
         #endregion c'tor
@@ -246,19 +248,25 @@ namespace TecX.Unity.Configuration.Conventions
 
         public void WithDefaultConventions()
         {
-            throw new NotImplementedException();
+            ImplementsIInterfaceNameConvention convention = new ImplementsIInterfaceNameConvention();
+
+            With(convention);
         }
 
         public void RegisterConcreteTypesAgainstTheFirstInterface()
         {
-            var convention = new FirstInterfaceConvention();
+            FirstInterfaceConvention convention = new FirstInterfaceConvention();
 
             With(convention);
         }
 
         public void SingleImplementationsOfInterface()
         {
-            throw new NotImplementedException();
+            SingleImplementationOfInterfaceConvention convention = new SingleImplementationOfInterfaceConvention();
+
+            With(convention);
+
+            ModifyGraphAfterScan(convention.RegisterSingleImplementations);
         }
 
         #endregion Conventions
@@ -281,6 +289,15 @@ namespace TecX.Unity.Configuration.Conventions
                 .Each(type => _conventions.Each(c => c.Process(type, registry)));
 
             registry.ConfigureRegistrationGraph(graph);
+
+            _postScanningActions.Each(action => action(graph));
+        }
+
+        public void ModifyGraphAfterScan(Action<RegistrationGraph> modifyGraph)
+        {
+            Guard.AssertNotNull(modifyGraph, "modifyGraph");
+
+            _postScanningActions.Add(modifyGraph);
         }
 
         #endregion Infrastructure
