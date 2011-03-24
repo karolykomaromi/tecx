@@ -18,7 +18,7 @@ namespace TecX.Unity.Configuration.Conventions
             Type interfaceType = type.AllInterfaces().FirstOrDefault();
             if (interfaceType != null)
             {
-                registry.AddType(interfaceType, type, type.AssemblyQualifiedName);
+                registry.AddType(interfaceType, type, type.FullName);
             }
         }
     }

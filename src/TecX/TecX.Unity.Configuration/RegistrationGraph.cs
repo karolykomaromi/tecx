@@ -15,7 +15,7 @@ namespace TecX.Unity.Configuration
     {
         #region Fields
 
-        private readonly RegistrationFamilyCollection _registrations;
+        private readonly RegistrationFamilyCollection _registrationFamilies;
         private readonly List<Registry> _registries;
         private readonly List<AssemblyScanner> _scanners;
         private readonly WeakReference<TypePool> _types;
@@ -24,7 +24,10 @@ namespace TecX.Unity.Configuration
 
         #region Properties
 
-        public TypePool Types { get { return _types.Value; } }
+        public TypePool Types
+        {
+            get { return _types.Value; }
+        }
 
         public List<Registry> Registries
         {
@@ -33,7 +36,7 @@ namespace TecX.Unity.Configuration
 
         public RegistrationFamilyCollection RegistrationFamilies
         {
-            get { return _registrations; }
+            get { return _registrationFamilies; }
         }
 
         #endregion Properties
@@ -42,7 +45,7 @@ namespace TecX.Unity.Configuration
 
         public RegistrationGraph()
         {
-            _registrations = new RegistrationFamilyCollection();
+            this._registrationFamilies = new RegistrationFamilyCollection();
             _registries = new List<Registry>();
             _scanners = new List<AssemblyScanner>();
             _types = new WeakReference<TypePool>(() => new TypePool(this));
@@ -50,24 +53,11 @@ namespace TecX.Unity.Configuration
 
         #endregion c'tor
 
-        public RegistrationFamily FindFamily(Type pluginType)
+        public void AddScanner(AssemblyScanner scanner)
         {
-            return RegistrationFamilies[pluginType];
-        }
+            Guard.AssertNotNull(scanner, "scanner");
 
-        /// <summary>
-        /// Add configuration to a PluginGraph with the Registry DSL
-        /// </summary>
-        /// <param name="action">Action that configures a registry</param>
-        public void Configure(Action<Registry> action)
-        {
-            Guard.AssertNotNull(action, "action");
-
-            var registry = new Registry();
-
-            action(registry);
-
-            _registries.Fill(registry);
+            _scanners.Fill(scanner);
         }
 
         public void Configure(IUnityContainer container)
@@ -79,17 +69,18 @@ namespace TecX.Unity.Configuration
                 scanner.ScanForAll(this);
             }
 
-            foreach (RegistrationFamily family in _registrations)
+            foreach (RegistrationFamily family in this._registrationFamilies)
             {
-                family.Configure(container);
+                foreach (Registration registration in family)
+                {
+                    registration.Configure(container);
+                }
             }
         }
 
-        public void AddScanner(AssemblyScanner scanner)
+        public RegistrationFamily FindFamily(Type pluginType)
         {
-            Guard.AssertNotNull(scanner, "scanner");
-
-            _scanners.Fill(scanner);
+            return RegistrationFamilies[pluginType];
         }
 
         public void ImportRegistry(Type type)
