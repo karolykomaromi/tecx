@@ -11,6 +11,8 @@ namespace TecX.Unity.Configuration.Conventions
     {
         private readonly Cache<Type, List<Type>> _types;
 
+        private Registry _registry;
+
         public SingleImplementationOfInterfaceConvention()
         {
             _types = new Cache<Type, List<Type>>(t => new List<Type>());
@@ -18,9 +20,16 @@ namespace TecX.Unity.Configuration.Conventions
 
         public void Process(Type type, Registry registry)
         {
+            //TODO weberse 2011-03-25 wont work if i reuse this convention?
+            if (_registry == null)
+            {
+                _registry = registry;
+                _registry.AddExpression(RegisterSingleImplementations);
+            }
+
             RegisterType(type);
         }
-        
+
         public void RegisterSingleImplementations(RegistrationGraph graph)
         {
             Registry singleImplementationRegistry = new Registry();

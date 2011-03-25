@@ -18,7 +18,7 @@ namespace TecX.Unity.Configuration.Conventions
         private readonly List<Assembly> _assemblies;
         private readonly CompositeFilter<Type> _filter;
         private readonly List<IRegistrationConvention> _conventions;
-        private readonly List<Action<RegistrationGraph>> _postScanningActions;
+        //private readonly List<Action<RegistrationGraph>> _postScanningActions;
 
         #endregion Fields
 
@@ -29,7 +29,7 @@ namespace TecX.Unity.Configuration.Conventions
             _assemblies = new List<Assembly>();
             _filter = new CompositeFilter<Type>();
             _conventions = new List<IRegistrationConvention>();
-            _postScanningActions = new List<Action<RegistrationGraph>>();
+            //_postScanningActions = new List<Action<RegistrationGraph>>();
         }
 
         #endregion c'tor
@@ -266,7 +266,9 @@ namespace TecX.Unity.Configuration.Conventions
 
             With(convention);
 
-            ModifyGraphAfterScan(convention.RegisterSingleImplementations);
+            ////TODO weberse 2011-03-25 dont like this extra call. is it possible to add this registration 
+            ////when i process types for a registry?
+            //ModifyGraphAfterScan(convention.RegisterSingleImplementations);
         }
 
         #endregion Conventions
@@ -290,15 +292,15 @@ namespace TecX.Unity.Configuration.Conventions
 
             registry.ConfigureRegistrationGraph(graph);
 
-            _postScanningActions.Each(action => action(graph));
+            //_postScanningActions.Each(action => action(graph));
         }
 
-        public void ModifyGraphAfterScan(Action<RegistrationGraph> modifyGraph)
-        {
-            Guard.AssertNotNull(modifyGraph, "modifyGraph");
+        //public void ModifyGraphAfterScan(Action<RegistrationGraph> modifyGraph)
+        //{
+        //    Guard.AssertNotNull(modifyGraph, "modifyGraph");
 
-            _postScanningActions.Add(modifyGraph);
-        }
+        //    _postScanningActions.Add(modifyGraph);
+        //}
 
         #endregion Infrastructure
     }

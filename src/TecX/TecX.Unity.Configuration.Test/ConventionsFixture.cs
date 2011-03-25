@@ -76,5 +76,39 @@ namespace TecX.Unity.Configuration.Test
 
             Assert.IsNotNull(repository);
         }
+
+        [TestMethod]
+        public void CanApplyImplementsIInterfaceNameConvention()
+        {
+            IUnityContainer container = new UnityContainer();
+
+            container.Configure(r => r.Scan(s =>
+                {
+                    s.AssemblyContainingType(typeof(IInterfaceName));
+
+                    s.With(new ImplementsIInterfaceNameConvention());
+                }));
+
+            IInterfaceName result = container.ResolveAll<IInterfaceName>().Single();
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void CanApplySingleImplementationOfInterfaceConvention()
+        {
+            IUnityContainer container = new UnityContainer();
+
+            container.Configure(r => r.Scan(s =>
+                {
+                    s.AssemblyContainingType(typeof(IInterfaceName));       
+ 
+                    s.SingleImplementationsOfInterface();
+                }));
+
+            IInterfaceName result = container.ResolveAll<IInterfaceName>().Single();
+
+            Assert.IsNotNull(result);
+        }
     }
 }
