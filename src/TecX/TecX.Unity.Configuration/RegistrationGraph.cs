@@ -45,7 +45,7 @@ namespace TecX.Unity.Configuration
 
         public RegistrationGraph()
         {
-            this._registrationFamilies = new RegistrationFamilyCollection();
+            _registrationFamilies = new RegistrationFamilyCollection();
             _registries = new List<Registry>();
             _scanners = new List<AssemblyScanner>();
             _types = new WeakReference<TypePool>(() => new TypePool(this));

@@ -57,7 +57,9 @@
     <Compile Include="TestObjects\ClassThatImplementsAnotherInterface.cs" />
     <Compile Include="TestObjects\ClassThatUsesRepository.cs" />
     <Compile Include="TestObjects\IAnotherInterface.cs" />
+    <Compile Include="TestObjects\IInterfaceName.cs" />
     <Compile Include="TestObjects\IMyInterface.cs" />
+    <Compile Include="TestObjects\InterfaceName.cs" />
     <Compile Include="TestObjects\IRepository.cs" />
     <Compile Include="TestObjects\MyClass.cs" />
     <Compile Include="TestObjects\MyClassWithCtorParams.cs" />
