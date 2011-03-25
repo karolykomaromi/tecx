@@ -9,16 +9,30 @@ namespace TecX.Unity.Configuration.Conventions
 {
     public class SingleImplementationOfInterfaceConvention : IRegistrationConvention
     {
-        private readonly Cache<Type, List<Type>> _types;
+        #region Fields
 
+        private readonly Cache<Type, List<Type>> _types;
         private Registry _registry;
+
+        #endregion Fields
+
+        #region c'tor
 
         public SingleImplementationOfInterfaceConvention()
         {
             _types = new Cache<Type, List<Type>>(t => new List<Type>());
         }
 
+        #endregion c'tor
+
         public void Process(Type type, Registry registry)
+        {
+            PostScanningAction(registry);
+
+            RegisterType(type);
+        }
+
+        private void PostScanningAction(Registry registry)
         {
             //TODO weberse 2011-03-25 wont work if i reuse this convention?
             if (_registry == null)
@@ -26,11 +40,9 @@ namespace TecX.Unity.Configuration.Conventions
                 _registry = registry;
                 _registry.AddExpression(RegisterSingleImplementations);
             }
-
-            RegisterType(type);
         }
 
-        public void RegisterSingleImplementations(RegistrationGraph graph)
+        private void RegisterSingleImplementations(RegistrationGraph graph)
         {
             Registry singleImplementationRegistry = new Registry();
 
