@@ -7,7 +7,8 @@ using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Conventions
 {
-    public class SingleImplementationOfInterfaceConvention : IRegistrationConvention
+    public class SingleImplementationOfInterfaceConvention : IRegistrationConvention, 
+        IRegistrationConventionWithPostScanningAction
     {
         #region Fields
 
@@ -27,22 +28,10 @@ namespace TecX.Unity.Configuration.Conventions
 
         public void Process(Type type, Registry registry)
         {
-            PostScanningAction(registry);
-
             RegisterType(type);
         }
 
-        private void PostScanningAction(Registry registry)
-        {
-            //TODO weberse 2011-03-25 wont work if i reuse this convention?
-            if (_registry == null)
-            {
-                _registry = registry;
-                _registry.AddExpression(RegisterSingleImplementations);
-            }
-        }
-
-        private void RegisterSingleImplementations(RegistrationGraph graph)
+        public void PostScanningAction(RegistrationGraph graph)
         {
             Registry singleImplementationRegistry = new Registry();
 
