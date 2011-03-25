@@ -43,7 +43,10 @@ namespace TecX.Unity.Configuration.Conventions
 
         private void RegisterType(Type type)
         {
-            if (!type.CanBeCreated()) return;
+            if (!type.CanBeCreated())
+            {
+                return;
+            }
 
             type.GetInterfaces().Where(i => i.IsVisible).Each(i => Register(i, type));
         }
