@@ -65,7 +65,7 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            container.Configure(r => r.Scan(s => 
+            container.Configure(r => r.Scan(s =>
             {
                 s.With(new FindRegistriesConvention());
 
@@ -101,14 +101,42 @@ namespace TecX.Unity.Configuration.Test
 
             container.Configure(r => r.Scan(s =>
                 {
-                    s.AssemblyContainingType(typeof(IInterfaceName));       
- 
+                    s.AssemblyContainingType(typeof(IInterfaceName));
+
                     s.SingleImplementationsOfInterface();
                 }));
 
             IInterfaceName result = container.ResolveAll<IInterfaceName>().Single();
 
             Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void CanApplyFindAllTypesConvetion()
+        {
+            IUnityContainer container = new UnityContainer();
+
+            Registry registry = new Registry();
+
+            registry.Scan(s =>
+                {
+                    var convention = new FindAllTypesConvention(typeof(IMyInterface));
+
+                    convention.NameBy(t => t.FullName + "123");
+
+                    s.With(convention);
+
+                    s.AssemblyContainingType<IMyInterface>();
+
+                    s.Exclude(t => t == typeof(MyClassWithCtorParams));
+                });
+
+            container.AddExtension(registry);
+
+            var results = container.ResolveAll<IMyInterface>();
+
+            Assert.IsNotNull(results);
+            Assert.AreEqual(2, results.Count());
         }
     }
 }

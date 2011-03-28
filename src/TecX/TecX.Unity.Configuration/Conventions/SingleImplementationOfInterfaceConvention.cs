@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using TecX.Common;
 using TecX.Unity.Configuration.Common;
 using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Conventions
 {
     public class SingleImplementationOfInterfaceConvention : IRegistrationConvention, 
-        IRegistrationConventionWithPostScanningAction
+        INeedPostScanningAction
     {
         #region Fields
 
         private readonly Cache<Type, List<Type>> _types;
-        private Registry _registry;
 
         #endregion Fields
 
@@ -28,11 +28,16 @@ namespace TecX.Unity.Configuration.Conventions
 
         public void Process(Type type, Registry registry)
         {
+            Guard.AssertNotNull(type, "type");
+            Guard.AssertNotNull(registry, "registry");
+
             RegisterType(type);
         }
 
         public void PostScanningAction(RegistrationGraph graph)
         {
+            Guard.AssertNotNull(graph, "graph");
+
             Registry singleImplementationRegistry = new Registry();
 
             _types.Each((pluginType, types) =>
@@ -58,7 +63,9 @@ namespace TecX.Unity.Configuration.Conventions
                 return;
             }
 
-            type.GetInterfaces().Where(i => i.IsVisible).Each(i => Register(i, type));
+            type.GetInterfaces()
+                .Where(i => i.IsVisible)
+                .Each(i => Register(i, type));
         }
     }
 }

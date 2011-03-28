@@ -10,7 +10,12 @@ namespace TecX.Unity.Configuration.Conventions
     public class FindAllTypesConvention : IRegistrationConvention
     {
         private readonly Type _from;
-        private Func<Type, string> _getName = type => type.FullName;
+        private Func<Type, string> _getName;
+
+        public FindAllTypesConvention()
+        {
+            _getName = type => { return type.FullName; };
+        }
 
         public FindAllTypesConvention(Type from)
         {
@@ -21,7 +26,8 @@ namespace TecX.Unity.Configuration.Conventions
 
         public void Process(Type type, Registry registry)
         {
-            if (type.CanBeCastTo(_from) && Constructor.HasConstructors(type))
+            if (type.CanBeCastTo(_from) && 
+                Constructor.HasConstructors(type))
             {
                 string name = _getName(type);
 
