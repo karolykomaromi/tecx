@@ -245,7 +245,7 @@ namespace TecX.Unity.Configuration.Conventions
 
             _conventions.Fill(convention);
 
-            var modifyGraph = convention as IRegistrationConventionWithPostScanningAction;
+            var modifyGraph = convention as INeedPostScanningAction;
 
             if(modifyGraph != null)
             {
