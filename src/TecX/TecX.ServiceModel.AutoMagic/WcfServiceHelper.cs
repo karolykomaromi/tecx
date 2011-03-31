@@ -88,13 +88,13 @@ namespace TecX.ServiceModel.AutoMagic
 
             Collection<Uri> uris = scopes == null ? new Collection<Uri>() : new Collection<Uri>(scopes);
 
-            Tuple<EndpointAddress, Binding> serviceInfo;
+            ServiceInfo serviceInfo;
 
             if (TryGetServiceInfoFromDiscoveryMetadata(contract, uris, out serviceInfo))
-                return CreateWcfChannelProxy(contract, serviceInfo.Item1, serviceInfo.Item2);
+                return CreateWcfChannelProxy(contract, serviceInfo.Address, serviceInfo.Binding);
 
             if (TryGetServiceInfoFromMex(contract, out serviceInfo))
-                return CreateWcfChannelProxy(contract, serviceInfo.Item1, serviceInfo.Item2);
+                return CreateWcfChannelProxy(contract, serviceInfo.Address, serviceInfo.Binding);
 
             throw new ProxyCreationFailedException("Could not find a suitable service via WCF Discovery or MEX");
         }
@@ -135,7 +135,7 @@ namespace TecX.ServiceModel.AutoMagic
         /// <param name="serviceInfo">The contract info.</param>
         /// <returns><c>true</c> if (A)ddress and (B)inding could be retrieved; <c>false</c> otherwise</returns>
         private static bool TryGetServiceInfoFromDiscoveryMetadata(Type contract, Collection<Uri> scopes,
-                                                                   out Tuple<EndpointAddress, Binding> serviceInfo)
+                                                                   out ServiceInfo serviceInfo)
         {
             using (DiscoveryClient discoveryClient = new DiscoveryClient(new UdpDiscoveryEndpoint()))
             {
@@ -186,7 +186,7 @@ namespace TecX.ServiceModel.AutoMagic
         /// <param name="serviceInfo">The service info.</param>
         /// <returns><c>true</c> if address and binding could be retrieved; <c>false</c> otherwise</returns>
         private static bool TryGetServiceInfoFromMetadataSet(MetadataSet metadata, Type contract,
-                                                             out Tuple<EndpointAddress, Binding> serviceInfo)
+                                                             out ServiceInfo serviceInfo)
         {
             MetadataImporter importer = new WsdlImporter(metadata);
 
@@ -199,7 +199,7 @@ namespace TecX.ServiceModel.AutoMagic
 
                 if (endpoint != null)
                 {
-                    serviceInfo = new Tuple<EndpointAddress, Binding>(endpoint.Address, endpoint.Binding);
+                    serviceInfo = new ServiceInfo(endpoint.Address, endpoint.Binding);
                     return true;
                 }
             }
@@ -260,7 +260,7 @@ namespace TecX.ServiceModel.AutoMagic
         /// <param name="contract">The contract type.</param>
         /// <param name="serviceInfo">The service info.</param>
         /// <returns><c>true</c> if address and binding could be retrieved; <c>false</c> otherwise</returns>
-        private static bool TryGetServiceInfoFromMex(Type contract, out Tuple<EndpointAddress, Binding> serviceInfo)
+        private static bool TryGetServiceInfoFromMex(Type contract, out ServiceInfo serviceInfo)
         {
             using (DiscoveryClient discoveryClient = new DiscoveryClient(new UdpDiscoveryEndpoint()))
             {
