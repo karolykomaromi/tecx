@@ -30,7 +30,9 @@ namespace TecX.Common.Event.Unity
                 if (_knownSubscribers.TryGetValue(type, out shouldSubscribe))
                 {
                     if (shouldSubscribe)
+                    {
                         GetEventAggregator(context).Subscribe(context.Existing);
+                    }
                 }
                 else
                 {
@@ -62,6 +64,7 @@ namespace TecX.Common.Event.Unity
             {
                 throw new InvalidOperationException("No event aggregator available");
             }
+
             return eventAggregator;
         }
     }
