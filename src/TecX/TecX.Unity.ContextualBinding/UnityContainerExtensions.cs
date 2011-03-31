@@ -12,8 +12,8 @@ namespace TecX.Unity.ContextualBinding
         public static IUnityContainer RegisterType(this IUnityContainer container, Type from, Type to,
             Predicate<IBindingContext, IBuilderContext> matches, LifetimeManager lifetime, params InjectionMember[] injectionMembers)
         {
-            if (container == null) throw new ArgumentNullException("container");
-            if (matches == null) throw new ArgumentNullException("matches");
+            Guard.AssertNotNull(container, "container");
+            Guard.AssertNotNull(matches, "matches");
 
             var configuration = container.Configure<IContextualBindingConfiguration>();
 
@@ -28,7 +28,7 @@ namespace TecX.Unity.ContextualBinding
         public static IUnityContainer RegisterType<TFrom, TTo>(this IUnityContainer container, Predicate<IBindingContext, IBuilderContext> matches,
             LifetimeManager lifetime, params InjectionMember[] injectionMembers)
         {
-            if (container == null) throw new ArgumentNullException("container");
+            Guard.AssertNotNull(container, "container");
 
             return RegisterType(container, typeof(TFrom), typeof(TTo), matches, lifetime, injectionMembers);
         }
@@ -36,7 +36,7 @@ namespace TecX.Unity.ContextualBinding
         public static IUnityContainer RegisterType<TFrom, TTo>(this IUnityContainer container, Predicate<IBindingContext, IBuilderContext> matches,
             params InjectionMember[] injectionMembers)
         {
-            if (container == null) throw new ArgumentNullException("container");
+            Guard.AssertNotNull(container, "container");
 
             return RegisterType(container, typeof(TFrom), typeof(TTo), matches, new TransientLifetimeManager(), injectionMembers);
         }
@@ -44,7 +44,7 @@ namespace TecX.Unity.ContextualBinding
         public static IUnityContainer RegisterInstance<TFrom>(this IUnityContainer container, object instance,
             Predicate<IBindingContext, IBuilderContext> matches)
         {
-            if (container == null) throw new ArgumentNullException("container");
+            Guard.AssertNotNull(container, "container");
 
             return RegisterInstance<TFrom>(container, instance, matches, new ContainerControlledLifetimeManager());
         }
@@ -52,9 +52,9 @@ namespace TecX.Unity.ContextualBinding
         public static IUnityContainer RegisterInstance<TFrom>(this IUnityContainer container, object instance,
             Predicate<IBindingContext, IBuilderContext> matches, LifetimeManager lifetime)
         {
-            if (container == null) throw new ArgumentNullException("container");
-            if (matches == null) throw new ArgumentNullException("matches");
-            if (instance == null) throw new ArgumentNullException("instance");
+            Guard.AssertNotNull(container, "container");
+            Guard.AssertNotNull(matches, "matches");
+            Guard.AssertNotNull(instance, "instance");
 
             var configuration = container.Configure<IContextualBindingConfiguration>();
 

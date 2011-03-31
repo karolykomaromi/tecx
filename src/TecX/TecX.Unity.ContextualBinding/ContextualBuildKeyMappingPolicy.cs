@@ -26,7 +26,7 @@ namespace TecX.Unity.ContextualBinding
 
         public ContextualBuildKeyMappingPolicy(IBindingContext bindingContext)
         {
-            if (bindingContext == null) throw new ArgumentNullException("bindingContext");
+            Guard.AssertNotNull(bindingContext, "bindingContext");
 
             _bindingContext = bindingContext;
 
@@ -39,8 +39,8 @@ namespace TecX.Unity.ContextualBinding
 
         public NamedTypeBuildKey Map(NamedTypeBuildKey buildKey, IBuilderContext builderContext)
         {
-            if (buildKey == null) throw new ArgumentNullException("buildKey");
-            if (builderContext == null) throw new ArgumentNullException("builderContext");
+            Guard.AssertNotNull(buildKey, "buildKey");
+            Guard.AssertNotNull(builderContext, "builderContext");
 
             foreach (var mapping in _mappings)
             {
@@ -66,9 +66,9 @@ namespace TecX.Unity.ContextualBinding
         public void AddMapping(Predicate<IBindingContext, IBuilderContext> matches, Type mapTo, string uniqueMappingName)
         {
             //guards
-            if (matches == null) throw new ArgumentNullException("matches");
-            if (mapTo == null) throw new ArgumentNullException("mapTo");
-            if (uniqueMappingName == null) throw new ArgumentNullException("uniqueMappingName");
+            Guard.AssertNotNull(matches, "matches");
+            Guard.AssertNotNull(mapTo, "mapTo");
+            Guard.AssertNotNull(uniqueMappingName, "uniqueMappingName");
 
             _mappings.Add(new ContextualBuildKeyMapping(matches, mapTo, uniqueMappingName));
         }

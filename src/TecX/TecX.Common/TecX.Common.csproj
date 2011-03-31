@@ -48,6 +48,7 @@
     <Compile Include="Comparison\EpsilonComparer.cs" />
     <Compile Include="Comparison\LambdaComparer.cs" />
     <Compile Include="Convert.cs" />
+    <Compile Include="Extensions\Primitives\LiteralExtensions.cs" />
     <Compile Include="Reflection\MethodNotFoundException.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />
     <Compile Include="Time\DefaultTimeProvider.cs" />

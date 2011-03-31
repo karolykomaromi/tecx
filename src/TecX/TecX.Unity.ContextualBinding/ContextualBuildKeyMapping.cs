@@ -30,9 +30,9 @@ namespace TecX.Unity.ContextualBinding
         public ContextualBuildKeyMapping(Predicate<IBindingContext, IBuilderContext> matches, Type mapTo, string uniqueMappingName)
         {
             //guards
-            if (matches == null) throw new ArgumentNullException("matches");
-            if (mapTo == null) throw new ArgumentNullException("mapTo");
-            if (uniqueMappingName == null) throw new ArgumentNullException("uniqueMappingName");
+            Guard.AssertNotNull(matches, "matches");
+            Guard.AssertNotNull(mapTo, "mapTo");
+            Guard.AssertNotEmpty(uniqueMappingName, "uniqueMappingName");
 
             _matches = matches;
             _mapTo = mapTo;
@@ -44,8 +44,8 @@ namespace TecX.Unity.ContextualBinding
         public bool Matches(IBindingContext bindingContext, IBuilderContext builderContext)
         {
             //guards
-            if (bindingContext == null) throw new ArgumentNullException("bindingContext");
-            if (builderContext == null) throw new ArgumentNullException("builderContext");
+            Guard.AssertNotNull(bindingContext, "bindingContext");
+            Guard.AssertNotNull(builderContext, "builderContext");
 
             return _matches(bindingContext, builderContext);
         }

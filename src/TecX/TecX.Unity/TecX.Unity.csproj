@@ -64,30 +64,9 @@
     <Compile Include="BuildTracking\IBuildTreeTrackerStrategy.cs" />
     <Compile Include="BuildTracking\LockReader.cs" />
     <Compile Include="BuildTracking\LockWriter.cs" />
-    <Compile Include="Registration\AssemblyLocator.cs" />
-    <Compile Include="Registration\RegistryBuilder.cs" />
-    <Compile Include="Registration\RegistryExtensions.cs" />
-    <Compile Include="Registration\ContainerExtensionOptions.cs" />
-    <Compile Include="Registration\ContainerExtensionOptionsBuilder.cs" />
-    <Compile Include="Registration\Extensions.cs" />
-    <Compile Include="Registration\Filter.cs" />
-    <Compile Include="Registration\Filters.cs" />
-    <Compile Include="Registration\FolderAssemblyLocator.cs" />
-    <Compile Include="Registration\From.cs" />
-    <Compile Include="Registration\IRegistry.cs" />
-    <Compile Include="Registration\If.cs" />
-    <Compile Include="Registration\InterceptionOptions.cs" />
-    <Compile Include="Registration\InterceptionOptionsBuilder.cs" />
-    <Compile Include="Registration\Registration.cs" />
-    <Compile Include="Registration\RegistrationOptions.cs" />
-    <Compile Include="Registration\RegistrationOptionsBuilder.cs" />
-    <Compile Include="Registration\RunOnceRegistration.cs" />
-    <Compile Include="Registration\Then.cs" />
-    <Compile Include="Registration\WellKnownAppParts.cs" />
     <Compile Include="Injection\ParameterMatcher.cs" />
     <Compile Include="Injection\ClozeInjectionConstructur.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registration\The.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
