@@ -9,8 +9,7 @@ namespace TecX.TestTools
     public static class NotifyPropertyChanged
     {
         public static NotifyChangedExpectation<T> ShouldNotifyOn<T, TProperty>(this T owner,
-                                                                               Expression<Func<T, TProperty>>
-                                                                                   propertyPicker)
+            Expression<Func<T, TProperty>> propertyPicker)
             where T : INotifyPropertyChanged
         {
             Guard.AssertNotNull(owner, "owner");
@@ -20,8 +19,7 @@ namespace TecX.TestTools
         }
 
         public static NotifyChangedExpectation<T> ShouldNotNotifyOn<T, TProperty>(this T owner,
-                                                                                  Expression<Func<T, TProperty>>
-                                                                                      propertyPicker)
+            Expression<Func<T, TProperty>> propertyPicker)
             where T : INotifyPropertyChanged
         {
             Guard.AssertNotNull(owner, "owner");
@@ -31,8 +29,8 @@ namespace TecX.TestTools
         }
 
         private static NotifyChangedExpectation<T> CreateExpectation<T, TProperty>(T owner,
-                                                                                   Expression<Func<T, TProperty>>
-                                                                                       pickProperty, bool eventExpected)
+            Expression<Func<T, TProperty>> pickProperty, 
+            bool eventExpected)
             where T : INotifyPropertyChanged
         {
             string propertyName = ((MemberExpression)pickProperty.Body).Member.Name;

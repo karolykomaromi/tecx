@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.ObjectBuilder;
 
 using TecX.Common;
 
@@ -64,9 +63,9 @@ namespace TecX.Unity.ContextualBinding
                              LifetimeManager lifetime, params InjectionMember[] injectionMembers)
         {
             //guards
-            if (from == null) throw new ArgumentNullException("from");
-            if (to == null) throw new ArgumentNullException("to");
-            if (matches == null) throw new ArgumentNullException("matches");
+            Guard.AssertNotNull(from, "from");
+            Guard.AssertNotNull(to, "to");
+            Guard.AssertNotNull(matches, "matches");
 
             //if no lifetime manager is registered we use the transient lifetime (new instance is created for
             //every resolve). this is identical to the unity default behavior
@@ -89,9 +88,9 @@ namespace TecX.Unity.ContextualBinding
 
         public void RegisterInstance(Type from, object instance, Predicate<IBindingContext, IBuilderContext> matches, LifetimeManager lifetime)
         {
-            if (from == null) throw new ArgumentNullException("from");
-            if (matches == null) throw new ArgumentNullException("matches");
-            if (instance == null) throw new ArgumentNullException("instance");
+            Guard.AssertNotNull(from, "from");
+            Guard.AssertNotNull(matches, "matches");
+            Guard.AssertNotNull(instance, "instance");
 
             if (lifetime == null)
             {
@@ -114,8 +113,7 @@ namespace TecX.Unity.ContextualBinding
 
         public void Put(string key, object value)
         {
-            if (key == null) throw new ArgumentNullException("key");
-            if (string.IsNullOrEmpty(key)) throw new ArgumentException(@"Key must not be empty", "key");
+            Guard.AssertNotEmpty(key, "key");
 
             _context[key] = value;
         }
@@ -159,7 +157,7 @@ namespace TecX.Unity.ContextualBinding
 
             public DefaultBindingContext(ContextualBindingExtension extension)
             {
-                if (extension == null) throw new ArgumentNullException("extension");
+                Guard.AssertNotNull(extension, "extension");
 
                 _extension = extension;
             }
@@ -168,8 +166,7 @@ namespace TecX.Unity.ContextualBinding
             {
                 get
                 {
-                    if (key == null) throw new ArgumentNullException("key");
-                    if (string.IsNullOrEmpty(key)) throw new ArgumentException(@"Key must not be empty", "key");
+                    Guard.AssertNotEmpty(key, "key");
 
                     object value;
                     if (_extension._context.TryGetValue(key, out value))

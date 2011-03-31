@@ -9,9 +9,15 @@ namespace TecX.TestTools
 {
     public class NotifyChangedExpectation<T> where T : INotifyPropertyChanged
     {
+        #region Fields
+
         private readonly T _owner;
         private readonly string _propertyName;
         private readonly bool _eventExpected;
+
+        #endregion Fields
+
+        #region c'tor
 
         public NotifyChangedExpectation(T owner, string propertyName, bool eventExpected)
         {
@@ -22,6 +28,8 @@ namespace TecX.TestTools
             _propertyName = propertyName;
             _eventExpected = eventExpected;
         }
+
+        #endregion c'tor
 
         public void When(Action<T> action)
         {

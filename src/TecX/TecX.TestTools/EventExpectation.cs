@@ -11,6 +11,8 @@ namespace TecX.TestTools
     public class EventExpectation<T, TEventArgs>
         where TEventArgs : EventArgs
     {
+        #region Fields
+
         private bool _eventRaised;
         private readonly ManualResetEvent _manualResetEvent;
         private readonly Action<T> _action;
@@ -19,19 +21,25 @@ namespace TecX.TestTools
         private readonly IObservable<IEvent<TEventArgs>> _observable;
         private Action<TEventArgs> _verify;
 
+        #endregion Fields
+
+        #region c'tor
+
         public EventExpectation(T owner, Action<T> action, IObservable<IEvent<TEventArgs>> observable)
         {
             Guard.AssertNotNull(owner, "owner");
             Guard.AssertNotNull(observable, "observable");
             Guard.AssertNotNull(owner, "owner");
 
-            this._action = action;
-            this._owner = owner;
-            this._observable = observable;
+            _action = action;
+            _owner = owner;
+            _observable = observable;
 
             _eventRaised = false;
             _manualResetEvent = new ManualResetEvent(false);
         }
+
+        #endregion c'tor
 
         public EventExpectation<T, TEventArgs> WithArgs(Action<TEventArgs> verify)
         {
@@ -50,7 +58,7 @@ namespace TecX.TestTools
                                              {
                                                  try
                                                  {
-                                                     if(_verify != null)
+                                                     if (_verify != null)
                                                      {
                                                          _verify(e.EventArgs);
                                                      }
