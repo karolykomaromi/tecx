@@ -5,7 +5,7 @@ using Microsoft.Practices.EnterpriseLibrary.Logging;
 using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using TecX.Common.EntLib;
+using TecX.Common.Test.TestObjects;
 
 namespace TecX.Common.Test
 {

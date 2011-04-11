@@ -108,7 +108,7 @@ namespace TecX.Common.Event
         /// <typeparam name="TMessage">The type of the message.</typeparam>
         /// <param name="message">The message containing data.</param>
         /// <returns></returns>
-        public void Publish<TMessage>(TMessage message)
+        public TMessage Publish<TMessage>(TMessage message)
         {
             Guard.AssertNotNull(message, "message");
 
@@ -126,12 +126,6 @@ namespace TecX.Common.Event
                         subscriber.Handle(message);
                 }
             });
-        }
-
-        public ICancellationToken PublishWithCancelOption<TMessage>(TMessage message)
-            where TMessage : ICancellationToken
-        {
-            Publish(message);
 
             return message;
         }
@@ -174,7 +168,9 @@ namespace TecX.Common.Event
                     }, null);
 
             if (interfaces.Length == 0)
+            {
                 throw new ArgumentException("Subscriber must implement ISubscribeTo<TMessage>.", "subscriber");
+            }
         }
 
         /// <summary>

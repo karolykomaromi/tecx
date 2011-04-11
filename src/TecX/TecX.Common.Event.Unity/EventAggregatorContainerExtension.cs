@@ -6,15 +6,9 @@ using System.Windows.Threading;
 
 namespace TecX.Common.Event.Unity
 {
-    public class EventAggregatorContainerExtension : UnityContainerExtension,
-        IEventAggregatorConfiguration
+    public class EventAggregatorContainerExtension : UnityContainerExtension
     {
         private readonly IEventAggregator _eventAggregator;
-
-        public IEventAggregator EventAggregator
-        {
-            get { return _eventAggregator; }
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventAggregatorContainerExtension"/> class
