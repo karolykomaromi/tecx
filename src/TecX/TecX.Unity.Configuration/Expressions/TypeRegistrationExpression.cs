@@ -54,27 +54,27 @@ namespace TecX.Unity.Configuration.Expressions
 
         #endregion c'tor
 
-        public void AddEnrichment(Func<InjectionMember> enrichment)
+        public void EnrichWith(Func<InjectionMember> enrichment)
         {
             Guard.AssertNotNull(enrichment, "enrichment");
 
             _enrichments.Add(enrichment);
         }
 
-        public TypeRegistrationExpression ConstructedBy(Func<IUnityContainer, Type, string, object> factoryMethod)
+        public TypeRegistrationExpression CreatedUsing(Func<IUnityContainer, Type, string, object> factoryMethod)
         {
             Guard.AssertNotNull(factoryMethod, "factoryMethod");
 
-            AddEnrichment(() => new InjectionFactory(factoryMethod));
+            this.EnrichWith(() => new InjectionFactory(factoryMethod));
 
             return this;
         }
 
-        public TypeRegistrationExpression ConstructedBy(Func<IUnityContainer, object> factoryMethod)
+        public TypeRegistrationExpression CreatedUsing(Func<IUnityContainer, object> factoryMethod)
         {
             Guard.AssertNotNull(factoryMethod, "factoryMethod");
 
-            AddEnrichment(() => new InjectionFactory(factoryMethod));
+            this.EnrichWith(() => new InjectionFactory(factoryMethod));
 
             return this;
         }
@@ -96,7 +96,7 @@ namespace TecX.Unity.Configuration.Expressions
                     parameterTypes.Add(parameterInfo.ParameterType);
                 }
 
-                AddEnrichment(() => new InjectionConstructor(parameterTypes.ToArray()));
+                this.EnrichWith(() => new InjectionConstructor(parameterTypes.ToArray()));
             }
 
             return this;
@@ -104,7 +104,7 @@ namespace TecX.Unity.Configuration.Expressions
 
         public TypeRegistrationExpression SelectDefaultConstructor()
         {
-            this.AddEnrichment(() => new InjectionConstructor());
+            this.EnrichWith(() => new InjectionConstructor());
 
             return this;
         }

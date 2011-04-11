@@ -1,5 +1,6 @@
 ﻿using System;
 
+using TecX.Common;
 using TecX.Unity.Configuration.Common;
 using TecX.Unity.Configuration.Extensions;
 
@@ -12,6 +13,9 @@ namespace TecX.Unity.Configuration.Conventions
     {
         public void Process(Type type, Registry registry)
         {
+            Guard.AssertNotNull(type, "type");
+            Guard.AssertNotNull(registry, "registry");
+
             if (!type.IsConcrete())
             {
                 return;

@@ -245,11 +245,11 @@ namespace TecX.Unity.Configuration.Conventions
 
             _conventions.Fill(convention);
 
-            var modifyGraph = convention as INeedPostScanningAction;
+            var modifyGraph = convention as INeedPostProcessing;
 
             if(modifyGraph != null)
             {
-                ModifyGraphAfterScan(modifyGraph.PostScanningAction);
+                ModifyGraphAfterScan(modifyGraph.PostProcess);
             }
         }
 

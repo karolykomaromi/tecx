@@ -11,7 +11,10 @@ namespace TecX.Unity.Configuration.Expressions
     {
         private Func<LifetimeManager> _lifetimeFactory;
 
-        public LifetimeManager Lifetime { get { return _lifetimeFactory(); } }
+        public LifetimeManager Lifetime
+        {
+            get { return _lifetimeFactory(); }
+        }
 
         protected RegistrationExpression()
         {
