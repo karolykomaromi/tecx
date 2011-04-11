@@ -2,7 +2,7 @@
 
 namespace TecX.Common.Test.TestObjects
 {
-    internal class CancelMessage : ICancellationToken
+    internal class CancelMessage
     {
         public bool Cancel { get; set; }
     }

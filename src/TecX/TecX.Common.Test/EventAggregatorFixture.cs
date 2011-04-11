@@ -102,7 +102,7 @@ namespace TecX.Common.Test
 
             eventAggregator.Subscribe(subscriber);
 
-            ICancellationToken token = eventAggregator.PublishWithCancelOption(new CancelMessage());
+            CancelMessage token = eventAggregator.Publish(new CancelMessage());
 
             DispatcherUtil.DoEvents();
 

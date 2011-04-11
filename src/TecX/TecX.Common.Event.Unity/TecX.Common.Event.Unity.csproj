@@ -52,7 +52,6 @@
     </Compile>
     <Compile Include="EventAggregatorSubscriptionStrategy.cs" />
     <Compile Include="EventAggregatorContainerExtension.cs" />
-    <Compile Include="IEventAggregatorConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

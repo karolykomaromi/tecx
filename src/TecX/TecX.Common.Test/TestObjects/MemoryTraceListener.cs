@@ -1,8 +1,10 @@
 ﻿using System.Text;
 
-namespace TecX.Common.EntLib
+using TecX.Common.EntLib;
+
+namespace TecX.Common.Test.TestObjects
 {
-    public class MemoryTraceListener : TecXTraceListenerBase
+    internal class MemoryTraceListener : TecXTraceListenerBase
     {
         private readonly StringBuilder _messages = new StringBuilder(8192);
         private readonly object _syncRoot = new object();
@@ -11,7 +13,7 @@ namespace TecX.Common.EntLib
         {
             get
             {
-                lock(_syncRoot)
+                lock (_syncRoot)
                 {
                     return _messages.ToString();
                 }

@@ -84,6 +84,7 @@
     <Compile Include="TestObjects\ClassA.cs" />
     <Compile Include="TestObjects\ClassB.cs" />
     <Compile Include="TestObjects\HasSomeFlag.cs" />
+    <Compile Include="TestObjects\MemoryTraceListener.cs" />
     <Compile Include="TestObjects\NumberBetween.cs" />
     <Compile Include="TestObjects\NumberMatches.cs" />
     <Compile Include="TestObjects\OneTimeSubscriber.cs" />
