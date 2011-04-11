@@ -65,12 +65,13 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            container.Configure(r => r.Scan(s =>
-            {
-                s.With(new FindRegistriesConvention());
+            container.Configure(r => 
+                r.Scan(s =>
+                {
+                    s.With(new FindRegistriesConvention());
 
-                s.AssemblyContainingType(typeof(RegistrySubClass));
-            }));
+                    s.AssemblyContainingType(typeof(RegistrySubClass));
+                }));
 
             IRepository<int> repository = container.Resolve<IRepository<int>>();
 
@@ -82,7 +83,8 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            container.Configure(r => r.Scan(s =>
+            container.Configure(r => 
+                r.Scan(s =>
                 {
                     s.AssemblyContainingType(typeof(IInterfaceName));
 
@@ -99,7 +101,8 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            container.Configure(r => r.Scan(s =>
+            container.Configure(r => 
+                r.Scan(s =>
                 {
                     s.AssemblyContainingType(typeof(IInterfaceName));
 
