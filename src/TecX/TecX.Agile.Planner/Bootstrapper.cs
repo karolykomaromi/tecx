@@ -8,6 +8,7 @@ using Microsoft.Practices.Unity;
 
 using TecX.Agile.ChangeTracking;
 using TecX.Agile.Data;
+using TecX.Agile.Data.Xml;
 using TecX.Agile.Infrastructure.Services;
 using TecX.Agile.Modules.Main;
 using TecX.Agile.Modules.Main.Services;
@@ -15,7 +16,6 @@ using TecX.Agile.Peer;
 using TecX.Agile.Remote;
 using TecX.Common.Event.Unity;
 using TecX.Prism.Regions;
-using TecX.Unity.Registration;
 
 namespace TecX.Agile.Planner
 {
@@ -39,16 +39,11 @@ namespace TecX.Agile.Planner
             //TODO weberse configure logging, maybe wcf automagic, a repository and all the other funny
             //Stuff
 
-            Container
-                .ConfigureRegistrations()
-                .ExcludeSystemAssemblies()
-                .Include(The.Extension<EventAggregatorContainerExtension>())
-                .Include(If.Implements<IRepository>(),
-                         Then.Register().WithoutPartName(WellKnownAppParts.DesignPatterns.Repository))
-                .Include(If.Is<WcfPeerRemoteUI>(), Then.Register().As<IRemoteUI>())
-                .Include(If.Is<PeerClient>(), Then.Register().As<IPeerClient>())
-                .Include(If.Is<ChangeTracker>(), Then.Register().As<IChangeTracker>())
-                .ApplyRegistrations();
+            Container.AddNewExtension<EventAggregatorContainerExtension>()
+                .RegisterType<IRepository, XmlRepository>()
+                .RegisterType<IRemoteUI, WcfPeerRemoteUI>()
+                .RegisterType<IPeerClient, PeerClient>()
+                .RegisterType<IChangeTracker, ChangeTracker>();
 
             Container.RegisterType<IShowThings, ShowThingsService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IShowText, ShowTextService>(new ContainerControlledLifetimeManager());
