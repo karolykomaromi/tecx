@@ -57,13 +57,10 @@ namespace TecX.Agile.Infrastructure
             {
             }
 
-            public void Publish<TMessage>(TMessage message)
+            public TMessage Publish<TMessage>(TMessage message)
+                where TMessage : class
             {
-            }
-
-            public ICancellationToken PublishWithCancelOption<TMessage>(TMessage message) where TMessage : ICancellationToken
-            {
-                return message;
+                return null;
             }
 
             #endregion

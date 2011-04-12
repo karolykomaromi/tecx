@@ -91,13 +91,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.ViewModel", "Tec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.ViewModel.Test", "TecX.Agile.ViewModel.Test\TecX.Agile.ViewModel.Test.csproj", "{3600E042-48AC-4756-9F36-E8642E81EB61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.ContextualBinding", "TecX.Unity.ContextualBinding\TecX.Unity.ContextualBinding.csproj", "{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.2010", "..\..\lib\Unity2\src\Unity\Unity.2010.csproj", "{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Interception.2010", "..\..\lib\Unity2\src\Unity.Interception\Unity.Interception.2010.csproj", "{F8186B23-B0E1-4646-B5F3-14357841E2BA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.ContextualBinding.Test", "TecX.Unity.ContextualBinding.Test\TecX.Unity.ContextualBinding.Test.csproj", "{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.View.Test", "TecX.Agile.View.Test\TecX.Agile.View.Test.csproj", "{8A9CDA60-166B-4B5A-82B7-5B6313C6368A}"
 EndProject
@@ -115,19 +111,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Moduls.Speech", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Modules.SysInfo", "TecX.Agile.Modules.SysInfo\TecX.Agile.Modules.SysInfo.csproj", "{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.Configuration", "TecX.Unity.Configuration\TecX.Unity.Configuration.csproj", "{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Configuration.2010", "..\..\lib\Unity2\src\Unity.Configuration\Unity.Configuration.2010.csproj", "{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Interception.Configuration.2010", "..\..\lib\Unity2\src\Unity.Interception.Configuration\Unity.Interception.Configuration.2010.csproj", "{80F7399F-B221-465F-97C9-4B9FC0E2F67F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{95FCB9E4-84E9-4080-A12B-4FB12F648C31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.Configuration.Test", "TecX.Unity.Configuration.Test\TecX.Unity.Configuration.Test.csproj", "{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}"
-EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 48
+		SccNumberOfProjects = 44
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -255,70 +247,54 @@ Global
 		SccProjectTopLevelParentUniqueName31 = TecX.sln
 		SccProjectName31 = TecX.Agile.ViewModel.Test
 		SccLocalPath31 = TecX.Agile.ViewModel.Test
-		SccProjectUniqueName32 = TecX.Unity.ContextualBinding\\TecX.Unity.ContextualBinding.csproj
+		SccProjectUniqueName32 = ..\\..\\lib\\Unity2\\src\\Unity\\Unity.2010.csproj
 		SccProjectTopLevelParentUniqueName32 = TecX.sln
-		SccProjectName32 = TecX.Unity.ContextualBinding
-		SccLocalPath32 = TecX.Unity.ContextualBinding
-		SccProjectUniqueName33 = ..\\..\\lib\\Unity2\\src\\Unity\\Unity.2010.csproj
+		SccProjectName32 = ../../lib/Unity2/src/Unity
+		SccLocalPath32 = ..\\..\\lib\\Unity2\\src\\Unity
+		SccProjectUniqueName33 = ..\\..\\lib\\Unity2\\src\\Unity.Interception\\Unity.Interception.2010.csproj
 		SccProjectTopLevelParentUniqueName33 = TecX.sln
-		SccProjectName33 = ../../lib/Unity2/src/Unity
-		SccLocalPath33 = ..\\..\\lib\\Unity2\\src\\Unity
-		SccProjectUniqueName34 = ..\\..\\lib\\Unity2\\src\\Unity.Interception\\Unity.Interception.2010.csproj
+		SccProjectName33 = ../../lib/Unity2/src/Unity.Interception
+		SccLocalPath33 = ..\\..\\lib\\Unity2\\src\\Unity.Interception
+		SccProjectUniqueName34 = TecX.Agile.View.Test\\TecX.Agile.View.Test.csproj
 		SccProjectTopLevelParentUniqueName34 = TecX.sln
-		SccProjectName34 = ../../lib/Unity2/src/Unity.Interception
-		SccLocalPath34 = ..\\..\\lib\\Unity2\\src\\Unity.Interception
-		SccProjectUniqueName35 = TecX.Unity.ContextualBinding.Test\\TecX.Unity.ContextualBinding.Test.csproj
+		SccProjectName34 = TecX.Agile.View.Test
+		SccLocalPath34 = TecX.Agile.View.Test
+		SccProjectUniqueName35 = TecX.Agile.ChangeTracking\\TecX.Agile.ChangeTracking.csproj
 		SccProjectTopLevelParentUniqueName35 = TecX.sln
-		SccProjectName35 = TecX.Unity.ContextualBinding.Test
-		SccLocalPath35 = TecX.Unity.ContextualBinding.Test
-		SccProjectUniqueName36 = TecX.Agile.View.Test\\TecX.Agile.View.Test.csproj
+		SccProjectName35 = TecX.Agile.ChangeTracking
+		SccLocalPath35 = TecX.Agile.ChangeTracking
+		SccProjectUniqueName36 = TecX.Agile.Remote\\TecX.Agile.Remote.csproj
 		SccProjectTopLevelParentUniqueName36 = TecX.sln
-		SccProjectName36 = TecX.Agile.View.Test
-		SccLocalPath36 = TecX.Agile.View.Test
-		SccProjectUniqueName37 = TecX.Agile.ChangeTracking\\TecX.Agile.ChangeTracking.csproj
+		SccProjectName36 = TecX.Agile.Remote
+		SccLocalPath36 = TecX.Agile.Remote
+		SccProjectUniqueName37 = TecX.Agile.Undo\\TecX.Agile.Undo.csproj
 		SccProjectTopLevelParentUniqueName37 = TecX.sln
-		SccProjectName37 = TecX.Agile.ChangeTracking
-		SccLocalPath37 = TecX.Agile.ChangeTracking
-		SccProjectUniqueName38 = TecX.Agile.Remote\\TecX.Agile.Remote.csproj
+		SccProjectName37 = TecX.Agile.Undo
+		SccLocalPath37 = TecX.Agile.Undo
+		SccProjectUniqueName38 = TecX.Agile.Modules.Gestures\\TecX.Agile.Modules.Gestures.csproj
 		SccProjectTopLevelParentUniqueName38 = TecX.sln
-		SccProjectName38 = TecX.Agile.Remote
-		SccLocalPath38 = TecX.Agile.Remote
-		SccProjectUniqueName39 = TecX.Agile.Undo\\TecX.Agile.Undo.csproj
+		SccProjectName38 = TecX.Agile.Modules.Gestures
+		SccLocalPath38 = TecX.Agile.Modules.Gestures
+		SccProjectUniqueName39 = TecX.Agile.Data.Tfs\\TecX.Agile.Data.Tfs.csproj
 		SccProjectTopLevelParentUniqueName39 = TecX.sln
-		SccProjectName39 = TecX.Agile.Undo
-		SccLocalPath39 = TecX.Agile.Undo
-		SccProjectUniqueName40 = TecX.Agile.Modules.Gestures\\TecX.Agile.Modules.Gestures.csproj
+		SccProjectName39 = TecX.Agile.Data.Tfs
+		SccLocalPath39 = TecX.Agile.Data.Tfs
+		SccProjectUniqueName40 = TecX.Agile.Moduls.Speech\\TecX.Agile.Moduls.Speech.csproj
 		SccProjectTopLevelParentUniqueName40 = TecX.sln
-		SccProjectName40 = TecX.Agile.Modules.Gestures
-		SccLocalPath40 = TecX.Agile.Modules.Gestures
-		SccProjectUniqueName41 = TecX.Agile.Data.Tfs\\TecX.Agile.Data.Tfs.csproj
+		SccProjectName40 = TecX.Agile.Moduls.Speech
+		SccLocalPath40 = TecX.Agile.Moduls.Speech
+		SccProjectUniqueName41 = TecX.Agile.Modules.SysInfo\\TecX.Agile.Modules.SysInfo.csproj
 		SccProjectTopLevelParentUniqueName41 = TecX.sln
-		SccProjectName41 = TecX.Agile.Data.Tfs
-		SccLocalPath41 = TecX.Agile.Data.Tfs
-		SccProjectUniqueName42 = TecX.Agile.Moduls.Speech\\TecX.Agile.Moduls.Speech.csproj
+		SccProjectName41 = TecX.Agile.Modules.SysInfo
+		SccLocalPath41 = TecX.Agile.Modules.SysInfo
+		SccProjectUniqueName42 = ..\\..\\lib\\Unity2\\src\\Unity.Configuration\\Unity.Configuration.2010.csproj
 		SccProjectTopLevelParentUniqueName42 = TecX.sln
-		SccProjectName42 = TecX.Agile.Moduls.Speech
-		SccLocalPath42 = TecX.Agile.Moduls.Speech
-		SccProjectUniqueName43 = TecX.Agile.Modules.SysInfo\\TecX.Agile.Modules.SysInfo.csproj
+		SccProjectName42 = ../../lib/Unity2/src/Unity.Configuration
+		SccLocalPath42 = ..\\..\\lib\\Unity2\\src\\Unity.Configuration
+		SccProjectUniqueName43 = ..\\..\\lib\\Unity2\\src\\Unity.Interception.Configuration\\Unity.Interception.Configuration.2010.csproj
 		SccProjectTopLevelParentUniqueName43 = TecX.sln
-		SccProjectName43 = TecX.Agile.Modules.SysInfo
-		SccLocalPath43 = TecX.Agile.Modules.SysInfo
-		SccProjectUniqueName44 = TecX.Unity.Configuration\\TecX.Unity.Configuration.csproj
-		SccProjectTopLevelParentUniqueName44 = TecX.sln
-		SccProjectName44 = TecX.Unity.Configuration
-		SccLocalPath44 = TecX.Unity.Configuration
-		SccProjectUniqueName45 = ..\\..\\lib\\Unity2\\src\\Unity.Configuration\\Unity.Configuration.2010.csproj
-		SccProjectTopLevelParentUniqueName45 = TecX.sln
-		SccProjectName45 = ../../lib/Unity2/src/Unity.Configuration
-		SccLocalPath45 = ..\\..\\lib\\Unity2\\src\\Unity.Configuration
-		SccProjectUniqueName46 = ..\\..\\lib\\Unity2\\src\\Unity.Interception.Configuration\\Unity.Interception.Configuration.2010.csproj
-		SccProjectTopLevelParentUniqueName46 = TecX.sln
-		SccProjectName46 = ../../lib/Unity2/src/Unity.Interception.Configuration
-		SccLocalPath46 = ..\\..\\lib\\Unity2\\src\\Unity.Interception.Configuration
-		SccProjectUniqueName47 = TecX.Unity.Configuration.Test\\TecX.Unity.Configuration.Test.csproj
-		SccProjectTopLevelParentUniqueName47 = TecX.sln
-		SccProjectName47 = TecX.Unity.Configuration.Test
-		SccLocalPath47 = TecX.Unity.Configuration.Test
+		SccProjectName43 = ../../lib/Unity2/src/Unity.Interception.Configuration
+		SccLocalPath43 = ..\\..\\lib\\Unity2\\src\\Unity.Interception.Configuration
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -642,16 +618,6 @@ Global
 		{3600E042-48AC-4756-9F36-E8642E81EB61}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3600E042-48AC-4756-9F36-E8642E81EB61}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3600E042-48AC-4756-9F36-E8642E81EB61}.Release|x86.ActiveCfg = Release|Any CPU
-		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Release|x86.ActiveCfg = Release|Any CPU
 		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -672,16 +638,6 @@ Global
 		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Release|x86.ActiveCfg = Release|Any CPU
-		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|x86.ActiveCfg = Release|Any CPU
 		{8A9CDA60-166B-4B5A-82B7-5B6313C6368A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8A9CDA60-166B-4B5A-82B7-5B6313C6368A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A9CDA60-166B-4B5A-82B7-5B6313C6368A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -762,16 +718,6 @@ Global
 		{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}.Release|x86.ActiveCfg = Release|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|x86.ActiveCfg = Release|Any CPU
 		{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -792,16 +738,6 @@ Global
 		{80F7399F-B221-465F-97C9-4B9FC0E2F67F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{80F7399F-B221-465F-97C9-4B9FC0E2F67F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{80F7399F-B221-465F-97C9-4B9FC0E2F67F}.Release|x86.ActiveCfg = Release|Any CPU
-		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -816,9 +752,7 @@ Global
 		{943AD349-5431-4B9F-9DF4-A6DF5390B484} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{148699A6-388F-45A5-A9B5-DA1C2BDDD168} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{3600E042-48AC-4756-9F36-E8642E81EB61} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
-		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{8A9CDA60-166B-4B5A-82B7-5B6313C6368A} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
-		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2} = {3BBD53CF-FD94-413D-B3B8-C2A0D9AAC4DC}
 		{45BE1494-E6F4-415F-8206-2856FBD28F66} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{266522EB-9DCB-451A-8CD7-678188DCB5F6} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
 		{F749C03B-EC1A-460E-ACF8-05F70AD7512A} = {0F6D840F-1B1D-47DF-9007-C725CB01A384}
@@ -844,9 +778,7 @@ Global
 		{1A3E51FF-8DA1-4D8D-B7A3-4E6B3625A955} = {4E870DA1-42F8-4FF2-8172-5676DAB9959B}
 		{69621991-8933-41FD-8493-87E7FA5A26FE} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{A763CC8F-835E-444C-9A9F-88E7A443C1B2} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
-		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{95FCB9E4-84E9-4080-A12B-4FB12F648C31} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{692D5946-BFB5-46EC-A012-5FBF853A93EE} = {E6BC7155-A2F0-4353-A57C-36A237193155}
 		{FA168E91-F953-4C22-9727-4462E9DF74EF} = {BC5057D0-37DD-40FD-98BE-0FF01551FEFE}
 		{1EB35F86-DA6C-4691-A2C5-8587129B520D} = {83F73BB7-5B6F-469E-9376-AF196CFFA146}

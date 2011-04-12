@@ -6,6 +6,6 @@
 
         void Unsubscribe(object subscriber);
 
-        TMessage Publish<TMessage>(TMessage message);
+        TMessage Publish<TMessage>(TMessage message) where TMessage : class;
     }
 }

@@ -109,6 +109,7 @@ namespace TecX.Common.Event
         /// <param name="message">The message containing data.</param>
         /// <returns></returns>
         public TMessage Publish<TMessage>(TMessage message)
+            where TMessage : class 
         {
             Guard.AssertNotNull(message, "message");
 
