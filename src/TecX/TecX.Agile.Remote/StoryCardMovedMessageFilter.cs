@@ -7,9 +7,9 @@ using TecX.Common;
 
 namespace TecX.Agile.Remote
 {
-    public class StoryCardMovedMessageFilter
+    public class StoryCardMovedMessageFilter : IMessageFilter<StoryCardMoved>
     {
-        private readonly RingBuffer<Tuple<Guid, double, double, double>> _buffer;
+        private readonly Buffer<Tuple<Guid, double, double, double>> _buffer;
 
         public StoryCardMovedMessageFilter()
         {
