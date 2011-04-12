@@ -7,9 +7,9 @@ using TecX.Common;
 
 namespace TecX.Agile.Remote
 {
-    public class PropertyChangedMessageFilter
+    public class PropertyChangedMessageFilter : IMessageFilter<PropertyUpdated>
     {
-        private readonly RingBuffer<Tuple<Guid, string, object, object>> _buffer;
+        private readonly Buffer<Tuple<Guid, string, object, object>> _buffer;
 
         public PropertyChangedMessageFilter()
         {

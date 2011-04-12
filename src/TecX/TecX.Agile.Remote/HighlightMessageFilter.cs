@@ -7,9 +7,15 @@ using TecX.Common;
 
 namespace TecX.Agile.Remote
 {
-    public class HighlightMessageFilter
+    public interface IMessageFilter<in TMessage>
+        where TMessage : IDomainEvent
     {
-        private readonly RingBuffer<Tuple<Guid, string>> _buffer;
+        bool ShouldLetPass(TMessage outboundMessage);
+    }
+
+    public class HighlightMessageFilter : IMessageFilter<FieldHighlighted>
+    {
+        private readonly Buffer<Tuple<Guid, string>> _buffer;
 
         public HighlightMessageFilter()
         {

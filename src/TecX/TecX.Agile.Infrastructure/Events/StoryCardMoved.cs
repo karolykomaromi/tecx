@@ -2,7 +2,7 @@
 
 namespace TecX.Agile.Infrastructure.Events
 {
-    public class StoryCardMoved
+    public class StoryCardMoved : IDomainEvent
     {
         #region Fields
 

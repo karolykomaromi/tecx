@@ -1,11 +1,49 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using TecX.Common;
 
 namespace TecX.Agile.Peer
 {
-    public class RingBuffer<T>
+    public abstract class Buffer<T>
+    {
+        public abstract int Count { get; }
+
+        public abstract void Add(T item);
+
+        public abstract bool Contains(T candidate);
+
+        public abstract bool Remove(T item);
+    }
+
+    public class ExpiringBuffer<T> : Buffer<T>
+    {
+        public override int Count
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public override void Add(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Contains(T candidate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Remove(T item)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class RingBuffer<T> : Buffer<T>
     {
         private readonly int _capacity;
         private readonly IEqualityComparer<T> _comparer;
@@ -24,12 +62,12 @@ namespace TecX.Agile.Peer
             _items = new List<T>(capacity);
         }
 
-        public int Count
+        public override int Count
         {
             get { return _items.Count; }
         }
 
-        public void Add(T item)
+        public override void Add(T item)
         {
             Guard.AssertNotNull(item, "item");
 
@@ -41,7 +79,7 @@ namespace TecX.Agile.Peer
             _items.Add(item);
         }
 
-        public bool Contains(T candidate)
+        public override bool Contains(T candidate)
         {
             Guard.AssertNotNull(candidate, "candidate");
 
@@ -50,7 +88,7 @@ namespace TecX.Agile.Peer
             return contains;
         }
 
-        public bool Remove(T item)
+        public override bool Remove(T item)
         {
             Guard.AssertNotNull(item, "item");
 
