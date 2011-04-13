@@ -47,10 +47,12 @@
     </Compile>
     <Compile Include="CaretMovedEventArgs.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="ExpiringMessageHistory.cs" />
     <Compile Include="FieldHighlightedEventArgs.cs" />
     <Compile Include="IPeerClient.cs" />
+    <Compile Include="MessageHistory.cs" />
     <Compile Include="RemoteOnlyMessagePropagationFilter.cs" />
-    <Compile Include="RingBuffer.cs" />
+    <Compile Include="RingMessageHistory.cs" />
     <Compile Include="StoryCardMovedEventArgs.cs" />
     <Compile Include="PeerClient.cs" />
     <Compile Include="PeerServiceHost.cs" />

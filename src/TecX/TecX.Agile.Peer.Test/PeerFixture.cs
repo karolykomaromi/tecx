@@ -86,10 +86,10 @@ namespace TecX.Agile.Peer.Test
 
             HighlightMessageFilter filter = new HighlightMessageFilter();
 
-            filter.Enqueue(artefactId, fieldName);
-
             FieldHighlighted outboundMessage = new FieldHighlighted(artefactId, fieldName);
 
+            filter.Enqueue(outboundMessage);
+            
             bool letPass = filter.ShouldLetPass(outboundMessage);
 
             Assert.IsFalse(letPass);
@@ -106,9 +106,9 @@ namespace TecX.Agile.Peer.Test
 
             PropertyChangedMessageFilter filter = new PropertyChangedMessageFilter();
 
-            filter.Enqueue(storyCardId, propertyName, oldValue, newValue);
-
             PropertyUpdated outboundMessage = new PropertyUpdated(card.Id, propertyName, oldValue, newValue);
+
+            filter.Enqueue(outboundMessage);
 
             bool letPass = filter.ShouldLetPass(outboundMessage);
 
@@ -124,9 +124,9 @@ namespace TecX.Agile.Peer.Test
 
             StoryCardMovedMessageFilter filter = new StoryCardMovedMessageFilter();
 
-            filter.Enqueue(storyCardId, x, 0.0, 0.0);
-
             StoryCardMoved outboundMessage = new StoryCardMoved(storyCardId, x, 0.0, 0.0);
+
+            filter.Enqueue(outboundMessage);
 
             bool letPass = filter.ShouldLetPass(outboundMessage);
 

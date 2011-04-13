@@ -4,42 +4,59 @@ using System.Collections.Generic;
 using TecX.Agile.Infrastructure.Events;
 using TecX.Agile.Peer;
 using TecX.Common;
+using TecX.Common.Extensions.Primitives;
 
 namespace TecX.Agile.Remote
 {
-    public interface IMessageFilter<in TMessage>
-        where TMessage : IDomainEvent
-    {
-        bool ShouldLetPass(TMessage outboundMessage);
-    }
-
     public class HighlightMessageFilter : IMessageFilter<FieldHighlighted>
     {
-        private readonly Buffer<Tuple<Guid, string>> _buffer;
+        private readonly MessageHistory<FieldHighlighted> _messageHistory;
 
         public HighlightMessageFilter()
         {
-            _buffer = new RingBuffer<Tuple<Guid, string>>(10, EqualityComparer<Tuple<Guid, string>>.Default);
+            this._messageHistory = new ExpiringMessageHistory<FieldHighlighted>(1.Minutes(), new FieldHighlightedEqualityComparer());
         }
 
-        public void Enqueue(Guid artefactId, string fieldName)
+        public void Enqueue(FieldHighlighted inboundMessage)
         {
-            Guard.AssertNotEmpty(fieldName, "fieldName");
+            Guard.AssertNotNull(inboundMessage, "inboundMessage");
 
-            _buffer.Add(new Tuple<Guid, string>(artefactId, fieldName));
-#if SILVERLIGHT
-            _buffer.Add(new Tuple<Guid, string>(artefactId, fieldName));
-#endif
+            _messageHistory.Add(inboundMessage);
         }
 
         public bool ShouldLetPass(FieldHighlighted outboundMessage)
         {
             Guard.AssertNotNull(outboundMessage, "outboundMessage");
-            Guard.AssertNotEmpty((string)outboundMessage.FieldName, "outboundMessage.FieldName");
+            Guard.AssertNotEmpty(outboundMessage.FieldName, "outboundMessage.FieldName");
 
-            bool letPass = !_buffer.Remove(new Tuple<Guid, string>(outboundMessage.ArtefactId, outboundMessage.FieldName));
+            bool letPass = !_messageHistory.Contains(outboundMessage);
 
             return letPass;
+        }
+
+        private class FieldHighlightedEqualityComparer : EqualityComparer<FieldHighlighted>
+        {
+            public override bool Equals(FieldHighlighted x, FieldHighlighted y)
+            {
+                Guard.AssertNotNull(x, "x");
+                Guard.AssertNotNull(y, "y");
+                Guard.AssertNotEmpty(x.FieldName, "x.FieldName");
+                Guard.AssertNotEmpty(y.FieldName, "y.FieldName");
+
+                if(x.ArtefactId != y.ArtefactId)
+                {
+                    return false;
+                }
+
+                return string.Equals(x.FieldName, y.FieldName, StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            public override int GetHashCode(FieldHighlighted obj)
+            {
+                Guard.AssertNotNull(obj, "obj");
+
+                return obj.ArtefactId.GetHashCode();
+            }
         }
     }
 }

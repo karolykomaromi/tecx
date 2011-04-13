@@ -1,58 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 using TecX.Common;
 
 namespace TecX.Agile.Peer
 {
-    public abstract class Buffer<T>
-    {
-        public abstract int Count { get; }
-
-        public abstract void Add(T item);
-
-        public abstract bool Contains(T candidate);
-
-        public abstract bool Remove(T item);
-    }
-
-    public class ExpiringBuffer<T> : Buffer<T>
-    {
-        public override int Count
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override void Add(T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool Contains(T candidate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool Remove(T item)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class RingBuffer<T> : Buffer<T>
+    public class RingMessageHistory<T> : MessageHistory<T>
     {
         private readonly int _capacity;
         private readonly IEqualityComparer<T> _comparer;
         private readonly List<T> _items;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RingBuffer{T}"/> class
+        /// Initializes a new instance of the <see cref="RingMessageHistory{T}"/> class
         /// </summary>
-        public RingBuffer(int capacity, IEqualityComparer<T> comparer)
+        public RingMessageHistory(int capacity, IEqualityComparer<T> comparer)
         {
             Guard.AssertIsInRange(capacity, "capacity", 0, int.MaxValue);
             Guard.AssertNotNull(comparer, "comparer");
@@ -71,7 +33,7 @@ namespace TecX.Agile.Peer
         {
             Guard.AssertNotNull(item, "item");
 
-            if(Count == _capacity)
+            if (Count == _capacity)
             {
                 _items.RemoveAt(0);
             }

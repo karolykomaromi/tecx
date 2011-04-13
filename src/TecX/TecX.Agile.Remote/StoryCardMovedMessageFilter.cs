@@ -1,68 +1,64 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using TecX.Agile.Infrastructure.Events;
 using TecX.Agile.Peer;
 using TecX.Common;
+using TecX.Common.Extensions.Primitives;
 
 namespace TecX.Agile.Remote
 {
     public class StoryCardMovedMessageFilter : IMessageFilter<StoryCardMoved>
     {
-        private readonly Buffer<Tuple<Guid, double, double, double>> _buffer;
+        private readonly MessageHistory<StoryCardMoved> _messageHistory;
 
         public StoryCardMovedMessageFilter()
         {
-            _buffer = new RingBuffer<Tuple<Guid, double, double, double>>(10, new StoryCardMovedComparer());
+            _messageHistory = new ExpiringMessageHistory<StoryCardMoved>(1.Minutes(), new StoryCardMovedComparer());
         }
 
-        public void Enqueue(Guid storyCardId, double x, double y, double angle)
+        public void Enqueue(StoryCardMoved @event)
         {
-            var tuple = new Tuple<Guid, double, double, double>(storyCardId, x, y, angle);
+            Guard.AssertNotNull(@event, "event");
 
-            _buffer.Add(tuple);
-            _buffer.Add(tuple);
-            _buffer.Add(tuple);
+            _messageHistory.Add(@event);
         }
 
         public bool ShouldLetPass(StoryCardMoved msg)
         {
             Guard.AssertNotNull(msg, "msg");
-
-            var tuple = new Tuple<Guid, double, double, double>(msg.StoryCardId, msg.X, msg.Y, msg.Angle);
-
-            bool letPass = !_buffer.Remove(tuple);
+            
+            bool letPass = !_messageHistory.Contains(msg);
 
             return letPass;
         }
 
-        private class StoryCardMovedComparer : IEqualityComparer<Tuple<Guid, double, double, double>>
+        private class StoryCardMovedComparer : IEqualityComparer<StoryCardMoved>
         {
-            public bool Equals(Tuple<Guid, double, double, double> x, Tuple<Guid, double, double, double> y)
+            public bool Equals(StoryCardMoved x, StoryCardMoved y)
             {
                 Guard.AssertNotNull(x, "x");
                 Guard.AssertNotNull(y, "y");
 
-                if (x.Item1 != y.Item1)
+                if (x.StoryCardId != y.StoryCardId)
                     return false;
 
-                if (x.Item2 == y.Item2)
+                if (x.X == y.X)
                     return true;
                 
-                if (x.Item3 == y.Item3)
+                if (x.Y == y.Y)
                     return true;
                 
-                if (x.Item4 == y.Item4)
+                if (x.Angle == y.Angle)
                     return true;
 
                 return false;
             }
 
-            public int GetHashCode(Tuple<Guid, double, double, double> obj)
+            public int GetHashCode(StoryCardMoved obj)
             {
                 Guard.AssertNotNull(obj, "obj");
 
-                return obj.Item1.GetHashCode();
+                return obj.StoryCardId.GetHashCode();
             }
         }
     }
