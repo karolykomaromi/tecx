@@ -77,6 +77,8 @@ namespace TecX.Agile.Peer
 
                 PeerNode thisPeerNode = _broadcastToMesh.GetProperty<PeerNode>();
 
+                //TODO weberse 2011-04-13 filter makes it impossible to test the peer client because tests 
+                //start two instances on the same machine
                 var remoteOnlyMessagePropagationFilter = new RemoteOnlyMessagePropagationFilter();
 
                 thisPeerNode.MessagePropagationFilter = remoteOnlyMessagePropagationFilter;

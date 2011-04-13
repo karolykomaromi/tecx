@@ -12,7 +12,7 @@ namespace TecX.Agile.Peer.Test
         [TestMethod]
         public void GivenARingBuffer_WhenAddingMoreItemsThanAllowedByCapacity_RemovesFirstItem()
         {
-            var buffer = new RingBuffer<int>(1, EqualityComparer<int>.Default);
+            var buffer = new RingMessageHistory<int>(1, EqualityComparer<int>.Default);
 
             buffer.Add(1);
 

@@ -50,6 +50,7 @@
     </Compile>
     <Compile Include="AzureServiceBusRemoteUI.cs" />
     <Compile Include="HighlightMessageFilter.cs" />
+    <Compile Include="IMessageFilter.cs" />
     <Compile Include="IRemoteUI.cs" />
     <Compile Include="MassTransitRemoteUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
