@@ -12,16 +12,12 @@ namespace TecX.Unity.Configuration.Conventions
         private readonly Type _from;
         private Func<Type, string> _getName;
 
-        public FindAllTypesConvention()
-        {
-            _getName = type => { return type.FullName; };
-        }
-
         public FindAllTypesConvention(Type from)
         {
             Guard.AssertNotNull(from, "from");
 
             _from = from;
+            _getName = type => { return type.FullName; };
         }
 
         public void Process(Type type, Registry registry)
@@ -37,6 +33,8 @@ namespace TecX.Unity.Configuration.Conventions
 
         public void NameBy(Func<Type, string> getName)
         {
+            Guard.AssertNotNull(getName, "getName");
+
             _getName = getName;
         }
     }
