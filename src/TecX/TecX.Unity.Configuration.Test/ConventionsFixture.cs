@@ -5,7 +5,7 @@ using System.Linq;
 
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using TecX.TestTools;
 using TecX.Unity.Configuration.Common;
 using TecX.Unity.Configuration.Conventions;
 using TecX.Unity.Configuration.Test.TestObjects;
@@ -13,35 +13,57 @@ using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Test
 {
-    [TestClass]
-    public class ConventionsFixture
+    public abstract class Given_AContainer : ArrangeActAssert
     {
-        [TestMethod]
-        public void CanApplyFindAllTypesConvention()
+        protected IUnityContainer _container;
+
+        protected override void Arrange()
         {
-            IUnityContainer container = new UnityContainer();
+            _container = new UnityContainer();
+        }
+    }
 
-            container.Configure(r =>
-                r.Scan(x =>
-                {
-                    x.With(new FindAllTypesConvention(typeof(IMyInterface)));
+    [TestClass]
+    public class When_ApplyingFindAllTypesConvention : Given_AContainer
+    {
+        private List<IMyInterface> _all;
 
-                    x.AssemblyContainingType<IMyInterface>();
+        protected override void Act()
+        {
+            _container.Configure(r =>
+            r.Scan(x =>
+            {
+                x.With(new FindAllTypesConvention(typeof(IMyInterface)));
 
-                    x.Exclude(t => t.Name == "MyClassWithCtorParams");
-                }));
+                x.AssemblyContainingType<IMyInterface>();
 
-            IEnumerable<IMyInterface> allResults = container.ResolveAll<IMyInterface>();
+                x.Exclude(t => t.Name == "MyClassWithCtorParams");
+            }));
 
-            Assert.AreEqual(2, allResults.Count());
+            _all = _container
+                        .ResolveAll<IMyInterface>()
+                        .OrderBy(i => i.GetType().Name)
+                        .ToList();
         }
 
         [TestMethod]
-        public void CanApplyFirstInterfaceConvention()
+        public void Then_RegistersImplementationsOfInterfaceExpectExcluded()
         {
-            IUnityContainer container = new UnityContainer();
+            Assert.AreEqual(2, _all.Count);
+            Assert.IsInstanceOfType(_all[0], typeof(MyClass));
+            Assert.IsInstanceOfType(_all[1], typeof(MyOtherClass));
+        }
+    }
 
-            container.Configure(r =>
+    [TestClass]
+    public class When_ApplyingFirstInterfaceConvention : Given_AContainer
+    {
+        private List<IMyInterface> _all;
+        private List<IAnotherInterface> _others;
+
+        protected override void Act()
+        {
+            _container.Configure(r =>
                 r.Scan(s =>
                 {
                     s.RegisterConcreteTypesAgainstTheFirstInterface();
@@ -51,21 +73,37 @@ namespace TecX.Unity.Configuration.Test
                     s.Exclude(t => t.Name == "MyClassWithCtorParams");
                 }));
 
-            IEnumerable<IMyInterface> results = container.ResolveAll<IMyInterface>();
+            _all = _container
+                        .ResolveAll<IMyInterface>()
+                        .OrderBy(i => i.GetType().Name)
+                        .ToList();
 
-            Assert.AreEqual(2, results.Count());
-
-            IEnumerable<IAnotherInterface> others = container.ResolveAll<IAnotherInterface>();
-
-            Assert.AreEqual(1, others.Count());
+            _others = _container
+                        .ResolveAll<IAnotherInterface>()
+                        .ToList();
         }
 
+        [TestMethod]
+        public void Then_RegistersImplementationsOfInterfaceExpectExcluded()
+        {
+            Assert.AreEqual(2, _all.Count);
+            Assert.IsInstanceOfType(_all[0], typeof(MyClass));
+            Assert.IsInstanceOfType(_all[1], typeof(MyOtherClass));
+
+            Assert.AreEqual(1, _others.Count);
+            Assert.IsInstanceOfType(_others[0], typeof(ClassThatImplementsAnotherInterface));
+        }
+    }
+
+    [TestClass]
+    public class ConventionsFixture
+    {
         [TestMethod]
         public void CanApplyFindRegistriesConvention()
         {
             IUnityContainer container = new UnityContainer();
 
-            container.Configure(r => 
+            container.Configure(r =>
                 r.Scan(s =>
                 {
                     s.With(new FindRegistriesConvention());
@@ -83,7 +121,7 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            container.Configure(r => 
+            container.Configure(r =>
                 r.Scan(s =>
                 {
                     s.AssemblyContainingType(typeof(IInterfaceName));
@@ -101,7 +139,7 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            container.Configure(r => 
+            container.Configure(r =>
                 r.Scan(s =>
                 {
                     s.AssemblyContainingType(typeof(IInterfaceName));
