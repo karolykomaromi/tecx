@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace TecX.Agile.Infrastructure.Events
 {
+    [DataContract]
     public class StoryCardRescheduled : IDomainEvent
     {
         #region Fields
 
+        [DataMember]
         private readonly Guid _storyCardId;
+        [DataMember]
         private readonly Guid _from;
+        [DataMember]
         private readonly Guid _to;
 
         #endregion Fields

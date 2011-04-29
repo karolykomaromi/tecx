@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 using TecX.Common;
 
 namespace TecX.Agile.Infrastructure.Events
 {
+    [DataContract]
     public class CaretMoved : IDomainEvent
     {
+        [DataMember]
         private readonly Guid _artefactId;
+        [DataMember]
         private readonly string _fieldName;
+        [DataMember]
         private readonly int _caretIndex;
 
         public string FieldName

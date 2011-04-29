@@ -1,15 +1,22 @@
 ﻿using System;
+using System.Runtime.Serialization;
+
 using TecX.Common;
 
 namespace TecX.Agile.Infrastructure.Events
 {
+    [DataContract]
     public class PropertyUpdated : IDomainEvent
     {
         #region Fields
 
+        [DataMember]
         private readonly Guid _artefactId;
+        [DataMember]
         private readonly string _propertyName;
+        [DataMember]
         private readonly object _oldValue;
+        [DataMember]
         private readonly object _newValue;
 
         #endregion Fields
