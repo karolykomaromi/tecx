@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace TecX.Agile.Infrastructure.Events
 {
+    [DataContract]
     public class IterationReplaced : IDomainEvent
     {
+        [DataMember]
         private readonly Guid _oldItemId;
+        [DataMember]
         private readonly Guid _newItemId;
+        [DataMember]
         private readonly Guid _collectionId;
 
         public Guid CollectionId

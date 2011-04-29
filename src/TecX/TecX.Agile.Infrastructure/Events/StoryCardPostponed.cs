@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace TecX.Agile.Infrastructure.Events
 {
+    [DataContract]
     public class StoryCardPostponed : IDomainEvent
     {
+        [DataMember]
         private readonly Guid _storyCardId;
+        [DataMember]
         private readonly Guid _from;
 
         public Guid From

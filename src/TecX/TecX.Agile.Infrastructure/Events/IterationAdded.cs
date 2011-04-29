@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace TecX.Agile.Infrastructure.Events
 {
+    [DataContract]
     public class IterationAdded : IDomainEvent
     {
+        [DataMember]
         private readonly Guid _iterationId;
+        [DataMember]
         private readonly Guid _to;
 
         public Guid To

@@ -1,15 +1,22 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace TecX.Agile.Infrastructure.Events
 {
+    [DataContract]
     public class StoryCardAdded : IDomainEvent
     {
         #region Fields
 
+        [DataMember]
         private readonly Guid _storyCardId;
+        [DataMember]
         private readonly Guid _to;
+        [DataMember]
         private readonly double _x;
+        [DataMember]
         private readonly double _y;
+        [DataMember]
         private readonly double _angle;
 
         #endregion Fields
