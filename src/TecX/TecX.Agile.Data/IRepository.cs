@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace TecX.Agile.Data
 {
-    public interface IRepository
+    public interface IRepository<TArtefact>
+        where TArtefact : PlanningArtefact
     {
-        Project GetProjectBy(Guid id);
+        IQueryable<TArtefact> FindAll();
 
-        Project GetProjectBy(string name);
+        IQueryable<TArtefact> FindWhere(Expression<Func<TArtefact, bool>> predicate);
 
-        IEnumerable<ProjectInfo> GetExistingProjects();
+        TArtefact FindById(Guid id);
 
-        Project CreateProject();
+        void Add(TArtefact newArtefact);
 
-        bool SaveProject(Project project);
+        void Remove(TArtefact artefact);
     }
 }
