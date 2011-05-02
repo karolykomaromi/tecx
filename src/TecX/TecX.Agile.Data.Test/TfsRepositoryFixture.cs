@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using TecX.Agile.Data.Tfs;
+//using TecX.Agile.Data.Tfs;
 
 namespace TecX.Agile.Data.Test
 {
@@ -12,13 +12,19 @@ namespace TecX.Agile.Data.Test
     public class TfsRepositoryFixture
     {
         [TestMethod]
-        public void GivenRepositoryAndLocalTfs_WhenGettingAvailableProjects_GetsAllProjects()
+        public void MustReimplement()
         {
-            Uri tfsUri = new Uri("http://WKWEBERSE02:8080/TFS");
-
-            TfsRepository repository = new TfsRepository(tfsUri);
-
-            var projects = repository.GetExistingProjects();
+            Assert.Fail("must reimplement");
         }
+
+        //[TestMethod]
+        //public void GivenRepositoryAndLocalTfs_WhenGettingAvailableProjects_GetsAllProjects()
+        //{
+        //    Uri tfsUri = new Uri("http://WKWEBERSE02:8080/TFS");
+
+        //    TfsRepository repository = new TfsRepository(tfsUri);
+
+        //    var projects = repository.GetExistingProjects();
+        //}
     }
 }

@@ -7,76 +7,80 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ploeh.AutoFixture;
 
-using TecX.Agile.Data.File;
-
 namespace TecX.Agile.Data.Test
 {
     [TestClass]
     public class FileRepositoryFixture
     {
         [TestMethod]
-        public void CanXmlSerializeProjectInfo()
+        public void MustReimplement()
         {
-            ProjectInfo pi = new ProjectInfo
-                                 {
-                                     Created = new DateTime(2010, 08, 13),
-                                     Id = Guid.NewGuid(),
-                                     LastModified = new DateTime(2010, 09, 7),
-                                     Name = "To whom the bell tolls"
-                                 };
-
-            XmlSerializer serializer = new XmlSerializer(typeof (ProjectInfo));
-
-            string xml = serializer.SerializePlain(pi);
-
-            ProjectInfo deserialized = (ProjectInfo) serializer.Deserialize(new StringReader(xml));
-
-            Assert.AreEqual(pi.Created, deserialized.Created);
-            Assert.AreEqual(pi.Id, deserialized.Id);
-            Assert.AreEqual(pi.LastModified, deserialized.LastModified);
-            Assert.AreEqual(pi.Name, deserialized.Name);
+            Assert.Fail("must reimplement");
         }
 
-        [TestMethod]
-        public void CanCreateProjectFolder()
-        {
-            string currentDirName = Directory.GetCurrentDirectory();
+        //[TestMethod]
+        //public void CanXmlSerializeProjectInfo()
+        //{
+        //    ProjectInfo pi = new ProjectInfo
+        //                         {
+        //                             Created = new DateTime(2010, 08, 13),
+        //                             Id = Guid.NewGuid(),
+        //                             LastModified = new DateTime(2010, 09, 7),
+        //                             Name = "To whom the bell tolls"
+        //                         };
 
-            DirectoryInfo current = new DirectoryInfo(currentDirName);
+        //    XmlSerializer serializer = new XmlSerializer(typeof (ProjectInfo));
 
-            Guid id = Guid.NewGuid();
+        //    string xml = serializer.SerializePlain(pi);
 
-            DirectoryInfo newDir = FileRepositoryHelper.CreateDirectoryIfNotExists(current, id.ToString());
+        //    ProjectInfo deserialized = (ProjectInfo) serializer.Deserialize(new StringReader(xml));
 
-            Assert.IsTrue(newDir.Exists);
-        }
+        //    Assert.AreEqual(pi.Created, deserialized.Created);
+        //    Assert.AreEqual(pi.Id, deserialized.Id);
+        //    Assert.AreEqual(pi.LastModified, deserialized.LastModified);
+        //    Assert.AreEqual(pi.Name, deserialized.Name);
+        //}
 
-        [TestMethod]
-        public void CanWriteAndReadProjectInfo()
-        {
-            Fixture fixture = new Fixture();
+        //[TestMethod]
+        //public void CanCreateProjectFolder()
+        //{
+        //    string currentDirName = Directory.GetCurrentDirectory();
 
-            ProjectInfo info = fixture.CreateAnonymous<ProjectInfo>();
+        //    DirectoryInfo current = new DirectoryInfo(currentDirName);
 
-            Assert.IsNotNull(info);
-            Assert.AreNotEqual(Guid.Empty, info.Id);
+        //    Guid id = Guid.NewGuid();
 
-            DirectoryInfo current = new DirectoryInfo(Directory.GetCurrentDirectory());
+        //    DirectoryInfo newDir = FileRepositoryHelper.CreateDirectoryIfNotExists(current, id.ToString());
 
-            DirectoryInfo projectDir = FileRepositoryHelper.CreateDirectoryIfNotExists(current, info.Id.ToString());
+        //    Assert.IsTrue(newDir.Exists);
+        //}
 
-            FileRepositoryHelper.WriteProjectInfo(projectDir, info);
+        //[TestMethod]
+        //public void CanWriteAndReadProjectInfo()
+        //{
+        //    Fixture fixture = new Fixture();
 
-            var infos = FileRepositoryHelper.GetProjectInfos(current);
+        //    ProjectInfo info = fixture.CreateAnonymous<ProjectInfo>();
 
-            Assert.AreEqual(1, infos.Count());
+        //    Assert.IsNotNull(info);
+        //    Assert.AreNotEqual(Guid.Empty, info.Id);
 
-            ProjectInfo read = infos.Single();
+        //    DirectoryInfo current = new DirectoryInfo(Directory.GetCurrentDirectory());
 
-            Assert.AreEqual(info.Created, read.Created);
-            Assert.AreEqual(info.Id, read.Id);
-            Assert.AreEqual(info.LastModified, read.LastModified);
-            Assert.AreEqual(info.Name, read.Name);
-        }
+        //    DirectoryInfo projectDir = FileRepositoryHelper.CreateDirectoryIfNotExists(current, info.Id.ToString());
+
+        //    FileRepositoryHelper.WriteProjectInfo(projectDir, info);
+
+        //    var infos = FileRepositoryHelper.GetProjectInfos(current);
+
+        //    Assert.AreEqual(1, infos.Count());
+
+        //    ProjectInfo read = infos.Single();
+
+        //    Assert.AreEqual(info.Created, read.Created);
+        //    Assert.AreEqual(info.Id, read.Id);
+        //    Assert.AreEqual(info.LastModified, read.LastModified);
+        //    Assert.AreEqual(info.Name, read.Name);
+        //}
     }
 }

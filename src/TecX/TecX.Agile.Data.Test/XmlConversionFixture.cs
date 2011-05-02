@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ploeh.AutoFixture;
 
-using TecX.Agile.Data.Xml;
+//using TecX.Agile.Data.Xml;
 using TecX.Agile.Test;
 
 namespace TecX.Agile.Data.Test
@@ -13,113 +13,119 @@ namespace TecX.Agile.Data.Test
     [TestClass]
     public class XmlConversionFixture
     {
-        private readonly Fixture _fixture;
-
-        public XmlConversionFixture()
-        {
-            _fixture = TestHelper.GetCustomizedFixture();
-        }
-
         [TestMethod]
-        public void CanConvertVisualizableToXml()
+        public void MustReimplement()
         {
-            Visualizable visualizable = _fixture.CreateAnonymous<Visualizable>();
-
-            XElement xml = new XElement("Visualizable");
-
-            visualizable.ToXml(xml);
-
-            Visualizable converted = new Visualizable();
-
-            converted.FromXml(xml);
-
-            Assert.AreEqual(visualizable, converted);
+            Assert.Fail("must reimplement");
         }
 
-        [TestMethod]
-        public void CanConvertTrackableToXml()
-        {
-            Trackable trackable = _fixture.CreateAnonymous<Trackable>();
+        //private readonly Fixture _fixture;
 
-            XElement xml = new XElement("Trackable");
+        //public XmlConversionFixture()
+        //{
+        //    _fixture = TestHelper.GetCustomizedFixture();
+        //}
 
-            trackable.ToXml(xml);
+        //[TestMethod]
+        //public void CanConvertVisualizableToXml()
+        //{
+        //    Visualizable visualizable = _fixture.CreateAnonymous<Visualizable>();
 
-            Trackable converted = new Trackable();
+        //    XElement xml = new XElement("Visualizable");
 
-            converted.FromXml(xml);
+        //    visualizable.ToXml(xml);
 
-            Assert.AreEqual(trackable, converted);
-        }
+        //    Visualizable converted = new Visualizable();
 
-        [TestMethod]
-        public void CanConvertLegendToXml()
-        {
-            Legend legend = _fixture.CreateAnonymous<Legend>();
+        //    converted.FromXml(xml);
 
-            XElement xml = legend.ToXml();
+        //    Assert.AreEqual(visualizable, converted);
+        //}
 
-            Legend converted = new Legend();
-            converted.FromXml(xml);
+        //[TestMethod]
+        //public void CanConvertTrackableToXml()
+        //{
+        //    Trackable trackable = _fixture.CreateAnonymous<Trackable>();
 
-            Assert.IsTrue(legend.Count() > 0);
-            Assert.AreEqual(legend, converted);
-        }
+        //    XElement xml = new XElement("Trackable");
 
-        [TestMethod]
-        public void CanConvertStoryCardToXml()
-        {
-            StoryCard storyCard = _fixture.CreateAnonymous<StoryCard>();
+        //    trackable.ToXml(xml);
 
-            XElement xml = storyCard.ToXml();
+        //    Trackable converted = new Trackable();
 
-            StoryCard converted = new StoryCard();
-            converted.FromXml(xml);
+        //    converted.FromXml(xml);
 
-            Assert.AreEqual(storyCard, converted);
-        }
+        //    Assert.AreEqual(trackable, converted);
+        //}
 
-        [TestMethod]
-        public void CanConvertBacklogToXml()
-        {
-            Backlog backlog = _fixture.CreateAnonymous<Backlog>();
+        //[TestMethod]
+        //public void CanConvertLegendToXml()
+        //{
+        //    Legend legend = _fixture.CreateAnonymous<Legend>();
 
-            XElement xml = backlog.ToXml();
+        //    XElement xml = legend.ToXml();
 
-            Backlog converted = new Backlog();
-            converted.FromXml(xml);
+        //    Legend converted = new Legend();
+        //    converted.FromXml(xml);
 
-            Assert.AreEqual(backlog,converted);
-            Assert.IsTrue(backlog.OrderBy(sc => sc.Id).SequenceEqual(converted.OrderBy(sc => sc.Id)));
-        }
+        //    Assert.IsTrue(legend.Count() > 0);
+        //    Assert.AreEqual(legend, converted);
+        //}
 
-        [TestMethod]
-        public void CanConvertIterationToXml()
-        {
-            Iteration iteration = _fixture.CreateAnonymous<Iteration>();
+        //[TestMethod]
+        //public void CanConvertStoryCardToXml()
+        //{
+        //    StoryCard storyCard = _fixture.CreateAnonymous<StoryCard>();
 
-            XElement xml = iteration.ToXml();
-            Iteration converted = new Iteration();
-            converted.FromXml(xml);
+        //    XElement xml = storyCard.ToXml();
 
-            Assert.AreEqual(iteration, converted);
-            Assert.IsTrue(iteration.OrderBy(sc => sc.Id).SequenceEqual(converted.OrderBy(sc => sc.Id)));
-        }
+        //    StoryCard converted = new StoryCard();
+        //    converted.FromXml(xml);
 
-        [TestMethod]
-        public void CanConvertProjectToXml()
-        {
-            XmlProjectToStringConverter converter = new XmlProjectToStringConverter();
+        //    Assert.AreEqual(storyCard, converted);
+        //}
 
-            Project project = _fixture.CreateAnonymous<Project>();
+        //[TestMethod]
+        //public void CanConvertBacklogToXml()
+        //{
+        //    Backlog backlog = _fixture.CreateAnonymous<Backlog>();
 
-            string xml = converter.ConvertToString(project);
+        //    XElement xml = backlog.ToXml();
 
-            Project converted = converter.ConvertToProject(xml);
+        //    Backlog converted = new Backlog();
+        //    converted.FromXml(xml);
 
-            Assert.AreEqual(project, converted);
-            Assert.IsTrue(project.OrderBy(i => i.Id).SequenceEqual(converted.OrderBy(i => i.Id)));
+        //    Assert.AreEqual(backlog,converted);
+        //    Assert.IsTrue(backlog.OrderBy(sc => sc.Id).SequenceEqual(converted.OrderBy(sc => sc.Id)));
+        //}
 
-        }
+        //[TestMethod]
+        //public void CanConvertIterationToXml()
+        //{
+        //    Iteration iteration = _fixture.CreateAnonymous<Iteration>();
+
+        //    XElement xml = iteration.ToXml();
+        //    Iteration converted = new Iteration();
+        //    converted.FromXml(xml);
+
+        //    Assert.AreEqual(iteration, converted);
+        //    Assert.IsTrue(iteration.OrderBy(sc => sc.Id).SequenceEqual(converted.OrderBy(sc => sc.Id)));
+        //}
+
+        //[TestMethod]
+        //public void CanConvertProjectToXml()
+        //{
+        //    XmlProjectToStringConverter converter = new XmlProjectToStringConverter();
+
+        //    Project project = _fixture.CreateAnonymous<Project>();
+
+        //    string xml = converter.ConvertToString(project);
+
+        //    Project converted = converter.ConvertToProject(xml);
+
+        //    Assert.AreEqual(project, converted);
+        //    Assert.IsTrue(project.OrderBy(i => i.Id).SequenceEqual(converted.OrderBy(i => i.Id)));
+
+        //}
     }
 }

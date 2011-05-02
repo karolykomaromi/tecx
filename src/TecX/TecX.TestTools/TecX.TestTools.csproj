@@ -64,7 +64,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="ArrangeActAssert.cs" />
+    <Compile Include="GivenWhenThen.cs" />
     <Compile Include="DispatcherUtil.cs" />
     <Compile Include="EventExpectation.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />

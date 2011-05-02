@@ -7,8 +7,6 @@ using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 
 using TecX.Agile.ChangeTracking;
-using TecX.Agile.Data;
-using TecX.Agile.Data.Xml;
 using TecX.Agile.Infrastructure.Services;
 using TecX.Agile.Modules.Main;
 using TecX.Agile.Modules.Main.Services;
@@ -40,7 +38,7 @@ namespace TecX.Agile.Planner
             //Stuff
 
             Container.AddNewExtension<EventAggregatorContainerExtension>()
-                .RegisterType<IRepository, XmlRepository>()
+                //.RegisterType<IRepository, XmlRepository>()
                 .RegisterType<IRemoteUI, WcfPeerRemoteUI>()
                 .RegisterType<IPeerClient, PeerClient>()
                 .RegisterType<IChangeTracker, ChangeTracker>();
