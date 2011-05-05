@@ -50,12 +50,14 @@
     <Compile Include="Commands.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="EventAggregatorAccessor.cs" />
+    <Compile Include="Events\Builder\StoryCardMovedMessageBuilder.cs" />
     <Compile Include="Events\CaretMoved.cs" />
     <Compile Include="Events\FieldHighlighted.cs" />
     <Compile Include="Events\IDomainEvent.cs" />
     <Compile Include="Events\IterationAdded.cs" />
     <Compile Include="Events\IterationRemoved.cs" />
     <Compile Include="Events\IterationReplaced.cs" />
+    <Compile Include="Events\PositionAndOrientation.cs" />
     <Compile Include="Events\PropertyUpdated.cs" />
     <Compile Include="Events\StoryCardAdded.cs" />
     <Compile Include="Events\StoryCardMoved.cs" />
@@ -63,6 +65,7 @@
     <Compile Include="Events\StoryCardRemoved.cs" />
     <Compile Include="Events\StoryCardReplaced.cs" />
     <Compile Include="Events\StoryCardRescheduled.cs" />
+    <Compile Include="NullEventAggregator.cs" />
     <Compile Include="Regions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IShowText.cs" />

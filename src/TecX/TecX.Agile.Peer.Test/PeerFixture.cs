@@ -6,6 +6,7 @@ using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Agile.Infrastructure.Events;
+using TecX.Agile.Infrastructure.Events.Builder;
 using TecX.Agile.Remote;
 using TecX.Agile.ViewModel;
 
@@ -34,7 +35,10 @@ namespace TecX.Agile.Peer.Test
                                                     messageReceived = true;
                                                 };
 
-                    peer1.MoveStoryCard(peer1.Id, Guid.NewGuid(), 1.2, 2.3, 3.4);
+                    PositionAndOrientation from = new PositionAndOrientation(0.0, 0.0, 0.0);
+                    PositionAndOrientation to = new PositionAndOrientation(1.2, 2.3, 3.4);
+
+                    peer1.MoveStoryCard(peer1.Id, Guid.NewGuid(), from, to);
 
                 }
 
@@ -124,7 +128,10 @@ namespace TecX.Agile.Peer.Test
 
             StoryCardMovedMessageFilter filter = new StoryCardMovedMessageFilter();
 
-            StoryCardMoved outboundMessage = new StoryCardMoved(storyCardId, x, 0.0, 0.0);
+            StoryCardMoved outboundMessage = new StoryCardMovedMessageBuilder()
+                                                    .MoveStoryCard(storyCardId)
+                                                    .From(0.0, 0.0, 0.0)
+                                                    .To(x, 0.0, 0.0);
 
             filter.Enqueue(outboundMessage);
 

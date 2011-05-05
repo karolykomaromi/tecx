@@ -1,33 +1,30 @@
 ﻿using System;
 
+using TecX.Agile.Infrastructure.Events;
+using TecX.Common;
+
 namespace TecX.Agile.Peer
 {
     public class StoryCardMovedEventArgs : EventArgs
     {
         private readonly Guid _senderId;
         private readonly Guid _storyCardId;
-        private readonly double _x;
-        private readonly double _y;
-        private readonly double _angle;
+        private readonly PositionAndOrientation _from;
+        private readonly PositionAndOrientation _to;
 
         public Guid SenderId
         {
             get { return _senderId; }
         }
 
-        public double Angle
+        public PositionAndOrientation From
         {
-            get { return _angle; }
+            get { return _from; }
         }
 
-        public double Y
+        public PositionAndOrientation To
         {
-            get { return _y; }
-        }
-
-        public double X
-        {
-            get { return _x; }
+            get { return _to; }
         }
 
         public Guid StoryCardId
@@ -35,13 +32,15 @@ namespace TecX.Agile.Peer
             get { return _storyCardId; }
         }
 
-        public StoryCardMovedEventArgs(Guid senderId, Guid storyCardId, double x, double y, double angle)
+        public StoryCardMovedEventArgs(Guid senderId, Guid storyCardId, PositionAndOrientation from, PositionAndOrientation to)
         {
+            Guard.AssertNotNull(from, "from");
+            Guard.AssertNotNull(to, "to");
+
             _senderId = senderId;
             _storyCardId = storyCardId;
-            _x = x;
-            _y = y;
-            _angle = angle;
+            _from = from;
+            _to = to;
         }
     }
 }

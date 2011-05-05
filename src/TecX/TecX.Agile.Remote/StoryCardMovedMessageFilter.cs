@@ -34,21 +34,21 @@ namespace TecX.Agile.Remote
 
         private class StoryCardMovedComparer : IEqualityComparer<StoryCardMoved>
         {
-            public bool Equals(StoryCardMoved x, StoryCardMoved y)
+            public bool Equals(StoryCardMoved a, StoryCardMoved b)
             {
-                Guard.AssertNotNull(x, "x");
-                Guard.AssertNotNull(y, "y");
+                Guard.AssertNotNull(a, "a");
+                Guard.AssertNotNull(b, "b");
 
-                if (x.StoryCardId != y.StoryCardId)
+                if (a.StoryCardId != b.StoryCardId)
                     return false;
 
-                if (x.X == y.X)
+                if (a.To.X == b.To.X)
                     return true;
                 
-                if (x.Y == y.Y)
+                if (a.To.Y == b.To.Y)
                     return true;
                 
-                if (x.Angle == y.Angle)
+                if (a.To.Angle == b.To.Angle)
                     return true;
 
                 return false;

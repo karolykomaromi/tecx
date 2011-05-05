@@ -88,7 +88,7 @@ namespace TecX.Agile.Remote
 
             if (_storyCardMovedMessageFilter.ShouldLetPass(message))
             {
-                _peerClient.MoveStoryCard(_peerClient.Id, message.StoryCardId, message.X, message.Y, message.Angle);
+                _peerClient.MoveStoryCard(_peerClient.Id, message.StoryCardId, message.From, message.To);
             }
         }
 
@@ -132,7 +132,7 @@ namespace TecX.Agile.Remote
         {
             Guard.AssertNotNull(e, "e");
 
-            StoryCardMoved @event = new StoryCardMoved(e.StoryCardId, e.X, e.Y, e.Angle);
+            StoryCardMoved @event = new StoryCardMoved(e.StoryCardId, e.From, e.To);
 
             _storyCardMovedMessageFilter.Enqueue(@event);
 

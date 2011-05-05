@@ -52,7 +52,7 @@ namespace TecX.Agile.ViewModel
             PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
         }
 
-        private static string GetPropertyName<T>(Expression<Func<T>> propertySelector)
+        protected static string GetPropertyName<T>(Expression<Func<T>> propertySelector)
         {
             Guard.AssertNotNull(propertySelector, "propertySelector");
 

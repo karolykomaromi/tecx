@@ -61,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionFixture.cs" />
-    <Compile Include="ChangeTrackerFixture.cs" />
     <Compile Include="IterationFixture.cs" />
     <Compile Include="ObservableDictionaryFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,10 +70,6 @@
     <Compile Include="ViewModelBaseFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TecX.Agile.ChangeTracking\TecX.Agile.ChangeTracking.csproj">
-      <Project>{E7D68497-0BAC-44D6-95DC-F05A7EB203FC}</Project>
-      <Name>TecX.Agile.ChangeTracking</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.csproj">
       <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
       <Name>TecX.Agile.Infrastructure</Name>
