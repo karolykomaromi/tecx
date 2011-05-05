@@ -17,7 +17,7 @@ namespace TecX.Agile.Planner
     {
         #region Fields
 
-        private readonly IRemoteUI _remoteUI;
+        private readonly IMessageRelay messageRelay;
         private readonly IShowThings _showThingsService;
 
         private readonly DelegateCommand<StoryCardAdded> _addStoryCardCommand;
@@ -57,14 +57,14 @@ namespace TecX.Agile.Planner
         #region c'tor
 
         public ShellViewModel(
-            IRemoteUI remoteUI, 
+            IMessageRelay messageRelay, 
             IShowThings showThingsService, 
             EventAggregatorAccessor eventAggregatorAccessor)
         {
-            Guard.AssertNotNull(remoteUI, "remoteUI");
+            Guard.AssertNotNull(messageRelay, "messageRelay");
             Guard.AssertNotNull(showThingsService, "showThingsService");
 
-            _remoteUI = remoteUI;
+            messageRelay = messageRelay;
             _showThingsService = showThingsService;
 
             //TODO weberse initialization of current project must be moved somewhere else
