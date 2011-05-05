@@ -5,6 +5,7 @@ using System.ServiceModel;
 using System.ServiceModel.PeerResolvers;
 using System.Threading;
 
+using TecX.Agile.Infrastructure.Events;
 using TecX.Common;
 
 namespace TecX.Agile.Peer
@@ -120,19 +121,22 @@ namespace TecX.Agile.Peer
             }
         }
 
-        public void MoveStoryCard(Guid senderId, Guid storyCardId, double x, double y, double angle)
+        public void MoveStoryCard(Guid senderId, Guid storyCardId, PositionAndOrientation from, PositionAndOrientation to)
         {
+            Guard.AssertNotNull(from, "from");
+            Guard.AssertNotNull(to, "to");
+
             //message comes from somewhere else -> handle it
             if (senderId != Id)
             {
-                var args = new StoryCardMovedEventArgs(senderId, storyCardId, x, y, angle);
+                var args = new StoryCardMovedEventArgs(senderId, storyCardId, from, to);
 
                 StoryCardMoved(this, args);
             }
             //message comes from here -> send it to the mesh
             else
             {
-                RunWithWorkaroundForBclBug(() => _broadcastToMesh.MoveStoryCard(senderId, storyCardId, x, y, angle));
+                RunWithWorkaroundForBclBug(() => _broadcastToMesh.MoveStoryCard(senderId, storyCardId, from, to));
             }
         }
 

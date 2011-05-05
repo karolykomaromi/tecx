@@ -4,78 +4,67 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Moq;
+
+using TecX.Agile.Infrastructure.Events;
+using TecX.Common.Event;
 using TecX.TestTools;
 
 namespace TecX.Agile.ViewModel.Test
 {
-    [TestClass]
-    public class StoryCardCollectionFixture
+    public abstract class Given_TwoStoryCardCollections : GivenWhenThen
     {
-        [TestMethod]
-        public void WhenReschedulingStoryCard_EventIsRaised()
+        protected Iteration _from;
+        protected Iteration _to;
+        protected StoryCard _card;
+        protected Mock<IEventAggregator> _mock;
+
+        protected override void Given()
         {
-            Iteration iter1 = new Iteration();
-            Iteration iter2 = new Iteration();
+            _mock = new Mock<IEventAggregator>();
 
-            StoryCard card = new StoryCard();
+            _from = new Iteration { Id = Guid.NewGuid(), EventAggregator = _mock.Object };
 
-            iter1.Add(card);
+            _to = new Iteration { Id = Guid.NewGuid() };
 
-            iter1
-                .AfterCalling(i => i.Reschedule(card, iter2))
-                .ShouldNotifyVia<StoryCardRescheduledEventArgs>("StoryCardRescheduled")
-                .WithArgs(args =>
-                                {
-                                    Assert.AreEqual(card, args.StoryCard);
-                                    Assert.AreEqual(iter1, args.From);
-                                    Assert.AreEqual(iter2, args.To);
-                                })
-                .AssertExpectations();
+            _card = new StoryCard { Id = Guid.NewGuid() };
+
+            _from.Add(_card);
+        }
+    }
+
+    [TestClass]
+    public class When_ReschedulingStoryCard : Given_TwoStoryCardCollections
+    {
+        protected override void When()
+        {
+            _from.Reschedule(_card, _to);
         }
 
         [TestMethod]
-        public void WhenReschedulingStoryCard_NewStoryCardParentIsSet()
+        public void Then_NotificationIsPushedViaEventAggregator()
         {
-            Iteration iter1 = new Iteration();
-            Iteration iter2 = new Iteration();
-
-            StoryCard card = new StoryCard();
-
-            iter1.Add(card);
-
-            iter1.Reschedule(card, iter2);
-
-            Assert.AreEqual(iter2, card.Parent);
+            _mock.Verify(ea => ea.Publish(It.Is<StoryCardRescheduled>(msg => _card.Id == msg.StoryCardId && _from.Id == msg.From && _to.Id == msg.To)), 
+                Times.Once(), 
+                "ea not called to publish message");
         }
 
         [TestMethod]
-        public void WhenReschedulingStoryCard_CardIsRemovedFromOldParent()
+        public void Then_NewStoryCardParentIsSet()
         {
-            Iteration iter1 = new Iteration();
-            Iteration iter2 = new Iteration();
-
-            StoryCard card = new StoryCard();
-
-            iter1.Add(card);
-
-            iter1.Reschedule(card, iter2);
-
-            Assert.IsFalse(iter1.Contains(card));
+            Assert.AreEqual(_to, _card.Parent);
         }
 
         [TestMethod]
-        public void WhenReschedulingStoryCard_CardIsAddedToNewParent()
+        public void Then_CardIsRemovedFromOldParent()
         {
-            Iteration iter1 = new Iteration();
-            Iteration iter2 = new Iteration();
+            Assert.IsFalse(_from.Contains(_card));
+        }
 
-            StoryCard card = new StoryCard();
-
-            iter1.Add(card);
-
-            iter1.Reschedule(card, iter2);
-
-            Assert.IsTrue(iter2.Contains(card));
+        [TestMethod]
+        public void Then_CardIsAddedToNewParent()
+        {
+            Assert.IsTrue(_to.Contains(_card));
         }
     }
 }

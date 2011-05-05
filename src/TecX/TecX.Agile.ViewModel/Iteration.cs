@@ -1,5 +1,6 @@
 ﻿using System;
 
+using TecX.Agile.Infrastructure.Events;
 using TecX.Common;
 using TecX.Common.Extensions.Error;
 
@@ -8,8 +9,6 @@ namespace TecX.Agile.ViewModel
     [Serializable]
     public class Iteration : StoryCardCollection
     {
-        public event EventHandler<StoryCardPostponedEventArgs> StoryCardPostponed;
-
         public void Postpone(StoryCard storyCard)
         {
             Guard.AssertNotNull(storyCard, "storyCard");
@@ -25,24 +24,12 @@ namespace TecX.Agile.ViewModel
                 Project.Backlog.Artefacts.Add(storyCard.Id, storyCard);
                 Project.Backlog.AddCore(storyCard);
 
-                StoryCardPostponedEventArgs args = new StoryCardPostponedEventArgs(storyCard, this);
-
-                OnStoryCardPostponed(args);
+                EventAggregator.Publish(new StoryCardPostponed(storyCard.Id, Id));
             }
             else
             {
                 throw new InvalidOperationException("Storycard is not part of this iteration and thus cannot be postponed")
                     .WithAdditionalInfo("storyCard", storyCard);
-            }
-        }
-
-        private void OnStoryCardPostponed(StoryCardPostponedEventArgs args)
-        {
-            Guard.AssertNotNull(args, "args");
-
-            if(StoryCardPostponed != null)
-            {
-                StoryCardPostponed(this, args);
             }
         }
     }

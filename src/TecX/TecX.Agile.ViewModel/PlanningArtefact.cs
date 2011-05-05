@@ -6,18 +6,20 @@ using Microsoft.Practices.Prism.Commands;
 using TecX.Agile.Infrastructure;
 using TecX.Agile.Infrastructure.Events;
 using TecX.Common;
+using TecX.Common.Event;
 
 namespace TecX.Agile.ViewModel
 {
     [Serializable]
     public abstract class PlanningArtefact : ViewModelBase
     {
+
         #region Fields
 
         private Guid _id;
         private string _name;
         private string _description;
-
+        private IEventAggregator _eventAggregator;
         private readonly DelegateCommand<PropertyUpdated> _updatePropertyCommand;
 
         #endregion Fields
@@ -32,9 +34,18 @@ namespace TecX.Agile.ViewModel
                 if (_id == value)
                     return;
 
-                OnPropertyChanging(() => Id);
+                Guid pre = _id;
+                Guid post = value;
+
+                string propertyName = GetPropertyName(() => Id);
+
+                OnPropertyChanging(propertyName);
+
                 _id = value;
-                OnPropertyChanged(() => Id);
+
+                OnPropertyChanged(propertyName);
+
+                EventAggregator.Publish(new PropertyUpdated(Id, propertyName, pre, post));
             }
         }
 
@@ -46,9 +57,18 @@ namespace TecX.Agile.ViewModel
                 if (_name == value)
                     return;
 
-                OnPropertyChanging(() => Name);
+                string pre = _name;
+                string post = value;
+
+                string propertyName = GetPropertyName(() => Name);
+
+                OnPropertyChanging(propertyName);
+
                 _name = value;
-                OnPropertyChanged(() => Name);
+
+                OnPropertyChanged(propertyName);
+
+                EventAggregator.Publish(new PropertyUpdated(Id, propertyName, pre, post));
             }
         }
 
@@ -60,9 +80,29 @@ namespace TecX.Agile.ViewModel
                 if (_description == value)
                     return;
 
-                OnPropertyChanging(() => Description);
+                string pre = _description;
+                string post = value;
+
+                string propertyName = GetPropertyName(() => Description);
+
+                OnPropertyChanging(propertyName);
+
                 _description = value;
-                OnPropertyChanged(() => Description);
+
+                OnPropertyChanged(propertyName);
+
+                EventAggregator.Publish(new PropertyUpdated(Id, propertyName, pre, post));
+            }
+        }
+
+        public IEventAggregator EventAggregator
+        {
+            get { return _eventAggregator; }
+            set
+            {
+                Guard.AssertNotNull(value, "EventAggregator");
+
+                _eventAggregator = value;
             }
         }
 
@@ -74,7 +114,15 @@ namespace TecX.Agile.ViewModel
         /// Initializes a new instance of the <see cref="PlanningArtefact"/> class
         /// </summary>
         protected PlanningArtefact()
+            : this(new NullEventAggregator())
         {
+        }
+
+        protected PlanningArtefact(IEventAggregator eventAggregator)
+        {
+            Guard.AssertNotNull(eventAggregator, "eventAggregator");
+
+            _eventAggregator = eventAggregator;
             _id = Guid.Empty;
             _name = string.Empty;
             _description = string.Empty;

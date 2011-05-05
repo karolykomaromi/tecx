@@ -6,7 +6,6 @@ using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 
-using TecX.Agile.ChangeTracking;
 using TecX.Agile.Infrastructure.Services;
 using TecX.Agile.Modules.Main;
 using TecX.Agile.Modules.Main.Services;
@@ -40,8 +39,8 @@ namespace TecX.Agile.Planner
             Container.AddNewExtension<EventAggregatorContainerExtension>()
                 //.RegisterType<IRepository, XmlRepository>()
                 .RegisterType<IRemoteUI, WcfPeerRemoteUI>()
-                .RegisterType<IPeerClient, PeerClient>()
-                .RegisterType<IChangeTracker, ChangeTracker>();
+                .RegisterType<IPeerClient, PeerClient>();
+                //.RegisterType<IChangeTracker, ChangeTracker>();
 
             Container.RegisterType<IShowThings, ShowThingsService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IShowText, ShowTextService>(new ContainerControlledLifetimeManager());

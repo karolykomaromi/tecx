@@ -113,10 +113,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TecX.Agile.ChangeTracking\TecX.Agile.ChangeTracking.csproj">
-      <Project>{E7D68497-0BAC-44D6-95DC-F05A7EB203FC}</Project>
-      <Name>TecX.Agile.ChangeTracking</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Data\TecX.Agile.Data.csproj">
       <Project>{5A6CB6EB-7298-40B9-91FD-0378798D8F7C}</Project>
       <Name>TecX.Agile.Data</Name>

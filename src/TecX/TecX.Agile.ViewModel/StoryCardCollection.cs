@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using TecX.Agile.Infrastructure.Events;
 using TecX.Common;
 using TecX.Common.Extensions.Error;
 
@@ -8,12 +9,6 @@ namespace TecX.Agile.ViewModel
 {
     public class StoryCardCollection : PlanningArtefactCollection<StoryCard>
     {
-        #region Events
-
-        public event EventHandler<StoryCardRescheduledEventArgs> StoryCardRescheduled;
-
-        #endregion Events
-
         #region Overrides of PlanningArtefactCollection<StoryCard>
 
         protected internal override void AddCore(StoryCard item)
@@ -66,19 +61,7 @@ namespace TecX.Agile.ViewModel
             otherCollection.Artefacts.Add(storyCard.Id, storyCard);
             otherCollection.AddCore(storyCard);
 
-            StoryCardRescheduledEventArgs args = new StoryCardRescheduledEventArgs(storyCard, this, otherCollection);
-
-            OnStoryCardRescheduled(args);
-        }
-
-        private void OnStoryCardRescheduled(StoryCardRescheduledEventArgs args)
-        {
-            Guard.AssertNotNull(args, "args");
-
-            if(StoryCardRescheduled != null)
-            {
-                StoryCardRescheduled(this, args);
-            }
+            EventAggregator.Publish(new StoryCardRescheduled(storyCard.Id, Id, otherCollection.Id));
         }
 
         #endregion Methods

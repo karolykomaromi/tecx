@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
+using TecX.Common;
+
 namespace TecX.Agile.Infrastructure.Events
 {
     [DataContract]
@@ -11,29 +13,22 @@ namespace TecX.Agile.Infrastructure.Events
         [DataMember]
         private readonly Guid _storyCardId;
         [DataMember]
-        private readonly double _x;
+        private readonly PositionAndOrientation _from;
         [DataMember]
-        private readonly double _y;
-        [DataMember]
-        private readonly double _angle;
+        private readonly PositionAndOrientation _to;
 
         #endregion Fields
 
         #region Properties
 
-        public double Angle
+        public PositionAndOrientation From
         {
-            get { return _angle; }
+            get { return _from; }
         }
 
-        public double Y
+        public PositionAndOrientation To
         {
-            get { return _y; }
-        }
-
-        public double X
-        {
-            get { return _x; }
+            get { return _to; }
         }
 
         public Guid StoryCardId
@@ -45,12 +40,14 @@ namespace TecX.Agile.Infrastructure.Events
 
         #region c'tor
 
-        public StoryCardMoved(Guid storyCardId, double x, double y, double angle)
+        public StoryCardMoved(Guid storyCardId, PositionAndOrientation from, PositionAndOrientation to)
         {
+            Guard.AssertNotNull(from, "from");
+            Guard.AssertNotNull(to, "to");
+
             _storyCardId = storyCardId;
-            _x = x;
-            _y = y;
-            _angle = angle;
+            _from = from;
+            _to = to;
         }
 
         #endregion c'tor

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ServiceModel;
 
+using TecX.Agile.Infrastructure.Events;
+
 namespace TecX.Agile.Peer
 {
     /// <summary>
@@ -23,7 +25,7 @@ namespace TecX.Agile.Peer
         Guid Id { get; }
 
         [OperationContract(IsOneWay = true)]
-        void MoveStoryCard(Guid senderId, Guid storyCardId, double x, double y, double angle);
+        void MoveStoryCard(Guid senderId, Guid storyCardId, PositionAndOrientation from, PositionAndOrientation to);
 
         [OperationContract(IsOneWay = true)]
         void Highlight(Guid senderId, Guid artefactId, string fieldName);

@@ -44,26 +44,5 @@ namespace TecX.Agile.Infrastructure
 
             _eventAggregator = eventAggregator;
         }
-
-        private class NullEventAggregator : IEventAggregator
-        {
-            #region Implementation of IEventAggregator
-
-            public void Subscribe(object subscriber)
-            {
-            }
-
-            public void Unsubscribe(object subscriber)
-            {
-            }
-
-            public TMessage Publish<TMessage>(TMessage message)
-                where TMessage : class
-            {
-                return null;
-            }
-
-            #endregion
-        }
     }
 }
