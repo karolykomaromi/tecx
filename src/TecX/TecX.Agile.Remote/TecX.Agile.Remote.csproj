@@ -48,15 +48,15 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="AzureServiceBusRemoteUI.cs" />
+    <Compile Include="AzureServiceBusMessageRelay.cs" />
     <Compile Include="HighlightMessageFilter.cs" />
     <Compile Include="IMessageFilter.cs" />
-    <Compile Include="IRemoteUI.cs" />
-    <Compile Include="MassTransitRemoteUI.cs" />
+    <Compile Include="IMessageRelay.cs" />
+    <Compile Include="MassTransitMessageRelay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyChangedMessageFilter.cs" />
     <Compile Include="StoryCardMovedMessageFilter.cs" />
-    <Compile Include="WcfPeerRemoteUI.cs" />
+    <Compile Include="WcfPeerMessageRelay.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.csproj">

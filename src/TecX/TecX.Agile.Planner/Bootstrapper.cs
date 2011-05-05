@@ -38,7 +38,7 @@ namespace TecX.Agile.Planner
 
             Container.AddNewExtension<EventAggregatorContainerExtension>()
                 //.RegisterType<IRepository, XmlRepository>()
-                .RegisterType<IRemoteUI, WcfPeerRemoteUI>()
+                .RegisterType<IMessageRelay, WcfPeerMessageRelay>()
                 .RegisterType<IPeerClient, PeerClient>();
                 //.RegisterType<IChangeTracker, ChangeTracker>();
 
