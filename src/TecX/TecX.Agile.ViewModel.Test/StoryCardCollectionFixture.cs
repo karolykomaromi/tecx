@@ -42,7 +42,7 @@ namespace TecX.Agile.ViewModel.Test
         }
 
         [TestMethod]
-        public void Then_NotificationIsPushedViaEventAggregator()
+        public void Then_NotificationIsPublishedViaEventAggregator()
         {
             _mock.Verify(ea => ea.Publish(It.Is<StoryCardRescheduled>(msg => _card.Id == msg.StoryCardId && _from.Id == msg.From && _to.Id == msg.To)), 
                 Times.Once(), 
