@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Reactive;
+using System.Reactive.Linq;
 using TecX.Common;
 
 namespace TecX.TestTools
@@ -33,7 +34,7 @@ namespace TecX.TestTools
         {
             Guard.AssertNotEmpty(eventName, "eventName");
 
-            IObservable<IEvent<TEventArgs>> observable = Observable.FromEvent<TEventArgs>(_owner, eventName);
+            IObservable<EventPattern<TEventArgs>> observable = Observable.FromEventPattern<TEventArgs>(_owner, eventName);
 
             return new EventExpectation<T, TEventArgs>(_owner, _action, observable);
         }
@@ -48,7 +49,7 @@ namespace TecX.TestTools
             Guard.AssertNotNull(addHandler, "addHandler");
             Guard.AssertNotNull(removeHandler, "removeHandler");
 
-            IObservable<IEvent<TEventArgs>> observable = Observable.FromEvent(conversion, addHandler, removeHandler);
+            IObservable<EventPattern<TEventArgs>> observable = Observable.FromEventPattern(conversion, addHandler, removeHandler);
 
             return new EventExpectation<T, TEventArgs>(_owner, _action, observable);
         }

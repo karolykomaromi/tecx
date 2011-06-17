@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -229,7 +230,10 @@ namespace TecX.Agile.View.Behavior
 
             AssociatedObject.Transform().Matrix = initialMatrix;
 
-            var transform = from evt in Observable.FromEvent<EventArgs>(element.Transform(), "Changed")
+            var observable = Observable.FromEventPattern(addHandler => element.RenderTransform.Changed += addHandler,
+                                                  removeHandler => element.RenderTransform.Changed -= removeHandler);
+
+            var transform = from evt in observable
                             let matrix = ((MatrixTransform)evt.Sender).Matrix
                             let angle = GeometryHelper.GetRotationAngleFromMatrix(matrix)
                             where !EpsilonComparer.AreEqual(storyCard.X, matrix.OffsetX) ||
@@ -250,7 +254,7 @@ namespace TecX.Agile.View.Behavior
                 storyCard.Angle = fromMatrix.Angle;
             });
 
-            var position = from evt in Observable.FromEvent<PropertyChangedEventArgs>(storyCard, "PropertyChanged")
+            var position = from evt in Observable.FromEventPattern<PropertyChangedEventArgs>(storyCard, "PropertyChanged")
                            let name = evt.EventArgs.PropertyName
                            let matrix = element.Transform().Matrix
                            let angle = GeometryHelper.GetRotationAngleFromMatrix(matrix)
