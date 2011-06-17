@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
+using System.Reactive;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -18,14 +18,14 @@ namespace TecX.TestTools
         private readonly Action<T> _action;
 
         private readonly T _owner;
-        private readonly IObservable<IEvent<TEventArgs>> _observable;
+        private readonly IObservable<EventPattern<TEventArgs>> _observable;
         private Action<TEventArgs> _verify;
 
         #endregion Fields
 
         #region c'tor
 
-        public EventExpectation(T owner, Action<T> action, IObservable<IEvent<TEventArgs>> observable)
+        public EventExpectation(T owner, Action<T> action, IObservable<EventPattern<TEventArgs>> observable)
         {
             Guard.AssertNotNull(owner, "owner");
             Guard.AssertNotNull(observable, "observable");
