@@ -43,17 +43,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Common", "TecX.Common\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.ContextualBinding", "TecX.Unity.ContextualBinding\TecX.Unity.ContextualBinding.csproj", "{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.2010", "..\..\lib\Unity2\src\Unity\Unity.2010.csproj", "{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Interception.2010", "..\..\lib\Unity2\src\Unity.Interception\Unity.Interception.2010.csproj", "{F8186B23-B0E1-4646-B5F3-14357841E2BA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.ContextualBinding.Test", "TecX.Unity.ContextualBinding.Test\TecX.Unity.ContextualBinding.Test.csproj", "{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.Configuration", "TecX.Unity.Configuration\TecX.Unity.Configuration.csproj", "{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Configuration.2010", "..\..\lib\Unity2\src\Unity.Configuration\Unity.Configuration.2010.csproj", "{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Interception.Configuration.2010", "..\..\lib\Unity2\src\Unity.Interception.Configuration\Unity.Interception.Configuration.2010.csproj", "{80F7399F-B221-465F-97C9-4B9FC0E2F67F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{95FCB9E4-84E9-4080-A12B-4FB12F648C31}"
 EndProject
@@ -61,7 +53,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.Configuration.Te
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 20
+		SccNumberOfProjects = 16
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
 		SccLocalPath0 = .
@@ -113,34 +105,18 @@ Global
 		SccProjectTopLevelParentUniqueName12 = TecX.Unity.sln
 		SccProjectName12 = TecX.Unity.ContextualBinding
 		SccLocalPath12 = TecX.Unity.ContextualBinding
-		SccProjectUniqueName13 = ..\\..\\lib\\Unity2\\src\\Unity\\Unity.2010.csproj
+		SccProjectUniqueName13 = TecX.Unity.ContextualBinding.Test\\TecX.Unity.ContextualBinding.Test.csproj
 		SccProjectTopLevelParentUniqueName13 = TecX.Unity.sln
-		SccProjectName13 = ../../lib/Unity2/src/Unity
-		SccLocalPath13 = ..\\..\\lib\\Unity2\\src\\Unity
-		SccProjectUniqueName14 = ..\\..\\lib\\Unity2\\src\\Unity.Interception\\Unity.Interception.2010.csproj
+		SccProjectName13 = TecX.Unity.ContextualBinding.Test
+		SccLocalPath13 = TecX.Unity.ContextualBinding.Test
+		SccProjectUniqueName14 = TecX.Unity.Configuration\\TecX.Unity.Configuration.csproj
 		SccProjectTopLevelParentUniqueName14 = TecX.Unity.sln
-		SccProjectName14 = ../../lib/Unity2/src/Unity.Interception
-		SccLocalPath14 = ..\\..\\lib\\Unity2\\src\\Unity.Interception
-		SccProjectUniqueName15 = TecX.Unity.ContextualBinding.Test\\TecX.Unity.ContextualBinding.Test.csproj
+		SccProjectName14 = TecX.Unity.Configuration
+		SccLocalPath14 = TecX.Unity.Configuration
+		SccProjectUniqueName15 = TecX.Unity.Configuration.Test\\TecX.Unity.Configuration.Test.csproj
 		SccProjectTopLevelParentUniqueName15 = TecX.Unity.sln
-		SccProjectName15 = TecX.Unity.ContextualBinding.Test
-		SccLocalPath15 = TecX.Unity.ContextualBinding.Test
-		SccProjectUniqueName16 = TecX.Unity.Configuration\\TecX.Unity.Configuration.csproj
-		SccProjectTopLevelParentUniqueName16 = TecX.Unity.sln
-		SccProjectName16 = TecX.Unity.Configuration
-		SccLocalPath16 = TecX.Unity.Configuration
-		SccProjectUniqueName17 = ..\\..\\lib\\Unity2\\src\\Unity.Configuration\\Unity.Configuration.2010.csproj
-		SccProjectTopLevelParentUniqueName17 = TecX.Unity.sln
-		SccProjectName17 = ../../lib/Unity2/src/Unity.Configuration
-		SccLocalPath17 = ..\\..\\lib\\Unity2\\src\\Unity.Configuration
-		SccProjectUniqueName18 = ..\\..\\lib\\Unity2\\src\\Unity.Interception.Configuration\\Unity.Interception.Configuration.2010.csproj
-		SccProjectTopLevelParentUniqueName18 = TecX.Unity.sln
-		SccProjectName18 = ../../lib/Unity2/src/Unity.Interception.Configuration
-		SccLocalPath18 = ..\\..\\lib\\Unity2\\src\\Unity.Interception.Configuration
-		SccProjectUniqueName19 = TecX.Unity.Configuration.Test\\TecX.Unity.Configuration.Test.csproj
-		SccProjectTopLevelParentUniqueName19 = TecX.Unity.sln
-		SccProjectName19 = TecX.Unity.Configuration.Test
-		SccLocalPath19 = TecX.Unity.Configuration.Test
+		SccProjectName15 = TecX.Unity.Configuration.Test
+		SccLocalPath15 = TecX.Unity.Configuration.Test
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.vsmdi
@@ -274,26 +250,6 @@ Global
 		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}.Release|x86.ActiveCfg = Release|Any CPU
-		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}.Release|x86.ActiveCfg = Release|Any CPU
-		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{F8186B23-B0E1-4646-B5F3-14357841E2BA}.Release|x86.ActiveCfg = Release|Any CPU
 		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -314,26 +270,6 @@ Global
 		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|x86.ActiveCfg = Release|Any CPU
-		{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}.Release|x86.ActiveCfg = Release|Any CPU
-		{80F7399F-B221-465F-97C9-4B9FC0E2F67F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80F7399F-B221-465F-97C9-4B9FC0E2F67F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80F7399F-B221-465F-97C9-4B9FC0E2F67F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{80F7399F-B221-465F-97C9-4B9FC0E2F67F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{80F7399F-B221-465F-97C9-4B9FC0E2F67F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{80F7399F-B221-465F-97C9-4B9FC0E2F67F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80F7399F-B221-465F-97C9-4B9FC0E2F67F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80F7399F-B221-465F-97C9-4B9FC0E2F67F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{80F7399F-B221-465F-97C9-4B9FC0E2F67F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{80F7399F-B221-465F-97C9-4B9FC0E2F67F}.Release|x86.ActiveCfg = Release|Any CPU
 		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -365,9 +301,8 @@ Global
 		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{95FCB9E4-84E9-4080-A12B-4FB12F648C31} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
-		{F8186B23-B0E1-4646-B5F3-14357841E2BA} = {95FCB9E4-84E9-4080-A12B-4FB12F648C31}
-		{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE} = {95FCB9E4-84E9-4080-A12B-4FB12F648C31}
-		{80F7399F-B221-465F-97C9-4B9FC0E2F67F} = {95FCB9E4-84E9-4080-A12B-4FB12F648C31}
-		{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B} = {95FCB9E4-84E9-4080-A12B-4FB12F648C31}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal

@@ -69,22 +69,6 @@
     <Compile Include="TestObjects\Repository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\lib\Unity2\src\Unity.Configuration\Unity.Configuration.2010.csproj">
-      <Project>{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}</Project>
-      <Name>Unity.Configuration.2010</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\lib\Unity2\src\Unity.Interception.Configuration\Unity.Interception.Configuration.2010.csproj">
-      <Project>{80F7399F-B221-465F-97C9-4B9FC0E2F67F}</Project>
-      <Name>Unity.Interception.Configuration.2010</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\lib\Unity2\src\Unity.Interception\Unity.Interception.2010.csproj">
-      <Project>{F8186B23-B0E1-4646-B5F3-14357841E2BA}</Project>
-      <Name>Unity.Interception.2010</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\lib\Unity2\src\Unity\Unity.2010.csproj">
-      <Project>{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}</Project>
-      <Name>Unity.2010</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
