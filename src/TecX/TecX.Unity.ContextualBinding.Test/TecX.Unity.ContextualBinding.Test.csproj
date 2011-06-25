@@ -58,14 +58,6 @@
     <Compile Include="TestObjects\MyParameterLessClass.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\lib\Unity2\src\Unity.Interception\Unity.Interception.2010.csproj">
-      <Project>{F8186B23-B0E1-4646-B5F3-14357841E2BA}</Project>
-      <Name>Unity.Interception.2010</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\lib\Unity2\src\Unity\Unity.2010.csproj">
-      <Project>{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}</Project>
-      <Name>Unity.2010</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TecX.Unity.ContextualBinding\TecX.Unity.ContextualBinding.csproj">
       <Project>{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}</Project>
       <Name>TecX.Unity.ContextualBinding</Name>
