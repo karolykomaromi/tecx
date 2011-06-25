@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-
+using TecX.Agile.Infrastructure;
 using TecX.Common;
 using TecX.Common.Extensions.Error;
 
@@ -69,6 +69,7 @@ namespace TecX.Agile.ViewModel
         /// Initializes a new instance of the <see cref="PlanningArtefactCollection{TArtefact}"/> class
         /// </summary>
         protected PlanningArtefactCollection()
+            : base(new NullEventAggregator())
         {
             _artefacts = new Dictionary<Guid, TArtefact>();
         }

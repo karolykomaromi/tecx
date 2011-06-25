@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Moq;
-
+using TecX.Agile.Infrastructure;
 using TecX.Agile.Infrastructure.Events;
 using TecX.Common.Event;
 using TecX.TestTools;
@@ -27,7 +27,7 @@ namespace TecX.Agile.ViewModel.Test
 
             _to = new Iteration { Id = Guid.NewGuid() };
 
-            _card = new StoryCard { Id = Guid.NewGuid() };
+            _card = new StoryCard(new NullEventAggregator()) { Id = Guid.NewGuid() };
 
             _from.Add(_card);
         }

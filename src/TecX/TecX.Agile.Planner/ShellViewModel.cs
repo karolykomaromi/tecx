@@ -83,7 +83,7 @@ namespace TecX.Agile.Planner
         {
             Guard.AssertNotNull(args, "args");
 
-            StoryCard card = new StoryCard { Id = args.StoryCardId, X = args.X, Y = args.Y, Angle = args.Angle };
+            StoryCard card = new StoryCard(new NullEventAggregator()) { Id = args.StoryCardId, X = args.X, Y = args.Y, Angle = args.Angle };
 
             StoryCardCollection parent = CurrentProject.Find<StoryCardCollection>(args.To) ?? CurrentProject.Backlog;
 

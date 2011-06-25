@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using TecX.Agile.Infrastructure;
 using TecX.Agile.ViewModel;
 using TecX.Common;
 
@@ -25,7 +25,7 @@ namespace TecX.Agile.View
         #region c'tor
 
         public StoryCard()
-            : this(new ViewModel.StoryCard())
+            : this(new ViewModel.StoryCard(new NullEventAggregator()))
         {
         }
 
