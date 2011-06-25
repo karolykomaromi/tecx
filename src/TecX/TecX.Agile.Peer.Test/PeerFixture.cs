@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using TecX.Agile.Infrastructure;
 using TecX.Agile.Infrastructure.Events;
 using TecX.Agile.Infrastructure.Events.Builder;
 using TecX.Agile.Remote;
@@ -93,17 +93,17 @@ namespace TecX.Agile.Peer.Test
             FieldHighlighted outboundMessage = new FieldHighlighted(artefactId, fieldName);
 
             filter.Enqueue(outboundMessage);
-            
+
             bool letPass = filter.ShouldLetPass(outboundMessage);
 
             Assert.IsFalse(letPass);
         }
 
-        [TestMethod] 
+        [TestMethod]
         public void GivenAnInboundPropertyChangeMessage_WhenCheckingWetherToSendReboundMessage_SaysNo()
         {
             Guid storyCardId = Guid.NewGuid();
-            StoryCard card = new StoryCard {Id = storyCardId};
+            StoryCard card = new StoryCard(new NullEventAggregator()) { Id = storyCardId };
             const string propertyName = "Name";
             string oldValue = null;
             const string newValue = "Some name";
@@ -123,7 +123,7 @@ namespace TecX.Agile.Peer.Test
         public void GivenAnInboundStoryCardMovedMessage_WhenCheckingWetherToSendReboundMessage_SaysNo()
         {
             Guid storyCardId = Guid.NewGuid();
-            StoryCard card = new StoryCard { Id = storyCardId };
+            StoryCard card = new StoryCard(new NullEventAggregator()) { Id = storyCardId };
             const double x = 125.0;
 
             StoryCardMovedMessageFilter filter = new StoryCardMovedMessageFilter();

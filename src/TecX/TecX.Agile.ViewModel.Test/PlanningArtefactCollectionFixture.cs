@@ -4,6 +4,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TecX.Agile.Infrastructure;
 
 namespace TecX.Agile.ViewModel.Test
 {
@@ -15,7 +16,7 @@ namespace TecX.Agile.ViewModel.Test
         {
             StoryCardCollection collection = new StoryCardCollection();
 
-            StoryCard card = new StoryCard();
+            StoryCard card = new StoryCard(new NullEventAggregator());
 
             collection.Add(card);
 
@@ -27,7 +28,7 @@ namespace TecX.Agile.ViewModel.Test
         {
             StoryCardCollection collection = new StoryCardCollection();
 
-            StoryCard card = new StoryCard();
+            StoryCard card = new StoryCard(new NullEventAggregator());
 
             collection.Add(card);
 
@@ -43,9 +44,9 @@ namespace TecX.Agile.ViewModel.Test
 
             Guid id = Guid.NewGuid();
 
-            StoryCard card = new StoryCard { Id = id, Name = "old card" };
+            StoryCard card = new StoryCard(new NullEventAggregator()) { Id = id, Name = "old card" };
 
-            StoryCard replacement = new StoryCard { Id = id, Name = "new card" };
+            StoryCard replacement = new StoryCard(new NullEventAggregator()) { Id = id, Name = "new card" };
 
             collection.Add(card);
 
@@ -62,9 +63,9 @@ namespace TecX.Agile.ViewModel.Test
 
             Guid id = Guid.NewGuid();
 
-            StoryCard card = new StoryCard { Id = id };
+            StoryCard card = new StoryCard(new NullEventAggregator()) { Id = id };
 
-            StoryCard replacement = new StoryCard { Id = id };
+            StoryCard replacement = new StoryCard(new NullEventAggregator()) { Id = id };
 
             collection.Add(card);
 
@@ -89,7 +90,7 @@ namespace TecX.Agile.ViewModel.Test
         {
             StoryCardCollection collection = new StoryCardCollection();
 
-            StoryCard card = new StoryCard();
+            StoryCard card = new StoryCard(new NullEventAggregator());
 
             bool notified = false;
 
@@ -111,7 +112,7 @@ namespace TecX.Agile.ViewModel.Test
         {
             StoryCardCollection collection = new StoryCardCollection();
 
-            StoryCard card = new StoryCard();
+            StoryCard card = new StoryCard(new NullEventAggregator());
 
             collection.Add(card);
 
@@ -135,7 +136,7 @@ namespace TecX.Agile.ViewModel.Test
         {
             StoryCardCollection collection = new StoryCardCollection();
 
-            StoryCard card = new StoryCard();
+            StoryCard card = new StoryCard(new NullEventAggregator());
 
             collection.Add(card);
 
@@ -147,7 +148,7 @@ namespace TecX.Agile.ViewModel.Test
         {
             StoryCardCollection collection = new StoryCardCollection();
 
-            StoryCard card = new StoryCard();
+            StoryCard card = new StoryCard(new NullEventAggregator());
 
             collection.Add(card);
 

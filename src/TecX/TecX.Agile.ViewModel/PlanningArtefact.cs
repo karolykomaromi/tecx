@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq.Expressions;
 using System.Reflection;
 
 using Microsoft.Practices.Prism.Commands;
@@ -13,7 +15,6 @@ namespace TecX.Agile.ViewModel
     [Serializable]
     public abstract class PlanningArtefact : ViewModelBase
     {
-
         #region Fields
 
         private Guid _id;
@@ -31,21 +32,7 @@ namespace TecX.Agile.ViewModel
             get { return _id; }
             set
             {
-                if (_id == value)
-                    return;
-
-                Guid pre = _id;
-                Guid post = value;
-
-                string propertyName = GetPropertyName(() => Id);
-
-                OnPropertyChanging(propertyName);
-
-                _id = value;
-
-                OnPropertyChanged(propertyName);
-
-                EventAggregator.Publish(new PropertyUpdated(Id, propertyName, pre, post));
+                Set(() => _id, value);
             }
         }
 
@@ -54,21 +41,7 @@ namespace TecX.Agile.ViewModel
             get { return _name; }
             set
             {
-                if (_name == value)
-                    return;
-
-                string pre = _name;
-                string post = value;
-
-                string propertyName = GetPropertyName(() => Name);
-
-                OnPropertyChanging(propertyName);
-
-                _name = value;
-
-                OnPropertyChanged(propertyName);
-
-                EventAggregator.Publish(new PropertyUpdated(Id, propertyName, pre, post));
+                Set(() => _name, value);
             }
         }
 
@@ -77,21 +50,7 @@ namespace TecX.Agile.ViewModel
             get { return _description; }
             set
             {
-                if (_description == value)
-                    return;
-
-                string pre = _description;
-                string post = value;
-
-                string propertyName = GetPropertyName(() => Description);
-
-                OnPropertyChanging(propertyName);
-
-                _description = value;
-
-                OnPropertyChanged(propertyName);
-
-                EventAggregator.Publish(new PropertyUpdated(Id, propertyName, pre, post));
+                Set(() => _description, value);
             }
         }
 
@@ -109,15 +68,7 @@ namespace TecX.Agile.ViewModel
         #endregion Properties
 
         #region c'tor
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PlanningArtefact"/> class
-        /// </summary>
-        protected PlanningArtefact()
-            : this(new NullEventAggregator())
-        {
-        }
-
+        
         protected PlanningArtefact(IEventAggregator eventAggregator)
         {
             Guard.AssertNotNull(eventAggregator, "eventAggregator");
@@ -144,6 +95,46 @@ namespace TecX.Agile.ViewModel
             PropertyInfo property = GetType().GetProperty(args.PropertyName);
 
             property.SetValue(this, args.NewValue, null);
+        }
+
+        protected void Set<T>(Expression<Func<T>> backingFieldSelector, object value)
+        {
+            Guard.AssertNotNull(backingFieldSelector, "backingFieldSelector");
+
+            FieldInfo field = GetBackingField(backingFieldSelector);
+
+            object currentValue = field.GetValue(this);
+
+            if (Equals(currentValue, value))
+            {
+                return;
+            }
+
+            string propertyName = GetPropertyName(field.Name);
+
+            OnPropertyChanging(propertyName);
+
+            field.SetValue(this, value);
+
+            OnPropertyChanged(propertyName);
+
+            EventAggregator.Publish(new PropertyUpdated(Id, propertyName, currentValue, value));
+        }
+
+        private static string GetPropertyName(string backingFieldName)
+        {
+            string propertyName = backingFieldName.Substring(1, 1).ToUpper() + backingFieldName.Substring(2);
+
+            return propertyName;
+        }
+
+        private static FieldInfo GetBackingField<T>(Expression<Func<T>> fieldSelector)
+        {
+            var expr = (MemberExpression)fieldSelector.Body;
+
+            var field = (FieldInfo)expr.Member;
+
+            return field;
         }
     }
 }
