@@ -4,8 +4,6 @@ namespace TecX.Common.Test.TestObjects
 {
     internal class NumberMatches : CompareToValueSpecification<SearchTestEntity, int>
     {
-        #region c'tor
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NumberMatches"/> class.
         /// </summary>
@@ -22,10 +20,6 @@ namespace TecX.Common.Test.TestObjects
             this.Value = number;
         }
 
-        #endregion c'tor
-
-        #region Specification Members
-
         /// <summary>
         /// Determines whether a candidate object satifies the specification
         /// </summary>
@@ -34,11 +28,9 @@ namespace TecX.Common.Test.TestObjects
         /// 	<c>true</c> if the specification is satisfied by the
         /// candidate object; otherwise, <c>false</c>.
         /// </returns>
-        public override bool IsSatisfiedBy(SearchTestEntity candidate)
+        protected override bool IsMatchCore(SearchTestEntity candidate)
         {
             return candidate.Number == this.Value;
         }
-
-        #endregion Specification Members
     }
 }

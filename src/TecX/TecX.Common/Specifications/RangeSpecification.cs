@@ -9,29 +9,26 @@ namespace TecX.Common.Specifications
     /// <typeparam name="TCandidate">The type of the candidate.</typeparam>
     public abstract class RangeSpecification<TCandidate> : Specification<TCandidate>
     {
-        #region Properties
+        private readonly IComparable _lowerBound;
+
+        private readonly IComparable _upperBound;
 
         /// <summary>
         /// Gets or sets the lower bound of the range
         /// </summary>
         /// <value>The lower bound.</value>
-        public IComparable LowerBound { get; set; }
+        public IComparable LowerBound
+        {
+            get { return _lowerBound; }
+        }
 
         /// <summary>
         /// Gets or sets the upper bound of the range.
         /// </summary>
         /// <value>The upper bound.</value>
-        public IComparable UpperBound { get; set; }
-
-        #endregion Properties
-
-        #region c'tor
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RangeSpecification{TCandidate}"/> class.
-        /// </summary>
-        protected RangeSpecification()
+        public IComparable UpperBound
         {
+            get { return _upperBound; }
         }
 
         /// <summary>
@@ -44,10 +41,8 @@ namespace TecX.Common.Specifications
             Guard.AssertNotNull(lowerBound, "lowerBound");
             Guard.AssertNotNull(upperBound, "upperBound");
 
-            LowerBound = lowerBound;
-            UpperBound = upperBound;
+            _lowerBound = lowerBound;
+            _upperBound = upperBound;
         }
-
-        #endregion c'tor
     }
 }

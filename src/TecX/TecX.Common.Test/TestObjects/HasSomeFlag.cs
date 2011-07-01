@@ -4,7 +4,7 @@ namespace TecX.Common.Test.TestObjects
 {
     internal class HasSomeFlag : CompareToValueSpecification<SearchTestEntity, bool>
     {
-        public override bool IsSatisfiedBy(SearchTestEntity candidate)
+        protected override bool IsMatchCore(SearchTestEntity candidate)
         {
             return candidate.HasSomeFlag;
         }

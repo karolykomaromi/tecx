@@ -10,8 +10,6 @@
     /// <typeparam name="TCandidate">The type the specification should work on</typeparam>
     public class AndSpecification<TCandidate> : CompositeSpecification<TCandidate>
     {
-        #region c'tor
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AndSpecification&lt;TCandidate&gt;"/> class.
         /// </summary>
@@ -22,10 +20,6 @@
         {
         }
 
-        #endregion c'tor
-
-        #region ISpecification Members
-
         /// <summary>
         /// Determines whether a candidate object satifies the specification
         /// </summary>
@@ -34,13 +28,9 @@
         /// 	<c>true</c> if the specification is satisfied by the
         /// candidate object; otherwise, <c>false</c>.
         /// </returns>
-        public override bool IsSatisfiedBy(TCandidate candidate)
+        protected override bool IsMatchCore(TCandidate candidate)
         {
-            Guard.AssertNotNull(candidate, "candidate");
-
-            return LeftSide.IsSatisfiedBy(candidate) && RightSide.IsSatisfiedBy(candidate);
+            return LeftSide.IsMatch(candidate) && RightSide.IsMatch(candidate);
         }
-
-        #endregion ISpecification Members
     }
 }

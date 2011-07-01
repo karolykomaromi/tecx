@@ -7,16 +7,15 @@
     /// work on</typeparam>
     public class NotSpecification<TCandidate> : Specification<TCandidate>
     {
-        #region Properties
+        private readonly ISpecification<TCandidate> _wrapped;
 
         /// <summary>
-        /// Gets or sets the original specification.
+        /// Gets the original specification.
         /// </summary>
-        protected ISpecification<TCandidate> Wrapped { get; set; }
-
-        #endregion Properties
-
-        #region c'tor
+        public ISpecification<TCandidate> Wrapped
+        {
+            get { return _wrapped; }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NotSpecification&lt;T&gt;"/> class.
@@ -26,25 +25,13 @@
         {
             Guard.AssertNotNull(specificationToNegate, "specificationToNegate");
 
-            Wrapped = specificationToNegate;
+            _wrapped = specificationToNegate;
         }
 
-        #endregion c'tor
-
-        #region ISpecification Members
-
-        /// <summary>
-        /// Determines whether [is satisfied by] [the specified candidate].
-        /// </summary>
-        /// <param name="candidate">The candidate.</param>
-        /// <returns>
-        /// 	<c>true</c> if [is satisfied by] [the specified candidate]; otherwise, <c>false</c>.
-        /// </returns>
-        public override bool IsSatisfiedBy(TCandidate candidate)
+        /// <inheritdoc/>
+        protected override bool IsMatchCore(TCandidate candidate)
         {
-            return !Wrapped.IsSatisfiedBy(candidate);
+            return !Wrapped.IsMatch(candidate);
         }
-
-        #endregion ISpecification Members
     }
 }
