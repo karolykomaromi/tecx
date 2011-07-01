@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using TecX.Common.Specifications;
 using TecX.Common.Test.TestObjects;
+using TecX.TestTools;
 
 namespace TecX.Common.Test
 {
@@ -66,6 +69,45 @@ namespace TecX.Common.Test
 
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count());
+        }
+    }
+
+    public abstract class Given_SpecificationComposite : GivenWhenThen
+    {
+        protected ISpecification<SearchTestEntity> composite;
+
+        protected override void Given()
+        {
+            var s1 = new DummySpec1();
+
+            var s2 = new DummySpec2();
+
+            var s3 = new DummySpec3();
+
+            composite = s1.And(s2.Or(s3));
+        }
+    }
+
+    [TestClass]
+    public class When_UsingVisitorToExtractDescription : Given_SpecificationComposite
+    {
+        private DescriptionVisitor<SearchTestEntity> visitor;
+
+        private string descriptions;
+
+        protected override void When()
+        {
+            visitor = new DescriptionVisitor<SearchTestEntity>();
+
+            composite.Accept(visitor);
+
+            descriptions = visitor.ToString();
+        }
+
+        [TestMethod]
+        public void Then_VisitorCrawlsGraphAndCollectsDescriptions()
+        {
+            Assert.AreEqual("(DummySpec1 AND (DummySpec2 OR DummySpec3))", descriptions);
         }
     }
 }

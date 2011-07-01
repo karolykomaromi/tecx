@@ -1,6 +1,6 @@
 ﻿namespace TecX.Common.Test.TestObjects
 {
-    internal class SearchTestEntity
+    public class SearchTestEntity
     {
         public int Number { get; set; }
 

@@ -55,6 +55,10 @@
     <Compile Include="Extensions\Primitives\LiteralExtensions.cs" />
     <Compile Include="Reflection\MethodNotFoundException.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />
+    <Compile Include="Specifications\AlwaysFalseSpecification.cs" />
+    <Compile Include="Specifications\DescriptionVisitor.cs" />
+    <Compile Include="Specifications\ISpecificationVisitor.cs" />
+    <Compile Include="Specifications\IVisitableSpecification.cs" />
     <Compile Include="Time\DefaultTimeProvider.cs" />
     <Compile Include="Extensions\Collections\ListExtensions.cs" />
     <Compile Include="Extensions\Error\ExceptionExtensions.cs" />
