@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace TecX.Common.Specifications
 {
@@ -14,11 +15,20 @@ namespace TecX.Common.Specifications
     public abstract class Specification<TCandidate> : ISpecification<TCandidate>
     {
         /// <inheritdoc/>
-        public bool IsMatch(TCandidate candidate)
+        public abstract string Description { get; }
+
+        /// <inheritdoc/>
+        public bool IsMatch(TCandidate candidate, ICollection<ISpecification<TCandidate>> matchedSpecifications)
         {
             Guard.AssertNotNull(candidate, "candidate");
 
-            bool isMatch = IsMatchCore(candidate);
+            bool isMatch = IsMatchCore(candidate, matchedSpecifications);
+
+            if (matchedSpecifications != null &&
+                isMatch)
+            {
+                matchedSpecifications.Add(this);
+            }
 
             return isMatch;
         }
@@ -27,8 +37,17 @@ namespace TecX.Common.Specifications
         /// Implementers must put the core validation logic here
         /// </summary>
         /// <param name="candidate">The candidate object to validate</param>
+        /// <param name="matchedSpecifications">List of specifications matched by this <paramref name="candidate"/></param>
         /// <returns><c>true</c> if the candidate matches this specification; <c>false</c> otherwise</returns>
-        protected abstract bool IsMatchCore(TCandidate candidate);
+        protected abstract bool IsMatchCore(TCandidate candidate, ICollection<ISpecification<TCandidate>> matchedSpecifications);
+
+        /// <inheritdoc/>
+        public virtual void Accept(ISpecificationVisitor<TCandidate> visitor)
+        {
+            Guard.AssertNotNull(visitor, "visitor");
+   
+            visitor.Visit(this);
+        }
 
         /// <inheritdoc/>
         public ISpecification<TCandidate> And(ISpecification<TCandidate> other)
@@ -37,7 +56,7 @@ namespace TecX.Common.Specifications
 
             return new AndSpecification<TCandidate>(this, other);
         }
-        
+
         /// <inheritdoc/>
         public ISpecification<TCandidate> Or(ISpecification<TCandidate> other)
         {

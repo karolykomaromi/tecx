@@ -1,6 +1,6 @@
 ﻿namespace TecX.Common.Test.TestObjects
 {
-    internal enum Status
+    public enum Status
     {
         Started,
 

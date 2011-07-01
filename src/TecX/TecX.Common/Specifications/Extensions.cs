@@ -23,7 +23,7 @@ namespace TecX.Common.Specifications
 
             foreach (TCandidate candidate in repository)
             {
-                if (specification.IsMatch(candidate))
+                if (specification.IsMatch(candidate, null))
                 {
                     itemsThatSatisfyTheSpecification.Add(candidate);
                 }

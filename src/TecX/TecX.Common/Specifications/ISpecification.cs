@@ -1,4 +1,6 @@
-﻿namespace TecX.Common.Specifications
+﻿using System.Collections.Generic;
+
+namespace TecX.Common.Specifications
 {
     /// <summary>
     /// Part of the <c>Specification Pattern</c>
@@ -8,17 +10,23 @@
     /// </remarks>
     /// <typeparam name="TCandidate">The type of the candidate objects the specification should
     /// work on</typeparam>
-    public interface ISpecification<TCandidate> : IFluentInterface
+    public interface ISpecification<TCandidate> : IFluentInterface, IVisitableSpecification<TCandidate>
     {
+        /// <summary>
+        /// Gets a brief description of this specification
+        /// </summary>
+        string Description { get; }
+
         /// <summary>
         /// Determines whether a candidate object satifies the specification
         /// </summary>
         /// <param name="candidate">The candidate.</param>
+        /// <param name="matchedSpecifications">List of specifications that were matched by the candidate</param>
         /// <returns>
         /// 	<c>true</c> if the specification is satisfied by the 
         /// candidate object; otherwise, <c>false</c>.
         /// </returns>
-        bool IsMatch(TCandidate candidate);
+        bool IsMatch(TCandidate candidate, ICollection<ISpecification<TCandidate>> matchedSpecifications);
  
         /// <summary>
         /// Links two specifications using logical AND

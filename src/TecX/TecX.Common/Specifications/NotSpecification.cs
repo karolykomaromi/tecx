@@ -1,4 +1,6 @@
-﻿namespace TecX.Common.Specifications
+﻿using System.Collections.Generic;
+
+namespace TecX.Common.Specifications
 {
     /// <summary>
     /// Negates the result of a specification
@@ -8,6 +10,12 @@
     public class NotSpecification<TCandidate> : Specification<TCandidate>
     {
         private readonly ISpecification<TCandidate> _wrapped;
+
+        /// <inheritdoc/>
+        public override string Description
+        {
+            get { return "NOT"; }
+        }
 
         /// <summary>
         /// Gets the original specification.
@@ -29,9 +37,9 @@
         }
 
         /// <inheritdoc/>
-        protected override bool IsMatchCore(TCandidate candidate)
+        protected override bool IsMatchCore(TCandidate candidate, ICollection<ISpecification<TCandidate>> matchedSpecifications)
         {
-            return !Wrapped.IsMatch(candidate);
+            return !Wrapped.IsMatch(candidate, matchedSpecifications);
         }
     }
 }

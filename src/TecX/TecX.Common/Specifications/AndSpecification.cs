@@ -1,4 +1,6 @@
-﻿namespace TecX.Common.Specifications
+﻿using System.Collections.Generic;
+
+namespace TecX.Common.Specifications
 {
     /// <summary>
     /// Specification that links two other specifications using logical OR
@@ -10,6 +12,12 @@
     /// <typeparam name="TCandidate">The type the specification should work on</typeparam>
     public class AndSpecification<TCandidate> : CompositeSpecification<TCandidate>
     {
+        /// <inheritdoc/>
+        public override string Description
+        {
+            get { return "AND"; }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AndSpecification&lt;TCandidate&gt;"/> class.
         /// </summary>
@@ -24,13 +32,17 @@
         /// Determines whether a candidate object satifies the specification
         /// </summary>
         /// <param name="candidate">The candidate.</param>
+        /// <param name="matchedSpecifications"></param>
         /// <returns>
         /// 	<c>true</c> if the specification is satisfied by the
         /// candidate object; otherwise, <c>false</c>.
         /// </returns>
-        protected override bool IsMatchCore(TCandidate candidate)
+        protected override bool IsMatchCore(TCandidate candidate, ICollection<ISpecification<TCandidate>> matchedSpecifications)
         {
-            return LeftSide.IsMatch(candidate) && RightSide.IsMatch(candidate);
+            bool isMatch = LeftSide.IsMatch(candidate, matchedSpecifications) && 
+                           RightSide.IsMatch(candidate, matchedSpecifications);
+
+            return isMatch;
         }
     }
 }
