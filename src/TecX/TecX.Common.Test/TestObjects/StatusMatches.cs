@@ -14,7 +14,7 @@ namespace TecX.Common.Test.TestObjects
             this.Value = status;
         }
 
-        public override bool IsSatisfiedBy(SearchTestEntity candidate)
+        protected override bool IsMatchCore(SearchTestEntity candidate)
         {
             return this.Value == candidate.Status;
         }

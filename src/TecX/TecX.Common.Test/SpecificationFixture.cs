@@ -17,12 +17,12 @@ namespace TecX.Common.Test
 
             List<SearchTestEntity> repository = new List<SearchTestEntity> { entity };
 
-            var result = repository.FindAll(new TextMatches("abc").And<NumberBetween>(0, 5));
+            var result = repository.FindAll(new TextMatches("abc").And(new NumberBetween(0, 5)));
 
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count());
 
-            result = repository.FindAll(new TextMatches("xyz").And<NumberBetween>(0, 5));
+            result = repository.FindAll(new TextMatches("xyz").And(new NumberBetween(0, 5)));
 
             Assert.IsNotNull(result);
             Assert.AreEqual(0, result.Count());
@@ -35,7 +35,7 @@ namespace TecX.Common.Test
 
             List<SearchTestEntity> repository = new List<SearchTestEntity> { entity };
 
-            var result = repository.FindAll(new NumberBetween(0, 5).And<TextMatches>("xyz"));
+            var result = repository.FindAll(new NumberBetween(0, 5).And(new TextMatches("xyz")));
 
             Assert.IsNotNull(result);
             Assert.AreEqual(0, result.Count());
@@ -49,7 +49,7 @@ namespace TecX.Common.Test
 
             List<SearchTestEntity> repository = new List<SearchTestEntity> { entity };
 
-            var result = repository.FindAll(new NumberBetween(0, 5).And<NumberMatches>(3).And<TextMatches>("abc"));
+            var result = repository.FindAll(new NumberBetween(0, 5).And(new NumberMatches(3)).And(new TextMatches("abc")));
 
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count());
@@ -62,7 +62,7 @@ namespace TecX.Common.Test
 
             List<SearchTestEntity> repository = new List<SearchTestEntity> { entity };
 
-            var result = repository.FindAll(new NumberBetween(0, 5).And<HasSomeFlag>(true));
+            var result = repository.FindAll(new NumberBetween(0, 5).And(new HasSomeFlag()));
 
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count());

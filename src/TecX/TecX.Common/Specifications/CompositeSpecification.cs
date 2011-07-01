@@ -11,24 +11,19 @@
     /// work on</typeparam>
     public abstract class CompositeSpecification<TCandidate> : Specification<TCandidate>
     {
-        #region Properties
         /// <summary>
         /// Gets or sets the left side of a <see cref="CompositeSpecification{T}"/>. Which is the
         /// left side of a logical operator
         /// </summary>
         /// <value>The left side of a logical operation (first specification in the composition)</value>
-        protected ISpecification<TCandidate> LeftSide { get; set; }
+        public ISpecification<TCandidate> LeftSide { get; private set; }
 
         /// <summary>
         /// Gets or sets the right side of a <see cref="CompositeSpecification{T}"/>. Which is the
         /// right side of a logical operator
         /// </summary>
         /// <value>The right side of a logical operation (second specification in the composition)</value>
-        protected ISpecification<TCandidate> RightSide { get; set; }
-
-        #endregion Properties
-
-        #region c'tor
+        public ISpecification<TCandidate> RightSide { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CompositeSpecification&lt;T&gt;"/> class.
@@ -43,8 +38,5 @@
             LeftSide = leftSide;
             RightSide = rightSide;
         }
-
-        #endregion c'tor
-
     }
 }
