@@ -24,8 +24,9 @@ namespace TecX.Common.Specifications
 
             bool isMatch = IsMatchCore(candidate, matchedSpecifications);
 
-            if (matchedSpecifications != null &&
-                isMatch)
+            if (isMatch &&
+                matchedSpecifications != null &&
+                !typeof(CompositeSpecification<TCandidate>).IsAssignableFrom(GetType()))
             {
                 matchedSpecifications.Add(this);
             }

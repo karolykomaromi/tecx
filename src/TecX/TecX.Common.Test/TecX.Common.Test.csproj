@@ -98,6 +98,9 @@
     <Compile Include="TestObjects\CancelMessage.cs" />
     <Compile Include="TestObjects\ClassA.cs" />
     <Compile Include="TestObjects\ClassB.cs" />
+    <Compile Include="TestObjects\DummySpec1.cs" />
+    <Compile Include="TestObjects\DummySpec2.cs" />
+    <Compile Include="TestObjects\DummySpec3.cs" />
     <Compile Include="TestObjects\HasSomeFlag.cs" />
     <Compile Include="TestObjects\MemoryTraceListener.cs" />
     <Compile Include="TestObjects\NumberBetween.cs" />

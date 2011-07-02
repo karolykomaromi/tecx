@@ -74,40 +74,61 @@ namespace TecX.Common.Test
 
     public abstract class Given_SpecificationComposite : GivenWhenThen
     {
-        protected ISpecification<SearchTestEntity> composite;
+        protected ISpecification<SearchTestEntity> _composite;
+
+        protected ISpecification<SearchTestEntity> _s1;
 
         protected override void Given()
         {
-            var s1 = new DummySpec1();
+            _s1 = new DummySpec1();
 
             var s2 = new DummySpec2();
 
             var s3 = new DummySpec3();
 
-            composite = s1.And(s2.Or(s3));
+            _composite = _s1.Or(s2.And(s3));
         }
     }
 
     [TestClass]
     public class When_UsingVisitorToExtractDescription : Given_SpecificationComposite
     {
-        private DescriptionVisitor<SearchTestEntity> visitor;
+        private DescriptionVisitor<SearchTestEntity> _visitor;
 
-        private string descriptions;
+        private string _descriptions;
 
         protected override void When()
         {
-            visitor = new DescriptionVisitor<SearchTestEntity>();
+            _visitor = new DescriptionVisitor<SearchTestEntity>();
 
-            composite.Accept(visitor);
+            _composite.Accept(_visitor);
 
-            descriptions = visitor.ToString();
+            _descriptions = _visitor.ToString();
         }
 
         [TestMethod]
         public void Then_VisitorCrawlsGraphAndCollectsDescriptions()
         {
-            Assert.AreEqual("(DummySpec1 AND (DummySpec2 OR DummySpec3))", descriptions);
+            Assert.AreEqual("(DummySpec1 OR (DummySpec2 AND DummySpec3))", _descriptions);
+        }
+    }
+
+    [TestClass]
+    public class When_RetrievingMatchedSpecifications : Given_SpecificationComposite
+    {
+        private List<ISpecification<SearchTestEntity>> _matchedSpecs;
+
+        protected override void When()
+        {
+            _matchedSpecs = new List<ISpecification<SearchTestEntity>>();
+
+            _composite.IsMatch(new SearchTestEntity(), _matchedSpecs);
+        }
+
+        [TestMethod]
+        public void Then_MatchedSpecsAreReturnedInCollection()
+        {
+            Assert.AreEqual(_s1, _matchedSpecs.Single());
         }
     }
 }
