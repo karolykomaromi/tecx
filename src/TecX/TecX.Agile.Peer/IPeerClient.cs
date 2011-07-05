@@ -21,6 +21,7 @@ namespace TecX.Agile.Peer
         event EventHandler<StoryCardMovedEventArgs> StoryCardMoved;
         event EventHandler<FieldHighlightedEventArgs> IncomingRequestToHighlightField;
         event EventHandler<UpdatedPropertyEventArgs> PropertyUpdated;
+        event EventHandler<CaretMovedEventArgs> CaretMoved;
 
         Guid Id { get; }
 
@@ -35,8 +36,5 @@ namespace TecX.Agile.Peer
 
         [OperationContract(IsOneWay = true)]
         void MoveCaret(Guid senderId, Guid artefactId, string fieldName, int caretIndex);
-
-        [field: NonSerialized]
-        event EventHandler<CaretMovedEventArgs> CaretMoved;
     }
 }
