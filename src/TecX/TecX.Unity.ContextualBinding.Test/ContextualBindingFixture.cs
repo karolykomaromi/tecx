@@ -10,110 +10,139 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TecX.Unity.ContextualBinding;
 using TecX.Unity.ContextualBinding.Test.TestObjects;
 
+using TecX.TestTools;
+
 namespace TecX.Unity.Test
 {
-    [TestClass]
-    public class ContextualBindingFixture
+    public abstract class Given_ContainerWithContextualBindingExtension : GivenWhenThen
     {
-        [TestMethod]
-        public void GivenContainer_WhenRegisteringWithContext_ResolvesProperly()
+        protected IUnityContainer container;
+
+        protected override void Given()
         {
-            IUnityContainer container = new UnityContainer();
+            container = new UnityContainer();
 
             container.AddNewExtension<ContextualBindingExtension>();
+        }
+    }
 
+    [TestClass]
+    public class When_ContextMatchesPredicate : Given_ContainerWithContextualBindingExtension
+    {
+        protected override void When()
+        {
             container.RegisterType<IMyInterface, MyParameterLessClass>((bindingContext, builderContext) => true);
+        }
 
+        [TestMethod]
+        public void Then_ResolvesProperly()
+        {
             MyParameterLessClass myClass = container.Resolve<IMyInterface>() as MyParameterLessClass;
 
             Assert.IsNotNull(myClass);
         }
+    }
+
+    [TestClass]
+    public class When_ContextDoesNotMatchPredicate : Given_ContainerWithContextualBindingExtension
+    {
+        protected override void When()
+        {
+            container.RegisterType<IMyInterface, MyParameterLessClass>((bindingContext, builderContext) => false);
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
-        public void GivenContainer_WhenRegisteringWithContext_FailsIfPredicateFails()
+        public void Then_Throws()
         {
-            IUnityContainer container = new UnityContainer();
-
-            container.AddNewExtension<ContextualBindingExtension>();
-
-            container.RegisterType<IMyInterface, MyClass>((bindingContext, builderContext) => false);
-
             container.Resolve<IMyInterface>();
         }
+    }
+    
+    [TestClass]
+    public class When_MappingWithNonTransientLifetimeManager : Given_ContainerWithContextualBindingExtension
+    {
+        private IMyInterface first, second;
 
-        [TestMethod]
-        public void GivenMappingWithNonTransientLifetimeManager_WhenResolving_ResolvesCorrectLifetime()
+        protected override void When()
         {
-            IUnityContainer container = new UnityContainer();
-
-            container.AddNewExtension<ContextualBindingExtension>();
-
             container.RegisterType<IMyInterface, MyParameterLessClass>((bindingContext, builderContext) => true,
                 new ContainerControlledLifetimeManager());
 
-            var first = container.Resolve<IMyInterface>();
+            first = container.Resolve<IMyInterface>();
 
-            var second = container.Resolve<IMyInterface>();
-
-            Assert.AreSame(first, second);
+            second = container.Resolve<IMyInterface>();
         }
 
         [TestMethod]
-        public void GivenMappingWithInjectionMember_WhenResolving_ResolvesUsingSpecifiedInjectionMember()
+        public void Then_ResolvesWithCorrectLifetime()
         {
-            IUnityContainer container = new UnityContainer();
-
-            container.AddNewExtension<ContextualBindingExtension>();
-
+            Assert.AreSame(first, second);
+        }
+    }
+    
+    [TestClass]
+    public class When_MappingWithInjectionMember : Given_ContainerWithContextualBindingExtension
+    {
+        protected override void When()
+        {
             container.RegisterType<IMyInterface, MyClass>((bindingContext, builderContext) => true, new InjectionConstructor("c'tor with parameter"));
+        }
 
+        [TestMethod]
+        public void Then_ResolvesUsingSpecifiedInjectionMember()
+        {
             var myClass = container.Resolve<IMyInterface>() as MyClass;
 
             Assert.IsNotNull(myClass);
 
             Assert.AreEqual("c'tor with parameter", myClass.Str);
         }
+    }
 
-        [TestMethod]
-        public void GivenRegistrationWithContextAfterDefaultRegistration_WhenResolving_ResolvesProperly()
+    [TestClass]
+    public class When_RegisteringContextualAfterDefaultMapping : Given_ContainerWithContextualBindingExtension
+    {
+        protected override void When()
         {
-            IUnityContainer container = new UnityContainer();
-
-            container.AddNewExtension<ContextualBindingExtension>();
-
             container.RegisterType<IMyInterface, MyOtherClass>();
 
             container.RegisterType<IMyInterface, MyClass>((bindingContext, builderContext) => false);
+        }
 
+        [TestMethod]
+        public void Then_CanStillResolveDefaultMapping()
+        {
             MyOtherClass myOtherClass = container.Resolve<IMyInterface>() as MyOtherClass;
 
             Assert.IsNotNull(myOtherClass);
         }
+    }
 
-        [TestMethod]
-        public void GivenDefaultRegistrationAfterRegistrationWithContext_WhenResolving_ResolvesProperly()
+    [TestClass]
+    public class When_RegisteringDefaultAfterContextualMapping : Given_ContainerWithContextualBindingExtension
+    {
+        protected override void When()
         {
-            IUnityContainer container = new UnityContainer();
-
-            container.AddNewExtension<ContextualBindingExtension>();
-
             container.RegisterType<IMyInterface, MyParameterLessClass>((bindingContext, builderContext) => true);
 
             container.RegisterType<IMyInterface, MyOtherClass>();
+        }
 
+        [TestMethod]
+        public void Then_ContextualMappingHasPrecedence()
+        {
             MyParameterLessClass myParameterLessClass = container.Resolve<IMyInterface>() as MyParameterLessClass;
 
             Assert.IsNotNull(myParameterLessClass);
         }
+    }
 
-        [TestMethod]
-        public void GivenRegistrationThatUsesContextInformation_WhenResolving_ResolvesProperly()
+    [TestClass]
+    public class When_ContextualMappingUsesInformationFromCtx : Given_ContainerWithContextualBindingExtension
+    {
+        protected override void When()
         {
-            IUnityContainer container = new UnityContainer();
-
-            container.AddNewExtension<ContextualBindingExtension>();
-
             container.Configure<IContextualBindingConfiguration>().Put("someKey", 123);
 
             Predicate<IBindingContext, IBuilderContext> matches = (bindingContext, builderContext) =>
@@ -125,70 +154,94 @@ namespace TecX.Unity.Test
             };
 
             container.RegisterType<IMyInterface, MyParameterLessClass>(matches);
+        }
 
+        [TestMethod]
+        public void Then_PullsInformationCorrectlyFromContext()
+        {
             var myClass = container.Resolve<BindingNamespaceTest>();
 
             Assert.IsNotNull(myClass);
         }
+    }
+
+    public abstract class Given_Instance : Given_ContainerWithContextualBindingExtension
+    {
+        protected MyParameterLessClass instance;
+
+        protected override void Given()
+        {
+            base.Given();
+
+            instance = new MyParameterLessClass();
+        }
+    }
+
+    [TestClass]
+    public class When_RegisteringInstanceWithContext : Given_Instance
+    {
+        protected override void When()
+        {
+            container.RegisterInstance<IMyInterface>(instance, (bindingContext, builderContext) => true);
+        }
 
         [TestMethod]
-        public void GivenContainer_WhenRegisteringInstanceWithContext_ResolvesProperly()
+        public void Then_PullsInstanceOnMatch()
         {
-            IUnityContainer container = new UnityContainer();
-
-            container.AddNewExtension<ContextualBindingExtension>();
-
-            MyParameterLessClass instance = new MyParameterLessClass();
-
-            container.RegisterInstance<IMyInterface>(instance, (bindingContext, builderContext) => true);
-
             MyParameterLessClass myClass = container.Resolve<IMyInterface>() as MyParameterLessClass;
 
             Assert.AreSame(instance, myClass);
         }
+    }
 
-        [TestMethod]
-        [ExpectedException(typeof(ResolutionFailedException))]
-        public void GivenContainer_WhenRegisteringInstanceWithContext_FailsIfPredicateFails()
+    [TestClass]
+    public class When_RegisteringInstanceWithFailingPredicate : Given_Instance
+    {
+        protected override void When()
         {
-            IUnityContainer container = new UnityContainer();
-
-            container.AddNewExtension<ContextualBindingExtension>();
-
-            var instance = new MyParameterLessClass();
-
             container.RegisterInstance<IMyInterface>(instance, (bindingContext, builderContext) => false);
-
-            container.Resolve<IMyInterface>();
         }
 
         [TestMethod]
-        public void GivenInstanceRegistrationWithContextAfterDefaultRegistration_WhenResolving_ResolvesProperly()
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public void Then_Throws()
         {
-            IUnityContainer container = new UnityContainer();
+            container.Resolve<IMyInterface>();
+        }
+    }
 
-            container.AddNewExtension<ContextualBindingExtension>();
-
+    [TestClass]
+    public class When_RegisteringInstanceAfterDefaultMapping : Given_Instance
+    {
+        protected override void When()
+        {
             container.RegisterType<IMyInterface, MyOtherClass>();
 
             container.RegisterInstance<IMyInterface>(new MyParameterLessClass(), (bindingContext, builderContext) => false);
+        }
 
+        [TestMethod]
+        public void Then_CanResolveDefault()
+        {
             MyOtherClass myOtherClass = container.Resolve<IMyInterface>() as MyOtherClass;
 
             Assert.IsNotNull(myOtherClass);
         }
+    }
 
-        [TestMethod]
-        public void GivenDefaultRegistrationAfterInstanceRegistrationWithContext_WhenResolving_ResolvesProperly()
+    [TestClass]
+    public class When_RegisteringDefaultMappingAfterInstance : Given_Instance
+    {
+        protected override void When()
         {
-            IUnityContainer container = new UnityContainer();
-
-            container.AddNewExtension<ContextualBindingExtension>();
-
             container.RegisterInstance<IMyInterface>(new MyClass(), (bindingContext, builderContext) => true);
 
             container.RegisterType<IMyInterface, MyOtherClass>();
+        }
 
+        [TestMethod]
+        public void Then_CanResolveDefault()
+        {
             MyClass myClass = container.Resolve<IMyInterface>() as MyClass;
 
             Assert.IsNotNull(myClass);

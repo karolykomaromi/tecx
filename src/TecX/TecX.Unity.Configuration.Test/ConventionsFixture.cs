@@ -13,11 +13,11 @@ using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Test
 {
-    public abstract class Given_AContainer : ArrangeActAssert
+    public abstract class Given_AContainer : GivenWhenThen
     {
         protected IUnityContainer _container;
 
-        protected override void Arrange()
+        protected override void Given()
         {
             _container = new UnityContainer();
         }
@@ -28,7 +28,7 @@ namespace TecX.Unity.Configuration.Test
     {
         private List<IMyInterface> _all;
 
-        protected override void Act()
+        protected override void When()
         {
             _container.Configure(r =>
             r.Scan(x =>
@@ -61,7 +61,7 @@ namespace TecX.Unity.Configuration.Test
         private List<IMyInterface> _all;
         private List<IAnotherInterface> _others;
 
-        protected override void Act()
+        protected override void When()
         {
             _container.Configure(r =>
                 r.Scan(s =>
@@ -99,7 +99,7 @@ namespace TecX.Unity.Configuration.Test
     public class ConventionsFixture
     {
         [TestMethod]
-        public void CanApplyFindRegistriesConvention()
+        public void Then_CanApplyFindRegistriesConvention()
         {
             IUnityContainer container = new UnityContainer();
 
@@ -117,7 +117,7 @@ namespace TecX.Unity.Configuration.Test
         }
 
         [TestMethod]
-        public void CanApplyImplementsIInterfaceNameConvention()
+        public void Then_CanApplyImplementsIInterfaceNameConvention()
         {
             IUnityContainer container = new UnityContainer();
 
@@ -135,7 +135,7 @@ namespace TecX.Unity.Configuration.Test
         }
 
         [TestMethod]
-        public void CanApplySingleImplementationOfInterfaceConvention()
+        public void Then_CanApplySingleImplementationOfInterfaceConvention()
         {
             IUnityContainer container = new UnityContainer();
 
@@ -153,7 +153,7 @@ namespace TecX.Unity.Configuration.Test
         }
 
         [TestMethod]
-        public void CanApplyFindAllTypesConvetion()
+        public void Then_CanApplyFindAllTypesConvetion()
         {
             IUnityContainer container = new UnityContainer();
 
