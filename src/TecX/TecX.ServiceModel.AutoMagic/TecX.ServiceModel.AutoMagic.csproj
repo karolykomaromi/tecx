@@ -79,10 +79,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TecX.Agile.Error\TecX.Agile.Error.csproj">
-      <Project>{24AEC2DE-1132-4FE4-BA35-AD8DE374DB74}</Project>
-      <Name>TecX.Agile.Error</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
