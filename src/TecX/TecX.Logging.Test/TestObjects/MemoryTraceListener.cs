@@ -1,8 +1,7 @@
 ﻿using System.Text;
+using TecX.Common;
 
-using TecX.Common.EntLib;
-
-namespace TecX.Common.Test.TestObjects
+namespace TecX.Logging.Test.TestObjects
 {
     internal class MemoryTraceListener : TecXTraceListenerBase
     {

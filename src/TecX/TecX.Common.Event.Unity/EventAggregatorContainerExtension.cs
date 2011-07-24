@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.ObjectBuilder;
 using System.Windows.Threading;
 
@@ -42,7 +40,9 @@ namespace TecX.Common.Event.Unity
         {
             Context.Container.RegisterInstance(_eventAggregator, new ExternallyControlledLifetimeManager());
 
-            Context.Strategies.AddNew<EventAggregatorSubscriptionStrategy>(UnityBuildStage.PostInitialization);
+            EventAggregatorSubscriptionStrategy strategy = new EventAggregatorSubscriptionStrategy(_eventAggregator);
+
+            Context.Strategies.Add(strategy, UnityBuildStage.PostInitialization);
         }
 
         #endregion

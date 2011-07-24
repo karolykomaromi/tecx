@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace TecX.Common.EntLib
+namespace TecX.Logging
 {
     public class DebugTraceListener : TecXTraceListenerBase
     {

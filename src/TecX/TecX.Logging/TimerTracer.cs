@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using TecX.Common;
 
-namespace TecX.Common.EntLib
+namespace TecX.Logging
 {
     /// <summary>
     /// Traces the duration of an operation

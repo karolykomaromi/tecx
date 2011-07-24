@@ -1,6 +1,6 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
 
-namespace TecX.Common.EntLib
+namespace TecX.Logging
 {
     /// <summary>
     /// Implements the NullObject-pattern and does absolutely nothing
