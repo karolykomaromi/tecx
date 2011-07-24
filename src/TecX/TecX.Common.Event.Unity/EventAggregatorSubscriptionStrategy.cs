@@ -9,12 +9,17 @@ namespace TecX.Common.Event.Unity
     public class EventAggregatorSubscriptionStrategy : BuilderStrategy
     {
         private readonly Dictionary<Type, bool> _knownSubscribers;
+        private readonly IEventAggregator _eventAggregator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventAggregatorSubscriptionStrategy"/> class
         /// </summary>
-        public EventAggregatorSubscriptionStrategy()
+        /// <param name="eventAggregator">The <see cref="IEventAggregator"/> instance used for this application</param>
+        public EventAggregatorSubscriptionStrategy(IEventAggregator eventAggregator)
         {
+            Guard.AssertNotNull(eventAggregator, "eventAggregator");
+
+            _eventAggregator = eventAggregator;
             _knownSubscribers = new Dictionary<Type, bool>();
         }
 
@@ -31,7 +36,7 @@ namespace TecX.Common.Event.Unity
                 {
                     if (shouldSubscribe)
                     {
-                        GetEventAggregator(context).Subscribe(context.Existing);
+                        _eventAggregator.Subscribe(context.Existing);
                     }
                 }
                 else
@@ -45,7 +50,7 @@ namespace TecX.Common.Event.Unity
                         //if it does add the type to knownSubscribers so we dont have
                         //to check again next time
                         _knownSubscribers[type] = true;
-                        GetEventAggregator(context).Subscribe(context.Existing);
+                        _eventAggregator.Subscribe(context.Existing);
                     }
                     else
                     {
@@ -54,18 +59,6 @@ namespace TecX.Common.Event.Unity
                     }
                 }
             }
-        }
-
-        private static IEventAggregator GetEventAggregator(IBuilderContext context)
-        {
-            IEventAggregator eventAggregator = context.NewBuildUp<IEventAggregator>();
-
-            if (eventAggregator == null)
-            {
-                throw new InvalidOperationException("No event aggregator available");
-            }
-
-            return eventAggregator;
         }
     }
 }

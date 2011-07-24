@@ -48,15 +48,16 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Comparison\Compare.cs" />
-    <Compile Include="Comparison\DictionaryComparer.cs" />
+    <Compile Include="Comparison\DictionaryEqualityComparer.cs" />
     <Compile Include="Comparison\EpsilonComparer.cs" />
-    <Compile Include="Comparison\LambdaComparer.cs" />
+    <Compile Include="Comparison\HashingHelper.cs" />
+    <Compile Include="Comparison\LambdaEqualityComparer.cs" />
     <Compile Include="Convert.cs" />
     <Compile Include="Extensions\Primitives\LiteralExtensions.cs" />
     <Compile Include="Reflection\MethodNotFoundException.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />
     <Compile Include="Specifications\AlwaysFalseSpecification.cs" />
-    <Compile Include="Specifications\DescriptionVisitor.cs" />
+    <Compile Include="Specifications\PrintGraphVisitor.cs" />
     <Compile Include="Specifications\ISpecificationVisitor.cs" />
     <Compile Include="Specifications\IVisitableSpecification.cs" />
     <Compile Include="Time\DefaultTimeProvider.cs" />

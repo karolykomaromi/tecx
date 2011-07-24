@@ -1,9 +1,8 @@
 using System.Diagnostics;
-
 using Microsoft.Practices.EnterpriseLibrary.Logging;
 using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
 
-namespace TecX.Common.EntLib
+namespace TecX.Logging
 {
     public abstract class TecXTraceListenerBase : CustomTraceListener
     {

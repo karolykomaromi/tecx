@@ -86,7 +86,6 @@
     <Compile Include="EventAggregatorContainerExtensionFixture.cs" />
     <Compile Include="EventAggregatorFixture.cs" />
     <Compile Include="ExceptionExtensionFixture.cs" />
-    <Compile Include="FluentLoggingConfigFixture.cs" />
     <Compile Include="GuardFixture.cs" />
     <Compile Include="LatchFixture.cs" />
     <Compile Include="ObjectPredicateExtensionsFixture.cs" />
@@ -102,7 +101,6 @@
     <Compile Include="TestObjects\DummySpec2.cs" />
     <Compile Include="TestObjects\DummySpec3.cs" />
     <Compile Include="TestObjects\HasSomeFlag.cs" />
-    <Compile Include="TestObjects\MemoryTraceListener.cs" />
     <Compile Include="TestObjects\NumberBetween.cs" />
     <Compile Include="TestObjects\NumberMatches.cs" />
     <Compile Include="TestObjects\OneTimeSubscriber.cs" />
@@ -119,10 +117,6 @@
     <Compile Include="TypeHelperFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TecX.Common.EntLib\TecX.Common.EntLib.csproj">
-      <Project>{45BE1494-E6F4-415F-8206-2856FBD28F66}</Project>
-      <Name>TecX.Common.EntLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TecX.Common.Event.Unity\TecX.Common.Event.Unity.csproj">
       <Project>{A763CC8F-835E-444C-9A9F-88E7A443C1B2}</Project>
       <Name>TecX.Common.Event.Unity</Name>
