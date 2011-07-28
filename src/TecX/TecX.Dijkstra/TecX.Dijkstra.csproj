@@ -44,6 +44,8 @@
     <Compile Include="EdgeEqualityComparer.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NodeEqualityComparer.cs" />
+    <Compile Include="PriorityQueue.cs" />
+    <Compile Include="PriorityQueueItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
