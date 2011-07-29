@@ -1,7 +1,7 @@
-namespace Dijkstra
-{
-    using System.Diagnostics;
+using System.Diagnostics;
 
+namespace TecX.Dijkstra
+{
     [DebuggerDisplay("Edge Id={Id}, Start={StartNode.Id}, End={EndNode.Id}, Cost={Cost}")]
     public struct Edge
     {

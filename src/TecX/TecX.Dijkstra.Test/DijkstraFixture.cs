@@ -1,10 +1,10 @@
-﻿using System.Text;
+﻿using Dijkstra;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System.Collections.Generic;
 
-namespace Dijkstra
+namespace TecX.Dijkstra.Test
 {
     [TestClass]
     public class DijkstraFixture
@@ -25,10 +25,11 @@ namespace Dijkstra
 
             EdgeEqualityComparer comparer = new EdgeEqualityComparer();
 
-            Dictionary<Edge, double> dictionary = new Dictionary<Edge, double>(comparer);
-
-            dictionary.Add(e1, e1.Cost);
-            dictionary.Add(e2, e2.Cost);
+            Dictionary<Edge, double> dictionary = new Dictionary<Edge, double>(comparer)
+                                                        {
+                                                            { e1, e1.Cost }, 
+                                                            { e2, e2.Cost }
+                                                        };
 
             Assert.AreEqual(2, dictionary.Count);
         }
