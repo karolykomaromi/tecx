@@ -1,7 +1,7 @@
-namespace Dijkstra
-{
-    using System.Collections.Generic;
+using System.Collections.Generic;
 
+namespace TecX.Dijkstra
+{
     public class EdgeEqualityComparer : EqualityComparer<Edge>
     {
         public override bool Equals(Edge x, Edge y)

@@ -2,8 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Dijkstra
+using TecX.Common;
+
+namespace TecX.Dijkstra
 {
+    public delegate double EdgeCostFunction(Edge edge);
+
     public class Dijkstra
     {
         private readonly HashSet<Node> nodes;
@@ -21,40 +25,34 @@ namespace Dijkstra
         /// <param name="nodes">Liste aller Knoten</param>
         public Dijkstra(IEnumerable<Edge> edges, IEnumerable<Node> nodes)
         {
-            if (edges == null)
-            {
-                throw new ArgumentNullException("edges");
-            }
-
-            if (nodes == null)
-            {
-                throw new ArgumentNullException("nodes");
-            }
+            Guard.AssertNotNull(edges, "edges");
+            Guard.AssertNotNull(nodes, "nodes");
 
             this.edges = new HashSet<Edge>(edges, new EdgeEqualityComparer());
             this.nodes = new HashSet<Node>(nodes, new NodeEqualityComparer());
-            this.searchSpace = new HashSet<Node>(new NodeEqualityComparer());
-            this.distances = new Dictionary<long, double>();
-            this.previous = new Dictionary<long, Node>();
 
-            this.neighbors = this.edges
+            searchSpace = new HashSet<Node>(new NodeEqualityComparer());
+            distances = new Dictionary<long, double>();
+            previous = new Dictionary<long, Node>();
+
+            neighbors = this.edges
                                 .GroupBy(e => e.StartNode.Id)
                                 .ToDictionary(g => g.Key, g => g.Select(e => e.EndNode));
 
-            this.InitializeAlgorithm();
+            InitializeAlgorithm();
         }
 
         private void InitializeAlgorithm()
         {
-            this.searchSpace.Clear();
-            this.distances.Clear();
-            this.previous.Clear();
+            searchSpace.Clear();
+            distances.Clear();
+            previous.Clear();
 
             foreach (Node node in this.nodes)
             {
-                this.searchSpace.Add(node);
-                this.distances.Add(node.Id, double.MaxValue);
-                this.previous.Add(node.Id, Node.Empty);
+                searchSpace.Add(node);
+                distances.Add(node.Id, double.MaxValue);
+                previous.Add(node.Id, Node.Empty);
             }
         }
 
@@ -64,17 +62,17 @@ namespace Dijkstra
         /// </summary>
         /// <param name="startNode">Startknoten</param>
         /// <param name="endNode"></param>
-        public IEnumerable<Node> CalculateDistance(Node startNode, Node endNode)
+        public IEnumerable<Node> GetShortestPath(Node startNode, Node endNode)
         {
             distances[startNode.Id] = 0;
 
             while (searchSpace.Count > 0)
             {
-                Node u = GetNodeWithSmallestDistance();
+                Node u = GetNearestNode();
 
                 if (u.Equals(Node.Empty))
                 {
-                    this.searchSpace.Clear();
+                    searchSpace.Clear();
                 }
                 else
                 {
@@ -94,12 +92,12 @@ namespace Dijkstra
                     //premature end of algorith as we already reached the target
                     if(u.Equals(endNode))
                     {
-                        return this.GetPathTo(endNode);
+                        return GetPathTo(endNode);
                     }
                 }
             }
 
-            return this.GetPathTo(endNode);
+            return GetPathTo(endNode);
         }
 
         /// <summary>
@@ -127,7 +125,7 @@ namespace Dijkstra
         /// Liefert den Knoten mit der kürzesten Distanz
         /// </summary>
         /// <returns></returns>
-        private Node GetNodeWithSmallestDistance()
+        private Node GetNearestNode()
         {
             //TODO priority queue?
             double distance = double.MaxValue;

@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using TecX.Dijkstra;
 using TecX.TestTools;
 
 namespace Dijkstra
 {
     public abstract class Given_DijkstraAndInputData : GivenWhenThen
     {
-        protected Dijkstra algorithm;
+        protected TecX.Dijkstra.Dijkstra algorithm;
 
         protected Dictionary<long, Node> dictNodes;
 
@@ -56,7 +57,7 @@ namespace Dijkstra
                     new Edge(18, this.dictNodes[6], this.dictNodes[5], 9.0)
                 };
 
-            algorithm = new Dijkstra(this.edges, this.nodes);
+            algorithm = new TecX.Dijkstra.Dijkstra(this.edges, this.nodes);
         }
     }
 }
