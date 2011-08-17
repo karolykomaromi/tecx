@@ -12,6 +12,7 @@ namespace TecX.Unity.TypedFactory
     public static class UnityContainerExtensions
     {
         public static IUnityContainer RegisterFactory<TFactory>(this IUnityContainer container)
+            where TFactory : class
         {
             Guard.AssertNotNull(container, "container");
 
