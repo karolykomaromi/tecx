@@ -9,7 +9,7 @@ using TecX.Unity.Configuration.Extensions;
 namespace TecX.Unity.Configuration.Conventions
 {
     public class SingleImplementationOfInterfaceConvention : IRegistrationConvention, 
-        INeedPostProcessing
+        IRequirePostProcessing
     {
         #region Fields
 
@@ -34,7 +34,7 @@ namespace TecX.Unity.Configuration.Conventions
             RegisterType(type);
         }
 
-        public void PostProcess(RegistrationGraph graph)
+        public void Process(RegistrationGraph graph)
         {
             Guard.AssertNotNull(graph, "graph");
 
