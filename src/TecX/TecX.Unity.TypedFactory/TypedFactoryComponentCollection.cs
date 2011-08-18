@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
 using Microsoft.Practices.Unity;
 
@@ -13,7 +11,7 @@ namespace TecX.Unity.TypedFactory
     {
         private readonly Type _collectionType;
 
-        private readonly Delegate _addItemsToList;
+        private readonly Delegate _addObjectToTypedList;
 
         public TypedFactoryComponentCollection(Type collectionItemType, Type collectionType, ParameterOverrides additionalArguments)
             : base(null, collectionItemType, additionalArguments)
@@ -22,7 +20,7 @@ namespace TecX.Unity.TypedFactory
 
             _collectionType = collectionType;
 
-            _addItemsToList = ReflectionHelper.CastItemAndAddToList(ComponentType);
+            _addObjectToTypedList = ReflectionHelper.CastItemAndAddToList(ComponentType);
         }
 
         public override object Resolve(IUnityContainer container)
@@ -33,15 +31,15 @@ namespace TecX.Unity.TypedFactory
 
             object theList = ReflectionHelper.CreateGenericListOf(ComponentType);
 
-            foreach(object item in resolved)
+            foreach (object item in resolved)
             {
-                _addItemsToList.DynamicInvoke(item, theList);
+                _addObjectToTypedList.DynamicInvoke(item, theList);
             }
 
-            if(_collectionType.IsArray)
+            if (_collectionType.IsArray)
             {
-                //TODO weberse 2011-08-18 convert to array and return
-                throw new NotImplementedException();
+                object theArray = ReflectionHelper.ToArray(ComponentType, theList);
+                return theArray;
             }
 
             return theList;

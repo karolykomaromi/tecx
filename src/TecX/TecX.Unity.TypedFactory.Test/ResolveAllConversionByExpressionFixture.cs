@@ -42,5 +42,17 @@ namespace TecX.Unity.TypedFactory.Test
 
             Assert.IsInstanceOfType(result, typeof(List<Foo>));
         }
+
+        [TestMethod]
+        public void CanConvertListToArray()
+        {
+            object list = new List<Foo>();
+
+            Type itemType = typeof(Foo);
+
+            var converted = ReflectionHelper.ToArray(itemType, list);
+
+            Assert.IsInstanceOfType(converted, typeof(Foo[]));
+        }
     }
 }

@@ -78,5 +78,21 @@ namespace TecX.Unity.TypedFactory
 
             return list;
         }
+
+        public static object ToArray(Type itemType, object list)
+        {
+            Type listType = typeof(List<>).MakeGenericType(itemType);
+
+            ParameterExpression source = Expression.Parameter(listType, "list");
+
+            var call = Expression.Call(typeof(Enumerable), "ToArray", new[] { itemType }, source);
+
+            Type arrayType = itemType.MakeArrayType();
+
+            var convert = Expression.Lambda(typeof(Func<,>).MakeGenericType(listType, arrayType), call, source).Compile();
+
+            object converted = convert.DynamicInvoke(list);
+            return converted;
+        }
     }
 }
