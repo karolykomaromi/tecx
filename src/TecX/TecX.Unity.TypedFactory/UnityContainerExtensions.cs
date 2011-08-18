@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Microsoft.Practices.Unity;
 
@@ -14,7 +11,14 @@ namespace TecX.Unity.TypedFactory
         public static IUnityContainer RegisterFactory<TFactory>(this IUnityContainer container)
             where TFactory : class
         {
+            return RegisterFactory<TFactory>(container, new DefaultTypedFactoryComponentSelector());
+        }
+
+        public static IUnityContainer RegisterFactory<TFactory>(this IUnityContainer container, ITypedFactoryComponentSelector selector)
+            where TFactory : class
+        {
             Guard.AssertNotNull(container, "container");
+            Guard.AssertNotNull(selector, "selector");
 
             Type factoryType = typeof(TFactory);
 
@@ -22,9 +26,10 @@ namespace TecX.Unity.TypedFactory
 
             ITypedFactoryConfiguration configuration = container.Configure<ITypedFactoryConfiguration>();
 
-            configuration.RegisterFactory<TFactory>();
+            configuration.RegisterFactory<TFactory>(selector);
 
             return container;
+            
         }
     }
 }
