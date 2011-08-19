@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using Microsoft.Practices.Unity;
 using TecX.Unity.TypedFactory.Test.TestObjects;
 
 namespace TecX.Unity.TypedFactory.Test

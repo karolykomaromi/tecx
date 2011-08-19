@@ -92,6 +92,7 @@ namespace TecX.Unity.TypedFactory
             var convert = Expression.Lambda(typeof(Func<,>).MakeGenericType(listType, arrayType), call, source).Compile();
 
             object converted = convert.DynamicInvoke(list);
+
             return converted;
         }
     }
