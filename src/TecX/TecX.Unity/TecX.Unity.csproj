@@ -65,6 +65,8 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Collections\CollectionResolutionExtension.cs" />
+    <Compile Include="Collections\CollectionResolutionStrategy.cs" />
     <Compile Include="Injection\ParameterMatcher.cs" />
     <Compile Include="Injection\ClozeInjectionConstructur.cs" />
     <Compile Include="Lifetime\CacheLifetimeManager.cs" />
