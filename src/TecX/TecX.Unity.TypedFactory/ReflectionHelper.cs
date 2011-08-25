@@ -68,13 +68,7 @@ namespace TecX.Unity.TypedFactory
         {
             Type listType = typeof(List<>).MakeGenericType(itemType);
 
-            Type delegateType = typeof(Func<>).MakeGenericType(listType);
-            
-            NewExpression @new = Expression.New(listType);
-
-            LambdaExpression lambda = Expression.Lambda(delegateType, @new);
-
-            object list = lambda.Compile().DynamicInvoke();
+            object list = Activator.CreateInstance(listType);
 
             return list;
         }

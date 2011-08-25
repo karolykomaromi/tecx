@@ -12,6 +12,7 @@ namespace TecX.Unity.Collections
     public class CollectionResolutionStrategy : BuilderStrategy
     {
         private delegate object CollectionResolver(IBuilderContext context);
+
         private static readonly MethodInfo genericResolveCollectionMethod = typeof(CollectionResolutionStrategy)
                 .GetMethod("ResolveCollection", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly);
 
@@ -44,7 +45,9 @@ namespace TecX.Unity.Collections
         private static object ResolveCollection<T>(IBuilderContext context)
         {
             IUnityContainer container = context.NewBuildUp<IUnityContainer>();
+
             List<T> results = new List<T>(container.ResolveAll<T>());
+
             return results;
         }
     }
