@@ -75,6 +75,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollectionResolutionExtensionFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClozeInjectionConstructorFixture.cs" />
     <Compile Include="TestObjects\AnotherInterceptable.cs" />
