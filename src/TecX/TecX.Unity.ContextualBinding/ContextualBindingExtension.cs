@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
-
+using Microsoft.Practices.Unity.ObjectBuilder;
 using TecX.Common;
 
 namespace TecX.Unity.ContextualBinding
@@ -14,6 +14,7 @@ namespace TecX.Unity.ContextualBinding
 
         private readonly Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy> _mappings;
         private readonly Dictionary<string, object> _context;
+        private readonly IBuildTreeTracker _treeTracker;
 
         #endregion Fields
 
@@ -23,6 +24,7 @@ namespace TecX.Unity.ContextualBinding
         {
             _mappings = new Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy>();
             _context = new Dictionary<string, object>();
+            _treeTracker = new BuildTreeTrackerStrategy();
         }
 
         #endregion c'tor
@@ -30,6 +32,8 @@ namespace TecX.Unity.ContextualBinding
         protected override void Initialize()
         {
             Context.Registering += OnRegistering;
+
+            Context.Strategies.Add(_treeTracker, UnityBuildStage.PreCreation);
         }
 
         private void OnRegistering(object sender, RegisterEventArgs e)
@@ -184,4 +188,55 @@ namespace TecX.Unity.ContextualBinding
             }
         }
     }
+
+    //   /// <summary>
+    ///// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    ///// </summary>
+    //public void Dispose()
+    //{
+    //    Dispose(true);
+    //    GC.SuppressFinalize(this);
+    //}
+
+    ///// <summary>
+    ///// Releases unmanaged and - optionally - managed resources.
+    ///// </summary>
+    ///// <param name="disposing">
+    ///// <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
+    ///// </param>
+    //protected virtual void Dispose(Boolean disposing)
+    //{
+    //    if (disposing)
+    //    {
+    //        // Free managed resources
+    //        TreeTracker.DisposeAllTrees();
+    //    }
+
+    //    // Free native resources if there are any.
+    //}
+
+    ///// <summary>
+    ///// Initial the container with this extension's functionality.
+    ///// </summary>
+    ///// <remarks>
+    ///// When overridden in a derived class, this method will modify the given
+    /////   <see cref="T:Microsoft.Practices.Unity.ExtensionContext"/> by adding strategies, policies, etc. to
+    /////   install it's functions into the container.
+    ///// </remarks>
+    //protected override void Initialize()
+    //{
+    //    Context.Strategies.Add(TreeTracker, UnityBuildStage.PreCreation);
+    //}
+
+    ///// <summary>
+    ///// Gets or sets the tree tracker.
+    ///// </summary>
+    ///// <value>
+    ///// The tree tracker.
+    ///// </value>
+    //private IBuildTreeTracker TreeTracker
+    //{
+    //    get;
+    //    set;
+    //}
 }
