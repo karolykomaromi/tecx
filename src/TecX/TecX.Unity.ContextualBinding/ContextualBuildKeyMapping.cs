@@ -19,7 +19,6 @@ namespace TecX.Unity.ContextualBinding
 
         public ContextualBuildKeyMapping(Predicate<IBindingContext, IBuilderContext> isMatch, Type mapTo, string uniqueMappingName)
         {
-            //guards
             Guard.AssertNotNull(isMatch, "isMatch");
             Guard.AssertNotNull(mapTo, "mapTo");
             Guard.AssertNotEmpty(uniqueMappingName, "uniqueMappingName");
@@ -31,7 +30,6 @@ namespace TecX.Unity.ContextualBinding
 
         public bool IsMatch(IBindingContext bindingContext, IBuilderContext builderContext)
         {
-            //guards
             Guard.AssertNotNull(bindingContext, "bindingContext");
             Guard.AssertNotNull(builderContext, "builderContext");
 

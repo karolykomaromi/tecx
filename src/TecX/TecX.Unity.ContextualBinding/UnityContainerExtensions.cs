@@ -9,59 +9,73 @@ namespace TecX.Unity.ContextualBinding
 {
     public static class UnityContainerExtensions
     {
-        public static IUnityContainer RegisterType(this IUnityContainer container, Type from, Type to,
-            Predicate<IBindingContext, IBuilderContext> matches, LifetimeManager lifetime, params InjectionMember[] injectionMembers)
+        public static IUnityContainer RegisterType(this IUnityContainer container, 
+            Type from, 
+            Type to,
+            Predicate<IBindingContext, IBuilderContext> isMatch, 
+            LifetimeManager lifetime, 
+            params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(container, "container");
-            Guard.AssertNotNull(matches, "matches");
+            Guard.AssertNotNull(isMatch, "isMatch");
 
             var configuration = container.Configure<IContextualBindingConfiguration>();
 
             if (configuration == null)
+            {
                 throw new ContextualBindingException("ContextualBindingExtension must be registered with the container!");
+            }
 
-            configuration.RegisterType(from, to, matches, lifetime, injectionMembers);
+            configuration.RegisterType(from, to, isMatch, lifetime, injectionMembers);
 
             return container;
         }
 
-        public static IUnityContainer RegisterType<TFrom, TTo>(this IUnityContainer container, Predicate<IBindingContext, IBuilderContext> matches,
-            LifetimeManager lifetime, params InjectionMember[] injectionMembers)
-        {
-            Guard.AssertNotNull(container, "container");
-
-            return RegisterType(container, typeof(TFrom), typeof(TTo), matches, lifetime, injectionMembers);
-        }
-
-        public static IUnityContainer RegisterType<TFrom, TTo>(this IUnityContainer container, Predicate<IBindingContext, IBuilderContext> matches,
+        public static IUnityContainer RegisterType<TFrom, TTo>(this IUnityContainer container, 
+            Predicate<IBindingContext, IBuilderContext> isMatch,
+            LifetimeManager lifetime, 
             params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(container, "container");
 
-            return RegisterType(container, typeof(TFrom), typeof(TTo), matches, new TransientLifetimeManager(), injectionMembers);
+            return RegisterType(container, typeof(TFrom), typeof(TTo), isMatch, lifetime, injectionMembers);
         }
 
-        public static IUnityContainer RegisterInstance<TFrom>(this IUnityContainer container, object instance,
-            Predicate<IBindingContext, IBuilderContext> matches)
+        public static IUnityContainer RegisterType<TFrom, TTo>(this IUnityContainer container, 
+            Predicate<IBindingContext, IBuilderContext> isMatch,
+            params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(container, "container");
 
-            return RegisterInstance<TFrom>(container, instance, matches, new ContainerControlledLifetimeManager());
+            return RegisterType(container, typeof(TFrom), typeof(TTo), isMatch, new TransientLifetimeManager(), injectionMembers);
         }
 
-        public static IUnityContainer RegisterInstance<TFrom>(this IUnityContainer container, object instance,
-            Predicate<IBindingContext, IBuilderContext> matches, LifetimeManager lifetime)
+        public static IUnityContainer RegisterInstance<TFrom>(this IUnityContainer container, 
+            object instance,
+            Predicate<IBindingContext, IBuilderContext> isMatch)
         {
             Guard.AssertNotNull(container, "container");
-            Guard.AssertNotNull(matches, "matches");
+
+            return RegisterInstance<TFrom>(container, instance, isMatch, new ContainerControlledLifetimeManager());
+        }
+
+        public static IUnityContainer RegisterInstance<TFrom>(this IUnityContainer container, 
+            object instance,
+            Predicate<IBindingContext, IBuilderContext> isMatch, 
+            LifetimeManager lifetime)
+        {
+            Guard.AssertNotNull(container, "container");
+            Guard.AssertNotNull(isMatch, "isMatch");
             Guard.AssertNotNull(instance, "instance");
 
             var configuration = container.Configure<IContextualBindingConfiguration>();
 
             if (configuration == null)
+            {
                 throw new ContextualBindingException("ContextualBindingExtension must be registered with the container!");
+            }
 
-            configuration.RegisterInstance(typeof(TFrom), instance, matches, lifetime);
+            configuration.RegisterInstance(typeof(TFrom), instance, isMatch, lifetime);
 
             return container;
         }
