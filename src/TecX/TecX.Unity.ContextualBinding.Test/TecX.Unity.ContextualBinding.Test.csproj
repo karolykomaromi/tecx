@@ -69,6 +69,7 @@
     <Compile Include="TestObjects\MyClass.cs" />
     <Compile Include="TestObjects\MyOtherClass.cs" />
     <Compile Include="TestObjects\MyParameterLessClass.cs" />
+    <Compile Include="TestObjects\ParentWithDependency.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.TestTools\TecX.TestTools.csproj">
