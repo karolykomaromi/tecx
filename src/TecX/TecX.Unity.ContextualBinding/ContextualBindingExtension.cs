@@ -147,7 +147,7 @@ namespace TecX.Unity.ContextualBinding
         }
 
         /// <summary>
-        /// The default context is more or less a direct link to the extensions data story. The <see cref="UnityContainer"/> does the same
+        /// The default context is more or less a direct link to the extensions data store. The <see cref="UnityContainer"/> does the same
         /// thing with the default implementation of <see cref="ExtensionContext"/> which is a private, nested class called 
         /// <i>ExtensionContextImpl</i>. Looked neat so I applied the same approach here.
         /// </summary>

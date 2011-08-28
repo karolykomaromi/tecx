@@ -1,9 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-
-using Microsoft.Practices.ObjectBuilder2;
+﻿using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -23,6 +18,26 @@ namespace TecX.Unity.Test
             container = new UnityContainer();
 
             container.AddNewExtension<ContextualBindingExtension>();
+        }
+    }
+
+    [TestClass]
+    public class When_RegisteringWithParentNamespaceCondition : Given_ContainerWithContextualBindingExtension
+    {
+        protected override void When()
+        {
+            Predicate<IBindingContext, IBuilderContext> condition = (bindingCtx, builderCtx) =>
+                                                                        {
+                                                                            return false;
+                                                                        };
+
+            container.RegisterType<IMyInterface, MyOtherClass>(condition);
+        }
+
+        [TestMethod]
+        public void Then_ResolvesProperly()
+        {
+            container.Resolve<ParentWithDependency>();
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 using Microsoft.Practices.ObjectBuilder2;
@@ -46,9 +47,37 @@ namespace TecX.Unity.Collections
         {
             IUnityContainer container = context.NewBuildUp<IUnityContainer>();
 
-            List<T> results = new List<T>(container.ResolveAll<T>());
+            var resolverOverrides = ExtractResolverOverrides(context);
+
+            List<T> results = new List<T>(container.ResolveAll<T>(resolverOverrides));
 
             return results;
+        }
+
+        private static ResolverOverride[] ExtractResolverOverrides(IBuilderContext context)
+        {
+            //this method is tightly coupled to the implementation of IBuilderContext. It assumes that the 
+            //class BuilderContext is used and that a field of type CompositeResolverOverride named resolverOverrides
+            //exists in that class
+            ResolverOverride[] ro = new ResolverOverride[0];
+
+            if (context is BuilderContext)
+            {
+                FieldInfo field = typeof (BuilderContext).GetField("resolverOverrides",
+                    BindingFlags.Instance | BindingFlags.NonPublic);
+
+                if (field != null)
+                {
+                    var overrides = field.GetValue(context) as IEnumerable<ResolverOverride>;
+
+                    if (overrides != null)
+                    {
+                        ro = overrides.ToArray();
+                    }
+                }
+            }
+
+            return ro;
         }
     }
 }
