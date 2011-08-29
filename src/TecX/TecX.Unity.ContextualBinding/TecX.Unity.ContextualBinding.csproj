@@ -60,17 +60,14 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="BuildTreeDisposer.cs" />
-    <Compile Include="BuildTreeItemNode.cs" />
+    <Compile Include="BuildTreeNode.cs" />
     <Compile Include="BuildTreeTrackerStrategy.cs" />
     <Compile Include="ContextualBuildKeyMappingPolicy.cs" />
     <Compile Include="ContextualBindingException.cs" />
     <Compile Include="ContextualBindingExtension.cs" />
     <Compile Include="ContextualBuildKeyMapping.cs" />
     <Compile Include="IBindingContext.cs" />
-    <Compile Include="IBuildTreeTracker.cs" />
     <Compile Include="IContextualBindingConfiguration.cs" />
-    <Compile Include="LockReader.cs" />
     <Compile Include="Predicate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnityContainerExtensions.cs" />

@@ -12,6 +12,6 @@ namespace TecX.Unity.ContextualBinding
 
         void RegisterInstance(Type from, object instance, Predicate<IBindingContext, IBuilderContext> matches, LifetimeManager lifetime);
 
-        void Put(string key, object value);
+        object this[string key] { get; set; }
     }
 }

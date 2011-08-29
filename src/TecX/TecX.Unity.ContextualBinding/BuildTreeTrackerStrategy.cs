@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Threading;
 
 using Microsoft.Practices.ObjectBuilder2;
 
@@ -12,7 +9,7 @@ namespace TecX.Unity.ContextualBinding
     /// The <see cref="BuildTreeTrackerStrategy"/>
     ///   class is used to track build trees created by the container.
     /// </summary>
-    public class BuildTreeTrackerStrategy : BuilderStrategy, IBuildTreeTracker
+    public class BuildTreeTrackerStrategy : BuilderStrategy
     {
         private static class Constants
         {
@@ -26,23 +23,13 @@ namespace TecX.Unity.ContextualBinding
         }
 
         /// <summary>
-        /// Defines the lock used to protect the list of build trees.
-        /// </summary>
-        private static readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
-
-        /// <summary>
-        /// Stores the build trees created by the current container.
-        /// </summary>
-        private readonly List<BuildTreeItemNode> _buildTrees = new List<BuildTreeItemNode>();
-
-        /// <summary>
-        /// The _current build node.
+        /// The current build node.
         /// </summary>
         [ThreadStatic]
-        private static BuildTreeItemNode _currentBuildNode;
+        private static BuildTreeNode _currentBuildNode;
 
         /// <summary>
-        /// Assigns the instance to current tree.
+        /// Assigns an instance to the current tree node.
         /// </summary>
         /// <param name="buildKey">
         /// The build key.
@@ -50,7 +37,7 @@ namespace TecX.Unity.ContextualBinding
         /// <param name="instance">
         /// The instance.
         /// </param>
-        public void AssignInstanceToCurrentTreeNode(NamedTypeBuildKey buildKey, object instance)
+        private void AssignInstanceToCurrentTreeNode(NamedTypeBuildKey buildKey, object instance)
         {
             if (CurrentBuildNode.BuildKey != buildKey)
             {
@@ -63,39 +50,6 @@ namespace TecX.Unity.ContextualBinding
             }
 
             CurrentBuildNode.AssignInstance(instance);
-        }
-
-        /// <summary>
-        /// Disposes all trees.
-        /// </summary>
-        public void DisposeAllTrees()
-        {
-            using (new LockReader(_lock, true))
-            {
-                for (int index = BuildTrees.Count - 1; index >= 0; index--)
-                {
-                    BuildTreeItemNode buildTree = BuildTrees[index];
-
-                    DisposeTree(null, buildTree);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets the build tree for instance.
-        /// </summary>
-        /// <param name="instance">
-        /// The instance.
-        /// </param>
-        /// <returns>
-        /// A <see cref="BuildTreeItemNode"/> instance or <c>null</c> if no item can be found.
-        /// </returns>
-        public BuildTreeItemNode GetBuildTreeForInstance(object instance)
-        {
-            using (new LockReader(_lock))
-            {
-                return BuildTrees.Where(x => x.ItemReference.IsAlive && ReferenceEquals(x.ItemReference.Target, instance)).SingleOrDefault();
-            }
         }
 
         /// <summary>
@@ -112,16 +66,7 @@ namespace TecX.Unity.ContextualBinding
             {
                 AssignInstanceToCurrentTreeNode(context.BuildKey, context.Existing);
 
-                BuildTreeItemNode parentNode = CurrentBuildNode.Parent;
-
-                if (parentNode == null)
-                {
-                    // This is the end of the creation of the root node
-                    using (new LockWriter(_lock))
-                    {
-                        BuildTrees.Add(CurrentBuildNode);
-                    }
-                }
+                BuildTreeNode parentNode = CurrentBuildNode.Parent;
 
                 // Move the current node back up to the parent
                 // If this is the top level node, this will set the current node back to null
@@ -129,32 +74,6 @@ namespace TecX.Unity.ContextualBinding
             }
 
             base.PostBuildUp(context);
-        }
-
-        /// <summary>
-        /// Called during the chain of responsibility for a teardown operation. The
-        ///   PostTearDown method is called when the chain has finished the PreTearDown
-        ///   phase and executes in reverse order from the PreTearDown calls.
-        /// </summary>
-        /// <param name="context">
-        /// Context of the teardown operation.
-        /// </param>
-        public override void PostTearDown(IBuilderContext context)
-        {
-            base.PostTearDown(context);
-
-            // Get the build tree for this item
-            if (context != null)
-            {
-                BuildTreeItemNode buildTree = GetBuildTreeForInstance(context.Existing);
-
-                if (buildTree != null)
-                {
-                    DisposeTree(context, buildTree);
-                }
-
-                DisposeDeadTrees(context);
-            }
         }
 
         /// <summary>
@@ -173,7 +92,7 @@ namespace TecX.Unity.ContextualBinding
             {
                 bool nodeCreatedByContainer = context.Existing == null;
 
-                BuildTreeItemNode newTreeNode = new BuildTreeItemNode(context.BuildKey, 
+                BuildTreeNode newTreeNode = new BuildTreeNode(context.BuildKey, 
                     nodeCreatedByContainer, 
                     CurrentBuildNode);
 
@@ -188,54 +107,12 @@ namespace TecX.Unity.ContextualBinding
         }
 
         /// <summary>
-        /// Disposes the dead trees.
-        /// </summary>
-        /// <param name="context">
-        /// The context.
-        /// </param>
-        private void DisposeDeadTrees(IBuilderContext context)
-        {
-            // Need to enumerate in the reverse order because the trees that are torn down are removed from the set
-            using (new LockReader(_lock, true))
-            {
-                for (int index = BuildTrees.Count - 1; index >= 0; index--)
-                {
-                    BuildTreeItemNode buildTree = BuildTrees[index];
-
-                    if (buildTree.ItemReference.IsAlive == false)
-                    {
-                        DisposeTree(context, buildTree);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Disposes the tree.
-        /// </summary>
-        /// <param name="context">
-        /// The context.
-        /// </param>
-        /// <param name="buildTree">
-        /// The build tree.
-        /// </param>
-        private void DisposeTree(IBuilderContext context, BuildTreeItemNode buildTree)
-        {
-            BuildTreeDisposer.DisposeTree(context, buildTree);
-
-            using (new LockWriter(_lock))
-            {
-                BuildTrees.Remove(buildTree);
-            }
-        }
-
-        /// <summary>
         /// Gets the current build node.
         /// </summary>
         /// <value>
         /// The current build node.
         /// </value>
-        private static BuildTreeItemNode CurrentBuildNode
+        public BuildTreeNode CurrentBuildNode
         {
             get
             {
@@ -245,20 +122,6 @@ namespace TecX.Unity.ContextualBinding
             set
             {
                 _currentBuildNode = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets the build trees.
-        /// </summary>
-        /// <value>
-        /// The build trees.
-        /// </value>
-        public virtual IList<BuildTreeItemNode> BuildTrees
-        {
-            get
-            {
-                return _buildTrees;
             }
         }
     }

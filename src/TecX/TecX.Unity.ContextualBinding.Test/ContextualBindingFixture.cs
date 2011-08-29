@@ -1,11 +1,11 @@
 ﻿using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using TecX.TestTools;
 using TecX.Unity.ContextualBinding;
 using TecX.Unity.ContextualBinding.Test.TestObjects;
-
-using TecX.TestTools;
 
 namespace TecX.Unity.Test
 {
@@ -27,9 +27,10 @@ namespace TecX.Unity.Test
         protected override void When()
         {
             Predicate<IBindingContext, IBuilderContext> condition = (bindingCtx, builderCtx) =>
-                                                                        {
-                                                                            return false;
-                                                                        };
+                {
+                    bool isMatch = bindingCtx.CurrentBuildNode.RootNode.BuildKey.Type.Namespace.EndsWith("TestObjects");
+                    return isMatch;
+                };
 
             container.RegisterType<IMyInterface, MyOtherClass>(condition);
         }
@@ -73,7 +74,7 @@ namespace TecX.Unity.Test
             container.Resolve<IMyInterface>();
         }
     }
-    
+
     [TestClass]
     public class When_MappingWithNonTransientLifetimeManager : Given_ContainerWithContextualBindingExtension
     {
@@ -95,7 +96,7 @@ namespace TecX.Unity.Test
             Assert.AreSame(first, second);
         }
     }
-    
+
     [TestClass]
     public class When_MappingWithInjectionMember : Given_ContainerWithContextualBindingExtension
     {
@@ -158,7 +159,7 @@ namespace TecX.Unity.Test
     {
         protected override void When()
         {
-            container.Configure<IContextualBindingConfiguration>().Put("someKey", 123);
+            container.Configure<IContextualBindingConfiguration>()["someKey"] = 123;
 
             Predicate<IBindingContext, IBuilderContext> matches = (bindingContext, builderContext) =>
             {
