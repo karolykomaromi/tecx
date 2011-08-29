@@ -25,7 +25,7 @@ namespace TecX.Unity.Configuration.Expressions
         {
             Guard.AssertNotNull(lifetime, "lifetime");
 
-            LifetimeIs(lifetime);
+            _lifetimeFactory = lifetime;
 
             return this as TRegistrationExpression;
         }

@@ -2,8 +2,8 @@
 {
     public interface IBindingContext
     {
-        object this[string key] { get; }
+        object this[string key] { get; set; }
 
-        void Put(string key, object value);
+        BuildTreeNode CurrentBuildNode { get; }
     }
 }

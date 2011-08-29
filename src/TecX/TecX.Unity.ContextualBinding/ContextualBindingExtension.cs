@@ -13,17 +13,46 @@ namespace TecX.Unity.ContextualBinding
         #region Fields
 
         private readonly Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy> _mappings;
-        private readonly Dictionary<string, object> _context;
-        private readonly IBuildTreeTracker _treeTracker;
+        private readonly Dictionary<string, object> _bindingContext;
+        private readonly BuildTreeTrackerStrategy _treeTracker;
 
         #endregion Fields
+
+        #region Properties
+
+        public IDictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy> Mappings
+        {
+            get
+            {
+                return _mappings;
+            }
+        }
+
+        public IDictionary<string, object> BindingContext
+        {
+            get
+            {
+                return _bindingContext;
+            }
+        }
+
+        public BuildTreeTrackerStrategy TreeTracker
+        {
+            get
+            {
+                return _treeTracker;
+            }
+        }
+
+
+        #endregion Properties
 
         #region c'tor
 
         public ContextualBindingExtension()
         {
             _mappings = new Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy>();
-            _context = new Dictionary<string, object>();
+            _bindingContext = new Dictionary<string, object>();
             _treeTracker = new BuildTreeTrackerStrategy();
         }
 
@@ -33,7 +62,7 @@ namespace TecX.Unity.ContextualBinding
         {
             Context.Registering += OnRegistering;
 
-            Context.Strategies.Add(_treeTracker, UnityBuildStage.PreCreation);
+            Context.Strategies.Add(this.TreeTracker, UnityBuildStage.PreCreation);
         }
 
         private void OnRegistering(object sender, RegisterEventArgs e)
@@ -45,7 +74,7 @@ namespace TecX.Unity.ContextualBinding
             NamedTypeBuildKey key = new NamedTypeBuildKey(e.TypeFrom);
 
             ContextualBuildKeyMappingPolicy policy;
-            if (_mappings.TryGetValue(key, out policy))
+            if (this.Mappings.TryGetValue(key, out policy))
             {
                 //if something is already registered -> check if we have a registration with same name
                 //do the replace and last chance hookup if neccessary
@@ -66,13 +95,12 @@ namespace TecX.Unity.ContextualBinding
         public void RegisterType(Type from, Type to, Predicate<IBindingContext, IBuilderContext> matches,
                              LifetimeManager lifetime, params InjectionMember[] injectionMembers)
         {
-            //guards
             Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(to, "to");
             Guard.AssertNotNull(matches, "matches");
 
-            //if no lifetime manager is registered we use the transient lifetime (new instance is created for
-            //every resolve). this is identical to the unity default behavior
+            // if no lifetime manager is registered we use the transient lifetime (new instance is created for
+            // every resolve). this is identical to the unity default behavior
             if (lifetime == null)
             {
                 lifetime = new TransientLifetimeManager();
@@ -82,11 +110,11 @@ namespace TecX.Unity.ContextualBinding
 
             string uniqueMappingName = Guid.NewGuid().ToString();
 
-            //add another contextual mapping to the policy
+            // add another contextual mapping to the policy
             policy.AddMapping(matches, to, uniqueMappingName);
 
-            //by registering our mapping under a name that is guaranteed to be unique we can make use
-            //of the full container infrastructure that is already in place
+            // by registering our mapping under a name that is guaranteed to be unique we can make use
+            // of the full container infrastructure that is already in place
             Container.RegisterType(from, to, uniqueMappingName, lifetime, injectionMembers);
         }
 
@@ -115,11 +143,27 @@ namespace TecX.Unity.ContextualBinding
             Container.RegisterInstance(from, uniqueMappingName, instance, lifetime);
         }
 
-        public void Put(string key, object value)
+        public object this[string key]
         {
-            Guard.AssertNotEmpty(key, "key");
+            get
+            {
+                Guard.AssertNotEmpty(key, "key");
 
-            _context[key] = value;
+                object value;
+                if (BindingContext.TryGetValue(key, out value))
+                {
+                    return value;
+                }
+
+                return null;
+            }
+
+            set
+            {
+                Guard.AssertNotEmpty(key, "key");
+
+                BindingContext[key] = value;
+            }
         }
 
         private ContextualBuildKeyMappingPolicy GetPolicy(Type from)
@@ -130,7 +174,7 @@ namespace TecX.Unity.ContextualBinding
             ContextualBuildKeyMappingPolicy existingContextualPolicy = existingPolicy as ContextualBuildKeyMappingPolicy;
 
             ContextualBuildKeyMappingPolicy policy;
-            if (!_mappings.TryGetValue(key, out policy))
+            if (!this.Mappings.TryGetValue(key, out policy))
             {
                 //no existing contextual mapping policy for this build key so we have to create an
                 //new one and hook it up
@@ -143,7 +187,7 @@ namespace TecX.Unity.ContextualBinding
                     policy.LastChance = existingPolicy;
                 }
 
-                _mappings[key] = policy;
+                this.Mappings[key] = policy;
 
                 Context.Policies.Set<IBuildKeyMappingPolicy>(policy, key);
             }
@@ -172,71 +216,32 @@ namespace TecX.Unity.ContextualBinding
                 {
                     Guard.AssertNotEmpty(key, "key");
 
-                    object value;
-                    if (_extension._context.TryGetValue(key, out value))
-                    {
-                        return value;
-                    }
+                    return Extension.BindingContext[key];
+                }
 
-                    return null;
+                set
+                {
+                    Guard.AssertNotEmpty(key, "key");
+
+                    Extension.BindingContext[key] = value;
                 }
             }
 
-            public void Put(string key, object value)
+            public BuildTreeNode CurrentBuildNode
             {
-                _extension.Put(key, value);
+                get
+                {
+                    return Extension.TreeTracker.CurrentBuildNode;
+                }
+            }
+
+            private ContextualBindingExtension Extension
+            {
+                get
+                {
+                    return _extension;
+                }
             }
         }
     }
-
-    //   /// <summary>
-    ///// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-    ///// </summary>
-    //public void Dispose()
-    //{
-    //    Dispose(true);
-    //    GC.SuppressFinalize(this);
-    //}
-
-    ///// <summary>
-    ///// Releases unmanaged and - optionally - managed resources.
-    ///// </summary>
-    ///// <param name="disposing">
-    ///// <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.
-    ///// </param>
-    //protected virtual void Dispose(Boolean disposing)
-    //{
-    //    if (disposing)
-    //    {
-    //        // Free managed resources
-    //        TreeTracker.DisposeAllTrees();
-    //    }
-
-    //    // Free native resources if there are any.
-    //}
-
-    ///// <summary>
-    ///// Initial the container with this extension's functionality.
-    ///// </summary>
-    ///// <remarks>
-    ///// When overridden in a derived class, this method will modify the given
-    /////   <see cref="T:Microsoft.Practices.Unity.ExtensionContext"/> by adding strategies, policies, etc. to
-    /////   install it's functions into the container.
-    ///// </remarks>
-    //protected override void Initialize()
-    //{
-    //    Context.Strategies.Add(TreeTracker, UnityBuildStage.PreCreation);
-    //}
-
-    ///// <summary>
-    ///// Gets or sets the tree tracker.
-    ///// </summary>
-    ///// <value>
-    ///// The tree tracker.
-    ///// </value>
-    //private IBuildTreeTracker TreeTracker
-    //{
-    //    get;
-    //    set;
-    //}
 }
