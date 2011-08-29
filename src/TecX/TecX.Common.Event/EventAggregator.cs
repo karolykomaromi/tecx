@@ -107,7 +107,7 @@ namespace TecX.Common.Event
         /// </summary>
         /// <typeparam name="TMessage">The type of the message.</typeparam>
         /// <param name="message">The message containing data.</param>
-        /// <returns></returns>
+        /// <returns>The <paramref name="message"/></returns>
         public TMessage Publish<TMessage>(TMessage message)
             where TMessage : class 
         {
@@ -118,13 +118,17 @@ namespace TecX.Common.Event
                 foreach (var subscriber in GetAllSubscribersFor<TMessage>())
                 {
                     if (_dispatcher != null)
+                    {
 #if SILVERLIGHT
                         _dispatcher.BeginInvoke(new Action(() => subscriber.Handle(message)));
 #else
                         _dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => subscriber.Handle(message)));
 #endif
+                    }
                     else
+                    {
                         subscriber.Handle(message);
+                    }
                 }
             });
 
@@ -139,7 +143,7 @@ namespace TecX.Common.Event
         /// Gets all subscribers for a specific messagetype.
         /// </summary>
         /// <typeparam name="TMessage">The messagetype to search registered implementers for.</typeparam>
-        /// <returns></returns>
+        /// <returns>List of all subscribers for <typeparamref name="TMessage"/></returns>
         private IEnumerable<ISubscribeTo<TMessage>> GetAllSubscribersFor<TMessage>()
         {
             return (from subscriber in _subscribers
@@ -154,7 +158,7 @@ namespace TecX.Common.Event
         /// </summary>
         /// <param name="subscriber">The subscribing object.</param>
         /// <returns>
-        /// 	<c>true</c> if <see cref="ISubscribeTo{TMessage}"/>  is implemented; otherwise, <c>false</c>.
+        ///     <c>true</c> if <see cref="ISubscribeTo{TMessage}"/> is implemented; otherwise, <c>false</c>.
         /// </returns>
         private static void AssertHandlerInterfaceImplemented(object subscriber)
         {
@@ -163,10 +167,13 @@ namespace TecX.Common.Event
                     {
                         if (type.IsGenericType &&
                             type.GetGenericTypeDefinition() == typeof(ISubscribeTo<>))
+                        {
                             return true;
+                        }
 
                         return false;
-                    }, null);
+                    }, 
+                    null);
 
             if (interfaces.Length == 0)
             {
@@ -188,28 +195,17 @@ namespace TecX.Common.Event
         }
 
         /// <summary>
-        /// Determines whether the subscriber is null
-        /// </summary>
-        /// <param name="subscriber">The subscriber to check.</param>
-        /// <returns>
-        /// 	<c>true</c> if the subscriber is not null; otherwise, <c>false</c>.
-        /// </returns>
-        private static bool IsNotNull(object subscriber)
-        {
-            return subscriber != null ? true : false;
-        }
-
-        /// <summary>
         /// Determines whether the object is already in the collection
         /// </summary>
         /// <param name="subscriber">The subscriber to check for.</param>
         /// <returns>
-        /// 	<c>true</c> if the subscriber is not registered yet; otherwise, <c>false</c>.
+        ///     <c>true</c> if the subscriber is not registered yet; otherwise, <c>false</c>.
         /// </returns>
         private bool IsAlreadyInCollection(object subscriber)
         {
             var element = _subscribers.Select(o => o).Where(o => o.Target == subscriber).FirstOrDefault();
-            return element == null ? false : true;
+
+            return element != null;
         }
 
         /// <summary>

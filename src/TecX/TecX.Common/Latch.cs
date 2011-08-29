@@ -56,7 +56,7 @@ namespace TecX.Common
                 return;
             }
 
-            action();
+            RunOpThatMightRaiseRunawayEvents(action);
         }
 
         #endregion Methods

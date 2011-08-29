@@ -26,13 +26,13 @@ namespace TecX.Unity.Injection
             _ctorArguments = new Dictionary<string, object>();
         }
 
-        public ClozeInjectionConstructur(string argName, object argValue)
+        public ClozeInjectionConstructur(string paramName, object paramValue)
             : this()
         {
-            Guard.AssertNotEmpty(argName, "argName");
-            Guard.AssertNotNull(argValue, "argValue");
+            Guard.AssertNotEmpty(paramName, "paramName");
+            Guard.AssertNotNull(paramValue, "paramValue");
 
-            _ctorArguments.Add(argName, argValue);
+            _ctorArguments.Add(paramName, paramValue);
         }
 
         public ClozeInjectionConstructur(IEnumerable<KeyValuePair<string, object>> ctorArguments)
@@ -50,8 +50,10 @@ namespace TecX.Unity.Injection
 
         #region Methods
 
-        public override void AddPolicies(Type serviceType, Type implementationType, string name,
-                                         IPolicyList policies)
+        public override void AddPolicies(Type serviceType, 
+            Type implementationType, 
+            string name,
+            IPolicyList policies)
         {
             ConstructorInfo ctor = FindConstructor(implementationType);
 
@@ -68,9 +70,9 @@ namespace TecX.Unity.Injection
 
             object[] parameterValues = new object[infos.Length];
 
-            //fill in the provided values and add the type of the parameter that the
-            //ctor expects otherwise. unity will take care of resolving parameters that
-            //are provided that way
+            // fill in the provided values and add the type of the parameter that the
+            // ctor expects otherwise. unity will take care of resolving parameters that
+            // are provided that way
             for (int i = 0; i < infos.Length; i++)
             {
                 object value;

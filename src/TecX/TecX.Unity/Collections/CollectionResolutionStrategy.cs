@@ -56,25 +56,29 @@ namespace TecX.Unity.Collections
 
         private static ResolverOverride[] ExtractResolverOverrides(IBuilderContext context)
         {
-            //this method is tightly coupled to the implementation of IBuilderContext. It assumes that the 
-            //class BuilderContext is used and that a field of type CompositeResolverOverride named resolverOverrides
-            //exists in that class
+            // this method is tightly coupled to the implementation of IBuilderContext. It assumes that the 
+            // class BuilderContext is used and that a field of type CompositeResolverOverride named 'resolverOverrides'
+            // exists in that class
             ResolverOverride[] ro = new ResolverOverride[0];
 
-            if (context is BuilderContext)
+            if (!(context is BuilderContext))
             {
-                FieldInfo field = typeof (BuilderContext).GetField("resolverOverrides",
-                    BindingFlags.Instance | BindingFlags.NonPublic);
+                return ro;
+            }
 
-                if (field != null)
-                {
-                    var overrides = field.GetValue(context) as IEnumerable<ResolverOverride>;
+            FieldInfo field = typeof(BuilderContext).GetField(
+                "resolverOverrides", BindingFlags.Instance | BindingFlags.NonPublic);
 
-                    if (overrides != null)
-                    {
-                        ro = overrides.ToArray();
-                    }
-                }
+            if (field == null)
+            {
+                return ro;
+            }
+
+            var overrides = field.GetValue(context) as IEnumerable<ResolverOverride>;
+
+            if (overrides != null)
+            {
+                ro = overrides.ToArray();
             }
 
             return ro;
