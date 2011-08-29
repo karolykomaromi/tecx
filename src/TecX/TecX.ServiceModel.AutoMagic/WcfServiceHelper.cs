@@ -13,6 +13,7 @@ using System.Xml.Linq;
 
 using TecX.Common;
 using TecX.Common.Extensions.Error;
+using TecX.Common.Extensions.Primitives;
 
 namespace TecX.ServiceModel.AutoMagic
 {
@@ -27,8 +28,8 @@ namespace TecX.ServiceModel.AutoMagic
         /// Creates the WCF channel proxy through reflection
         /// </summary>
         /// <param name="contract">The contract.</param>
-        /// <param name="address"></param>
-        /// <param name="binding">The endpoint.</param>
+        /// <param name="address">The address</param>
+        /// <param name="binding">The binding.</param>
         /// <returns></returns>
         public static object CreateWcfChannelProxy(Type contract, EndpointAddress address, Binding binding)
         {
@@ -36,20 +37,19 @@ namespace TecX.ServiceModel.AutoMagic
             Guard.AssertNotNull(binding, "binding");
             Guard.AssertNotNull(address, "address");
 
-            //get the open type for the channelfactory
+            // get the open type for the channelfactory
             Type channelFactoryType = typeof(ChannelFactory<>);
 
-            //make the generic open type a specific type and thus tell the factory for which contract
-            //it will be used
+            // make the generic open type a specific type and thus tell the factory for which contract
+            // it will be used
             channelFactoryType = channelFactoryType.MakeGenericType(contract);
 
-            //create the concrete factory and hand in the binding and address to the constructor
+            // create the concrete factory and hand in the binding and address to the constructor
             object channelFactory = Activator.CreateInstance(channelFactoryType, binding, address);
 
-            //get the method that creates the channel
+            // get the method that creates the channel
             MethodInfo createchannel = channelFactory.GetType().GetMethod("CreateChannel", new Type[0]);
 
-            //return the proxy
             return createchannel.Invoke(channelFactory, null);
         }
 
@@ -58,20 +58,19 @@ namespace TecX.ServiceModel.AutoMagic
             Guard.AssertNotNull(contract, "contract");
             Guard.AssertNotNull(endpointConfigurationName, "endpointConfigurationName");
 
-            //get the open type for the channelfactory
+            // get the open type for the channelfactory
             Type channelFactoryType = typeof(ChannelFactory<>);
 
-            //make the generic open type a specific type and thus tell the factory for which contract
-            //it will be used
+            // make the generic open type a specific type and thus tell the factory for which contract
+            // it will be used
             channelFactoryType = channelFactoryType.MakeGenericType(contract);
 
-            //create the concrete factory and hand in the name of the endpoint configuration to the constructor
+            // create the concrete factory and hand in the name of the endpoint configuration to the constructor
             object channelFactory = Activator.CreateInstance(channelFactoryType, endpointConfigurationName);
 
-            //get the method that creates the channel
+            // get the method that creates the channel
             MethodInfo createchannel = channelFactory.GetType().GetMethod("CreateChannel", new Type[0]);
 
-            //return the proxy
             return createchannel.Invoke(channelFactory, null);
         }
 
@@ -91,10 +90,14 @@ namespace TecX.ServiceModel.AutoMagic
             ServiceInfo serviceInfo;
 
             if (TryGetServiceInfoFromDiscoveryMetadata(contract, uris, out serviceInfo))
+            {
                 return CreateWcfChannelProxy(contract, serviceInfo.Address, serviceInfo.Binding);
+            }
 
             if (TryGetServiceInfoFromMex(contract, out serviceInfo))
+            {
                 return CreateWcfChannelProxy(contract, serviceInfo.Address, serviceInfo.Binding);
+            }
 
             throw new ProxyCreationFailedException("Could not find a suitable service via WCF Discovery or MEX");
         }
@@ -112,10 +115,10 @@ namespace TecX.ServiceModel.AutoMagic
         {
             Guard.AssertNotNull(endpoint, "endpoint");
 
-            //get all metadata like the bindings, contract and address from the endpoint...
+            // get all metadata like the bindings, contract and address from the endpoint...
             MetadataSet endpointMetadata = WcfServiceHelper.ExportEndpointMetadata(endpoint);
 
-            //...convert it to xml and add the xml to the metadata the DiscoveryClient will receive
+            // ...convert it to xml and add the xml to the metadata the DiscoveryClient will receive
             if (endpointMetadata != null)
             {
                 XElement endpointMetadataExtension = WcfServiceHelper.ConvertServiceMetadataToXml(endpointMetadata);
@@ -134,17 +137,18 @@ namespace TecX.ServiceModel.AutoMagic
         /// <param name="scopes">The scopes of the endpoints to look for. <see cref="FindCriteria.Scopes"/></param>
         /// <param name="serviceInfo">The contract info.</param>
         /// <returns><c>true</c> if (A)ddress and (B)inding could be retrieved; <c>false</c> otherwise</returns>
-        private static bool TryGetServiceInfoFromDiscoveryMetadata(Type contract, Collection<Uri> scopes,
-                                                                   out ServiceInfo serviceInfo)
+        private static bool TryGetServiceInfoFromDiscoveryMetadata(Type contract, Collection<Uri> scopes, out ServiceInfo serviceInfo)
         {
             using (DiscoveryClient discoveryClient = new DiscoveryClient(new UdpDiscoveryEndpoint()))
             {
-                FindCriteria criteria = new FindCriteria(contract) { Duration = new TimeSpan(0, 0, 2) };
+                FindCriteria criteria = new FindCriteria(contract) { Duration = 2.Seconds() };
 
                 if (scopes != null && scopes.Count > 0)
                 {
                     foreach (Uri scope in scopes)
+                    {
                         criteria.Scopes.Add(scope);
+                    }
                 }
 
                 FindResponse response = discoveryClient.Find(criteria);
@@ -154,7 +158,7 @@ namespace TecX.ServiceModel.AutoMagic
                 if (availableServices != null &&
                     availableServices.Count > 0)
                 {
-                    //the first available service is used (no guarantees about order or special features)
+                    // the first available service is used (no guarantees about order or special features)
                     EndpointDiscoveryMetadata svc = availableServices[0];
 
                     XElement element = svc.Extensions.Elements(Constants.EndpointMetadataExtensionName).FirstOrDefault();
@@ -169,7 +173,9 @@ namespace TecX.ServiceModel.AutoMagic
                         MetadataSet metadata = MetadataSet.ReadFrom(reader);
 
                         if (TryGetServiceInfoFromMetadataSet(metadata, contract, out serviceInfo))
+                        {
                             return true;
+                        }
                     }
                 }
             }
@@ -185,8 +191,7 @@ namespace TecX.ServiceModel.AutoMagic
         /// <param name="contract">Contract the endpoint must implement</param>
         /// <param name="serviceInfo">The service info.</param>
         /// <returns><c>true</c> if address and binding could be retrieved; <c>false</c> otherwise</returns>
-        private static bool TryGetServiceInfoFromMetadataSet(MetadataSet metadata, Type contract,
-                                                             out ServiceInfo serviceInfo)
+        private static bool TryGetServiceInfoFromMetadataSet(MetadataSet metadata, Type contract, out ServiceInfo serviceInfo)
         {
             MetadataImporter importer = new WsdlImporter(metadata);
 
@@ -194,7 +199,7 @@ namespace TecX.ServiceModel.AutoMagic
 
             if (endpoints.Count > 0)
             {
-                //only use the metadata of a service that offers the requested contract
+                // only use the metadata of a service that offers the requested contract
                 ServiceEndpoint endpoint = endpoints.FirstOrDefault();
 
                 if (endpoint != null)
@@ -264,10 +269,10 @@ namespace TecX.ServiceModel.AutoMagic
         {
             using (DiscoveryClient discoveryClient = new DiscoveryClient(new UdpDiscoveryEndpoint()))
             {
-                //define search criteria that identify a MetadataExchangeEndpoint
+                // define search criteria that identify a MetadataExchangeEndpoint
                 FindCriteria criteria = FindCriteria.CreateMetadataExchangeEndpointCriteria();
                 criteria.MaxResults = 1;
-                criteria.Duration = new TimeSpan(0, 0, 2);
+                criteria.Duration = 2.Seconds();
 
                 FindResponse discovered = discoveryClient.Find(criteria);
 
@@ -280,7 +285,9 @@ namespace TecX.ServiceModel.AutoMagic
                 MetadataSet metadata = mexClient.GetMetadata(discovered.Endpoints[0].Address);
 
                 if (TryGetServiceInfoFromMetadataSet(metadata, contract, out serviceInfo))
+                {
                     return true;
+                }
             }
 
             serviceInfo = null;

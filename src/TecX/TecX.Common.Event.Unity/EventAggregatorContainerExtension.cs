@@ -13,8 +13,6 @@ namespace TecX.Common.Event.Unity
         /// </summary>
         public EventAggregatorContainerExtension()
         {
-            //TODO weberse evaluate using the application dispatcher instead via ctor injection to the
-            //container extension
 #if SILVERLIGHT
             Dispatcher dispatcher = Deployment.Current.Dispatcher;
 #else

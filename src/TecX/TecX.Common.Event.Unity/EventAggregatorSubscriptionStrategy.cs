@@ -20,6 +20,7 @@ namespace TecX.Common.Event.Unity
             Guard.AssertNotNull(eventAggregator, "eventAggregator");
 
             _eventAggregator = eventAggregator;
+
             _knownSubscribers = new Dictionary<Type, bool>();
         }
 
@@ -29,8 +30,8 @@ namespace TecX.Common.Event.Unity
             {
                 Type type = context.Existing.GetType();
 
-                //if we came across that type before see wether we should automatically
-                //subscribe it
+                // if we came across that type before see wether we should automatically
+                // subscribe it
                 bool shouldSubscribe;
                 if (_knownSubscribers.TryGetValue(type, out shouldSubscribe))
                 {
@@ -41,20 +42,20 @@ namespace TecX.Common.Event.Unity
                 }
                 else
                 {
-                    //havent seen that type before so check wether it implements
-                    //any subscription handler
+                    // haven't seen that type before so check wether it implements
+                    // any subscription handler
                     if (type.GetInterfaces()
                         .Any(i => i.IsGenericType &&
                                   (i.GetGenericTypeDefinition() == typeof(ISubscribeTo<>))))
                     {
-                        //if it does add the type to knownSubscribers so we dont have
-                        //to check again next time
+                        // if it does add the type to knownSubscribers so we dont have
+                        // to check again next time
                         _knownSubscribers[type] = true;
                         _eventAggregator.Subscribe(context.Existing);
                     }
                     else
                     {
-                        //doesnt implement a subscription handler -> dont bother next time
+                        // doesn't implement a subscription handler -> dont bother next time
                         _knownSubscribers[type] = false;
                     }
                 }

@@ -29,27 +29,22 @@ namespace TecX.Unity.ContextualBinding
         private static BuildTreeNode _currentBuildNode;
 
         /// <summary>
-        /// Assigns an instance to the current tree node.
+        /// Gets the current build node.
         /// </summary>
-        /// <param name="buildKey">
-        /// The build key.
-        /// </param>
-        /// <param name="instance">
-        /// The instance.
-        /// </param>
-        private void AssignInstanceToCurrentTreeNode(NamedTypeBuildKey buildKey, object instance)
+        /// <value>
+        /// The current build node.
+        /// </value>
+        public BuildTreeNode CurrentBuildNode
         {
-            if (CurrentBuildNode.BuildKey != buildKey)
+            get
             {
-                string message = string.Format(CultureInfo.CurrentCulture, 
-                    Constants.ErrorMessages.BuildTreeConstructedOutOfOrder, 
-                    CurrentBuildNode.BuildKey, 
-                    buildKey);
-
-                throw new InvalidOperationException(message);
+                return _currentBuildNode;
             }
 
-            CurrentBuildNode.AssignInstance(instance);
+            set
+            {
+                _currentBuildNode = value;
+            }
         }
 
         /// <summary>
@@ -107,22 +102,27 @@ namespace TecX.Unity.ContextualBinding
         }
 
         /// <summary>
-        /// Gets the current build node.
+        /// Assigns an instance to the current tree node.
         /// </summary>
-        /// <value>
-        /// The current build node.
-        /// </value>
-        public BuildTreeNode CurrentBuildNode
+        /// <param name="buildKey">
+        /// The build key.
+        /// </param>
+        /// <param name="instance">
+        /// The instance.
+        /// </param>
+        private void AssignInstanceToCurrentTreeNode(NamedTypeBuildKey buildKey, object instance)
         {
-            get
+            if (CurrentBuildNode.BuildKey != buildKey)
             {
-                return _currentBuildNode;
+                string message = string.Format(CultureInfo.CurrentCulture,
+                    Constants.ErrorMessages.BuildTreeConstructedOutOfOrder,
+                    CurrentBuildNode.BuildKey,
+                    buildKey);
+
+                throw new InvalidOperationException(message);
             }
 
-            set
-            {
-                _currentBuildNode = value;
-            }
+            CurrentBuildNode.AssignInstance(instance);
         }
     }
 }

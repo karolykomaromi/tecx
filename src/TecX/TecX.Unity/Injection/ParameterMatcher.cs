@@ -48,21 +48,25 @@ namespace TecX.Unity.Injection
         {
             Guard.AssertNotNull(ctors, "ctors");
 
-            //sort by number of arguments the ctor takes
+            // sort by number of arguments the ctor takes
             ctors = ctors.OrderByDescending(ctor => ctor.GetParameters().Length);
 
             IEnumerable<ConstructorInfo> potentialMatches = ctors
                 .Where(ctor => !_filters.Any(filter => filter(ctor)));
 
-            //no match -> exceptional situation which should cause some error))
+            // no match -> exceptional situation which should cause some error))
             if (potentialMatches.Count() == 0)
+            {
                 throw new ArgumentException("no matching ctor found");
+            }
 
-            //one perfect match
+            // one perfect match
             if (potentialMatches.Count() == 1)
+            {
                 return potentialMatches.Single();
+            }
 
-            //several matches -> return ctor with most arguments
+            // several matches -> return ctor with most arguments
             return potentialMatches
                 .OrderByDescending(ctor => ctor.GetParameters().Length)
                 .FirstOrDefault();
@@ -102,7 +106,7 @@ namespace TecX.Unity.Injection
 
             ParameterInfo[] parameters = ctor.GetParameters();
 
-            //find parameters not satisfied by provided args
+            // find parameters not satisfied by provided args
             var noMatch = from p in parameters
                           where !_ctorArgs.Keys.Any(key => p.Name == key)
                           select p;

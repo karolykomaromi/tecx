@@ -36,7 +36,7 @@ namespace TecX.ServiceModel.AutoMagic
                         .WithAdditionalInfo("buildKey", context.BuildKey);
                 }
 
-                //delegate creation of the channel proxy
+                // delegate creation of the channel proxy
                 context.Existing = WcfServiceHelper.CreateWcfChannelProxy(typeToConstruct, _address, _binding);
             }
         }
