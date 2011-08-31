@@ -19,6 +19,9 @@ namespace TecX.Common.Time
 
         #region c'tor
 
+        /// <summary>
+        /// Initializes static members of the <see cref="TimeProvider"/> class.
+        /// </summary>
         static TimeProvider()
         {
             _current = new DefaultTimeProvider();
@@ -32,7 +35,11 @@ namespace TecX.Common.Time
         /// <value>The current provider.</value>
         public static TimeProvider Current
         {
-            get { return _current; }
+            get
+            {
+                return _current;
+            }
+
             set
             {
                 Guard.AssertNotNull(value, "value", "An Ambient Context must never be null");
@@ -45,15 +52,7 @@ namespace TecX.Common.Time
         }
 
         /// <summary>
-        /// Resets the current provider to a &quot;good local default&quot;.
-        /// </summary>
-        public static void ResetToDefault()
-        {
-            Current = new DefaultTimeProvider();
-        }
-
-        /// <summary>
-        ///Gets a <see cref="DateTime"/> object that is set to the current date and time 
+        /// Gets a <see cref="DateTime"/> object that is set to the current date and time 
         /// on this computer, expressed as the Coordinated Universal Time (UTC).
         /// </summary>
         public abstract DateTime UtcNow { get; }

@@ -16,21 +16,24 @@ namespace TecX.Common.Comparison
         /// </summary>
         /// <param name="first">First array of bytes</param>
         /// <param name="second">Second array of bytes</param>
-        /// <returns><c>true</c> if both arrays contain identical values or both are <c>null</c>; <c>false</c> otherwise.</returns>
+        /// <returns>
+        ///     <c>true</c> if both arrays contain identical values or both are <c>null</c>; <c>false</c> otherwise.
+        /// </returns>
         public static bool AreEqual(byte[] first, byte[] second)
         {
-            //one is null -> false
+            // one is null -> false
             if (IsExactlyOneNull(first, second))
             {
                 return false;
             }
 
-            //both are null -> true
+            // both are null -> true
             if (AreBothNull(first, second))
             {
                 return true;
             }
-            //different length -> false
+
+            // different length -> false
             if (first.Length != second.Length)
             {
                 return false;
@@ -42,20 +45,26 @@ namespace TecX.Common.Comparison
         /// <summary>
         /// Compares two objects using their Equals() method
         /// </summary>
-        /// <param name="first"></param>
-        /// <param name="second"></param>
-        /// <returns><c>true</c> if the objects are equal, <c>false</c> otherwise.</returns>
+        /// <param name="first">First object</param>
+        /// <param name="second">Second object</param>
+        /// <returns>
+        ///     <c>true</c> if the objects are equal, <c>false</c> otherwise.
+        /// </returns>
         public static bool AreEqual(object first, object second)
         {
-            //one object is null -> not equal
+            // one object is null -> not equal
             if (IsExactlyOneNull(first, second))
+            {
                 return false;
+            }
 
-            //both objects are null -> equal
+            // both objects are null -> equal
             if (AreBothNull(first, second))
+            {
                 return true;
+            }
 
-            //uses the instance Equals() method for comparison
+            // uses the instance Equals() method for comparison
             bool equal = first.Equals(second);
 
             return equal;
@@ -69,18 +78,24 @@ namespace TecX.Common.Comparison
         /// <param name="second">Second object</param>
         /// <param name="comparer">Implementation of <see cref="IEqualityComparer{T}"/> used to
         /// compare the <paramref name="first"/> and <paramref name="second"/> object</param>
-        /// <returns><c>true</c> if the two objects are considered equal; <c>false</c> otherwise</returns>
+        /// <returns>
+        ///     <c>true</c> if the two objects are considered equal; <c>false</c> otherwise
+        /// </returns>
         public static bool AreEqual<T>(T first, T second, IEqualityComparer<T> comparer)
         {
             Guard.AssertNotNull(comparer, "comparer");
 
-            //one object is null -> not equal
+            // one object is null -> not equal
             if (IsExactlyOneNull(first, second))
+            {
                 return false;
+            }
 
-            //both objects are null -> equal
+            // both objects are null -> equal
             if (AreBothNull(first, second))
+            {
                 return true;
+            }
 
             bool equal = comparer.Equals(first, second);
 
@@ -97,7 +112,7 @@ namespace TecX.Common.Comparison
         /// <param name="first">The first object</param>
         /// <param name="second">The second object</param>
         /// <returns>
-        /// 	<c>true</c> if none is <c>null</c>; otherwise, <c>false</c>.
+        ///     <c>true</c> if none is <c>null</c>; otherwise, <c>false</c>.
         /// </returns>
         public static bool IsNoneNull(object first, object second)
         {
@@ -105,7 +120,7 @@ namespace TecX.Common.Comparison
         }
 
         /// <summary>
-        ///Determines wether both values are <c>null</c>
+        /// Determines wether both values are <c>null</c>
         /// </summary>
         /// <param name="first">The first obj.</param>
         /// <param name="second">The second obj.</param>
@@ -121,7 +136,7 @@ namespace TecX.Common.Comparison
         /// <param name="first">The first obj.</param>
         /// <param name="second">The second obj.</param>
         /// <returns>
-        /// 	<c>true</c> if exactly one of the values is <c>null</c>; <c>false</c> otherwise
+        ///     <c>true</c> if exactly one of the values is <c>null</c>; <c>false</c> otherwise
         /// </returns>
         public static bool IsExactlyOneNull(object first, object second)
         {

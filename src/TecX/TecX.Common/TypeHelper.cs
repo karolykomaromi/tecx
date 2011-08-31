@@ -39,15 +39,15 @@ namespace TecX.Common
         {
             if (string.IsNullOrEmpty(format))
             {
-                //if the format string is already empty,
-                //then just return an empty string
+                // if the format string is already empty,
+                // then just return an empty string
                 return string.Empty;
             }
 
             try
             {
-                //if there are no arguments to put into the format string
-                //then just return the format string as is
+                // if there are no arguments to put into the format string
+                // then just return the format string as is
                 if (args == null || args.Length == 0)
                 {
                     return format;
@@ -59,8 +59,8 @@ namespace TecX.Common
             }
             catch (FormatException)
             {
-                //if an error occured fallback to the most complicated
-                //and slowest way to fill the arguments into the format string
+                // if an error occured fallback to the most complicated
+                // and slowest way to fill the arguments into the format string
                 return SafeFormatIntern(format, args);
             }
         }
@@ -85,9 +85,9 @@ namespace TecX.Common
 
             try
             {
-                //initialize a StringBuilder as we might have quite a few changes to make to the
-                //format string and make sure that it has a reasonable initial capacity so we do not have to
-                //reallocate and increase the memory reserved for the builder
+                // initialize a StringBuilder as we might have quite a few changes to make to the
+                // format string and make sure that it has a reasonable initial capacity so we do not have to
+                // reallocate and increase the memory reserved for the builder
                 StringBuilder sb = new StringBuilder(format, format.Length + args.Length * Constants.DefaultLengthPerStringFormatArg);
 
                 Regex regex = new Regex(@"{\d+}");
@@ -360,10 +360,21 @@ namespace TecX.Common
         /// <summary>
         /// Checks wether a value is inside a range (including the upper and lower bound of the range)
         /// </summary>
-        /// <param name="value">The value to check</param>
-        /// <param name="lower">The lower bound of the range</param>
-        /// <param name="upper">The upper bound of the range</param>
-        /// <returns><i>true</i> if (lower &lt;= value &lt; upper); <i>false</i> otherwise</returns>
+        /// <typeparam name="T">
+        /// Type of values to compare
+        /// </typeparam>
+        /// <param name="value">
+        /// The value to check
+        /// </param>
+        /// <param name="lower">
+        /// The lower bound of the range
+        /// </param>
+        /// <param name="upper">
+        /// The upper bound of the range
+        /// </param>
+        /// <returns>
+        /// <i>true</i> if (lower &lt;= value &lt; upper); <i>false</i> otherwise
+        /// </returns>
         public static bool IsInRange<T>(T value, T lower, T upper)
             where T : IComparable
         {
