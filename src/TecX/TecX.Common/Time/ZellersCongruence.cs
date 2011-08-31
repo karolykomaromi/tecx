@@ -22,12 +22,13 @@ namespace TecX.Common.Time
             int h; // is the day of the week (0 = Saturday, 1 = Sunday, 2 = Monday, ...
             int q = dt.Day; // q is the day of the month
             int m = (dt.Month < 3) ? dt.Month + 12 : dt.Month;
+
             // m is the month (3 = March, 4 = April, 5 = May, ..., 14 = February)
             int Y = (dt.Month < 3) ? dt.Year - 1 : dt.Year;
 
             h = (q + (int)(((m + 1) * 26) / 10) + Y + (int)(Y / 4) + 6 * (int)(Y / 100) + (int)(Y / 400)) % 7;
 
-            //(int)DayOfWeek.Sunday == 0 so we need to add 1 to our result and make sure we stay inside the [0..6] range
+            // (int)DayOfWeek.Sunday == 0 so we need to add 1 to our result and make sure we stay inside the [0..6] range
             return (DayOfWeek)((h + 1) % 7);
         }
 

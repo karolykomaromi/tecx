@@ -31,11 +31,13 @@ namespace TecX.Common
         public static decimal ToDecimal(object value, decimal def)
         {
             if (value == null)
+            {
                 return def;
+            }
 
             decimal result;
 
-            //if the value already is a string -> try to parse it
+            // if the value already is a string -> try to parse it
             if (TypeHelper.TryParse(value as string, out result))
             {
                 return result;
@@ -51,7 +53,7 @@ namespace TecX.Common
                 /* Intentionally left blank */
             }
 
-            //value cannot be converted and is not a string
+            // value cannot be converted and is not a string
             if (TypeHelper.TryParse(value.ToString(), out result))
             {
                 return result;
@@ -92,20 +94,22 @@ namespace TecX.Common
         /// <returns>A hexadecimal string</returns>
         public static string ToHex(byte[] bytes)
         {
-            //input validation
+            // input validation
             Guard.AssertNotNull(bytes, "bytes");
 
             StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < bytes.Length; i++)
             {
-                //X2 defines hex format
+                // X2 defines hex format
                 string str = bytes[i].ToString("X2");
-                if (!String.IsNullOrEmpty(str))
+                if (!string.IsNullOrEmpty(str))
                 {
-                    //no separator as first letter
+                    // no separator as first letter
                     if (i > 0)
+                    {
                         sb.Append("-");
+                    }
 
                     sb.Append(str);
                 }
@@ -121,12 +125,12 @@ namespace TecX.Common
         /// <returns>An array of bytes</returns>
         public static byte[] ToByte(string hexString)
         {
-            if (String.IsNullOrEmpty(hexString))
+            if (string.IsNullOrEmpty(hexString))
             {
                 return new byte[0];
             }
 
-            //hex strings may start with '#' as delimiter
+            // hex strings may start with '#' as delimiter
             hexString = hexString.TrimStart('#');
 
             List<byte> bytes = new List<byte>();
@@ -140,7 +144,7 @@ namespace TecX.Common
                     if (!string.IsNullOrEmpty(str) && (str != "-"))
                     {
                         byte b;
-                        if (Byte.TryParse(str, NumberStyles.HexNumber, null, out b))
+                        if (byte.TryParse(str, NumberStyles.HexNumber, null, out b))
                         {
                             bytes.Add(b);
                         }
@@ -149,8 +153,9 @@ namespace TecX.Common
 
                 return bytes.ToArray();
             }
-            //you need two hex digits for a byte so the
-            //string length must be even
+
+            // you need two hex digits for a byte so the
+            // string length must be even
             if (hexString.Length % 2 != 0)
             {
                 return new byte[0];
@@ -158,16 +163,16 @@ namespace TecX.Common
 
             try
             {
-                //cut the hexstring in snippets of length 2
+                // cut the hexstring in snippets of length 2
                 for (int i = 0; i < hexString.Length; i += 2)
                 {
                     string str = hexString.Substring(i, 2);
 
-                    //check if there is anything in it
-                    if (!String.IsNullOrEmpty(str))
+                    // check if there is anything in it
+                    if (!string.IsNullOrEmpty(str))
                     {
                         byte b;
-                        if (Byte.TryParse(str, NumberStyles.HexNumber, null, out b))
+                        if (byte.TryParse(str, NumberStyles.HexNumber, null, out b))
                         {
                             bytes.Add(b);
                         }
