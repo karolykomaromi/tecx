@@ -14,6 +14,9 @@ namespace TecX.Unity.ContextualBinding
     {
         private static class Constants
         {
+            /// <summary>
+            /// Error messages
+            /// </summary>
             public static class ErrorMessages
             {
                 /// <summary>

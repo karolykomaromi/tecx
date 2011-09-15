@@ -64,6 +64,7 @@
     <Compile Include="Collections\CollectionResolutionExtension.cs" />
     <Compile Include="Collections\CollectionResolutionStrategy.cs" />
     <Compile Include="Collections\CoupledToImplementationDetailsOverrideExtractor.cs" />
+    <Compile Include="Collections\NullResolverOverrideExtractor.cs" />
     <Compile Include="Collections\ResolverOverrideExtractor.cs" />
     <Compile Include="Injection\ParameterMatcher.cs" />
     <Compile Include="Injection\ClozeInjectionConstructur.cs" />

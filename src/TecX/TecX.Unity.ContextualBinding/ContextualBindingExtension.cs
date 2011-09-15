@@ -156,7 +156,7 @@ namespace TecX.Unity.ContextualBinding
 
         private void OnRegistering(object sender, RegisterEventArgs e)
         {
-            //we are only interested in default mappings
+            // we are only interested in default mappings
             if (!string.IsNullOrEmpty(e.Name)) return;
 
             NamedTypeBuildKey key = new NamedTypeBuildKey(e.TypeFrom);
@@ -164,15 +164,15 @@ namespace TecX.Unity.ContextualBinding
             ContextualBuildKeyMappingPolicy policy;
             if (this.Mappings.TryGetValue(key, out policy))
             {
-                //if something is already registered -> check if we have a registration with same name
-                //do the replace and last chance hookup if neccessary
+                // if something is already registered -> check if we have a registration with same name
+                // do the replace and last chance hookup if neccessary
                 IBuildKeyMappingPolicy existingPolicy = Context.Policies.Get<IBuildKeyMappingPolicy>(key);
-                ContextualBuildKeyMappingPolicy existingContextualPolicy =
-                    existingPolicy as ContextualBuildKeyMappingPolicy;
+                ContextualBuildKeyMappingPolicy existingContextualPolicy = existingPolicy as ContextualBuildKeyMappingPolicy;
 
-                if (existingPolicy != null && existingContextualPolicy == null)
+                if (existingPolicy != null && 
+                    existingContextualPolicy == null)
                 {
-                    //means that there is a default mapping registered but its not a contextual mapping
+                    // means that there is a default mapping registered but its not a contextual mapping
                     policy.LastChance = existingPolicy;
                 }
 
@@ -188,7 +188,7 @@ namespace TecX.Unity.ContextualBinding
             ContextualBuildKeyMappingPolicy existingContextualPolicy = existingPolicy as ContextualBuildKeyMappingPolicy;
 
             ContextualBuildKeyMappingPolicy policy;
-            if (!this.Mappings.TryGetValue(key, out policy))
+            if (!Mappings.TryGetValue(key, out policy))
             {
                 // no existing contextual mapping policy for this build key so we have to create an
                 // new one and hook it up
@@ -200,7 +200,7 @@ namespace TecX.Unity.ContextualBinding
                     policy.LastChance = existingPolicy;
                 }
 
-                this.Mappings[key] = policy;
+                Mappings[key] = policy;
 
                 Context.Policies.Set<IBuildKeyMappingPolicy>(policy, key);
             }

@@ -13,6 +13,9 @@ namespace TecX.Unity.ContextualBinding
     {
         private static class Constants
         {
+            /// <summary>
+            /// Error messages
+            /// </summary>
             public static class ErrorMessages
             {
                 /// <summary>
@@ -29,7 +32,7 @@ namespace TecX.Unity.ContextualBinding
         private static BuildTreeNode _currentBuildNode;
 
         /// <summary>
-        /// Gets the current build node.
+        /// Gets or sets the current build node.
         /// </summary>
         /// <value>
         /// The current build node.
@@ -47,14 +50,7 @@ namespace TecX.Unity.ContextualBinding
             }
         }
 
-        /// <summary>
-        /// Called during the chain of responsibility for a build operation. The
-        ///   PostBuildUp method is called when the chain has finished the PreBuildUp
-        ///   phase and executes in reverse order from the PreBuildUp calls.
-        /// </summary>
-        /// <param name="context">
-        /// Context of the build operation.
-        /// </param>
+        /// <inheritdoc/>
         public override void PostBuildUp(IBuilderContext context)
         {
             if (context != null)
@@ -71,14 +67,7 @@ namespace TecX.Unity.ContextualBinding
             base.PostBuildUp(context);
         }
 
-        /// <summary>
-        /// Called during the chain of responsibility for a build operation. The
-        ///   PreBuildUp method is called when the chain is being executed in the
-        ///   forward direction.
-        /// </summary>
-        /// <param name="context">
-        /// Context of the build operation.
-        /// </param>
+        /// <inheritdoc/>
         public override void PreBuildUp(IBuilderContext context)
         {
             base.PreBuildUp(context);
@@ -87,7 +76,8 @@ namespace TecX.Unity.ContextualBinding
             {
                 bool nodeCreatedByContainer = context.Existing == null;
 
-                BuildTreeNode newTreeNode = new BuildTreeNode(context.BuildKey, 
+                BuildTreeNode newTreeNode = new BuildTreeNode(
+                    context.BuildKey, 
                     nodeCreatedByContainer, 
                     CurrentBuildNode);
 
@@ -114,7 +104,8 @@ namespace TecX.Unity.ContextualBinding
         {
             if (CurrentBuildNode.BuildKey != buildKey)
             {
-                string message = string.Format(CultureInfo.CurrentCulture,
+                string message = string.Format(
+                    CultureInfo.CurrentCulture,
                     Constants.ErrorMessages.BuildTreeConstructedOutOfOrder,
                     CurrentBuildNode.BuildKey,
                     buildKey);
