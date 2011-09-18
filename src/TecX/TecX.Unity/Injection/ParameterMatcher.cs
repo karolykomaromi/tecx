@@ -11,28 +11,25 @@ namespace TecX.Unity.Injection
     {
         #region Fields
 
-        private readonly IDictionary<string, object> _ctorArgs;
+        private readonly ConstructorArgumentCollection _ctorArgs;
         private readonly IEnumerable<Predicate<ConstructorInfo>> _filters;
 
         #endregion Fields
 
         #region c'tor
 
-        private ParameterMatcher()
+        public ParameterMatcher(IEnumerable<ConstructorArgument> ctorArgs)
         {
-            _ctorArgs = new Dictionary<string, object>();
+            Guard.AssertNotNull(ctorArgs, "ctorArgs"); 
+            
+            _ctorArgs = new ConstructorArgumentCollection();
+
             _filters = new Predicate<ConstructorInfo>[]
                            {
-                               FilterByCtorTakesAllArgs, 
-                               FilterByNonSatisfiedPrimitiveArgs, 
-                               FilterByArgTypesFit
+                               ConstructorTakesAllArguments, 
+                               NonSatisfiedPrimitiveArgs, 
+                               ArgumentTypesMatch
                            };
-        }
-
-        public ParameterMatcher(IEnumerable<KeyValuePair<string, object>> ctorArgs)
-            : this()
-        {
-            Guard.AssertNotNull(ctorArgs, "ctorArgs");
 
             foreach (var arg in ctorArgs)
             {
@@ -78,16 +75,18 @@ namespace TecX.Unity.Injection
         /// <param name="ctor">The ctor.</param>
         /// <returns><c>true</c> when a constructor does not take one of the provided
         /// arguments; otherwise <c>false</c></returns>
-        public bool FilterByCtorTakesAllArgs(ConstructorInfo ctor)
+        public bool ConstructorTakesAllArguments(ConstructorInfo ctor)
         {
             Guard.AssertNotNull(ctor, "ctor");
 
             ParameterInfo[] parameters = ctor.GetParameters();
 
-            foreach (var arg in _ctorArgs)
+            foreach (var argument in _ctorArgs)
             {
-                if (!parameters.Any(p => p.Name == arg.Key))
+                if (!parameters.Any(p => p.Name == argument.Name))
+                {
                     return true;
+                }
             }
 
             return false;
@@ -100,7 +99,7 @@ namespace TecX.Unity.Injection
         /// <param name="ctor">The ctor.</param>
         /// <returns><c>true</c> if the ctor takes a primitive argument that is not provided;
         /// otherwise <c>false</c></returns>
-        public bool FilterByNonSatisfiedPrimitiveArgs(ConstructorInfo ctor)
+        public bool NonSatisfiedPrimitiveArgs(ConstructorInfo ctor)
         {
             Guard.AssertNotNull(ctor, "ctor");
 
@@ -108,7 +107,7 @@ namespace TecX.Unity.Injection
 
             // find parameters not satisfied by provided args
             var noMatch = from p in parameters
-                          where !_ctorArgs.Keys.Any(key => p.Name == key)
+                          where !_ctorArgs.Names.Any(key => p.Name == key)
                           select p;
 
             foreach (ParameterInfo parameter in noMatch)
@@ -134,16 +133,16 @@ namespace TecX.Unity.Injection
         /// <param name="ctor">The ctor.</param>
         /// <returns><c>true</c> if ctor takes argument with correct argument name but wrong
         /// argument Type; otherwise <c>false</c></returns>
-        public bool FilterByArgTypesFit(ConstructorInfo ctor)
+        public bool ArgumentTypesMatch(ConstructorInfo ctor)
         {
             Guard.AssertNotNull(ctor, "ctor");
-            
+
             foreach (ParameterInfo parameter in ctor.GetParameters())
             {
-                object value;
-                if (_ctorArgs.TryGetValue(parameter.Name, out value))
+                ConstructorArgument argument;
+                if (_ctorArgs.TryGetArgumentByName(parameter.Name, out argument))
                 {
-                    if (parameter.ParameterType != value.GetType())
+                    if (parameter.ParameterType != argument.Value.GetType())
                     {
                         return true;
                     }

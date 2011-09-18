@@ -42,10 +42,10 @@ namespace TecX.Unity.Test
             container.RegisterType<ILogger, TestLogger>();
 
             container.RegisterType<ICtorTest, CtorTest>(
-                new ClozeInjectionConstructur(new Dictionary<string, object>
+                new ClozeInjectionConstructur(new ConstructorArgumentCollection
                                                   {
-                                                      {"connectionString", Constants.ConnectionStringValue},
-                                                      {"anotherParam", "I'm a string"}
+                                                      new ConstructorArgument("connectionString", Constants.ConnectionStringValue),
+                                                      new ConstructorArgument("anotherParam", "I'm a string")
                                                   }));
 
             ICtorTest sut = container.Resolve<ICtorTest>();
@@ -56,12 +56,12 @@ namespace TecX.Unity.Test
         public void WhenFilterByCtorTakesAllArgsFindsExpectedCtors()
         {
             ParameterMatcher matcher = new ParameterMatcher(
-                new Dictionary<string, object>
+                new ConstructorArgumentCollection
                     {
-                        {"connectionString", Constants.ConnectionStringValue}
+                        new ConstructorArgument("connectionString", Constants.ConnectionStringValue)
                     });
 
-            Predicate<ConstructorInfo> filter = matcher.FilterByCtorTakesAllArgs;
+            Predicate<ConstructorInfo> filter = matcher.ConstructorTakesAllArguments;
 
             IEnumerable<Predicate<ConstructorInfo>> filters = new[] {filter};
 
@@ -78,16 +78,16 @@ namespace TecX.Unity.Test
         public void WhenFilterByNonSatisfiedPrimitiveArgsFindsExpectedCtors()
         {
             ParameterMatcher matcher = new ParameterMatcher(
-                new Dictionary<string, object>
+                new ConstructorArgumentCollection
                     {
-                        {"connectionString", Constants.ConnectionStringValue}
+                        new ConstructorArgument("connectionString", Constants.ConnectionStringValue)
                     });
 
-            Predicate<ConstructorInfo> filter = matcher.FilterByNonSatisfiedPrimitiveArgs;
+            Predicate<ConstructorInfo> filter = matcher.NonSatisfiedPrimitiveArgs;
 
-            IEnumerable<Predicate<ConstructorInfo>> filters = new[] {filter};
+            IEnumerable<Predicate<ConstructorInfo>> filters = new[] { filter };
 
-            var ctors = typeof (CtorTest).GetConstructors();
+            var ctors = typeof(CtorTest).GetConstructors();
 
             var result = ctors.Where(ctor => !filters.Any(f => f(ctor)))
                 .OrderBy(ctor => ctor.GetParameters().Length);
@@ -103,17 +103,17 @@ namespace TecX.Unity.Test
         public void WhenFilterByArgTypesFitFindsExpectedCtors()
         {
             ParameterMatcher matcher = new ParameterMatcher(
-                new Dictionary<string, object>
+                new ConstructorArgumentCollection
                     {
-                        {"connectionString", Constants.ConnectionStringValue},
-                        {"anotherParam", "I'm a string"}
+                        new ConstructorArgument("connectionString", Constants.ConnectionStringValue),
+                        new ConstructorArgument("anotherParam", "I'm a string")
                     });
 
-            Predicate<ConstructorInfo> filter = matcher.FilterByArgTypesFit;
+            Predicate<ConstructorInfo> filter = matcher.ArgumentTypesMatch;
 
-            IEnumerable<Predicate<ConstructorInfo>> filters = new[] {filter};
+            IEnumerable<Predicate<ConstructorInfo>> filters = new[] { filter };
 
-            var ctors = typeof (CtorTest).GetConstructors();
+            var ctors = typeof(CtorTest).GetConstructors();
 
             var result = ctors.Where(ctor => !filters.Any(f => f(ctor)))
                 .OrderBy(ctor => ctor.GetParameters().Length);

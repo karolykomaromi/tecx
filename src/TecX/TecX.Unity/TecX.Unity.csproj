@@ -66,6 +66,13 @@
     <Compile Include="Collections\CoupledToImplementationDetailsOverrideExtractor.cs" />
     <Compile Include="Collections\NullResolverOverrideExtractor.cs" />
     <Compile Include="Collections\ResolverOverrideExtractor.cs" />
+    <Compile Include="Enrichment\Enrichment.cs" />
+    <Compile Include="Enrichment\EnrichmentExtension.cs" />
+    <Compile Include="Enrichment\EnrichmentPolicy.cs" />
+    <Compile Include="Enrichment\EnrichmentStrategy.cs" />
+    <Compile Include="Enrichment\IEnrichmentPolicy.cs" />
+    <Compile Include="Injection\ConstructorArgument.cs" />
+    <Compile Include="Injection\ConstructorArgumentCollection.cs" />
     <Compile Include="Injection\ParameterMatcher.cs" />
     <Compile Include="Injection\ClozeInjectionConstructur.cs" />
     <Compile Include="Lifetime\CacheLifetimeManager.cs" />
