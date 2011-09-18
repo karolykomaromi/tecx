@@ -13,42 +13,31 @@ namespace TecX.Unity.Injection
 {
     public class ClozeInjectionConstructur : InjectionMember
     {
-        #region Fields
-
-        private readonly IDictionary<string, object> _ctorArguments;
-
-        #endregion Fields
-
-        #region c'tor
+        private readonly ConstructorArgumentCollection _constructorArguments;
 
         private ClozeInjectionConstructur()
         {
-            _ctorArguments = new Dictionary<string, object>();
+            _constructorArguments = new ConstructorArgumentCollection();
         }
 
-        public ClozeInjectionConstructur(string paramName, object paramValue)
+        public ClozeInjectionConstructur(string argumentName, object value)
             : this()
         {
-            Guard.AssertNotEmpty(paramName, "paramName");
-            Guard.AssertNotNull(paramValue, "paramValue");
+            Guard.AssertNotEmpty(argumentName, "argumentName");
 
-            _ctorArguments.Add(paramName, paramValue);
+            _constructorArguments.Add(new ConstructorArgument(argumentName, value));
         }
 
-        public ClozeInjectionConstructur(IEnumerable<KeyValuePair<string, object>> ctorArguments)
+        public ClozeInjectionConstructur(IEnumerable<ConstructorArgument> ctorArguments)
             : this()
         {
             Guard.AssertNotNull(ctorArguments, "ctorArguments");
 
             foreach (var ctorArgument in ctorArguments)
             {
-                _ctorArguments.Add(ctorArgument);
+                _constructorArguments.Add(ctorArgument);
             }
         }
-
-        #endregion c'tor
-
-        #region Methods
 
         public override void AddPolicies(Type serviceType, 
             Type implementationType, 
@@ -75,10 +64,10 @@ namespace TecX.Unity.Injection
             // are provided that way
             for (int i = 0; i < infos.Length; i++)
             {
-                object value;
-                if (_ctorArguments.TryGetValue(infos[i].Name, out value))
+                ConstructorArgument argument;
+                if (_constructorArguments.TryGetArgumentByName(infos[i].Name, out argument))
                 {
-                    parameterValues[i] = value;
+                    parameterValues[i] = argument.Value;
                 }
                 else
                 {
@@ -93,11 +82,9 @@ namespace TecX.Unity.Injection
         {
             var ctors = typeToCreate.GetConstructors();
 
-            ParameterMatcher matcher = new ParameterMatcher(_ctorArguments);
+            ParameterMatcher matcher = new ParameterMatcher(_constructorArguments);
 
             return matcher.BestMatch(ctors);
         }
-
-        #endregion Methods
     }
 }

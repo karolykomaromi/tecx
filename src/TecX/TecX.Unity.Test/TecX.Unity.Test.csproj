@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionResolutionExtensionFixture.cs" />
+    <Compile Include="EnrichmentFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClozeInjectionConstructorFixture.cs" />
     <Compile Include="TestObjects\Bar.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="TestObjects\ICtorTest.cs" />
     <Compile Include="TestObjects\IFoo.cs" />
     <Compile Include="TestObjects\ILogger.cs" />
+    <Compile Include="TestObjects\Snafu.cs" />
     <Compile Include="TestObjects\TestLogger.cs" />
   </ItemGroup>
   <ItemGroup>
