@@ -57,6 +57,7 @@
     <Compile Include="EventAggregatorSubscriptionStrategy.cs" />
     <Compile Include="EventAggregatorContainerExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubscriberTypesCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.csproj">

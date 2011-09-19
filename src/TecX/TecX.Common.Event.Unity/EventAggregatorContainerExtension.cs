@@ -1,6 +1,7 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System.Windows.Threading;
+
+using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.ObjectBuilder;
-using System.Windows.Threading;
 
 namespace TecX.Common.Event.Unity
 {
