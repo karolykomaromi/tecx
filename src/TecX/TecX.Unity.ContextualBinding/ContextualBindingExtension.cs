@@ -67,7 +67,6 @@ namespace TecX.Unity.ContextualBinding
             }
         }
 
-
         #endregion Properties
 
         #region c'tor
@@ -114,11 +113,14 @@ namespace TecX.Unity.ContextualBinding
         }
 
         public void RegisterInstance(
-            Type from, object instance, Predicate<IBindingContext, IBuilderContext> matches, LifetimeManager lifetime)
+            Type from, 
+            object instance, 
+            Predicate<IBindingContext, IBuilderContext> matches, 
+            LifetimeManager lifetime)
         {
             Guard.AssertNotNull(from, "from");
-            Guard.AssertNotNull(matches, "matches");
             Guard.AssertNotNull(instance, "instance");
+            Guard.AssertNotNull(matches, "matches");
 
             if (lifetime == null)
             {
@@ -162,7 +164,7 @@ namespace TecX.Unity.ContextualBinding
             NamedTypeBuildKey key = new NamedTypeBuildKey(e.TypeFrom);
 
             ContextualBuildKeyMappingPolicy policy;
-            if (this.Mappings.TryGetValue(key, out policy))
+            if (Mappings.TryGetValue(key, out policy))
             {
                 // if something is already registered -> check if we have a registration with same name
                 // do the replace and last chance hookup if neccessary
@@ -194,7 +196,8 @@ namespace TecX.Unity.ContextualBinding
                 // new one and hook it up
                 policy = new ContextualBuildKeyMappingPolicy(new DefaultBindingContext(this));
 
-                if (existingPolicy != null && existingContextualPolicy == null)
+                if (existingPolicy != null && 
+                    existingContextualPolicy == null)
                 {
                     // means that there is a default mapping registered but its not a contextual mapping
                     policy.LastChance = existingPolicy;

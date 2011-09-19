@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 using Microsoft.Practices.ObjectBuilder2;
 
@@ -8,8 +6,9 @@ namespace TecX.Common.Event.Unity
 {
     public class EventAggregatorSubscriptionStrategy : BuilderStrategy
     {
-        private readonly Dictionary<Type, bool> _knownSubscribers;
         private readonly IEventAggregator _eventAggregator;
+
+        private readonly SubscriberTypesCollection _knownSubscribers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventAggregatorSubscriptionStrategy"/> class
@@ -21,7 +20,7 @@ namespace TecX.Common.Event.Unity
 
             _eventAggregator = eventAggregator;
 
-            _knownSubscribers = new Dictionary<Type, bool>();
+            _knownSubscribers = new SubscriberTypesCollection();
         }
 
         public override void PostBuildUp(IBuilderContext context)
@@ -32,32 +31,11 @@ namespace TecX.Common.Event.Unity
 
                 // if we came across that type before see wether we should automatically
                 // subscribe it
-                bool shouldSubscribe;
-                if (_knownSubscribers.TryGetValue(type, out shouldSubscribe))
+                bool shouldSubscribe = _knownSubscribers.IsSubscriberType(type);
+
+                if (shouldSubscribe)
                 {
-                    if (shouldSubscribe)
-                    {
-                        _eventAggregator.Subscribe(context.Existing);
-                    }
-                }
-                else
-                {
-                    // haven't seen that type before so check wether it implements
-                    // any subscription handler
-                    if (type.GetInterfaces()
-                        .Any(i => i.IsGenericType &&
-                                  (i.GetGenericTypeDefinition() == typeof(ISubscribeTo<>))))
-                    {
-                        // if it does add the type to knownSubscribers so we dont have
-                        // to check again next time
-                        _knownSubscribers[type] = true;
-                        _eventAggregator.Subscribe(context.Existing);
-                    }
-                    else
-                    {
-                        // doesn't implement a subscription handler -> dont bother next time
-                        _knownSubscribers[type] = false;
-                    }
+                    _eventAggregator.Subscribe(context.Existing);
                 }
             }
         }
