@@ -82,6 +82,7 @@
     <Compile Include="EventAggregatorContainerExtensionFixture.cs" />
     <Compile Include="EventAggregatorFixture.cs" />
     <Compile Include="ExceptionExtensionFixture.cs" />
+    <Compile Include="ExceptionExtensionsFixture.cs" />
     <Compile Include="GuardFixture.cs" />
     <Compile Include="LatchFixture.cs" />
     <Compile Include="ListExtensionsFixture.cs" />
