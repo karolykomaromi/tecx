@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace TecX.Common.Measures
+﻿namespace TecX.Common.Measures
 {
     public static class MeasuresExtensions
     {
@@ -25,6 +20,16 @@ namespace TecX.Common.Measures
         public static Kilometer Kilometers(this int distance)
         {
             return new Kilometer(distance);
+        }
+
+        public static Meter Meters(this double distance)
+        {
+            return new Meter(distance);
+        }
+
+        public static Meter Meters(this int distance)
+        {
+            return new Meter(distance);
         }
     }
 }
