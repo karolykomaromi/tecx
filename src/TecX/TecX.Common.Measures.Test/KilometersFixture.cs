@@ -36,7 +36,7 @@ namespace TecX.Common.Measures.Test
         [TestMethod]
         public void CanConvertToMeters()
         {
-            Kilometer d1 = 1.Kilometers();
+            Kilometer d1 = 1.0;
 
             Assert.AreEqual(1000.Meters(), d1.ToMeters());
         }
@@ -77,6 +77,24 @@ namespace TecX.Common.Measures.Test
             double d2 = 0.1;
 
             Assert.AreEqual(1.Kilometers(), d1 - d2);
+        }
+
+        [TestMethod]
+        public void CanAddMeters()
+        {
+            Kilometer d1 = 1.Kilometers();
+
+            Meter d2 = 100.Meters();
+
+            Assert.AreEqual(1.1.Kilometers(), d1 + d2);
+        }
+
+        [TestMethod]
+        public void CanAddDouble()
+        {
+            Kilometer d1 = 1.4.Kilometers();
+
+            Assert.AreEqual(1.5.Kilometers(), d1 + 0.1);
         }
     }
 }

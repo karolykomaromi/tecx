@@ -80,5 +80,29 @@ namespace TecX.Common.Measures.Test
 
             Assert.AreEqual(60.Kilometers(), distance);
         }
+
+        [TestMethod]
+        public void CanCastExplicitely()
+        {
+            var speed = 100.Kmh();
+
+            Assert.AreEqual(100.0, (double)speed);
+        }
+
+        [TestMethod]
+        public void CanAddDouble()
+        {
+            var speed = 100.Kmh();
+
+            Assert.AreEqual(110.Kmh(), speed + 10.0);
+        }
+
+        [TestMethod]
+        public void CanSubtractDouble()
+        {
+            var speed = 100.Kmh();
+
+            Assert.AreEqual(90.Kmh(), speed - 10.0);
+        }
     }
 }

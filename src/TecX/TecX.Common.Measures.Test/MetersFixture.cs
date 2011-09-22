@@ -1,8 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TecX.Common.Measures.Test
 {
@@ -39,6 +35,30 @@ namespace TecX.Common.Measures.Test
             Kilometer d2 = d1.ToKilometers();
 
             Assert.AreEqual(0.75.Kilometers(), d2);
+        }
+
+        [TestMethod]
+        public void CanCastExplicitely()
+        {
+            Meter d1 = 100.Meters();
+
+            Assert.AreEqual(100.0, (double)d1);
+        }
+
+        [TestMethod]
+        public void CanAddDouble()
+        {
+            Meter d1 = 100.Meters();
+
+            Assert.AreEqual(200.Meters(), d1 + 100.0);
+        }
+
+        [TestMethod]
+        public void CanSubtractDouble()
+        {
+            Meter d1 = 150.0;
+
+            Assert.AreEqual(50.Meters(), d1 - 100.0);
         }
     }
 }

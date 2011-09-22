@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+
 using TecX.Common.Comparison;
 
 namespace TecX.Common.Measures
 {
-    public struct KilometersPerHour
+    [DebuggerDisplay("{_value} km/h")]
+    public struct KilometersPerHour : IFormattable
     {
         private readonly double _value;
 
@@ -60,6 +64,16 @@ namespace TecX.Common.Measures
         public static KilometersPerHour FromDistanceAndTime(double distanceInKilometers, TimeSpan time)
         {
             return new KilometersPerHour(distanceInKilometers / time.TotalHours);
+        }
+
+        public override string ToString()
+        {
+            return this.ToString("F3", CultureInfo.InvariantCulture);
+        }
+
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return _value.ToString(format, formatProvider) + " km/h";
         }
     }
 }

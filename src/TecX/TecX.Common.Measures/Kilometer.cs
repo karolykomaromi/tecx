@@ -78,7 +78,7 @@ namespace TecX.Common.Measures
 
         public override string ToString()
         {
-            return this.ToString("F3", CultureInfo.CurrentCulture);
+            return this.ToString("F3", CultureInfo.InvariantCulture);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)

@@ -1,11 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace TecX.Common.Measures
 {
-    using System;
-    using System.Globalization;
-
-    [DebuggerDisplay("{_value} m")]
+    [DebuggerDisplay("{_value,{F2},{en-US}} m")]
     public struct Meter : IFormattable
     {
         private readonly double _value;
@@ -52,7 +51,7 @@ namespace TecX.Common.Measures
 
         public override string ToString()
         {
-            return this.ToString("F2", CultureInfo.CurrentCulture);
+            return this.ToString("F2", CultureInfo.InvariantCulture);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
