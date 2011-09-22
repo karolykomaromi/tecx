@@ -29,6 +29,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Common.Measures.Test", "TecX.Common.Measures.Test\TecX.Common.Measures.Test.csproj", "{8FDDD000-B333-4E50-A6C3-2C392F1A5505}"
 EndProject
 Global
+	GlobalSection(MercurialSourceControlSolutionProperties) = preSolution
+		SolutionIsControlled = True
+		SolutionBindings = <Solution Location In Database>
+	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TecX.Common.vsmdi
 	EndGlobalSection

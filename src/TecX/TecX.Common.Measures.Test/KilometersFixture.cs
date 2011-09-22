@@ -21,7 +21,7 @@ namespace TecX.Common.Measures.Test
             var km1 = 4.Kilometers();
             var km2 = 3.Kilometers();
 
-            Assert.AreEqual(1.Kilometers(), km1 + km2);
+            Assert.AreEqual(1.Kilometers(), km1 - km2);
         }
 
         [TestMethod]
@@ -31,6 +31,52 @@ namespace TecX.Common.Measures.Test
             var time = 2.Hours();
 
             Assert.AreEqual(30.Kmh(), distance / time);
+        }
+
+        [TestMethod]
+        public void CanConvertToMeters()
+        {
+            Kilometer d1 = 1.Kilometers();
+
+            Assert.AreEqual(1000.Meters(), d1.ToMeters());
+        }
+
+        [TestMethod]
+        public void CanTestEquality()
+        {
+            Assert.IsTrue(1.Kilometers() == 1.Kilometers());
+        }
+
+        [TestMethod]
+        public void CanTestNonEquality()
+        {
+            Assert.IsTrue(1.Kilometers() != 2.Kilometers());
+        }
+
+        [TestMethod]
+        public void CanCastExplicitely()
+        {
+            var d1 = 1.5.Kilometers();
+
+            Assert.AreEqual(1.5, (double)d1);
+        }
+
+        [TestMethod]
+        public void CanSubtractMeters()
+        {
+            var d1 = 1.1.Kilometers();
+            var d2 = 100.Meters();
+
+            Assert.AreEqual(1.Kilometers(), d1 - d2);
+        }
+
+        [TestMethod]
+        public void CanSubtractDouble()
+        {
+            Kilometer d1 = 1.1.Kilometers();
+            double d2 = 0.1;
+
+            Assert.AreEqual(1.Kilometers(), d1 - d2);
         }
     }
 }
