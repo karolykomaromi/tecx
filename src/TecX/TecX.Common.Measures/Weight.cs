@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace TecX.Common.Measures
 {
@@ -37,7 +34,7 @@ namespace TecX.Common.Measures
         public static readonly Weight MinWeight;
         public static readonly Weight Zero;
 
-        #endregion
+        #endregion Constants
 
         #region Fields
 
@@ -120,9 +117,9 @@ namespace TecX.Common.Measures
 
         public Weight(int tons, int kilograms, int grams, int milligrams)
         {
-            long num = tons * Constants.MillisPerTon +
-                       kilograms * Constants.MillisPerKilo +
-                       grams * Constants.MillisPerGram +
+            long num = tons * (long)Constants.MillisPerTon +
+                       kilograms * (long)Constants.MillisPerKilo +
+                       grams * (long)Constants.MillisPerGram +
                        milligrams;
 
             if ((num > Constants.MaxMilligrams) || (num < Constants.MinMilligrams))
