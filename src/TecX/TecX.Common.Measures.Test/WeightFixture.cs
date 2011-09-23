@@ -72,5 +72,13 @@ namespace TecX.Common.Measures.Test
 
             Assert.AreEqual(10500, weight.TotalKilograms);
         }
+
+        [TestMethod]
+        public void CanGetTotalTons()
+        {
+            Weight weight = new Weight(1, 500, 0, 0);
+
+            Assert.AreEqual(1.5, weight.TotalTons);
+        }
     }
 }
