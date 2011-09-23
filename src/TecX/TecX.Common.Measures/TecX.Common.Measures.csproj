@@ -56,6 +56,7 @@
     <Compile Include="Milligram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ton.cs" />
+    <Compile Include="Weight.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
