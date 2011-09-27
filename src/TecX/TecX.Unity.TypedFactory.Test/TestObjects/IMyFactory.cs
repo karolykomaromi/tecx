@@ -15,5 +15,6 @@ namespace TecX.Unity.TypedFactory.Test.TestObjects
         IList<IFoo> CreateList();
 
         ICollection<IFoo> CreateCollection();
+        ICollection<IFoo> CreateCollection(string name);
     }
 }

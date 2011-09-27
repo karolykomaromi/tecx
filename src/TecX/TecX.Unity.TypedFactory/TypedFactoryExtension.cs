@@ -6,6 +6,7 @@ using Castle.DynamicProxy;
 using Microsoft.Practices.Unity;
 
 using TecX.Common;
+using TecX.Unity.Collections;
 
 namespace TecX.Unity.TypedFactory
 {
@@ -16,6 +17,8 @@ namespace TecX.Unity.TypedFactory
         protected override void Initialize()
         {
             _generator = new ProxyGenerator();
+
+            Container.AddNewExtension<CollectionResolutionExtension>();
         }
 
         public void RegisterFactory<TFactory>()
