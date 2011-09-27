@@ -26,14 +26,16 @@ namespace TecX.Unity.TypedFactory
                                                                       Type componentType, 
                                                                       ParameterOverrides additionalArguments)
         {
-            var itemType = componentType.GetCompatibleArrayItemType();
+            return new TypedFactoryComponent(componentType, componentName, additionalArguments);
 
-            if (itemType == null)
-            {
-                return new TypedFactoryComponent(componentName, componentType, additionalArguments);
-            }
+            //var itemType = componentType.GetCompatibleArrayItemType();
 
-            return new TypedFactoryComponentCollection(itemType, componentType, additionalArguments);
+            //if (itemType == null)
+            //{
+            //    return new TypedFactoryComponent(componentName, componentType, additionalArguments);
+            //}
+
+            //return new TypedFactoryComponentCollection(itemType, componentType, additionalArguments);
         }
 
         protected virtual ParameterOverrides GetArguments(MethodInfo method, object[] arguments)

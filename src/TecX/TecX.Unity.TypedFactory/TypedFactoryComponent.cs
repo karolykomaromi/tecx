@@ -38,7 +38,7 @@ namespace TecX.Unity.TypedFactory
             }
         }
 
-        public TypedFactoryComponent(string componentName, Type componentType, ParameterOverrides additionalArguments)
+        public TypedFactoryComponent(Type componentType, string componentName, ParameterOverrides additionalArguments)
         {
             Guard.AssertNotNull(componentType, "componentType");
             Guard.AssertNotNull(additionalArguments, "additionalArguments");
