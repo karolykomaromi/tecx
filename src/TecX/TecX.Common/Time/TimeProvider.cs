@@ -42,7 +42,7 @@ namespace TecX.Common.Time
 
             set
             {
-                Guard.AssertNotNull(value, "value", "An Ambient Context must never be null");
+                Guard.AssertNotNull(value, "Current");
 
                 lock (SyncRoot)
                 {

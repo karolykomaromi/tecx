@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq.Expressions;
+using System.Reflection;
 
 using TecX.Common.Extensions.Error;
 
@@ -49,45 +51,31 @@ namespace TecX.Common
         /// <summary>
         /// Asserts that the argument is not <i>null</i>
         /// </summary>
-        /// <param name="arg">The argument to validate.</param>
-        /// <param name="paramName">The name of the argument (parameter in a method signature).</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="arg"/> is <c>null</c></exception>
+        /// <param name="param">The parameter to validate.</param>
+        /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="param"/> is <c>null</c></exception>
         [DebuggerStepThrough]
-        public static void AssertNotNull(object arg, string paramName)
+        public static void AssertNotNull(object param, string paramName)
         {
-            AssertNotNull(arg, paramName, Constants.Messages.ArgumentNull);
-        }
-
-        /// <summary>
-        /// Asserts that the argument is not <i>null</i>
-        /// </summary>
-        /// <param name="arg">The argument to validate.</param>
-        /// <param name="paramName">The name of the argument (parameter in a method signature).</param>
-        /// <param name="message">The error message.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="arg"/> is <c>null</c></exception>
-        [DebuggerStepThrough]
-        public static void AssertNotNull(object arg, string paramName, string message)
-        {
-            if (arg == null)
+            if (param == null)
             {
-                throw new ArgumentNullException(
-                    TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
-                    TypeHelper.ToNullSafeString(message));
+                throw new ArgumentNullException(paramName);
             }
         }
 
-        /// <summary>
-        /// Asserts that the argument is not <i>null</i>
-        /// </summary>
-        /// <param name="arg">The argument to validate.</param>
-        /// <param name="paramName">The name of the argument (parameter in a method signature).</param>
-        /// <param name="format">The format string for the error message.</param>
-        /// <param name="args">The parameters for the error message.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="arg"/> is <c>null</c></exception>
         [DebuggerStepThrough]
-        public static void AssertNotNull(object arg, string paramName, string format, params object[] args)
+        public static void AssertNotNull<T>(Expression<Func<T>> selector)
         {
-            AssertNotNull(arg, paramName, TypeHelper.SafeFormat(format, args));
+            var memberSelector = (MemberExpression)selector.Body;
+            var constantSelector = (ConstantExpression)memberSelector.Expression;
+            object value = ((FieldInfo)memberSelector.Member)
+                .GetValue(constantSelector.Value);
+
+            if (value == null)
+            {
+                string name = ((MemberExpression)selector.Body).Member.Name;
+                throw new ArgumentNullException(name);
+            }
         }
 
         #endregion AssertNotNull
@@ -97,43 +85,43 @@ namespace TecX.Common
         /// <summary>
         /// Asserts that the argument is not <i>null</i> or empty
         /// </summary>
-        /// <param name="arg">The argument to validate.</param>
+        /// <param name="param">The argument to validate.</param>
         /// <param name="paramName">The name of the argument (parameter in a method signature).</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="arg"/> is <c>null</c></exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="arg"/> is <see cref="string.Empty"/></exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="param"/> is <c>null</c></exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="param"/> is <see cref="string.Empty"/></exception>
         [DebuggerStepThrough]
-        public static void AssertNotEmpty(string arg, string paramName)
+        public static void AssertNotEmpty(string param, string paramName)
         {
-            AssertNotEmpty(arg, paramName, Constants.Messages.ArgumentNull, Constants.Messages.ArgumentEmpty);
+            if (param == null)
+            {
+                throw new ArgumentNullException(paramName);
+            }
+
+            if (string.IsNullOrEmpty(param))
+            {
+                throw new ArgumentException(Constants.Messages.ArgumentEmpty, paramName);
+            }
         }
 
-        /// <summary>
-        /// Asserts that the argument is not <i>null</i> or empty
-        /// </summary>
-        /// <param name="arg">The argument to validate.</param>
-        /// <param name="paramName">The name of the argument (parameter in a method signature).</param>
-        /// <param name="message">The error message.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="arg"/> is <c>null</c></exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="arg"/> is <see cref="string.Empty"/></exception>
         [DebuggerStepThrough]
-        public static void AssertNotEmpty(string arg, string paramName, string message)
+        public static void AssertNotEmpty(Expression<Func<string>> selector)
         {
-            AssertNotNull(arg, paramName, message, message);
-        }
+            var memberSelector = (MemberExpression)selector.Body;
+            var constantSelector = (ConstantExpression)memberSelector.Expression;
+            string value = (string)((FieldInfo)memberSelector.Member)
+                .GetValue(constantSelector.Value);
 
-        /// <summary>
-        /// Asserts that the argument is not <i>null</i> or empty
-        /// </summary>
-        /// <param name="arg">The argument to validate.</param>
-        /// <param name="paramName">The name of the argument (parameter in a method signature).</param>
-        /// <param name="format">The format string for the error message.</param>
-        /// <param name="args">The parameters for the error message.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="arg"/> is <c>null</c></exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="arg"/> is <see cref="string.Empty"/></exception>
-        [DebuggerStepThrough]
-        public static void AssertNotEmpty(string arg, string paramName, string format, params object[] args)
-        {
-            AssertNotEmpty(arg, paramName, TypeHelper.SafeFormat(format, args));
+            if (value == null)
+            {
+                string paramName = ((MemberExpression)selector.Body).Member.Name;
+                throw new ArgumentNullException(paramName);
+            }
+
+            if (string.IsNullOrEmpty(value))
+            {
+                string paramName = ((MemberExpression)selector.Body).Member.Name;
+                throw new ArgumentException("String must not be empty.", paramName);
+            }
         }
 
         #endregion AssertNotEmpty (string)
@@ -143,43 +131,43 @@ namespace TecX.Common
         /// <summary>
         /// Asserts that the argument is not <i>null</i> or empty
         /// </summary>
-        /// <param name="arg">The argument to validate.</param>
+        /// <param name="param">The argument to validate.</param>
         /// <param name="paramName">The name of the argument (parameter in a method signature).</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="arg"/> is <c>null</c></exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="arg"/> contains no elements</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="param"/> is <c>null</c></exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="param"/> contains no elements</exception>
         [DebuggerStepThrough]
-        public static void AssertNotEmpty(ICollection arg, string paramName)
+        public static void AssertNotEmpty(ICollection param, string paramName)
         {
-            AssertNotEmpty(arg, paramName, Constants.Messages.ArgumentNull, Constants.Messages.ArgumentEmpty);
+            AssertNotEmpty(param, paramName, Constants.Messages.ArgumentNull, Constants.Messages.ArgumentEmpty);
         }
 
         /// <summary>
         /// Asserts that the argument is not <i>null</i> or empty
         /// </summary>
-        /// <param name="arg">The argument to validate.</param>
+        /// <param name="param">The argument to validate.</param>
         /// <param name="paramName">The name of the argument (parameter in a method signature).</param>
         /// <param name="message">The error message.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="arg"/> is <c>null</c></exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="arg"/> contains no elements</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="param"/> is <c>null</c></exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="param"/> contains no elements</exception>
         [DebuggerStepThrough]
-        public static void AssertNotEmpty(ICollection arg, string paramName, string message)
+        public static void AssertNotEmpty(ICollection param, string paramName, string message)
         {
-            AssertNotEmpty(arg, paramName, message, message);
+            AssertNotEmpty(param, paramName, message, message);
         }
 
         /// <summary>
         /// Asserts that the argument is not <i>null</i> or empty
         /// </summary>
-        /// <param name="arg">The argument to validate.</param>
+        /// <param name="param">The argument to validate.</param>
         /// <param name="paramName">The name of the argument (parameter in a method signature).</param>
         /// <param name="format">The format string for the error message.</param>
         /// <param name="args">The parameters for the error message.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="arg"/> is <c>null</c></exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="arg"/> contains no elements</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="param"/> is <c>null</c></exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="param"/> contains no elements</exception>
         [DebuggerStepThrough]
-        public static void AssertNotEmpty(ICollection arg, string paramName, string format, params object[] args)
+        public static void AssertNotEmpty(ICollection param, string paramName, string format, params object[] args)
         {
-            AssertNotEmpty(arg, paramName, TypeHelper.SafeFormat(format, args));
+            AssertNotEmpty(param, paramName, TypeHelper.SafeFormat(format, args));
         }
 
         #endregion AssertNotEmpty (ICollection)
@@ -212,7 +200,7 @@ namespace TecX.Common
             {
                 throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
                                                       TypeHelper.ToNullSafeString(message)).WithAdditionalInfos(
-                                                          new Dictionary<object, object> {{"arg", arg}});
+                                                          new Dictionary<object, object> { { "arg", arg } });
             }
         }
 
@@ -265,7 +253,7 @@ namespace TecX.Common
             {
                 throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
                                                       TypeHelper.ToNullSafeString(message)).WithAdditionalInfos(
-                                                          new Dictionary<object, object> {{"arg", arg}});
+                                                          new Dictionary<object, object> { { "arg", arg } });
             }
         }
 
@@ -350,7 +338,7 @@ namespace TecX.Common
             {
                 throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
                                                       TypeHelper.ToNullSafeString(message)).WithAdditionalInfos(
-                                                          new Dictionary<object, object> {{"arg", arg}});
+                                                          new Dictionary<object, object> { { "arg", arg } });
             }
         }
 
@@ -392,7 +380,7 @@ namespace TecX.Common
         [DebuggerStepThrough]
         public static void AssertIsType<TTarget>(object value, string paramName)
         {
-            AssertIsType<TTarget>(value, paramName, Constants.Messages.WrongType, paramName, typeof (TTarget).FullName);
+            AssertIsType<TTarget>(value, paramName, Constants.Messages.WrongType, paramName, typeof(TTarget).FullName);
         }
 
         /// <summary>
@@ -409,7 +397,7 @@ namespace TecX.Common
         [DebuggerStepThrough]
         public static void AssertIsType<TTarget>(object value, string paramName, string message)
         {
-            Type targetType = typeof (TTarget);
+            Type targetType = typeof(TTarget);
 
             AssertIsType(targetType, value, paramName, message);
         }
@@ -516,28 +504,17 @@ namespace TecX.Common
         #region Private Methods
 
         [DebuggerStepThrough]
-        private static void AssertNotEmpty(string arg, string paramName, string messageNull, string messageEmpty)
+        private static void AssertNotEmpty(ICollection param, string paramName, string messageNull, string messageEmpty)
         {
-            AssertNotNull(arg, paramName, TypeHelper.ToNullSafeString(messageNull));
-
-            if (arg.Length == 0)
+            if (param == null)
             {
-                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
-                                                      TypeHelper.ToNullSafeString(messageEmpty)).WithAdditionalInfos(
-                                                          new Dictionary<object, object> {{"arg", arg}});
+                throw new ArgumentNullException(paramName, messageNull);
             }
-        }
 
-        [DebuggerStepThrough]
-        private static void AssertNotEmpty(ICollection arg, string paramName, string messageNull, string messageEmpty)
-        {
-            AssertNotNull(arg, paramName, TypeHelper.ToNullSafeString(messageNull));
-
-            if (arg.Count == 0)
+            if (param.Count == 0)
             {
-                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
-                                                      TypeHelper.ToNullSafeString(messageEmpty)).WithAdditionalInfos(
-                                                          new Dictionary<object, object> {{"arg", arg}});
+                throw new ArgumentOutOfRangeException(paramName, messageEmpty)
+                    .WithAdditionalInfo("param", param);
             }
         }
 

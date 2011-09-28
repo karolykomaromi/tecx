@@ -21,40 +21,23 @@ namespace TecX.Unity.TypedFactory
             return BuildFactoryComponent(method, componentName, componentType, additionalArguments);
         }
 
-        protected virtual TypedFactoryComponent BuildFactoryComponent(MethodInfo method, 
-                                                                      string componentName,
-                                                                      Type componentType, 
+        protected virtual TypedFactoryComponent BuildFactoryComponent(MethodInfo method,
+                                                                      string nameToBuild,
+                                                                      Type typeToBuild,
                                                                       ParameterOverrides additionalArguments)
         {
-            return new TypedFactoryComponent(componentType, componentName, additionalArguments);
+            Type itemType;
+            if (typeToBuild.TryGetCompatibleCollectionItemType(out itemType))
+            {
+                TypedFactoryComponent tfc = (TypedFactoryComponent)Activator.CreateInstance(
+                                                typeof(TypedFactoryComponentCollection<>).MakeGenericType(itemType),
+                                                typeToBuild,
+                                                additionalArguments);
 
-            //Type itemType = componentType.GetCompatibleCollectionItemType();
+                return tfc;
+            }
 
-            //if(itemType != null)
-            //{
-            //    ResolveTrampoline resolver = (ResolveTrampoline)Activator.CreateInstance(
-            //                                    typeof (ResolveAllTrampoline<>).MakeGenericType(itemType),
-            //                                    componentType,
-            //                                    additionalArguments);
-
-            //    return resolver;
-            //}
-
-            //ResolveTrampoline resolver = (ResolveTrampoline)Activator.CreateInstance(
-            //                                    typeof (ResolveTrampoline<>).MakeGenericType(componentType), 
-            //                                    componentName,
-            //                                    additionalArguments);
-
-            //return resolver;
-
-            //var itemType = componentType.GetCompatibleCollectionItemType();
-
-            //if (itemType == null)
-            //{
-            //    return new TypedFactoryComponent(componentName, componentType, additionalArguments);
-            //}
-
-            //return new TypedFactoryComponentCollection(itemType, componentType, additionalArguments);
+            return new TypedFactoryComponent(typeToBuild, nameToBuild, additionalArguments);
         }
 
         protected virtual ParameterOverrides GetArguments(MethodInfo method, object[] arguments)
