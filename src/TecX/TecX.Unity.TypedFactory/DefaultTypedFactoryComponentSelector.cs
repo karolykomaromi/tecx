@@ -28,7 +28,26 @@ namespace TecX.Unity.TypedFactory
         {
             return new TypedFactoryComponent(componentType, componentName, additionalArguments);
 
-            //var itemType = componentType.GetCompatibleArrayItemType();
+            //Type itemType = componentType.GetCompatibleCollectionItemType();
+
+            //if(itemType != null)
+            //{
+            //    ResolveTrampoline resolver = (ResolveTrampoline)Activator.CreateInstance(
+            //                                    typeof (ResolveAllTrampoline<>).MakeGenericType(itemType),
+            //                                    componentType,
+            //                                    additionalArguments);
+
+            //    return resolver;
+            //}
+
+            //ResolveTrampoline resolver = (ResolveTrampoline)Activator.CreateInstance(
+            //                                    typeof (ResolveTrampoline<>).MakeGenericType(componentType), 
+            //                                    componentName,
+            //                                    additionalArguments);
+
+            //return resolver;
+
+            //var itemType = componentType.GetCompatibleCollectionItemType();
 
             //if (itemType == null)
             //{
