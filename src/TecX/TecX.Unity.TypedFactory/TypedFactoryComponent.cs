@@ -7,25 +7,25 @@ namespace TecX.Unity.TypedFactory
 {
     public class TypedFactoryComponent
     {
-        private readonly string _componentName;
+        private readonly string _nameToBuild;
 
-        private readonly Type _componentType;
+        private readonly Type _typeToBuild;
 
         private readonly ParameterOverrides _additionalArguments;
 
-        public string ComponentName
+        public string NameToBuild
         {
             get
             {
-                return _componentName;
+                return _nameToBuild;
             }
         }
 
-        public Type ComponentType
+        public Type TypeToBuild
         {
             get
             {
-                return _componentType;
+                return _typeToBuild;
             }
         }
 
@@ -37,18 +37,23 @@ namespace TecX.Unity.TypedFactory
             }
         }
 
-        public TypedFactoryComponent(Type componentType, string componentName, ParameterOverrides additionalArguments)
+        public TypedFactoryComponent(Type typeToBuild, string nameToBuild, ParameterOverrides additionalArguments)
+            : this(typeToBuild, additionalArguments)
         {
-            Guard.AssertNotNull(componentType, "componentType");
-            Guard.AssertNotNull(additionalArguments, "additionalArguments");
-
-            if (componentName == string.Empty)
+            if (nameToBuild == string.Empty)
             {
-                componentName = null;
+                nameToBuild = null;
             }
 
-            _componentName = componentName;
-            _componentType = componentType;
+            this._nameToBuild = nameToBuild;
+        }
+
+        protected TypedFactoryComponent(Type typeToBuild, ParameterOverrides additionalArguments)
+        {
+            Guard.AssertNotNull(typeToBuild, "typeToBuild");
+            Guard.AssertNotNull(additionalArguments, "additionalArguments");
+
+            this._typeToBuild = typeToBuild;
             _additionalArguments = additionalArguments;
         }
 
@@ -56,7 +61,7 @@ namespace TecX.Unity.TypedFactory
         {
             Guard.AssertNotNull(container, "container");
 
-            object resolved = container.Resolve(ComponentType, ComponentName, AdditionalArguments);
+            object resolved = container.Resolve(this.TypeToBuild, this.NameToBuild, AdditionalArguments);
 
             return resolved;
         }
