@@ -1,5 +1,4 @@
 using System;
-
 using Microsoft.Practices.Unity;
 
 using TecX.Common;
@@ -43,7 +42,7 @@ namespace TecX.Unity.TypedFactory
             Guard.AssertNotNull(componentType, "componentType");
             Guard.AssertNotNull(additionalArguments, "additionalArguments");
 
-            if(componentName == string.Empty)
+            if (componentName == string.Empty)
             {
                 componentName = null;
             }
