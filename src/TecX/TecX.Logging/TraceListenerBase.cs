@@ -4,7 +4,7 @@ using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
 
 namespace TecX.Logging
 {
-    public abstract class TecXTraceListenerBase : CustomTraceListener
+    public abstract class TraceListenerBase : CustomTraceListener
     {
         public override void TraceData(TraceEventCache eventCache, 
             string source, 

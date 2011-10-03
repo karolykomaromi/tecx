@@ -23,7 +23,6 @@ namespace TecX.Agile.Planner
         protected override DependencyObject CreateShell()
         {
             Shell shell = Container.Resolve<Shell>();
-
             //in Silverlight you need to call
             //Application.Current.RootVisual = shell;
             shell.Show();

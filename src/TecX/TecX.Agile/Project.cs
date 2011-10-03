@@ -98,7 +98,7 @@ namespace TecX.Agile
             equal &= Backlog.Equals(other.Backlog);
             equal &= Legend.Equals(other.Legend);
             equal &= Compare.AreEqual(_iterations, other._iterations,
-                                      new DictionaryComparer<Guid, Iteration>());
+                                      new DictionaryEqualityComparer<Guid, Iteration>());
 
             return equal;
         }

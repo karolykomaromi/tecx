@@ -2,7 +2,7 @@
 
 namespace TecX.Logging
 {
-    public class DebugTraceListener : TecXTraceListenerBase
+    public class DebugTraceListener : TraceListenerBase
     {
         #region Overrides of TraceListener
 

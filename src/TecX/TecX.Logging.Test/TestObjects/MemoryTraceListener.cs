@@ -3,7 +3,7 @@ using TecX.Common;
 
 namespace TecX.Logging.Test.TestObjects
 {
-    internal class MemoryTraceListener : TecXTraceListenerBase
+    internal class MemoryTraceListener : TraceListenerBase
     {
         private readonly StringBuilder _messages = new StringBuilder(8192);
         private readonly object _syncRoot = new object();
