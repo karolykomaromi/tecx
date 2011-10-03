@@ -85,13 +85,13 @@ namespace TecX.Unity.ContextualBinding
         public void RegisterType(
             Type from,
             Type to,
-            Predicate<IBindingContext, IBuilderContext> matches,
+            Predicate<IBindingContext, IBuilderContext> isMatch,
             LifetimeManager lifetime,
             params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(to, "to");
-            Guard.AssertNotNull(matches, "matches");
+            Guard.AssertNotNull(isMatch, "isMatch");
 
             // if no lifetime manager is registered we use the transient lifetime (new instance is created for
             // every resolve). this is identical to the unity default behavior
@@ -105,7 +105,7 @@ namespace TecX.Unity.ContextualBinding
             string uniqueMappingName = Guid.NewGuid().ToString();
 
             // add another contextual mapping to the policy
-            policy.AddMapping(matches, to, uniqueMappingName);
+            policy.AddMapping(isMatch, to, uniqueMappingName);
 
             // by registering our mapping under a name that is guaranteed to be unique we can make use
             // of the full container infrastructure that is already in place
@@ -120,7 +120,7 @@ namespace TecX.Unity.ContextualBinding
         {
             Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(instance, "instance");
-            Guard.AssertNotNull(matches, "matches");
+            Guard.AssertNotNull(matches, "isMatch");
 
             if (lifetime == null)
             {
@@ -175,7 +175,7 @@ namespace TecX.Unity.ContextualBinding
                     existingContextualPolicy == null)
                 {
                     // means that there is a default mapping registered but its not a contextual mapping
-                    policy.LastChance = existingPolicy;
+                    policy.DefaultMapping = existingPolicy;
                 }
 
                 Context.Policies.Set<IBuildKeyMappingPolicy>(policy, key);
@@ -200,7 +200,7 @@ namespace TecX.Unity.ContextualBinding
                     existingContextualPolicy == null)
                 {
                     // means that there is a default mapping registered but its not a contextual mapping
-                    policy.LastChance = existingPolicy;
+                    policy.DefaultMapping = existingPolicy;
                 }
 
                 Mappings[key] = policy;

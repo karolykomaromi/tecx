@@ -41,7 +41,7 @@ namespace TecX.Unity.Configuration.Test
 
             Registry registry = new Registry();
 
-            registry.For(typeof(IEnumerable<>)).Use(typeof(List<>)).SelectDefaultConstructor();
+            registry.For(typeof(IEnumerable<>)).Use(typeof(List<>)).UsingDefaultConstructor();
 
             container.AddExtension(registry);
 

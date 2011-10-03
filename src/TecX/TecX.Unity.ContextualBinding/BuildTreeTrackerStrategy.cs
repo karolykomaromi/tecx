@@ -3,6 +3,8 @@ using System.Globalization;
 
 using Microsoft.Practices.ObjectBuilder2;
 
+using TecX.Common;
+
 namespace TecX.Unity.ContextualBinding
 {
     /// <summary>
@@ -53,42 +55,36 @@ namespace TecX.Unity.ContextualBinding
         /// <inheritdoc/>
         public override void PostBuildUp(IBuilderContext context)
         {
-            if (context != null)
-            {
-                AssignInstanceToCurrentTreeNode(context.BuildKey, context.Existing);
+            Guard.AssertNotNull(() => context);
 
-                BuildTreeNode parentNode = CurrentBuildNode.Parent;
+            AssignInstanceToCurrentTreeNode(context.BuildKey, context.Existing);
 
-                // Move the current node back up to the parent
-                // If this is the top level node, this will set the current node back to null
-                CurrentBuildNode = parentNode;
-            }
+            BuildTreeNode parentNode = CurrentBuildNode.Parent;
 
-            base.PostBuildUp(context);
+            // Move the current node back up to the parent
+            // If this is the top level node, this will set the current node back to null
+            CurrentBuildNode = parentNode;
         }
 
         /// <inheritdoc/>
         public override void PreBuildUp(IBuilderContext context)
         {
-            base.PreBuildUp(context);
+            Guard.AssertNotNull(() => context);
 
-            if (context != null)
+            bool nodeCreatedByContainer = context.Existing == null;
+
+            BuildTreeNode newTreeNode = new BuildTreeNode(
+                context.BuildKey,
+                nodeCreatedByContainer,
+                CurrentBuildNode);
+
+            if (CurrentBuildNode != null)
             {
-                bool nodeCreatedByContainer = context.Existing == null;
-
-                BuildTreeNode newTreeNode = new BuildTreeNode(
-                    context.BuildKey, 
-                    nodeCreatedByContainer, 
-                    CurrentBuildNode);
-
-                if (CurrentBuildNode != null)
-                {
-                    // This is a child node
-                    CurrentBuildNode.Children.Add(newTreeNode);
-                }
-
-                CurrentBuildNode = newTreeNode;
+                // This is a child node
+                CurrentBuildNode.Children.Add(newTreeNode);
             }
+
+            CurrentBuildNode = newTreeNode;
         }
 
         /// <summary>

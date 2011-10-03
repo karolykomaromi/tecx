@@ -77,6 +77,7 @@
     <Compile Include="Conventions\IRegistrationConvention.cs" />
     <Compile Include="Conventions\SingleImplementationOfInterfaceConvention.cs" />
     <Compile Include="Expressions\CreateRegistrationFamilyExpression.cs" />
+    <Compile Include="Expressions\InjectionMembers.cs" />
     <Compile Include="Expressions\InstanceRegistrationExpression.cs" />
     <Compile Include="Expressions\TypeRegistrationExpression.cs" />
     <Compile Include="Expressions\NamedInstanceRegistrationExpression.cs" />

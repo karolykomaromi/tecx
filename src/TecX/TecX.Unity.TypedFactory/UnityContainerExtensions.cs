@@ -11,18 +11,24 @@ namespace TecX.Unity.TypedFactory
         public static IUnityContainer RegisterFactory<TFactory>(this IUnityContainer container)
             where TFactory : class
         {
+            Guard.AssertNotNull(() => container);
+
             return RegisterFactory<TFactory>(container, new DefaultTypedFactoryComponentSelector());
         }
 
-        public static IUnityContainer RegisterFactory<TFactory>(this IUnityContainer container, ITypedFactoryComponentSelector selector)
+        public static IUnityContainer RegisterFactory<TFactory>(this IUnityContainer container, 
+            ITypedFactoryComponentSelector selector)
             where TFactory : class
         {
-            Guard.AssertNotNull(container, "container");
-            Guard.AssertNotNull(selector, "selector");
+            Guard.AssertNotNull(() => container);
+            Guard.AssertNotNull(() => selector);
 
             Type factoryType = typeof(TFactory);
 
-            Guard.AssertCondition(factoryType.IsInterface, factoryType, "TFactory", "Cannot generate an implementation for a non-interface factory type.");
+            Guard.AssertCondition(factoryType.IsInterface, 
+                factoryType, 
+                "TFactory", 
+                "Cannot generate an implementation for a non-interface factory type.");
 
             ITypedFactoryConfiguration configuration = container.Configure<ITypedFactoryConfiguration>();
 

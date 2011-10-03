@@ -12,7 +12,18 @@ namespace TecX.Unity.ContextualBinding
         private readonly IBindingContext _bindingContext;
         private readonly List<ContextualBuildKeyMapping> _mappings;
 
-        public IBuildKeyMappingPolicy LastChance { get; set; }
+        private IBuildKeyMappingPolicy _defaultMapping;
+
+        public IBuildKeyMappingPolicy DefaultMapping
+        {
+            get { return _defaultMapping; }
+            set
+            {
+                Guard.AssertNotNull(value, "DefaultMapping");
+
+                _defaultMapping = value;
+            }
+        }
 
         public ContextualBuildKeyMappingPolicy(IBindingContext bindingContext)
         {
@@ -36,22 +47,22 @@ namespace TecX.Unity.ContextualBinding
                 }
             }
 
-            if (LastChance != null)
+            if (DefaultMapping != null)
             {
-                return LastChance.Map(buildKey, builderContext);
+                return DefaultMapping.Map(buildKey, builderContext);
             }
 
-            throw new ContextualBindingException("No contextual mapping that matches the current context was " +
+            throw new ContextualBindingException("No contextual mapping that isMatch the current context was " +
                                                  "defined and no default mapping could be found.");
         }
 
-        public void AddMapping(Predicate<IBindingContext, IBuilderContext> matches, Type mapTo, string uniqueMappingName)
+        public void AddMapping(Predicate<IBindingContext, IBuilderContext> isMatch, Type mapTo, string uniqueMappingName)
         {
-            Guard.AssertNotNull(matches, "matches");
+            Guard.AssertNotNull(isMatch, "isMatch");
             Guard.AssertNotNull(mapTo, "mapTo");
             Guard.AssertNotNull(uniqueMappingName, "uniqueMappingName");
 
-            _mappings.Add(new ContextualBuildKeyMapping(matches, mapTo, uniqueMappingName));
+            _mappings.Add(new ContextualBuildKeyMapping(isMatch, mapTo, uniqueMappingName));
         }
     }
 }
