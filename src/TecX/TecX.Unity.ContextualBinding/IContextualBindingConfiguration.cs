@@ -7,7 +7,7 @@ namespace TecX.Unity.ContextualBinding
 {
     public interface IContextualBindingConfiguration : IUnityContainerExtensionConfigurator
     {
-        void RegisterType(Type from, Type to, Predicate<IBindingContext, IBuilderContext> matches,
+        void RegisterType(Type from, Type to, Predicate<IBindingContext, IBuilderContext> isMatch,
             LifetimeManager lifetime, params InjectionMember[] injectionMembers);
 
         void RegisterInstance(Type from, object instance, Predicate<IBindingContext, IBuilderContext> matches, LifetimeManager lifetime);

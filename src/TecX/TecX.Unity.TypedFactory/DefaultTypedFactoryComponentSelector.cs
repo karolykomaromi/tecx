@@ -11,8 +11,8 @@ namespace TecX.Unity.TypedFactory
     {
         public TypedFactoryComponent SelectComponent(MethodInfo method, Type type, object[] arguments)
         {
-            Guard.AssertNotNull(method, "method");
-            Guard.AssertNotNull(arguments, "arguments");
+            Guard.AssertNotNull(() => method);
+            Guard.AssertNotNull(() => arguments);
 
             var componentName = GetComponentName(method, arguments);
             var componentType = GetComponentType(method, arguments);
@@ -22,9 +22,9 @@ namespace TecX.Unity.TypedFactory
         }
 
         protected virtual TypedFactoryComponent BuildFactoryComponent(MethodInfo method,
-                                                                      string nameToBuild,
-                                                                      Type typeToBuild,
-                                                                      ParameterOverrides additionalArguments)
+            string nameToBuild,
+            Type typeToBuild,
+            ParameterOverrides additionalArguments)
         {
             Type itemType;
             if (typeToBuild.TryGetCompatibleCollectionItemType(out itemType))

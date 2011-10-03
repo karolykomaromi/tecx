@@ -14,7 +14,7 @@ namespace TecX.Unity.Configuration.Expressions
     {
         #region Fields
 
-        private readonly List<Func<InjectionMember>> _enrichments;
+        private readonly List<InjectionMember> _enrichments;
         private readonly Type _from;
         private readonly Type _to;
 
@@ -30,10 +30,7 @@ namespace TecX.Unity.Configuration.Expressions
         {
             get
             {
-                return _enrichments
-                    .Select(enrichment => enrichment())
-                    .Where(e => e != null)
-                    .ToArray();
+                return _enrichments.ToArray();
             }
         }
 
@@ -49,23 +46,29 @@ namespace TecX.Unity.Configuration.Expressions
             _from = from;
             _to = to;
 
-            _enrichments = new List<Func<InjectionMember>>();
+            _enrichments = new List<InjectionMember>();
         }
 
         #endregion c'tor
 
-        public void EnrichWith(Func<InjectionMember> enrichment)
+        public TypeRegistrationExpression EnrichWith(Action<InjectionMembers> action)
         {
-            Guard.AssertNotNull(enrichment, "enrichment");
+            Guard.AssertNotNull(() => action);
 
-            _enrichments.Add(enrichment);
+            InjectionMembers injectionMembers = new InjectionMembers();
+
+            action(injectionMembers);
+
+            _enrichments.Add(injectionMembers);
+
+            return this;
         }
 
         public TypeRegistrationExpression CreatedUsing(Func<IUnityContainer, Type, string, object> factoryMethod)
         {
             Guard.AssertNotNull(factoryMethod, "factoryMethod");
 
-            this.EnrichWith(() => new InjectionFactory(factoryMethod));
+            _enrichments.Add(new InjectionFactory(factoryMethod));
 
             return this;
         }
@@ -74,12 +77,12 @@ namespace TecX.Unity.Configuration.Expressions
         {
             Guard.AssertNotNull(factoryMethod, "factoryMethod");
 
-            this.EnrichWith(() => new InjectionFactory(factoryMethod));
+            _enrichments.Add(new InjectionFactory(factoryMethod));
 
             return this;
         }
 
-        public TypeRegistrationExpression SelectConstructor(Expression<Func<object>> expression)
+        public TypeRegistrationExpression UsingConstructor(Expression<Func<object>> expression)
         {
             Guard.AssertNotNull(expression, "expression");
 
@@ -96,15 +99,15 @@ namespace TecX.Unity.Configuration.Expressions
                     parameterTypes.Add(parameterInfo.ParameterType);
                 }
 
-                this.EnrichWith(() => new InjectionConstructor(parameterTypes.ToArray()));
+                _enrichments.Add(new InjectionConstructor(parameterTypes.ToArray()));
             }
 
             return this;
         }
 
-        public TypeRegistrationExpression SelectDefaultConstructor()
+        public TypeRegistrationExpression UsingDefaultConstructor()
         {
-            this.EnrichWith(() => new InjectionConstructor());
+            _enrichments.Add(new InjectionConstructor());
 
             return this;
         }

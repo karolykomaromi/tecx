@@ -73,7 +73,7 @@
     <Compile Include="DebugTraceListener.cs" />
     <Compile Include="NullTraceListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TecXTraceListenerBase.cs" />
+    <Compile Include="TraceListenerBase.cs" />
     <Compile Include="TimerTracer.cs" />
   </ItemGroup>
   <ItemGroup>

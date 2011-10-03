@@ -71,7 +71,7 @@ namespace TecX.Unity.Configuration.Test
 
             var expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClassWithCtorParams));
 
-            expression.SelectConstructor(() => new MyClassWithCtorParams());
+            expression.UsingConstructor(() => new MyClassWithCtorParams());
 
             expression.Compile().Configure(container);
 

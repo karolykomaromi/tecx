@@ -84,7 +84,7 @@ namespace TecX.Unity.ContextualBinding
             bool nodeCreatedByContainer,
             BuildTreeNode parentNode)
         {
-            Guard.AssertNotNull(buildKey, "buildKey");
+            Guard.AssertNotNull(() => buildKey);
 
             BuildKey = buildKey;
 
