@@ -11,8 +11,8 @@ namespace TecX.Unity.TypedFactory
     {
         public TypedFactoryComponent SelectComponent(MethodInfo method, Type type, object[] arguments)
         {
-            Guard.AssertNotNull(() => method);
-            Guard.AssertNotNull(() => arguments);
+            Guard.AssertNotNull(method, "method");
+            Guard.AssertNotNull(arguments, "arguments");
 
             var componentName = GetComponentName(method, arguments);
             var componentType = GetComponentType(method, arguments);
@@ -42,6 +42,9 @@ namespace TecX.Unity.TypedFactory
 
         protected virtual ParameterOverrides GetArguments(MethodInfo method, object[] arguments)
         {
+            Guard.AssertNotNull(method, "method");
+            Guard.AssertNotNull(arguments, "arguments");
+
             var parameters = new ParameterOverrides();
 
             var input = method.GetParameters();
@@ -56,6 +59,8 @@ namespace TecX.Unity.TypedFactory
 
         protected virtual string GetComponentName(MethodInfo method, object[] arguments)
         {
+            Guard.AssertNotNull(method, "method");
+
             string componentName = null;
 
             if (method.Name.StartsWith("Get"))
@@ -68,6 +73,8 @@ namespace TecX.Unity.TypedFactory
 
         protected virtual Type GetComponentType(MethodInfo method, object[] arguments)
         {
+            Guard.AssertNotNull(method, "method");
+
             return method.ReturnType;
         }
     }

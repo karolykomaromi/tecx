@@ -23,6 +23,8 @@ namespace TecX.Unity.TypedFactory
 
         public void Intercept(IInvocation invocation)
         {
+            Guard.AssertNotNull(invocation, "invocation");
+
             var component = _selector.SelectComponent(invocation.Method, invocation.TargetType, invocation.Arguments);
 
             invocation.ReturnValue = component.Resolve(_container);
