@@ -18,12 +18,6 @@ namespace TecX.Unity.TypedFactory
             _generator = new ProxyGenerator();
         }
 
-        public void RegisterFactory<TFactory>()
-            where TFactory : class
-        {
-            RegisterFactory<TFactory>(new DefaultTypedFactoryComponentSelector());
-        }
-
         public void RegisterFactory<TFactory>(ITypedFactoryComponentSelector selector)
             where TFactory : class
         {

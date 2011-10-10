@@ -45,7 +45,7 @@ namespace TecX.Unity.TypedFactory
                 nameToBuild = null;
             }
 
-            this._nameToBuild = nameToBuild;
+            _nameToBuild = nameToBuild;
         }
 
         protected TypedFactoryComponent(Type typeToBuild, ParameterOverrides additionalArguments)

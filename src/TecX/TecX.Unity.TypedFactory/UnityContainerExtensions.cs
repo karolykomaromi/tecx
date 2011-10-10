@@ -11,7 +11,7 @@ namespace TecX.Unity.TypedFactory
         public static IUnityContainer RegisterFactory<TFactory>(this IUnityContainer container)
             where TFactory : class
         {
-            Guard.AssertNotNull(() => container);
+            Guard.AssertNotNull(container, "container");
 
             return RegisterFactory<TFactory>(container, new DefaultTypedFactoryComponentSelector());
         }
@@ -20,8 +20,8 @@ namespace TecX.Unity.TypedFactory
             ITypedFactoryComponentSelector selector)
             where TFactory : class
         {
-            Guard.AssertNotNull(() => container);
-            Guard.AssertNotNull(() => selector);
+            Guard.AssertNotNull(container, "container");
+            Guard.AssertNotNull(selector, "selector");
 
             Type factoryType = typeof(TFactory);
 
@@ -35,7 +35,6 @@ namespace TecX.Unity.TypedFactory
             configuration.RegisterFactory<TFactory>(selector);
 
             return container;
-            
         }
     }
 }
