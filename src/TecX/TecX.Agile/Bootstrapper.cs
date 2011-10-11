@@ -12,6 +12,8 @@ using TecX.Unity.Configuration.Conventions;
 
 namespace TecX.Agile
 {
+    using TecX.Agile.Registration;
+
     public class Bootstrapper : UnityBootstrapper
     {
         protected override DependencyObject CreateShell()
@@ -33,7 +35,7 @@ namespace TecX.Agile
         {
             base.ConfigureContainer();
 
-            Registry registry = new Registry();
+            Registry registry = new EntLibRegistry();
 
             registry.Scan(x =>
                 {

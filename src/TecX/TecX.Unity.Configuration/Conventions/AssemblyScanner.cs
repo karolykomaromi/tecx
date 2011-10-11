@@ -284,10 +284,10 @@ namespace TecX.Unity.Configuration.Conventions
 
             Registry registry = new Registry();
 
-            //we iterate over all assemblies that were added to this scanner
-            //we run the exported types from each of these assemblies through the scanners filter
-            //the types that get past the filters are processed by the registered conventions
-            //the conventions take care about registering a type with the container if it fits their scheme
+            // we iterate over all assemblies that were added to this scanner
+            // we run the exported types from each of these assemblies through the scanners filter
+            // the types that get past the filters are processed by the registered conventions
+            // the conventions take care about registering a type with the container if it fits their scheme
             graph
                 .Types
                 .For(_assemblies, _filter)
