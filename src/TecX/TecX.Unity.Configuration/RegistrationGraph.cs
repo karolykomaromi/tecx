@@ -11,7 +11,7 @@ using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration
 {
-    public class RegistrationGraph : IContainerConfigurator
+    public class RegistrationGraph : IConfiguration
     {
         private readonly RegistrationFamilyCollection _registrationFamilies;
         private readonly List<Registry> _registries;
@@ -48,24 +48,6 @@ namespace TecX.Unity.Configuration
             _scanners.Fill(scanner);
         }
 
-        public void Configure(IUnityContainer container)
-        {
-            Guard.AssertNotNull(container, "container");
-
-            foreach (AssemblyScanner scanner in _scanners)
-            {
-                scanner.ScanForAll(this);
-            }
-
-            foreach (RegistrationFamily family in this._registrationFamilies)
-            {
-                foreach (Registration registration in family)
-                {
-                    registration.Configure(container);
-                }
-            }
-        }
-
         public RegistrationFamily FindFamily(Type pluginType)
         {
             return RegistrationFamilies[pluginType];
@@ -83,6 +65,24 @@ namespace TecX.Unity.Configuration
             var registry = (Registry)Activator.CreateInstance(type);
 
             registry.ConfigureRegistrationGraph(this);
+        }
+
+        public void Configure(IUnityContainer container)
+        {
+            Guard.AssertNotNull(container, "container");
+
+            foreach (AssemblyScanner scanner in _scanners)
+            {
+                scanner.ScanForAll(this);
+            }
+
+            foreach (RegistrationFamily family in this._registrationFamilies)
+            {
+                foreach (Registration registration in family)
+                {
+                    registration.Configure(container);
+                }
+            }
         }
     }
 }

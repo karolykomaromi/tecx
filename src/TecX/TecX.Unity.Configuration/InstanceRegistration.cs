@@ -8,22 +8,12 @@ namespace TecX.Unity.Configuration
 {
     public class InstanceRegistration : Registration
     {
-        #region Fields
-
         private readonly object _instance;
-
-        #endregion Fields
-
-        #region Properties
 
         public object Instance
         {
             get { return _instance; }
         }
-
-        #endregion Properties
-
-        #region c'tor
 
         public InstanceRegistration(Type from, string name, object instance, LifetimeManager lifetime)
             : base(from, name, lifetime)
@@ -32,8 +22,6 @@ namespace TecX.Unity.Configuration
 
             _instance = instance;
         }
-
-        #endregion c'tor
 
         public override void Configure(IUnityContainer container)
         {

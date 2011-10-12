@@ -31,14 +31,13 @@ namespace TecX.Unity.Configuration
         {
             get
             {
-                if (!_registrationFamilies.ContainsKey(from))
+                RegistrationFamily family;
+                if (!_registrationFamilies.TryGetValue(from, out family))
                 {
-                    var family = new RegistrationFamily(from);
-
-                    Add(family);
+                    family = Add(new RegistrationFamily(from));
                 }
 
-                return _registrationFamilies[from];
+                return family;
             }
         }
 
@@ -62,19 +61,9 @@ namespace TecX.Unity.Configuration
             Guard.AssertNotNull(family, "family");
             Guard.AssertNotNull(family.From, "family.From");
 
-            Type key = family.From;
-
-            _registrationFamilies[key] = family;
+            _registrationFamilies[family.From] = family;
 
             return family;
-        }
-
-        public void Remove(RegistrationFamily family)
-        {
-            Guard.AssertNotNull(family, "family");
-            Guard.AssertNotNull(family.From, "family.From");
-
-            _registrationFamilies.Remove(family.From);
         }
 
         public bool Contains(Type from)

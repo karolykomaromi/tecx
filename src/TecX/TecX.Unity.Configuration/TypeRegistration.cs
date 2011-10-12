@@ -8,14 +8,8 @@ namespace TecX.Unity.Configuration
 {
     public class TypeRegistration : Registration
     {
-        #region Fields
-
         private readonly Type _to;
         private readonly InjectionMember[] _enrichments;
-
-        #endregion Fields
-
-        #region Properties
 
         public Type To
         {
@@ -27,11 +21,11 @@ namespace TecX.Unity.Configuration
             get { return _enrichments; }
         }
 
-        #endregion Properties
-
-        #region c'tor
-
-        public TypeRegistration(Type from, Type to, string name, LifetimeManager lifetime, params InjectionMember[] enrichments)
+        public TypeRegistration(Type from, 
+            Type to, 
+            string name, 
+            LifetimeManager lifetime, 
+            params InjectionMember[] enrichments)
             : base(from, name, lifetime)
         {
             Guard.AssertNotNull(to, "to");
@@ -39,8 +33,6 @@ namespace TecX.Unity.Configuration
             _to = to;
             _enrichments = enrichments;
         }
-
-        #endregion c'tor
 
         public override void Configure(IUnityContainer container)
         {
