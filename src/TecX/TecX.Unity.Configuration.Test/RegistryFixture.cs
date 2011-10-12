@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Practices.Unity;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Unity.Configuration.Test.TestObjects;
 
@@ -16,13 +16,19 @@ namespace TecX.Unity.Configuration.Test
         [TestMethod]
         public void CanUseBasicActionsToAddExtensions()
         {
-            Registry registry = new InterceptionRegistry();
+            var extension = new DummyExtension();
+
+            bool initialized = false;
+
+            extension.Initialized += (s, e) => initialized = true;
+
+            Registry registry = new DummyRegistry(extension);
 
             IUnityContainer container = new UnityContainer();
 
             container.AddExtension(registry);
 
-            Assert.Fail("finish test");
+            Assert.IsTrue(initialized);
         }
     }
 }

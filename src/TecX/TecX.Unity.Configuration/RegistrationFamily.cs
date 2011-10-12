@@ -11,21 +11,11 @@ namespace TecX.Unity.Configuration
 {
     public class RegistrationFamily : IEnumerable<Registration>
     {
-        #region Fields
-
         private static readonly string DefaultRegistrationKey = string.Empty;
         private readonly Type _from;
         private readonly Cache<string, Registration> _registrations;
 
-        #endregion Fields
-
-        #region Properties
-
         public Type From { get { return _from; } }
-
-        #endregion Properties
-
-        #region c'tor
 
         public RegistrationFamily(Type from)
         {
@@ -34,8 +24,6 @@ namespace TecX.Unity.Configuration
             _from = from;
             _registrations = new Cache<string, Registration>();
         }
-
-        #endregion c'tor
 
         public void AddRegistration(Registration registration)
         {
@@ -54,8 +42,6 @@ namespace TecX.Unity.Configuration
             }
         }
 
-        #region Implementation of IEnumerable<Registration>
-
         public IEnumerator<Registration> GetEnumerator()
         {
             return _registrations.GetEnumerator();
@@ -65,7 +51,5 @@ namespace TecX.Unity.Configuration
         {
             return this.GetEnumerator();
         }
-
-        #endregion Implementation of IEnumerable<Registration>
     }
 }

@@ -47,17 +47,15 @@ namespace TecX.Unity.Configuration.Expressions
 
         public TypeRegistrationExpression Use(Type to)
         {
-            Guard.AssertNotNull(to, "to"); 
-            
+            Guard.AssertNotNull(to, "to");
+
             var expression = new TypeRegistrationExpression(_from, to);
 
             _alterations.Add(family =>
             {
                 var expr = expression;
 
-                var registration = expr.Compile();
-
-                family.AddRegistration(registration);
+                family.AddRegistration(expr);
             });
 
             return expression;
@@ -73,9 +71,7 @@ namespace TecX.Unity.Configuration.Expressions
             {
                 var expr = expression;
 
-                var registration = expr.Compile();
-
-                family.AddRegistration(registration);
+                family.AddRegistration(expr);
             });
 
             return expression;
@@ -88,17 +84,15 @@ namespace TecX.Unity.Configuration.Expressions
 
         public NamedTypeRegistrationExpression Add(Type to)
         {
-            Guard.AssertNotNull(to, "to"); 
-            
+            Guard.AssertNotNull(to, "to");
+
             var expression = new NamedTypeRegistrationExpression(_from, to);
 
             _alterations.Add(family =>
             {
                 var expr = expression;
 
-                var registration = expr.Compile();
-
-                family.AddRegistration(registration);
+                family.AddRegistration(expr);
             });
 
             return expression;
@@ -114,9 +108,7 @@ namespace TecX.Unity.Configuration.Expressions
             {
                 var expr = expression;
 
-                var registration = expr.Compile();
-
-                family.AddRegistration(registration);
+                family.AddRegistration(expr);
             });
 
             return expression;

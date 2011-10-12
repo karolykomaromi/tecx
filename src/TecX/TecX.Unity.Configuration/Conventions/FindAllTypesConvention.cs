@@ -17,7 +17,7 @@ namespace TecX.Unity.Configuration.Conventions
             Guard.AssertNotNull(from, "from");
 
             _from = from;
-            _getName = type => { return type.FullName; };
+            _getName = type => type.FullName;
         }
 
         public void Process(Type type, Registry registry)

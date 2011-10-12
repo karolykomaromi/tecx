@@ -9,35 +9,42 @@ namespace TecX.Unity.Configuration.Expressions
     public abstract class RegistrationExpression<TRegistrationExpression> : RegistrationExpression
         where TRegistrationExpression : RegistrationExpression
     {
-        private Func<LifetimeManager> _lifetimeFactory;
+        private LifetimeManager _lifetime;
 
         public LifetimeManager Lifetime
         {
-            get { return _lifetimeFactory(); }
+            get { return _lifetime; }
         }
 
         protected RegistrationExpression()
         {
-            _lifetimeFactory = () => new TransientLifetimeManager();
+            _lifetime = new TransientLifetimeManager();
         }
 
-        public TRegistrationExpression LifetimeIs(Func<LifetimeManager> lifetime)
+        public TRegistrationExpression LifetimeIs(LifetimeManager lifetime)
         {
             Guard.AssertNotNull(lifetime, "lifetime");
 
-            _lifetimeFactory = lifetime;
+            _lifetime = lifetime;
 
             return this as TRegistrationExpression;
         }
 
         public TRegistrationExpression AsSingleton()
         {
-            return LifetimeIs(() => new ContainerControlledLifetimeManager());
+            return LifetimeIs(new ContainerControlledLifetimeManager());
         }
     }
 
     public abstract class RegistrationExpression
     {
         public abstract Registration Compile();
+
+        public static implicit operator Registration(RegistrationExpression expression)
+        {
+            Guard.AssertNotNull(expression, "expression");
+
+            return expression.Compile();
+        }
     }
 }

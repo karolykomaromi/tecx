@@ -63,7 +63,9 @@ namespace TecX.Unity.Configuration.Extensions
             Guard.AssertNotNull(list, "list");
 
             if (list.Contains(value))
+            {
                 return;
+            }
 
             list.Add(value);
         }
@@ -84,7 +86,10 @@ namespace TecX.Unity.Configuration.Extensions
 
         public static bool CanBeCastTo(this Type pluggedType, Type pluginType)
         {
-            if (pluggedType == null) return false;
+            if (pluggedType == null)
+            {
+                return false;
+            }
 
             if (pluggedType.IsInterface || pluggedType.IsAbstract)
             {
@@ -110,55 +115,6 @@ namespace TecX.Unity.Configuration.Extensions
             Guard.AssertNotNull(type, "type");
 
             return type.IsGenericTypeDefinition || type.ContainsGenericParameters;
-        }
-
-        public static bool IsAutoFillable(this Type type)
-        {
-            Guard.AssertNotNull(type, "type");
-
-            return IsChild(type) || IsChildArray(type);
-        }
-
-        public static bool IsChild(this Type type)
-        {
-            Guard.AssertNotNull(type, "type");
-
-            return IsPrimitiveArray(type) || (!type.IsArray && !IsSimple(type));
-        }
-
-        public static bool IsChildArray(this Type type)
-        {
-            Guard.AssertNotNull(type, "type");
-
-            return type.IsArray && !IsSimple(type.GetElementType());
-        }
-
-        public static bool IsString(this Type type)
-        {
-            Guard.AssertNotNull(type, "type");
-
-            return type.Equals(typeof(string));
-        }
-
-        public static bool IsPrimitive(this Type type)
-        {
-            Guard.AssertNotNull(type, "type");
-
-            return type.IsPrimitive && !IsString(type) && type != typeof(IntPtr);
-        }
-
-        public static bool IsSimple(this Type type)
-        {
-            Guard.AssertNotNull(type, "type");
-
-            return type.IsPrimitive || IsString(type) || type.IsEnum;
-        }
-
-        public static bool IsPrimitiveArray(this Type type)
-        {
-            Guard.AssertNotNull(type, "type");
-
-            return type.IsArray && IsSimple(type.GetElementType());
         }
     }
 }

@@ -8,23 +8,15 @@ using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Conventions
 {
-    public class SingleImplementationOfInterfaceConvention : IRegistrationConvention, 
+    public class SingleImplementationOfInterfaceConvention : IRegistrationConvention,
         IRequirePostProcessing
     {
-        #region Fields
-
         private readonly Cache<Type, List<Type>> _types;
-
-        #endregion Fields
-
-        #region c'tor
 
         public SingleImplementationOfInterfaceConvention()
         {
             _types = new Cache<Type, List<Type>>(t => new List<Type>());
         }
-
-        #endregion c'tor
 
         public void Process(Type type, Registry registry)
         {
@@ -34,7 +26,7 @@ namespace TecX.Unity.Configuration.Conventions
             RegisterType(type);
         }
 
-        public void Process(RegistrationGraph graph)
+        void IRequirePostProcessing.Process(RegistrationGraph graph)
         {
             Guard.AssertNotNull(graph, "graph");
 
