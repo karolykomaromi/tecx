@@ -8,13 +8,7 @@ namespace TecX.Unity.Configuration
 {
     public class RegistrationFamilyCollection : IEnumerable<RegistrationFamily>
     {
-        #region Fields
-
         private readonly Dictionary<Type, RegistrationFamily> _registrationFamilies;
-
-        #endregion Fields
-
-        #region Properties
 
         public IEnumerable<RegistrationFamily> All
         {
@@ -33,10 +27,6 @@ namespace TecX.Unity.Configuration
             get { return _registrationFamilies.Count; }
         }
 
-        #endregion Properties
-
-        #region Indexer
-
         public RegistrationFamily this[Type from]
         {
             get
@@ -44,6 +34,7 @@ namespace TecX.Unity.Configuration
                 if (!_registrationFamilies.ContainsKey(from))
                 {
                     var family = new RegistrationFamily(from);
+
                     Add(family);
                 }
 
@@ -51,18 +42,10 @@ namespace TecX.Unity.Configuration
             }
         }
 
-        #endregion Indexer
-
-        #region c'tor
-
         public RegistrationFamilyCollection()
         {
             _registrationFamilies = new Dictionary<Type, RegistrationFamily>();
         }
-
-        #endregion c'tor
-
-        #region IEnumerable<RegistrationFamily> Members
 
         IEnumerator<RegistrationFamily> IEnumerable<RegistrationFamily>.GetEnumerator()
         {
@@ -74,21 +57,14 @@ namespace TecX.Unity.Configuration
             return ((IEnumerable<RegistrationFamily>)this).GetEnumerator();
         }
 
-        #endregion IEnumerable<RegistrationFamily> Members
-
         public RegistrationFamily Add(RegistrationFamily family)
         {
             Guard.AssertNotNull(family, "family");
+            Guard.AssertNotNull(family.From, "family.From");
 
             Type key = family.From;
-            if (_registrationFamilies.ContainsKey(key))
-            {
-                _registrationFamilies[key] = family;
-            }
-            else
-            {
-                _registrationFamilies.Add(key, family);
-            }
+
+            _registrationFamilies[key] = family;
 
             return family;
         }
@@ -96,6 +72,7 @@ namespace TecX.Unity.Configuration
         public void Remove(RegistrationFamily family)
         {
             Guard.AssertNotNull(family, "family");
+            Guard.AssertNotNull(family.From, "family.From");
 
             _registrationFamilies.Remove(family.From);
         }

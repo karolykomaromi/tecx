@@ -11,22 +11,14 @@ namespace TecX.Unity.Configuration
 {
     public class Registry : UnityContainerExtension
     {
-        #region Fields
-
         private readonly List<Action<RegistrationGraph>> _actions;
-        private readonly List<Action> _basicActions;
-
-        #endregion Fields
-
-        #region c'tor
+        private readonly List<Action> _configActions;
 
         public Registry()
         {
             _actions = new List<Action<RegistrationGraph>>();
-            _basicActions = new List<Action>();
+            _configActions = new List<Action>();
         }
-
-        #endregion c'tor
 
         public static bool IsPublicRegistry(Type type)
         {
@@ -117,7 +109,6 @@ namespace TecX.Unity.Configuration
                 return;
             }
 
-            _basicActions.ForEach(action => action());
             _actions.ForEach(action => action(graph));
 
             graph.Registries.Add(this);
@@ -130,15 +121,17 @@ namespace TecX.Unity.Configuration
             _actions.Add(alteration);
         }
         
-        protected void RegisterAction(Action action)
+        protected void AddConfigAction(Action action)
         {
             Guard.AssertNotNull(action, "action");
 
-            _basicActions.Add(action);
+            _configActions.Add(action);
         }
 
         protected override void Initialize()
         {
+            _configActions.ForEach(action => action());
+
             RegistrationGraph graph = new RegistrationGraph();
 
             ConfigureRegistrationGraph(graph);

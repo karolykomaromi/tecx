@@ -232,7 +232,8 @@ namespace TecX.Unity.Configuration.Conventions
         public void Convention<T>()
             where T : IRegistrationConvention, new()
         {
-            IRegistrationConvention previous = _conventions.FirstOrDefault(scanner => scanner is T);
+            IRegistrationConvention previous = _conventions.FirstOrDefault(convention => convention is T);
+
             if (previous == null)
             {
                 With(new T());
@@ -247,7 +248,7 @@ namespace TecX.Unity.Configuration.Conventions
 
             var modifyGraph = convention as IRequirePostProcessing;
 
-            if(modifyGraph != null)
+            if (modifyGraph != null)
             {
                 ModifyGraphAfterScan(modifyGraph.Process);
             }

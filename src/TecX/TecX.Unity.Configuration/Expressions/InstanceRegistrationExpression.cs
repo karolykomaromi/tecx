@@ -29,7 +29,7 @@ namespace TecX.Unity.Configuration.Expressions
             _from = from;
             _instance = instance;
 
-            LifetimeIs(() => new ContainerControlledLifetimeManager());
+            LifetimeIs(new ContainerControlledLifetimeManager());
         }
 
         public override Registration Compile()

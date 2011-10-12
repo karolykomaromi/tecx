@@ -13,16 +13,10 @@ namespace TecX.Unity.Configuration
 {
     public class RegistrationGraph : IContainerConfigurator
     {
-        #region Fields
-
         private readonly RegistrationFamilyCollection _registrationFamilies;
         private readonly List<Registry> _registries;
         private readonly List<AssemblyScanner> _scanners;
         private readonly WeakReference<TypePool> _types;
-
-        #endregion Fields
-
-        #region Properties
 
         public TypePool Types
         {
@@ -39,10 +33,6 @@ namespace TecX.Unity.Configuration
             get { return _registrationFamilies; }
         }
 
-        #endregion Properties
-
-        #region c'tor
-
         public RegistrationGraph()
         {
             _registrationFamilies = new RegistrationFamilyCollection();
@@ -50,8 +40,6 @@ namespace TecX.Unity.Configuration
             _scanners = new List<AssemblyScanner>();
             _types = new WeakReference<TypePool>(() => new TypePool(this));
         }
-
-        #endregion c'tor
 
         public void AddScanner(AssemblyScanner scanner)
         {

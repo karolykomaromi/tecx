@@ -35,11 +35,11 @@ namespace TecX.Agile
         {
             base.ConfigureContainer();
 
-            Registry registry = new EntLibRegistry();
+            Registry registry = new Registry();
 
             registry.Scan(x =>
                 {
-                    x.With(new FindRegistriesConvention());
+                    x.LookForRegistries();
                     x.AssembliesFromApplicationBaseDirectory();
                 });
 

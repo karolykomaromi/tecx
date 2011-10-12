@@ -88,7 +88,7 @@ namespace TecX.Unity.Configuration.Test
 
             var expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClass));
 
-            expression.LifetimeIs(() => new ContainerControlledLifetimeManager());
+            expression.LifetimeIs(new ContainerControlledLifetimeManager());
 
             expression.Compile().Configure(container);
 
