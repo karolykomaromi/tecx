@@ -6,7 +6,7 @@ using TecX.Common;
 
 namespace TecX.Unity.Configuration
 {
-    public abstract class Registration : Configuration
+    public abstract class Registration : IConfigurationSource
     {
         private readonly string _name;
         private readonly Type _from;
@@ -45,10 +45,7 @@ namespace TecX.Unity.Configuration
             _name = name;
             _lifetime = lifetime;
         }
-    }
 
-    public abstract class Configuration : IConfiguration
-    {
         public abstract void Configure(IUnityContainer container);
     }
 }

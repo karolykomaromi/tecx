@@ -223,10 +223,11 @@ namespace TecX.Unity.Configuration.Conventions
         {
             Guard.AssertNotNull(pluginType, "pluginType");
 
-            var filter = new FindAllTypesConvention(pluginType);
-            With(filter);
+            var convention = new FindAllTypesConvention(pluginType);
 
-            return filter;
+            With(convention);
+
+            return convention;
         }
 
         public void Convention<T>()
