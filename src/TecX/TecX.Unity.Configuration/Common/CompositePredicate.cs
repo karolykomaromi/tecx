@@ -20,10 +20,10 @@ namespace TecX.Unity.Configuration.Common
             _list.Add(filter);
         }
 
-        public static CompositePredicate<T> operator +(CompositePredicate<T> invokes, Func<T, bool> filter)
+        public static CompositePredicate<T> operator +(CompositePredicate<T> predicate, Func<T, bool> filter)
         {
-            invokes.Add(filter);
-            return invokes;
+            predicate.Add(filter);
+            return predicate;
         }
 
         public bool MatchesAll(T target)
@@ -43,7 +43,7 @@ namespace TecX.Unity.Configuration.Common
 
         public bool DoesNotMatcheAny(T target)
         {
-            return _list.Count == 0 ? true : !MatchesAny(target);
+            return _list.Count == 0 || !MatchesAny(target);
         }
     }
 }

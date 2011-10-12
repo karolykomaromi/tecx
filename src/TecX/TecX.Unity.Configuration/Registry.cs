@@ -128,8 +128,10 @@ namespace TecX.Unity.Configuration
             _basicActions.Add(action);
         }
 
-        protected override void Initialize()
+        protected sealed override void Initialize()
         {
+            BeforeInitialize();
+
             _basicActions.ForEach(action => action());
 
             RegistrationGraph graph = new RegistrationGraph();
@@ -137,6 +139,16 @@ namespace TecX.Unity.Configuration
             ConfigureRegistrationGraph(graph);
 
             graph.Configure(Container);
+
+            AfterInitialize();
+        }
+
+        protected virtual void BeforeInitialize()
+        {
+        }
+
+        protected virtual void AfterInitialize()
+        {
         }
 
         #endregion Infrastructure

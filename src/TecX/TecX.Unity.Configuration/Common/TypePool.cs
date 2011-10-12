@@ -15,20 +15,18 @@ namespace TecX.Unity.Configuration.Common
         {
             Guard.AssertNotNull(graph, "graph");
 
-            _types = new Cache<Assembly, Type[]>
-            {
-                OnMissing = assembly =>
-                {
-                    try
+            _types = new Cache<Assembly, Type[]>(
+                assembly =>
                     {
-                        return assembly.GetExportedTypes();
-                    }
-                    catch (Exception ex)
-                    {
-                        return new Type[0];
-                    }
-                }
-            };
+                        try
+                        {
+                            return assembly.GetExportedTypes();
+                        }
+                        catch (Exception ex)
+                        {
+                            return Type.EmptyTypes;
+                        }
+                    });
         }
 
         public IEnumerable<Type> For(IEnumerable<Assembly> assemblies, CompositeFilter<Type> filter)
