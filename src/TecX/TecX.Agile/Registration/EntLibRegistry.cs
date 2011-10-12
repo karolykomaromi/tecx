@@ -35,7 +35,7 @@ namespace TecX.Agile.Registration
 
         public EntLibRegistry()
         {
-            this.AddConfigAction(() =>
+            this.AddAction(() =>
                 {
                     Container.AddNewExtension<EnterpriseLibraryCoreExtension>();
 

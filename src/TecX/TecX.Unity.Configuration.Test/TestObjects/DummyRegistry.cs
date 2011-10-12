@@ -9,7 +9,7 @@ namespace TecX.Unity.Configuration.Test.TestObjects
     {
         public DummyRegistry(DummyExtension extension)
         {
-            this.AddConfigAction(() => Container.AddExtension(extension));
+            this.AddAction(() => Container.AddExtension(extension));
         }
     }
 

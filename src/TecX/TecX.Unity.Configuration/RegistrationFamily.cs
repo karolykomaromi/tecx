@@ -15,7 +15,10 @@ namespace TecX.Unity.Configuration
         private readonly Type _from;
         private readonly Cache<string, Registration> _registrations;
 
-        public Type From { get { return _from; } }
+        public Type From
+        {
+            get { return _from; }
+        }
 
         public RegistrationFamily(Type from)
         {

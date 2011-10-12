@@ -12,12 +12,12 @@ namespace TecX.Unity.Configuration
     public class Registry : UnityContainerExtension
     {
         private readonly List<Action<RegistrationGraph>> _actions;
-        private readonly List<Action> _configActions;
+        private readonly List<Action> _basicActions;
 
         public Registry()
         {
             _actions = new List<Action<RegistrationGraph>>();
-            _configActions = new List<Action>();
+            _basicActions = new List<Action>();
         }
 
         public static bool IsPublicRegistry(Type type)
@@ -121,16 +121,16 @@ namespace TecX.Unity.Configuration
             _actions.Add(alteration);
         }
         
-        protected void AddConfigAction(Action action)
+        protected void AddAction(Action action)
         {
             Guard.AssertNotNull(action, "action");
 
-            _configActions.Add(action);
+            _basicActions.Add(action);
         }
 
         protected override void Initialize()
         {
-            _configActions.ForEach(action => action());
+            _basicActions.ForEach(action => action());
 
             RegistrationGraph graph = new RegistrationGraph();
 
