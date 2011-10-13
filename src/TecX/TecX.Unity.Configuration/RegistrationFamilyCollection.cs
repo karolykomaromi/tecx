@@ -6,7 +6,9 @@ using TecX.Common;
 
 namespace TecX.Unity.Configuration
 {
-    public class RegistrationFamilyCollection : IEnumerable<RegistrationFamily>
+    using Microsoft.Practices.Unity;
+
+    public class RegistrationFamilyCollection : IEnumerable<RegistrationFamily>, IContainerConfigurator
     {
         private readonly Dictionary<Type, RegistrationFamily> _registrationFamilies;
 
@@ -85,6 +87,16 @@ namespace TecX.Unity.Configuration
             foreach (RegistrationFamily family in All)
             {
                 action(family);
+            }
+        }
+
+        public void Configure(IUnityContainer container)
+        {
+            Guard.AssertNotNull(container, "container");
+
+            foreach (RegistrationFamily family in this._registrationFamilies.Values)
+            {
+                family.Configure(container);
             }
         }
     }

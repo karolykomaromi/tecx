@@ -13,15 +13,9 @@ namespace TecX.Unity.Configuration.Conventions
 {
     public class AssemblyScanner : IAssemblyScanner
     {
-        #region Fields
-
         private readonly List<Assembly> _assemblies;
         private readonly CompositeFilter<Type> _filter;
         private readonly List<IRegistrationConvention> _conventions;
-
-        #endregion Fields
-
-        #region c'tor
 
         public AssemblyScanner()
         {
@@ -30,8 +24,6 @@ namespace TecX.Unity.Configuration.Conventions
             _conventions = new List<IRegistrationConvention>();
         }
 
-        #endregion c'tor
-
         #region Select assemblies to scan
 
         public void Assembly(Assembly assembly)
@@ -39,7 +31,9 @@ namespace TecX.Unity.Configuration.Conventions
             Guard.AssertNotNull(assembly, "assembly");
 
             if (!_assemblies.Contains(assembly))
+            {
                 _assemblies.Add(assembly);
+            }
         }
 
         public void Assembly(string assemblyName)
@@ -99,8 +93,8 @@ namespace TecX.Unity.Configuration.Conventions
             Guard.AssertNotNull(assemblyFilter, "assemblyFilter");
 
             IEnumerable<string> assemblyPaths = Directory.GetFiles(path)
-                .Where(file => Path.GetExtension(file).Equals(".exe", StringComparison.OrdinalIgnoreCase) ||
-                               Path.GetExtension(file).Equals(".dll", StringComparison.OrdinalIgnoreCase));
+                .Where(file => string.Equals(Path.GetExtension(file), ".exe", StringComparison.OrdinalIgnoreCase) ||
+                               string.Equals(Path.GetExtension(file), ".dll", StringComparison.OrdinalIgnoreCase));
 
             foreach (string assemblyPath in assemblyPaths)
             {
@@ -269,8 +263,6 @@ namespace TecX.Unity.Configuration.Conventions
 
         #endregion Conventions
 
-        #region Infrastructure
-
         internal void ScanForAll(RegistrationGraph graph)
         {
             Guard.AssertNotNull(graph, "graph");
@@ -288,7 +280,5 @@ namespace TecX.Unity.Configuration.Conventions
 
             registry.ConfigureRegistrationGraph(graph);
         }
-
-        #endregion Infrastructure
     }
 }

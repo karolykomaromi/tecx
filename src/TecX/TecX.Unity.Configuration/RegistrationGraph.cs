@@ -76,13 +76,7 @@ namespace TecX.Unity.Configuration
                 scanner.ScanForAll(this);
             }
 
-            foreach (RegistrationFamily family in this._registrationFamilies)
-            {
-                foreach (Registration registration in family)
-                {
-                    registration.Configure(container);
-                }
-            }
+            _registrationFamilies.Configure(container);
         }
     }
 }
