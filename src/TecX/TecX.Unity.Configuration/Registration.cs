@@ -6,7 +6,7 @@ using TecX.Common;
 
 namespace TecX.Unity.Configuration
 {
-    public abstract class Registration : IConfigurationSource
+    public abstract class Registration : IContainerConfigurator
     {
         private readonly string _name;
         private readonly Type _from;

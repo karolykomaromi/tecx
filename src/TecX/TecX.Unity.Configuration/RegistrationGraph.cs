@@ -11,7 +11,7 @@ using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration
 {
-    public class RegistrationGraph : IConfigurationSource
+    public class RegistrationGraph : IContainerConfigurator
     {
         private readonly RegistrationFamilyCollection _registrationFamilies;
         private readonly List<Registry> _registries;

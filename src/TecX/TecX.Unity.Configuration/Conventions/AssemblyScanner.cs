@@ -18,7 +18,6 @@ namespace TecX.Unity.Configuration.Conventions
         private readonly List<Assembly> _assemblies;
         private readonly CompositeFilter<Type> _filter;
         private readonly List<IRegistrationConvention> _conventions;
-        private readonly List<Action<RegistrationGraph>> _postScanningActions;
 
         #endregion Fields
 
@@ -29,7 +28,6 @@ namespace TecX.Unity.Configuration.Conventions
             _assemblies = new List<Assembly>();
             _filter = new CompositeFilter<Type>();
             _conventions = new List<IRegistrationConvention>();
-            _postScanningActions = new List<Action<RegistrationGraph>>();
         }
 
         #endregion c'tor
@@ -211,7 +209,7 @@ namespace TecX.Unity.Configuration.Conventions
 
         public void LookForRegistries()
         {
-            Convention<FindRegistriesConvention>();
+            With<FindRegistriesConvention>();
         }
 
         public FindAllTypesConvention AddAllTypesOf<TPlugin>()
@@ -230,12 +228,12 @@ namespace TecX.Unity.Configuration.Conventions
             return convention;
         }
 
-        public void Convention<T>()
+        public void With<T>()
             where T : IRegistrationConvention, new()
         {
-            IRegistrationConvention previous = _conventions.FirstOrDefault(convention => convention is T);
+            IRegistrationConvention existing = _conventions.FirstOrDefault(convention => convention is T);
 
-            if (previous == null)
+            if (existing == null)
             {
                 With(new T());
             }
@@ -246,13 +244,6 @@ namespace TecX.Unity.Configuration.Conventions
             Guard.AssertNotNull(convention, "convention");
 
             _conventions.Fill(convention);
-
-            var modifyGraph = convention as IRequirePostProcessing;
-
-            if (modifyGraph != null)
-            {
-                ModifyGraphAfterScan(modifyGraph.Process);
-            }
         }
 
         public void WithDefaultConventions()
@@ -296,15 +287,6 @@ namespace TecX.Unity.Configuration.Conventions
                 .Each(type => _conventions.Each(c => c.Process(type, registry)));
 
             registry.ConfigureRegistrationGraph(graph);
-
-            _postScanningActions.Each(action => action(graph));
-        }
-
-        public void ModifyGraphAfterScan(Action<RegistrationGraph> modifyGraph)
-        {
-            Guard.AssertNotNull(modifyGraph, "modifyGraph");
-
-            _postScanningActions.Add(modifyGraph);
         }
 
         #endregion Infrastructure

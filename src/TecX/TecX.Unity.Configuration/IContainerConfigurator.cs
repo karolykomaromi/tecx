@@ -2,7 +2,7 @@
 
 namespace TecX.Unity.Configuration
 {
-    public interface IConfigurationSource
+    public interface IContainerConfigurator
     {
         void Configure(IUnityContainer container);
     }
