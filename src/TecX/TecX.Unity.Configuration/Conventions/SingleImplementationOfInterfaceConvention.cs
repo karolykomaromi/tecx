@@ -8,14 +8,16 @@ using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Conventions
 {
-    public class SingleImplementationOfInterfaceConvention : IRegistrationConvention,
-        IRequirePostProcessing
+    public class SingleImplementationOfInterfaceConvention : IRegistrationConvention
     {
         private readonly Cache<Type, List<Type>> _types;
+
+        private bool _hookedUp;
 
         public SingleImplementationOfInterfaceConvention()
         {
             _types = new Cache<Type, List<Type>>(t => new List<Type>());
+            _hookedUp = false;
         }
 
         public void Process(Type type, Registry registry)
@@ -24,9 +26,15 @@ namespace TecX.Unity.Configuration.Conventions
             Guard.AssertNotNull(registry, "registry");
 
             RegisterType(type);
+
+            if (!_hookedUp)
+            {
+                registry.AddExpression(Post);
+                _hookedUp = true;
+            }
         }
 
-        void IRequirePostProcessing.Process(RegistrationGraph graph)
+        public void Post(RegistrationGraph graph)
         {
             Guard.AssertNotNull(graph, "graph");
 
