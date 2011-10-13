@@ -9,7 +9,7 @@ using TecX.Unity.Configuration.Common;
 
 namespace TecX.Unity.Configuration
 {
-    public class RegistrationFamily : IEnumerable<Registration>
+    public class RegistrationFamily : IEnumerable<Registration>, IContainerConfigurator
     {
         private static readonly string DefaultRegistrationKey = string.Empty;
         private readonly Type _from;
@@ -53,6 +53,16 @@ namespace TecX.Unity.Configuration
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+        public void Configure(IUnityContainer container)
+        {
+            Guard.AssertNotNull(container, "container");
+
+            foreach (Registration registration in _registrations)
+            {
+                registration.Configure(container);
+            }
         }
     }
 }

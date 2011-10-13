@@ -67,28 +67,6 @@ namespace TecX.Unity.Configuration.Conventions
 
         #endregion
 
-        #region Other options
-
-        /// <summary>
-        /// Directs the scanning operation to automatically detect and include any Registry
-        /// classes found in the Assembly's being scanned
-        /// </summary>
-        void LookForRegistries();
-
-        /// <summary>
-        /// Add all concrete types of the Plugin Type as Instances of Plugin Type
-        /// </summary>
-        /// <typeparam name="TPlugin"></typeparam>
-        FindAllTypesConvention AddAllTypesOf<TPlugin>();
-
-        /// <summary>
-        /// Add all concrete types of the Plugin Type as Instances of Plugin Type
-        /// </summary>
-        /// <param name="TPlugin"></param>
-        FindAllTypesConvention AddAllTypesOf(Type TPlugin);
-
-        #endregion
-
         #region Filtering types
 
         /// <summary>
@@ -140,7 +118,25 @@ namespace TecX.Unity.Configuration.Conventions
 
         #endregion
 
-        // ... Other methods
+        #region Conventions
+
+        /// <summary>
+        /// Directs the scanning operation to automatically detect and include any Registry
+        /// classes found in the Assembly's being scanned
+        /// </summary>
+        void LookForRegistries();
+
+        /// <summary>
+        /// Add all concrete types of the Plugin Type as Instances of Plugin Type
+        /// </summary>
+        /// <typeparam name="TPlugin"></typeparam>
+        FindAllTypesConvention AddAllTypesOf<TPlugin>();
+
+        /// <summary>
+        /// Add all concrete types of the Plugin Type as Instances of Plugin Type
+        /// </summary>
+        /// <param name="TPlugin"></param>
+        FindAllTypesConvention AddAllTypesOf(Type TPlugin);
 
         /// <summary>
         /// Adds a registration convention to be applied to all the types in this
@@ -161,7 +157,7 @@ namespace TecX.Unity.Configuration.Conventions
         /// added to TPlugin "ISomething"
         /// </summary>
         void WithDefaultConventions();
-        
+
         /// <summary>
         /// Automatically registers all concrete types without primitive arguments
         /// against its first interface, if any
@@ -174,5 +170,7 @@ namespace TecX.Unity.Configuration.Conventions
         /// The filters apply
         /// </summary>
         void SingleImplementationsOfInterface();
+
+        #endregion Conventions
     }
 }

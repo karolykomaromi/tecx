@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using TecX.Common;
 using TecX.Unity.Configuration.Common;
@@ -9,39 +8,6 @@ namespace TecX.Unity.Configuration.Extensions
 {
     public static class TypeExtensions
     {
-        public static IEnumerable<Type> FindInterfacesThatClose(this Type pluggedType, Type templateType)
-        {
-            Guard.AssertNotNull(pluggedType, "pluggedType");
-            Guard.AssertNotNull(templateType, "templateType");
-
-            if (!pluggedType.IsConcrete())
-            {
-                yield break;
-            }
-
-            if (templateType.IsInterface)
-            {
-                foreach (var interfaceType in pluggedType.GetInterfaces().Where(type => type.IsGenericType && (type.GetGenericTypeDefinition() == templateType)))
-                {
-                    yield return interfaceType;
-                }
-            }
-            else if (pluggedType.BaseType.IsGenericType && (pluggedType.BaseType.GetGenericTypeDefinition() == templateType))
-            {
-                yield return pluggedType.BaseType;
-            }
-
-            if (pluggedType.BaseType == typeof(object))
-            {
-                yield break;
-            }
-
-            foreach (var interfaceType in FindInterfacesThatClose(pluggedType.BaseType, templateType))
-            {
-                yield return interfaceType;
-            }
-        }
-
         public static bool IsInNamespace(this Type type, string nameSpace)
         {
             Guard.AssertNotNull(type, "type");
