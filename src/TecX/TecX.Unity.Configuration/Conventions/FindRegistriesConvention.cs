@@ -4,11 +4,11 @@ namespace TecX.Unity.Configuration.Conventions
 {
     public class FindRegistriesConvention : IRegistrationConvention
     {
-        public void Process(Type type, Registry registry)
+        public void Process(Type type, ConfigurationBuilder builder)
         {
-            if (Registry.IsPublicRegistry(type))
+            if (ConfigurationBuilder.IsPublicBuilder(type))
             {
-                registry.AddExpression(graph => graph.ImportRegistry(type));
+                builder.AddExpression(graph => graph.ImportRegistry(type));
             }
         }
     }

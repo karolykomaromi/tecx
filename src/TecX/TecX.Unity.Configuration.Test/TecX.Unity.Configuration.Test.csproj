@@ -74,13 +74,13 @@
     <Compile Include="TestObjects\IAnotherInterface.cs" />
     <Compile Include="TestObjects\IInterfaceName.cs" />
     <Compile Include="TestObjects\IMyInterface.cs" />
-    <Compile Include="TestObjects\DummyRegistry.cs" />
+    <Compile Include="TestObjects\DummyConfigurationBuilder.cs" />
     <Compile Include="TestObjects\InterfaceName.cs" />
     <Compile Include="TestObjects\IRepository.cs" />
     <Compile Include="TestObjects\MyClass.cs" />
     <Compile Include="TestObjects\MyClassWithCtorParams.cs" />
     <Compile Include="TestObjects\MyOtherClass.cs" />
-    <Compile Include="TestObjects\RegistrySubClass.cs" />
+    <Compile Include="TestObjects\ConfigurationBuilderSubClass.cs" />
     <Compile Include="TestObjects\Repository.cs" />
   </ItemGroup>
   <ItemGroup>

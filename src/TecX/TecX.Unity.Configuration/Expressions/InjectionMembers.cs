@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
@@ -21,16 +19,16 @@ namespace TecX.Unity.Configuration.Expressions
 
         public void Add(InjectionMember injectionMember)
         {
-            Guard.AssertNotNull(() => injectionMember);
+            Guard.AssertNotNull(injectionMember, "injectionMember");
 
             _injectionMembers.Add(injectionMember);
         }
 
         public override void AddPolicies(Type serviceType, Type implementationType, string name, IPolicyList policies)
         {
-            Guard.AssertNotNull(() => serviceType);
-            Guard.AssertNotNull(() => implementationType);
-            Guard.AssertNotNull(() => policies);
+            Guard.AssertNotNull(serviceType, "serviceType");
+            Guard.AssertNotNull(implementationType, "implementationType");
+            Guard.AssertNotNull(policies, "policies");
 
             _injectionMembers.ForEach(injectionMember => injectionMember.AddPolicies(serviceType, implementationType, name, policies));
         }

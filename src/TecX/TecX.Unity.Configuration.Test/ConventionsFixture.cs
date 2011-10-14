@@ -108,7 +108,7 @@ namespace TecX.Unity.Configuration.Test
                 {
                     s.With(new FindRegistriesConvention());
 
-                    s.AssemblyContainingType(typeof(RegistrySubClass));
+                    s.AssemblyContainingType(typeof(ConfigurationBuilderSubClass));
                 }));
 
             IRepository<int> repository = container.Resolve<IRepository<int>>();
@@ -157,9 +157,9 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            Registry registry = new Registry();
+            ConfigurationBuilder builder = new ConfigurationBuilder();
 
-            registry.Scan(s =>
+            builder.Scan(s =>
                 {
                     var convention = new FindAllTypesConvention(typeof(IMyInterface));
 
@@ -172,7 +172,7 @@ namespace TecX.Unity.Configuration.Test
                     s.Exclude(t => t == typeof(MyClassWithCtorParams));
                 });
 
-            container.AddExtension(registry);
+            container.AddExtension(builder);
 
             var results = container.ResolveAll<IMyInterface>();
 

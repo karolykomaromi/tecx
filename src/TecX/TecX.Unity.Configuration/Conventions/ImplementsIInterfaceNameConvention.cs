@@ -11,10 +11,10 @@ namespace TecX.Unity.Configuration.Conventions
     /// </summary>
     public class ImplementsIInterfaceNameConvention : IRegistrationConvention
     {
-        public void Process(Type type, Registry registry)
+        public void Process(Type type, ConfigurationBuilder builder)
         {
             Guard.AssertNotNull(type, "type");
-            Guard.AssertNotNull(registry, "registry");
+            Guard.AssertNotNull(builder, "ConfigurationBuilder");
 
             if (!type.IsConcrete())
             {
@@ -25,7 +25,7 @@ namespace TecX.Unity.Configuration.Conventions
             if (pluginType != null && 
                 Constructor.HasConstructors(type))
             {
-                registry.AddType(pluginType, type, type.FullName );
+                builder.AddType(pluginType, type, type.FullName );
             }
         }
 

@@ -9,32 +9,34 @@ using TecX.Unity.Configuration.Expressions;
 
 namespace TecX.Unity.Configuration
 {
-    public class Registry : UnityContainerExtension
+    public class ConfigurationBuilder : UnityContainerExtension
     {
-        private readonly List<Action<RegistrationGraph>> _actions;
+        private readonly List<Action<Configuration>> _actions;
         private readonly List<Action> _basicActions;
 
-        public Registry()
+        public ConfigurationBuilder()
         {
-            _actions = new List<Action<RegistrationGraph>>();
+            _actions = new List<Action<Configuration>>();
             _basicActions = new List<Action>();
         }
 
-        public static bool IsPublicRegistry(Type type)
+        public static bool IsPublicBuilder(Type type)
         {
             Guard.AssertNotNull(type, "type");
 
-            if (type.Assembly == typeof(Registry).Assembly)
+            if (type.Assembly == typeof(ConfigurationBuilder).Assembly)
             {
                 return false;
             }
 
-            if (!typeof(Registry).IsAssignableFrom(type))
+            if (!typeof(ConfigurationBuilder).IsAssignableFrom(type))
             {
                 return false;
             }
 
-            if (type.IsInterface || type.IsAbstract || type.IsGenericType)
+            if (type.IsInterface || 
+                type.IsAbstract || 
+                type.IsGenericType)
             {
                 return false;
             }
@@ -74,17 +76,17 @@ namespace TecX.Unity.Configuration
             return new CreateRegistrationFamilyExpression(from, this);
         }
 
-        public void IncludeRegistry<T>() 
-            where T : Registry, new()
+        public void Import<T>() 
+            where T : ConfigurationBuilder, new()
         {
-            _actions.Add(g => new T().ConfigureRegistrationGraph(g));
+            Import(new T());
         }
 
-        public void IncludeRegistry(Registry registry)
+        public void Import(ConfigurationBuilder builder)
         {
-            Guard.AssertNotNull(registry, "registry");
+            Guard.AssertNotNull(builder, "ConfigurationBuilder");
 
-            _actions.Add(registry.ConfigureRegistrationGraph);
+            _actions.Add(builder.BuildUp);
         }
 
         public void Scan(Action<IAssemblyScanner> action)
@@ -100,21 +102,21 @@ namespace TecX.Unity.Configuration
 
         #region Infrastructure
 
-        internal void ConfigureRegistrationGraph(RegistrationGraph graph)
+        internal void BuildUp(Configuration config)
         {
-            Guard.AssertNotNull(graph, "graph");
+            Guard.AssertNotNull(config, "config");
 
-            if (graph.Registries.Contains(this))
+            if (config.Builders.Contains(this))
             {
                 return;
             }
 
-            _actions.ForEach(action => action(graph));
+            _actions.ForEach(action => action(config));
 
-            graph.Registries.Add(this);
+            config.Builders.Add(this);
         }
 
-        internal void AddExpression(Action<RegistrationGraph> alteration)
+        internal void AddExpression(Action<Configuration> alteration)
         {
             Guard.AssertNotNull(alteration, "alteration");
 
@@ -130,24 +132,24 @@ namespace TecX.Unity.Configuration
 
         protected sealed override void Initialize()
         {
-            BeforeInitialize();
+            this.PreBuildUp();
 
             _basicActions.ForEach(action => action());
 
-            RegistrationGraph graph = new RegistrationGraph();
+            Configuration graph = new Configuration();
 
-            ConfigureRegistrationGraph(graph);
+            this.BuildUp(graph);
 
             graph.Configure(Container);
 
-            AfterInitialize();
+            this.PostBuildUp();
         }
 
-        protected virtual void BeforeInitialize()
+        protected virtual void PreBuildUp()
         {
         }
 
-        protected virtual void AfterInitialize()
+        protected virtual void PostBuildUp()
         {
         }
 

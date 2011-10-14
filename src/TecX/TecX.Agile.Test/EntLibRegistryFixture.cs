@@ -25,7 +25,7 @@ namespace TecX.Agile.Test
     {
         protected override void When()
         {
-            container.AddNewExtension<EntLibRegistry>();
+            container.AddNewExtension<EntLibConfigurationBuilder>();
         }
 
         [TestMethod]

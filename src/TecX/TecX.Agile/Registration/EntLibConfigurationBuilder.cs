@@ -10,7 +10,7 @@ using TecX.Unity.Configuration;
 
 namespace TecX.Agile.Registration
 {
-    public class EntLibRegistry : Registry
+    public class EntLibConfigurationBuilder : ConfigurationBuilder
     {
         private static class Constants
         {
@@ -33,7 +33,7 @@ namespace TecX.Agile.Registration
             }
         }
 
-        public EntLibRegistry()
+        public EntLibConfigurationBuilder()
         {
             this.AddAction(() =>
                 {

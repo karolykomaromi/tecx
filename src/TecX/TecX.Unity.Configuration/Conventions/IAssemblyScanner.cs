@@ -121,7 +121,7 @@ namespace TecX.Unity.Configuration.Conventions
         #region Conventions
 
         /// <summary>
-        /// Directs the scanning operation to automatically detect and include any Registry
+        /// Directs the scanning operation to automatically detect and include any ConfigurationBuilder
         /// classes found in the Assembly's being scanned
         /// </summary>
         void LookForRegistries();

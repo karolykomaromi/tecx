@@ -13,23 +13,23 @@ namespace TecX.Unity.Configuration.Expressions
 
         private readonly Type _from;
         private readonly List<Action<RegistrationFamily>> _alterations;
-        private readonly List<Action<RegistrationGraph>> _children;
+        private readonly List<Action<Configuration>> _children;
 
         #endregion Fields
 
         #region c'tor
 
-        public CreateRegistrationFamilyExpression(Type from, Registry registry)
+        public CreateRegistrationFamilyExpression(Type from, ConfigurationBuilder builder)
         {
             Guard.AssertNotNull(from, "from");
-            Guard.AssertNotNull(registry, "registry");
+            Guard.AssertNotNull(builder, "ConfigurationBuilder");
 
             _from = from;
 
             _alterations = new List<Action<RegistrationFamily>>();
-            _children = new List<Action<RegistrationGraph>>();
+            _children = new List<Action<Configuration>>();
 
-            registry.AddExpression(graph =>
+            builder.AddExpression(graph =>
                 {
                     RegistrationFamily family = graph.FindFamily(_from);
 

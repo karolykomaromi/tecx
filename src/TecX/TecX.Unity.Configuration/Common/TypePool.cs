@@ -11,7 +11,7 @@ namespace TecX.Unity.Configuration.Common
     {
         private readonly Cache<Assembly, Type[]> _types;
 
-        public TypePool(RegistrationGraph graph)
+        public TypePool(Configuration graph)
         {
             Guard.AssertNotNull(graph, "graph");
 

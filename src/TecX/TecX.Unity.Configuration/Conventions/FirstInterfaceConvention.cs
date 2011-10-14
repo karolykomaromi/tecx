@@ -8,10 +8,10 @@ namespace TecX.Unity.Configuration.Conventions
 {
     public class FirstInterfaceConvention : IRegistrationConvention
     {
-        public void Process(Type type, Registry registry)
+        public void Process(Type type, ConfigurationBuilder builder)
         {
             Guard.AssertNotNull(type, "type");
-            Guard.AssertNotNull(registry, "registry");
+            Guard.AssertNotNull(builder, "ConfigurationBuilder");
 
             if (!type.IsConcrete() ||
                 !type.CanBeCreated())
@@ -22,7 +22,7 @@ namespace TecX.Unity.Configuration.Conventions
             Type interfaceType = type.AllInterfaces().FirstOrDefault();
             if (interfaceType != null)
             {
-                registry.AddType(interfaceType, type, type.FullName);
+                builder.AddType(interfaceType, type, type.FullName);
             }
         }
     }

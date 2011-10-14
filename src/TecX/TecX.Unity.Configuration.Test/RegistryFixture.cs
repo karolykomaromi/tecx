@@ -22,11 +22,11 @@ namespace TecX.Unity.Configuration.Test
 
             extension.Initialized += (s, e) => initialized = true;
 
-            Registry registry = new DummyRegistry(extension);
+            ConfigurationBuilder builder = new DummyConfigurationBuilder(extension);
 
             IUnityContainer container = new UnityContainer();
 
-            container.AddExtension(registry);
+            container.AddExtension(builder);
 
             Assert.IsTrue(initialized);
         }
