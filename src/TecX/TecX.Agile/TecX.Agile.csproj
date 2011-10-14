@@ -118,7 +118,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Registration\EntLibConfigurationBuilder.cs" />
+    <Compile Include="Registration\EnterpriseLibraryConfigurationBuilder.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
       <SubType>Code</SubType>

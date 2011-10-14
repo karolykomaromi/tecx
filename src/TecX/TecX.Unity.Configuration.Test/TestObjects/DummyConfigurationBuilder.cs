@@ -9,7 +9,7 @@ namespace TecX.Unity.Configuration.Test.TestObjects
     {
         public DummyConfigurationBuilder(DummyExtension extension)
         {
-            this.AddAction(() => Container.AddExtension(extension));
+            this.AddExpression(cfg => cfg.AddModification(container => container.AddExtension(extension)));
         }
     }
 

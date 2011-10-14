@@ -32,5 +32,10 @@ namespace TecX.Unity.Configuration.Expressions
 
             _injectionMembers.ForEach(injectionMember => injectionMember.AddPolicies(serviceType, implementationType, name, policies));
         }
+
+        public InjectionMember[] ToArray()
+        {
+            return _injectionMembers.ToArray();
+        }
     }
 }

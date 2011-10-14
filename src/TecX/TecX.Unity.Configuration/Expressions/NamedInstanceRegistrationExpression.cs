@@ -14,6 +14,7 @@ namespace TecX.Unity.Configuration.Expressions
             {
                 return _name;
             }
+
             set
             {
                 Guard.AssertNotEmpty(value, "Name");

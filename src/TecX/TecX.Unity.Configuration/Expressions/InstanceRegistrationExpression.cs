@@ -34,7 +34,7 @@ namespace TecX.Unity.Configuration.Expressions
 
         public override Registration Compile()
         {
-            return new InstanceRegistration(From, null, _instance, Lifetime);
+            return new InstanceRegistration(From, null, Instance, Lifetime);
         }
     }
 }

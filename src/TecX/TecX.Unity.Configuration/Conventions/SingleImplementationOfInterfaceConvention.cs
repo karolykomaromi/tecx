@@ -17,7 +17,7 @@ namespace TecX.Unity.Configuration.Conventions
         public SingleImplementationOfInterfaceConvention()
         {
             _types = new Cache<Type, List<Type>>(t => new List<Type>());
-            _hookUp = new RunOnce<ConfigurationBuilder>(builder => builder.AddExpression(Post));
+            _hookUp = new RunOnce<ConfigurationBuilder>(builder => builder.AddExpression(Modify));
         }
 
         public void Process(Type type, ConfigurationBuilder builder)
@@ -30,7 +30,7 @@ namespace TecX.Unity.Configuration.Conventions
             _hookUp(builder);
         }
 
-        public void Post(Configuration graph)
+        public void Modify(Configuration graph)
         {
             Guard.AssertNotNull(graph, "graph");
 
