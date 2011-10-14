@@ -35,15 +35,15 @@ namespace TecX.Agile
         {
             base.ConfigureContainer();
 
-            Registry registry = new Registry();
+            ConfigurationBuilder builder = new ConfigurationBuilder();
 
-            registry.Scan(x =>
+            builder.Scan(x =>
                 {
                     x.LookForRegistries();
                     x.AssembliesFromApplicationBaseDirectory();
                 });
 
-            Container.AddExtension(registry);
+            Container.AddExtension(builder);
         }
 
         protected override void ConfigureModuleCatalog()

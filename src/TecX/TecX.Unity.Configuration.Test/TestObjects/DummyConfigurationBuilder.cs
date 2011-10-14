@@ -5,9 +5,9 @@ namespace TecX.Unity.Configuration.Test.TestObjects
 {
     using System;
 
-    internal class DummyRegistry : Registry
+    internal class DummyConfigurationBuilder : ConfigurationBuilder
     {
-        public DummyRegistry(DummyExtension extension)
+        public DummyConfigurationBuilder(DummyExtension extension)
         {
             this.AddAction(() => Container.AddExtension(extension));
         }

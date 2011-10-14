@@ -8,16 +8,16 @@ namespace TecX.Unity.Configuration.Extensions
 {
     public static class UnityContainerExtensions
     {
-        public static void Configure(this IUnityContainer container, Action<Registry> action)
+        public static void Configure(this IUnityContainer container, Action<ConfigurationBuilder> action)
         {
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(action, "action");
 
-            Registry registry = new Registry();
+            ConfigurationBuilder builder = new ConfigurationBuilder();
 
-            action(registry);
+            action(builder);
 
-            container.AddExtension(registry);
+            container.AddExtension(builder);
         }
     }
 }

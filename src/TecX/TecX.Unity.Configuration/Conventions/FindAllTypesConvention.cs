@@ -20,14 +20,14 @@ namespace TecX.Unity.Configuration.Conventions
             _getName = type => type.FullName;
         }
 
-        public void Process(Type type, Registry registry)
+        public void Process(Type type, ConfigurationBuilder builder)
         {
             if (type.CanBeCastTo(_from) && 
                 Constructor.HasConstructors(type))
             {
                 string name = _getName(type);
 
-                registry.AddType(_from, type, name);
+                builder.AddType(_from, type, name);
             }
         }
 

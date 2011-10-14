@@ -1,8 +1,8 @@
 ﻿namespace TecX.Unity.Configuration.Test.TestObjects
 {
-    public class RegistrySubClass : Registry
+    public class ConfigurationBuilderSubClass : ConfigurationBuilder
     {
-        public RegistrySubClass()
+        public ConfigurationBuilderSubClass()
         {
             For<IRepository<int>>().Use<Repository<int>>();
         }

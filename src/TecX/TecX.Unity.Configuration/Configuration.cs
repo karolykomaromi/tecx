@@ -11,10 +11,10 @@ using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration
 {
-    public class RegistrationGraph : IContainerConfigurator
+    public class Configuration : IContainerConfigurator
     {
         private readonly RegistrationFamilyCollection _registrationFamilies;
-        private readonly List<Registry> _registries;
+        private readonly List<ConfigurationBuilder> _builders;
         private readonly List<AssemblyScanner> _scanners;
         private readonly WeakReference<TypePool> _types;
 
@@ -23,9 +23,9 @@ namespace TecX.Unity.Configuration
             get { return _types.Value; }
         }
 
-        public List<Registry> Registries
+        public List<ConfigurationBuilder> Builders
         {
-            get { return _registries; }
+            get { return this._builders; }
         }
 
         public RegistrationFamilyCollection RegistrationFamilies
@@ -33,10 +33,10 @@ namespace TecX.Unity.Configuration
             get { return _registrationFamilies; }
         }
 
-        public RegistrationGraph()
+        public Configuration()
         {
             _registrationFamilies = new RegistrationFamilyCollection();
-            _registries = new List<Registry>();
+            this._builders = new List<ConfigurationBuilder>();
             _scanners = new List<AssemblyScanner>();
             _types = new WeakReference<TypePool>(() => new TypePool(this));
         }
@@ -57,14 +57,14 @@ namespace TecX.Unity.Configuration
         {
             Guard.AssertNotNull(type, "type");
 
-            if (Registries.Any(x => x.GetType() == type))
+            if (this.Builders.Any(x => x.GetType() == type))
             {
                 return;
             }
 
-            var registry = (Registry)Activator.CreateInstance(type);
+            var registry = (ConfigurationBuilder)Activator.CreateInstance(type);
 
-            registry.ConfigureRegistrationGraph(this);
+            registry.BuildUp(this);
         }
 
         public void Configure(IUnityContainer container)

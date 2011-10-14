@@ -39,11 +39,11 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            Registry registry = new Registry();
+            ConfigurationBuilder builder = new ConfigurationBuilder();
 
-            registry.For(typeof(IEnumerable<>)).Use(typeof(List<>)).UsingDefaultConstructor();
+            builder.For(typeof(IEnumerable<>)).Use(typeof(List<>)).UsingDefaultConstructor();
 
-            container.AddExtension(registry);
+            container.AddExtension(builder);
 
             IEnumerable<int> result = container.Resolve<IEnumerable<int>>();
 

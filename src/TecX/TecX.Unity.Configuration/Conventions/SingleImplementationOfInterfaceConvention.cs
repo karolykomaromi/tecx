@@ -12,43 +12,39 @@ namespace TecX.Unity.Configuration.Conventions
     {
         private readonly Cache<Type, List<Type>> _types;
 
-        private bool _hookedUp;
+        private readonly Action<ConfigurationBuilder> _hookUp;
 
         public SingleImplementationOfInterfaceConvention()
         {
             _types = new Cache<Type, List<Type>>(t => new List<Type>());
-            _hookedUp = false;
+            _hookUp = new RunOnce<ConfigurationBuilder>(builder => builder.AddExpression(Post));
         }
 
-        public void Process(Type type, Registry registry)
+        public void Process(Type type, ConfigurationBuilder builder)
         {
             Guard.AssertNotNull(type, "type");
-            Guard.AssertNotNull(registry, "registry");
+            Guard.AssertNotNull(builder, "ConfigurationBuilder");
 
             RegisterType(type);
 
-            if (!_hookedUp)
-            {
-                registry.AddExpression(Post);
-                _hookedUp = true;
-            }
+            _hookUp(builder);
         }
 
-        public void Post(RegistrationGraph graph)
+        public void Post(Configuration graph)
         {
             Guard.AssertNotNull(graph, "graph");
 
-            Registry singleImplementationRegistry = new Registry();
+            ConfigurationBuilder singleImplementationBuilder = new ConfigurationBuilder();
 
             _types.Each((pluginType, types) =>
             {
                 if (types.Count == 1)
                 {
-                    singleImplementationRegistry.AddType(pluginType, types[0], types[0].FullName);
+                    singleImplementationBuilder.AddType(pluginType, types[0], types[0].FullName);
                 }
             });
 
-            singleImplementationRegistry.ConfigureRegistrationGraph(graph);
+            singleImplementationBuilder.BuildUp(graph);
         }
 
         private void Register(Type interfaceType, Type concreteType)

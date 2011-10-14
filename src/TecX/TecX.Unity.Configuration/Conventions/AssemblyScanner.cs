@@ -263,11 +263,11 @@ namespace TecX.Unity.Configuration.Conventions
 
         #endregion Conventions
 
-        internal void ScanForAll(RegistrationGraph graph)
+        internal void ScanForAll(Configuration graph)
         {
             Guard.AssertNotNull(graph, "graph");
 
-            Registry registry = new Registry();
+            ConfigurationBuilder builder = new ConfigurationBuilder();
 
             // we iterate over all assemblies that were added to this scanner
             // we run the exported types from each of these assemblies through the scanners filter
@@ -276,9 +276,9 @@ namespace TecX.Unity.Configuration.Conventions
             graph
                 .Types
                 .For(_assemblies, _filter)
-                .Each(type => _conventions.Each(c => c.Process(type, registry)));
+                .Each(type => _conventions.Each(c => c.Process(type, builder)));
 
-            registry.ConfigureRegistrationGraph(graph);
+            builder.BuildUp(graph);
         }
     }
 }
