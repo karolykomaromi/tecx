@@ -12,12 +12,10 @@ namespace TecX.Unity.Configuration
     public class ConfigurationBuilder : UnityContainerExtension
     {
         private readonly List<Action<Configuration>> _alternations;
-        private readonly List<Action> _basicActions;
 
         public ConfigurationBuilder()
         {
             _alternations = new List<Action<Configuration>>();
-            _basicActions = new List<Action>();
         }
 
         public static bool IsPublicBuilder(Type type)
@@ -112,7 +110,6 @@ namespace TecX.Unity.Configuration
                 return;
             }
 
-            _basicActions.ForEach(action => action());
             _alternations.ForEach(action => action(config));
 
             config.Builders.Add(this);
@@ -123,13 +120,6 @@ namespace TecX.Unity.Configuration
             Guard.AssertNotNull(alteration, "alteration");
 
             _alternations.Add(alteration);
-        }
-
-        protected void AddAction(Action action)
-        {
-            Guard.AssertNotNull(action, "action");
-
-            _basicActions.Add(action);
         }
 
         protected sealed override void Initialize()
