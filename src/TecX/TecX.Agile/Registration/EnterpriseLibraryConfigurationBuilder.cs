@@ -38,7 +38,7 @@ namespace TecX.Agile.Registration
             AddExpression(graph => 
                 graph.AddModification(container =>
                     {
-                        this.Container.AddNewExtension<EnterpriseLibraryCoreExtension>();
+                        container.AddNewExtension<EnterpriseLibraryCoreExtension>();
 
                         var builder = new ConfigurationSourceBuilder();
 
@@ -57,11 +57,11 @@ namespace TecX.Agile.Registration
 
                         builder.UpdateConfigurationWithReplace(config);
 
-                        var configurator = new UnityContainerConfigurator(this.Container);
+                        var configurator = new UnityContainerConfigurator(container);
 
                         EnterpriseLibraryContainer.ConfigureContainer(configurator, config);
 
-                        UnityServiceLocator locator = new UnityServiceLocator(this.Container);
+                        UnityServiceLocator locator = new UnityServiceLocator(container);
 
                         EnterpriseLibraryContainer.Current = locator;
                     }));

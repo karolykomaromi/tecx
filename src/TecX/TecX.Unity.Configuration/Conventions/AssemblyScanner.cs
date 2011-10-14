@@ -201,7 +201,7 @@ namespace TecX.Unity.Configuration.Conventions
 
         #region Conventions
 
-        public void LookForRegistries()
+        public void LookForConfigBuilders()
         {
             With<FindRegistriesConvention>();
         }
