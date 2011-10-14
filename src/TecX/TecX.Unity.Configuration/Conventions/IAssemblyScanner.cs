@@ -124,7 +124,7 @@ namespace TecX.Unity.Configuration.Conventions
         /// Directs the scanning operation to automatically detect and include any ConfigurationBuilder
         /// classes found in the Assembly's being scanned
         /// </summary>
-        void LookForRegistries();
+        void LookForConfigBuilders();
 
         /// <summary>
         /// Add all concrete types of the Plugin Type as Instances of Plugin Type

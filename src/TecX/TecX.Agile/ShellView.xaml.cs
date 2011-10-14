@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace TecX.Agile
 {
     /// <summary>
-    /// Interaction logic for Shell.xaml
+    /// Interaction logic for ShellView.xaml
     /// </summary>
-    public partial class Shell : Window
+    public partial class ShellView : Window
     {
-        public Shell()
+        public ShellView()
         {
             InitializeComponent();
         }
