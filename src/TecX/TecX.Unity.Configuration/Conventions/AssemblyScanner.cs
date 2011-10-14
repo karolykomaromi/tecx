@@ -263,9 +263,9 @@ namespace TecX.Unity.Configuration.Conventions
 
         #endregion Conventions
 
-        internal void ScanForAll(Configuration graph)
+        internal void ScanForAll(Configuration config)
         {
-            Guard.AssertNotNull(graph, "graph");
+            Guard.AssertNotNull(config, "config");
 
             ConfigurationBuilder builder = new ConfigurationBuilder();
 
@@ -273,12 +273,12 @@ namespace TecX.Unity.Configuration.Conventions
             // we run the exported types from each of these assemblies through the scanners filter
             // the types that get past the filters are processed by the registered conventions
             // the conventions take care about registering a type with the container if it fits their scheme
-            graph
+            config
                 .Types
                 .For(_assemblies, _filter)
                 .Each(type => _conventions.Each(c => c.Process(type, builder)));
 
-            builder.BuildUp(graph);
+            builder.BuildUp(config);
         }
     }
 }

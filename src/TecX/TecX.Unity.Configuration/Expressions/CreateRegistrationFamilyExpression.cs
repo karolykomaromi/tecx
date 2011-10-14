@@ -9,15 +9,9 @@ namespace TecX.Unity.Configuration.Expressions
 {
     public class CreateRegistrationFamilyExpression
     {
-        #region Fields
-
         private readonly Type _from;
         private readonly List<Action<RegistrationFamily>> _alterations;
         private readonly List<Action<Configuration>> _children;
-
-        #endregion Fields
-
-        #region c'tor
 
         public CreateRegistrationFamilyExpression(Type from, ConfigurationBuilder builder)
         {
@@ -37,8 +31,6 @@ namespace TecX.Unity.Configuration.Expressions
                     _alterations.ForEach(action => action(family));
                 });
         }
-
-        #endregion c'tor
 
         public TypeRegistrationExpression Use<TTo>()
         {

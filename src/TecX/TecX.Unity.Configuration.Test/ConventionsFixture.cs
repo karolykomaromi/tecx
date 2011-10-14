@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using TecX.TestTools;
 using TecX.Unity.Configuration.Common;
 using TecX.Unity.Configuration.Conventions;
-using TecX.Unity.Configuration.Test.TestObjects;
 using TecX.Unity.Configuration.Extensions;
+using TecX.Unity.Configuration.Test.TestObjects;
 
 namespace TecX.Unity.Configuration.Test
 {

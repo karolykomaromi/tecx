@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -12,19 +11,19 @@ namespace TecX.Unity.Configuration.Expressions
 {
     public class TypeRegistrationExpression : RegistrationExpression<TypeRegistrationExpression>
     {
-        #region Fields
-
-        private readonly List<InjectionMember> _enrichments;
+        private readonly InjectionMembers _enrichments;
         private readonly Type _from;
         private readonly Type _to;
 
-        #endregion Fields
+        protected Type From
+        {
+            get { return _from; }
+        }
 
-        #region Properties
-
-        protected Type From { get { return _from; } }
-
-        protected Type To { get { return _to; } }
+        protected Type To
+        {
+            get { return _to; }
+        }
 
         protected InjectionMember[] Enrichments
         {
@@ -34,10 +33,6 @@ namespace TecX.Unity.Configuration.Expressions
             }
         }
 
-        #endregion Properties
-
-        #region c'tor
-
         public TypeRegistrationExpression(Type from, Type to)
         {
             Guard.AssertNotNull(from, "from");
@@ -46,20 +41,14 @@ namespace TecX.Unity.Configuration.Expressions
             _from = from;
             _to = to;
 
-            _enrichments = new List<InjectionMember>();
+            _enrichments = new InjectionMembers();
         }
-
-        #endregion c'tor
 
         public TypeRegistrationExpression EnrichWith(Action<InjectionMembers> action)
         {
-            Guard.AssertNotNull(() => action);
+            Guard.AssertNotNull(action, "action");
 
-            InjectionMembers injectionMembers = new InjectionMembers();
-
-            action(injectionMembers);
-
-            _enrichments.Add(injectionMembers);
+            action(_enrichments);
 
             return this;
         }
@@ -82,7 +71,7 @@ namespace TecX.Unity.Configuration.Expressions
             return this;
         }
 
-        public TypeRegistrationExpression UsingConstructor(Expression<Func<object>> expression)
+        public TypeRegistrationExpression Ctor(Expression<Func<object>> expression)
         {
             Guard.AssertNotNull(expression, "expression");
 
@@ -105,7 +94,7 @@ namespace TecX.Unity.Configuration.Expressions
             return this;
         }
 
-        public TypeRegistrationExpression UsingDefaultConstructor()
+        public TypeRegistrationExpression DefaultCtor()
         {
             _enrichments.Add(new InjectionConstructor());
 
@@ -114,7 +103,7 @@ namespace TecX.Unity.Configuration.Expressions
 
         public override Registration Compile()
         {
-            return new TypeRegistration(_from, _to, null, Lifetime, Enrichments);
+            return new TypeRegistration(From, To, null, Lifetime, Enrichments);
         }
     }
 }

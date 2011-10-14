@@ -11,12 +11,12 @@ namespace TecX.Unity.Configuration
 {
     public class ConfigurationBuilder : UnityContainerExtension
     {
-        private readonly List<Action<Configuration>> _actions;
+        private readonly List<Action<Configuration>> _alternations;
         private readonly List<Action> _basicActions;
 
         public ConfigurationBuilder()
         {
-            _actions = new List<Action<Configuration>>();
+            _alternations = new List<Action<Configuration>>();
             _basicActions = new List<Action>();
         }
 
@@ -34,14 +34,14 @@ namespace TecX.Unity.Configuration
                 return false;
             }
 
-            if (type.IsInterface || 
-                type.IsAbstract || 
+            if (type.IsInterface ||
+                type.IsAbstract ||
                 type.IsGenericType)
             {
                 return false;
             }
 
-            return (type.GetConstructor(new Type[0]) != null);
+            return type.GetConstructor(new Type[0]) != null;
         }
 
         public void AddType(Type from, Type to, string name)
@@ -50,18 +50,19 @@ namespace TecX.Unity.Configuration
             Guard.AssertNotNull(to, "to");
             Guard.AssertNotEmpty(name, "name");
 
-            _actions.Add(graph =>
-            {
-                var family = graph.FindFamily(from);
+            this._alternations.Add(config =>
+                {
+                    var family = config.FindFamily(from);
 
-                var registration = new TypeRegistration(from,
-                                                        to,
-                                                        name,
-                                                        new TransientLifetimeManager(),
-                                                        new InjectionMember[0]);
+                    var registration = new TypeRegistration(
+                        from,
+                        to,
+                        name,
+                        new TransientLifetimeManager(),
+                        new InjectionMember[0]);
 
-                family.AddRegistration(registration);
-            });
+                    family.AddRegistration(registration);
+                });
         }
 
         public CreateRegistrationFamilyExpression For<T>()
@@ -76,17 +77,17 @@ namespace TecX.Unity.Configuration
             return new CreateRegistrationFamilyExpression(from, this);
         }
 
-        public void Import<T>() 
+        public void ImportBuilder<T>()
             where T : ConfigurationBuilder, new()
         {
-            Import(new T());
+            ImportBuilder(new T());
         }
 
-        public void Import(ConfigurationBuilder builder)
+        public void ImportBuilder(ConfigurationBuilder builder)
         {
             Guard.AssertNotNull(builder, "ConfigurationBuilder");
 
-            _actions.Add(builder.BuildUp);
+            _alternations.Add(builder.BuildUp);
         }
 
         public void Scan(Action<IAssemblyScanner> action)
@@ -97,7 +98,7 @@ namespace TecX.Unity.Configuration
 
             action(scanner);
 
-            _actions.Add(graph => graph.AddScanner(scanner));
+            _alternations.Add(graph => graph.AddScanner(scanner));
         }
 
         #region Infrastructure
@@ -111,18 +112,19 @@ namespace TecX.Unity.Configuration
                 return;
             }
 
-            _actions.ForEach(action => action(config));
+            _basicActions.ForEach(action => action());
+            _alternations.ForEach(action => action(config));
 
             config.Builders.Add(this);
         }
 
-        internal void AddExpression(Action<Configuration> alteration)
+        protected internal void AddExpression(Action<Configuration> alteration)
         {
             Guard.AssertNotNull(alteration, "alteration");
 
-            _actions.Add(alteration);
+            _alternations.Add(alteration);
         }
-        
+
         protected void AddAction(Action action)
         {
             Guard.AssertNotNull(action, "action");
@@ -132,17 +134,15 @@ namespace TecX.Unity.Configuration
 
         protected sealed override void Initialize()
         {
-            this.PreBuildUp();
-
-            _basicActions.ForEach(action => action());
+            PreBuildUp();
 
             Configuration graph = new Configuration();
 
-            this.BuildUp(graph);
+            BuildUp(graph);
 
             graph.Configure(Container);
 
-            this.PostBuildUp();
+            PostBuildUp();
         }
 
         protected virtual void PreBuildUp()

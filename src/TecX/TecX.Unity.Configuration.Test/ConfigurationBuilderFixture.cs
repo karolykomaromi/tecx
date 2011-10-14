@@ -11,7 +11,7 @@ using TecX.Unity.Configuration.Test.TestObjects;
 namespace TecX.Unity.Configuration.Test
 {
     [TestClass]
-    public class RegistryFixture
+    public class ConfigurationBuilderFixture
     {
         [TestMethod]
         public void CanUseBasicActionsToAddExtensions()

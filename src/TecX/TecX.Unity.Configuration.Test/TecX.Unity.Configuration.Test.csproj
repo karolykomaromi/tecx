@@ -68,7 +68,7 @@
     <Compile Include="CreateRegistrationFamilyExpressionFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistrationExpressionFixture.cs" />
-    <Compile Include="RegistryFixture.cs" />
+    <Compile Include="ConfigurationBuilderFixture.cs" />
     <Compile Include="TestObjects\ClassThatImplementsAnotherInterface.cs" />
     <Compile Include="TestObjects\ClassThatUsesRepository.cs" />
     <Compile Include="TestObjects\IAnotherInterface.cs" />

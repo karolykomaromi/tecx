@@ -8,7 +8,7 @@ namespace TecX.Unity.Configuration.Conventions
         {
             if (ConfigurationBuilder.IsPublicBuilder(type))
             {
-                builder.AddExpression(graph => graph.ImportRegistry(type));
+                builder.AddExpression(config => config.ImportBuilder(type));
             }
         }
     }

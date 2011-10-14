@@ -41,7 +41,7 @@ namespace TecX.Unity.Configuration.Test
 
             ConfigurationBuilder builder = new ConfigurationBuilder();
 
-            builder.For(typeof(IEnumerable<>)).Use(typeof(List<>)).UsingDefaultConstructor();
+            builder.For(typeof(IEnumerable<>)).Use(typeof(List<>)).DefaultCtor();
 
             container.AddExtension(builder);
 
