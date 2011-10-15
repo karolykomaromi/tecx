@@ -72,7 +72,6 @@
     <Compile Include="Conventions\FindAllTypesConvention.cs" />
     <Compile Include="Conventions\FindRegistriesConvention.cs" />
     <Compile Include="Conventions\FirstInterfaceConvention.cs" />
-    <Compile Include="Conventions\IAssemblyScanner.cs" />
     <Compile Include="Conventions\IRegistrationConvention.cs" />
     <Compile Include="Conventions\RunOnce.cs" />
     <Compile Include="Conventions\SingleImplementationOfInterfaceConvention.cs" />

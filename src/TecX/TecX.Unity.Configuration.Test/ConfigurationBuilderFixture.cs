@@ -30,5 +30,17 @@ namespace TecX.Unity.Configuration.Test
 
             Assert.IsTrue(initialized);
         }
+
+        [TestMethod]
+        public void CanAddScannerOnSearchForRegistries()
+        {
+            var container = new UnityContainer();
+            container.AddExtension(new ScansForBuilders());
+
+            var mine = container.ResolveAll<IMyInterface>();
+
+            Assert.IsNotNull(mine);
+            Assert.IsTrue(mine.Any());
+        }
     }
 }
