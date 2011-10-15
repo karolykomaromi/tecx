@@ -103,6 +103,8 @@
     </ApplicationDefinition>
     <Compile Include="DebugLogger.cs" />
     <Compile Include="Registration\AppConfigurationBuilder.cs" />
+    <Compile Include="Registration\CaliburnConfigurationBuilder.cs" />
+    <Compile Include="Registration\ModuleConfigurationBuilder.cs" />
     <Compile Include="ShellViewModel.cs" />
     <Compile Include="UnityBootstrapper.cs" />
     <Page Include="ShellView.xaml">
@@ -153,6 +155,10 @@
       <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
       <Name>TecX.Agile.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Modules.Main\TecX.Agile.Modules.Main.csproj">
+      <Project>{1EB35F86-DA6C-4691-A2C5-8587129B520D}</Project>
+      <Name>TecX.Agile.Modules.Main</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Common.Event.Unity\TecX.Common.Event.Unity.csproj">
       <Project>{A763CC8F-835E-444C-9A9F-88E7A443C1B2}</Project>
       <Name>TecX.Common.Event.Unity</Name>
@@ -176,6 +182,10 @@
     <ProjectReference Include="..\TecX.Unity.Configuration\TecX.Unity.Configuration.csproj">
       <Project>{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}</Project>
       <Name>TecX.Unity.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Unity.TypedFactory\TecX.Unity.TypedFactory.csproj">
+      <Project>{2BF97DAC-6DEC-4576-B994-813686F5B0CA}</Project>
+      <Name>TecX.Unity.TypedFactory</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Unity\TecX.Unity.csproj">
       <Project>{69621991-8933-41FD-8493-87E7FA5A26FE}</Project>

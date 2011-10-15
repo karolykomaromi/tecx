@@ -1,11 +1,21 @@
-﻿using Caliburn.Micro;
+﻿using System.Collections.Generic;
+
+using Caliburn.Micro;
+
+using TecX.Agile.Infrastructure;
+using TecX.Common;
 
 namespace TecX.Agile
 {
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive
     {
-        public ShellViewModel()
+        private readonly IEnumerable<IModule> _modules;
+
+        public ShellViewModel(IEnumerable<IModule> modules)
         {
+            Guard.AssertNotNull(modules, "modules");
+
+            _modules = modules;
         }
     }
 }
