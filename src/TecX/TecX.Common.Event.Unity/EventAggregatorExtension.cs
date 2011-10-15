@@ -5,14 +5,14 @@ using Microsoft.Practices.Unity.ObjectBuilder;
 
 namespace TecX.Common.Event.Unity
 {
-    public class EventAggregatorContainerExtension : UnityContainerExtension
+    public class EventAggregatorExtension : UnityContainerExtension
     {
         private readonly IEventAggregator _eventAggregator;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventAggregatorContainerExtension"/> class
+        /// Initializes a new instance of the <see cref="EventAggregatorExtension"/> class
         /// </summary>
-        public EventAggregatorContainerExtension()
+        public EventAggregatorExtension()
         {
 #if SILVERLIGHT
             Dispatcher dispatcher = Deployment.Current.Dispatcher;

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
+using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
 
 using TecX.Common;
+using TecX.Unity.Enrichment;
 
 namespace TecX.Unity.Configuration.Expressions
 {
@@ -42,6 +44,16 @@ namespace TecX.Unity.Configuration.Expressions
             _to = to;
 
             _enrichments = new InjectionMembers();
+        }
+
+        public TypeRegistrationExpression EnrichWith<T>(Action<T, IBuilderContext> action)
+            where T : class
+        {
+            Guard.AssertNotNull(action, "action");
+
+            _enrichments.Add(new Enrichment<T>(action));
+
+            return this;
         }
 
         public TypeRegistrationExpression EnrichWith(Action<InjectionMembers> action)

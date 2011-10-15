@@ -3,11 +3,11 @@
 namespace TecX.Agile.Modules.Main.View
 {
     /// <summary>
-    /// Interaction logic for Surface.xaml
+    /// Interaction logic for SurfaceView.xaml
     /// </summary>
-    public partial class Surface : UserControl
+    public partial class SurfaceView : UserControl
     {
-        public Surface()
+        public SurfaceView()
         {
             InitializeComponent();
         }

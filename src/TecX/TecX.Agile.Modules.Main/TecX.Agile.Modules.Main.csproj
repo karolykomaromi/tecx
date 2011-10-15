@@ -39,12 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.4.0.0.0\lib\NET40\Microsoft.Practices.Prism.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Prism.Interactivity">
-      <HintPath>..\packages\Prism.4.0.0.0\lib\NET40\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -73,27 +67,14 @@
     </Compile>
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ShowTextService.cs" />
-    <Compile Include="Services\ShowThingsService.cs" />
-    <Compile Include="View\InfoTextArea.xaml.cs">
-      <DependentUpon>InfoTextArea.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Surface.xaml.cs">
-      <DependentUpon>Surface.xaml</DependentUpon>
+    <Compile Include="View\SurfaceView.xaml.cs">
+      <DependentUpon>SurfaceView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.csproj">
       <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
       <Name>TecX.Agile.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.csproj">
-      <Project>{E4698C1F-EF98-480C-B923-BB986C2B7F37}</Project>
-      <Name>TecX.Agile.ViewModel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TecX.Agile.View\TecX.Agile.View.csproj">
-      <Project>{09B2D14D-9911-4CDA-A175-43754A2AAAFE}</Project>
-      <Name>TecX.Agile.View</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.csproj">
       <Project>{266522EB-9DCB-451A-8CD7-678188DCB5F6}</Project>
@@ -108,11 +89,7 @@
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\InfoTextArea.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Surface.xaml">
+    <Page Include="View\SurfaceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -16,7 +16,7 @@ namespace TecX.Common.Test
         {
             IUnityContainer container = new UnityContainer();
             
-            container.AddNewExtension<EventAggregatorContainerExtension>();
+            container.AddNewExtension<EventAggregatorExtension>();
 
             IEventAggregator eventAggregator = container.Resolve<IEventAggregator>();
 
@@ -36,7 +36,7 @@ namespace TecX.Common.Test
         public void CanPublishUsingUnityInfrastructure()
         {
             IUnityContainer container = new UnityContainer();
-            container.AddNewExtension<EventAggregatorContainerExtension>();
+            container.AddNewExtension<EventAggregatorExtension>();
 
             SimpleSubscriber subscriber = container.Resolve<SimpleSubscriber>();
 

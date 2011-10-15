@@ -101,6 +101,10 @@
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Unity\TecX.Unity.csproj">
+      <Project>{69621991-8933-41FD-8493-87E7FA5A26FE}</Project>
+      <Name>TecX.Unity</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
