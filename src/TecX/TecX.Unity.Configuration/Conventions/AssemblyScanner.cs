@@ -11,7 +11,7 @@ using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Conventions
 {
-    public class AssemblyScanner : IAssemblyScanner
+    public class AssemblyScanner
     {
         private readonly List<Assembly> _assemblies;
         private readonly CompositeFilter<Type> _filter;

@@ -88,7 +88,7 @@ namespace TecX.Unity.Configuration
             _alternations.Add(builder.BuildUp);
         }
 
-        public void Scan(Action<IAssemblyScanner> action)
+        public void Scan(Action<AssemblyScanner> action)
         {
             Guard.AssertNotNull(action, "action");
 

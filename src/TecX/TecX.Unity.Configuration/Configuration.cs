@@ -15,7 +15,7 @@ namespace TecX.Unity.Configuration
     {
         private readonly RegistrationFamilyCollection _registrationFamilies;
         private readonly List<ConfigurationBuilder> _builders;
-        private readonly List<IAssemblyScanner> _scanners;
+        private readonly List<AssemblyScanner> _scanners;
         private readonly WeakReference<TypePool> _types;
         private readonly List<Action<IUnityContainer>> _modifications;
 
@@ -33,12 +33,12 @@ namespace TecX.Unity.Configuration
         {
             _registrationFamilies = new RegistrationFamilyCollection();
             _builders = new List<ConfigurationBuilder>();
-            _scanners = new List<IAssemblyScanner>();
+            _scanners = new List<AssemblyScanner>();
             _types = new WeakReference<TypePool>(() => new TypePool(this));
             _modifications = new List<Action<IUnityContainer>>();
         }
 
-        public void AddScanner(IAssemblyScanner scanner)
+        public void AddScanner(AssemblyScanner scanner)
         {
             Guard.AssertNotNull(scanner, "scanner");
 
@@ -76,10 +76,15 @@ namespace TecX.Unity.Configuration
         {
             Guard.AssertNotNull(container, "container");
 
-            foreach (AssemblyScanner scanner in _scanners)
+            for (int i = 0; i < _scanners.Count; i++)
             {
-                scanner.ScanForAll(this);
+                _scanners[i].ScanForAll(this);
             }
+
+                foreach (AssemblyScanner scanner in _scanners)
+                {
+                    scanner.ScanForAll(this);
+                }
 
             _registrationFamilies.Configure(container);
 
