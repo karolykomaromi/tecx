@@ -107,7 +107,7 @@ namespace TecX.Unity.Configuration.Test
             container.Configure(r =>
                 r.Scan(s =>
                 {
-                    s.With(new FindRegistriesConvention());
+                    s.With(new FindConfigBuildersConvention());
 
                     s.AssemblyContainingType(typeof(ConfigurationBuilderSubClass));
                 }));

@@ -2,7 +2,7 @@
 
 namespace TecX.Unity.Configuration.Conventions
 {
-    public class FindRegistriesConvention : IRegistrationConvention
+    public class FindConfigBuildersConvention : IRegistrationConvention
     {
         public void Process(Type type, ConfigurationBuilder builder)
         {
