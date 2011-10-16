@@ -7,7 +7,7 @@ using TecX.Common;
 
 namespace TecX.Agile
 {
-    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive
+    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShell
     {
         private readonly IEnumerable<IModule> _modules;
 

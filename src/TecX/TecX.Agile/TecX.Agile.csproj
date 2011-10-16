@@ -101,12 +101,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DebugLogger.cs" />
+    <Compile Include="IShell.cs" />
     <Compile Include="Registration\AppConfigurationBuilder.cs" />
     <Compile Include="Registration\CaliburnConfigurationBuilder.cs" />
     <Compile Include="Registration\ModuleConfigurationBuilder.cs" />
     <Compile Include="ShellViewModel.cs" />
-    <Compile Include="UnityBootstrapper.cs" />
     <Page Include="ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -118,7 +117,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Registration\EnterpriseLibraryConfigurationBuilder.cs" />
     <Compile Include="ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>

@@ -1,4 +1,4 @@
-﻿namespace $safeprojectname$ {
+﻿namespace TecX.Agile.Infrastructure {
     using System.ComponentModel.Composition;
 
     [Export(typeof(IShell))]

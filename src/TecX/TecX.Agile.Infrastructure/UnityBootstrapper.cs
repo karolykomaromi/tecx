@@ -7,7 +7,7 @@ using Microsoft.Practices.Unity;
 
 using TecX.Common;
 
-namespace TecX.Agile
+namespace TecX.Agile.Infrastructure
 {
     public class UnityBootstrapper<T> : Bootstrapper<T>
     {

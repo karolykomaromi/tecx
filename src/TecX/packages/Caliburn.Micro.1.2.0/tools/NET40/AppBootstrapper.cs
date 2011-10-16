@@ -1,4 +1,4 @@
-﻿namespace $safeprojectname$
+﻿namespace TecX.Agile.Infrastructure
 {
 	using System;
 	using System.Collections.Generic;

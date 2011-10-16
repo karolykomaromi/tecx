@@ -76,6 +76,9 @@ namespace TecX.Unity.Configuration
         {
             Guard.AssertNotNull(container, "container");
 
+            //don't use foreach! when adding additional config builders
+            //via FindConfigBuildersConvention they might add scanners as well
+            //which would cause problems with modified enumeration
             for (int i = 0; i < _scanners.Count; i++)
             {
                 _scanners[i].ScanForAll(this);

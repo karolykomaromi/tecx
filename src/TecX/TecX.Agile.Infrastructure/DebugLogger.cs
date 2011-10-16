@@ -5,7 +5,7 @@ using Caliburn.Micro;
 
 using TecX.Common;
 
-namespace TecX.Agile
+namespace TecX.Agile.Infrastructure
 {
     public class DebugLogger : ILog
     {

@@ -1,12 +1,14 @@
 ﻿using Caliburn.Micro;
 
+using TecX.Agile.Infrastructure;
 using TecX.Unity.Configuration;
+using Microsoft.Practices.Unity;
 
 namespace TecX.Agile
 {
-    public class Bootstrapper : UnityBootstrapper<ShellViewModel>
+    public class AppBootstrapper : UnityBootstrapper<ShellViewModel>
     {
-        public Bootstrapper()
+        public AppBootstrapper()
         {
             LogManager.GetLog = type => new DebugLogger(type);
         }

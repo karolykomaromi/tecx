@@ -70,7 +70,7 @@
     <Compile Include="Conventions\AssemblyScanner.cs" />
     <Compile Include="Conventions\ImplementsIInterfaceNameConvention.cs" />
     <Compile Include="Conventions\FindAllTypesConvention.cs" />
-    <Compile Include="Conventions\FindRegistriesConvention.cs" />
+    <Compile Include="Conventions\FindConfigBuildersConvention.cs" />
     <Compile Include="Conventions\FirstInterfaceConvention.cs" />
     <Compile Include="Conventions\IRegistrationConvention.cs" />
     <Compile Include="Conventions\RunOnce.cs" />
