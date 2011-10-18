@@ -203,7 +203,7 @@ namespace TecX.Unity.Configuration.Conventions
 
         public void LookForConfigBuilders()
         {
-            With<FindRegistriesConvention>();
+            With<FindConfigBuildersConvention>();
         }
 
         public FindAllTypesConvention AddAllTypesOf<TPlugin>()
