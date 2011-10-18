@@ -2,7 +2,6 @@
 
 using TecX.Agile.Infrastructure;
 using TecX.Unity.Configuration;
-using Microsoft.Practices.Unity;
 
 namespace TecX.Agile
 {
