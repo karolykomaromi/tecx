@@ -1,10 +1,11 @@
 ﻿using Caliburn.Micro;
 
+using TecX.Agile.ViewModels;
 using TecX.Unity.Configuration;
 
 namespace TecX.Agile.Registration
 {
-public class CaliburnConfigurationBuilder : ConfigurationBuilder
+    public class CaliburnConfigurationBuilder : ConfigurationBuilder
     {
         public CaliburnConfigurationBuilder()
         {
