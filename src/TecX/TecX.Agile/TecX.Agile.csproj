@@ -118,6 +118,10 @@
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Registration\EnterpriseLibraryConfigurationBuilder.cs" />
+    <Page Include="SimpleStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -172,10 +176,6 @@
     <ProjectReference Include="..\TecX.Logging\TecX.Logging.csproj">
       <Project>{DEDCDF0F-15B1-4E90-B0A3-5FC5331C5436}</Project>
       <Name>TecX.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TecX.Prism\TecX.Prism.csproj">
-      <Project>{FA168E91-F953-4C22-9727-4462E9DF74EF}</Project>
-      <Name>TecX.Prism</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Unity.Configuration\TecX.Unity.Configuration.csproj">
       <Project>{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}</Project>
