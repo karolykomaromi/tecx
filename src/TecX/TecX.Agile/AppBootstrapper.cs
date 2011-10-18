@@ -5,6 +5,8 @@ using TecX.Unity.Configuration;
 
 namespace TecX.Agile
 {
+    using TecX.Agile.ViewModels;
+
     public class AppBootstrapper : UnityBootstrapper<ShellViewModel>
     {
         public AppBootstrapper()
