@@ -101,9 +101,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Constants.cs" />
     <Compile Include="Registration\AppConfigurationBuilder.cs" />
     <Compile Include="Registration\CaliburnConfigurationBuilder.cs" />
     <Compile Include="Registration\ModuleConfigurationBuilder.cs" />
+    <Compile Include="SurfaceDataTemplateSelector.cs" />
+    <Compile Include="ViewModels\IterationViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\StoryCardViewModel.cs" />
     <Compile Include="Views\ShellView.xaml.cs">
