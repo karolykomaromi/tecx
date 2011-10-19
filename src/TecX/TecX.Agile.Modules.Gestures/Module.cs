@@ -1,49 +1,42 @@
-﻿using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Regions;
+﻿using System;
+using System.Diagnostics;
+using System.Windows;
 
 using TecX.Agile.Infrastructure;
-using TecX.Agile.Modules.Gestures.View;
+using TecX.Agile.Modules.Gestures.ViewModels;
 using TecX.Common;
 
 namespace TecX.Agile.Modules.Gestures
 {
+    [DebuggerDisplay("{Description}")]
     public class Module : IModule
     {
-        #region Constants
+        private readonly GestureViewModel _gestureViewModel;
 
-        public const string ModuleName = "Gestures";
-
-        #endregion Constants
-
-        #region Fields
-
-        private readonly IRegionManager _regionManager;
-        private readonly GestureOverlay _gestureOverlay;
-
-        #endregion Fields
-
-        #region c'tor
-
-        public Module(IRegionManager regionManager, GestureOverlay gestureOverlay)
+        public string Description
         {
-            Guard.AssertNotNull(regionManager, "regionManager");
-            Guard.AssertNotNull(gestureOverlay, "gestureOverlay");
-
-            _regionManager = regionManager;
-            _gestureOverlay = gestureOverlay;
+            get
+            {
+                return "Gesture Recognition";
+            }
         }
 
-        #endregion c'tor
+        public Module(GestureViewModel gestureViewModel)
+        {
+            Guard.AssertNotNull(gestureViewModel, "gestureViewModel");
 
-        #region Implementation of IModule
+            _gestureViewModel = gestureViewModel;
+        }
 
         public void Initialize()
         {
-            IRegion main = _regionManager.Regions[Regions.Main];
+            ResourceDictionary dictionary = new ResourceDictionary
+                {
+                    //Source = new Uri("pack://application:,,,/GestureStyles.xaml")
+                    Source = new Uri("TecX.Agile.Modules.Gestures;component/GestureStyles.xaml", UriKind.RelativeOrAbsolute)
+                };
 
-            main.Add(_gestureOverlay);
+            Application.Current.Resources.MergedDictionaries.Add(dictionary);
         }
-
-        #endregion Implementation of IModule
     }
 }

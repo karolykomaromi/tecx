@@ -13,12 +13,11 @@ namespace TecX.Agile.Registration
     {
         public ModuleConfigurationBuilder()
         {
-            AddExpression(config => config.AddModification(container => container.AddNewExtension<TypedFactoryExtension>()));
-            AddExpression(config => config.AddModification(container => container.AddNewExtension<EnrichmentExtension>()));
-            AddExpression(config => config.AddModification(container => container.AddNewExtension<CollectionResolutionExtension>()));
-
             For<IModule>().Add<Module>().Named("Main")
-                .EnrichWith<Module>((module, ctx) => module.Initialize());
+                .EnrichWith<IModule>((module, ctx) => module.Initialize());
+
+            For<IModule>().Add<Modules.Gestures.Module>().Named("Gestures")
+                .EnrichWith<IModule>((module, ctx) => module.Initialize());
         }
     }
 }
