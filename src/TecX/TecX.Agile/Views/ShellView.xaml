@@ -29,6 +29,11 @@
                 <Agile:SurfaceDataTemplateSelector/>
             </ItemsControl.ItemTemplateSelector>
         </ItemsControl>
-        <Button Grid.Column="1" Click="Button_Click">Add</Button>
+        <Button x:Name="AddItem" Grid.Column="1">Add</Button>
+        <ItemsControl
+            x:Name="Overlay"
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="3"
+            ItemsSource="{Binding Overlays}"/>
     </Grid>
 </Window>
