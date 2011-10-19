@@ -5,9 +5,9 @@ using TecX.Agile.Infrastructure;
 namespace TecX.Agile.Modules.Main
 {
     [DebuggerDisplay("{Description}")]
-    public class Module : IModule
+    public class Module : ModuleBase
     {
-        public string Description
+        public override string Description
         {
             get { return "Main Module"; }
         }
