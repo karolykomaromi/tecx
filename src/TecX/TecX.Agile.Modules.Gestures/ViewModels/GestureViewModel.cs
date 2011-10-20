@@ -12,12 +12,13 @@ using IEventAggregator = TecX.Common.Event.IEventAggregator;
 
 namespace TecX.Agile.Modules.Gestures.ViewModels
 {
+    using TecX.Agile.Infrastructure;
     using TecX.Agile.Infrastructure.Error;
     using TecX.Agile.Infrastructure.Events;
 
     public class GestureViewModel : Screen
     {
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IShell _shell;
 
         private readonly ApplicationGesture[] _addStoryCardGestures = new[]
                                                     {
@@ -31,11 +32,11 @@ namespace TecX.Agile.Modules.Gestures.ViewModels
                                                         ApplicationGesture.ChevronDown
                                                     };
 
-        public GestureViewModel(IEventAggregator eventAggregator)
+        public GestureViewModel(IShell shell)
         {
-            Guard.AssertNotNull(eventAggregator, "eventAggregator");
+            Guard.AssertNotNull(shell, "shell");
 
-            _eventAggregator = eventAggregator;
+            _shell = shell;
         }
 
         public void Gesture(InkCanvasGestureEventArgs e)
@@ -92,7 +93,6 @@ namespace TecX.Agile.Modules.Gestures.ViewModels
 
         private void AddStoryCardUp()
         {
-            _eventAggregator.Publish(new AddedStoryCard { });
         }
 
         //private void ProcessAddIterationGesture(InkCanvasGestureEventArgs e, ApplicationGesture topGesture)
