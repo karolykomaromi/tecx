@@ -60,10 +60,6 @@ namespace TecX.Agile.Registration
                         var configurator = new UnityContainerConfigurator(container);
 
                         EnterpriseLibraryContainer.ConfigureContainer(configurator, config);
-
-                        UnityServiceLocator locator = new UnityServiceLocator(container);
-
-                        EnterpriseLibraryContainer.Current = locator;
                     }));
         }
     }
