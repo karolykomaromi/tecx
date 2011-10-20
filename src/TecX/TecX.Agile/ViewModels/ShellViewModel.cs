@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using Caliburn.Micro;
 
 using TecX.Agile.Infrastructure;
@@ -9,15 +7,10 @@ namespace TecX.Agile.ViewModels
 {
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShell
     {
-        private readonly IEnumerable<IModule> _modules;
-
         private readonly BindableCollection<Screen> _overlays;
 
-        public ShellViewModel(IEnumerable<IModule> modules)
+        public ShellViewModel()
         {
-            Guard.AssertNotNull(modules, "modules");
-
-            _modules = modules;
             _overlays = new BindableCollection<Screen>();
         }
 

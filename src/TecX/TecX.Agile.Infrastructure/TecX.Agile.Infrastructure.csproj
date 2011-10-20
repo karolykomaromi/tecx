@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="DefaultLogger.cs" />
     <Compile Include="Error\AgileBaseException.cs" />
+    <Compile Include="Events\AddedStoryCard.cs" />
     <Compile Include="IModule.cs" />
     <Compile Include="IShell.cs" />
     <Compile Include="ModuleBase.cs" />

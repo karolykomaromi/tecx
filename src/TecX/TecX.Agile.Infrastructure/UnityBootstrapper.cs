@@ -32,7 +32,11 @@ namespace TecX.Agile.Infrastructure
             ConfigureContainer();
 
             ConfigureServiceLocator();
+
+            InitializeModules();
         }
+
+        #region Initialization
 
         protected virtual Func<Type, ILog> CreateLogger()
         {
@@ -57,13 +61,18 @@ namespace TecX.Agile.Infrastructure
         {
             ConfigurationBuilder builder = new ConfigurationBuilder();
 
-            builder.Scan(x =>
-            {
-                x.LookForConfigBuilders();
-                x.AssembliesFromApplicationBaseDirectory();
-            });
+            builder.Scan(
+                x =>
+                {
+                    x.LookForConfigBuilders();
+                    x.AssembliesFromApplicationBaseDirectory();
+                });
 
             Container.AddExtension(builder);
+
+            Container.RegisterInstance(ModuleCatalog);
+
+            Container.RegisterType<IModuleManager, ModuleManager>(new ContainerControlledLifetimeManager());
         }
 
         protected virtual void ConfigureServiceLocator()
@@ -73,7 +82,32 @@ namespace TecX.Agile.Infrastructure
             EnterpriseLibraryContainer.Current = locator;
         }
 
-        protected sealed override IEnumerable<object> GetAllInstances(Type service)
+        protected virtual void InitializeModules()
+        {
+            IModuleManager manager;
+
+            try
+            {
+                manager = this.Container.Resolve<IModuleManager>();
+            }
+            catch (ResolutionFailedException ex)
+            {
+                if (ex.Message.Contains("IModuleCatalog"))
+                {
+                    throw new InvalidOperationException();
+                }
+
+                throw;
+            }
+
+            manager.Run();
+        }
+
+        #endregion
+
+        #region Overrides of Bootstrapper<T>
+
+        protected override sealed IEnumerable<object> GetAllInstances(Type service)
         {
             Guard.AssertNotNull(service, "service");
 
@@ -82,7 +116,7 @@ namespace TecX.Agile.Infrastructure
             return instances;
         }
 
-        protected sealed override object GetInstance(Type service, string key)
+        protected override sealed object GetInstance(Type service, string key)
         {
             Guard.AssertNotNull(service, "service");
 
@@ -91,19 +125,98 @@ namespace TecX.Agile.Infrastructure
             return instance;
         }
 
-        protected sealed override void BuildUp(object instance)
+        protected override sealed void BuildUp(object instance)
         {
             Guard.AssertNotNull(instance, "instance");
 
             var builtUp = Container.BuildUp(instance.GetType(), instance);
         }
+
+        #endregion Overrides of Bootstrapper<T>
+    }
+
+    public interface IModuleManager
+    {
+        void Run();
+    }
+
+    public class ModuleManager : IModuleManager
+    {
+        private readonly IModuleCatalog _catalog;
+
+        private readonly IUnityContainer _container;
+
+        public ModuleManager(IModuleCatalog catalog, IUnityContainer container)
+        {
+            Guard.AssertNotNull(catalog, "catalog");
+            Guard.AssertNotNull(container, "container");
+
+            _catalog = catalog;
+            _container = container;
+        }
+
+        public void Run()
+        {
+            foreach (var moduleInfo in _catalog.Modules)
+            {
+                Type moduleType = Type.GetType(moduleInfo.ModuleType);
+
+                IModule module = (IModule)_container.Resolve(moduleType, moduleInfo.Name);
+
+                module.Initialize();
+            }
+        }
     }
 
     public class ModuleCatalog : IModuleCatalog
     {
+        private readonly List<ModuleInfo> _modules;
+
+        public ModuleCatalog()
+        {
+            _modules = new List<ModuleInfo>();
+        }
+
+        public IEnumerable<ModuleInfo> Modules
+        {
+            get
+            {
+                return _modules;
+            }
+        }
+
+        public void AddModule(Type moduleType)
+        {
+            Guard.AssertNotNull(moduleType, "moduleType");
+
+            ModuleInfo module = new ModuleInfo
+                {
+                    Name = moduleType.Name,
+                    ModuleType = moduleType.AssemblyQualifiedName
+                };
+
+            AddModule(module);
+        }
+
+        public void AddModule(ModuleInfo module)
+        {
+            Guard.AssertNotNull(module, "module");
+
+            _modules.Add(module);
+        }
     }
 
     public interface IModuleCatalog
     {
+        IEnumerable<ModuleInfo> Modules { get; }
+
+        void AddModule(ModuleInfo module);
+    }
+
+    public class ModuleInfo
+    {
+        public string Name { get; set; }
+
+        public string ModuleType { get; set; }
     }
 }

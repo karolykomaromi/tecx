@@ -8,10 +8,17 @@ using Caliburn.Micro;
 
 using TecX.Common;
 
+using IEventAggregator = TecX.Common.Event.IEventAggregator;
+
 namespace TecX.Agile.Modules.Gestures.ViewModels
 {
+    using TecX.Agile.Infrastructure.Error;
+    using TecX.Agile.Infrastructure.Events;
+
     public class GestureViewModel : Screen
     {
+        private readonly IEventAggregator _eventAggregator;
+
         private readonly ApplicationGesture[] _addStoryCardGestures = new[]
                                                     {
                                                         ApplicationGesture.ArrowUp,
@@ -24,44 +31,68 @@ namespace TecX.Agile.Modules.Gestures.ViewModels
                                                         ApplicationGesture.ChevronDown
                                                     };
 
-        public void OnGesture(InkCanvasGestureEventArgs e)
+        public GestureViewModel(IEventAggregator eventAggregator)
+        {
+            Guard.AssertNotNull(eventAggregator, "eventAggregator");
+
+            _eventAggregator = eventAggregator;
+        }
+
+        public void Gesture(InkCanvasGestureEventArgs e)
         {
             var recognitionResults = e.GetGestureRecognitionResults();
 
-            if (!TypeHelper.IsEmpty(recognitionResults) &&
-                !TypeHelper.IsEmpty(e.Strokes))
+            if (TypeHelper.IsEmpty(recognitionResults) ||
+                recognitionResults[0].RecognitionConfidence < RecognitionConfidence.Strong)
             {
-                ApplicationGesture topGesture = recognitionResults[0].ApplicationGesture;
-
-                if (IsAddStoryCardGesture(topGesture))
-                {
-                    Point gestureCenter = GetGestureCenterOnSurface(e.Strokes.GetBounds());
-
-                    AddStoryCard(gestureCenter, topGesture);
-                    return;
-                }
-
-                if (topGesture == ApplicationGesture.LeftDown)
-                {
-                    Undo();
-                    return;
-                }
-
-                if (topGesture == ApplicationGesture.RightDown)
-                {
-                    Redo();
-                    return;
-                }
-
-                //if (topGesture == ApplicationGesture.Square)
-                //{
-                //    ProcessAddIterationGesture(e, topGesture);
-                //    return;
-                //}
-
-                //try to interpret the gesture as lasso
-                Lasso(e);
+                return;
             }
+
+            ApplicationGesture gesture = recognitionResults[0].ApplicationGesture;
+
+            switch (gesture)
+            {
+                case ApplicationGesture.ChevronUp:
+                case ApplicationGesture.ArrowUp:
+                    AddStoryCardUp();
+                    break;
+                default:
+                    throw new NotImplementedException("Recognition of ApplicationGesture not implemented.");
+            }
+
+            //if (IsAddStoryCardGesture(topGesture))
+            //{
+            //    Point gestureCenter = GetGestureCenterOnSurface(e.Strokes.GetBounds());
+
+            //    AddStoryCard(gestureCenter, topGesture);
+            //    return;
+            //}
+
+            //if (topGesture == ApplicationGesture.LeftDown)
+            //{
+            //    Undo();
+            //    return;
+            //}
+
+            //if (topGesture == ApplicationGesture.RightDown)
+            //{
+            //    Redo();
+            //    return;
+            //}
+
+            //if (topGesture == ApplicationGesture.Square)
+            //{
+            //    ProcessAddIterationGesture(e, topGesture);
+            //    return;
+            //}
+
+            //try to interpret the gesture as lasso
+            Lasso(e);
+        }
+
+        private void AddStoryCardUp()
+        {
+            _eventAggregator.Publish(new AddedStoryCard { });
         }
 
         //private void ProcessAddIterationGesture(InkCanvasGestureEventArgs e, ApplicationGesture topGesture)

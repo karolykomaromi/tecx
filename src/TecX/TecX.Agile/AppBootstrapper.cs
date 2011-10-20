@@ -1,16 +1,21 @@
-﻿using System.Collections.Generic;
-
-using Caliburn.Micro;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Agile.Infrastructure;
+﻿using TecX.Agile.Infrastructure;
 using TecX.Agile.ViewModels;
-using TecX.Unity.Configuration;
 
 namespace TecX.Agile
 {
     public class AppBootstrapper : UnityBootstrapper<ShellViewModel>
     {
+        protected override void ConfigureModuleCatalog()
+        {
+            base.ConfigureModuleCatalog();
+
+            var gestures = typeof(Modules.Gestures.Module);
+
+            ModuleCatalog.AddModule(new ModuleInfo { Name = gestures.Name, ModuleType = gestures.AssemblyQualifiedName });
+
+            var main = typeof(Modules.Main.Module);
+
+            ModuleCatalog.AddModule(new ModuleInfo { Name = main.Name, ModuleType = main.AssemblyQualifiedName });
+        }
     }
 }
