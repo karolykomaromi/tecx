@@ -3,6 +3,8 @@ using TecX.Agile.ViewModels;
 
 namespace TecX.Agile
 {
+    using TecX.Agile.Infrastructure.Modularization;
+
     public class AppBootstrapper : UnityBootstrapper<ShellViewModel>
     {
         protected override void ConfigureModuleCatalog()
