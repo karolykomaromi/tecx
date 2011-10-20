@@ -1,10 +1,9 @@
 ﻿using TecX.Agile.Infrastructure;
+using TecX.Agile.Infrastructure.Modularization;
 using TecX.Agile.ViewModels;
 
 namespace TecX.Agile
 {
-    using TecX.Agile.Infrastructure.Modularization;
-
     public class AppBootstrapper : UnityBootstrapper<ShellViewModel>
     {
         protected override void ConfigureModuleCatalog()
@@ -13,11 +12,11 @@ namespace TecX.Agile
 
             var gestures = typeof(Modules.Gestures.Module);
 
-            ModuleCatalog.AddModule(new ModuleInfo { Name = gestures.Name, ModuleType = gestures.AssemblyQualifiedName });
+            ModuleCatalog.AddModule(new ModuleInfo(gestures));
 
             var main = typeof(Modules.Main.Module);
 
-            ModuleCatalog.AddModule(new ModuleInfo { Name = main.Name, ModuleType = main.AssemblyQualifiedName });
+            ModuleCatalog.AddModule(new ModuleInfo(main));
         }
     }
 }
