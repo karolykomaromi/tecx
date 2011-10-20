@@ -6,6 +6,7 @@ using Caliburn.Micro;
 using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 using Microsoft.Practices.Unity;
 
+using TecX.Agile.Infrastructure.Modularization;
 using TecX.Common;
 using TecX.Unity.Configuration;
 
@@ -16,25 +17,6 @@ namespace TecX.Agile.Infrastructure
         protected IModuleCatalog ModuleCatalog { get; set; }
 
         protected IUnityContainer Container { get; set; }
-
-        protected sealed override void Configure()
-        {
-            base.Configure();
-
-            LogManager.GetLog = CreateLogger();
-
-            ModuleCatalog = CreateModuleCatalog();
-
-            ConfigureModuleCatalog();
-
-            Container = CreateContainer();
-
-            ConfigureContainer();
-
-            ConfigureServiceLocator();
-
-            InitializeModules();
-        }
 
         #region Initialization
 
@@ -107,6 +89,25 @@ namespace TecX.Agile.Infrastructure
 
         #region Overrides of Bootstrapper<T>
 
+        protected sealed override void Configure()
+        {
+            base.Configure();
+
+            LogManager.GetLog = CreateLogger();
+
+            ModuleCatalog = CreateModuleCatalog();
+
+            ConfigureModuleCatalog();
+
+            Container = CreateContainer();
+
+            ConfigureContainer();
+
+            ConfigureServiceLocator();
+
+            InitializeModules();
+        }
+
         protected override sealed IEnumerable<object> GetAllInstances(Type service)
         {
             Guard.AssertNotNull(service, "service");
@@ -133,90 +134,5 @@ namespace TecX.Agile.Infrastructure
         }
 
         #endregion Overrides of Bootstrapper<T>
-    }
-
-    public interface IModuleManager
-    {
-        void Run();
-    }
-
-    public class ModuleManager : IModuleManager
-    {
-        private readonly IModuleCatalog _catalog;
-
-        private readonly IUnityContainer _container;
-
-        public ModuleManager(IModuleCatalog catalog, IUnityContainer container)
-        {
-            Guard.AssertNotNull(catalog, "catalog");
-            Guard.AssertNotNull(container, "container");
-
-            _catalog = catalog;
-            _container = container;
-        }
-
-        public void Run()
-        {
-            foreach (var moduleInfo in _catalog.Modules)
-            {
-                Type moduleType = Type.GetType(moduleInfo.ModuleType);
-
-                IModule module = (IModule)_container.Resolve(moduleType, moduleInfo.Name);
-
-                module.Initialize();
-            }
-        }
-    }
-
-    public class ModuleCatalog : IModuleCatalog
-    {
-        private readonly List<ModuleInfo> _modules;
-
-        public ModuleCatalog()
-        {
-            _modules = new List<ModuleInfo>();
-        }
-
-        public IEnumerable<ModuleInfo> Modules
-        {
-            get
-            {
-                return _modules;
-            }
-        }
-
-        public void AddModule(Type moduleType)
-        {
-            Guard.AssertNotNull(moduleType, "moduleType");
-
-            ModuleInfo module = new ModuleInfo
-                {
-                    Name = moduleType.Name,
-                    ModuleType = moduleType.AssemblyQualifiedName
-                };
-
-            AddModule(module);
-        }
-
-        public void AddModule(ModuleInfo module)
-        {
-            Guard.AssertNotNull(module, "module");
-
-            _modules.Add(module);
-        }
-    }
-
-    public interface IModuleCatalog
-    {
-        IEnumerable<ModuleInfo> Modules { get; }
-
-        void AddModule(ModuleInfo module);
-    }
-
-    public class ModuleInfo
-    {
-        public string Name { get; set; }
-
-        public string ModuleType { get; set; }
     }
 }
