@@ -14,7 +14,7 @@
             Cursor="Arrow"
             ForceCursor="True"
             EditingMode="GestureOnly"
-            cal:Message.Attach="[Event Gesture] = [Action OnGesture($eventArgs)]">
+            cal:Message.Attach="[Event Gesture] = [Action Gesture($eventArgs)]">
         <InkCanvas.DefaultDrawingAttributes>
             <DrawingAttributes Color="GreenYellow" />
         </InkCanvas.DefaultDrawingAttributes>

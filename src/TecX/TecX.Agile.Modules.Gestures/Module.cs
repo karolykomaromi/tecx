@@ -11,6 +11,8 @@ namespace TecX.Agile.Modules.Gestures
     {
         private readonly GestureViewModel _gestureViewModel;
 
+        private readonly IShell _shell;
+
         public override string Description
         {
             get
@@ -19,11 +21,20 @@ namespace TecX.Agile.Modules.Gestures
             }
         }
 
-        public Module(GestureViewModel gestureViewModel)
+        public Module(GestureViewModel gestureViewModel, IShell shell)
         {
             Guard.AssertNotNull(gestureViewModel, "gestureViewModel");
+            Guard.AssertNotNull(shell, "shell");
 
             _gestureViewModel = gestureViewModel;
+            _shell = shell;
+        }
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            _shell.AddOverlay(_gestureViewModel);
         }
     }
 }
