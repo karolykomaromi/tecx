@@ -42,5 +42,33 @@ namespace TecX.Unity.Configuration.Test
             Assert.IsNotNull(mine);
             Assert.IsTrue(mine.Any());
         }
+
+        [TestMethod]
+        public void RegisteringInterfacesOfSameImplementationAsSingletonResultsInSameInstance()
+        {
+            ConfigurationBuilder builder = new ConfigurationBuilder();
+
+            builder.For<ShellViewModel>().Use<ShellViewModel>().AsSingleton();
+            builder.For<IShell>().Use<ShellViewModel>();
+
+            var container = new UnityContainer();
+
+            container.AddExtension(builder);
+
+            var svm = container.Resolve<ShellViewModel>();
+            var s1 = container.Resolve<IShell>();
+
+            Assert.AreSame(svm, s1);
+        }
+    }
+
+    interface IShell
+    {
+        
+    }
+
+    class ShellViewModel : IShell
+    {
+        
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace TecX.Agile.Infrastructure.Events
+﻿using System;
+    
+namespace TecX.Agile.Infrastructure.Events
 {
     public class AddedStoryCard
     {
@@ -8,6 +10,6 @@
 
         public double Angle { get; set; }
 
-        public double Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

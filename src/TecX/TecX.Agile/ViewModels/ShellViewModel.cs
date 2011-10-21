@@ -2,23 +2,44 @@ using Caliburn.Micro;
 
 using TecX.Agile.Infrastructure;
 using TecX.Common;
+using IEventAggregator = TecX.Common.Event.IEventAggregator;
 
 namespace TecX.Agile.ViewModels
 {
+    using System;
+    using System.Security.Cryptography.X509Certificates;
+    using System.Windows;
+    using System.Windows.Media;
+
+    using TecX.Agile.Infrastructure.Events;
+
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShell
     {
-        private readonly BindableCollection<Screen> _overlays;
+        private readonly IEventAggregator _eventAggregator;
 
-        public ShellViewModel()
+        private readonly Conductor<IScreen>.Collection.AllActive _overlays;
+
+        public ShellViewModel(IEventAggregator eventAggregator)
         {
-            _overlays = new BindableCollection<Screen>();
+            Guard.AssertNotNull(eventAggregator, "eventAggregator");
+
+            _eventAggregator = eventAggregator;
+            _overlays = new Conductor<IScreen>.Collection.AllActive();
         }
 
-        public IObservableCollection<Screen> Overlays
+        public IEventAggregator EventAggregator
         {
             get
             {
-                return _overlays;
+                return _eventAggregator;
+            }
+        }
+
+        public IObservableCollection<IScreen> Overlays
+        {
+            get
+            {
+                return _overlays.Items;
             }
         }
 
@@ -51,6 +72,29 @@ namespace TecX.Agile.ViewModels
             Guard.AssertNotNull(overlay, "overlay");
 
             Overlays.Add(overlay);
+        }
+
+        public void AddStoryCard(double x, double y, double angle)
+        {
+            StoryCardViewModel storyCard = new StoryCardViewModel { Id = Guid.NewGuid(), X = x, Y = y, Angle = angle };
+
+            Items.Add(storyCard);
+
+            EventAggregator.Publish(new AddedStoryCard { Id = storyCard.Id, X = x, Y = y, Angle = angle });
+        }
+
+        public Point PointFromScreen(Point point)
+        {
+            Point p = ((Visual)this.GetView()).PointFromScreen(point);
+
+            return p;
+        }
+
+        public Point PointToScreen(Point point)
+        {
+            Point p = ((Visual)this.GetView()).PointToScreen(point);
+
+            return p;
         }
     }
 }

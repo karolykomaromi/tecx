@@ -185,7 +185,7 @@ namespace TecX.Common
         /// <returns>
         /// <i>true</i> if the collection is <i>null</i> or empty; <i>false</i> otherwise
         /// </returns>
-        public static bool IsEmpty(ICollection collection)
+        public static bool IsEmpty(this ICollection collection)
         {
             return (collection == null) ||
                    (collection.Count == 0);
