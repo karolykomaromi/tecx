@@ -1,18 +1,17 @@
+using System;
+using System.Windows;
+using System.Windows.Media;
+
 using Caliburn.Micro;
 
 using TecX.Agile.Infrastructure;
+using TecX.Agile.Infrastructure.Events;
 using TecX.Common;
+
 using IEventAggregator = TecX.Common.Event.IEventAggregator;
 
 namespace TecX.Agile.ViewModels
 {
-    using System;
-    using System.Security.Cryptography.X509Certificates;
-    using System.Windows;
-    using System.Windows.Media;
-
-    using TecX.Agile.Infrastructure.Events;
-
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShell
     {
         private readonly IEventAggregator _eventAggregator;
