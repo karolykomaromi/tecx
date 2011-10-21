@@ -6,16 +6,11 @@ using System.Windows.Ink;
 
 using Caliburn.Micro;
 
+using TecX.Agile.Infrastructure;
 using TecX.Common;
-
-using IEventAggregator = TecX.Common.Event.IEventAggregator;
 
 namespace TecX.Agile.Modules.Gestures.ViewModels
 {
-    using TecX.Agile.Infrastructure;
-    using TecX.Agile.Infrastructure.Error;
-    using TecX.Agile.Infrastructure.Events;
-
     public class GestureViewModel : Screen
     {
         private readonly IShell _shell;
@@ -43,7 +38,7 @@ namespace TecX.Agile.Modules.Gestures.ViewModels
         {
             var recognitionResults = e.GetGestureRecognitionResults();
 
-            if (TypeHelper.IsEmpty(recognitionResults) ||
+            if (recognitionResults.IsEmpty() ||
                 recognitionResults[0].RecognitionConfidence < RecognitionConfidence.Strong)
             {
                 return;
@@ -51,19 +46,22 @@ namespace TecX.Agile.Modules.Gestures.ViewModels
 
             ApplicationGesture gesture = recognitionResults[0].ApplicationGesture;
 
+            Point gestureCenter = GetGestureCenter(e.Strokes.GetBounds());
+
             switch (gesture)
             {
                 case ApplicationGesture.ChevronUp:
                 case ApplicationGesture.ArrowUp:
-                    AddStoryCardUp();
+                    AddStoryCardUp(gestureCenter);
                     break;
                 default:
-                    throw new NotImplementedException("Recognition of ApplicationGesture not implemented.");
+                    //throw new NotImplementedException("Recognition of ApplicationGesture not implemented.");
+                    return;
             }
 
             //if (IsAddStoryCardGesture(topGesture))
             //{
-            //    Point gestureCenter = GetGestureCenterOnSurface(e.Strokes.GetBounds());
+            //    Point gestureCenter = GetGestureCenter(e.Strokes.GetBounds());
 
             //    AddStoryCard(gestureCenter, topGesture);
             //    return;
@@ -91,15 +89,16 @@ namespace TecX.Agile.Modules.Gestures.ViewModels
             Lasso(e);
         }
 
-        private void AddStoryCardUp()
+        private void AddStoryCardUp(Point gestureCenter)
         {
+            _shell.AddStoryCard(gestureCenter.X, gestureCenter.Y, 0.0);
         }
 
         //private void ProcessAddIterationGesture(InkCanvasGestureEventArgs e, ApplicationGesture topGesture)
         //{
         //    Rect bounds = e.Strokes.GetBounds();
 
-        //    Point center = GetGestureCenterOnSurface(e);
+        //    Point center = GetGestureCenter(e);
 
         //    Iteration iteration = new IterationBuilder()
         //        .WithID(Guid.NewGuid())
@@ -208,21 +207,19 @@ namespace TecX.Agile.Modules.Gestures.ViewModels
             return _addStoryCardGestures.Contains(topGesture);
         }
 
-        private static Point GetGestureCenterOnSurface(Rect gestureBounds)
+        private Point GetGestureCenter(Rect gestureBounds)
         {
             //TODO need to decide which corner of the bounds to use dependent on which gesture was used
             //return gestureBounds.TopLeft;
 
-            //var topLeft = Tabletop.Surface.PointFromScreen(gestureBounds.TopLeft);
-            //var bottomRight = Tabletop.Surface.PointFromScreen(gestureBounds.BottomRight);
+            var topLeft = _shell.PointFromScreen(gestureBounds.TopLeft);
+            var bottomRight = _shell.PointFromScreen(gestureBounds.BottomRight);
 
-            //var vector = (bottomRight - topLeft) / 2;
+            var vector = (bottomRight - topLeft) / 2;
 
-            //Point center = topLeft + vector;
+            Point center = topLeft + vector;
 
-            //return center;
-
-            return new Point();
+            return center;
         }
 
         private static double GetAngleFromChevron(ApplicationGesture topGesture)

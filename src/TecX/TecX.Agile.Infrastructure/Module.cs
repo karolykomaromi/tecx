@@ -3,7 +3,7 @@ namespace TecX.Agile.Infrastructure
     using System;
     using System.Windows;
 
-    public abstract class ModuleBase : IModule
+    public abstract class Module : IModule
     {
         public abstract string Description { get; }
 

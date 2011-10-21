@@ -7,7 +7,7 @@ using TecX.Common;
 namespace TecX.Agile.Modules.Gestures
 {
     [DebuggerDisplay("{Description}")]
-    public class Module : ModuleBase
+    public class GestureModule : Module
     {
         private readonly GestureViewModel _gestureViewModel;
 
@@ -21,7 +21,7 @@ namespace TecX.Agile.Modules.Gestures
             }
         }
 
-        public Module(GestureViewModel gestureViewModel, IShell shell)
+        public GestureModule(GestureViewModel gestureViewModel, IShell shell)
         {
             Guard.AssertNotNull(gestureViewModel, "gestureViewModel");
             Guard.AssertNotNull(shell, "shell");
@@ -32,8 +32,6 @@ namespace TecX.Agile.Modules.Gestures
 
         protected override void OnInitialize()
         {
-            base.OnInitialize();
-
             _shell.AddOverlay(_gestureViewModel);
         }
     }
