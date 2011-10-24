@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Media;
 
 using TecX.Agile.ViewModels;
 using TecX.Common;
@@ -212,10 +213,7 @@ namespace TecX.Agile.Behaviors
             return center;
 
         }/// <summary>
-        /// Gets the width of a <see cref="FrameworkElement"/>
-        /// </summary>
-        /// <param name="element">The element</param>
-        /// <returns>The width or <i>0.0</i> in case of an error</returns>
+
         public static double GetWidth(FrameworkElement element)
         {
             Guard.AssertNotNull(element, "element");
@@ -240,11 +238,6 @@ namespace TecX.Agile.Behaviors
             return width;
         }
 
-        /// <summary>
-        /// Gets the height of a <see cref="FrameworkElement"/>
-        /// </summary>
-        /// <param name="element">The element</param>
-        /// <returns>The height or <i>0.0</i> in case of an error</returns>
         public static double GetHeight(FrameworkElement element)
         {
             Guard.AssertNotNull(element, "element");
@@ -295,6 +288,42 @@ namespace TecX.Agile.Behaviors
 
             //move and rotate the 
             return new Transition(displacement.X, displacement.Y, angle);
+        }
+
+        /// <summary>
+        /// Gets the translation for the specified element.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <returns></returns>
+        public static TranslateTransform Translation(this FrameworkElement element)
+        {
+            Guard.AssertNotNull(element, "element");
+
+            return (TranslateTransform)((TransformGroup)element.RenderTransform).Children[2];
+        }
+
+        /// <summary>
+        /// Gets the rotation for the specified element.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <returns></returns>
+        public static RotateTransform Rotation(this FrameworkElement element)
+        {
+            Guard.AssertNotNull(element, "element");
+
+            return (RotateTransform)((TransformGroup)element.RenderTransform).Children[0];
+        }
+
+        /// <summary>
+        /// Gets the scale for the specified element.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <returns></returns>
+        public static ScaleTransform Scale(this FrameworkElement element)
+        {
+            Guard.AssertNotNull(element, "element");
+
+            return (ScaleTransform)((TransformGroup)element.RenderTransform).Children[1];
         }
     }
 
