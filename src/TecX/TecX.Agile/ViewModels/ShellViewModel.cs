@@ -48,7 +48,7 @@ namespace TecX.Agile.ViewModels
         {
             if (counter % 2 == 0)
             {
-                Items.Add(new StoryCardViewModel());
+                AddStoryCard(0, 0, 0);
             }
             else
             {
@@ -80,6 +80,8 @@ namespace TecX.Agile.ViewModels
             Items.Add(storyCard);
 
             EventAggregator.Publish(new AddedStoryCard { Id = storyCard.Id, X = x, Y = y, Angle = angle });
+
+            ActivateItem(storyCard);
         }
 
         public Point PointFromScreen(Point point)

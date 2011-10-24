@@ -1,6 +1,8 @@
 <Window x:Class="TecX.Agile.Views.ShellView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Agile="clr-namespace:TecX.Agile" Title="Shell" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:Agile="clr-namespace:TecX.Agile"
+        Title="Shell" 
         Height="350" 
         Width="525">
     <Grid>

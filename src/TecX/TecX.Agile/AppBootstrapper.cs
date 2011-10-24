@@ -27,6 +27,7 @@ namespace TecX.Agile
             return new[]
                 {
                     Assembly.GetExecutingAssembly(), 
+                    Assembly.GetEntryAssembly(),
                     typeof(Modules.Gestures.GestureModule).Assembly,
                     typeof(Modules.Main.MainModule).Assembly
                 };

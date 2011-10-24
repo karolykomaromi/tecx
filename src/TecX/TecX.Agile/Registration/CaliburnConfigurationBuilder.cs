@@ -14,10 +14,6 @@ namespace TecX.Agile.Registration
         {
             For<ShellViewModel>().Use<ShellViewModel>().AsSingleton();
             For<IShell>().Use<ShellViewModel>().AsSingleton();
-
-            //this.AddExpression(x => x.AddModification(c => c.RegisterType<ShellViewModel>(new ContainerControlledLifetimeManager())));
-            //this.AddExpression(x => x.AddModification(c => c.RegisterType<IShell, ShellViewModel>()));
-
             For<IWindowManager>().Use<WindowManager>().AsSingleton();
         }
     }
