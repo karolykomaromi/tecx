@@ -1,4 +1,9 @@
-﻿namespace TecX.Agile.Behaviors
+﻿using System;
+
+using TecX.Agile.ViewModels;
+using TecX.Common;
+
+namespace TecX.Agile.Behaviors
 {
     using System.Windows;
     using System.Windows.Controls;
@@ -11,20 +16,26 @@
 
         private bool IsTranslated { get; set; }
 
+        private StoryCardViewModel Card { get; set; }
+
+        private TranslateOnlyAreaView Toa { get; set; }
+
         public RntBehavior()
         {
+            Toa = new TranslateOnlyAreaView();
+            Toa.Visibility = Visibility.Hidden;
         }
 
         private void AddTranslateOnlyArea(object sender, RoutedEventArgs e)
         {
-            //if (AssociatedObject != null)
-            //{
-            //    AdornerLayer layer = AdornerLayer.GetAdornerLayer(AssociatedObject);
+            var panel = AssociatedObject.Content as Panel;
 
-            //    Toa = new TranslateOnlyAdorner(AssociatedObject);
+            if (panel != null)
+            {
+                panel.Children.Add(Toa);
+            }
 
-            //    layer.Add(Toa);
-            //}
+            AssociatedObject.Loaded -= AddTranslateOnlyArea;
         }
 
 
@@ -38,9 +49,11 @@
             AssociatedObject.PreviewMouseLeftButtonDown += OnMouseLeftButtonDown;
             AssociatedObject.PreviewMouseLeftButtonUp += OnMouseLeftButtonUp;
             AssociatedObject.PreviewMouseMove += OnMouseMove;
+
+            Card = (StoryCardViewModel)AssociatedObject.DataContext;
         }
 
-        protected override void  OnDetaching()
+        protected override void OnDetaching()
         {
             AssociatedObject.PreviewMouseLeftButtonDown -= OnMouseLeftButtonDown;
             AssociatedObject.PreviewMouseLeftButtonUp -= OnMouseLeftButtonUp;
@@ -48,6 +61,15 @@
 
             AssociatedObject.MouseEnter -= OnMouseEnter;
             AssociatedObject.MouseLeave -= OnMouseLeave;
+
+            Card = null;
+
+            var panel = AssociatedObject.Content as Panel;
+
+            if (panel != null)
+            {
+                panel.Children.Remove(Toa);
+            }
 
             //UserControl ctrl = Element as UserControl;
 
@@ -71,8 +93,10 @@
         /// </summary>
         private void OnMouseLeave(object sender, MouseEventArgs e)
         {
-            //if (Toa != null)
-            //    Toa.Visibility = Visibility.Hidden;
+            if (Toa != null)
+            {
+                Toa.Visibility = Visibility.Hidden;
+            }
         }
 
         /// <summary>
@@ -80,127 +104,171 @@
         /// </summary>
         private void OnMouseEnter(object sender, MouseEventArgs e)
         {
-            //if (Toa != null &&
-            //    !AssociatedObject.IsPinned())
-            //    Toa.Visibility = Visibility.Visible;
+            if (Toa != null &&
+                !Card.IsPinned)
+            {
+                Toa.Visibility = Visibility.Visible;
+            }
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            ////ignore click if the item is pinned
-            //if (AssociatedObject.IsPinned() || !AssociatedObject.IsMouseCaptured)
-            //    return;
+            //ignore click if the item is pinned
+            if (Card.IsPinned ||
+                !AssociatedObject.IsMouseCaptured)
+            {
+                return;
+            }
 
-            //if (e.LeftButton.Equals(MouseButtonState.Pressed))
-            //{
-            //    //the actual point is set to the absolute coordinates of the mouse click
-            //    Point actual = e.GetPosition(Tabletop.Surface);
+            if (e.LeftButton.Equals(MouseButtonState.Pressed))
+            {
+                //the actual point is set to the absolute coordinates of the mouse click
+                Point actual = e.GetPosition(SurfaceBehavior.Surface);
 
-            //    //ApplyRNT(actual);
-            //    Transition by = GeometryHelper.CalculateRntStep(actual, Previous, AssociatedObject.CenterOnSurface(),
-            //                                                    IsTranslated);
+                //ApplyRNT(actual);
+                Transition by = GeometryHelper.CalculateRntStep(actual, Previous, AssociatedObject.CenterOnSurface(),
+                                                                IsTranslated);
 
-            //    AssociatedObject.Move(by.X, by.Y, by.Angle);
+                Card.Move(by.X, by.Y, by.Angle);
 
-            //    //after the movement set the previous point to the coordinates of the last mouse event
-            //    Previous = actual;
-            //}
+                //after the movement set the previous point to the coordinates of the last mouse event
+                Previous = actual;
+            }
         }
 
         private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ////ignore click if the item is pinned
-            //if (AssociatedObject.IsPinned())
-            //    return;
+            //ignore click if the item is pinned
+            if (Card.IsPinned)
+            {
+                return;
+            }
 
-            ////the item is no longer moved
-            //IsTranslated = false;
+            //the item is no longer moved
+            IsTranslated = false;
 
-            ////release the captured mouse input
-            //AssociatedObject.ReleaseMouseCapture();
+            //release the captured mouse input
+            AssociatedObject.ReleaseMouseCapture();
 
-            ////fire the drop-event
+            //fire the drop-event
 
-            //Point dropPoint = e.GetPosition(Tabletop.Surface);
-            //dropPoint = Tabletop.Surface.PointToScreen(dropPoint);
+            Point dropPoint = e.GetPosition(SurfaceBehavior.Surface);
+            dropPoint = SurfaceBehavior.Surface.PointToScreen(dropPoint);
 
             //EventAggregator.GetEvent<TabletopItemDropEvent>().Publish(new TabletopItemDropEventArgs(AssociatedObject, dropPoint));
         }
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ////if the item is pinned do nothing
-            //if (AssociatedObject.IsPinned())
-            //    return;
+            //if the item is pinned do nothing
+            if (Card.IsPinned)
+            {
+                return;
+            }
 
-            ////set the previous mouse point to the absolute coordinates of the event
-            //Previous = e.GetPosition(Tabletop.Surface);
+            //set the previous mouse point to the absolute coordinates of the event
+            Previous = e.GetPosition(SurfaceBehavior.Surface);
 
-            ////if the click occured inside the translate only area the movement is translate-only
-            //if (Toa != null && Toa.IsInsideTranslateOnlyArea(e.GetPosition(Toa)))
-            //    IsTranslated = true;
+            //if the click occured inside the translate only area the movement is translate-only
+            if (Toa != null && Toa.IsInsideTranslateOnlyArea(e.GetPosition(Toa)))
+            {
+                IsTranslated = true;
+            }
 
-            ////capture the mouse input
+            //capture the mouse input
 
-            //if (AssociatedObject.IsEnabled)
-            //{
-            //    AssociatedObject.CaptureMouse();
-            //}
-        }
-
-        /// <summary>
-        /// Applies the RNT-algorithm to the <see cref="FrameworkElement"/> the strategy is currently hooked up to
-        /// </summary>
-        /// <param name="actual">The location of the mouse pointer as absolute coordinates</param>
-        /// <returns><i>false</i> if no part of the item left the window; <i>true</i> otherwise</returns>
-        protected bool ApplyRNT(Point actual)
-        {
-            //if (IsTranslated)
-            //{
-            //    //just translate the card without rotation
-            //    AssociatedObject.Move(actual.X - Previous.X, actual.Y - Previous.Y);
-            //}
-            //else
-            //{
-            //    Point ctr = AssociatedObject.CenterOnSurface();
-
-            //    //get the vector from the center of the item to the position of the previous point
-            //    Vector vStart = Previous - ctr;
-
-            //    //get the vector from the center of the item to the position of the actual point
-            //    Vector vEnd = actual - ctr;
-
-            //    //calculate the angle between the vectors to know how far the item has to be rotated
-            //    double angle = Vector.AngleBetween(vStart, vEnd);
-
-            //    //dreht man die Vektoren übereinander kann man den Längenunterschied berechnen und als Bruchteil des
-            //    //Vektors zum zweiten Mauspunkt ausdrücken -> scalar
-            //    double scalar = (vEnd.Length - vStart.Length)/vEnd.Length;
-
-            //    //calculate the part of the vector that is the actual movement
-            //    Vector displacement = vEnd*scalar;
-
-            //    //move and rotate the item
-            //    AssociatedObject.Move(displacement.X, displacement.Y, angle);
-            //}
-
-            //if (GeometryHelper.IsRelativePointOutsideCanvas(
-            //    AssociatedObject.CenterOnSurface(), Tabletop.Surface))
-            //{
-            //    Vector displacement = GeometryHelper.GetPointOutsideShapeDisplacement(
-            //        AssociatedObject.CenterOnSurface(), Tabletop.Surface);
-
-            //    AssociatedObject.Move(displacement);
-
-            //    return true;
-            //}
-
-            return false;
+            if (AssociatedObject.IsEnabled)
+            {
+                AssociatedObject.CaptureMouse();
+            }
         }
     }
 
     public static class GeometryHelper
     {
+        public static Point CenterOnSurface(this FrameworkElement element)
+        {
+            Guard.AssertNotNull(element, "element");
+
+            var surface = SurfaceBehavior.Surface;
+
+            var center = element.PointToScreen(element.Center());
+
+            Point centerOnSurface = surface.PointFromScreen(center);
+
+            return centerOnSurface;
+        }
+
+        public static Point Center(this FrameworkElement element)
+        {
+            Guard.AssertNotNull(element, "element");
+
+            double width = GetWidth(element);
+
+            double height = GetHeight(element);
+
+            Point center = new Point(width / 2, height / 2);
+
+            return center;
+
+        }/// <summary>
+        /// Gets the width of a <see cref="FrameworkElement"/>
+        /// </summary>
+        /// <param name="element">The element</param>
+        /// <returns>The width or <i>0.0</i> in case of an error</returns>
+        public static double GetWidth(FrameworkElement element)
+        {
+            Guard.AssertNotNull(element, "element");
+
+            double width;
+
+            if (!Double.IsNaN(element.ActualWidth) &&
+                element.ActualWidth != 0)
+            {
+                width = element.ActualWidth;
+            }
+            else if (!Double.IsNaN(element.Width) &&
+                     element.Width != 0)
+            {
+                width = element.Width;
+            }
+            else
+            {
+                width = 0;
+            }
+
+            return width;
+        }
+
+        /// <summary>
+        /// Gets the height of a <see cref="FrameworkElement"/>
+        /// </summary>
+        /// <param name="element">The element</param>
+        /// <returns>The height or <i>0.0</i> in case of an error</returns>
+        public static double GetHeight(FrameworkElement element)
+        {
+            Guard.AssertNotNull(element, "element");
+
+            double height;
+
+            if (!Double.IsNaN(element.ActualHeight) &&
+                element.ActualHeight != 0)
+            {
+                height = element.ActualHeight;
+            }
+            else if (!Double.IsNaN(element.Height) &&
+                     element.Height != 0)
+            {
+                height = element.Height;
+            }
+            else
+            {
+                height = 0;
+            }
+
+            return height;
+        }
+
         public static Transition CalculateRntStep(Point actual, Point previous, Point center, bool isTranslated)
         {
             if (isTranslated)

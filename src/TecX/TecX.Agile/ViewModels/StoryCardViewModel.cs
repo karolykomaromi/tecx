@@ -356,5 +356,12 @@ namespace TecX.Agile.ViewModels
         }
 
         #endregion Properties
+
+        public void Move(double dx, double dy, double angle)
+        {
+            X += dx;
+            Y += dy;
+            Angle += angle;
+        }
     }
 }
