@@ -55,7 +55,6 @@ namespace TecX.Agile.Modules.Gestures.ViewModels
                     AddStoryCardUp(gestureCenter);
                     break;
                 default:
-                    //throw new NotImplementedException("Recognition of ApplicationGesture not implemented.");
                     return;
             }
 
@@ -93,25 +92,6 @@ namespace TecX.Agile.Modules.Gestures.ViewModels
         {
             _shell.AddStoryCard(gestureCenter.X, gestureCenter.Y, 0.0);
         }
-
-        //private void ProcessAddIterationGesture(InkCanvasGestureEventArgs e, ApplicationGesture topGesture)
-        //{
-        //    Rect bounds = e.Strokes.GetBounds();
-
-        //    Point center = GetGestureCenter(e);
-
-        //    Iteration iteration = new IterationBuilder()
-        //        .WithID(Guid.NewGuid())
-        //        .WithParent(Planner.CurrentProject.ID)
-        //        .WithWidth(bounds.Width)
-        //        .WithHeight(bounds.Height)
-        //        .WithX(center.X - bounds.Width/2)
-        //        .WithY(center.Y - bounds.Height/2);
-
-        //    var args = CommandArgsFactory.GetAddArtefactArgs(CommandSource.Local, iteration);
-
-        //    Commands.AddIterationCommand.Execute(args, Application.Current.MainWindow);
-        //}
 
         private void Redo()
         {
@@ -163,41 +143,6 @@ namespace TecX.Agile.Modules.Gestures.ViewModels
             //    //    ControlHelper.LayoutTabletopItems(storycards);
             //    //}
             //}
-        }
-
-        private void AddStoryCard(Point gestureCenter, ApplicationGesture topGesture)
-        {
-            //calculate center of the gesture
-            //TODO weberse make sure this works in multi-monitor setup
-            //TODO weberse check if the center is what you need (top-left fits better?)
-
-            //TODO weberse find all containers at the point of the gesture center
-            //used to find out wether to add a story-card to the backlog or an iteration
-
-            //TODO weberse must use ID of container at position of gesture as parent ID
-
-            Guid storyCardId = Guid.NewGuid();
-            Guid backlogId = Guid.Empty;
-            double x = gestureCenter.X;
-            double y = gestureCenter.Y;
-            double angle = GetAngleFromChevron(topGesture);
-
-            //Guid parentId = Planner.CurrentProject.Backlog.ID;
-
-            //StoryCard storycard = ViewModelFactory.NewStoryCard()
-            //    .ToBuilder()
-            //    .WithRotationAngle(angle)
-            //    .WithX(gestureCenter.X)
-            //    .WithY(gestureCenter.Y)
-            //    .WithParent(parentId)
-            //    .WithID(Guid.NewGuid());
-
-            //storycard.View.X -= storycard.View.Width/2;
-            //storycard.View.Y -= storycard.View.Height/2;
-
-            //var args = CommandArgsFactory.GetAddArtefactArgs(CommandSource.Local, storycard);
-
-            //Commands.AddStoryCard.Execute(args, Application.Current.MainWindow);
         }
 
         #region Methods

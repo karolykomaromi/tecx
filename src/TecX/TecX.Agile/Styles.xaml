@@ -55,6 +55,7 @@
             cal:Bind.Model="{Binding}">
             <i:Interaction.Behaviors>
                 <Behaviors:RntBehavior/>
+                <Behaviors:TransformBehavior/>
             </i:Interaction.Behaviors>
             <Grid x:Name="LayoutRoot">
                 <Grid.RowDefinitions>

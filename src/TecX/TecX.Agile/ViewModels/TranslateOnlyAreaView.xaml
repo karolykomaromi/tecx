@@ -6,8 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" 
              d:DesignWidth="300" 
-             BorderBrush="Black" 
-             Foreground="{x:Null}" 
+             BorderBrush="Black"
              HorizontalAlignment="Center" 
              VerticalAlignment="Center">
     <Grid>

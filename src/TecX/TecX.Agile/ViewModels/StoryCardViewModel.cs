@@ -18,16 +18,6 @@ namespace TecX.Agile.ViewModels
             }
         }
 
-        protected override void OnViewAttached(object view, object context)
-        {
-            base.OnViewAttached(view, context);
-        }
-
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-        }
-
         #region Fields
 
         private double _x;

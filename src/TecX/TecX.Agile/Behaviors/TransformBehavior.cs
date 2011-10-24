@@ -1,0 +1,109 @@
+﻿using System;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interactivity;
+using System.Windows.Media;
+
+using TecX.Common.Extensions.Error;
+
+namespace TecX.Agile.Behaviors
+{
+    public class TransformBehavior : Behavior<UserControl>
+    {
+        protected override void OnAttached()
+        {
+            if (DesignerProperties.GetIsInDesignMode(AssociatedObject))
+            {
+                return;
+            }
+
+            var transform = AssociatedObject.RenderTransform;
+
+            if (transform == null ||
+                transform == Transform.Identity)
+            {
+                var transformGroup = new TransformGroup();
+
+                transformGroup.Children.Add(new RotateTransform());
+                transformGroup.Children.Add(new ScaleTransform());
+                transformGroup.Children.Add(new TranslateTransform());
+
+                AssociatedObject.RenderTransform = transformGroup;
+            }
+
+            AssertPreconditions();
+
+            AssociatedObject.Loaded += OnLoaded;
+        }
+
+        private void AssertPreconditions()
+        {
+            var group = AssociatedObject.RenderTransform as TransformGroup;
+
+            if (group == null)
+            {
+                ThrowTransformsException(group);
+            }
+
+            int count = group.Children.Count;
+
+            if (count != 3)
+            {
+                ThrowTransformsException(group);
+            }
+
+            RotateTransform rotation = group.Children[0] as RotateTransform;
+
+            if (rotation == null)
+            {
+                ThrowTransformsException(group);
+            }
+
+            ScaleTransform scale = group.Children[1] as ScaleTransform;
+
+            if (scale == null)
+            {
+                ThrowTransformsException(group);
+            }
+
+            TranslateTransform translation = group.Children[2] as TranslateTransform;
+
+            if (translation == null)
+            {
+                ThrowTransformsException(group);
+            }
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (DesignerProperties.GetIsInDesignMode(AssociatedObject))
+            {
+                return;
+            }
+
+            var rotation = AssociatedObject.Rotation();
+
+            var center = AssociatedObject.Center();
+
+            rotation.CenterX = center.X;
+            rotation.CenterY = center.Y;
+
+            var scale = AssociatedObject.Scale();
+
+            scale.CenterX = center.X;
+            scale.CenterY = center.Y;
+
+            AssociatedObject.Loaded -= OnLoaded;
+        }
+
+        private static void ThrowTransformsException(Transform transform)
+        {
+            throw new InvalidOperationException("The UIElement's RenderTransform " +
+                                                "property is not set to a TransformGroup containing a " +
+                                                "RotateTransform, ScaleTransform and TranslateTransform. " +
+                                                "The order of the elements in the group matters!")
+                .WithAdditionalInfo("transform", transform);
+        }
+    }
+}
