@@ -16,6 +16,10 @@
             <ColumnDefinition Width="18*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
+        <ItemsControl
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="3"
+            ItemsSource="{Binding Overlays}"/>
         <ItemsControl 
             Grid.RowSpan="3"
             Grid.ColumnSpan="3"
@@ -31,10 +35,6 @@
                 <Agile:SurfaceDataTemplateSelector/>
             </ItemsControl.ItemTemplateSelector>
         </ItemsControl>
-        <ItemsControl
-            Grid.RowSpan="3"
-            Grid.ColumnSpan="3"
-            ItemsSource="{Binding Overlays}"/>
         <Button x:Name="AddItem" Grid.Column="1">Add</Button>
     </Grid>
 </Window>
