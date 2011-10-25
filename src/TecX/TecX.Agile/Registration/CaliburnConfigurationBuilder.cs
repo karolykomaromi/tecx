@@ -6,8 +6,6 @@ using TecX.Unity.Configuration;
 
 namespace TecX.Agile.Registration
 {
-    using Microsoft.Practices.Unity;
-
     public class CaliburnConfigurationBuilder : ConfigurationBuilder
     {
         public CaliburnConfigurationBuilder()
