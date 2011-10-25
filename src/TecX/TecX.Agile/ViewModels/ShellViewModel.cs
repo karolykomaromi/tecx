@@ -48,7 +48,7 @@ namespace TecX.Agile.ViewModels
         {
             if (counter % 2 == 0)
             {
-                AddStoryCard(0, 0, 0);
+                AddStoryCard(counter * 10 + 10, counter * 10 + 10, counter * 10 + 10);
             }
             else
             {

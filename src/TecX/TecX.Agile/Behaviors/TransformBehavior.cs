@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Interactivity;
 using System.Windows.Media;
 
@@ -33,6 +34,51 @@ namespace TecX.Agile.Behaviors
             }
 
             AssertPreconditions();
+
+            Binding x = new Binding("X")
+            {
+                Source = AssociatedObject.DataContext,
+                Mode = BindingMode.TwoWay,
+                NotifyOnSourceUpdated = true,
+                NotifyOnTargetUpdated = true
+            };
+
+            BindingExpressionBase hookForInitialUpdate = BindingOperations.SetBinding(
+                AssociatedObject.Translation(),
+                TranslateTransform.XProperty,
+                x);
+
+            hookForInitialUpdate.UpdateTarget();
+
+            Binding y = new Binding("Y")
+            {
+                Source = AssociatedObject.DataContext,
+                Mode = BindingMode.TwoWay,
+                NotifyOnSourceUpdated = true,
+                NotifyOnTargetUpdated = true
+            };
+
+            hookForInitialUpdate = BindingOperations.SetBinding(
+                AssociatedObject.Translation(),
+                TranslateTransform.YProperty,
+                y);
+
+            hookForInitialUpdate.UpdateTarget();
+
+            Binding angle = new Binding("Angle")
+            {
+                Source = AssociatedObject.DataContext,
+                Mode = BindingMode.TwoWay,
+                NotifyOnSourceUpdated = true,
+                NotifyOnTargetUpdated = true
+            };
+
+            hookForInitialUpdate = BindingOperations.SetBinding(
+                AssociatedObject.Rotation(),
+                RotateTransform.AngleProperty,
+                angle);
+
+            hookForInitialUpdate.UpdateTarget();
 
             AssociatedObject.Loaded += OnLoaded;
         }

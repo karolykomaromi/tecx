@@ -52,7 +52,8 @@
             d:DesignHeight="200"             
             BorderBrush="Black"
             BorderThickness="1"
-            cal:Bind.Model="{Binding}">
+            cal:Bind.Model="{Binding}"
+            Height="{Binding Height}">
             <i:Interaction.Behaviors>
                 <Behaviors:RntBehavior/>
                 <Behaviors:TransformBehavior/>
@@ -137,7 +138,35 @@
                     Grid.ColumnSpan="6" 
                     IsHitTestVisible="{Binding IsHandWritingEnabled}" 
                     Background="Transparent"/>
+                <ItemsControl 
+                    IsHitTestVisible="False"
+                    ItemsSource="{Binding Decorators}"
+                    Grid.ColumnSpan="6" 
+                    Grid.RowSpan="3">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
             </Grid>
+        </UserControl>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type ViewModels:TranslateOnlyAreaViewModel}">
+        <UserControl
+            cal:Bind.Model="{Binding}">
+            <UserControl.Resources>
+                <BooleanToVisibilityConverter x:Key="Converter"/>
+            </UserControl.Resources>
+            <Ellipse
+                x:Name="Toa"
+                Stroke="Black" 
+                Height="{Binding Height}" 
+                Width="{Binding Width}" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Fill="#7F7F7F7F"
+                Visibility="{Binding Path=Visible, Converter={StaticResource Converter}}"/>
         </UserControl>
     </DataTemplate>
 </ResourceDictionary>

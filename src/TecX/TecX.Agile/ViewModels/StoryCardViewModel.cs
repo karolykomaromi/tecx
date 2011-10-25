@@ -20,6 +20,8 @@ namespace TecX.Agile.ViewModels
 
         #region Fields
 
+        private readonly IObservableCollection<object> _decorators;
+
         private double _x;
 
         private double _y;
@@ -56,9 +58,19 @@ namespace TecX.Agile.ViewModels
         {
             Width = Defaults.StoryCard.Width;
             Height = Defaults.StoryCard.Height;
+
+            _decorators = new BindableCollection<object>();
         }
 
         #region Properties
+
+        public IObservableCollection<object> Decorators
+        {
+            get
+            {
+                return _decorators;
+            }
+        }
 
         public double X
         {
