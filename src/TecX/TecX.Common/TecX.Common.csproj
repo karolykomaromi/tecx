@@ -53,7 +53,7 @@
     <Compile Include="Reflection\Constructor.cs" />
     <Compile Include="Reflection\GenericsHelper.cs" />
     <Compile Include="Reflection\MethodNotFoundException.cs" />
-    <Compile Include="Reflection\ReflectionHelper.cs" />
+    <Compile Include="Reflection\DynamicMethodInvocation.cs" />
     <Compile Include="Specifications\AlwaysFalseSpecification.cs" />
     <Compile Include="Specifications\PrintGraphVisitor.cs" />
     <Compile Include="Specifications\ISpecificationVisitor.cs" />

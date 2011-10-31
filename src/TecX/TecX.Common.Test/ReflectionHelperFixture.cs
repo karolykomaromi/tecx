@@ -16,7 +16,7 @@ namespace TecX.Common.Test
         [TestMethod]
         public void WhenLookingForParameterlessGenericMethod_CanFind()
         {
-            MethodInfo info = ReflectionHelper.FindGenericMethod(typeof(ReflectionHelperTestClass), "TestMethod", new[] { typeof(object) },
+            MethodInfo info = DynamicMethodInvocation.FindGenericMethod(typeof(ReflectionHelperTestClass), "TestMethod", new[] { typeof(object) },
                                                           null);
 
             Assert.IsNotNull(info);
@@ -31,7 +31,7 @@ namespace TecX.Common.Test
         [TestMethod]
         public void WhenLookingForOverloadedGenericMethod_CanFindByParameterTypes()
         {
-            MethodInfo info = ReflectionHelper.FindGenericMethod(typeof(ReflectionHelperTestClass), "TestMethod",
+            MethodInfo info = DynamicMethodInvocation.FindGenericMethod(typeof(ReflectionHelperTestClass), "TestMethod",
                                                           new[] { typeof(object) }, new[] { typeof(object), typeof(int) });
 
             Assert.IsNotNull(info);
@@ -49,7 +49,7 @@ namespace TecX.Common.Test
         {
             try
             {
-                ReflectionHelper.FindGenericMethod(
+                DynamicMethodInvocation.FindGenericMethod(
                     typeof (ReflectionHelperTestClass), 
                     "NonExistentMethod", 
                     new[] {typeof (object)}, 
@@ -69,7 +69,7 @@ namespace TecX.Common.Test
         [TestMethod]
         public void WhenDynamicallyInvokingMethod_WorksAsExpected()
         {
-            DynamicMethodInvoker invoker = ReflectionHelper.GetGenericMethodInvoker(typeof (ReflectionHelperTestClass),
+            DynamicMethodInvoker invoker = DynamicMethodInvocation.GetGenericMethodInvoker(typeof (ReflectionHelperTestClass),
                                                                               "TestMethod", new[] {typeof (object)},
                                                                               new[] {typeof (object), typeof (string)});
 
@@ -85,7 +85,7 @@ namespace TecX.Common.Test
         {
             ReflectionHelperTestClass tc = new ReflectionHelperTestClass();
 
-            DynamicPropertySetter setter = ReflectionHelper.GetDynamicPropertySetter(typeof (ReflectionHelperTestClass),
+            DynamicPropertySetter setter = DynamicMethodInvocation.GetDynamicPropertySetter(typeof (ReflectionHelperTestClass),
                                                                              "TestProperty");
 
             Assert.IsNull(tc.TestProperty);
@@ -102,7 +102,7 @@ namespace TecX.Common.Test
 
             tc.TestProperty = "WhenDynamicallyGettingPropertyValue_ReturnsCorrectValue";
 
-            DynamicPropertyGetter getter = ReflectionHelper.GetDynamicPropertyGetter(typeof (ReflectionHelperTestClass),
+            DynamicPropertyGetter getter = DynamicMethodInvocation.GetDynamicPropertyGetter(typeof (ReflectionHelperTestClass),
                                                                              "TestProperty");
 
             object value = getter(tc);
