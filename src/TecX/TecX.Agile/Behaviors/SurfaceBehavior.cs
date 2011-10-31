@@ -12,7 +12,7 @@ namespace TecX.Agile.Behaviors
         {
             get
             {
-                if(_surface == null)
+                if (_surface == null)
                 {
                     throw new InvalidOperationException("No Canvas is decorated with the SurfaceBehavior.");
                 }
@@ -22,7 +22,7 @@ namespace TecX.Agile.Behaviors
 
             set
             {
-                if(_surface != null)
+                if (_surface != null)
                 {
                     throw new InvalidOperationException("There are multiple Canvas decorated with the SurfaceBehavior");
                 }

@@ -30,7 +30,6 @@ namespace TecX.Agile.Behaviors
             AssociatedObject.Loaded -= AddTranslateOnlyArea;
         }
 
-
         protected override void OnAttached()
         {
             AssociatedObject.Loaded += AddTranslateOnlyArea;
