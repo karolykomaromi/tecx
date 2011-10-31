@@ -14,7 +14,7 @@ namespace TecX.Common.Reflection
 
     public delegate object DynamicPropertyGetter(object target);
 
-    public static class ReflectionHelper
+    public static class DynamicMethodInvocation
     {
         public static MethodInfo FindGenericMethod(Type type, string methodName, Type[] typeArguments, Type[] parameterTypes)
         {
