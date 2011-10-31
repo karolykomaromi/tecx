@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Ink;
@@ -15,23 +14,16 @@ namespace TecX.Agile.Modules.Gestures.ViewModels
     {
         private readonly IShell _shell;
 
-        private readonly ApplicationGesture[] _addStoryCardGestures = new[]
-                                                    {
-                                                        ApplicationGesture.ArrowUp,
-                                                        ApplicationGesture.ArrowLeft,
-                                                        ApplicationGesture.ArrowRight,
-                                                        ApplicationGesture.ArrowDown,
-                                                        ApplicationGesture.ChevronUp,
-                                                        ApplicationGesture.ChevronRight,
-                                                        ApplicationGesture.ChevronLeft,
-                                                        ApplicationGesture.ChevronDown
-                                                    };
-
         public GestureViewModel(IShell shell)
         {
             Guard.AssertNotNull(shell, "shell");
 
             _shell = shell;
+        }
+
+        public IShell Shell
+        {
+            get { return _shell; }
         }
 
         public void Gesture(InkCanvasGestureEventArgs e)
@@ -52,7 +44,7 @@ namespace TecX.Agile.Modules.Gestures.ViewModels
             {
                 case ApplicationGesture.ChevronUp:
                 case ApplicationGesture.ArrowUp:
-                    AddStoryCardUp(gestureCenter);
+                    Shell.AddStoryCard(gestureCenter.X, gestureCenter.Y, 0.0);
                     break;
                 default:
                     return;
@@ -86,11 +78,6 @@ namespace TecX.Agile.Modules.Gestures.ViewModels
 
             //try to interpret the gesture as lasso
             Lasso(e);
-        }
-
-        private void AddStoryCardUp(Point gestureCenter)
-        {
-            _shell.AddStoryCard(gestureCenter.X, gestureCenter.Y, 0.0);
         }
 
         private void Redo()
@@ -147,44 +134,19 @@ namespace TecX.Agile.Modules.Gestures.ViewModels
 
         #region Methods
 
-        private bool IsAddStoryCardGesture(ApplicationGesture topGesture)
-        {
-            return _addStoryCardGestures.Contains(topGesture);
-        }
-
         private Point GetGestureCenter(Rect gestureBounds)
         {
             //TODO need to decide which corner of the bounds to use dependent on which gesture was used
             //return gestureBounds.TopLeft;
 
-            var topLeft = _shell.PointFromScreen(gestureBounds.TopLeft);
-            var bottomRight = _shell.PointFromScreen(gestureBounds.BottomRight);
+            var topLeft = Shell.PointFromScreen(gestureBounds.TopLeft);
+            var bottomRight = Shell.PointFromScreen(gestureBounds.BottomRight);
 
             var vector = (bottomRight - topLeft) / 2;
 
             Point center = topLeft + vector;
 
             return center;
-        }
-
-        private static double GetAngleFromChevron(ApplicationGesture topGesture)
-        {
-            //check which gesture was used to create the card and adjust the rotation
-            //angle appropriately
-            switch (topGesture)
-            {
-                case ApplicationGesture.ArrowDown:
-                case ApplicationGesture.ChevronDown:
-                    return 180.0;
-                case ApplicationGesture.ArrowLeft:
-                case ApplicationGesture.ChevronLeft:
-                    return 270.0;
-                case ApplicationGesture.ArrowRight:
-                case ApplicationGesture.ChevronRight:
-                    return 90.0;
-                default:
-                    return 0.0;
-            }
         }
 
         #endregion Methods

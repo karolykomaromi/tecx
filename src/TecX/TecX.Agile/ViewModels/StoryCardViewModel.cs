@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Media;
 
 using Caliburn.Micro;
 
@@ -22,6 +23,8 @@ namespace TecX.Agile.ViewModels
 
         private readonly IObservableCollection<object> _decorators;
 
+        private Color _background;
+
         private double _x;
 
         private double _y;
@@ -31,7 +34,7 @@ namespace TecX.Agile.ViewModels
         private double _width;
 
         private double _height;
-        
+
         private Guid _id;
 
         private bool _isPinned;
@@ -47,7 +50,7 @@ namespace TecX.Agile.ViewModels
         private double _actualEffort;
 
         private string _taskOwner;
-        
+
         private bool _isHandWritingEnabled;
 
         private string _description;
@@ -58,6 +61,8 @@ namespace TecX.Agile.ViewModels
         {
             Width = Defaults.StoryCard.Width;
             Height = Defaults.StoryCard.Height;
+
+            Background = TecX.Agile.Defaults.Colors.Yellow;
 
             _decorators = new BindableCollection<object>();
         }
@@ -354,6 +359,21 @@ namespace TecX.Agile.ViewModels
 
                 _description = value;
                 NotifyOfPropertyChange(() => Description);
+            }
+        }
+
+        public Color Background
+        {
+            get { return _background; }
+            set
+            {
+                if (_background == value)
+                {
+                    return;
+                }
+
+                _background = value;
+                NotifyOfPropertyChange(() => Background);
             }
         }
 
