@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Microsoft.Practices.ObjectBuilder2;
@@ -6,7 +6,7 @@ using Microsoft.Practices.Unity;
 
 using TecX.Common;
 
-namespace TecX.Unity.Configuration.Expressions
+namespace TecX.Unity
 {
     public class InjectionMembers : InjectionMember
     {

@@ -49,7 +49,7 @@ namespace TecX.Unity.Configuration.Test
             ConfigurationBuilder builder = new ConfigurationBuilder();
 
             builder.For<ShellViewModel>().Use<ShellViewModel>().AsSingleton();
-            builder.For<IShell>().Use<ShellViewModel>();
+            builder.For<IShell>().Use<ShellViewModel>().AsSingleton();
 
             var container = new UnityContainer();
 

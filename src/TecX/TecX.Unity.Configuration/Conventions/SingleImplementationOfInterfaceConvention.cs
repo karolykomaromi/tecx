@@ -40,7 +40,7 @@ namespace TecX.Unity.Configuration.Conventions
             {
                 if (types.Count == 1)
                 {
-                    singleImplementationBuilder.AddType(pluginType, types[0], types[0].FullName);
+                    singleImplementationBuilder.For(pluginType).Add(types[0]).Named(types[0].FullName);
                 }
             });
 

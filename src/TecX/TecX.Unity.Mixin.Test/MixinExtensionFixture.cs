@@ -24,16 +24,16 @@ namespace TecX.Unity.Mixin.Test
 
             var config = builder.BuildConfiguration();
 
+            var container = new UnityContainer();
+
+            container.AddNewExtension<MixinExtension>();
+
+            container.RegisterType<ILogger, Logger>();
+
+            container.RegisterType<MixinTarget>();
+
             using (config.EnterScope())
             {
-                var container = new UnityContainer();
-
-                container.AddNewExtension<MixinExtension>();
-
-                container.RegisterType<ILogger, Logger>();
-
-                container.RegisterType<MixinTarget>();
-
                 var target = container.Resolve<MixinTarget>();
 
                 Assert.AreEqual("2", target.ToString());

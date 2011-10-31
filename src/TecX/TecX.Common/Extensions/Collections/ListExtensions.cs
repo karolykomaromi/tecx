@@ -33,5 +33,17 @@ namespace TecX.Common.Extensions.Collections
         {
             return list == null || list.Count == 0 ? new T[0] : list.Cast<T>();
         }
+
+        public static void Fill<T>(this IList<T> list, T value)
+        {
+            Guard.AssertNotNull(list, "list");
+
+            if (list.Contains(value))
+            {
+                return;
+            }
+
+            list.Add(value);
+        }
     }
 }

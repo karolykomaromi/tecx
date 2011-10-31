@@ -11,6 +11,8 @@ using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration
 {
+    using TecX.Common.Extensions.Collections;
+
     public class Configuration : IContainerConfigurator
     {
         private readonly RegistrationFamilyCollection _registrationFamilies;

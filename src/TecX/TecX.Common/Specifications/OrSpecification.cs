@@ -34,7 +34,7 @@ namespace TecX.Common.Specifications
         /// <param name="candidate">The candidate.</param>
         /// <param name="matchedSpecifications"></param>
         /// <returns>
-        /// 	<c>true</c> if the specification is satisfied by the
+        ///     <c>true</c> if the specification is satisfied by the
         /// candidate object; otherwise, <c>false</c>.
         /// </returns>
         protected override bool IsMatchCore(TCandidate candidate, ICollection<ISpecification<TCandidate>> matchedSpecifications)

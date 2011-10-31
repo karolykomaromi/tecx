@@ -23,7 +23,7 @@ namespace TecX.Common.Specifications
         /// <param name="candidate">The candidate.</param>
         /// <param name="matchedSpecifications">List of specifications that were matched by the candidate</param>
         /// <returns>
-        /// 	<c>true</c> if the specification is satisfied by the 
+        ///     <c>true</c> if the specification is satisfied by the 
         /// candidate object; otherwise, <c>false</c>.
         /// </returns>
         bool IsMatch(TCandidate candidate, ICollection<ISpecification<TCandidate>> matchedSpecifications);

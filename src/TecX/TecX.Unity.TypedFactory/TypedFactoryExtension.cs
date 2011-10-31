@@ -1,7 +1,9 @@
-﻿using System;
+﻿extern alias CC25;
+
+using System;
 using System.Reflection;
 
-using Castle.DynamicProxy;
+using CC25.Castle.DynamicProxy;
 
 using Microsoft.Practices.Unity;
 

@@ -71,6 +71,7 @@
     <Compile Include="Enrichment\EnrichmentPolicy.cs" />
     <Compile Include="Enrichment\EnrichmentStrategy.cs" />
     <Compile Include="Enrichment\IEnrichmentPolicy.cs" />
+    <Compile Include="InjectionMembers.cs" />
     <Compile Include="Injection\ConstructorArgument.cs" />
     <Compile Include="Injection\ConstructorArgumentCollection.cs" />
     <Compile Include="Injection\ParameterMatcher.cs" />
