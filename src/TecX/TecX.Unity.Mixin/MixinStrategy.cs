@@ -20,7 +20,7 @@ namespace TecX.Unity.Mixin
             var cc = MixinConfiguration.ActiveConfiguration.GetContext(context.BuildKey.Type);
 
             // if so...
-            if(cc != null)
+            if (cc != null)
             {
                 // try to figure out which constructor on the mixins target type should be called
                 IPolicyList resolverPolicyDestination;
@@ -28,7 +28,7 @@ namespace TecX.Unity.Mixin
 
                 var ctor = selector.SelectConstructor(context, resolverPolicyDestination);
 
-                if(ctor == null)
+                if (ctor == null)
                 {
                     return;
                 }
@@ -38,7 +38,7 @@ namespace TecX.Unity.Mixin
 
                 var parameterKeys = ctor.GetParameterKeys();
 
-                foreach(var key in parameterKeys)
+                foreach (var key in parameterKeys)
                 {
                     var resolver = resolverPolicyDestination.Get<IDependencyResolverPolicy>(key);
 
@@ -49,7 +49,7 @@ namespace TecX.Unity.Mixin
 
                 // put them in a paramlist for the mixin objectfactory
                 var parameterTypes = ctor.Constructor.GetParameters().Select(p => p.ParameterType).ToArray();
-                
+
                 var paramList = ParamList.CreateDynamic(parameterTypes, parameterValues.ToArray());
 
                 // put a policy in the unity pipeline that will use the mixin objectfactory to create

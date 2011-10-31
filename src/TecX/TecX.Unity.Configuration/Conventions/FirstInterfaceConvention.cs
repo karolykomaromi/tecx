@@ -22,7 +22,7 @@ namespace TecX.Unity.Configuration.Conventions
             Type interfaceType = type.AllInterfaces().FirstOrDefault();
             if (interfaceType != null)
             {
-                builder.AddType(interfaceType, type, type.FullName);
+                builder.For(interfaceType).Add(type).Named(type.FullName);
             }
         }
     }

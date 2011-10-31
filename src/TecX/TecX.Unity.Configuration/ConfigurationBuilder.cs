@@ -42,30 +42,9 @@ namespace TecX.Unity.Configuration
             return type.GetConstructor(new Type[0]) != null;
         }
 
-        public void AddType(Type from, Type to, string name)
-        {
-            Guard.AssertNotNull(from, "from");
-            Guard.AssertNotNull(to, "to");
-            Guard.AssertNotEmpty(name, "name");
-
-            this._alternations.Add(config =>
-                {
-                    var family = config.FindFamily(from);
-
-                    var registration = new TypeRegistration(
-                        from,
-                        to,
-                        name,
-                        new TransientLifetimeManager(),
-                        new InjectionMember[0]);
-
-                    family.AddRegistration(registration);
-                });
-        }
-
         public CreateRegistrationFamilyExpression For<T>()
         {
-            return this.For(typeof(T));
+            return For(typeof(T));
         }
 
         public CreateRegistrationFamilyExpression For(Type from)

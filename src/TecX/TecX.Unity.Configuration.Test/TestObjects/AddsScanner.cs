@@ -8,6 +8,7 @@ namespace TecX.Unity.Configuration.Test.TestObjects
                      {
                          x.AssembliesFromApplicationBaseDirectory();
                          x.AddAllTypesOf<IMyInterface>();
+                         x.ExcludeType<MyClassWithCtorParams>();
                      });
         }
     }

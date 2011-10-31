@@ -6,6 +6,7 @@ using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Conventions
 {
+    using TecX.Common.Reflection;
 
     public class FindAllTypesConvention : IRegistrationConvention
     {
@@ -27,7 +28,7 @@ namespace TecX.Unity.Configuration.Conventions
             {
                 string name = _getName(type);
 
-                builder.AddType(_from, type, name);
+                builder.For(_from).Add(type).Named(name);
             }
         }
 

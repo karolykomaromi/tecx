@@ -11,6 +11,8 @@ using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Conventions
 {
+    using TecX.Common.Extensions.Collections;
+
     public class AssemblyScanner
     {
         private readonly List<Assembly> _assemblies;

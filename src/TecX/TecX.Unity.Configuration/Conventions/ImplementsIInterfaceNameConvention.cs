@@ -6,6 +6,8 @@ using TecX.Unity.Configuration.Extensions;
 
 namespace TecX.Unity.Configuration.Conventions
 {
+    using TecX.Common.Reflection;
+
     /// <summary>
     /// Registers implementations that match the ISomething -> Something pattern
     /// </summary>
@@ -25,7 +27,7 @@ namespace TecX.Unity.Configuration.Conventions
             if (pluginType != null && 
                 Constructor.HasConstructors(type))
             {
-                builder.AddType(pluginType, type, type.FullName );
+                builder.For(pluginType).Add(type).Named(type.FullName);
             }
         }
 

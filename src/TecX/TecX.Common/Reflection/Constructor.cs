@@ -1,10 +1,8 @@
-﻿using System;
-using System.Reflection;
-
-using TecX.Common;
-
-namespace TecX.Unity.Configuration.Common
+namespace TecX.Common.Reflection
 {
+    using System;
+    using System.Reflection;
+
     public static class Constructor
     {
         public static bool HasConstructors(Type type)

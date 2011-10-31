@@ -7,6 +7,8 @@ using System.Text.RegularExpressions;
 
 namespace TecX.Common
 {
+    using TecX.Common.Reflection;
+
     /// <summary>
     /// Helper classe for common operations on types
     /// </summary>
@@ -37,11 +39,11 @@ namespace TecX.Common
         /// <returns>The formatted string; the original format string if an error occurs</returns>
         public static string SafeFormat(string format, params object[] args)
         {
-            if (string.IsNullOrEmpty(format))
+            if (String.IsNullOrEmpty(format))
             {
                 // if the format string is already empty,
                 // then just return an empty string
-                return string.Empty;
+                return String.Empty;
             }
 
             try
@@ -53,7 +55,7 @@ namespace TecX.Common
                     return format;
                 }
 
-                string result = string.Format(format, args);
+                string result = String.Format(format, args);
 
                 return result;
             }
@@ -129,7 +131,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(string arg)
         {
-            return ToNullSafeString(arg, string.Empty);
+            return ToNullSafeString(arg, String.Empty);
         }
 
         /// <summary>
@@ -142,7 +144,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(string arg, string def)
         {
-            def = def ?? string.Empty;
+            def = def ?? String.Empty;
 
             return arg ?? def;
         }
@@ -156,7 +158,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(object obj)
         {
-            return ToNullSafeString(obj, string.Empty);
+            return ToNullSafeString(obj, String.Empty);
         }
 
         /// <summary>
@@ -169,7 +171,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(object obj, string def)
         {
-            def = def ?? string.Empty;
+            def = def ?? String.Empty;
 
             return (obj == null) ? def : obj.ToString();
         }
@@ -321,7 +323,7 @@ namespace TecX.Common
         public static bool TryParse(string value, out decimal result)
         {
             //empty string or null cannot be parsed
-            if (string.IsNullOrEmpty(value))
+            if (String.IsNullOrEmpty(value))
             {
                 result = default(decimal);
                 return false;
@@ -334,7 +336,7 @@ namespace TecX.Common
             if (idxComma > idxPeriod)
             {
                 //german culture uses comma as decimal separator
-                if (decimal.TryParse(value, NumberStyles.Float, new CultureInfo("de-DE"), out result))
+                if (Decimal.TryParse(value, NumberStyles.Float, new CultureInfo("de-DE"), out result))
                 {
                     return true;
                 }
@@ -342,7 +344,7 @@ namespace TecX.Common
             else
             {
                 //invariant culture uses period as decimal separator
-                if (decimal.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out result))
+                if (Decimal.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out result))
                 {
                     return true;
                 }
@@ -391,5 +393,68 @@ namespace TecX.Common
         }
 
         #endregion IsInRange
+
+        public static bool IsInNamespace(this Type type, string nameSpace)
+        {
+            Guard.AssertNotNull(type, "type");
+            Guard.AssertNotEmpty(nameSpace, "nameSpace");
+
+            return type.Namespace.StartsWith(nameSpace);
+        }
+
+        public static IEnumerable<Type> AllInterfaces(this Type type)
+        {
+            foreach (Type @interface in type.GetInterfaces())
+            {
+                yield return @interface;
+            }
+        }
+
+        public static bool IsConcrete(this Type type)
+        {
+            Guard.AssertNotNull(type, "type");
+
+            return !type.IsAbstract && !type.IsInterface;
+        }
+
+        public static bool CanBeCreated(this Type type)
+        {
+            Guard.AssertNotNull(type, "type");
+
+            return type.IsConcrete() && Constructor.HasConstructors(type);
+        }
+
+        public static bool CanBeCastTo(this Type pluggedType, Type pluginType)
+        {
+            if (pluggedType == null)
+            {
+                return false;
+            }
+
+            if (pluggedType.IsInterface || pluggedType.IsAbstract)
+            {
+                return false;
+            }
+
+            if (pluginType.IsOpenGeneric())
+            {
+                return GenericsHelper.CanBeCast(pluginType, pluggedType);
+            }
+
+            if (IsOpenGeneric(pluggedType))
+            {
+                return false;
+            }
+
+
+            return pluginType.IsAssignableFrom(pluggedType);
+        }
+
+        public static bool IsOpenGeneric(this Type type)
+        {
+            Guard.AssertNotNull(type, "type");
+
+            return type.IsGenericTypeDefinition || type.ContainsGenericParameters;
+        }
     }
 }

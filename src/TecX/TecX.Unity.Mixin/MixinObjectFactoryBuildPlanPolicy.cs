@@ -22,7 +22,7 @@ namespace TecX.Unity.Mixin
         {
             Guard.AssertNotNull(context, "context");
 
-            if(context.Existing != null)
+            if (context.Existing != null)
             {
                 return;
             }

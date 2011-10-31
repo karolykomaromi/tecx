@@ -41,7 +41,7 @@ namespace TecX.Unity.Configuration.Common
             return _matchesNone(target);
         }
 
-        public bool DoesNotMatcheAny(T target)
+        public bool DoesNotMatchAny(T target)
         {
             return _list.Count == 0 || !MatchesAny(target);
         }

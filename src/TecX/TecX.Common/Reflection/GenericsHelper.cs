@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace TecX.Unity.Configuration.Common
+namespace TecX.Common.Reflection
 {
+    using System;
+
     public static class GenericsHelper
     {
         public static bool CanBeCast(Type pluginType, Type pluggedType)

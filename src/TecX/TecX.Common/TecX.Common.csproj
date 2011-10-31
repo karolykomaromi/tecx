@@ -50,6 +50,8 @@
     <Compile Include="Comparison\LambdaEqualityComparer.cs" />
     <Compile Include="Convert.cs" />
     <Compile Include="Extensions\Primitives\LiteralExtensions.cs" />
+    <Compile Include="Reflection\Constructor.cs" />
+    <Compile Include="Reflection\GenericsHelper.cs" />
     <Compile Include="Reflection\MethodNotFoundException.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />
     <Compile Include="Specifications\AlwaysFalseSpecification.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Time\TimeSlot.cs" />
     <Compile Include="TypeHelper.cs" />
     <Compile Include="Time\ZellersCongruence.cs" />
+    <Compile Include="WeakReference.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
