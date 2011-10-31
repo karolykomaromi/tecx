@@ -1,60 +1,36 @@
-﻿namespace TecX.Agile.ViewModels
+﻿using System.Windows;
+
+using Caliburn.Micro;
+
+namespace TecX.Agile.ViewModels
 {
-    using System.Windows;
-    using System.Windows.Media;
-
-    using Caliburn.Micro;
-
-    using TecX.Agile.Behaviors;
-
     public class TranslateOnlyAreaViewModel : Screen
     {
         /// <summary>75.0 </summary>
         public const double DefaultRadius = 75.0;
 
-        private double _width;
-
-        private double _height;
+        private double diameter;
 
         private bool _visible;
 
         private IInputElement _inputArea;
 
-        public double Width
+        public double Diameter
         {
             get
             {
-                return _width;
+                return this.diameter;
             }
 
             set
             {
-                if (_width == value)
+                if (diameter == value)
                 {
                     return;
                 }
 
-                _width = value;
-                NotifyOfPropertyChange(() => Width);
-            }
-        }
-
-        public double Height
-        {
-            get
-            {
-                return _height;
-            }
-
-            set
-            {
-                if (_height == value)
-                {
-                    return;
-                }
-
-                _height = value;
-                NotifyOfPropertyChange(() => Height);
+                diameter = value;
+                NotifyOfPropertyChange(() => Diameter);
             }
         }
 
@@ -104,23 +80,16 @@
 
         public TranslateOnlyAreaViewModel()
         {
-            Width = 2 * DefaultRadius;
-            Height = 2 * DefaultRadius;
+            Diameter = 2 * DefaultRadius;
         }
 
         public bool IsInsideTranslateOnlyArea(Point point)
         {
-            Point center = new Point(Width / 2, Height / 2);
+            Point center = new Point(Diameter / 2, Diameter / 2);
 
             double distance = GeometryHelper.GetDistanceBetween(point, center);
 
-            //Rect adornedElementRect = new Rect(AdornedElement.DesiredSize);
-
-            //Point center = GeometryHelper.CenterPoint(adornedElementRect);
-
-            //double distance = GeometryHelper.GetDistanceBetween(p, center);
-
-            bool inside = distance < DefaultRadius;
+            bool inside = distance < (Diameter / 2);
 
             return inside;
         }

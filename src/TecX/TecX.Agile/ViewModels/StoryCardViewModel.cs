@@ -7,18 +7,6 @@ namespace TecX.Agile.ViewModels
 {
     public class StoryCardViewModel : Screen
     {
-        private static class Defaults
-        {
-            public static class StoryCard
-            {
-                /// <summary>300 </summary>
-                public const double Width = 300.0;
-
-                /// <summary>200 </summary>
-                public const double Height = 200.0;
-            }
-        }
-
         #region Fields
 
         private readonly IObservableCollection<object> _decorators;
@@ -59,10 +47,11 @@ namespace TecX.Agile.ViewModels
 
         public StoryCardViewModel()
         {
-            Width = Defaults.StoryCard.Width;
-            Height = Defaults.StoryCard.Height;
+            Width = Constants.StoryCard.Width;
+            Height = Constants.StoryCard.Height;
+            Opacity = Constants.Opacity;
 
-            Background = TecX.Agile.Defaults.Colors.Yellow;
+            Background = Constants.Colors.Yellow;
 
             _decorators = new BindableCollection<object>();
         }
