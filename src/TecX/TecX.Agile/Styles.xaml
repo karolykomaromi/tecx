@@ -5,10 +5,8 @@
 	                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:cal="http://www.caliburnproject.org"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
-    <!--<DataTemplate DataType="{x:Type ViewModels:StoryCardViewModel}" x:Key="StoryCard">
-        <Rectangle Width="200" Height="100" Fill="Yellow"/>
-    </DataTemplate>-->
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:Converters="clr-namespace:TecX.Agile.Infrastructure.Converters;assembly=TecX.Agile.Infrastructure">
     <DataTemplate DataType="{x:Type ViewModels:IterationViewModel}" x:Key="Iteration">
         <Rectangle Width="200" Height="100" Fill="LightBlue"/>
     </DataTemplate>
@@ -54,6 +52,12 @@
             BorderThickness="1"
             cal:Bind.Model="{Binding}"
             Height="{Binding Height}">
+            <UserControl.Resources>
+                <Converters:ColorToSolidColorBrushConverter x:Key="ColorToBrushConverter" />
+            </UserControl.Resources>
+            <UserControl.Background>
+                <Binding Path="Background" Converter="{StaticResource ColorToBrushConverter}"/>
+            </UserControl.Background>
             <i:Interaction.Behaviors>
                 <Behaviors:RntBehavior/>
                 <Behaviors:TransformBehavior/>

@@ -107,6 +107,7 @@
     <Compile Include="Behaviors\SurfaceBehavior.cs" />
     <Compile Include="Behaviors\TransformBehavior.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Defaults.cs" />
     <Compile Include="GeometryHelper.cs" />
     <Compile Include="Registration\AppConfigurationBuilder.cs" />
     <Compile Include="Registration\CaliburnConfigurationBuilder.cs" />

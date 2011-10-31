@@ -60,6 +60,8 @@
     </Page>
     <Compile Include="GestureModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\GestureRecognitionStrategy.cs" />
+    <Compile Include="ViewModels\GestureStrategyChain.cs" />
     <Compile Include="ViewModels\GestureViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
