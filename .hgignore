@@ -38,3 +38,5 @@ src/TecX/TecX.Unity.TypedFactory/obj
 src/TecX/TecX.Unity/bin
 src/TecX/TecX.Unity/obj
 *.suo
+src/TecX/TecX.Unity/TecX.Unity.csproj.user
+src/TecX/TecX.Unity.Test/TecX.Unity.Test.csproj.user
