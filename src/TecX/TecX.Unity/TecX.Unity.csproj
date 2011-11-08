@@ -71,6 +71,17 @@
     <Compile Include="Enrichment\EnrichmentPolicy.cs" />
     <Compile Include="Enrichment\EnrichmentStrategy.cs" />
     <Compile Include="Enrichment\IEnrichmentPolicy.cs" />
+    <Compile Include="Groups\ISemanticGroup.cs" />
+    <Compile Include="Groups\ISemanticGroupConfigurator.cs" />
+    <Compile Include="Groups\ISemanticGroupContext.cs" />
+    <Compile Include="Groups\ISemanticGroupPolicy.cs" />
+    <Compile Include="Groups\ReadonlyConstructorSelectorPolicy.cs" />
+    <Compile Include="Groups\SemanticGroup.cs" />
+    <Compile Include="Groups\SemanticGroupExtension.cs" />
+    <Compile Include="Groups\SemanticGroupPolicy.cs" />
+    <Compile Include="Groups\SemanticGroupStrategy.cs" />
+    <Compile Include="Groups\UnityContainerExtensions.cs" />
+    <Compile Include="Groups\Using.cs" />
     <Compile Include="InjectionMembers.cs" />
     <Compile Include="Injection\ConstructorArgument.cs" />
     <Compile Include="Injection\ConstructorArgumentCollection.cs" />
