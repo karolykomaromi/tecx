@@ -64,7 +64,6 @@
     <Compile Include="ContextualBuildKeyMapping.cs" />
     <Compile Include="IBindingContext.cs" />
     <Compile Include="IContextualBindingConfiguration.cs" />
-    <Compile Include="Predicate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnityContainerExtensions.cs" />
   </ItemGroup>

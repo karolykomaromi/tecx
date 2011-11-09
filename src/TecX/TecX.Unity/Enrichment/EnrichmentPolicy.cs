@@ -1,19 +1,21 @@
-﻿using System;
-using Microsoft.Practices.ObjectBuilder2;
-using TecX.Common;
-
-namespace TecX.Unity.Enrichment
+﻿namespace TecX.Unity.Enrichment
 {
+    using System;
+
+    using Microsoft.Practices.ObjectBuilder2;
+
+    using TecX.Common;
+
     public class EnrichmentPolicy<T> : IEnrichmentPolicy
         where T : class
     {
-        private readonly Action<T, IBuilderContext> _enrichWith;
+        private readonly Action<T, IBuilderContext> enrichWith;
 
         public EnrichmentPolicy(Action<T, IBuilderContext> enrichWith)
         {
             Guard.AssertNotNull(enrichWith, "enrichWith");
 
-            _enrichWith = enrichWith;
+            this.enrichWith = enrichWith;
         }
 
         public void Enrich(IBuilderContext context)
@@ -24,7 +26,7 @@ namespace TecX.Unity.Enrichment
 
             if (existing != null)
             {
-                _enrichWith(existing, context);
+                this.enrichWith(existing, context);
             }
         }
     }

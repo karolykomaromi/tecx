@@ -1,13 +1,11 @@
-﻿using Microsoft.Practices.ObjectBuilder2;
-
-namespace TecX.Unity.Enrichment
+﻿namespace TecX.Unity.Enrichment
 {
+    using Microsoft.Practices.ObjectBuilder2;
+
     public class EnrichmentStrategy : BuilderStrategy
     {
         public override void PreBuildUp(IBuilderContext context)
         {
-            base.PreBuildUp(context);
-
             IEnrichmentPolicy policy = context.Policies.Get<IEnrichmentPolicy>(context.BuildKey);
 
             if (policy != null)

@@ -5,16 +5,20 @@ namespace TecX.Unity.Groups
     using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity.ObjectBuilder;
 
+    using TecX.Common;
+
     public class SemanticGroupStrategy : BuilderStrategy
     {
         public override void PreBuildUp(IBuilderContext context)
         {
+            Guard.AssertNotNull(context, "context");
+
             IPolicyList resolverPolicyDestination;
             IConstructorSelectorPolicy selector = context.Policies.Get<IConstructorSelectorPolicy>(context.BuildKey, out resolverPolicyDestination);
 
-            var ctor = selector.SelectConstructor(context, resolverPolicyDestination);
+            var selectedConstructor = selector.SelectConstructor(context, resolverPolicyDestination);
 
-            if (ctor == null)
+            if (selectedConstructor == null)
             {
                 return;
             }
@@ -26,9 +30,9 @@ namespace TecX.Unity.Groups
                 return;
             }
 
-            var parameters = ctor.Constructor.GetParameters();
+            var parameters = selectedConstructor.Constructor.GetParameters();
 
-            var parameterKeys = ctor.GetParameterKeys();
+            var parameterKeys = selectedConstructor.GetParameterKeys();
 
             for (int i = 0; i < parameters.Length; i++)
             {
@@ -42,8 +46,7 @@ namespace TecX.Unity.Groups
                 }
             }
 
-            resolverPolicyDestination.Set<IConstructorSelectorPolicy>(
-                new ReadonlyConstructorSelectorPolicy(ctor), context.BuildKey);
+            resolverPolicyDestination.Set<IConstructorSelectorPolicy>(new SelectedConstructorCache(selectedConstructor), context.BuildKey);
         }
     }
 }

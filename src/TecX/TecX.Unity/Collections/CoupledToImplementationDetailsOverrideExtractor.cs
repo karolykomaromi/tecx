@@ -1,12 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity;
-
 namespace TecX.Unity.Collections
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
+    using Microsoft.Practices.ObjectBuilder2;
+    using Microsoft.Practices.Unity;
+
     public class CoupledToImplementationDetailsOverrideExtractor : ResolverOverrideExtractor
     {
         private static class Constants

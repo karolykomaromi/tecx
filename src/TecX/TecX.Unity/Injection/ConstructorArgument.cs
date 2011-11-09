@@ -1,17 +1,22 @@
-using TecX.Common;
-
 namespace TecX.Unity.Injection
 {
+    using TecX.Common;
+
     public class ConstructorArgument
     {
-        private string _name;
+        private string name;
+
         public string Name
         {
-            get { return _name; }
+            get
+            {
+                return this.name;
+            }
+
             set
             {
                 Guard.AssertNotNull(value, "Name");
-                _name = value;
+                this.name = value;
             }
         }
 
@@ -21,8 +26,8 @@ namespace TecX.Unity.Injection
         {
             Guard.AssertNotEmpty(argumentName, "argumentName");
 
-            _name = argumentName;
-            Value = value;
+            this.name = argumentName;
+            this.Value = value;
         }
     }
 }

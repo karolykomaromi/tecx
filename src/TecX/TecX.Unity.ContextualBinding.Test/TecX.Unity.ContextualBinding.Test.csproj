@@ -58,7 +58,8 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContextualBindingFixture.cs" />
+    <Compile Include="Given_ContainerWithContextualBindingExtension.cs" />
+    <Compile Include="Given_Instance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestObjects\BindingNamespaceTest.cs" />
     <Compile Include="TestObjects\IMyInterface.cs" />
@@ -66,8 +67,24 @@
     <Compile Include="TestObjects\MyOtherClass.cs" />
     <Compile Include="TestObjects\MyParameterLessClass.cs" />
     <Compile Include="TestObjects\ParentWithDependency.cs" />
+    <Compile Include="When_ContextDoesNotMatchPredicate.cs" />
+    <Compile Include="When_ContextMatchesPredicate.cs" />
+    <Compile Include="When_ContextualMappingUsesInformationFromCtx.cs" />
+    <Compile Include="When_MappingWithInjectionMember.cs" />
+    <Compile Include="When_MappingWithNonTransientLifetimeManager.cs" />
+    <Compile Include="When_RegisteringContextualAfterDefaultMapping.cs" />
+    <Compile Include="When_RegisteringDefaultAfterContextualMapping.cs" />
+    <Compile Include="When_RegisteringDefaultMappingAfterInstance.cs" />
+    <Compile Include="When_RegisteringInstanceAfterDefaultMapping.cs" />
+    <Compile Include="When_RegisteringInstanceWithContext.cs" />
+    <Compile Include="When_RegisteringInstanceWithFailingPredicate.cs" />
+    <Compile Include="When_RegisteringWithParentNamespaceCondition.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
+      <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
+      <Name>TecX.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.TestTools\TecX.TestTools.csproj">
       <Project>{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}</Project>
       <Name>TecX.TestTools</Name>

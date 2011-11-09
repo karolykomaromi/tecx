@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.ObjectBuilder;
-
-using TecX.Common;
-
-namespace TecX.Unity.Injection
+﻿namespace TecX.Unity.Injection
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
+    using Microsoft.Practices.ObjectBuilder2;
+    using Microsoft.Practices.Unity;
+    using Microsoft.Practices.Unity.ObjectBuilder;
+
+    using TecX.Common;
+
     public class ClozeInjectionConstructur : InjectionMember
     {
-        private readonly ConstructorArgumentCollection _constructorArguments;
+        private readonly ConstructorArgumentCollection constructorArguments;
 
         private ClozeInjectionConstructur()
         {
-            _constructorArguments = new ConstructorArgumentCollection();
+            this.constructorArguments = new ConstructorArgumentCollection();
         }
 
         public ClozeInjectionConstructur(string argumentName, object value)
@@ -25,7 +25,7 @@ namespace TecX.Unity.Injection
         {
             Guard.AssertNotEmpty(argumentName, "argumentName");
 
-            _constructorArguments.Add(new ConstructorArgument(argumentName, value));
+            this.constructorArguments.Add(new ConstructorArgument(argumentName, value));
         }
 
         public ClozeInjectionConstructur(IEnumerable<ConstructorArgument> ctorArguments)
@@ -35,18 +35,19 @@ namespace TecX.Unity.Injection
 
             foreach (var ctorArgument in ctorArguments)
             {
-                _constructorArguments.Add(ctorArgument);
+                this.constructorArguments.Add(ctorArgument);
             }
         }
 
-        public override void AddPolicies(Type serviceType, 
-            Type implementationType, 
+        public override void AddPolicies(
+            Type serviceType,
+            Type implementationType,
             string name,
             IPolicyList policies)
         {
-            ConstructorInfo ctor = FindConstructor(implementationType);
+            ConstructorInfo ctor = this.FindConstructor(implementationType);
 
-            InjectionParameterValue[] parameterValues = GetParameterValues(ctor);
+            InjectionParameterValue[] parameterValues = this.GetParameterValues(ctor);
 
             policies.Set<IConstructorSelectorPolicy>(
                 new SpecifiedConstructorSelectorPolicy(ctor, parameterValues),
@@ -65,7 +66,7 @@ namespace TecX.Unity.Injection
             for (int i = 0; i < infos.Length; i++)
             {
                 ConstructorArgument argument;
-                if (_constructorArguments.TryGetArgumentByName(infos[i].Name, out argument))
+                if (this.constructorArguments.TryGetArgumentByName(infos[i].Name, out argument))
                 {
                     parameterValues[i] = argument.Value;
                 }
@@ -82,7 +83,7 @@ namespace TecX.Unity.Injection
         {
             var ctors = typeToCreate.GetConstructors();
 
-            ParameterMatcher matcher = new ParameterMatcher(_constructorArguments);
+            ParameterMatcher matcher = new ParameterMatcher(this.constructorArguments);
 
             return matcher.BestMatch(ctors);
         }

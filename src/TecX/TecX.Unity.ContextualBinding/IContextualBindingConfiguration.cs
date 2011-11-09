@@ -5,6 +5,8 @@ using Microsoft.Practices.Unity;
 
 namespace TecX.Unity.ContextualBinding
 {
+    using TecX.Common;
+
     public interface IContextualBindingConfiguration : IUnityContainerExtensionConfigurator
     {
         void RegisterType(Type from, Type to, Predicate<IBindingContext, IBuilderContext> isMatch,

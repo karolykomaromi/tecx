@@ -1,8 +1,8 @@
-﻿using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.ObjectBuilder;
-
-namespace TecX.Unity.Collections
+﻿namespace TecX.Unity.Collections
 {
+    using Microsoft.Practices.Unity;
+    using Microsoft.Practices.Unity.ObjectBuilder;
+
     public class CollectionResolutionExtension : UnityContainerExtension
     {
         protected override void Initialize()

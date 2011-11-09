@@ -48,8 +48,10 @@
     <Compile Include="Comparison\EpsilonComparer.cs" />
     <Compile Include="Comparison\HashingHelper.cs" />
     <Compile Include="Comparison\LambdaEqualityComparer.cs" />
+    <Compile Include="CompositePredicate.cs" />
     <Compile Include="Convert.cs" />
     <Compile Include="Extensions\Primitives\LiteralExtensions.cs" />
+    <Compile Include="Predicate.cs" />
     <Compile Include="Reflection\Constructor.cs" />
     <Compile Include="Reflection\GenericsHelper.cs" />
     <Compile Include="Reflection\MethodNotFoundException.cs" />

@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
-namespace TecX.Unity.Collections
+﻿namespace TecX.Unity.Collections
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+
+    using Microsoft.Practices.ObjectBuilder2;
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     public class CollectionResolutionStrategy : BuilderStrategy
     {
         private delegate object CollectionResolver(IBuilderContext context);
