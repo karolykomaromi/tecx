@@ -62,7 +62,6 @@
     </Compile>
     <Compile Include="Common\Cache.cs" />
     <Compile Include="Common\CompositeFilter.cs" />
-    <Compile Include="Common\CompositePredicate.cs" />
     <Compile Include="Common\TypePool.cs" />
     <Compile Include="Conventions\AssemblyScanner.cs" />
     <Compile Include="Conventions\ImplementsIInterfaceNameConvention.cs" />

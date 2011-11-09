@@ -1,9 +1,9 @@
-﻿using Microsoft.Practices.ObjectBuilder2;
-
-using TecX.Common;
-
-namespace TecX.Unity.Lifetime
+﻿namespace TecX.Unity.Lifetime
 {
+    using Microsoft.Practices.ObjectBuilder2;
+
+    using TecX.Common;
+
     public class CacheLifetimeStrategy : BuilderStrategy
     {
         public override void PreBuildUp(IBuilderContext context)

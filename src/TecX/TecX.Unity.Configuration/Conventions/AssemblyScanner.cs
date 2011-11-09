@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-
-using TecX.Common;
-using TecX.Unity.Configuration.Common;
-using TecX.Unity.Configuration.Extensions;
-
-namespace TecX.Unity.Configuration.Conventions
+﻿namespace TecX.Unity.Configuration.Conventions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+
+    using TecX.Common;
     using TecX.Common.Extensions.Collections;
+    using TecX.Unity.Configuration.Common;
+    using TecX.Unity.Configuration.Extensions;
 
     public class AssemblyScanner
     {
-        private readonly List<Assembly> _assemblies;
-        private readonly CompositeFilter<Type> _filter;
-        private readonly List<IRegistrationConvention> _conventions;
+        private readonly List<Assembly> assemblies;
+        private readonly CompositeFilter<Type> filter;
+        private readonly List<IRegistrationConvention> conventions;
 
         public AssemblyScanner()
         {
-            _assemblies = new List<Assembly>();
-            _filter = new CompositeFilter<Type>();
-            _conventions = new List<IRegistrationConvention>();
+            this.assemblies = new List<Assembly>();
+            this.filter = new CompositeFilter<Type>();
+            this.conventions = new List<IRegistrationConvention>();
         }
 
         #region Select assemblies to scan
@@ -32,9 +31,9 @@ namespace TecX.Unity.Configuration.Conventions
         {
             Guard.AssertNotNull(assembly, "assembly");
 
-            if (!_assemblies.Contains(assembly))
+            if (!this.assemblies.Contains(assembly))
             {
-                _assemblies.Add(assembly);
+                this.assemblies.Add(assembly);
             }
         }
 
@@ -141,7 +140,7 @@ namespace TecX.Unity.Configuration.Conventions
         {
             Guard.AssertNotEmpty(assemblyName, "assemblyName");
 
-            foreach (Assembly assembly in _assemblies)
+            foreach (Assembly assembly in this.assemblies)
             {
                 if (assembly.GetName().Name == assemblyName)
                 {
@@ -156,11 +155,11 @@ namespace TecX.Unity.Configuration.Conventions
 
         #region Filtering
 
-        public void Exclude(Func<Type, bool> exclude)
+        public void Exclude(Predicate<Type> exclude)
         {
             Guard.AssertNotNull(exclude, "exclude");
 
-            _filter.Excludes += exclude;
+            this.filter.Excludes += exclude;
         }
 
         public void ExcludeNamespace(string nameSpace)
@@ -175,11 +174,11 @@ namespace TecX.Unity.Configuration.Conventions
             ExcludeNamespace(typeof(T).Namespace);
         }
 
-        public void Include(Func<Type, bool> predicate)
+        public void Include(Predicate<Type> predicate)
         {
             Guard.AssertNotNull(predicate, "predicate");
 
-            _filter.Includes += predicate;
+            this.filter.Includes += predicate;
         }
 
         public void IncludeNamespace(string nameSpace)
@@ -227,7 +226,7 @@ namespace TecX.Unity.Configuration.Conventions
         public void With<T>()
             where T : IRegistrationConvention, new()
         {
-            IRegistrationConvention existing = _conventions.FirstOrDefault(convention => convention is T);
+            IRegistrationConvention existing = this.conventions.FirstOrDefault(convention => convention is T);
 
             if (existing == null)
             {
@@ -239,7 +238,7 @@ namespace TecX.Unity.Configuration.Conventions
         {
             Guard.AssertNotNull(convention, "convention");
 
-            _conventions.Fill(convention);
+            this.conventions.Fill(convention);
         }
 
         public void WithDefaultConventions()
@@ -277,8 +276,8 @@ namespace TecX.Unity.Configuration.Conventions
             // the conventions take care about registering a type with the container if it fits their scheme
             config
                 .Types
-                .For(_assemblies, _filter)
-                .Each(type => _conventions.Each(c => c.Process(type, builder)));
+                .For(this.assemblies, this.filter)
+                .Each(type => this.conventions.Each(c => c.Process(type, builder)));
 
             builder.BuildUp(config);
         }

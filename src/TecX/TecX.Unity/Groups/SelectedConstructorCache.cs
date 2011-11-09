@@ -2,12 +2,16 @@ namespace TecX.Unity.Groups
 {
     using Microsoft.Practices.ObjectBuilder2;
 
-    public class ReadonlyConstructorSelectorPolicy : IConstructorSelectorPolicy
+    using TecX.Common;
+
+    public class SelectedConstructorCache : IConstructorSelectorPolicy
     {
         private readonly SelectedConstructor selectedConstructor;
 
-        public ReadonlyConstructorSelectorPolicy(SelectedConstructor selectedConstructor)
+        public SelectedConstructorCache(SelectedConstructor selectedConstructor)
         {
+            Guard.AssertNotNull(selectedConstructor, "selectedConstructor");
+
             this.selectedConstructor = selectedConstructor;
         }
 

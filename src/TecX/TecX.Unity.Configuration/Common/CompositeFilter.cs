@@ -1,5 +1,7 @@
 ﻿namespace TecX.Unity.Configuration.Common
 {
+    using TecX.Common;
+
     public class CompositeFilter<T>
     {
         private readonly CompositePredicate<T> _excludes;

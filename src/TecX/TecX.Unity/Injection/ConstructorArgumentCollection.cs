@@ -1,14 +1,15 @@
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using TecX.Common;
-
 namespace TecX.Unity.Injection
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+
+    using TecX.Common;
+
     public class ConstructorArgumentCollection : KeyedCollection<string, ConstructorArgument>
     {
-        protected override string GetKeyForItem(ConstructorArgument item)
+        public IEnumerable<string> Names
         {
-            return item.Name;
+            get { return Dictionary.Keys; }
         }
 
         public bool TryGetArgumentByName(string argumentName, out ConstructorArgument argument)
@@ -18,9 +19,9 @@ namespace TecX.Unity.Injection
             return Dictionary.TryGetValue(argumentName, out argument);
         }
 
-        public IEnumerable<string> Names
+        protected override string GetKeyForItem(ConstructorArgument item)
         {
-            get { return Dictionary.Keys; }
+            return item.Name;
         }
     }
 }

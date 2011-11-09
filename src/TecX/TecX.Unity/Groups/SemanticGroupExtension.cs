@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace TecX.Unity.Groups
+﻿namespace TecX.Unity.Groups
 {
     using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
@@ -8,16 +6,16 @@ namespace TecX.Unity.Groups
 
     public class SemanticGroupExtension : UnityContainerExtension, ISemanticGroupConfigurator
     {
+        public ISemanticGroup RegisterAsGroup<TFrom, TTo>(string name)
+        {
+            return new SemanticGroup(new SemanticGroupContext(this), typeof(TFrom), typeof(TTo), name);
+        }
+
         protected override void Initialize()
         {
             var strategy = new SemanticGroupStrategy();
 
             Context.Strategies.Add(strategy, UnityBuildStage.PreCreation);
-        }
-
-        public ISemanticGroup RegisterGroup<TFrom, TTo>(string name)
-        {
-            return new SemanticGroup(new SemanticGroupContext(this), typeof(TFrom), typeof(TTo), name);
         }
 
         private class SemanticGroupContext : ISemanticGroupContext

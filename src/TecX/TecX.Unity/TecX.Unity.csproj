@@ -75,7 +75,7 @@
     <Compile Include="Groups\ISemanticGroupConfigurator.cs" />
     <Compile Include="Groups\ISemanticGroupContext.cs" />
     <Compile Include="Groups\ISemanticGroupPolicy.cs" />
-    <Compile Include="Groups\ReadonlyConstructorSelectorPolicy.cs" />
+    <Compile Include="Groups\SelectedConstructorCache.cs" />
     <Compile Include="Groups\SemanticGroup.cs" />
     <Compile Include="Groups\SemanticGroupExtension.cs" />
     <Compile Include="Groups\SemanticGroupPolicy.cs" />

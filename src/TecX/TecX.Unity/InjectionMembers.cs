@@ -1,27 +1,27 @@
-using System;
-using System.Collections.Generic;
-
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
 namespace TecX.Unity
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Microsoft.Practices.ObjectBuilder2;
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     public class InjectionMembers : InjectionMember
     {
-        private readonly List<InjectionMember> _injectionMembers;
+        private readonly List<InjectionMember> injectionMembers;
 
         public InjectionMembers()
         {
-            _injectionMembers = new List<InjectionMember>();
+            this.injectionMembers = new List<InjectionMember>();
         }
 
         public void Add(InjectionMember injectionMember)
         {
             Guard.AssertNotNull(injectionMember, "injectionMember");
 
-            _injectionMembers.Add(injectionMember);
+            this.injectionMembers.Add(injectionMember);
         }
 
         public override void AddPolicies(Type serviceType, Type implementationType, string name, IPolicyList policies)
@@ -30,12 +30,12 @@ namespace TecX.Unity
             Guard.AssertNotNull(implementationType, "implementationType");
             Guard.AssertNotNull(policies, "policies");
 
-            _injectionMembers.ForEach(injectionMember => injectionMember.AddPolicies(serviceType, implementationType, name, policies));
+            this.injectionMembers.ForEach(injectionMember => injectionMember.AddPolicies(serviceType, implementationType, name, policies));
         }
 
         public InjectionMember[] ToArray()
         {
-            return _injectionMembers.ToArray();
+            return this.injectionMembers.ToArray();
         }
     }
 }

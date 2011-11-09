@@ -1,45 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-
-using TecX.Common;
-
-namespace TecX.Unity.Injection
+﻿namespace TecX.Unity.Injection
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
+    using TecX.Common;
+
     public class ParameterMatcher
     {
-        #region Fields
+        private readonly ConstructorArgumentCollection ctorArgs;
 
-        private readonly ConstructorArgumentCollection _ctorArgs;
-        private readonly IEnumerable<Predicate<ConstructorInfo>> _filters;
-
-        #endregion Fields
-
-        #region c'tor
+        private readonly CompositePredicate<ConstructorInfo> filters;
 
         public ParameterMatcher(IEnumerable<ConstructorArgument> ctorArgs)
         {
             Guard.AssertNotNull(ctorArgs, "ctorArgs"); 
             
-            _ctorArgs = new ConstructorArgumentCollection();
+            this.ctorArgs = new ConstructorArgumentCollection();
 
-            _filters = new Predicate<ConstructorInfo>[]
-                           {
-                               ConstructorTakesAllArguments, 
-                               NonSatisfiedPrimitiveArgs, 
-                               ArgumentTypesMatch
-                           };
+            this.filters = new CompositePredicate<ConstructorInfo>();
+            this.filters += this.ConstructorTakesAllArguments;
+            this.filters += this.NonSatisfiedPrimitiveArgs;
+            this.filters += this.ArgumentTypesMatch;
 
             foreach (var arg in ctorArgs)
             {
-                _ctorArgs.Add(arg);
+                this.ctorArgs.Add(arg);
             }
         }
-
-        #endregion c'tor
-
-        #region Methods
 
         public ConstructorInfo BestMatch(IEnumerable<ConstructorInfo> ctors)
         {
@@ -49,7 +38,7 @@ namespace TecX.Unity.Injection
             ctors = ctors.OrderByDescending(ctor => ctor.GetParameters().Length);
 
             IEnumerable<ConstructorInfo> potentialMatches = ctors
-                .Where(ctor => !_filters.Any(filter => filter(ctor)));
+                .Where(ctor => !this.filters.MatchesAny(ctor));
 
             // no match -> exceptional situation which should cause some error))
             if (potentialMatches.Count() == 0)
@@ -81,7 +70,7 @@ namespace TecX.Unity.Injection
 
             ParameterInfo[] parameters = ctor.GetParameters();
 
-            foreach (var argument in _ctorArgs)
+            foreach (var argument in this.ctorArgs)
             {
                 if (!parameters.Any(p => p.Name == argument.Name))
                 {
@@ -107,7 +96,7 @@ namespace TecX.Unity.Injection
 
             // find parameters not satisfied by provided args
             var noMatch = from p in parameters
-                          where !_ctorArgs.Names.Any(key => p.Name == key)
+                          where !this.ctorArgs.Names.Any(key => p.Name == key)
                           select p;
 
             foreach (ParameterInfo parameter in noMatch)
@@ -140,7 +129,7 @@ namespace TecX.Unity.Injection
             foreach (ParameterInfo parameter in ctor.GetParameters())
             {
                 ConstructorArgument argument;
-                if (_ctorArgs.TryGetArgumentByName(parameter.Name, out argument))
+                if (this.ctorArgs.TryGetArgumentByName(parameter.Name, out argument))
                 {
                     if (parameter.ParameterType != argument.Value.GetType())
                     {
@@ -151,7 +140,5 @@ namespace TecX.Unity.Injection
 
             return false;
         }
-
-        #endregion Methods
     }
 }

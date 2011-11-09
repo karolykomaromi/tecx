@@ -4,6 +4,6 @@ namespace TecX.Unity.Groups
 
     public interface ISemanticGroupConfigurator : IUnityContainerExtensionConfigurator
     {
-        ISemanticGroup RegisterGroup<TFrom, TTo>(string name);
+        ISemanticGroup RegisterAsGroup<TFrom, TTo>(string name);
     }
 }
