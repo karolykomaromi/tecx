@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-
-using TecX.Common.Extensions.Error;
-
-namespace TecX.Common.Reflection
+﻿namespace TecX.Common.Reflection
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Reflection.Emit;
+
+    using TecX.Common.Extensions.Error;
+
     public delegate object DynamicMethodInvoker(object target, params object[] arguments);
 
     public delegate void DynamicPropertySetter(object target, object value);
@@ -22,7 +22,7 @@ namespace TecX.Common.Reflection
             Guard.AssertNotEmpty(methodName, "methodName");
             Guard.AssertNotEmpty(typeArguments, "typeArguments");
 
-            //a method without parameters cannot be overloaded
+            // a method without parameters cannot be overloaded
             if (parameterTypes == null ||
                 parameterTypes.Length == 0)
             {
@@ -36,10 +36,10 @@ namespace TecX.Common.Reflection
                     throw new MethodNotFoundException()
                         .WithAdditionalInfos(new Dictionary<object, object>
                                                  {
-                                                     {"type", type}, 
-                                                     {"methodName", methodName}, 
-                                                     {"typeArguments", typeArguments}, 
-                                                     {"parameterTypes", parameterTypes}
+                                                     { "type", type }, 
+                                                     { "methodName", methodName }, 
+                                                     { "typeArguments", typeArguments }, 
+                                                     { "parameterTypes", parameterTypes }
                                                  });
 
                 method = method.MakeGenericMethod(typeArguments);
@@ -68,10 +68,10 @@ namespace TecX.Common.Reflection
             throw new MethodNotFoundException()
                         .WithAdditionalInfos(new Dictionary<object, object>
                                                  {
-                                                     {"type", type}, 
-                                                     {"methodName", methodName}, 
-                                                     {"typeArguments", typeArguments}, 
-                                                     {"parameterTypes", parameterTypes}
+                                                     { "type", type }, 
+                                                     { "methodName", methodName }, 
+                                                     { "typeArguments", typeArguments }, 
+                                                     { "parameterTypes", parameterTypes }
                                                  });
         }
 

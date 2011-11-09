@@ -1,45 +1,26 @@
-﻿using System.Text;
-using System.Text.RegularExpressions;
-
-namespace TecX.Common
+﻿namespace TecX.Common
 {
+    using System.Text;
+    using System.Text.RegularExpressions;
+
     /// <summary>
     /// Builder for very simple regular expressions (developed for recognizing Guids)
     /// </summary>
     public class RegexBuilder
     {
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets the pattern used by the regular expression
-        /// </summary>
-        /// <value>The pattern.</value>
-        public StringBuilder Pattern { get; private set; }
-
-        #endregion Properties
-
-        #region c'tor
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RegexBuilder"/> class
         /// </summary>
         public RegexBuilder()
         {
-            Pattern = new StringBuilder(256);
+            this.Pattern = new StringBuilder(256);
         }
-
-        #endregion c'tor
-
-        #region Builder Infrastructure
 
         /// <summary>
-        /// Builds a regular expression using the constructed <see cref="Pattern"/>
+        /// Gets the pattern used by the regular expression
         /// </summary>
-        /// <returns>A <see cref="System.Text.RegularExpressions.Regex"/></returns>
-        public Regex Build()
-        {
-            return new Regex(Pattern.ToString());
-        }
+        /// <value>The pattern.</value>
+        public StringBuilder Pattern { get; private set; }
 
         /// <summary>
         /// Performs an implicit conversion from <see cref="System.Text.RegularExpressions.Regex"/> to <see cref="Regex"/>.
@@ -53,7 +34,14 @@ namespace TecX.Common
             return builder.Build();
         }
 
-        #endregion Builder Infrastructure
+        /// <summary>
+        /// Builds a regular expression using the constructed <see cref="Pattern"/>
+        /// </summary>
+        /// <returns>A <see cref="System.Text.RegularExpressions.Regex"/></returns>
+        public Regex Build()
+        {
+            return new Regex(this.Pattern.ToString());
+        }
 
         /// <summary>
         /// Appends an end of string ($) marker to the pattern
@@ -61,7 +49,7 @@ namespace TecX.Common
         /// <returns>Self. Fluent interface</returns>
         public RegexBuilder ToEndOfString()
         {
-            Pattern.Append("$");
+            this.Pattern.Append("$");
 
             return this;
         }
@@ -72,7 +60,7 @@ namespace TecX.Common
         /// <returns>Self. Fluent interface</returns>
         public RegexBuilder StartingFromBeginning()
         {
-            Pattern.Append("^");
+            this.Pattern.Append("^");
 
             return this;
         }
@@ -83,7 +71,7 @@ namespace TecX.Common
         /// <returns>Self. Fluent interface</returns>
         public RegexBuilder AnyChar()
         {
-            Pattern.Append(".");
+            this.Pattern.Append(".");
 
             return this;
         }
@@ -94,7 +82,7 @@ namespace TecX.Common
         /// <returns>Self. Fluent interface</returns>
         public RegexBuilder AHexDigit()
         {
-            Pattern.Append("[a-fA-F0-9]");
+            this.Pattern.Append("[a-fA-F0-9]");
 
             return this;
         }
@@ -108,7 +96,7 @@ namespace TecX.Common
         {
             Guard.AssertNotNull(specificChar, "specificChar");
 
-            Pattern.Append(specificChar);
+            this.Pattern.Append(specificChar);
 
             return this;
         }
@@ -124,7 +112,7 @@ namespace TecX.Common
             Guard.AssertIsInRange(atLeast, "atLeast", 0, int.MaxValue);
             Guard.AssertIsInRange(atMost, "atMost", atLeast, int.MaxValue);
 
-            Pattern.Append("{")
+            this.Pattern.Append("{")
                 .Append(atLeast)
                 .Append(",")
                 .Append(atMost)
@@ -140,7 +128,7 @@ namespace TecX.Common
         /// <returns>Self. Fluent interface</returns>
         public RegexBuilder OccursForSpecificNumberOfTimes(int numberOfOccurences)
         {
-            Pattern.Append("{")
+            this.Pattern.Append("{")
                 .Append(numberOfOccurences)
                 .Append("}");
 
@@ -153,7 +141,7 @@ namespace TecX.Common
         /// <returns>Self. Fluent interface</returns>
         public RegexBuilder OccursZeroOrMoreTimes()
         {
-            Pattern.Append("*");
+            this.Pattern.Append("*");
 
             return this;
         }
@@ -164,7 +152,7 @@ namespace TecX.Common
         /// <returns>Self. Fluent interface</returns>
         public RegexBuilder OccursAtLeastOnce()
         {
-            Pattern.Append("+");
+            this.Pattern.Append("+");
 
             return this;
         }
@@ -178,7 +166,7 @@ namespace TecX.Common
         {
             Guard.AssertIsInRange(atMost, "atMost", 0, int.MaxValue);
 
-            Pattern.Append("{0,")
+            this.Pattern.Append("{0,")
                 .Append(atMost)
                 .Append("}");
 

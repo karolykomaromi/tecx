@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq.Expressions;
-using System.Reflection;
-
-using TecX.Common.Extensions.Error;
-
-namespace TecX.Common
+﻿namespace TecX.Common
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq.Expressions;
+    using System.Reflection;
+
+    using TecX.Common.Extensions.Error;
+
     /// <summary>
     /// Helper class for common method paramter validation tasks.
     /// </summary>

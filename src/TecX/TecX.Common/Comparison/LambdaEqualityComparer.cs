@@ -1,18 +1,18 @@
-using System;
-using System.Collections.Generic;
-
-using TecX.Common.Extensions.Primitives;
-
 namespace TecX.Common.Comparison
 {
+    using System;
+    using System.Collections.Generic;
+
+    using TecX.Common.Extensions.Primitives;
+
     /// <summary>
     /// An implementation of <see cref="IEqualityComparer{T}"/> that uses a lambda function to check for equality
     /// </summary>
     /// <typeparam name="T">The type of the objects to compare</typeparam>
     public class LambdaEqualityComparer<T> : EqualityComparer<T>
     {
-        private readonly Func<T, T, bool> _equals;
-        private readonly Func<T, int> _hash;
+        private readonly Func<T, T, bool> @equals;
+        private readonly Func<T, int> hash;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LambdaEqualityComparer{T}"/> class.
@@ -33,8 +33,8 @@ namespace TecX.Common.Comparison
             Guard.AssertNotNull(equals, "equals");
             Guard.AssertNotNull(hash, "hash");
 
-            _equals = equals;
-            _hash = hash;
+            this.@equals = equals;
+            this.hash = hash;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace TecX.Common.Comparison
         /// </returns>
         public override bool Equals(T x, T y)
         {
-            return _equals(x, y);
+            return this.@equals(x, y);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace TecX.Common.Comparison
         {
             Guard.AssertNotNull(obj, "obj");
 
-            return _hash(obj);
+            return this.hash(obj);
         }
     }
 }

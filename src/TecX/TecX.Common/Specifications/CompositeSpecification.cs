@@ -1,6 +1,4 @@
-﻿using System.Runtime.Remoting.Messaging;
-
-namespace TecX.Common.Specifications
+﻿namespace TecX.Common.Specifications
 {
     /// <summary>
     /// Base class for specifications that links two other specifications using logical operators
@@ -13,42 +11,46 @@ namespace TecX.Common.Specifications
     /// work on</typeparam>
     public abstract class CompositeSpecification<TCandidate> : Specification<TCandidate>
     {
-        private readonly ISpecification<TCandidate> _leftSide;
+        private readonly ISpecification<TCandidate> leftSide;
 
-        private readonly ISpecification<TCandidate> _rightSide;
-
-        /// <summary>
-        /// Gets or sets the left side of a <see cref="CompositeSpecification{T}"/>. Which is the
-        /// left side of a logical operator
-        /// </summary>
-        /// <value>The left side of a logical operation (first specification in the composition)</value>
-        public ISpecification<TCandidate> LeftSide
-        {
-            get { return _leftSide; }
-        }
+        private readonly ISpecification<TCandidate> rightSide;
 
         /// <summary>
-        /// Gets or sets the right side of a <see cref="CompositeSpecification{T}"/>. Which is the
-        /// right side of a logical operator
+        /// Initializes a new instance of the <see cref="CompositeSpecification{TCandidate}"/> class.
         /// </summary>
-        /// <value>The right side of a logical operation (second specification in the composition)</value>
-        public ISpecification<TCandidate> RightSide
-        {
-            get { return _rightSide; }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CompositeSpecification&lt;T&gt;"/> class.
-        /// </summary>
-        /// <param name="leftSide">The left side.</param>
-        /// <param name="rightSide">The right side.</param>
+        /// <param name="leftSide">
+        /// The left side.
+        /// </param>
+        /// <param name="rightSide">
+        /// The right side.
+        /// </param>
         protected CompositeSpecification(ISpecification<TCandidate> leftSide, ISpecification<TCandidate> rightSide)
         {
             Guard.AssertNotNull(leftSide, "leftSide");
             Guard.AssertNotNull(rightSide, "rightSide");
 
-            _leftSide = leftSide;
-            _rightSide = rightSide;
+            this.leftSide = leftSide;
+            this.rightSide = rightSide;
+        }
+
+        /// <summary>
+        /// Gets the left side of a <see cref="CompositeSpecification{T}"/>. Which is the
+        /// left side of a logical operator
+        /// </summary>
+        /// <value>The left side of a logical operation (first specification in the composition)</value>
+        public ISpecification<TCandidate> LeftSide
+        {
+            get { return this.leftSide; }
+        }
+
+        /// <summary>
+        /// Gets the right side of a <see cref="CompositeSpecification{T}"/>. Which is the
+        /// right side of a logical operator
+        /// </summary>
+        /// <value>The right side of a logical operation (second specification in the composition)</value>
+        public ISpecification<TCandidate> RightSide
+        {
+            get { return this.rightSide; }
         }
 
         /// <inheritdoc/>

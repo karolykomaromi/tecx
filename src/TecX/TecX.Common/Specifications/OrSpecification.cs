@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TecX.Common.Specifications
+﻿namespace TecX.Common.Specifications
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Specification that links two other specifications using logical OR
     /// Part of the <c>Specification Pattern</c>
@@ -12,12 +12,6 @@ namespace TecX.Common.Specifications
     /// <typeparam name="TCandidate">The type the specification should work on</typeparam>
     public class OrSpecification<TCandidate> : CompositeSpecification<TCandidate>
     {
-        /// <inheritdoc/>
-        public override string Description
-        {
-            get { return "OR"; }
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="OrSpecification&lt;TCandidate&gt;"/> class.
         /// </summary>
@@ -28,11 +22,17 @@ namespace TecX.Common.Specifications
         {
         }
 
+        /// <inheritdoc/>
+        public override string Description
+        {
+            get { return "OR"; }
+        }
+
         /// <summary>
         /// Determines whether a candidate object satifies the specification
         /// </summary>
         /// <param name="candidate">The candidate.</param>
-        /// <param name="matchedSpecifications"></param>
+        /// <param name="matchedSpecifications"> Specifications that where satisfied by the <paramref name="candidate"/>. </param>
         /// <returns>
         ///     <c>true</c> if the specification is satisfied by the
         /// candidate object; otherwise, <c>false</c>.

@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace TecX.Common.Specifications
+﻿namespace TecX.Common.Specifications
 {
+    using System;
+
     /// <summary>
     /// Defines an interface for a specification that verifies wether a property of the candidate object
     /// falls within a certain range
@@ -9,27 +9,9 @@ namespace TecX.Common.Specifications
     /// <typeparam name="TCandidate">The type of the candidate.</typeparam>
     public abstract class RangeSpecification<TCandidate> : Specification<TCandidate>
     {
-        private readonly IComparable _lowerBound;
+        private readonly IComparable lowerBound;
 
-        private readonly IComparable _upperBound;
-
-        /// <summary>
-        /// Gets or sets the lower bound of the range
-        /// </summary>
-        /// <value>The lower bound.</value>
-        public IComparable LowerBound
-        {
-            get { return _lowerBound; }
-        }
-
-        /// <summary>
-        /// Gets or sets the upper bound of the range.
-        /// </summary>
-        /// <value>The upper bound.</value>
-        public IComparable UpperBound
-        {
-            get { return _upperBound; }
-        }
+        private readonly IComparable upperBound;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RangeSpecification{TCandidate}"/> class.
@@ -41,8 +23,26 @@ namespace TecX.Common.Specifications
             Guard.AssertNotNull(lowerBound, "lowerBound");
             Guard.AssertNotNull(upperBound, "upperBound");
 
-            _lowerBound = lowerBound;
-            _upperBound = upperBound;
+            this.lowerBound = lowerBound;
+            this.upperBound = upperBound;
+        }
+
+        /// <summary>
+        /// Gets the lower bound of the range
+        /// </summary>
+        /// <value>The lower bound.</value>
+        public IComparable LowerBound
+        {
+            get { return this.lowerBound; }
+        }
+
+        /// <summary>
+        /// Gets the upper bound of the range.
+        /// </summary>
+        /// <value>The upper bound.</value>
+        public IComparable UpperBound
+        {
+            get { return this.upperBound; }
         }
     }
 }

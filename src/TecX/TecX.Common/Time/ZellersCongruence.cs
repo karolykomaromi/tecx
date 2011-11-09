@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace TecX.Common.Time
+﻿namespace TecX.Common.Time
 {
+    using System;
+
     /// <summary>
     /// Calculates the day of the week for any given date (very handy when you can't use <see cref="DateTime.DayOfWeek"/> like in
     /// Entity Framework queries).

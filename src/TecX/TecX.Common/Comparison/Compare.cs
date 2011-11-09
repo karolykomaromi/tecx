@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace TecX.Common.Comparison
+﻿namespace TecX.Common.Comparison
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
     /// Helper class for comparing objects.
     /// </summary>
     public static class Compare
     {
-        #region Typewise overloads
-
         /// <summary>
         /// Compares two byte arrays for value equality.
         /// </summary>
@@ -101,8 +99,6 @@ namespace TecX.Common.Comparison
 
             return equal;
         }
-
-        #endregion Typewise overloads
 
         #region null Checks
 

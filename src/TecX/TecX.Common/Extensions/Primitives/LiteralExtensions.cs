@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace TecX.Common.Extensions.Primitives
+﻿namespace TecX.Common.Extensions.Primitives
 {
+    using System;
+
     public static class LiteralExtensions
     {
         public static TimeSpan Milliseconds(this int ts)

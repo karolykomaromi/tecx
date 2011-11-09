@@ -1,24 +1,24 @@
-﻿using System;
+﻿namespace TecX.Common
+{
+    using System;
 
-namespace TecX.Common
-{   
     public class Latch
     {
-        private int _count = 0;
+        private int count = 0;
 
         public bool IsLatched
         {
-            get { return _count > 0; }
+            get { return this.count > 0; }
         }
 
         private void Increment()
         {
-            _count++;
+            this.count++;
         }
 
         private void Decrement()
         {
-            _count--;
+            this.count--;
         }
 
         public void RunOpThatMightRaiseRunawayEvents(Action action)

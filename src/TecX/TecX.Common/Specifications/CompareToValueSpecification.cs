@@ -8,18 +8,6 @@
     /// <typeparam name="TValue">The type of the value.</typeparam>
     public abstract class CompareToValueSpecification<TCandidate, TValue> : Specification<TCandidate>
     {
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets the value against which a candidate is compared
-        /// </summary>
-        /// <value>The value.</value>
-        public TValue Value { get; set; }
-
-        #endregion Properties
-
-        #region c'tor
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CompareToValueSpecification&lt;TCandidate, TValue&gt;"/> class.
         /// </summary>
@@ -35,9 +23,13 @@
         {
             Guard.AssertNotNull(value, "value");
 
-            Value = value;
+            this.Value = value;
         }
 
-        #endregion c'tor
+        /// <summary>
+        /// Gets or sets the value against which a candidate is compared
+        /// </summary>
+        /// <value>The value.</value>
+        public TValue Value { get; set; }
     }
 }
