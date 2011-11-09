@@ -1,28 +1,28 @@
-using System;
-
 namespace TecX.Common
 {
+    using System;
+
     public class WeakReference<T>
     {
-        private readonly Func<T> _builder;
-        private readonly WeakReference _reference;
+        private readonly Func<T> builder;
+        private readonly WeakReference reference;
 
         public WeakReference(Func<T> builder)
         {
-            _builder = builder;
-            _reference = new WeakReference(_builder());
+            this.builder = builder;
+            this.reference = new WeakReference(this.builder());
         }
 
         public T Value
         {
             get
             {
-                if (!_reference.IsAlive)
+                if (!this.reference.IsAlive)
                 {
-                    _reference.Target = _builder();
+                    this.reference.Target = this.builder();
                 }
 
-                return (T)_reference.Target;
+                return (T)this.reference.Target;
             }
         }
     }

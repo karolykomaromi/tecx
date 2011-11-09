@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TecX.Common.Specifications
+﻿namespace TecX.Common.Specifications
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Specification that links two other specifications using logical OR
     /// Part of the <c>Specification Pattern</c>
@@ -12,12 +12,6 @@ namespace TecX.Common.Specifications
     /// <typeparam name="TCandidate">The type the specification should work on</typeparam>
     public class AndSpecification<TCandidate> : CompositeSpecification<TCandidate>
     {
-        /// <inheritdoc/>
-        public override string Description
-        {
-            get { return "AND"; }
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AndSpecification&lt;TCandidate&gt;"/> class.
         /// </summary>
@@ -26,6 +20,12 @@ namespace TecX.Common.Specifications
         public AndSpecification(ISpecification<TCandidate> leftSide, ISpecification<TCandidate> rightSide)
             : base(leftSide, rightSide)
         {
+        }
+
+        /// <inheritdoc/>
+        public override string Description
+        {
+            get { return "AND"; }
         }
 
         /// <summary>

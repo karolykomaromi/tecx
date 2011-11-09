@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace TecX.Common.Comparison
+﻿namespace TecX.Common.Comparison
 {
+    using System;
+    using System.Collections.Generic;
+
     public class EpsilonComparer : IComparer<double>
     {
         private static class Constants
@@ -10,15 +10,6 @@ namespace TecX.Common.Comparison
             /// <summary>0.0000000001</summary>
             public const double Epsilon = 0.00000000000001;
         }
-
-        #region Implementation of IComparer<in double>
-
-        int IComparer<double>.Compare(double x, double y)
-        {
-            return Compare(x, y);
-        }
-
-        #endregion
 
         public static int Compare(double x, double y)
         {
@@ -58,6 +49,11 @@ namespace TecX.Common.Comparison
         public static bool IsAlmostZero(double x)
         {
             return AreEqual(x, 0.0);
+        }
+        
+        int IComparer<double>.Compare(double x, double y)
+        {
+            return Compare(x, y);
         }
     }
 }

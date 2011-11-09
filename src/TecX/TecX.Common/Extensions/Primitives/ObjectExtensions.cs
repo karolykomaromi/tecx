@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace TecX.Common.Extensions.Primitives
+﻿namespace TecX.Common.Extensions.Primitives
 {
+    using System;
+
     /// <summary>
     /// Extension methods for <see cref="object"/>
     /// </summary>
@@ -32,7 +32,7 @@ namespace TecX.Common.Extensions.Primitives
         {
             Guard.AssertNotNull(obj, "obj");
 
-            return (TDestination) obj;
+            return (TDestination)obj;
         }
 
         /// <summary>

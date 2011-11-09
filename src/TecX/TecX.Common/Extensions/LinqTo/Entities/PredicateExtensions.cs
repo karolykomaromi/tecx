@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-
-namespace TecX.Common.Extensions.LinqTo.Entities
+﻿namespace TecX.Common.Extensions.LinqTo.Entities
 {
+    using System;
+    using System.Linq;
+    using System.Linq.Expressions;
+
     /// <summary>
     /// This class extends the generic type "Expression(Func(T, bool))" to easily concatenate 
     /// multiple expressions of this type for a where statement
@@ -36,7 +36,9 @@ namespace TecX.Common.Extensions.LinqTo.Entities
             return f => false;
         }
 
-        public static Expression<T> Compose<T>(this Expression<T> left, Expression<T> right, 
+        public static Expression<T> Compose<T>(
+            this Expression<T> left, 
+            Expression<T> right, 
             Func<Expression, Expression, Expression> merge)
         {
             // build parameter map (from parameters of right to parameters of left)

@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace TecX.Common.Time
+﻿namespace TecX.Common.Time
 {
+    using System;
+
     /// <summary>
     /// If you ever need to &quot;change time&quot; be it for tests or some kind of simulation you will have a 
     /// hard time doing so if you use <see cref="DateTime.Now"/> all over your code. This class allows you to 
@@ -9,25 +9,17 @@ namespace TecX.Common.Time
     /// </summary>
     public abstract class TimeProvider
     {
-        #region Fields
-
         private static readonly object SyncRoot = new object();
 
-        private static TimeProvider _current;
-
-        #endregion Fields
-
-        #region c'tor
+        private static TimeProvider current;
 
         /// <summary>
         /// Initializes static members of the <see cref="TimeProvider"/> class.
         /// </summary>
         static TimeProvider()
         {
-            _current = new DefaultTimeProvider();
+            current = new DefaultTimeProvider();
         }
-
-        #endregion c'tor
 
         /// <summary>
         /// Gets or sets the current <see cref="TimeProvider"/>
@@ -37,7 +29,7 @@ namespace TecX.Common.Time
         {
             get
             {
-                return _current;
+                return current;
             }
 
             set
@@ -46,7 +38,7 @@ namespace TecX.Common.Time
 
                 lock (SyncRoot)
                 {
-                    _current = value;
+                    current = value;
                 }
             }
         }

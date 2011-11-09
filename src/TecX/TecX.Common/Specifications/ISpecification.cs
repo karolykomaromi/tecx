@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TecX.Common.Specifications
+﻿namespace TecX.Common.Specifications
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Part of the <c>Specification Pattern</c>
     /// </summary>

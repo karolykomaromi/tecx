@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TecX.Common.Specifications
+﻿namespace TecX.Common.Specifications
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Negates the result of a specification
     /// </summary>
@@ -9,7 +9,20 @@ namespace TecX.Common.Specifications
     /// work on</typeparam>
     public class NotSpecification<TCandidate> : Specification<TCandidate>
     {
-        private readonly ISpecification<TCandidate> _wrapped;
+        private readonly ISpecification<TCandidate> wrapped;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotSpecification{TCandidate}"/> class. 
+        /// </summary>
+        /// <param name="specificationToNegate">
+        /// The specification to negate.
+        /// </param>
+        public NotSpecification(ISpecification<TCandidate> specificationToNegate)
+        {
+            Guard.AssertNotNull(specificationToNegate, "specificationToNegate");
+
+            this.wrapped = specificationToNegate;
+        }
 
         /// <inheritdoc/>
         public override string Description
@@ -22,24 +35,13 @@ namespace TecX.Common.Specifications
         /// </summary>
         public ISpecification<TCandidate> Wrapped
         {
-            get { return _wrapped; }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NotSpecification&lt;T&gt;"/> class.
-        /// </summary>
-        /// <param name="specificationToNegate">The specification to negate.</param>
-        public NotSpecification(ISpecification<TCandidate> specificationToNegate)
-        {
-            Guard.AssertNotNull(specificationToNegate, "specificationToNegate");
-
-            _wrapped = specificationToNegate;
+            get { return this.wrapped; }
         }
 
         /// <inheritdoc/>
         protected override bool IsMatchCore(TCandidate candidate, ICollection<ISpecification<TCandidate>> matchedSpecifications)
         {
-            return !Wrapped.IsMatch(candidate, matchedSpecifications);
+            return !this.Wrapped.IsMatch(candidate, matchedSpecifications);
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace TecX.Common.Extensions.Error
+﻿namespace TecX.Common.Extensions.Error
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Extension methods for <see cref="Exception"/>
     /// </summary>
@@ -15,7 +15,8 @@ namespace TecX.Common.Extensions.Error
         /// <param name="exception">The exception.</param>
         /// <param name="additionalInformation">The additional information.</param>
         /// <returns>The original exception. Fluent interface</returns>
-        public static TException WithAdditionalInfos<TException>(this TException exception,
+        public static TException WithAdditionalInfos<TException>(
+            this TException exception, 
             IEnumerable<KeyValuePair<object, object>> additionalInformation)
             where TException : Exception
         {

@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace TecX.Common.Reflection
+﻿namespace TecX.Common.Reflection
 {
+    using System;
+
     public class MethodNotFoundException : Exception
     {
     }

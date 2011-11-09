@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TecX.Common.Comparison
+﻿namespace TecX.Common.Comparison
 {
+    using System.Collections.Generic;
+
     public class DictionaryEqualityComparer<TKey, TValue> : EqualityComparer<IDictionary<TKey, TValue>>
     {
         /// <inheritdoc/>

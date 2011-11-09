@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-
-namespace TecX.Common.Extensions.LinqTo.Objects
+﻿namespace TecX.Common.Extensions.LinqTo.Objects
 {
+    using System;
+    using System.Linq;
+    using System.Linq.Expressions;
+
     /// <summary>
     /// This class extends the generic type "Expression(Func(T, bool))" to easily concatenate 
     /// multiple expressions of this type for a where statement

@@ -3,7 +3,7 @@
     /// <summary>
     /// Defines a visitor for specifications
     /// </summary>
-    /// <typeparam name="TCandidate">The candidate that is evaluated by the specification</typeparam>
+    /// <typeparam name="TCandidate">Type of object the specification works on. </typeparam>
     public interface ISpecificationVisitor<TCandidate>
     {
         /// <summary>

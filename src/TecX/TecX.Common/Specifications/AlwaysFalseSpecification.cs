@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TecX.Common.Specifications
+﻿namespace TecX.Common.Specifications
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Always returns false no matter what the candidate is
     /// </summary>

@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace TecX.Common.Extensions.Collections
+﻿namespace TecX.Common.Extensions.Collections
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
     /// Extension methods for <see cref="IList{T}"/>
     /// </summary>

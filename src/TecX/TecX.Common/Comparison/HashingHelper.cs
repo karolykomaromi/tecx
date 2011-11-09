@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace TecX.Common.Comparison
+﻿namespace TecX.Common.Comparison
 {
+    using System;
+
     /// <summary>
     /// Extracted from <see cref="Tuple"/>. Not too bad if you have several items whose hashes you
     /// want to combine.

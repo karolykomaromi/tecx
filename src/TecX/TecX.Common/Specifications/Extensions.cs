@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TecX.Common.Specifications
+﻿namespace TecX.Common.Specifications
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Extension methods to use with the specification pattern
     /// </summary>
@@ -12,9 +12,11 @@ namespace TecX.Common.Specifications
         /// </summary>
         /// <param name="repository">The repository of candidates</param>
         /// <param name="specification">The specification.</param>
+        /// <typeparam name="TCandidate">The type of object the specification works on. </typeparam>
         /// <returns>All candidates that satisfy the specification</returns>
-        public static IEnumerable<TCandidate> FindAll<TCandidate>(this IEnumerable<TCandidate> repository,
-                                                                  ISpecification<TCandidate> specification)
+        public static IEnumerable<TCandidate> FindAll<TCandidate>(
+            this IEnumerable<TCandidate> repository,
+            ISpecification<TCandidate> specification)
         {
             Guard.AssertNotNull(repository, "repository");
             Guard.AssertNotNull(specification, "specification");
