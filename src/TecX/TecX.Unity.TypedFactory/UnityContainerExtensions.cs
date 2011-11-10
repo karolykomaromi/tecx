@@ -1,11 +1,11 @@
-﻿using System;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
-namespace TecX.Unity.TypedFactory
+﻿namespace TecX.Unity.TypedFactory
 {
+    using System;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     public static class UnityContainerExtensions
     {
         public static IUnityContainer RegisterFactory<TFactory>(this IUnityContainer container)
@@ -16,7 +16,8 @@ namespace TecX.Unity.TypedFactory
             return RegisterFactory<TFactory>(container, new DefaultTypedFactoryComponentSelector());
         }
 
-        public static IUnityContainer RegisterFactory<TFactory>(this IUnityContainer container, 
+        public static IUnityContainer RegisterFactory<TFactory>(
+            this IUnityContainer container, 
             ITypedFactoryComponentSelector selector)
             where TFactory : class
         {
@@ -25,7 +26,8 @@ namespace TecX.Unity.TypedFactory
 
             Type factoryType = typeof(TFactory);
 
-            Guard.AssertCondition(factoryType.IsInterface, 
+            Guard.AssertCondition(
+                factoryType.IsInterface, 
                 factoryType, 
                 "TFactory", 
                 "Cannot generate an implementation for a non-interface factory type.");

@@ -4,25 +4,25 @@
 
     public class CompositeFilter<T>
     {
-        private readonly CompositePredicate<T> _excludes;
-        private readonly CompositePredicate<T> _includes;
+        private readonly CompositePredicate<T> excludes;
+        private readonly CompositePredicate<T> includes;
+
+        public CompositeFilter()
+        {
+            this.excludes = new CompositePredicate<T>();
+            this.includes = new CompositePredicate<T>();
+        }
 
         public CompositePredicate<T> Includes
         {
-            get { return _includes; }
+            get { return this.includes; }
             set { }
         }
 
         public CompositePredicate<T> Excludes
         {
-            get { return _excludes; }
+            get { return this.excludes; }
             set { }
-        }
-
-        public CompositeFilter()
-        {
-            _excludes = new CompositePredicate<T>();
-            _includes = new CompositePredicate<T>();
         }
 
         public bool Matches(T target)

@@ -1,41 +1,18 @@
-using System;
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
 namespace TecX.Unity.TypedFactory
 {
+    using System;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     public class TypedFactoryComponent
     {
-        private readonly string _nameToBuild;
+        private readonly string nameToBuild;
 
-        private readonly Type _typeToBuild;
+        private readonly Type typeToBuild;
 
-        private readonly ParameterOverrides _additionalArguments;
-
-        public string NameToBuild
-        {
-            get
-            {
-                return _nameToBuild;
-            }
-        }
-
-        public Type TypeToBuild
-        {
-            get
-            {
-                return _typeToBuild;
-            }
-        }
-
-        public ParameterOverrides AdditionalArguments
-        {
-            get
-            {
-                return _additionalArguments;
-            }
-        }
+        private readonly ParameterOverrides additionalArguments;
 
         public TypedFactoryComponent(Type typeToBuild, string nameToBuild, ParameterOverrides additionalArguments)
             : this(typeToBuild, additionalArguments)
@@ -45,7 +22,7 @@ namespace TecX.Unity.TypedFactory
                 nameToBuild = null;
             }
 
-            _nameToBuild = nameToBuild;
+            this.nameToBuild = nameToBuild;
         }
 
         protected TypedFactoryComponent(Type typeToBuild, ParameterOverrides additionalArguments)
@@ -53,15 +30,39 @@ namespace TecX.Unity.TypedFactory
             Guard.AssertNotNull(typeToBuild, "typeToBuild");
             Guard.AssertNotNull(additionalArguments, "additionalArguments");
 
-            this._typeToBuild = typeToBuild;
-            _additionalArguments = additionalArguments;
+            this.typeToBuild = typeToBuild;
+            this.additionalArguments = additionalArguments;
+        }
+
+        public string NameToBuild
+        {
+            get
+            {
+                return this.nameToBuild;
+            }
+        }
+
+        public Type TypeToBuild
+        {
+            get
+            {
+                return this.typeToBuild;
+            }
+        }
+
+        public ParameterOverrides AdditionalArguments
+        {
+            get
+            {
+                return this.additionalArguments;
+            }
         }
 
         public virtual object Resolve(IUnityContainer container)
         {
             Guard.AssertNotNull(container, "container");
 
-            object resolved = container.Resolve(this.TypeToBuild, this.NameToBuild, AdditionalArguments);
+            object resolved = container.Resolve(this.TypeToBuild, this.NameToBuild, this.AdditionalArguments);
 
             return resolved;
         }

@@ -1,15 +1,15 @@
-using System.Collections;
-using System.Linq;
-
-using Microsoft.Practices.ObjectBuilder2;
-
-using Remotion.Mixins;
-using Remotion.Reflection;
-
-using TecX.Common;
-
 namespace TecX.Unity.Mixin
 {
+    using System.Collections;
+    using System.Linq;
+
+    using Microsoft.Practices.ObjectBuilder2;
+
+    using Remotion.Mixins;
+    using Remotion.Reflection;
+
+    using TecX.Common;
+
     public class MixinStrategy : BuilderStrategy
     {
         public override void PreBuildUp(IBuilderContext context)
