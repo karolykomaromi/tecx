@@ -1,31 +1,31 @@
-﻿using System;
-
-using Microsoft.Practices.ObjectBuilder2;
-
-using TecX.Common;
-
-namespace TecX.Unity.ContextualBinding
+﻿namespace TecX.Unity.ContextualBinding
 {
+    using System;
+
+    using Microsoft.Practices.ObjectBuilder2;
+
+    using TecX.Common;
+
     public class ContextualBuildKeyMapping
     {
-        private readonly Predicate<IBindingContext, IBuilderContext> _isMatch;
-        private readonly Type _mapTo;
-        private readonly string _uniqueMappingName;
-
-        public NamedTypeBuildKey BuildKey
-        {
-            get { return new NamedTypeBuildKey(_mapTo, _uniqueMappingName); }
-        }
-
+        private readonly Predicate<IBindingContext, IBuilderContext> isMatch;
+        private readonly Type mapTo;
+        private readonly string uniqueMappingName;
+        
         public ContextualBuildKeyMapping(Predicate<IBindingContext, IBuilderContext> isMatch, Type mapTo, string uniqueMappingName)
         {
             Guard.AssertNotNull(isMatch, "isMatch");
             Guard.AssertNotNull(mapTo, "mapTo");
             Guard.AssertNotEmpty(uniqueMappingName, "uniqueMappingName");
 
-            _isMatch = isMatch;
-            _mapTo = mapTo;
-            _uniqueMappingName = uniqueMappingName;
+            this.isMatch = isMatch;
+            this.mapTo = mapTo;
+            this.uniqueMappingName = uniqueMappingName;
+        }
+
+        public NamedTypeBuildKey BuildKey
+        {
+            get { return new NamedTypeBuildKey(this.mapTo, this.uniqueMappingName); }
         }
 
         public bool IsMatch(IBindingContext bindingContext, IBuilderContext builderContext)
@@ -33,7 +33,7 @@ namespace TecX.Unity.ContextualBinding
             Guard.AssertNotNull(bindingContext, "bindingContext");
             Guard.AssertNotNull(builderContext, "builderContext");
 
-            return _isMatch(bindingContext, builderContext);
+            return this.isMatch(bindingContext, builderContext);
         }
     }
 }

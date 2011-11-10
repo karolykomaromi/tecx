@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Microsoft.Practices.ObjectBuilder2;
-
-using TecX.Common;
-
-namespace TecX.Unity.ContextualBinding
+﻿namespace TecX.Unity.ContextualBinding
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Microsoft.Practices.ObjectBuilder2;
+
+    using TecX.Common;
+
     /// <summary>
     /// The <see cref="BuildTreeNode"/> is used to define a build tree node and its children.
     /// </summary>
@@ -26,9 +26,26 @@ namespace TecX.Unity.ContextualBinding
             }
         }
 
-        private readonly ICollection<BuildTreeNode> _children;
+        private readonly ICollection<BuildTreeNode> children;
 
-        #region Properties
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BuildTreeNode"/> class.
+        /// </summary>
+        /// <param name="buildKey">The build key for the current build operation. </param>
+        /// <param name="nodeCreatedByContainer">If set to <c>true</c>, the node was created by the container.</param>
+        /// <param name="parentNode">The parent node of this instance in the build tree.</param>
+        public BuildTreeNode(NamedTypeBuildKey buildKey, bool nodeCreatedByContainer, BuildTreeNode parentNode)
+        {
+            Guard.AssertNotNull(() => buildKey);
+
+            this.BuildKey = buildKey;
+
+            this.NodeCreatedByContainer = nodeCreatedByContainer;
+
+            this.Parent = parentNode;
+
+            this.children = new List<BuildTreeNode>();
+        }
 
         public NamedTypeBuildKey BuildKey { get; private set; }
 
@@ -36,7 +53,7 @@ namespace TecX.Unity.ContextualBinding
         {
             get
             {
-                return this._children;
+                return this.children;
             }
         }
 
@@ -56,12 +73,12 @@ namespace TecX.Unity.ContextualBinding
         {
             get
             {
-                if (Parent == null)
+                if (this.Parent == null)
                 {
                     return this;
                 }
 
-                BuildTreeNode root = Parent;
+                BuildTreeNode root = this.Parent;
 
                 while (root.Parent != null)
                 {
@@ -70,29 +87,6 @@ namespace TecX.Unity.ContextualBinding
 
                 return root;
             }
-        }
-
-        #endregion Properties
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BuildTreeNode"/> class.
-        /// </summary>
-        /// <param name="buildKey">The build key for the current build operation. </param>
-        /// <param name="nodeCreatedByContainer">If set to <c>true</c>, the node was created by the container.</param>
-        /// <param name="parentNode">The parent node of this instance in the build tree.</param>
-        public BuildTreeNode(NamedTypeBuildKey buildKey,
-            bool nodeCreatedByContainer,
-            BuildTreeNode parentNode)
-        {
-            Guard.AssertNotNull(() => buildKey);
-
-            BuildKey = buildKey;
-
-            NodeCreatedByContainer = nodeCreatedByContainer;
-
-            Parent = parentNode;
-
-            _children = new List<BuildTreeNode>();
         }
 
         /// <summary>
@@ -104,12 +98,28 @@ namespace TecX.Unity.ContextualBinding
         /// </exception>
         public void AssignInstance(object instance)
         {
-            if (ItemReference != null)
+            if (this.ItemReference != null)
             {
                 throw new ArgumentException(Constants.ErrorMessages.InstanceAlreadyAssigned, "instance");
             }
 
-            ItemReference = new WeakReference(instance);
+            this.ItemReference = new WeakReference(instance);
+        }
+
+        /// <summary>
+        /// Implements the visitor pattern.
+        /// </summary>
+        /// <param name="visitor">The visitor.</param>
+        public virtual void Accept(IBuildTreeNodeVisitor visitor)
+        {
+            Guard.AssertNotNull(visitor, "visitor");
+
+            visitor.Visit(this);
+
+            foreach (var child in this.Children)
+            {
+                child.Accept(visitor);
+            }
         }
     }
 }

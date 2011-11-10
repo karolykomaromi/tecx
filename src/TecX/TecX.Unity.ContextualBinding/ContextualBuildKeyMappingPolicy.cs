@@ -1,37 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Microsoft.Practices.ObjectBuilder2;
-
-using TecX.Common;
-
-namespace TecX.Unity.ContextualBinding
+﻿namespace TecX.Unity.ContextualBinding
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Microsoft.Practices.ObjectBuilder2;
+
+    using TecX.Common;
+
     public class ContextualBuildKeyMappingPolicy : IBuildKeyMappingPolicy
     {
-        private readonly IBindingContext _bindingContext;
-        private readonly List<ContextualBuildKeyMapping> _mappings;
+        private readonly IBindingContext bindingContext;
 
-        private IBuildKeyMappingPolicy _defaultMapping;
+        private readonly List<ContextualBuildKeyMapping> mappings;
 
-        public IBuildKeyMappingPolicy DefaultMapping
-        {
-            get { return _defaultMapping; }
-            set
-            {
-                Guard.AssertNotNull(value, "DefaultMapping");
-
-                _defaultMapping = value;
-            }
-        }
+        private IBuildKeyMappingPolicy defaultMapping;
 
         public ContextualBuildKeyMappingPolicy(IBindingContext bindingContext)
         {
             Guard.AssertNotNull(bindingContext, "bindingContext");
 
-            _bindingContext = bindingContext;
+            this.bindingContext = bindingContext;
 
-            _mappings = new List<ContextualBuildKeyMapping>();
+            this.mappings = new List<ContextualBuildKeyMapping>();
+        }
+
+        public IBuildKeyMappingPolicy DefaultMapping
+        {
+            get
+            {
+                return this.defaultMapping;
+            }
+
+            set
+            {
+                Guard.AssertNotNull(value, "DefaultMapping");
+
+                this.defaultMapping = value;
+            }
         }
 
         public NamedTypeBuildKey Map(NamedTypeBuildKey buildKey, IBuilderContext builderContext)
@@ -39,17 +44,17 @@ namespace TecX.Unity.ContextualBinding
             Guard.AssertNotNull(buildKey, "buildKey");
             Guard.AssertNotNull(builderContext, "builderContext");
 
-            foreach (var mapping in _mappings)
+            foreach (var mapping in this.mappings)
             {
-                if (mapping.IsMatch(_bindingContext, builderContext))
+                if (mapping.IsMatch(this.bindingContext, builderContext))
                 {
                     return mapping.BuildKey;
                 }
             }
 
-            if (DefaultMapping != null)
+            if (this.DefaultMapping != null)
             {
-                return DefaultMapping.Map(buildKey, builderContext);
+                return this.DefaultMapping.Map(buildKey, builderContext);
             }
 
             throw new ContextualBindingException("No contextual mapping that isMatch the current context was " +
@@ -62,7 +67,7 @@ namespace TecX.Unity.ContextualBinding
             Guard.AssertNotNull(mapTo, "mapTo");
             Guard.AssertNotNull(uniqueMappingName, "uniqueMappingName");
 
-            _mappings.Add(new ContextualBuildKeyMapping(isMatch, mapTo, uniqueMappingName));
+            this.mappings.Add(new ContextualBuildKeyMapping(isMatch, mapTo, uniqueMappingName));
         }
     }
 }

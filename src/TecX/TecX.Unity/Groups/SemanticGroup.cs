@@ -33,9 +33,17 @@ namespace TecX.Unity.Groups
 
         public ISemanticGroup Use<TFrom, TTo>()
         {
-            this.policy.Usings.Add(new Using { From = typeof(TFrom), To = typeof(TTo), Name = this.name });
+            return Use<TFrom, TTo>(this.name);
+        }
 
-            this.context.Container.RegisterType(typeof(TFrom), typeof(TTo), this.name);
+        public ISemanticGroup Use<TFrom, TTo>(string name)
+        {
+            // doesn't make sense to use default mapping with no name. this would be used anyway.
+            Guard.AssertNotEmpty(name, "name");
+
+            this.policy.Usings.Add(new Using { From = typeof(TFrom), To = typeof(TTo), Name = name });
+
+            this.context.Container.RegisterType(typeof(TFrom), typeof(TTo), name);
 
             return this;
         }

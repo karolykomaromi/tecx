@@ -2,8 +2,8 @@
 {
     public interface IBindingContext
     {
-        object this[string key] { get; set; }
-
         BuildTreeNode CurrentBuildNode { get; }
+
+        object this[string key] { get; set; }
     }
 }

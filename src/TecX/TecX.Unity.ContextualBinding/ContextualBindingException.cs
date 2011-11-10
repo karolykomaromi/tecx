@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace TecX.Unity.ContextualBinding
+﻿namespace TecX.Unity.ContextualBinding
 {
+    using System;
+
     public class ContextualBindingException : Exception
     {
         public ContextualBindingException(string message)

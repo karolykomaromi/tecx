@@ -1,12 +1,12 @@
-﻿using System;
-using System.Globalization;
-
-using Microsoft.Practices.ObjectBuilder2;
-
-using TecX.Common;
-
-namespace TecX.Unity.ContextualBinding
+﻿namespace TecX.Unity.ContextualBinding
 {
+    using System;
+    using System.Globalization;
+
+    using Microsoft.Practices.ObjectBuilder2;
+
+    using TecX.Common;
+
     /// <summary>
     /// The <see cref="BuildTreeTrackerStrategy"/>
     ///   class is used to track build trees created by the container.
@@ -31,7 +31,7 @@ namespace TecX.Unity.ContextualBinding
         /// The current build node.
         /// </summary>
         [ThreadStatic]
-        private static BuildTreeNode _currentBuildNode;
+        private static BuildTreeNode currentBuildNode;
 
         /// <summary>
         /// Gets or sets the current build node.
@@ -43,12 +43,12 @@ namespace TecX.Unity.ContextualBinding
         {
             get
             {
-                return _currentBuildNode;
+                return currentBuildNode;
             }
 
             set
             {
-                _currentBuildNode = value;
+                currentBuildNode = value;
             }
         }
 
@@ -59,11 +59,11 @@ namespace TecX.Unity.ContextualBinding
 
             AssignInstanceToCurrentTreeNode(context.BuildKey, context.Existing);
 
-            BuildTreeNode parentNode = CurrentBuildNode.Parent;
+            BuildTreeNode parentNode = this.CurrentBuildNode.Parent;
 
             // Move the current node back up to the parent
             // If this is the top level node, this will set the current node back to null
-            CurrentBuildNode = parentNode;
+            this.CurrentBuildNode = parentNode;
         }
 
         /// <inheritdoc/>
@@ -76,15 +76,15 @@ namespace TecX.Unity.ContextualBinding
             BuildTreeNode newTreeNode = new BuildTreeNode(
                 context.BuildKey,
                 nodeCreatedByContainer,
-                CurrentBuildNode);
+                this.CurrentBuildNode);
 
-            if (CurrentBuildNode != null)
+            if (this.CurrentBuildNode != null)
             {
                 // This is a child node
-                CurrentBuildNode.Children.Add(newTreeNode);
+                this.CurrentBuildNode.Children.Add(newTreeNode);
             }
 
-            CurrentBuildNode = newTreeNode;
+            this.CurrentBuildNode = newTreeNode;
         }
 
         /// <summary>
@@ -98,18 +98,18 @@ namespace TecX.Unity.ContextualBinding
         /// </param>
         private void AssignInstanceToCurrentTreeNode(NamedTypeBuildKey buildKey, object instance)
         {
-            if (CurrentBuildNode.BuildKey != buildKey)
+            if (this.CurrentBuildNode.BuildKey != buildKey)
             {
                 string message = string.Format(
                     CultureInfo.CurrentCulture,
                     Constants.ErrorMessages.BuildTreeConstructedOutOfOrder,
-                    CurrentBuildNode.BuildKey,
+                    this.CurrentBuildNode.BuildKey,
                     buildKey);
 
                 throw new InvalidOperationException(message);
             }
 
-            CurrentBuildNode.AssignInstance(instance);
+            this.CurrentBuildNode.AssignInstance(instance);
         }
     }
 }

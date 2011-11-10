@@ -1,24 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.ObjectBuilder;
-using TecX.Common;
-
-namespace TecX.Unity.ContextualBinding
+﻿namespace TecX.Unity.ContextualBinding
 {
-    public class ContextualBindingExtension : UnityContainerExtension, IContextualBindingConfiguration
+    using System;
+    using System.Collections.Generic;
+
+    using Microsoft.Practices.ObjectBuilder2;
+    using Microsoft.Practices.Unity;
+    using Microsoft.Practices.Unity.ObjectBuilder;
+
+    using TecX.Common;
+
+    public class ContextualBindingExtension : UnityContainerExtension, IContextualBindingConfigurator
     {
-        #region Fields
+        private readonly Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy> mappings;
 
-        private readonly Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy> _mappings;
-        private readonly Dictionary<string, object> _bindingContext;
-        private readonly BuildTreeTrackerStrategy _treeTracker;
+        private readonly Dictionary<string, object> bindingContext;
 
-        #endregion Fields
+        private readonly BuildTreeTrackerStrategy treeTracker;
 
-        #region Properties
+        public ContextualBindingExtension()
+        {
+            this.mappings = new Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy>();
+            this.bindingContext = new Dictionary<string, object>();
+            this.treeTracker = new BuildTreeTrackerStrategy();
+        }
 
         public object this[string key]
         {
@@ -27,7 +31,7 @@ namespace TecX.Unity.ContextualBinding
                 Guard.AssertNotEmpty(key, "key");
 
                 object value;
-                if (BindingContext.TryGetValue(key, out value))
+                if (this.BindingContext.TryGetValue(key, out value))
                 {
                     return value;
                 }
@@ -39,7 +43,7 @@ namespace TecX.Unity.ContextualBinding
             {
                 Guard.AssertNotEmpty(key, "key");
 
-                BindingContext[key] = value;
+                this.BindingContext[key] = value;
             }
         }
 
@@ -47,7 +51,7 @@ namespace TecX.Unity.ContextualBinding
         {
             get
             {
-                return _mappings;
+                return this.mappings;
             }
         }
 
@@ -55,7 +59,7 @@ namespace TecX.Unity.ContextualBinding
         {
             get
             {
-                return _bindingContext;
+                return this.bindingContext;
             }
         }
 
@@ -63,24 +67,9 @@ namespace TecX.Unity.ContextualBinding
         {
             get
             {
-                return _treeTracker;
+                return this.treeTracker;
             }
         }
-
-        #endregion Properties
-
-        #region c'tor
-
-        public ContextualBindingExtension()
-        {
-            _mappings = new Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy>();
-            _bindingContext = new Dictionary<string, object>();
-            _treeTracker = new BuildTreeTrackerStrategy();
-        }
-
-        #endregion c'tor
-
-        #region Implementation of IContextualBindingConfiguration
 
         public void RegisterType(
             Type from,
@@ -100,7 +89,7 @@ namespace TecX.Unity.ContextualBinding
                 lifetime = new TransientLifetimeManager();
             }
 
-            ContextualBuildKeyMappingPolicy policy = GetPolicy(from);
+            ContextualBuildKeyMappingPolicy policy = this.GetPolicy(from);
 
             string uniqueMappingName = Guid.NewGuid().ToString();
 
@@ -127,7 +116,7 @@ namespace TecX.Unity.ContextualBinding
                 lifetime = new ContainerControlledLifetimeManager();
             }
 
-            ContextualBuildKeyMappingPolicy policy = GetPolicy(from);
+            ContextualBuildKeyMappingPolicy policy = this.GetPolicy(from);
 
             string uniqueMappingName = Guid.NewGuid().ToString();
 
@@ -141,30 +130,25 @@ namespace TecX.Unity.ContextualBinding
             Container.RegisterInstance(from, uniqueMappingName, instance, lifetime);
         }
 
-        #endregion Implementation of IContextualBindingConfiguration
-
-        #region Overrides of UnityContainerExtension
-
         protected override void Initialize()
         {
-            Context.Registering += OnRegistering;
+            this.Context.Registering += this.OnRegistering;
 
-            Context.Strategies.Add(TreeTracker, UnityBuildStage.PreCreation);
+            this.Context.Strategies.Add(this.TreeTracker, UnityBuildStage.PreCreation);
         }
-
-        #endregion Overrides of UnityContainerExtension
-
-        #region Helper
 
         private void OnRegistering(object sender, RegisterEventArgs e)
         {
             // we are only interested in default mappings
-            if (!string.IsNullOrEmpty(e.Name)) return;
+            if (!string.IsNullOrEmpty(e.Name))
+            {
+                return;
+            }
 
             NamedTypeBuildKey key = new NamedTypeBuildKey(e.TypeFrom);
 
             ContextualBuildKeyMappingPolicy policy;
-            if (Mappings.TryGetValue(key, out policy))
+            if (this.Mappings.TryGetValue(key, out policy))
             {
                 // if something is already registered -> check if we have a registration with same name
                 // do the replace and last chance hookup if neccessary
@@ -190,7 +174,7 @@ namespace TecX.Unity.ContextualBinding
             ContextualBuildKeyMappingPolicy existingContextualPolicy = existingPolicy as ContextualBuildKeyMappingPolicy;
 
             ContextualBuildKeyMappingPolicy policy;
-            if (!Mappings.TryGetValue(key, out policy))
+            if (!this.Mappings.TryGetValue(key, out policy))
             {
                 // no existing contextual mapping policy for this build key so we have to create an
                 // new one and hook it up
@@ -218,13 +202,29 @@ namespace TecX.Unity.ContextualBinding
         /// </summary>
         private class DefaultBindingContext : IBindingContext
         {
-            private readonly ContextualBindingExtension _extension;
+            private readonly ContextualBindingExtension extension;
 
             public DefaultBindingContext(ContextualBindingExtension extension)
             {
                 Guard.AssertNotNull(extension, "extension");
 
-                _extension = extension;
+                this.extension = extension;
+            }
+
+            public BuildTreeNode CurrentBuildNode
+            {
+                get
+                {
+                    return this.Extension.TreeTracker.CurrentBuildNode;
+                }
+            }
+
+            private ContextualBindingExtension Extension
+            {
+                get
+                {
+                    return this.extension;
+                }
             }
 
             public object this[string key]
@@ -233,34 +233,16 @@ namespace TecX.Unity.ContextualBinding
                 {
                     Guard.AssertNotEmpty(key, "key");
 
-                    return Extension.BindingContext[key];
+                    return this.Extension.BindingContext[key];
                 }
 
                 set
                 {
                     Guard.AssertNotEmpty(key, "key");
 
-                    Extension.BindingContext[key] = value;
-                }
-            }
-
-            public BuildTreeNode CurrentBuildNode
-            {
-                get
-                {
-                    return Extension.TreeTracker.CurrentBuildNode;
-                }
-            }
-
-            private ContextualBindingExtension Extension
-            {
-                get
-                {
-                    return _extension;
+                    this.Extension.BindingContext[key] = value;
                 }
             }
         }
-
-        #endregion Helper
     }
 }

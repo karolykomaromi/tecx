@@ -63,7 +63,8 @@
     <Compile Include="ContextualBindingExtension.cs" />
     <Compile Include="ContextualBuildKeyMapping.cs" />
     <Compile Include="IBindingContext.cs" />
-    <Compile Include="IContextualBindingConfiguration.cs" />
+    <Compile Include="IBuildTreeNodeVisitor.cs" />
+    <Compile Include="IContextualBindingConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnityContainerExtensions.cs" />
   </ItemGroup>
