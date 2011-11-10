@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-
-using TecX.Common;
-
 namespace TecX.Unity.TypedFactory
 {
+    using System;
+    using System.Collections.Generic;
+
+    using TecX.Common;
+
     internal static class TypeHelper
     {
         public static bool TryGetCompatibleCollectionItemType(this Type type, out Type itemType)

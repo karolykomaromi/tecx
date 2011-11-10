@@ -1,8 +1,8 @@
-﻿using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.ObjectBuilder;
-
-namespace TecX.Unity.Mixin
+﻿namespace TecX.Unity.Mixin
 {
+    using Microsoft.Practices.Unity;
+    using Microsoft.Practices.Unity.ObjectBuilder;
+
     public class MixinExtension : UnityContainerExtension
     {
         protected override void Initialize()

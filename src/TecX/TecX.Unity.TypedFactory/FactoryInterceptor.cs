@@ -1,35 +1,35 @@
 extern alias CC25;
 
-using CC25.Castle.DynamicProxy;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
 namespace TecX.Unity.TypedFactory
 {
+    using CC25.Castle.DynamicProxy;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     public class FactoryInterceptor : IInterceptor
     {
-        private readonly IUnityContainer _container;
+        private readonly IUnityContainer container;
 
-        private readonly ITypedFactoryComponentSelector _selector;
+        private readonly ITypedFactoryComponentSelector selector;
 
         public FactoryInterceptor(IUnityContainer container, ITypedFactoryComponentSelector selector)
         {
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(selector, "selector");
 
-            _container = container;
-            _selector = selector;
+            this.container = container;
+            this.selector = selector;
         }
 
         public void Intercept(IInvocation invocation)
         {
             Guard.AssertNotNull(invocation, "invocation");
 
-            var component = _selector.SelectComponent(invocation.Method, invocation.TargetType, invocation.Arguments);
+            var component = this.selector.SelectComponent(invocation.Method, invocation.TargetType, invocation.Arguments);
 
-            invocation.ReturnValue = component.Resolve(_container);
+            invocation.ReturnValue = component.Resolve(this.container);
         }
     }
 }

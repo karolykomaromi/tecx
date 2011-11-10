@@ -15,7 +15,9 @@
     public class AssemblyScanner
     {
         private readonly List<Assembly> assemblies;
+
         private readonly CompositeFilter<Type> filter;
+
         private readonly List<IRegistrationConvention> conventions;
 
         public AssemblyScanner()

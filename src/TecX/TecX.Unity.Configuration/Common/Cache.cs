@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-
-using TecX.Common;
-
-namespace TecX.Unity.Configuration.Common
+﻿namespace TecX.Unity.Configuration.Common
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+
+    using TecX.Common;
+
     public class Cache<TKey, TValue> : IEnumerable<TValue>
         where TValue : class
     {
-        #region Fields
+        private readonly object locker = new object();
 
-        private readonly object _locker = new object();
-        private readonly IDictionary<TKey, TValue> _values;
+        private readonly IDictionary<TKey, TValue> values;
 
-        private Func<TValue, TKey> _getKey = delegate { throw new NotImplementedException(); };
-
-        #endregion Fields
-
-        #region c'tor
+        private Func<TValue, TKey> getKey = delegate { throw new NotImplementedException(); };
 
         public Cache()
             : this(new Dictionary<TKey, TValue>())
@@ -35,17 +30,15 @@ namespace TecX.Unity.Configuration.Common
             Guard.AssertNotNull(dictionary, "dictionary");
             Guard.AssertNotNull(onMissing, "onMissing");
 
-            _values = dictionary;
+            this.values = dictionary;
             this.OnMissing = onMissing;
         }
 
         public Cache(IDictionary<TKey, TValue> dictionary)
             : this(dictionary, key => default(TValue))
         {
-            _values = dictionary;
+            this.values = dictionary;
         }
-
-        #endregion c'tor
 
         public Func<TKey, TValue> OnMissing { get; set; }
 
@@ -53,27 +46,27 @@ namespace TecX.Unity.Configuration.Common
         {
             get
             {
-                return _getKey;
+                return this.getKey;
             }
 
             set
             {
                 Guard.AssertNotNull(value, "GetKey");
 
-                _getKey = value;
+                this.getKey = value;
             }
         }
 
         public int Count
         {
-            get { return _values.Count; }
+            get { return this.values.Count; }
         }
 
         public TValue First
         {
             get
             {
-                foreach (var pair in _values)
+                foreach (var pair in this.values)
                 {
                     return pair.Value;
                 }
@@ -86,39 +79,38 @@ namespace TecX.Unity.Configuration.Common
         {
             get
             {
-                if (!_values.ContainsKey(key))
+                if (!this.values.ContainsKey(key))
                 {
-                    lock (_locker)
+                    lock (this.locker)
                     {
-                        if (!_values.ContainsKey(key))
+                        if (!this.values.ContainsKey(key))
                         {
-                            TValue value = OnMissing(key);
+                            TValue value = this.OnMissing(key);
 
                             // Check to make sure that the onMissing didn't cache this already
-                            if (!_values.ContainsKey(key))
+                            if (!this.values.ContainsKey(key))
                             {
-                                _values.Add(key, value);
+                                this.values.Add(key, value);
                             }
                         }
                     }
                 }
 
-                return _values[key];
+                return this.values[key];
             }
+
             set
             {
-                if (_values.ContainsKey(key))
+                if (this.values.ContainsKey(key))
                 {
-                    _values[key] = value;
+                    this.values[key] = value;
                 }
                 else
                 {
-                    _values.Add(key, value);
+                    this.values.Add(key, value);
                 }
             }
         }
-
-        #region IEnumerable<TValue> Members
 
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -127,18 +119,16 @@ namespace TecX.Unity.Configuration.Common
 
         public IEnumerator<TValue> GetEnumerator()
         {
-            return _values.Values.GetEnumerator();
+            return this.values.Values.GetEnumerator();
         }
-
-        #endregion IEnumerable<TValue> Members
 
         public void Each(Action<TValue> action)
         {
             Guard.AssertNotNull(action, "action");
 
-            lock (_locker)
+            lock (this.locker)
             {
-                foreach (var pair in _values)
+                foreach (var pair in this.values)
                 {
                     action(pair.Value);
                 }
@@ -149,7 +139,7 @@ namespace TecX.Unity.Configuration.Common
         {
             Guard.AssertNotNull(action, "action");
 
-            foreach (var pair in _values)
+            foreach (var pair in this.values)
             {
                 action(pair.Key, pair.Value);
             }
@@ -159,7 +149,7 @@ namespace TecX.Unity.Configuration.Common
         {
             Guard.AssertNotNull(key, "key");
 
-            return _values.ContainsKey(key);
+            return this.values.ContainsKey(key);
         }
 
         public bool Exists(Predicate<TValue> predicate)
@@ -168,7 +158,7 @@ namespace TecX.Unity.Configuration.Common
 
             bool returnValue = false;
 
-            Each(delegate(TValue value) { returnValue |= predicate(value); });
+            this.Each(delegate(TValue value) { returnValue |= predicate(value); });
 
             return returnValue;
         }
@@ -177,7 +167,7 @@ namespace TecX.Unity.Configuration.Common
         {
             Guard.AssertNotNull(predicate, "predicate");
 
-            foreach (var pair in _values)
+            foreach (var pair in this.values)
             {
                 if (predicate(pair.Value))
                 {
@@ -192,15 +182,15 @@ namespace TecX.Unity.Configuration.Common
         {
             Guard.AssertNotNull(key, "key");
 
-            if (_values.ContainsKey(key))
+            if (this.values.ContainsKey(key))
             {
-                _values.Remove(key);
+                this.values.Remove(key);
             }
         }
 
         public void Clear()
         {
-            _values.Clear();
+            this.values.Clear();
         }
     }
 }

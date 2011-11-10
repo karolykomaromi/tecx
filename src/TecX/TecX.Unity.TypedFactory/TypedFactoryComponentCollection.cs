@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
 namespace TecX.Unity.TypedFactory
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     public class TypedFactoryComponentCollection<TItem> : TypedFactoryComponent
             where TItem : class
     {

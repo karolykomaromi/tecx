@@ -1,12 +1,12 @@
-using System;
-using System.Reflection;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
 namespace TecX.Unity.TypedFactory
 {
+    using System;
+    using System.Reflection;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     public class DefaultTypedFactoryComponentSelector : ITypedFactoryComponentSelector
     {
         public TypedFactoryComponent SelectComponent(MethodInfo method, Type type, object[] arguments)
@@ -14,14 +14,15 @@ namespace TecX.Unity.TypedFactory
             Guard.AssertNotNull(method, "method");
             Guard.AssertNotNull(arguments, "arguments");
 
-            var componentName = GetComponentName(method, arguments);
-            var componentType = GetComponentType(method, arguments);
-            var additionalArguments = GetArguments(method, arguments);
+            var componentName = this.GetComponentName(method, arguments);
+            var componentType = this.GetComponentType(method, arguments);
+            var additionalArguments = this.GetArguments(method, arguments);
 
-            return BuildFactoryComponent(method, componentName, componentType, additionalArguments);
+            return this.BuildFactoryComponent(method, componentName, componentType, additionalArguments);
         }
 
-        protected virtual TypedFactoryComponent BuildFactoryComponent(MethodInfo method,
+        protected virtual TypedFactoryComponent BuildFactoryComponent(
+            MethodInfo method,
             string nameToBuild,
             Type typeToBuild,
             ParameterOverrides additionalArguments)
