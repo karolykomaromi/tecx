@@ -1,16 +1,17 @@
-﻿using System;
-
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
-namespace TecX.Unity.ContextualBinding
+﻿namespace TecX.Unity.ContextualBinding
 {
+    using System;
+
+    using Microsoft.Practices.ObjectBuilder2;
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     public static class UnityContainerExtensions
     {
-        public static IUnityContainer RegisterType(this IUnityContainer container, 
-            Type from, 
+        public static IUnityContainer RegisterType(
+            this IUnityContainer container,
+            Type from,
             Type to,
             Predicate<IBindingContext, IBuilderContext> isMatch, 
             LifetimeManager lifetime, 
@@ -19,7 +20,7 @@ namespace TecX.Unity.ContextualBinding
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(isMatch, "isMatch");
 
-            var configuration = container.Configure<IContextualBindingConfiguration>();
+            var configuration = container.Configure<IContextualBindingConfigurator>();
 
             if (configuration == null)
             {
@@ -31,7 +32,8 @@ namespace TecX.Unity.ContextualBinding
             return container;
         }
 
-        public static IUnityContainer RegisterType<TFrom, TTo>(this IUnityContainer container, 
+        public static IUnityContainer RegisterType<TFrom, TTo>(
+            this IUnityContainer container,
             Predicate<IBindingContext, IBuilderContext> isMatch,
             LifetimeManager lifetime, 
             params InjectionMember[] injectionMembers)
@@ -41,7 +43,8 @@ namespace TecX.Unity.ContextualBinding
             return RegisterType(container, typeof(TFrom), typeof(TTo), isMatch, lifetime, injectionMembers);
         }
 
-        public static IUnityContainer RegisterType<TFrom, TTo>(this IUnityContainer container, 
+        public static IUnityContainer RegisterType<TFrom, TTo>(
+            this IUnityContainer container,
             Predicate<IBindingContext, IBuilderContext> isMatch,
             params InjectionMember[] injectionMembers)
         {
@@ -50,8 +53,9 @@ namespace TecX.Unity.ContextualBinding
             return RegisterType(container, typeof(TFrom), typeof(TTo), isMatch, new TransientLifetimeManager(), injectionMembers);
         }
 
-        public static IUnityContainer RegisterInstance<TFrom>(this IUnityContainer container, 
-            object instance,
+        public static IUnityContainer RegisterInstance<TFrom>(
+            this IUnityContainer container, 
+            object instance, 
             Predicate<IBindingContext, IBuilderContext> isMatch)
         {
             Guard.AssertNotNull(container, "container");
@@ -59,7 +63,8 @@ namespace TecX.Unity.ContextualBinding
             return RegisterInstance<TFrom>(container, instance, isMatch, new ContainerControlledLifetimeManager());
         }
 
-        public static IUnityContainer RegisterInstance<TFrom>(this IUnityContainer container, 
+        public static IUnityContainer RegisterInstance<TFrom>(
+            this IUnityContainer container, 
             object instance,
             Predicate<IBindingContext, IBuilderContext> isMatch, 
             LifetimeManager lifetime)
@@ -68,7 +73,7 @@ namespace TecX.Unity.ContextualBinding
             Guard.AssertNotNull(isMatch, "isMatch");
             Guard.AssertNotNull(instance, "instance");
 
-            var configuration = container.Configure<IContextualBindingConfiguration>();
+            var configuration = container.Configure<IContextualBindingConfigurator>();
 
             if (configuration == null)
             {
