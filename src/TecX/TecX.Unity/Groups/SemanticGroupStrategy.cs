@@ -1,5 +1,6 @@
 namespace TecX.Unity.Groups
 {
+    using System;
     using System.Linq;
 
     using Microsoft.Practices.ObjectBuilder2;
@@ -36,7 +37,16 @@ namespace TecX.Unity.Groups
 
             for (int i = 0; i < parameters.Length; i++)
             {
-                ScopedMapping scopedMapping = policy.Usings.FirstOrDefault(u => u.From == parameters[i].ParameterType);
+                Type parameterType = parameters[i].ParameterType;
+
+                ScopedMapping scopedMapping = policy.ScopedMappings.FirstOrDefault(sm => sm.From == parameterType);
+
+                if (scopedMapping == null && parameterType.IsGenericType)
+                {
+                    Type openGeneric = parameterType.GetGenericTypeDefinition();
+
+                    scopedMapping = policy.ScopedMappings.FirstOrDefault(sm => sm.From == openGeneric);
+                }
 
                 if (scopedMapping != null)
                 {

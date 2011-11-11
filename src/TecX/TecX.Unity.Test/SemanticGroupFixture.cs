@@ -6,6 +6,8 @@ using TecX.Unity.Test.TestObjects;
 
 namespace TecX.Unity.Test
 {
+    using System.Collections.Generic;
+
     [TestClass]
     public class SemanticGroupFixture
     {
@@ -26,6 +28,31 @@ namespace TecX.Unity.Test
             var motorcycle = container.Resolve<IVehicle>("Motorcycle");
             Assert.IsInstanceOfType(motorcycle.Wheel, typeof(MotorcycleWheel));
             Assert.IsInstanceOfType(motorcycle.Engine, typeof(MotorcycleEngine));
+        }
+
+        [TestMethod]
+        public void CanCreateGroupWithOpenGeneric()
+        {
+            var container = new UnityContainer();
+
+            container.AddNewExtension<SemanticGroupExtension>();
+
+            container.RegisterGroup<NeedsCollection, NeedsCollection>("1").Use(
+                typeof(IEnumerable<>), typeof(List<>), new InjectionConstructor());
+
+            var sut = container.Resolve<NeedsCollection>("1");
+
+            Assert.IsInstanceOfType(sut.Collection, typeof(List<string>));
+        }
+    }
+
+    class NeedsCollection
+    {
+        public IEnumerable<string> Collection { get; set; }
+
+        public NeedsCollection(IEnumerable<string> collection)
+        {
+            Collection = collection;
         }
     }
 }
