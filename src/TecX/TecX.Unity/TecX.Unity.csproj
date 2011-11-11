@@ -81,7 +81,7 @@
     <Compile Include="Groups\SemanticGroupPolicy.cs" />
     <Compile Include="Groups\SemanticGroupStrategy.cs" />
     <Compile Include="Groups\UnityContainerExtensions.cs" />
-    <Compile Include="Groups\Using.cs" />
+    <Compile Include="Groups\ScopedMapping.cs" />
     <Compile Include="InjectionMembers.cs" />
     <Compile Include="Injection\ConstructorArgument.cs" />
     <Compile Include="Injection\ConstructorArgumentCollection.cs" />
