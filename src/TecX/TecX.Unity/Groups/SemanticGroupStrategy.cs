@@ -36,11 +36,11 @@ namespace TecX.Unity.Groups
 
             for (int i = 0; i < parameters.Length; i++)
             {
-                var @using = policy.Usings.FirstOrDefault(u => u.From == parameters[i].ParameterType);
+                ScopedMapping scopedMapping = policy.Usings.FirstOrDefault(u => u.From == parameters[i].ParameterType);
 
-                if (@using != null)
+                if (scopedMapping != null)
                 {
-                    var resolverPolicy = new NamedTypeDependencyResolverPolicy(@using.From, @using.Name);
+                    var resolverPolicy = new NamedTypeDependencyResolverPolicy(scopedMapping.From, scopedMapping.Name);
 
                     context.Policies.Set<IDependencyResolverPolicy>(resolverPolicy, parameterKeys[i]);
                 }
