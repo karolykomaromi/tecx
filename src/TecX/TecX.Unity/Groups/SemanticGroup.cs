@@ -31,19 +31,25 @@ namespace TecX.Unity.Groups
             context.Container.RegisterType(from, to, name);
         }
 
-        public ISemanticGroup Use<TFrom, TTo>()
+        public string Name
         {
-            return Use<TFrom, TTo>(this.name);
+            get
+            {
+                return this.name;
+            }
         }
 
-        public ISemanticGroup Use<TFrom, TTo>(string name)
+        public ISemanticGroup Use(Type from, Type to, string name, params InjectionMember[] injectionMembers)
         {
+            Guard.AssertNotNull(from, "from");
+            Guard.AssertNotNull(to, "to");
+
             // doesn't make sense to use default mapping with no name. this would be used anyway.
             Guard.AssertNotEmpty(name, "name");
 
-            this.policy.Usings.Add(new Using { From = typeof(TFrom), To = typeof(TTo), Name = name });
+            this.policy.Usings.Add(new Using { From = from, To = to, Name = name });
 
-            this.context.Container.RegisterType(typeof(TFrom), typeof(TTo), name);
+            this.context.Container.RegisterType(from, to, name, injectionMembers);
 
             return this;
         }
