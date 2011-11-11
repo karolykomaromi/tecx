@@ -4,18 +4,18 @@ namespace TecX.Unity.Groups
 
     public class SemanticGroupPolicy : ISemanticGroupPolicy
     {
-        private readonly List<Using> usings;
+        private readonly List<ScopedMapping> scopedMappings;
 
         public SemanticGroupPolicy()
         {
-            usings = new List<Using>();
+            this.scopedMappings = new List<ScopedMapping>();
         }
 
-        public ICollection<Using> Usings
+        public ICollection<ScopedMapping> ScopedMappings
         {
             get
             {
-                return usings;
+                return this.scopedMappings;
             }
         }
     }

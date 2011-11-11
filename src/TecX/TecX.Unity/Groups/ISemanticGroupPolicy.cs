@@ -6,6 +6,6 @@ namespace TecX.Unity.Groups
 
     public interface ISemanticGroupPolicy : IBuilderPolicy
     {
-        ICollection<ScopedMapping> Usings { get; }
+        ICollection<ScopedMapping> ScopedMappings { get; }
     }
 }

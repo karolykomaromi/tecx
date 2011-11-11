@@ -47,7 +47,7 @@ namespace TecX.Unity.Groups
             // doesn't make sense to use default mapping with no name. this would be used anyway.
             Guard.AssertNotEmpty(name, "name");
 
-            this.policy.Usings.Add(new ScopedMapping { From = from, To = to, Name = name });
+            this.policy.ScopedMappings.Add(new ScopedMapping { From = from, To = to, Name = name });
 
             this.context.Container.RegisterType(from, to, name, injectionMembers);
 
