@@ -2,9 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     public class EpsilonComparer : IComparer<double>
     {
+        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
+            Justification = "Reviewed. Suppression is OK here.")]
         private static class Constants
         {
             /// <summary>0.0000000001</summary>
@@ -50,7 +53,7 @@
         {
             return AreEqual(x, 0.0);
         }
-        
+
         int IComparer<double>.Compare(double x, double y)
         {
             return Compare(x, y);

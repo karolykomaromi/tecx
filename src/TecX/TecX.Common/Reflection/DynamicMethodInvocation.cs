@@ -33,14 +33,16 @@
                                         .SingleOrDefault();
 
                 if (method == null)
-                    throw new MethodNotFoundException()
-                        .WithAdditionalInfos(new Dictionary<object, object>
-                                                 {
+                {
+                    throw new MethodNotFoundException().WithAdditionalInfos(
+                        new Dictionary<object, object>
+                            {
                                                      { "type", type }, 
                                                      { "methodName", methodName }, 
                                                      { "typeArguments", typeArguments }, 
                                                      { "parameterTypes", parameterTypes }
                                                  });
+                }
 
                 method = method.MakeGenericMethod(typeArguments);
 
@@ -62,7 +64,9 @@
                                                 .ToArray();
 
                 if (ParameterTypeListsMatch(methodParameterTypes, parameterTypes))
+                {
                     return genericMethod;
+                }
             }
 
             throw new MethodNotFoundException()
@@ -73,27 +77,6 @@
                                                      { "typeArguments", typeArguments }, 
                                                      { "parameterTypes", parameterTypes }
                                                  });
-        }
-
-        private static bool ParameterTypeListsMatch(Type[] methodParameterTypes, Type[] requestedParameterTypes)
-        {
-            // compare the method parameters
-            if (methodParameterTypes.Length == requestedParameterTypes.Length)
-            {
-                for (int i = 0; i < methodParameterTypes.Length; i++)
-                {
-                    if (methodParameterTypes[i] != requestedParameterTypes[i])
-                    {
-                        return false; // this is not the method we are looking for
-                    }
-                }
-
-                //no parameter mismatch short circuited our check -> method match
-                return true;
-            }
-
-            //mismatching number of parameters -> not the method we are looking for
-            return false;
         }
 
         /// <summary>
@@ -107,8 +90,11 @@
         /// <summary>
         /// Extracted from http://www.codeproject.com/KB/dotnet/InvokeGenericMethods.aspx
         /// </summary>
-        public static DynamicMethodInvoker GetGenericMethodInvoker(Type type, string methodName, Type[] typeArguments,
-                                                             Type[] parameterTypes)
+        public static DynamicMethodInvoker GetGenericMethodInvoker(
+            Type type, 
+            string methodName, 
+            Type[] typeArguments,
+            Type[] parameterTypes)
         {
             Guard.AssertNotNull(type, "type");
             Guard.AssertNotEmpty(methodName, "methodName");
@@ -118,12 +104,13 @@
             MethodInfo methodInfo = FindGenericMethod(type, methodName, typeArguments, parameterTypes);
             ParameterInfo[] parameters = methodInfo.GetParameters();
 
-            string dynamicMethodName = String.Format("__MethodInvoker_{0}_ON_{1}", methodInfo.Name, methodInfo.DeclaringType.Name);
+            string dynamicMethodName = string.Format("__MethodInvoker_{0}_ON_{1}", methodInfo.Name, methodInfo.DeclaringType.Name);
 
-            DynamicMethod dynamicMethod = new DynamicMethod(dynamicMethodName,
-                                                            typeof(object),
-                                                            new[] { typeof(object), typeof(object[]) },
-                                                            methodInfo.DeclaringType);
+            DynamicMethod dynamicMethod = new DynamicMethod(
+                                                    dynamicMethodName,
+                                                    typeof(object),
+                                                    new[] { typeof(object), typeof(object[]) },
+                                                    methodInfo.DeclaringType);
 
             ILGenerator generator = dynamicMethod.GetILGenerator();
 
@@ -205,34 +192,42 @@
         {
             Guard.AssertNotNull(propertyInfo, "propertyInfo");
 
-            //If there's no setter return null
+            // If there's no setter return null
             MethodInfo setMethod = propertyInfo.GetSetMethod();
             if (setMethod == null)
+            {
                 return null;
+            }
 
-            //Create the dynamic method
+            // Create the dynamic method
             Type[] arguments = new Type[2];
             arguments[0] = arguments[1] = typeof(object);
 
             DynamicMethod setter = new DynamicMethod(
-              String.Concat("_Set", propertyInfo.Name, "_"),
-              typeof(void), arguments, propertyInfo.DeclaringType);
+              string.Concat("_Set", propertyInfo.Name, "_"),
+              typeof(void), 
+              arguments, 
+              propertyInfo.DeclaringType);
+
             ILGenerator generator = setter.GetILGenerator();
             generator.Emit(OpCodes.Ldarg_0);
             generator.Emit(OpCodes.Castclass, propertyInfo.DeclaringType);
             generator.Emit(OpCodes.Ldarg_1);
 
             if (propertyInfo.PropertyType.IsClass)
+            {
                 generator.Emit(OpCodes.Castclass, propertyInfo.PropertyType);
+            }
             else
+            {
                 generator.Emit(OpCodes.Unbox_Any, propertyInfo.PropertyType);
+            }
 
             generator.EmitCall(OpCodes.Callvirt, setMethod, null);
             generator.Emit(OpCodes.Ret);
 
             return (DynamicPropertySetter)setter.CreateDelegate(typeof(DynamicPropertySetter));
         }
-
 
         public static DynamicPropertyGetter GetDynamicPropertyGetter(Type targetType, string propertyName)
         {
@@ -256,7 +251,9 @@
             */
             MethodInfo getMethod = propertyInfo.GetGetMethod();
             if (getMethod == null)
+            {
                 return null;
+            }
 
             /*
             * Create the dynamic method
@@ -265,8 +262,11 @@
             arguments[0] = typeof(object);
 
             DynamicMethod getter = new DynamicMethod(
-              String.Concat("_Get", propertyInfo.Name, "_"),
-              typeof(object), arguments, propertyInfo.DeclaringType);
+              string.Concat("_Get", propertyInfo.Name, "_"),
+              typeof(object), 
+              arguments, 
+              propertyInfo.DeclaringType);
+
             ILGenerator generator = getter.GetILGenerator();
             generator.DeclareLocal(typeof(object));
             generator.Emit(OpCodes.Ldarg_0);
@@ -274,11 +274,34 @@
             generator.EmitCall(OpCodes.Callvirt, getMethod, null);
 
             if (!propertyInfo.PropertyType.IsClass)
+            {
                 generator.Emit(OpCodes.Box, propertyInfo.PropertyType);
+            }
 
             generator.Emit(OpCodes.Ret);
 
             return (DynamicPropertyGetter)getter.CreateDelegate(typeof(DynamicPropertyGetter));
+        }
+
+        private static bool ParameterTypeListsMatch(Type[] methodParameterTypes, Type[] requestedParameterTypes)
+        {
+            // compare the method parameters
+            if (methodParameterTypes.Length == requestedParameterTypes.Length)
+            {
+                for (int i = 0; i < methodParameterTypes.Length; i++)
+                {
+                    if (methodParameterTypes[i] != requestedParameterTypes[i])
+                    {
+                        return false; // this is not the method we are looking for
+                    }
+                }
+
+                // no parameter mismatch short circuited our check -> method match
+                return true;
+            }
+
+            // mismatching number of parameters -> not the method we are looking for
+            return false;
         }
     }
 }

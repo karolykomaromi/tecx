@@ -14,6 +14,15 @@ namespace TecX.Common
 
         private Predicate<T> matchesNone = x => false;
 
+        public static CompositePredicate<T> operator +(CompositePredicate<T> predicate, Predicate<T> filter)
+        {
+            Guard.AssertNotNull(predicate, "predicate");
+            Guard.AssertNotNull(filter, "filter");
+
+            predicate.Add(filter);
+            return predicate;
+        }
+
         public void Add(Predicate<T> filter)
         {
             Guard.AssertNotNull(filter, "filter");
@@ -23,15 +32,6 @@ namespace TecX.Common
             this.matchesNone = x => !this.MatchesAny(x);
 
             this.list.Add(filter);
-        }
-
-        public static CompositePredicate<T> operator +(CompositePredicate<T> predicate, Predicate<T> filter)
-        {
-            Guard.AssertNotNull(predicate, "predicate");
-            Guard.AssertNotNull(filter, "filter");
-
-            predicate.Add(filter);
-            return predicate;
         }
 
         public bool MatchesAll(T target)

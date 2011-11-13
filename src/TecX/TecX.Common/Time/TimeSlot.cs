@@ -96,7 +96,7 @@
         /// </returns>
         public override int GetHashCode()
         {
-            int hash = Begin.GetHashCode() ^ End.GetHashCode();
+            int hash = this.Begin.GetHashCode() ^ this.End.GetHashCode();
 
             return hash;
         }

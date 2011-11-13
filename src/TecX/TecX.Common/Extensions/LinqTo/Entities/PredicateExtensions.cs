@@ -42,7 +42,7 @@
             Func<Expression, Expression, Expression> merge)
         {
             // build parameter map (from parameters of right to parameters of left)
-            //TODO weberse might be helpful if you don't name the variables f,i,s and p...
+            // TODO weberse might be helpful if you don't name the variables f,i,s and p...
             var map = left.Parameters.Select((f, i) => new { f, s = right.Parameters[i] }).ToDictionary(p => p.s, p => p.f);
 
             // replace parameters in the right lambda expression with parameters from the left
@@ -52,14 +52,12 @@
             return Expression.Lambda<T>(merge(left.Body, secondBody), left.Parameters);
         }
 
-        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> left, 
-            Expression<Func<T, bool>> right)
+        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> left, Expression<Func<T, bool>> right)
         {
             return left.Compose(right, Expression.And);
         }
 
-        public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> left, 
-            Expression<Func<T, bool>> right)
+        public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> left, Expression<Func<T, bool>> right)
         {
             return left.Compose(right, Expression.Or);
         }
