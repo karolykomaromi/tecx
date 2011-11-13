@@ -1,26 +1,26 @@
-﻿using System;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-
-using Microsoft.Practices.ObjectBuilder2;
-
-using TecX.Common;
-using TecX.Common.Extensions.Error;
-
-namespace TecX.ServiceModel.AutoMagic
+﻿namespace TecX.ServiceModel.AutoMagic
 {
+    using System;
+    using System.ServiceModel;
+    using System.ServiceModel.Channels;
+
+    using Microsoft.Practices.ObjectBuilder2;
+
+    using TecX.Common;
+    using TecX.Common.Extensions.Error;
+
     public class ManualSetupBuildPlanPolicy : IBuildPlanPolicy
     {
-        private readonly EndpointAddress _address;
-        private readonly Binding _binding;
+        private readonly EndpointAddress address;
+        private readonly Binding binding;
 
         public ManualSetupBuildPlanPolicy(EndpointAddress address, Binding binding)
         {
             Guard.AssertNotNull(address, "address");
             Guard.AssertNotNull(binding, "binding");
 
-            _address = address;
-            _binding = binding;
+            this.address = address;
+            this.binding = binding;
         }
 
         public void BuildUp(IBuilderContext context)
@@ -37,7 +37,7 @@ namespace TecX.ServiceModel.AutoMagic
                 }
 
                 // delegate creation of the channel proxy
-                context.Existing = WcfServiceHelper.CreateWcfChannelProxy(typeToConstruct, _address, _binding);
+                context.Existing = WcfServiceHelper.CreateWcfChannelProxy(typeToConstruct, this.address, this.binding);
             }
         }
     }

@@ -1,12 +1,12 @@
-﻿using System;
-
-using Microsoft.Practices.ObjectBuilder2;
-
-using TecX.Common.Extensions.Error;
-using TecX.Common;
-
-namespace TecX.ServiceModel.AutoMagic
+﻿namespace TecX.ServiceModel.AutoMagic
 {
+    using System;
+
+    using Microsoft.Practices.ObjectBuilder2;
+
+    using TecX.Common;
+    using TecX.Common.Extensions.Error;
+
     /// <summary>
     /// Policy used to build the wcf proxy from the interface using wcf auto-discovery
     /// </summary>
@@ -15,15 +15,14 @@ namespace TecX.ServiceModel.AutoMagic
         /// <summary>
         /// Stores the scopes used for auto discovery
         /// </summary>
-        private readonly Uri[] _scopes;
-
+        private readonly Uri[] scopes;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoDiscoveryBuildPlanPolicy"/> class
         /// </summary>
         public AutoDiscoveryBuildPlanPolicy(params Uri[] scopes)
         {
-            _scopes = scopes;
+            this.scopes = scopes;
         }
 
         /// <summary>
@@ -44,7 +43,7 @@ namespace TecX.ServiceModel.AutoMagic
                 }
 
                 // delegate creation of the channel proxy
-                context.Existing = WcfServiceHelper.CreateWcfChannelProxy(typeToConstruct, _scopes);
+                context.Existing = WcfServiceHelper.CreateWcfChannelProxy(typeToConstruct, this.scopes);
             }
         }
     }

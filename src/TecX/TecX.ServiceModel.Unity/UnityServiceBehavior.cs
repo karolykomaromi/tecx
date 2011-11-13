@@ -1,31 +1,31 @@
-﻿using System.Collections.ObjectModel;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
-using System.ServiceModel.Dispatcher;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
-namespace TecX.ServiceModel.Unity
+﻿namespace TecX.ServiceModel.Unity
 {
+    using System.Collections.ObjectModel;
+    using System.ServiceModel;
+    using System.ServiceModel.Channels;
+    using System.ServiceModel.Description;
+    using System.ServiceModel.Dispatcher;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     public class UnityServiceBehavior : IServiceBehavior
     {
-        private readonly IUnityContainer _container;
+        private readonly IUnityContainer container;
 
         public UnityServiceBehavior(IUnityContainer container)
         {
             Guard.AssertNotNull(container, "container");
 
-            _container = container;
+            this.container = container;
         }
 
         public IUnityContainer Container
         {
             get
             {
-                return this._container;
+                return this.container;
             }
         }
 
@@ -43,15 +43,12 @@ namespace TecX.ServiceModel.Unity
                 {
                     EndpointDispatcher endpointDispatcher = channelDispatcher.Endpoints[endpointIndex];
 
-                    endpointDispatcher.DispatchRuntime.InstanceProvider = new UnityInstanceProvider(Container, serviceDescription.ServiceType);
+                    endpointDispatcher.DispatchRuntime.InstanceProvider = new UnityInstanceProvider(this.Container, serviceDescription.ServiceType);
                 }
             }
         }
 
-        public void AddBindingParameters(ServiceDescription serviceDescription, 
-            ServiceHostBase serviceHostBase,
-            Collection<ServiceEndpoint> endpoints,
-            BindingParameterCollection bindingParameters)
+        public void AddBindingParameters(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase, Collection<ServiceEndpoint> endpoints, BindingParameterCollection bindingParameters)
         {
             /* intentionally left blank */
         }

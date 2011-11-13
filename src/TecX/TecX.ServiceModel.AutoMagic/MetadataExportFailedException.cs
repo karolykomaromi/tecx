@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace TecX.ServiceModel.AutoMagic
+﻿namespace TecX.ServiceModel.AutoMagic
 {
+    using System;
+
     public class MetadataExportFailedException : Exception
     {
         /// <summary>

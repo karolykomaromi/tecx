@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
-using System.ServiceModel.Discovery;
-using System.Xml.Linq;
-
-using TecX.Common;
-using TecX.Common.Extensions.Collections;
-
-namespace TecX.ServiceModel.AutoMagic
+﻿namespace TecX.ServiceModel.AutoMagic
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.ServiceModel;
+    using System.ServiceModel.Channels;
+    using System.ServiceModel.Description;
+    using System.ServiceModel.Discovery;
+    using System.Xml.Linq;
+
+    using TecX.Common;
+    using TecX.Common.Extensions.Collections;
+
     /// <summary>
     /// Adds information about the binding used to the discovery information of an endpoint and makes
     /// the endoint discoverable by adding a <see cref="ServiceDiscoveryBehavior"/> if neccessary
@@ -25,15 +25,13 @@ namespace TecX.ServiceModel.AutoMagic
     /// </remarks>
     public class BindingDiscoveryServiceBehavior : Attribute, IServiceBehavior
     {
-        public Collection<Uri> Scopes { get; private set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="BindingDiscoveryServiceBehavior"/> class
         /// </summary>
         /// <param name="scopes">A list of scopes </param>
         public BindingDiscoveryServiceBehavior(params string[] scopes)
         {
-            Scopes = new Collection<Uri>();
+            this.Scopes = new Collection<Uri>();
 
             if (scopes != null)
             {
@@ -42,33 +40,32 @@ namespace TecX.ServiceModel.AutoMagic
                     Uri uri;
 
                     if (Uri.TryCreate(scope, UriKind.RelativeOrAbsolute, out uri))
-                        Scopes.Add(uri);
+                    {
+                        this.Scopes.Add(uri);
+                    }
                 }
             }
         }
 
-        #region Implementation of IServiceBehavior
+        public Collection<Uri> Scopes { get; private set; }
 
-        public void AddBindingParameters(ServiceDescription serviceDescription,
-                                         ServiceHostBase serviceHostBase, Collection<ServiceEndpoint> endpoints,
-                                         BindingParameterCollection bindingParameters)
+        public void AddBindingParameters(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase, Collection<ServiceEndpoint> endpoints, BindingParameterCollection bindingParameters)
         {
             /* intentionally left blank */
         }
 
-        public void ApplyDispatchBehavior(ServiceDescription serviceDescription,
-                                          ServiceHostBase serviceHostBase)
+        public void ApplyDispatchBehavior(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
         {
             Guard.AssertNotNull(serviceDescription, "serviceDescription");
             Guard.AssertNotNull(serviceHostBase, "serviceHostBase");
 
-            //make the endpoints of a service discoverable by adding
-            //the neccessary behavior
+            // make the endpoints of a service discoverable by adding
+            // the neccessary behavior
             ServiceEndpointCollection endpoints = serviceDescription.Endpoints;
 
             foreach (ServiceEndpoint endpoint in endpoints)
             {
-                MakeEndpointDiscoverable(endpoint);
+                this.MakeEndpointDiscoverable(endpoint);
             }
         }
 
@@ -76,10 +73,6 @@ namespace TecX.ServiceModel.AutoMagic
         {
             /* intentionally left blank */
         }
-
-        #endregion Implementation of IServiceBehavior
-
-        #region Helper Methods
 
         /// <summary>
         /// Adds an <see cref="EndpointDiscoveryBehavior"/> to an endpoint as well as the
@@ -90,8 +83,8 @@ namespace TecX.ServiceModel.AutoMagic
         {
             EndpointDiscoveryBehavior endpointDiscoveryBehavior = new EndpointDiscoveryBehavior();
 
-            //if any scopes were defined add them to the endpoint
-            endpointDiscoveryBehavior.Scopes.AddRange(Scopes);
+            // if any scopes were defined add them to the endpoint
+            endpointDiscoveryBehavior.Scopes.AddRange(this.Scopes);
 
             // add the behavior to the endpoint
             endpoint.Behaviors.Add(endpointDiscoveryBehavior);
@@ -101,7 +94,5 @@ namespace TecX.ServiceModel.AutoMagic
             // add the binding information to the endpoint
             endpointDiscoveryBehavior.Extensions.Add(endpointMetadataExtension);
         }
-
-        #endregion Helper Methods
     }
 }
