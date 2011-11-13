@@ -41,3 +41,9 @@ src/TecX/TecX.Unity/obj
 src/TecX/TecX.Unity/TecX.Unity.csproj.user
 src/TecX/TecX.Unity.Test/TecX.Unity.Test.csproj.user
 src/TecX/_ReSharper.TecX.Unity
+src/TecX/TecX.Common.Event.Unity/StyleCop.Cache
+src/TecX/TecX.Common.Event/StyleCop.Cache
+src/TecX/TecX.Common/StyleCop.Cache
+src/TecX/TecX.ServiceModel.AutoMagic/StyleCop.Cache
+src/TecX/TecX.ServiceModel.Unity/StyleCop.Cache
+src/TecX/TecX.Unity/StyleCop.Cache
