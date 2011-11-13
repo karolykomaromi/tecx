@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-
 namespace TecX.Common.Event.Unity
 {
+    using System;
+    using System.Collections.Generic;
+
     public class SubscriberTypesCollection
     {
-        private readonly Dictionary<Type, bool> _knownSubscribers;
+        private readonly Dictionary<Type, bool> knownSubscribers;
 
         public SubscriberTypesCollection()
         {
-            _knownSubscribers = new Dictionary<Type, bool>();
+            this.knownSubscribers = new Dictionary<Type, bool>();
         }
 
         public bool IsSubscriberType(Type type)
@@ -17,7 +17,7 @@ namespace TecX.Common.Event.Unity
             Guard.AssertNotNull(type, "type");
 
             bool shouldSubscribe;
-            if (_knownSubscribers.TryGetValue(type, out shouldSubscribe))
+            if (this.knownSubscribers.TryGetValue(type, out shouldSubscribe))
             {
                 return shouldSubscribe;
             }
@@ -30,13 +30,13 @@ namespace TecX.Common.Event.Unity
                 {
                     // if it does add the type to knownSubscribers so we dont have
                     // to check again next time
-                    _knownSubscribers[type] = true;
+                    this.knownSubscribers[type] = true;
                     return true;
                 }
             }
 
             // doesn't implement a subscription handler -> dont bother next time
-            _knownSubscribers[type] = false;
+            this.knownSubscribers[type] = false;
             return false;
         }
     }

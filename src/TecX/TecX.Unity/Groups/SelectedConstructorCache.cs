@@ -17,7 +17,7 @@ namespace TecX.Unity.Groups
 
         public SelectedConstructor SelectConstructor(IBuilderContext context, IPolicyList resolverPolicyDestination)
         {
-            return selectedConstructor;
+            return this.selectedConstructor;
         }
     }
 }

@@ -9,8 +9,8 @@
 
     public class CacheLifetimeManager : LifetimeManager, IDisposable
     {
-        private object value;
         private readonly ILease lease;
+        private object value;
 
         public CacheLifetimeManager(ILease lease)
         {

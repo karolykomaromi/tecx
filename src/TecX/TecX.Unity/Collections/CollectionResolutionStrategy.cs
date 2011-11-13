@@ -11,10 +11,10 @@
 
     public class CollectionResolutionStrategy : BuilderStrategy
     {
-        private delegate object CollectionResolver(IBuilderContext context);
-
         private static readonly MethodInfo genericResolveCollectionMethod = typeof(CollectionResolutionStrategy)
                 .GetMethod("ResolveCollection", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly);
+
+        private delegate object CollectionResolver(IBuilderContext context);
 
         public override void PreBuildUp(IBuilderContext context)
         {

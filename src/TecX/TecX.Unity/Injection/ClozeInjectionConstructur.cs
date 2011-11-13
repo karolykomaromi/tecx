@@ -15,11 +15,6 @@
     {
         private readonly ConstructorArgumentCollection constructorArguments;
 
-        private ClozeInjectionConstructur()
-        {
-            this.constructorArguments = new ConstructorArgumentCollection();
-        }
-
         public ClozeInjectionConstructur(string argumentName, object value)
             : this()
         {
@@ -39,11 +34,12 @@
             }
         }
 
-        public override void AddPolicies(
-            Type serviceType,
-            Type implementationType,
-            string name,
-            IPolicyList policies)
+        private ClozeInjectionConstructur()
+        {
+            this.constructorArguments = new ConstructorArgumentCollection();
+        }
+
+        public override void AddPolicies(Type serviceType, Type implementationType, string name, IPolicyList policies)
         {
             ConstructorInfo ctor = this.FindConstructor(implementationType);
 
