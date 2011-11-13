@@ -22,7 +22,7 @@
                         {
                             return assembly.GetExportedTypes();
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             return Type.EmptyTypes;
                         }

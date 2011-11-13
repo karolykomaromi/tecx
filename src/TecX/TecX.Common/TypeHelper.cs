@@ -3,6 +3,7 @@ namespace TecX.Common
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Text;
     using System.Text.RegularExpressions;
@@ -14,8 +15,8 @@ namespace TecX.Common
     /// </summary>
     public static class TypeHelper
     {
-        #region Constants
-
+        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
+            Justification = "Reviewed. Suppression is OK here.")]
         private static class Constants
         {
             /// <summary>
@@ -27,10 +28,6 @@ namespace TecX.Common
             public const int DefaultLengthPerStringFormatArg = 16;
         }
 
-        #endregion Constants
-
-        #region String
-
         /// <summary>
         /// Performs a safe string format operation
         /// </summary>
@@ -39,11 +36,11 @@ namespace TecX.Common
         /// <returns>The formatted string; the original format string if an error occurs</returns>
         public static string SafeFormat(string format, params object[] args)
         {
-            if (String.IsNullOrEmpty(format))
+            if (string.IsNullOrEmpty(format))
             {
                 // if the format string is already empty,
                 // then just return an empty string
-                return String.Empty;
+                return string.Empty;
             }
 
             try
@@ -55,7 +52,7 @@ namespace TecX.Common
                     return format;
                 }
 
-                string result = String.Format(format, args);
+                string result = string.Format(format, args);
 
                 return result;
             }
@@ -64,49 +61,6 @@ namespace TecX.Common
                 // if an error occured fallback to the most complicated
                 // and slowest way to fill the arguments into the format string
                 return SafeFormatIntern(format, args);
-            }
-        }
-
-        /// <summary>
-        /// Parses the format string using regular expressions and replaces the parameters
-        /// one after another
-        /// </summary>
-        /// <param name="format">The format string</param>
-        /// <param name="args">The arguments</param>
-        /// <returns>Either the format string (empty string if format is NULL), or the format
-        /// string with the placeholders replaced by the arguments</returns>
-        private static string SafeFormatIntern(string format, params object[] args)
-        {
-            format = ToNullSafeString(format);
-
-            if (args == null ||
-                args.Length == 0)
-            {
-                return format;
-            }
-
-            try
-            {
-                // initialize a StringBuilder as we might have quite a few changes to make to the
-                // format string and make sure that it has a reasonable initial capacity so we do not have to
-                // reallocate and increase the memory reserved for the builder
-                StringBuilder sb = new StringBuilder(format, format.Length + args.Length * Constants.DefaultLengthPerStringFormatArg);
-
-                Regex regex = new Regex(@"{\d+}");
-                var matches = regex.Matches(format);
-
-                int maxCount = Math.Min(matches.Count, args.Length);
-
-                for (int i = 0; i < maxCount; i++)
-                {
-                    sb = sb.Replace(matches[i].Value, ToNullSafeString(args[i]));
-                }
-
-                return sb.ToString();
-            }
-            catch (Exception)
-            {
-                return format;
             }
         }
 
@@ -131,7 +85,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(string arg)
         {
-            return ToNullSafeString(arg, String.Empty);
+            return ToNullSafeString(arg, string.Empty);
         }
 
         /// <summary>
@@ -144,7 +98,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(string arg, string def)
         {
-            def = def ?? String.Empty;
+            def = def ?? string.Empty;
 
             return arg ?? def;
         }
@@ -158,7 +112,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(object obj)
         {
-            return ToNullSafeString(obj, String.Empty);
+            return ToNullSafeString(obj, string.Empty);
         }
 
         /// <summary>
@@ -171,14 +125,10 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(object obj, string def)
         {
-            def = def ?? String.Empty;
+            def = def ?? string.Empty;
 
             return (obj == null) ? def : obj.ToString();
         }
-
-        #endregion String
-
-        #region Collections
 
         /// <summary>
         /// Checks wether the <see cref="ICollection"/> is <i>null</i> or empty
@@ -189,8 +139,7 @@ namespace TecX.Common
         /// </returns>
         public static bool IsEmpty(this ICollection collection)
         {
-            return (collection == null) ||
-                   (collection.Count == 0);
+            return (collection == null) || (collection.Count == 0);
         }
 
         /// <summary>
@@ -203,12 +152,16 @@ namespace TecX.Common
         public static bool IsEmpty(IEnumerable enumerable)
         {
             if (enumerable == null)
+            {
                 return true;
+            }
 
             IEnumerator iter = enumerable.GetEnumerator();
 
             if (iter.MoveNext() == false)
+            {
                 return true;
+            }
 
             return false;
         }
@@ -223,10 +176,6 @@ namespace TecX.Common
             return (collection == null) ? -1 : collection.Count;
         }
 
-        #endregion Collections
-
-        #region Other types
-
         /// <summary>
         /// Checks wether a <see cref="Guid"/> is a <i>Guid.Empty</i>
         /// </summary>
@@ -234,7 +183,7 @@ namespace TecX.Common
         /// <returns><i>true</i> if the value is <i>Guid.Empty</i>; <i>false</i> otherwise</returns>
         public static bool IsEmpty(Guid guid)
         {
-            return (guid == Guid.Empty);
+            return guid == Guid.Empty;
         }
 
         /// <summary>
@@ -247,36 +196,7 @@ namespace TecX.Common
         /// </returns>
         public static bool IsEmpty(DateTime dateTime)
         {
-            return (dateTime == default(DateTime) ||
-                   (dateTime == DateTime.MaxValue) ||
-                   (dateTime == DateTime.MinValue));
-        }
-
-        /// <summary>
-        /// Checks wether a string follows the Guid pattern
-        /// </summary>
-        /// <param name="expression">The string to check</param>
-        /// <returns><i>true</i> if the string is a Guid; <i>false</i> otherwise</returns>
-        public static bool IsGuid(string expression)
-        {
-            if (expression != null)
-            {
-                Regex regex = new RegexBuilder()
-                    .StartingFromBeginning()
-                    .AHexDigit().OccursForSpecificNumberOfTimes(8)
-                    .ASpecificChar('-')
-                    .AHexDigit().OccursForSpecificNumberOfTimes(4)
-                    .ASpecificChar('-')
-                    .AHexDigit().OccursForSpecificNumberOfTimes(4)
-                    .ASpecificChar('-')
-                    .AHexDigit().OccursForSpecificNumberOfTimes(4)
-                    .ASpecificChar('-')
-                    .AHexDigit().OccursForSpecificNumberOfTimes(12)
-                    .ToEndOfString();
-
-                return regex.IsMatch(expression);
-            }
-            return false;
+            return dateTime == default(DateTime) || (dateTime == DateTime.MaxValue) || (dateTime == DateTime.MinValue);
         }
 
         /// <summary>
@@ -286,7 +206,7 @@ namespace TecX.Common
         /// <returns>The hashcode of the object;<c>0</c> if the object is <c>null</c></returns>
         public static int GetNullSafeHashCode(object value)
         {
-            return (value == null ? 0 : value.GetHashCode());
+            return value == null ? 0 : value.GetHashCode();
         }
 
         /// <summary>
@@ -322,42 +242,38 @@ namespace TecX.Common
         /// <returns><i>true</i> if the string is successfully parsed; <i>false</i> otherwise</returns>
         public static bool TryParse(string value, out decimal result)
         {
-            //empty string or null cannot be parsed
-            if (String.IsNullOrEmpty(value))
+            // empty string or null cannot be parsed
+            if (string.IsNullOrEmpty(value))
             {
                 result = default(decimal);
                 return false;
             }
 
-            //determines the NumberDecimalSeparator
+            // determines the NumberDecimalSeparator
             int idxComma = value.LastIndexOf(',');
             int idxPeriod = value.LastIndexOf('.');
 
             if (idxComma > idxPeriod)
             {
-                //german culture uses comma as decimal separator
-                if (Decimal.TryParse(value, NumberStyles.Float, new CultureInfo("de-DE"), out result))
+                // german culture uses comma as decimal separator
+                if (decimal.TryParse(value, NumberStyles.Float, new CultureInfo("de-DE"), out result))
                 {
                     return true;
                 }
             }
             else
             {
-                //invariant culture uses period as decimal separator
-                if (Decimal.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out result))
+                // invariant culture uses period as decimal separator
+                if (decimal.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out result))
                 {
                     return true;
                 }
             }
 
-            //parsing not successfull
+            // parsing not successfull
             result = default(decimal);
             return false;
         }
-
-        #endregion Other types
-
-        #region IsInRange
 
         /// <summary>
         /// Checks wether a value is inside a range (including the upper and lower bound of the range)
@@ -377,8 +293,7 @@ namespace TecX.Common
         /// <returns>
         /// <i>true</i> if (lower &lt;= value &lt; upper); <i>false</i> otherwise
         /// </returns>
-        public static bool IsInRange<T>(T value, T lower, T upper)
-            where T : IComparable
+        public static bool IsInRange<T>(T value, T lower, T upper) where T : IComparable
         {
             Guard.AssertNotNull(value, "value");
             Guard.AssertNotNull(lower, "lower");
@@ -391,8 +306,6 @@ namespace TecX.Common
 
             return between;
         }
-
-        #endregion IsInRange
 
         public static bool IsInNamespace(this Type type, string nameSpace)
         {
@@ -446,7 +359,6 @@ namespace TecX.Common
                 return false;
             }
 
-
             return pluginType.IsAssignableFrom(pluggedType);
         }
 
@@ -455,6 +367,50 @@ namespace TecX.Common
             Guard.AssertNotNull(type, "type");
 
             return type.IsGenericTypeDefinition || type.ContainsGenericParameters;
+        }
+
+        /// <summary>
+        /// Parses the format string using regular expressions and replaces the parameters
+        /// one after another
+        /// </summary>
+        /// <param name="format">The format string</param>
+        /// <param name="args">The arguments</param>
+        /// <returns>Either the format string (empty string if format is NULL), or the format
+        /// string with the placeholders replaced by the arguments</returns>
+        private static string SafeFormatIntern(string format, params object[] args)
+        {
+            format = ToNullSafeString(format);
+
+            if (args == null || args.Length == 0)
+            {
+                return format;
+            }
+
+            try
+            {
+                // initialize a StringBuilder as we might have quite a few changes to make to the
+                // format string and make sure that it has a reasonable initial capacity so we do not have to
+                // reallocate and increase the memory reserved for the builder
+                StringBuilder sb = new StringBuilder(
+                    format,
+                    format.Length + (args.Length * Constants.DefaultLengthPerStringFormatArg));
+
+                Regex regex = new Regex(@"{\d+}");
+                var matches = regex.Matches(format);
+
+                int maxCount = Math.Min(matches.Count, args.Length);
+
+                for (int i = 0; i < maxCount; i++)
+                {
+                    sb = sb.Replace(matches[i].Value, ToNullSafeString(args[i]));
+                }
+
+                return sb.ToString();
+            }
+            catch (Exception)
+            {
+                return format;
+            }
         }
     }
 }

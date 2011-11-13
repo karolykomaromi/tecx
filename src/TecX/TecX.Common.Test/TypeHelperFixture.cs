@@ -11,23 +11,15 @@ namespace TecX.Common.Test
     [TestClass]
     public class TypeHelperFixture
     {
-        [TestMethod]
-        public void CanRecognizeGuid()
-        {
-            string guid = Guid.NewGuid().ToString();
-
-            Assert.IsTrue(TypeHelper.IsGuid(guid));
-        }
-
         /// <summary>
         /// Tests parsing an hexadecimal string as a byte array
         /// </summary>
         [TestMethod]
         public void CanConvertFromStringToByteArray()
         {
-            const string colorString = @"#FF00FFFF";
+            const string ColorString = @"#FF00FFFF";
 
-            byte[] bytes = Convert.ToByte(colorString);
+            byte[] bytes = Convert.ToByte(ColorString);
 
             Assert.AreEqual(4, bytes.Length);
             Assert.AreEqual(bytes[0], 255);
@@ -42,7 +34,7 @@ namespace TecX.Common.Test
         [TestMethod]
         public void CanConvertFromByteArrayToHexString()
         {
-            byte[] bytes = new byte[] {255, 0, 255, 255};
+            byte[] bytes = new byte[] { 255, 0, 255, 255 };
 
             string hexString = Convert.ToHex(bytes);
 
@@ -65,38 +57,22 @@ namespace TecX.Common.Test
         public void CanFindStringFormatPlaceHoldersWithRegEx()
         {
             string format = "Fill {0} the blanks, {1} by {2}";
-            object[] args = new object[] {"in", 1};
+            object[] args = new object[] { "in", 1 };
 
-            //at least one number surrounded by brackets {}
+            // at least one number surrounded by brackets {}
             Regex regex = new Regex(@"{\d+}");
 
             var matches = regex.Matches(format);
 
             int maxCount = Math.Min(matches.Count, args.Length);
 
-            //replace every match with the according item from the args array
+            // replace every match with the according item from the args array
             for (int i = 0; i < maxCount; i++)
             {
                 format = format.Replace(matches[i].Value, TypeHelper.ToNullSafeString(args[i]));
             }
 
             Assert.AreEqual("Fill in the blanks, 1 by {2}", format);
-        }
-
-        [TestMethod]
-        public void CanIdentifyRegex()
-        {
-            string guid = Guid.NewGuid().ToString();
-
-            Assert.IsTrue(TypeHelper.IsGuid(guid));
-
-            string noGuid = guid.Substring(1) + "X";
-
-            Assert.IsFalse(TypeHelper.IsGuid(noGuid));
-
-            noGuid = "X" + guid.Substring(1);
-
-            Assert.IsFalse(TypeHelper.IsGuid(noGuid));
         }
     }
 }

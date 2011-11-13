@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq.Expressions;
     using System.Reflection;
 
@@ -16,15 +17,17 @@
     {
         #region Constants
 
+        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
+            Justification = "Reviewed. Suppression is OK here.")]
         private static class Constants
         {
             public static class Messages
             {
-                /// <summary>paramument '{0}' should not be NULL!</summary>
-                public const string paramumentNull = "paramument '{0}' must not be NULL!";
+                /// <summary>ParameterNull '{0}' should not be NULL!</summary>
+                public const string ParameterNull = "ParameterNull '{0}' must not be NULL!";
 
                 /// <summary>paramument '{0}' should not be empty!</summary>
-                public const string paramumentEmpty = "paramument '{0}' must not be empty!";
+                public const string ParameterEmpty = "ParameterNull '{0}' must not be empty!";
 
                 /// <summary>Condition not met!</summary>
                 public const string ConditionNotMet = "Condition not met!";
@@ -32,9 +35,9 @@
                 /// <summary>Invalid switch value '{0}' for parameter '{1}'.</summary>
                 public const string InvalidSwitchValue = "Invalid switch value '{0}' for parameter '{1}'.";
 
-                /// <summary>paramument '{0}' with a value of '{1}' is not between '{2}' and '{3}!</summary>
-                public const string paramumentNotInRange =
-                    "paramument '{0}' with a value of '{1}' is not between '{2}' and '{3}!";
+                /// <summary>Parameter '{0}' with a value of '{1}' is not between '{2}' and '{3}!</summary>
+                public const string ParameterNotInRange =
+                    "Parameter '{0}' with a value of '{1}' is not between '{2}' and '{3}!";
 
                 /// <summary>&lt;no parameter name&gt;</summary>
                 public const string NoParamName = "<no parameter name>";
@@ -68,8 +71,7 @@
         {
             var memberSelector = (MemberExpression)selector.Body;
             var constantSelector = (ConstantExpression)memberSelector.Expression;
-            object value = ((FieldInfo)memberSelector.Member)
-                .GetValue(constantSelector.Value);
+            object value = ((FieldInfo)memberSelector.Member).GetValue(constantSelector.Value);
 
             if (value == null)
             {
@@ -99,7 +101,7 @@
 
             if (string.IsNullOrEmpty(param))
             {
-                throw new ArgumentException(Constants.Messages.paramumentEmpty, paramName);
+                throw new ArgumentException(Constants.Messages.ParameterEmpty, paramName);
             }
         }
 
@@ -108,8 +110,7 @@
         {
             var memberSelector = (MemberExpression)selector.Body;
             var constantSelector = (ConstantExpression)memberSelector.Expression;
-            string value = (string)((FieldInfo)memberSelector.Member)
-                .GetValue(constantSelector.Value);
+            string value = (string)((FieldInfo)memberSelector.Member).GetValue(constantSelector.Value);
 
             if (value == null)
             {
@@ -138,7 +139,7 @@
         [DebuggerStepThrough]
         public static void AssertNotEmpty(ICollection param, string paramName)
         {
-            AssertNotEmpty(param, paramName, Constants.Messages.paramumentNull, Constants.Messages.paramumentEmpty);
+            AssertNotEmpty(param, paramName, Constants.Messages.ParameterNull, Constants.Messages.ParameterEmpty);
         }
 
         /// <summary>
@@ -183,7 +184,7 @@
         [DebuggerStepThrough]
         public static void AssertNotEmpty(Guid param, string paramName)
         {
-            AssertNotEmpty(param, paramName, Constants.Messages.paramumentEmpty);
+            AssertNotEmpty(param, paramName, Constants.Messages.ParameterEmpty);
         }
 
         /// <summary>
@@ -198,8 +199,9 @@
         {
             if (param == Guid.Empty)
             {
-                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
-                                                      TypeHelper.ToNullSafeString(message)).WithAdditionalInfo("param", param);
+                throw new ArgumentOutOfRangeException(
+                    TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
+                    TypeHelper.ToNullSafeString(message)).WithAdditionalInfo("param", param);
             }
         }
 
@@ -231,8 +233,8 @@
         /// <param name="args">The parameters for the error message.</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="param"/> does not satisfy the <paramref name="condition"/></exception>
         [DebuggerStepThrough]
-        public static void AssertCondition(bool condition, object param, string paramName, string format,
-                                           params object[] args)
+        public static void AssertCondition(
+            bool condition, object param, string paramName, string format, params object[] args)
         {
             AssertCondition(condition, param, paramName, TypeHelper.SafeFormat(format, args));
         }
@@ -250,9 +252,10 @@
         {
             if (!condition)
             {
-                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
-                                                      TypeHelper.ToNullSafeString(message)).WithAdditionalInfos(
-                                                          new Dictionary<object, object> { { "param", param } });
+                throw new ArgumentOutOfRangeException(
+                    TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
+                    TypeHelper.ToNullSafeString(message)).WithAdditionalInfos(
+                        new Dictionary<object, object> { { "param", param } });
             }
         }
 
@@ -284,9 +287,10 @@
         public static void InvalidSwitchValue(object param, string paramName)
         {
             throw new InvalidOperationException(
-                TypeHelper.SafeFormat(Constants.Messages.InvalidSwitchValue,
-                                      TypeHelper.ToNullSafeString(param),
-                                      TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName)));
+                TypeHelper.SafeFormat(
+                    Constants.Messages.InvalidSwitchValue,
+                    TypeHelper.ToNullSafeString(param),
+                    TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName)));
         }
 
         #endregion InvalidSwitchValue
@@ -306,10 +310,10 @@
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="param"/> is not between
         /// <paramref name="min"/> and <paramref name="max"/></exception>
         [DebuggerStepThrough]
-        public static void AssertIsInRange<T>(T param, string paramName, T min, T max)
-            where T : IComparable
+        public static void AssertIsInRange<T>(T param, string paramName, T min, T max) where T : IComparable
         {
-            AssertIsInRange(param, paramName, min, max, Constants.Messages.paramumentNotInRange, paramName, param, min, max);
+            AssertIsInRange(
+                param, paramName, min, max, Constants.Messages.ParameterNotInRange, paramName, param, min, max);
         }
 
         /// <summary>
@@ -335,9 +339,10 @@
 
             if (!TypeHelper.IsInRange(param, min, max))
             {
-                throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
-                                                      TypeHelper.ToNullSafeString(message)).WithAdditionalInfos(
-                                                          new Dictionary<object, object> { { "param", param } });
+                throw new ArgumentOutOfRangeException(
+                    TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
+                    TypeHelper.ToNullSafeString(message)).WithAdditionalInfos(
+                        new Dictionary<object, object> { { "param", param } });
             }
         }
 
@@ -356,8 +361,8 @@
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="param"/> is not between
         /// <paramref name="min"/> and <paramref name="max"/></exception>
         [DebuggerStepThrough]
-        public static void AssertIsInRange<T>(T param, string paramName, T min, T max, string format, params object[] args)
-            where T : IComparable
+        public static void AssertIsInRange<T>(
+            T param, string paramName, T min, T max, string format, params object[] args) where T : IComparable
         {
             AssertIsInRange(param, paramName, min, max, TypeHelper.SafeFormat(format, args));
         }
@@ -379,7 +384,8 @@
         [DebuggerStepThrough]
         public static void AssertIsType<TTparamet>(object value, string paramName)
         {
-            AssertIsType<TTparamet>(value, paramName, Constants.Messages.WrongType, paramName, typeof(TTparamet).FullName);
+            AssertIsType<TTparamet>(
+                value, paramName, Constants.Messages.WrongType, paramName, typeof(TTparamet).FullName);
         }
 
         /// <summary>
@@ -423,78 +429,79 @@
 
         /// <summary>
         /// Asserts that the <paramref name="value"/> is of the <see cref="Type"/> specified
-        /// by <paramref name="tparametType"/>
+        /// by <paramref name="parameterType"/>
         /// </summary>
-        /// <param name="tparametType">The <see cref="Type"/> that must be matched by <paramref name="value"/></param>
+        /// <param name="parameterType">The <see cref="Type"/> that must be matched by <paramref name="value"/></param>
         /// <param name="value">The value to check.</param>
         /// <param name="paramName">Name of the parameter.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="tparametType"/> or <paramref name="value"/>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="parameterType"/> or <paramref name="value"/>
         /// are <c>null</c></exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> is not of <see cref="Type"/>
-        /// <paramref name="tparametType"/></exception>
+        /// <paramref name="parameterType"/></exception>
         [DebuggerStepThrough]
-        public static void AssertIsType(Type tparametType, object value, string paramName)
+        public static void AssertIsType(Type parameterType, object value, string paramName)
         {
-            string tparametTypeFullName = (tparametType == null ? string.Empty : tparametType.FullName);
+            string tparametTypeFullName = parameterType == null ? string.Empty : parameterType.FullName;
 
-            AssertIsType(tparametType, value, paramName, Constants.Messages.WrongType, paramName, tparametTypeFullName);
+            AssertIsType(parameterType, value, paramName, Constants.Messages.WrongType, paramName, tparametTypeFullName);
         }
 
         /// <summary>
         /// Asserts that the <paramref name="value"/> is of the <see cref="Type"/> specified
-        /// by <paramref name="tparametType"/>
+        /// by <paramref name="parameterType"/>
         /// </summary>
-        /// <param name="tparametType">The <see cref="Type"/> that must be matched by <paramref name="value"/></param>
+        /// <param name="parameterType">The <see cref="Type"/> that must be matched by <paramref name="value"/></param>
         /// <param name="value">The value to check.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="format">The format string for the error message</param>
         /// <param name="args">The paramuments to put in the format string</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="tparametType"/> or <paramref name="value"/>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="parameterType"/> or <paramref name="value"/>
         /// are <c>null</c></exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> is not of <see cref="Type"/>
-        /// <paramref name="tparametType"/></exception>
+        /// <paramref name="parameterType"/></exception>
         [DebuggerStepThrough]
-        public static void AssertIsType(Type tparametType, object value, string paramName, string format,
-                                        params object[] args)
+        public static void AssertIsType(
+            Type parameterType, object value, string paramName, string format, params object[] args)
         {
-            AssertIsType(tparametType, value, paramName, TypeHelper.SafeFormat(format, args));
+            AssertIsType(parameterType, value, paramName, TypeHelper.SafeFormat(format, args));
         }
 
         /// <summary>
         /// Asserts that the <paramref name="value"/> is of the <see cref="Type"/> specified
-        /// by <paramref name="tparametType"/>
+        /// by <paramref name="parameterType"/>
         /// </summary>
-        /// <param name="tparametType">The <see cref="Type"/> that must be matched by <paramref name="value"/></param>
+        /// <param name="parameterType">The <see cref="Type"/> that must be matched by <paramref name="value"/></param>
         /// <param name="value">The value to check.</param>
         /// <param name="paramName">Name of the parameter.</param>
         /// <param name="message">The error message</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="tparametType"/> or <paramref name="value"/>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="parameterType"/> or <paramref name="value"/>
         /// are <c>null</c></exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> is not of <see cref="Type"/>
-        /// <paramref name="tparametType"/></exception>
+        /// <paramref name="parameterType"/></exception>
         [DebuggerStepThrough]
-        public static void AssertIsType(Type tparametType, object value, string paramName, string message)
+        public static void AssertIsType(Type parameterType, object value, string paramName, string message)
         {
-            AssertNotNull(tparametType, "tparametType");
+            AssertNotNull(parameterType, "parameterType");
             AssertNotNull(value, "value");
 
             Type sourceType = value.GetType();
 
             if (string.IsNullOrEmpty(message))
             {
-                message = TypeHelper.SafeFormat(Constants.Messages.WrongType, paramName, tparametType.FullName);
+                message = TypeHelper.SafeFormat(Constants.Messages.WrongType, paramName, parameterType.FullName);
             }
 
-            if (!tparametType.IsAssignableFrom(sourceType))
+            if (!parameterType.IsAssignableFrom(sourceType))
             {
                 throw new ArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName), message)
-                    .WithAdditionalInfos(new Dictionary<object, object>
-                                             {
-                                                 {"tparametType", tparametType},
-                                                 {"sourceType", sourceType},
-                                                 {"value", value},
-                                                 {"paramName", paramName}
-                                             });
+                    .WithAdditionalInfos(
+                        new Dictionary<object, object>
+                            {
+                                { "parameterType", parameterType },
+                                { "sourceType", sourceType },
+                                { "value", value },
+                                { "paramName", paramName }
+                            });
             }
         }
 
@@ -512,8 +519,7 @@
 
             if (param.Count == 0)
             {
-                throw new ArgumentOutOfRangeException(paramName, messageEmpty)
-                    .WithAdditionalInfo("param", param);
+                throw new ArgumentOutOfRangeException(paramName, messageEmpty).WithAdditionalInfo("param", param);
             }
         }
 

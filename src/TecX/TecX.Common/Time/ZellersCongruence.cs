@@ -1,6 +1,7 @@
 ﻿namespace TecX.Common.Time
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Calculates the day of the week for any given date (very handy when you can't use <see cref="DateTime.DayOfWeek"/> like in
@@ -19,14 +20,15 @@
         /// <returns>Sunday, Monday,...</returns>
         public static DayOfWeek GetDayOfWeek(DateTime dt)
         {
-            int h; // is the day of the week (0 = Saturday, 1 = Sunday, 2 = Monday, ...
             int q = dt.Day; // q is the day of the month
             int m = (dt.Month < 3) ? dt.Month + 12 : dt.Month;
 
             // m is the month (3 = March, 4 = April, 5 = May, ..., 14 = February)
-            int Y = (dt.Month < 3) ? dt.Year - 1 : dt.Year;
+            int y = (dt.Month < 3) ? dt.Year - 1 : dt.Year;
 
-            h = (q + (int)(((m + 1) * 26) / 10) + Y + (int)(Y / 4) + 6 * (int)(Y / 100) + (int)(Y / 400)) % 7;
+            // is the day of the week (0 = Saturday, 1 = Sunday, 2 = Monday, ...
+            // int h = (q + ((m + 1) * 26) / 10 + y + y / 4 + 6 * (y / 100) + y / 400) % 7;
+            int h = (q + (((m + 1) * 26) / 10) + y + (y / 4) + (6 * (y / 100)) + (y / 400)) % 7;
 
             // (int)DayOfWeek.Sunday == 0 so we need to add 1 to our result and make sure we stay inside the [0..6] range
             return (DayOfWeek)((h + 1) % 7);
@@ -48,14 +50,17 @@
         ///     <item>Friday == 6</item>
         /// </list>
         /// </returns>
+        /// 
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1407:ArithmeticExpressionsMustDeclarePrecedence", 
+            Justification = "Reviewed. Suppression is OK here.")]
         public static int GetDayOfWeekUsingYMethod(DateTime dt)
         {
             int h = (dt.Day
-                     + (int)(((((dt.Month < 3) ? dt.Month + 12 : dt.Month) + 1) * 26) / 10)
+                     + ((((dt.Month < 3) ? dt.Month + 12 : dt.Month) + 1) * 26) / 10
                      + ((dt.Month < 3) ? dt.Year - 1 : dt.Year)
-                     + (int)(((dt.Month < 3) ? dt.Year - 1 : dt.Year) / 4)
-                     + 6 * (int)(((dt.Month < 3) ? dt.Year - 1 : dt.Year) / 100)
-                     + (int)(((dt.Month < 3) ? dt.Year - 1 : dt.Year) / 400)) % 7;
+                     + ((dt.Month < 3) ? dt.Year - 1 : dt.Year) / 4
+                     + 6 * (((dt.Month < 3) ? dt.Year - 1 : dt.Year) / 100)
+                     + ((dt.Month < 3) ? dt.Year - 1 : dt.Year) / 400) % 7;
 
             return h;
         }
