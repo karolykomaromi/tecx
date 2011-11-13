@@ -6,6 +6,14 @@ namespace TecX.Unity.Injection
     {
         private string name;
 
+        public ConstructorArgument(string argumentName, object value)
+        {
+            Guard.AssertNotEmpty(argumentName, "argumentName");
+
+            this.name = argumentName;
+            this.Value = value;
+        }
+
         public string Name
         {
             get
@@ -21,13 +29,5 @@ namespace TecX.Unity.Injection
         }
 
         public object Value { get; set; }
-
-        public ConstructorArgument(string argumentName, object value)
-        {
-            Guard.AssertNotEmpty(argumentName, "argumentName");
-
-            this.name = argumentName;
-            this.Value = value;
-        }
     }
 }

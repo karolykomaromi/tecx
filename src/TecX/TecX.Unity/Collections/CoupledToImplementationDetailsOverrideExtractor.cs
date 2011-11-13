@@ -1,6 +1,7 @@
 namespace TecX.Unity.Collections
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Reflection;
 
@@ -9,6 +10,8 @@ namespace TecX.Unity.Collections
 
     public class CoupledToImplementationDetailsOverrideExtractor : ResolverOverrideExtractor
     {
+        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
+            Justification = "Reviewed. Suppression is OK here.")]
         private static class Constants
         {
             /// <summary>resolverOverrides</summary>
@@ -27,7 +30,8 @@ namespace TecX.Unity.Collections
                 return resolverOverrides;
             }
 
-            FieldInfo field = typeof(BuilderContext).GetField(Constants.ResolverOverrides, BindingFlags.Instance | BindingFlags.NonPublic);
+            FieldInfo field = typeof(BuilderContext).GetField(
+                Constants.ResolverOverrides, BindingFlags.Instance | BindingFlags.NonPublic);
 
             if (field == null)
             {

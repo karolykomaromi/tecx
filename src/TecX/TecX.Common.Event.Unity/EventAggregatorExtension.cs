@@ -1,13 +1,13 @@
-﻿using System.Windows.Threading;
-
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.ObjectBuilder;
-
-namespace TecX.Common.Event.Unity
+﻿namespace TecX.Common.Event.Unity
 {
+    using System.Windows.Threading;
+
+    using Microsoft.Practices.Unity;
+    using Microsoft.Practices.Unity.ObjectBuilder;
+
     public class EventAggregatorExtension : UnityContainerExtension
     {
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IEventAggregator eventAggregator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventAggregatorExtension"/> class
@@ -19,10 +19,7 @@ namespace TecX.Common.Event.Unity
 #else
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 #endif
-            
-            IEventAggregator eventAggregator = new EventAggregator(dispatcher);
-
-            _eventAggregator = eventAggregator;
+            this.eventAggregator = new EventAggregator(dispatcher);
         }
 
         #region Overrides of UnityContainerExtension
@@ -37,9 +34,9 @@ namespace TecX.Common.Event.Unity
         /// </remarks>
         protected override void Initialize()
         {
-            Context.Container.RegisterInstance(_eventAggregator, new ExternallyControlledLifetimeManager());
+            Context.Container.RegisterInstance(this.eventAggregator, new ExternallyControlledLifetimeManager());
 
-            EventAggregatorSubscriptionStrategy strategy = new EventAggregatorSubscriptionStrategy(_eventAggregator);
+            EventAggregatorSubscriptionStrategy strategy = new EventAggregatorSubscriptionStrategy(this.eventAggregator);
 
             Context.Strategies.Add(strategy, UnityBuildStage.PostInitialization);
         }

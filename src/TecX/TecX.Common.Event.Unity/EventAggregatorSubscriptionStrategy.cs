@@ -1,14 +1,14 @@
-﻿using System;
-
-using Microsoft.Practices.ObjectBuilder2;
-
-namespace TecX.Common.Event.Unity
+﻿namespace TecX.Common.Event.Unity
 {
+    using System;
+
+    using Microsoft.Practices.ObjectBuilder2;
+
     public class EventAggregatorSubscriptionStrategy : BuilderStrategy
     {
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IEventAggregator eventAggregator;
 
-        private readonly SubscriberTypesCollection _knownSubscribers;
+        private readonly SubscriberTypesCollection knownSubscribers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventAggregatorSubscriptionStrategy"/> class
@@ -18,9 +18,9 @@ namespace TecX.Common.Event.Unity
         {
             Guard.AssertNotNull(eventAggregator, "eventAggregator");
 
-            _eventAggregator = eventAggregator;
+            this.eventAggregator = eventAggregator;
 
-            _knownSubscribers = new SubscriberTypesCollection();
+            this.knownSubscribers = new SubscriberTypesCollection();
         }
 
         public override void PostBuildUp(IBuilderContext context)
@@ -31,11 +31,11 @@ namespace TecX.Common.Event.Unity
 
                 // if we came across that type before see wether we should automatically
                 // subscribe it
-                bool shouldSubscribe = _knownSubscribers.IsSubscriberType(type);
+                bool shouldSubscribe = this.knownSubscribers.IsSubscriberType(type);
 
                 if (shouldSubscribe)
                 {
-                    _eventAggregator.Subscribe(context.Existing);
+                    this.eventAggregator.Subscribe(context.Existing);
                 }
             }
         }
