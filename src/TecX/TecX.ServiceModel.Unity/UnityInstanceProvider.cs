@@ -1,36 +1,36 @@
-﻿using System;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.ServiceModel.Dispatcher;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
-namespace TecX.ServiceModel.Unity
+﻿namespace TecX.ServiceModel.Unity
 {
+    using System;
+    using System.ServiceModel;
+    using System.ServiceModel.Channels;
+    using System.ServiceModel.Dispatcher;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     /// <summary>
     /// Resolves services using Unity 
     /// </summary>
     public class UnityInstanceProvider : IInstanceProvider
     {
-        private readonly IUnityContainer _container;
-        private readonly Type _serviceType;
+        private readonly IUnityContainer container;
+        private readonly Type serviceType;
 
         public UnityInstanceProvider(IUnityContainer container, Type serviceType)
         {
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(serviceType, "serviceType");
 
-            _container = container;
-            _serviceType = serviceType;
+            this.container = container;
+            this.serviceType = serviceType;
         }
 
         public IUnityContainer Container
         {
             get
             {
-                return _container;
+                return this.container;
             }
         }
 
@@ -38,27 +38,27 @@ namespace TecX.ServiceModel.Unity
         {
             get
             {
-                return _serviceType;
+                return this.serviceType;
             }
         }
 
         public object GetInstance(InstanceContext instanceContext, Message message)
         {
-            object serviceInstance = Container.Resolve(ServiceType);
+            object serviceInstance = this.Container.Resolve(this.ServiceType);
 
             return serviceInstance;
         }
 
         public object GetInstance(InstanceContext instanceContext)
         {
-            return GetInstance(instanceContext, null);
+            return this.GetInstance(instanceContext, null);
         }
 
         public void ReleaseInstance(InstanceContext instanceContext, object instance)
         {
             if (instance != null)
             {
-                Container.Teardown(instance);
+                this.Container.Teardown(instance);
             }
         }
     }

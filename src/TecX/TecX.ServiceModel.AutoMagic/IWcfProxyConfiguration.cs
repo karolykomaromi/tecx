@@ -1,11 +1,11 @@
-﻿using System;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-
-using Microsoft.Practices.Unity;
-
-namespace TecX.ServiceModel.AutoMagic
+﻿namespace TecX.ServiceModel.AutoMagic
 {
+    using System;
+    using System.ServiceModel;
+    using System.ServiceModel.Channels;
+
+    using Microsoft.Practices.Unity;
+
     /// <summary>
     /// configuration interface exposed by the Wcf Proxy extension, it will be used to register new types in the container
     /// </summary>

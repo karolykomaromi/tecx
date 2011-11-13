@@ -1,27 +1,16 @@
-﻿using System;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
-namespace TecX.ServiceModel.AutoMagic
+﻿namespace TecX.ServiceModel.AutoMagic
 {
+    using System;
+    using System.ServiceModel;
+    using System.ServiceModel.Channels;
+
+    using Microsoft.Practices.ObjectBuilder2;
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     public class WcfProxyContainerExtension : UnityContainerExtension, IWcfProxyConfiguration
     {
-        #region Overrides of UnityContainerExtension
-
-        protected override void Initialize()
-        {
-            /* intentionally left blank */
-        }
-
-        #endregion Overrides of UnityContainerExtension
-
-        #region IWcfProxyConfiguration Members
-
         /// <summary>
         /// Registers the type with the <see cref="WcfProxyContainerExtension"/>
         /// </summary>
@@ -49,9 +38,6 @@ namespace TecX.ServiceModel.AutoMagic
         {
             return RegisterForAutoDiscovery<TTypeToBuild>(null, scopes);
         }
-
-        #endregion IWcfProxyConfiguration Members
-
 
         public IWcfProxyConfiguration RegisterForUsingAppConfig<TTypeToBuild>(string name, string endpointConfigName)
         {
@@ -84,6 +70,11 @@ namespace TecX.ServiceModel.AutoMagic
         public IWcfProxyConfiguration RegisterForManualSetup<TTypeToBuild>(EndpointAddress address, Binding binding)
         {
             return RegisterForManualSetup<TTypeToBuild>(null, address, binding);
+        }
+
+        protected override void Initialize()
+        {
+            /* intentionally left blank */
         }
     }
 }

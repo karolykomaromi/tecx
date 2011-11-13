@@ -1,21 +1,21 @@
-﻿using System;
-
-using Microsoft.Practices.ObjectBuilder2;
-
-using TecX.Common;
-using TecX.Common.Extensions.Error;
-
-namespace TecX.ServiceModel.AutoMagic
+﻿namespace TecX.ServiceModel.AutoMagic
 {
+    using System;
+
+    using Microsoft.Practices.ObjectBuilder2;
+
+    using TecX.Common;
+    using TecX.Common.Extensions.Error;
+
     public class AppConfigBuildPlanPolicy : IBuildPlanPolicy
     {
-        private readonly string _endpointConfigName;
+        private readonly string endpointConfigName;
 
         public AppConfigBuildPlanPolicy(string endpointConfigName)
         {
             Guard.AssertNotNull(endpointConfigName, "endpointConfigName");
 
-            _endpointConfigName = endpointConfigName;
+            this.endpointConfigName = endpointConfigName;
         }
 
         public void BuildUp(IBuilderContext context)
@@ -32,7 +32,7 @@ namespace TecX.ServiceModel.AutoMagic
                 }
 
                 // delegate creation of the channel proxy
-                context.Existing = WcfServiceHelper.CreateWcfChannelProxy(typeToConstruct, _endpointConfigName);
+                context.Existing = WcfServiceHelper.CreateWcfChannelProxy(typeToConstruct, this.endpointConfigName);
             }
         }
     }

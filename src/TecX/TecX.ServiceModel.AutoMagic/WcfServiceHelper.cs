@@ -1,29 +1,27 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
-using System.ServiceModel.Discovery;
-using System.Text;
-using System.Xml;
-using System.Xml.Linq;
-
-using TecX.Common;
-using TecX.Common.Extensions.Error;
-using TecX.Common.Extensions.Primitives;
-
-namespace TecX.ServiceModel.AutoMagic
+﻿namespace TecX.ServiceModel.AutoMagic
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.ServiceModel;
+    using System.ServiceModel.Channels;
+    using System.ServiceModel.Description;
+    using System.ServiceModel.Discovery;
+    using System.Text;
+    using System.Xml;
+    using System.Xml.Linq;
+
+    using TecX.Common;
+    using TecX.Common.Extensions.Error;
+    using TecX.Common.Extensions.Primitives;
+
     /// <summary>
     /// Utility methods for WCF
     /// </summary>
     public static class WcfServiceHelper
     {
-        #region Create Proxy
-
         /// <summary>
         /// Creates the WCF channel proxy through reflection
         /// </summary>
@@ -101,10 +99,6 @@ namespace TecX.ServiceModel.AutoMagic
 
             throw new ProxyCreationFailedException("Could not find a suitable service via WCF Discovery or MEX");
         }
-
-        #endregion Create Proxy
-
-        #region Service Metadata Retrieval
 
         /// <summary>
         /// Extracts metadata information from an endpoint and converts the information to xml
@@ -293,7 +287,5 @@ namespace TecX.ServiceModel.AutoMagic
             serviceInfo = null;
             return false;
         }
-
-        #endregion Service Metadata Retrieval
     }
 }

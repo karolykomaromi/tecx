@@ -1,31 +1,31 @@
-﻿using System;
-using System.ServiceModel;
-using System.ServiceModel.Activation;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
-namespace TecX.ServiceModel.Unity
+﻿namespace TecX.ServiceModel.Unity
 {
+    using System;
+    using System.ServiceModel;
+    using System.ServiceModel.Activation;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     /// <summary>
     /// ServiceHostFactory that can be used by IIS to host a service configured with
     /// Unity
     /// </summary>
     public abstract class UnityServiceHostFactory : ServiceHostFactory
     {
-        private readonly IUnityContainer _container;
+        private readonly IUnityContainer container;
 
         public UnityServiceHostFactory()
         {
-            _container = new UnityContainer();
+            this.container = new UnityContainer();
 
-            ConfigureContainer(_container);
+            this.ConfigureContainer(this.container);
         }
 
         public IUnityContainer Container
         {
-            get { return _container; }
+            get { return this.container; }
         }
 
         protected abstract void ConfigureContainer(IUnityContainer container);
@@ -34,7 +34,7 @@ namespace TecX.ServiceModel.Unity
         {
             Guard.AssertNotNull(serviceType, "serviceType");
 
-            UnityServiceHost host = new UnityServiceHost(Container, serviceType, baseAddresses);
+            UnityServiceHost host = new UnityServiceHost(this.Container, serviceType, baseAddresses);
 
             return host;
         }

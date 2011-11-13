@@ -1,20 +1,29 @@
-﻿using System.ServiceModel;
-using System.ServiceModel.Channels;
-
-using TecX.Common;
-
-namespace TecX.ServiceModel.AutoMagic
+﻿namespace TecX.ServiceModel.AutoMagic
 {
+    using System.ServiceModel;
+    using System.ServiceModel.Channels;
+
+    using TecX.Common;
+
     public class ServiceInfo
     {
-        private readonly EndpointAddress _address;
-        private readonly Binding _binding;
+        private readonly EndpointAddress address;
+        private readonly Binding binding;
+
+        public ServiceInfo(EndpointAddress address, Binding binding)
+        {
+            Guard.AssertNotNull(address, "address");
+            Guard.AssertNotNull(binding, "binding");
+
+            this.address = address;
+            this.binding = binding;
+        }
 
         public EndpointAddress Address
         {
             get
             {
-                return this._address;
+                return this.address;
             }
         }
 
@@ -22,17 +31,8 @@ namespace TecX.ServiceModel.AutoMagic
         {
             get
             {
-                return this._binding;
+                return this.binding;
             }
-        }
-
-        public ServiceInfo(EndpointAddress address, Binding binding)
-        {
-            Guard.AssertNotNull(address, "address");
-            Guard.AssertNotNull(binding, "binding");
-
-            this._address = address;
-            _binding = binding;
         }
     }
 }
