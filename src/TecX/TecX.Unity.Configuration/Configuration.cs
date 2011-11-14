@@ -1,62 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-using TecX.Unity.Configuration.Common;
-using TecX.Unity.Configuration.Conventions;
-using TecX.Unity.Configuration.Extensions;
-
-namespace TecX.Unity.Configuration
+﻿namespace TecX.Unity.Configuration
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
     using TecX.Common.Extensions.Collections;
+    using TecX.Unity.Configuration.Common;
+    using TecX.Unity.Configuration.Conventions;
 
     public class Configuration : IContainerConfigurator
     {
-        private readonly RegistrationFamilyCollection _registrationFamilies;
-        private readonly List<ConfigurationBuilder> _builders;
-        private readonly List<AssemblyScanner> _scanners;
-        private readonly WeakReference<TypePool> _types;
-        private readonly List<Action<IUnityContainer>> _modifications;
+        private readonly RegistrationFamilyCollection registrationFamilies;
+        private readonly List<ConfigurationBuilder> builders;
+        private readonly List<AssemblyScanner> scanners;
+        private readonly WeakReference<TypePool> types;
+        private readonly List<Action<IUnityContainer>> modifications;
+
+        public Configuration()
+        {
+            this.registrationFamilies = new RegistrationFamilyCollection();
+            this.builders = new List<ConfigurationBuilder>();
+            this.scanners = new List<AssemblyScanner>();
+            this.types = new WeakReference<TypePool>(() => new TypePool(this));
+            this.modifications = new List<Action<IUnityContainer>>();
+        }
 
         public TypePool Types
         {
-            get { return _types.Value; }
+            get { return this.types.Value; }
         }
 
         public List<ConfigurationBuilder> Builders
         {
-            get { return _builders; }
-        }
-        
-        public Configuration()
-        {
-            _registrationFamilies = new RegistrationFamilyCollection();
-            _builders = new List<ConfigurationBuilder>();
-            _scanners = new List<AssemblyScanner>();
-            _types = new WeakReference<TypePool>(() => new TypePool(this));
-            _modifications = new List<Action<IUnityContainer>>();
+            get { return this.builders; }
         }
 
         public void AddScanner(AssemblyScanner scanner)
         {
             Guard.AssertNotNull(scanner, "scanner");
 
-            _scanners.Fill(scanner);
+            this.scanners.Fill(scanner);
         }
 
         public void AddModification(Action<IUnityContainer> modification)
         {
             Guard.AssertNotNull(modification, "modification");
 
-            _modifications.Add(modification);
+            this.modifications.Add(modification);
         }
 
         public RegistrationFamily FindFamily(Type pluginType)
         {
-            return _registrationFamilies[pluginType];
+            return this.registrationFamilies[pluginType];
         }
 
         public void ImportBuilder(Type type)
@@ -64,7 +62,7 @@ namespace TecX.Unity.Configuration
             Guard.AssertNotNull(type, "type");
             Guard.AssertCondition(typeof(ConfigurationBuilder).IsAssignableFrom(type), type, "type");
 
-            if (Builders.Any(x => x.GetType() == type))
+            if (this.Builders.Any(x => x.GetType() == type))
             {
                 return;
             }
@@ -78,22 +76,22 @@ namespace TecX.Unity.Configuration
         {
             Guard.AssertNotNull(container, "container");
 
-            //don't use foreach! when adding additional config builders
-            //via FindConfigBuildersConvention they might add scanners as well
-            //which would cause problems with modified enumeration
-            for (int i = 0; i < _scanners.Count; i++)
+            // don't use foreach! when adding additional config builders
+            // via FindConfigBuildersConvention they might add scanners as well
+            // which would cause problems with modified enumeration
+            for (int i = 0; i < this.scanners.Count; i++)
             {
-                _scanners[i].ScanForAll(this);
+                this.scanners[i].ScanForAll(this);
             }
 
-                foreach (AssemblyScanner scanner in _scanners)
+                foreach (AssemblyScanner scanner in this.scanners)
                 {
                     scanner.ScanForAll(this);
                 }
 
-            _registrationFamilies.Configure(container);
+            this.registrationFamilies.Configure(container);
 
-            foreach (var modification in _modifications)
+            foreach (var modification in this.modifications)
             {
                 modification(container);
             }

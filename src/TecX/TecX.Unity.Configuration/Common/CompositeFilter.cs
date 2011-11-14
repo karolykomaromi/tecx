@@ -27,7 +27,7 @@
 
         public bool Matches(T target)
         {
-            return Includes.MatchesAny(target) && Excludes.DoesNotMatchAny(target);
+            return this.Includes.MatchesAny(target) && this.Excludes.DoesNotMatchAny(target);
         }
     }
 }

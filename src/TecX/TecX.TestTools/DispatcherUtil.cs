@@ -1,8 +1,8 @@
-﻿using System.Security.Permissions;
-using System.Windows.Threading;
-
-namespace TecX.TestTools
+﻿namespace TecX.TestTools
 {
+    using System.Security.Permissions;
+    using System.Windows.Threading;
+
     public static class DispatcherUtil
     {
         [SecurityPermissionAttribute(SecurityAction.Demand, Flags = SecurityPermissionFlag.UnmanagedCode)]
@@ -22,5 +22,4 @@ namespace TecX.TestTools
             return null;
         }
     }
-
 }

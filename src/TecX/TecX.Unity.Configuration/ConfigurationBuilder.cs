@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-using TecX.Unity.Configuration.Conventions;
-using TecX.Unity.Configuration.Expressions;
-
-namespace TecX.Unity.Configuration
+﻿namespace TecX.Unity.Configuration
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+    using TecX.Unity.Configuration.Conventions;
+    using TecX.Unity.Configuration.Expressions;
+
     public class ConfigurationBuilder : UnityContainerExtension
     {
-        private readonly List<Action<Configuration>> _alternations;
+        private readonly List<Action<Configuration>> alternations;
 
         public ConfigurationBuilder()
         {
-            _alternations = new List<Action<Configuration>>();
+            this.alternations = new List<Action<Configuration>>();
         }
 
         public static bool IsPublicBuilder(Type type)
@@ -64,7 +64,7 @@ namespace TecX.Unity.Configuration
         {
             Guard.AssertNotNull(builder, "ConfigurationBuilder");
 
-            _alternations.Add(builder.BuildUp);
+            this.alternations.Add(builder.BuildUp);
         }
 
         public void Scan(Action<AssemblyScanner> action)
@@ -75,7 +75,7 @@ namespace TecX.Unity.Configuration
 
             action(scanner);
 
-            _alternations.Add(graph => graph.AddScanner(scanner));
+            this.alternations.Add(graph => graph.AddScanner(scanner));
         }
 
         #region Infrastructure
@@ -89,7 +89,7 @@ namespace TecX.Unity.Configuration
                 return;
             }
 
-            _alternations.ForEach(action => action(config));
+            this.alternations.ForEach(action => action(config));
 
             config.Builders.Add(this);
         }
@@ -98,20 +98,20 @@ namespace TecX.Unity.Configuration
         {
             Guard.AssertNotNull(alteration, "alteration");
 
-            _alternations.Add(alteration);
+            this.alternations.Add(alteration);
         }
 
         protected sealed override void Initialize()
         {
-            PreBuildUp();
+            this.PreBuildUp();
 
             Configuration graph = new Configuration();
 
-            BuildUp(graph);
+            this.BuildUp(graph);
 
             graph.Configure(Container);
 
-            PostBuildUp();
+            this.PostBuildUp();
         }
 
         protected virtual void PreBuildUp()

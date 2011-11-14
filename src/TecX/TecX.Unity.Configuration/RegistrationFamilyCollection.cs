@@ -1,24 +1,29 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-
-using TecX.Common;
-
-namespace TecX.Unity.Configuration
+﻿namespace TecX.Unity.Configuration
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+
     using Microsoft.Practices.Unity;
+
+    using TecX.Common;
 
     public class RegistrationFamilyCollection : IEnumerable<RegistrationFamily>, IContainerConfigurator
     {
-        private readonly Dictionary<Type, RegistrationFamily> _registrationFamilies;
+        private readonly Dictionary<Type, RegistrationFamily> registrationFamilies;
+
+        public RegistrationFamilyCollection()
+        {
+            this.registrationFamilies = new Dictionary<Type, RegistrationFamily>();
+        }
 
         public IEnumerable<RegistrationFamily> All
         {
             get
             {
-                RegistrationFamily[] families = new RegistrationFamily[_registrationFamilies.Count];
+                RegistrationFamily[] families = new RegistrationFamily[this.registrationFamilies.Count];
 
-                _registrationFamilies.Values.CopyTo(families, 0);
+                this.registrationFamilies.Values.CopyTo(families, 0);
 
                 return families;
             }
@@ -26,7 +31,7 @@ namespace TecX.Unity.Configuration
 
         public int Count
         {
-            get { return _registrationFamilies.Count; }
+            get { return this.registrationFamilies.Count; }
         }
 
         public RegistrationFamily this[Type from]
@@ -34,23 +39,18 @@ namespace TecX.Unity.Configuration
             get
             {
                 RegistrationFamily family;
-                if (!_registrationFamilies.TryGetValue(from, out family))
+                if (!this.registrationFamilies.TryGetValue(from, out family))
                 {
-                    family = Add(new RegistrationFamily(from));
+                    family = this.Add(new RegistrationFamily(from));
                 }
 
                 return family;
             }
         }
 
-        public RegistrationFamilyCollection()
-        {
-            _registrationFamilies = new Dictionary<Type, RegistrationFamily>();
-        }
-
         IEnumerator<RegistrationFamily> IEnumerable<RegistrationFamily>.GetEnumerator()
         {
-            return _registrationFamilies.Values.GetEnumerator();
+            return this.registrationFamilies.Values.GetEnumerator();
         }
 
         public IEnumerator GetEnumerator()
@@ -63,7 +63,7 @@ namespace TecX.Unity.Configuration
             Guard.AssertNotNull(family, "family");
             Guard.AssertNotNull(family.From, "family.From");
 
-            _registrationFamilies[family.From] = family;
+            this.registrationFamilies[family.From] = family;
 
             return family;
         }
@@ -72,19 +72,19 @@ namespace TecX.Unity.Configuration
         {
             Guard.AssertNotNull(from, "from");
 
-            return _registrationFamilies.ContainsKey(from);
+            return this.registrationFamilies.ContainsKey(from);
         }
 
         public bool Contains<T>()
         {
-            return Contains(typeof(T));
+            return this.Contains(typeof(T));
         }
 
         public void Each(Action<RegistrationFamily> action)
         {
             Guard.AssertNotNull(action, "action");
 
-            foreach (RegistrationFamily family in All)
+            foreach (RegistrationFamily family in this.All)
             {
                 action(family);
             }
@@ -94,7 +94,7 @@ namespace TecX.Unity.Configuration
         {
             Guard.AssertNotNull(container, "container");
 
-            foreach (RegistrationFamily family in this._registrationFamilies.Values)
+            foreach (RegistrationFamily family in this.registrationFamilies.Values)
             {
                 family.Configure(container);
             }

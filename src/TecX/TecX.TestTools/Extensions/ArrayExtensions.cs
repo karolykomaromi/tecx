@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using TecX.Common;
-
-namespace TecX.TestTools.Extensions
+﻿namespace TecX.TestTools.Extensions
 {
+    using TecX.Common;
+
     public static class ArrayExtensions
     {
         public static int IndexOf<T>(this T[] array, T item)
@@ -14,12 +9,14 @@ namespace TecX.TestTools.Extensions
             Guard.AssertNotNull(array, "array");
             Guard.AssertNotNull(item, "item");
 
-            for(int i = 0; i < array.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                if(array[i] != null)
+                if (array[i] != null)
                 {
                     if (array[i].Equals(item))
+                    {
                         return i;
+                    }
                 }
             }
 

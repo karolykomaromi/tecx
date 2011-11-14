@@ -24,29 +24,6 @@
             this.treeTracker = new BuildTreeTrackerStrategy();
         }
 
-        public object this[string key]
-        {
-            get
-            {
-                Guard.AssertNotEmpty(key, "key");
-
-                object value;
-                if (this.BindingContext.TryGetValue(key, out value))
-                {
-                    return value;
-                }
-
-                return null;
-            }
-
-            set
-            {
-                Guard.AssertNotEmpty(key, "key");
-
-                this.BindingContext[key] = value;
-            }
-        }
-
         public IDictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy> Mappings
         {
             get
@@ -68,6 +45,29 @@
             get
             {
                 return this.treeTracker;
+            }
+        }
+
+        public object this[string key]
+        {
+            get
+            {
+                Guard.AssertNotEmpty(key, "key");
+
+                object value;
+                if (this.BindingContext.TryGetValue(key, out value))
+                {
+                    return value;
+                }
+
+                return null;
+            }
+
+            set
+            {
+                Guard.AssertNotEmpty(key, "key");
+
+                this.BindingContext[key] = value;
             }
         }
 
@@ -187,7 +187,7 @@
                     policy.DefaultMapping = existingPolicy;
                 }
 
-                Mappings[key] = policy;
+                this.Mappings[key] = policy;
 
                 Context.Policies.Set<IBuildKeyMappingPolicy>(policy, key);
             }

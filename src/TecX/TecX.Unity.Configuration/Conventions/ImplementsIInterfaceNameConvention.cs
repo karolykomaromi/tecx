@@ -1,11 +1,8 @@
-﻿using System;
-
-using TecX.Common;
-using TecX.Unity.Configuration.Common;
-using TecX.Unity.Configuration.Extensions;
-
-namespace TecX.Unity.Configuration.Conventions
+﻿namespace TecX.Unity.Configuration.Conventions
 {
+    using System;
+
+    using TecX.Common;
     using TecX.Common.Reflection;
 
     /// <summary>

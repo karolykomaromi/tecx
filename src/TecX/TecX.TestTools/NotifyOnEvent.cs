@@ -1,9 +1,9 @@
-﻿using System;
-
-using TecX.Common;
-
-namespace TecX.TestTools
+﻿namespace TecX.TestTools
 {
+    using System;
+
+    using TecX.Common;
+
     public static class NotifyOnEvent
     {
         public static NotifyExpectation<T> AfterCalling<T>(this T owner, Action<T> action)

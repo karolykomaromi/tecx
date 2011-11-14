@@ -1,40 +1,40 @@
-﻿using System;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
-namespace TecX.Unity.Configuration.Expressions
+﻿namespace TecX.Unity.Configuration.Expressions
 {
+    using System;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     public class InstanceRegistrationExpression : RegistrationExpression<InstanceRegistrationExpression>
     {
-        private readonly Type _from;
-        private readonly object _instance;
-
-        public Type From
-        {
-            get { return _from; }
-        }
-
-        public object Instance
-        {
-            get { return _instance; }
-        }
+        private readonly Type @from;
+        private readonly object instance;
 
         public InstanceRegistrationExpression(Type from, object instance)
         {
             Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(instance, "instance");
 
-            _from = from;
-            _instance = instance;
+            this.@from = from;
+            this.instance = instance;
 
             LifetimeIs(new ContainerControlledLifetimeManager());
         }
 
+        public Type From
+        {
+            get { return this.@from; }
+        }
+
+        public object Instance
+        {
+            get { return this.instance; }
+        }
+
         public override Registration Compile()
         {
-            return new InstanceRegistration(From, null, Instance, Lifetime);
+            return new InstanceRegistration(this.From, null, this.Instance, this.Lifetime);
         }
     }
 }

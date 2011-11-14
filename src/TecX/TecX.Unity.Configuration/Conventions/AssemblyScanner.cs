@@ -43,7 +43,7 @@
         {
             Guard.AssertNotEmpty(assemblyName, "assemblyName");
 
-            Assembly(AppDomain.CurrentDomain.Load(assemblyName));
+            this.Assembly(AppDomain.CurrentDomain.Load(assemblyName));
         }
 
         public void TheCallingAssembly()
@@ -65,13 +65,13 @@
 
             if (callingAssembly != null)
             {
-                Assembly(callingAssembly);
+                this.Assembly(callingAssembly);
             }
         }
 
         public void AssemblyContainingType<T>()
         {
-            AssemblyContainingType(typeof(T));
+            this.AssemblyContainingType(typeof(T));
         }
 
         public void AssemblyContainingType(Type type)
@@ -80,7 +80,7 @@
 
             Assembly assembly = type.Assembly;
 
-            Assembly(assembly);
+            this.Assembly(assembly);
         }
 
         public void AssembliesFromPath(string path)
@@ -106,22 +106,22 @@
                 {
                     assembly = System.Reflection.Assembly.LoadFrom(assemblyPath);
                 }
-                catch
+                catch (Exception)
                 {
-                    //intentionally left blank
+                    // intentionally left blank
                 }
 
                 if (assembly != null &&
                     assemblyFilter(assembly))
                 {
-                    Assembly(assembly);
+                    this.Assembly(assembly);
                 }
             }
         }
 
         public void AssembliesFromApplicationBaseDirectory()
         {
-            AssembliesFromApplicationBaseDirectory(a => true);
+            this.AssembliesFromApplicationBaseDirectory(a => true);
         }
 
         public void AssembliesFromApplicationBaseDirectory(Predicate<Assembly> assemblyFilter)
@@ -130,11 +130,11 @@
 
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            AssembliesFromPath(baseDirectory, assemblyFilter);
+            this.AssembliesFromPath(baseDirectory, assemblyFilter);
             string binPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath;
             if (Directory.Exists(binPath))
             {
-                AssembliesFromPath(binPath, assemblyFilter);
+                this.AssembliesFromPath(binPath, assemblyFilter);
             }
         }
 
@@ -168,12 +168,12 @@
         {
             Guard.AssertNotEmpty(nameSpace, "nameSpace");
 
-            Exclude(type => type.IsInNamespace(nameSpace));
+            this.Exclude(type => type.IsInNamespace(nameSpace));
         }
 
         public void ExcludeNamespaceContainingType<T>()
         {
-            ExcludeNamespace(typeof(T).Namespace);
+            this.ExcludeNamespace(typeof(T).Namespace);
         }
 
         public void Include(Predicate<Type> predicate)
@@ -187,17 +187,17 @@
         {
             Guard.AssertNotEmpty(nameSpace, "nameSpace");
 
-            Include(type => type.IsInNamespace(nameSpace));
+            this.Include(type => type.IsInNamespace(nameSpace));
         }
 
         public void IncludeNamespaceContainingType<T>()
         {
-            IncludeNamespace(typeof(T).Namespace);
+            this.IncludeNamespace(typeof(T).Namespace);
         }
 
         public void ExcludeType<T>()
         {
-            Exclude(type => type == typeof(T));
+            this.Exclude(type => type == typeof(T));
         }
 
         #endregion Filtering
@@ -206,12 +206,12 @@
 
         public void LookForConfigBuilders()
         {
-            With<FindConfigBuildersConvention>();
+            this.With<FindConfigBuildersConvention>();
         }
 
         public FindAllTypesConvention AddAllTypesOf<TPlugin>()
         {
-            return AddAllTypesOf(typeof(TPlugin));
+            return this.AddAllTypesOf(typeof(TPlugin));
         }
 
         public FindAllTypesConvention AddAllTypesOf(Type pluginType)
@@ -220,19 +220,18 @@
 
             var convention = new FindAllTypesConvention(pluginType);
 
-            With(convention);
+            this.With(convention);
 
             return convention;
         }
 
-        public void With<T>()
-            where T : IRegistrationConvention, new()
+        public void With<T>() where T : IRegistrationConvention, new()
         {
             IRegistrationConvention existing = this.conventions.FirstOrDefault(convention => convention is T);
 
             if (existing == null)
             {
-                With(new T());
+                this.With(new T());
             }
         }
 
@@ -247,21 +246,21 @@
         {
             ImplementsIInterfaceNameConvention convention = new ImplementsIInterfaceNameConvention();
 
-            With(convention);
+            this.With(convention);
         }
 
         public void RegisterConcreteTypesAgainstTheFirstInterface()
         {
             FirstInterfaceConvention convention = new FirstInterfaceConvention();
 
-            With(convention);
+            this.With(convention);
         }
 
         public void SingleImplementationsOfInterface()
         {
             SingleImplementationOfInterfaceConvention convention = new SingleImplementationOfInterfaceConvention();
 
-            With(convention);
+            this.With(convention);
         }
 
         #endregion Conventions
