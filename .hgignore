@@ -47,3 +47,8 @@ src/TecX/TecX.Common/StyleCop.Cache
 src/TecX/TecX.ServiceModel.AutoMagic/StyleCop.Cache
 src/TecX/TecX.ServiceModel.Unity/StyleCop.Cache
 src/TecX/TecX.Unity/StyleCop.Cache
+src/TecX/TecX.TestTools/StyleCop.Cache
+src/TecX/TecX.Unity.Configuration/StyleCop.Cache
+src/TecX/TecX.Unity.ContextualBinding/StyleCop.Cache
+src/TecX/TecX.Unity.Mixin/StyleCop.Cache
+src/TecX/TecX.Unity.TypedFactory/StyleCop.Cache
