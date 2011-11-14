@@ -13,7 +13,7 @@ namespace TecX.Unity.Groups
 
         private readonly string name;
 
-        private SemanticGroupPolicy policy;
+        private readonly SemanticGroupPolicy policy;
 
         public SemanticGroup(ISemanticGroupContext context, Type from, Type to, string name)
         {
