@@ -1,6 +1,7 @@
 ﻿namespace TecX.Unity.ContextualBinding
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
 
     using Microsoft.Practices.ObjectBuilder2;
@@ -13,6 +14,8 @@
     /// </summary>
     public class BuildTreeTrackerStrategy : BuilderStrategy
     {
+        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
+            Justification = "Reviewed. Suppression is OK here.")]
         private static class Constants
         {
             /// <summary>
@@ -23,7 +26,8 @@
                 /// <summary>
                 /// Build tree constructed out of order. Build key '{0}' was expected but build key '{1}' was provided.
                 /// </summary>
-                public const string BuildTreeConstructedOutOfOrder = "Build tree constructed out of order. Build key '{0}' was expected but build key '{1}' was provided.";
+                public const string BuildTreeConstructedOutOfOrder =
+                    "Build tree constructed out of order. Build key '{0}' was expected but build key '{1}' was provided.";
             }
         }
 
@@ -57,7 +61,7 @@
         {
             Guard.AssertNotNull(() => context);
 
-            AssignInstanceToCurrentTreeNode(context.BuildKey, context.Existing);
+            this.AssignInstanceToCurrentTreeNode(context.BuildKey, context.Existing);
 
             BuildTreeNode parentNode = this.CurrentBuildNode.Parent;
 
@@ -74,9 +78,7 @@
             bool nodeCreatedByContainer = context.Existing == null;
 
             BuildTreeNode newTreeNode = new BuildTreeNode(
-                context.BuildKey,
-                nodeCreatedByContainer,
-                this.CurrentBuildNode);
+                context.BuildKey, nodeCreatedByContainer, this.CurrentBuildNode);
 
             if (this.CurrentBuildNode != null)
             {

@@ -1,45 +1,46 @@
-﻿using System;
-
-using TecX.Common;
-
-namespace TecX.Unity.Configuration.Expressions
+﻿namespace TecX.Unity.Configuration.Expressions
 {
+    using System;
+
+    using TecX.Common;
+
     public class NamedInstanceRegistrationExpression : InstanceRegistrationExpression
     {
-        private string _name;
+        private string name;
+
+        public NamedInstanceRegistrationExpression(Type from, object instance)
+            : base(from, instance)
+        {
+            this.Name = Guid.NewGuid().ToString();
+        }
 
         public string Name
         {
             get
             {
-                return _name;
+                return this.name;
             }
 
             set
             {
                 Guard.AssertNotEmpty(value, "Name");
-                _name = value;
-            }
-        }
 
-        public NamedInstanceRegistrationExpression(Type from, object instance) 
-            : base(from, instance)
-        {
-            Name = Guid.NewGuid().ToString();
+                this.name = value;
+            }
         }
 
         public NamedInstanceRegistrationExpression Named(string name)
         {
             Guard.AssertNotEmpty(name, "name");
 
-            Name = name;
+            this.Name = name;
 
             return this;
         }
 
         public override Registration Compile()
         {
-            return new InstanceRegistration(From, Name, Instance, Lifetime);
+            return new InstanceRegistration(this.From, this.Name, this.Instance, this.Lifetime);
         }
     }
 }

@@ -1,16 +1,16 @@
-﻿using System;
-
-using Moq;
-
-using TecX.Common.Time;
-
-namespace TecX.TestTools.Extensions
+﻿namespace TecX.TestTools.Extensions
 {
+    using System;
+
+    using Moq;
+
+    using TecX.Common.Time;
+
     public static class LiteralExtensions
     {
         public static void Times(this int i, Action action)
         {
-            for(int j = 0; j < i; j++)
+            for (int j = 0; j < i; j++)
             {
                 action();
             }

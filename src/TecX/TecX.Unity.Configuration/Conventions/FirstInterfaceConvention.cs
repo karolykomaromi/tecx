@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
-
-using TecX.Common;
-using TecX.Unity.Configuration.Extensions;
-
-namespace TecX.Unity.Configuration.Conventions
+﻿namespace TecX.Unity.Configuration.Conventions
 {
+    using System;
+    using System.Linq;
+
+    using TecX.Common;
+
     public class FirstInterfaceConvention : IRegistrationConvention
     {
         public void Process(Type type, ConfigurationBuilder builder)

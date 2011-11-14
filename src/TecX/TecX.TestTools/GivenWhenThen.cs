@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace TecX.TestTools
+﻿namespace TecX.TestTools
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     /// <summary>
     /// A base class for tests written in the BDD style that provide standard
     /// methods to set up test actions and the "when" statements. "Then" is
@@ -9,6 +9,19 @@ namespace TecX.TestTools
     /// </summary>
     public abstract class GivenWhenThen
     {
+        [TestInitialize]
+        public void MainSetup()
+        {
+            this.Given();
+            this.When();
+        }
+
+        [TestCleanup]
+        public void MainTeardown()
+        {
+            this.Teardown();
+        }
+
         /// <summary>
         /// When overridden in a derived class, this method is used to
         /// set up the current state of the specs context.
@@ -17,7 +30,6 @@ namespace TecX.TestTools
         /// before the <see cref="When"/> method.</remarks>
         protected virtual void Given()
         {
-
         }
 
         /// <summary>
@@ -28,7 +40,6 @@ namespace TecX.TestTools
         /// and before each test method runs.</remarks>
         protected virtual void When()
         {
-
         }
 
         /// <summary>
@@ -38,24 +49,6 @@ namespace TecX.TestTools
         /// <remarks>This method is called automatically after each TestMethod has run.</remarks>
         protected virtual void Teardown()
         {
-
         }
-
-        #region MSTEST integration methods
-
-        [TestInitialize]
-        public void MainSetup()
-        {
-            Given();
-            When();
-        }
-
-        [TestCleanup]
-        public void MainTeardown()
-        {
-            Teardown();
-        }
-
-        #endregion
     }
 }

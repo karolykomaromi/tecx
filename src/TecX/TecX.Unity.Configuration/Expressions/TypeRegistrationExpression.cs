@@ -1,49 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Reflection;
-
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-using TecX.Unity.Enrichment;
-
-namespace TecX.Unity.Configuration.Expressions
+﻿namespace TecX.Unity.Configuration.Expressions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+    using System.Reflection;
+
+    using Microsoft.Practices.ObjectBuilder2;
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+    using TecX.Unity.Enrichment;
+
     public class TypeRegistrationExpression : RegistrationExpression<TypeRegistrationExpression>
     {
-        private readonly InjectionMembers _enrichments;
-        private readonly Type _from;
-        private readonly Type _to;
-
-        protected Type From
-        {
-            get { return _from; }
-        }
-
-        protected Type To
-        {
-            get { return _to; }
-        }
-
-        protected InjectionMember[] Enrichments
-        {
-            get
-            {
-                return _enrichments.ToArray();
-            }
-        }
+        private readonly InjectionMembers enrichments;
+        private readonly Type @from;
+        private readonly Type to;
 
         public TypeRegistrationExpression(Type from, Type to)
         {
             Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(to, "to");
 
-            _from = from;
-            _to = to;
+            this.@from = from;
+            this.to = to;
 
-            _enrichments = new InjectionMembers();
+            this.enrichments = new InjectionMembers();
+        }
+
+        protected Type From
+        {
+            get { return this.@from; }
+        }
+
+        protected Type To
+        {
+            get { return this.to; }
+        }
+
+        protected InjectionMember[] Enrichments
+        {
+            get
+            {
+                return this.enrichments.ToArray();
+            }
         }
 
         public TypeRegistrationExpression EnrichWith<T>(Action<T, IBuilderContext> action)
@@ -51,7 +51,7 @@ namespace TecX.Unity.Configuration.Expressions
         {
             Guard.AssertNotNull(action, "action");
 
-            _enrichments.Add(new Enrichment<T>(action));
+            this.enrichments.Add(new Enrichment<T>(action));
 
             return this;
         }
@@ -60,7 +60,7 @@ namespace TecX.Unity.Configuration.Expressions
         {
             Guard.AssertNotNull(action, "action");
 
-            action(_enrichments);
+            action(this.enrichments);
 
             return this;
         }
@@ -69,7 +69,7 @@ namespace TecX.Unity.Configuration.Expressions
         {
             Guard.AssertNotNull(factoryMethod, "factoryMethod");
 
-            _enrichments.Add(new InjectionFactory(factoryMethod));
+            this.enrichments.Add(new InjectionFactory(factoryMethod));
 
             return this;
         }
@@ -78,7 +78,7 @@ namespace TecX.Unity.Configuration.Expressions
         {
             Guard.AssertNotNull(factoryMethod, "factoryMethod");
 
-            _enrichments.Add(new InjectionFactory(factoryMethod));
+            this.enrichments.Add(new InjectionFactory(factoryMethod));
 
             return this;
         }
@@ -100,7 +100,7 @@ namespace TecX.Unity.Configuration.Expressions
                     parameterTypes.Add(parameterInfo.ParameterType);
                 }
 
-                _enrichments.Add(new InjectionConstructor(parameterTypes.ToArray()));
+                this.enrichments.Add(new InjectionConstructor(parameterTypes.ToArray()));
             }
 
             return this;
@@ -108,14 +108,14 @@ namespace TecX.Unity.Configuration.Expressions
 
         public TypeRegistrationExpression DefaultCtor()
         {
-            _enrichments.Add(new InjectionConstructor());
+            this.enrichments.Add(new InjectionConstructor());
 
             return this;
         }
 
         public override Registration Compile()
         {
-            return new TypeRegistration(From, To, null, Lifetime, Enrichments);
+            return new TypeRegistration(this.From, this.To, null, this.Lifetime, this.Enrichments);
         }
     }
 }

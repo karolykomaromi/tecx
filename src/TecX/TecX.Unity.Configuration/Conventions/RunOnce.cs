@@ -1,33 +1,21 @@
-using System;
-
-using TecX.Common;
-
 namespace TecX.Unity.Configuration.Conventions
 {
+    using System;
+
+    using TecX.Common;
+
     public class RunOnce<T>
     {
-        private bool _run;
+        private readonly Action<T> action;
 
-        private readonly Action<T> _action;
+        private bool run;
 
         public RunOnce(Action<T> action)
         {
             Guard.AssertNotNull(action, "action");
 
-            _action = action;
-            _run = false;
-        }
-
-        public void Run(T item)
-        {
-            if (_run)
-            {
-                return;
-            }
-
-            _action(item);
-
-            _run = true;
+            this.action = action;
+            this.run = false;
         }
 
         public static implicit operator Action<T>(RunOnce<T> runOnce)
@@ -35,6 +23,18 @@ namespace TecX.Unity.Configuration.Conventions
             Guard.AssertNotNull(runOnce, "runOnce");
 
             return runOnce.Run;
+        }
+
+        public void Run(T item)
+        {
+            if (this.run)
+            {
+                return;
+            }
+
+            this.action(item);
+
+            this.run = true;
         }
     }
 }

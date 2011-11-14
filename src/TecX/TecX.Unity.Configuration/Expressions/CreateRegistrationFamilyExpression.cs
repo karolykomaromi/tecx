@@ -1,34 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
-namespace TecX.Unity.Configuration.Expressions
+﻿namespace TecX.Unity.Configuration.Expressions
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     public class CreateRegistrationFamilyExpression
     {
-        private readonly Type _from;
-        private readonly List<Action<RegistrationFamily>> _alterations;
-        private readonly List<Action<Configuration>> _children;
+        private readonly Type @from;
+        private readonly List<Action<RegistrationFamily>> alterations;
+        private readonly List<Action<Configuration>> children;
 
         public CreateRegistrationFamilyExpression(Type from, ConfigurationBuilder builder)
         {
             Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(builder, "ConfigurationBuilder");
 
-            _from = from;
+            this.@from = from;
 
-            _alterations = new List<Action<RegistrationFamily>>();
-            _children = new List<Action<Configuration>>();
+            this.alterations = new List<Action<RegistrationFamily>>();
+            this.children = new List<Action<Configuration>>();
 
             builder.AddExpression(graph =>
                 {
-                    RegistrationFamily family = graph.FindFamily(_from);
+                    RegistrationFamily family = graph.FindFamily(this.@from);
 
-                    _children.ForEach(action => action(graph));
-                    _alterations.ForEach(action => action(family));
+                    this.children.ForEach(action => action(graph));
+                    this.alterations.ForEach(action => action(family));
                 });
         }
 
@@ -41,9 +41,9 @@ namespace TecX.Unity.Configuration.Expressions
         {
             Guard.AssertNotNull(to, "to");
 
-            var expression = new TypeRegistrationExpression(_from, to);
+            var expression = new TypeRegistrationExpression(this.@from, to);
 
-            _alterations.Add(family =>
+            this.alterations.Add(family =>
             {
                 var expr = expression;
 
@@ -57,9 +57,9 @@ namespace TecX.Unity.Configuration.Expressions
         {
             Guard.AssertNotNull(instance, "instance");
 
-            var expression = new InstanceRegistrationExpression(_from, instance);
+            var expression = new InstanceRegistrationExpression(this.@from, instance);
 
-            _alterations.Add(family =>
+            this.alterations.Add(family =>
             {
                 var expr = expression;
 
@@ -78,9 +78,9 @@ namespace TecX.Unity.Configuration.Expressions
         {
             Guard.AssertNotNull(to, "to");
 
-            var expression = new NamedTypeRegistrationExpression(_from, to);
+            var expression = new NamedTypeRegistrationExpression(this.@from, to);
 
-            _alterations.Add(family =>
+            this.alterations.Add(family =>
             {
                 var expr = expression;
 
@@ -94,9 +94,9 @@ namespace TecX.Unity.Configuration.Expressions
         {
             Guard.AssertNotNull(instance, "instance");
 
-            var expression = new NamedInstanceRegistrationExpression(_from, instance);
+            var expression = new NamedInstanceRegistrationExpression(this.@from, instance);
 
-            _alterations.Add(family =>
+            this.alterations.Add(family =>
             {
                 var expr = expression;
 
@@ -110,7 +110,7 @@ namespace TecX.Unity.Configuration.Expressions
         {
             Guard.AssertNotNull(lifetime, "lifetime");
 
-            _alterations.Add(family => family.LifetimeIs(lifetime));
+            this.alterations.Add(family => family.LifetimeIs(lifetime));
 
             return this;
         }

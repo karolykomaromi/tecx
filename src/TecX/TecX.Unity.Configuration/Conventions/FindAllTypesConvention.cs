@@ -1,34 +1,31 @@
-﻿using System;
-
-using TecX.Common;
-using TecX.Unity.Configuration.Common;
-using TecX.Unity.Configuration.Extensions;
-
-namespace TecX.Unity.Configuration.Conventions
+﻿namespace TecX.Unity.Configuration.Conventions
 {
+    using System;
+
+    using TecX.Common;
     using TecX.Common.Reflection;
 
     public class FindAllTypesConvention : IRegistrationConvention
     {
-        private readonly Type _from;
-        private Func<Type, string> _getName;
+        private readonly Type @from;
+        private Func<Type, string> getName;
 
         public FindAllTypesConvention(Type from)
         {
             Guard.AssertNotNull(from, "from");
 
-            _from = from;
-            _getName = type => type.FullName;
+            this.@from = from;
+            this.getName = type => type.FullName;
         }
 
         public void Process(Type type, ConfigurationBuilder builder)
         {
-            if (type.CanBeCastTo(_from) && 
+            if (type.CanBeCastTo(this.@from) && 
                 Constructor.HasConstructors(type))
             {
-                string name = _getName(type);
+                string name = this.getName(type);
 
-                builder.For(_from).Add(type).Named(name);
+                builder.For(this.@from).Add(type).Named(name);
             }
         }
 
@@ -36,7 +33,7 @@ namespace TecX.Unity.Configuration.Conventions
         {
             Guard.AssertNotNull(getName, "getName");
 
-            _getName = getName;
+            this.getName = getName;
         }
     }
 }

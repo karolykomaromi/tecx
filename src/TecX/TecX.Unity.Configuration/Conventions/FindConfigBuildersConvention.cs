@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace TecX.Unity.Configuration.Conventions
+﻿namespace TecX.Unity.Configuration.Conventions
 {
+    using System;
+
     public class FindConfigBuildersConvention : IRegistrationConvention
     {
         public void Process(Type type, ConfigurationBuilder builder)

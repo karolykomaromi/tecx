@@ -1,45 +1,45 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-using TecX.Unity.Configuration.Common;
-
-namespace TecX.Unity.Configuration
+﻿namespace TecX.Unity.Configuration
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+    using TecX.Unity.Configuration.Common;
+
     public class RegistrationFamily : IEnumerable<Registration>, IContainerConfigurator
     {
         private static readonly string DefaultRegistrationKey = string.Empty;
-        private readonly Type _from;
-        private readonly Cache<string, Registration> _registrations;
-
-        public Type From
-        {
-            get { return _from; }
-        }
+        private readonly Type @from;
+        private readonly Cache<string, Registration> registrations;
 
         public RegistrationFamily(Type from)
         {
             Guard.AssertNotNull(from, "from");
 
-            _from = from;
-            _registrations = new Cache<string, Registration>();
+            this.@from = from;
+            this.registrations = new Cache<string, Registration>();
+        }
+
+        public Type From
+        {
+            get { return this.@from; }
         }
 
         public void AddRegistration(Registration registration)
         {
             Guard.AssertNotNull(registration, "registration");
 
-            _registrations[registration.Name ?? DefaultRegistrationKey] = registration;
+            this.registrations[registration.Name ?? DefaultRegistrationKey] = registration;
         }
 
         public void LifetimeIs(Func<LifetimeManager> lifetime)
         {
             Guard.AssertNotNull(lifetime, "lifetime");
 
-            foreach (Registration registration in _registrations)
+            foreach (Registration registration in this.registrations)
             {
                 registration.Lifetime = lifetime();
             }
@@ -47,7 +47,7 @@ namespace TecX.Unity.Configuration
 
         public IEnumerator<Registration> GetEnumerator()
         {
-            return _registrations.GetEnumerator();
+            return this.registrations.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -59,7 +59,7 @@ namespace TecX.Unity.Configuration
         {
             Guard.AssertNotNull(container, "container");
 
-            foreach (Registration registration in _registrations)
+            foreach (Registration registration in this.registrations)
             {
                 registration.Configure(container);
             }

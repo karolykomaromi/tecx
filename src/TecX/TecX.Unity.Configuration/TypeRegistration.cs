@@ -1,44 +1,40 @@
-﻿using System;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-
-namespace TecX.Unity.Configuration
+﻿namespace TecX.Unity.Configuration
 {
+    using System;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+
     public class TypeRegistration : Registration
     {
-        private readonly Type _to;
-        private readonly InjectionMember[] _enrichments;
+        private readonly Type to;
+        private readonly InjectionMember[] enrichments;
 
-        public Type To
-        {
-            get { return _to; }
-        }
-
-        public InjectionMember[] Enrichments
-        {
-            get { return _enrichments; }
-        }
-
-        public TypeRegistration(Type from, 
-            Type to, 
-            string name, 
-            LifetimeManager lifetime, 
-            params InjectionMember[] enrichments)
+        public TypeRegistration(Type from, Type to, string name, LifetimeManager lifetime, params InjectionMember[] enrichments)
             : base(from, name, lifetime)
         {
             Guard.AssertNotNull(to, "to");
 
-            _to = to;
-            _enrichments = enrichments;
+            this.to = to;
+            this.enrichments = enrichments;
+        }
+
+        public Type To
+        {
+            get { return this.to; }
+        }
+
+        public InjectionMember[] Enrichments
+        {
+            get { return this.enrichments; }
         }
 
         public override void Configure(IUnityContainer container)
         {
             Guard.AssertNotNull(container, "container");
 
-            container.RegisterType(From, To, Name, Lifetime, Enrichments);
+            container.RegisterType(this.From, this.To, this.Name, this.Lifetime, this.Enrichments);
         }
     }
 }

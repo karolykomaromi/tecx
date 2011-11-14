@@ -1,42 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive;
-using System.Reactive.Linq;
-using TecX.Common;
-
-namespace TecX.TestTools
+﻿namespace TecX.TestTools
 {
+    using System;
+    using System.Reactive;
+    using System.Reactive.Linq;
+
+    using TecX.Common;
+
     public class NotifyExpectation<T>
     {
-        #region Fields
-
-        private readonly T _owner;
-        private readonly Action<T> _action;
-
-        #endregion Fields
-
-        #region c'tor
+        private readonly T owner;
+        private readonly Action<T> action;
 
         public NotifyExpectation(T owner, Action<T> action)
         {
             Guard.AssertNotNull(owner, "owner");
             Guard.AssertNotNull(action, "action");
 
-            _owner = owner;
-            _action = action;
+            this.owner = owner;
+            this.action = action;
         }
-
-        #endregion c'tor
 
         public EventExpectation<T, TEventArgs> ShouldNotifyVia<TEventArgs>(string eventName)
             where TEventArgs : EventArgs
         {
             Guard.AssertNotEmpty(eventName, "eventName");
 
-            IObservable<EventPattern<TEventArgs>> observable = Observable.FromEventPattern<TEventArgs>(_owner, eventName);
+            IObservable<EventPattern<TEventArgs>> observable = Observable.FromEventPattern<TEventArgs>(this.owner, eventName);
 
-            return new EventExpectation<T, TEventArgs>(_owner, _action, observable);
+            return new EventExpectation<T, TEventArgs>(this.owner, this.action, observable);
         }
 
         public EventExpectation<T, TEventArgs> ShouldNotifyVia<TDelegate, TEventArgs>(
@@ -51,7 +42,7 @@ namespace TecX.TestTools
 
             IObservable<EventPattern<TEventArgs>> observable = Observable.FromEventPattern(conversion, addHandler, removeHandler);
 
-            return new EventExpectation<T, TEventArgs>(_owner, _action, observable);
+            return new EventExpectation<T, TEventArgs>(this.owner, this.action, observable);
         }
     }
 }
