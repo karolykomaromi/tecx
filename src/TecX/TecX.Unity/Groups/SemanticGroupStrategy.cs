@@ -41,18 +41,26 @@ namespace TecX.Unity.Groups
 
                 ScopedMapping scopedMapping = policy.ScopedMappings.FirstOrDefault(sm => sm.From == parameterType);
 
-                if (scopedMapping == null && parameterType.IsGenericType)
+                if (scopedMapping != null)
+                {
+                    IDependencyResolverPolicy resolverPolicy = new NamedTypeDependencyResolverPolicy(scopedMapping.From, scopedMapping.Name);
+                    context.Policies.Set<IDependencyResolverPolicy>(resolverPolicy, parameterKeys[i]);
+                    break;
+                }
+
+                if (parameterType.IsGenericType)
                 {
                     Type openGeneric = parameterType.GetGenericTypeDefinition();
 
                     scopedMapping = policy.ScopedMappings.FirstOrDefault(sm => sm.From == openGeneric);
-                }
 
-                if (scopedMapping != null)
-                {
-                    var resolverPolicy = new NamedTypeDependencyResolverPolicy(scopedMapping.From, scopedMapping.Name);
+                    if (scopedMapping != null)
+                    {
+                        Type closedGeneric = scopedMapping.To.MakeGenericType(parameterType.GetGenericArguments());
 
-                    context.Policies.Set<IDependencyResolverPolicy>(resolverPolicy, parameterKeys[i]);
+                        IDependencyResolverPolicy resolverPolicy = new NamedTypeDependencyResolverPolicy(closedGeneric, scopedMapping.Name);
+                        context.Policies.Set<IDependencyResolverPolicy>(resolverPolicy, parameterKeys[i]);
+                    }
                 }
             }
 
