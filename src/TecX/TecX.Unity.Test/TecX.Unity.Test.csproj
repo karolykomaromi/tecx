@@ -93,6 +93,7 @@
     <Compile Include="TestObjects\MotorcycleWheel.cs" />
     <Compile Include="TestObjects\Snafu.cs" />
     <Compile Include="TestObjects\TestLogger.cs" />
+    <Compile Include="WasResolvedFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
