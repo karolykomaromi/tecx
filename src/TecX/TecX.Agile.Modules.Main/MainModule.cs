@@ -1,9 +1,9 @@
-﻿using System.Diagnostics;
-
-using TecX.Agile.Infrastructure;
-
-namespace TecX.Agile.Modules.Main
+﻿namespace TecX.Agile.Modules.Main
 {
+    using System.Diagnostics;
+
+    using Infrastructure;
+
     [DebuggerDisplay("{Description}")]
     public class MainModule : Module
     {
@@ -12,7 +12,7 @@ namespace TecX.Agile.Modules.Main
             get { return "Main Module"; }
         }
 
-        public void Initialize()
+        protected override void OnInitialize()
         {
         }
     }

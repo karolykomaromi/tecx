@@ -1,9 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using TecX.Common;
-
-namespace TecX.Logging
+﻿namespace TecX.Logging
 {
+    using System;
+    using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
+
+    using TecX.Common;
+
     /// <summary>
     /// Traces the duration of an operation
     /// </summary>
@@ -22,8 +24,8 @@ namespace TecX.Logging
     [Serializable]
     public sealed class TimerTracer : IDisposable
     {
-        #region Constants
-
+        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
+            Justification = "Reviewed. Suppression is OK here.")]
         private static class Constants
         {
             /// <summary>"Trace - {0} (took {1}s)"</summary>
@@ -33,31 +35,20 @@ namespace TecX.Logging
             public const string TimerTracerCategory = "Trace";
         }
 
-        #endregion Constants
+        private readonly DateTime start;
 
-        #region Private Members
-
-        private readonly DateTime _start;
-        private readonly string _operationName;
-
-        #endregion Private Members
-
-        #region c'tor
+        private readonly string operationName;
 
         /// <summary>
         /// Creates a new <see cref="TimerTracer"/> instance
         /// </summary>
         public TimerTracer(string operationName)
         {
-            _start = DateTime.Now;
-            _operationName = operationName;
+            this.start = DateTime.Now;
+            this.operationName = operationName;
 
             Debug.Indent();
         }
-
-        #endregion c'tor
-
-        #region IDisposable Members
 
         /// <summary>
         /// Finalizer
@@ -78,6 +69,19 @@ namespace TecX.Logging
         }
 
         /// <summary>
+        /// Traces the message and the current lifespan of the object
+        /// </summary>
+        /// <param name="message">The message to trace</param>
+        public void Write(string message)
+        {
+            TimeSpan lifetime = DateTime.Now - this.start;
+
+            Debug.WriteLine(
+                TypeHelper.SafeFormat(Constants.MessageFormatString, message, lifetime.TotalSeconds),
+                Constants.TimerTracerCategory);
+        }
+
+        /// <summary>
         /// Disposes the object. On dispose the lifespan of the object is traced.
         /// </summary>
         /// <param name="disposing">If <i>false</i>, cleans up native resources.
@@ -86,28 +90,10 @@ namespace TecX.Logging
         {
             if (disposing)
             {
-                Write(_operationName);
+                this.Write(this.operationName);
 
                 Debug.Unindent();
             }
         }
-
-        #endregion IDisposable Members
-
-        #region Public Methods
-
-        /// <summary>
-        /// Traces the message and the current lifespan of the object
-        /// </summary>
-        /// <param name="message">The message to trace</param>
-        public void Write(string message)
-        {
-            TimeSpan lifetime = DateTime.Now - _start;
-
-            Debug.WriteLine(TypeHelper.SafeFormat(Constants.MessageFormatString, message, lifetime.TotalSeconds),
-                            Constants.TimerTracerCategory);
-        }
-
-        #endregion Public Methods
     }
 }

@@ -14,7 +14,7 @@ namespace TecX.Agile
             double dx = p1.X - p2.X;
             double dy = p1.Y - p2.Y;
 
-            double dist = dx * dx + dy * dy;
+            double dist = (dx * dx) + (dy * dy);
 
             dist = Math.Sqrt(dist);
 
@@ -53,13 +53,11 @@ namespace TecX.Agile
 
             double width;
 
-            if (!Double.IsNaN(element.ActualWidth) &&
-                element.ActualWidth != 0)
+            if (!double.IsNaN(element.ActualWidth) && element.ActualWidth != 0)
             {
                 width = element.ActualWidth;
             }
-            else if (!Double.IsNaN(element.Width) &&
-                     element.Width != 0)
+            else if (!double.IsNaN(element.Width) && element.Width != 0)
             {
                 width = element.Width;
             }
@@ -77,13 +75,11 @@ namespace TecX.Agile
 
             double height;
 
-            if (!Double.IsNaN(element.ActualHeight) &&
-                element.ActualHeight != 0)
+            if (!double.IsNaN(element.ActualHeight) && element.ActualHeight != 0)
             {
                 height = element.ActualHeight;
             }
-            else if (!Double.IsNaN(element.Height) &&
-                     element.Height != 0)
+            else if (!double.IsNaN(element.Height) && element.Height != 0)
             {
                 height = element.Height;
             }
@@ -99,27 +95,27 @@ namespace TecX.Agile
         {
             if (isTranslated)
             {
-                //just translate the card without rotation
+                // just translate the card without rotation
                 return new Transition(actual.X - previous.X, actual.Y - previous.Y, 0);
             }
 
-            //get the vector from the center of the item to the position of the previous point
-            Vector vStart = previous - center;
+            // get the vector from the center of the item to the position of the previous point
+            Vector vectorStart = previous - center;
 
-            //get the vector from the center of the item to the position of the actual point
-            Vector vEnd = actual - center;
+            // get the vector from the center of the item to the position of the actual point
+            Vector vectorEnd = actual - center;
 
-            //calculate the angle between the vectors to know how far the item has to be rotated
-            double angle = Vector.AngleBetween(vStart, vEnd);
+            // calculate the angle between the vectors to know how far the item has to be rotated
+            double angle = Vector.AngleBetween(vectorStart, vectorEnd);
 
-            //dreht man die Vektoren übereinander kann man den Längenunterschied berechnen und als Bruchteil des
-            //Vektors zum zweiten Mauspunkt ausdrücken -> scalar
-            double scalar = (vEnd.Length - vStart.Length) / vEnd.Length;
+            // dreht man die Vektoren übereinander kann man den Längenunterschied berechnen und als Bruchteil des
+            // Vektors zum zweiten Mauspunkt ausdrücken -> scalar
+            double scalar = (vectorEnd.Length - vectorStart.Length) / vectorEnd.Length;
 
-            //calculate the part of the vector that is the actual movement
-            Vector displacement = vEnd * scalar;
+            // calculate the part of the vector that is the actual movement
+            Vector displacement = vectorEnd * scalar;
 
-            //move and rotate the 
+            // move and rotate the 
             return new Transition(displacement.X, displacement.Y, angle);
         }
 

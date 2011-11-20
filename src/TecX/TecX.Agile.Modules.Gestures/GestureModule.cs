@@ -1,17 +1,26 @@
-﻿using System.Diagnostics;
-
-using TecX.Agile.Infrastructure;
-using TecX.Agile.Modules.Gestures.ViewModels;
-using TecX.Common;
-
-namespace TecX.Agile.Modules.Gestures
+﻿namespace TecX.Agile.Modules.Gestures
 {
+    using System.Diagnostics;
+
+    using TecX.Agile.Infrastructure;
+    using TecX.Agile.Modules.Gestures.ViewModels;
+    using TecX.Common;
+
     [DebuggerDisplay("{Description}")]
     public class GestureModule : Module
     {
-        private readonly GestureViewModel _gestureViewModel;
+        private readonly GestureViewModel gestureViewModel;
 
-        private readonly IShell _shell;
+        private readonly IShell shell;
+
+        public GestureModule(GestureViewModel gestureViewModel, IShell shell)
+        {
+            Guard.AssertNotNull(gestureViewModel, "gestureViewModel");
+            Guard.AssertNotNull(shell, "shell");
+
+            this.gestureViewModel = gestureViewModel;
+            this.shell = shell;
+        }
 
         public override string Description
         {
@@ -21,18 +30,9 @@ namespace TecX.Agile.Modules.Gestures
             }
         }
 
-        public GestureModule(GestureViewModel gestureViewModel, IShell shell)
-        {
-            Guard.AssertNotNull(gestureViewModel, "gestureViewModel");
-            Guard.AssertNotNull(shell, "shell");
-
-            _gestureViewModel = gestureViewModel;
-            _shell = shell;
-        }
-
         protected override void OnInitialize()
         {
-            _shell.AddOverlay(_gestureViewModel);
+            this.shell.AddOverlay(this.gestureViewModel);
         }
     }
 }

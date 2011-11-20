@@ -14,8 +14,8 @@ namespace TecX.Agile.Infrastructure.Modularization
         {
             Guard.AssertNotNull(moduleType, "moduleType");
 
-            Name = moduleType.Name;
-            ModuleType = moduleType.AssemblyQualifiedName;
+            this.Name = moduleType.Name;
+            this.ModuleType = moduleType.AssemblyQualifiedName;
         }
 
         public string Name { get; set; }

@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-
-namespace TecX.Logging
+﻿namespace TecX.Logging
 {
+    using System.Diagnostics;
+
     public class DebugTraceListener : TraceListenerBase
     {
         #region Overrides of TraceListener

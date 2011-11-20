@@ -1,17 +1,17 @@
-using System;
-using System.Collections.Generic;
-
-using Caliburn.Micro;
-
-using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
-using Microsoft.Practices.Unity;
-
-using TecX.Agile.Infrastructure.Modularization;
-using TecX.Common;
-using TecX.Unity.Configuration;
-
 namespace TecX.Agile.Infrastructure
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Caliburn.Micro;
+
+    using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+    using Microsoft.Practices.Unity;
+
+    using TecX.Agile.Infrastructure.Modularization;
+    using TecX.Common;
+    using TecX.Unity.Configuration;
+
     public class UnityBootstrapper<T> : Bootstrapper<T>
     {
         protected IModuleCatalog ModuleCatalog { get; set; }
@@ -50,16 +50,16 @@ namespace TecX.Agile.Infrastructure
                     x.AssembliesFromApplicationBaseDirectory();
                 });
 
-            Container.AddExtension(builder);
+            this.Container.AddExtension(builder);
 
-            Container.RegisterInstance(ModuleCatalog);
+            this.Container.RegisterInstance(this.ModuleCatalog);
 
-            Container.RegisterType<IModuleManager, ModuleManager>(new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IModuleManager, ModuleManager>(new ContainerControlledLifetimeManager());
         }
 
         protected virtual void ConfigureServiceLocator()
         {
-            UnityServiceLocator locator = new UnityServiceLocator(Container);
+            UnityServiceLocator locator = new UnityServiceLocator(this.Container);
 
             EnterpriseLibraryContainer.Current = locator;
         }
@@ -93,26 +93,26 @@ namespace TecX.Agile.Infrastructure
         {
             base.Configure();
 
-            LogManager.GetLog = CreateLogger();
+            LogManager.GetLog = this.CreateLogger();
 
-            ModuleCatalog = CreateModuleCatalog();
+            this.ModuleCatalog = this.CreateModuleCatalog();
 
-            ConfigureModuleCatalog();
+            this.ConfigureModuleCatalog();
 
-            Container = CreateContainer();
+            this.Container = this.CreateContainer();
 
-            ConfigureContainer();
+            this.ConfigureContainer();
 
-            ConfigureServiceLocator();
+            this.ConfigureServiceLocator();
 
-            InitializeModules();
+            this.InitializeModules();
         }
 
         protected override sealed IEnumerable<object> GetAllInstances(Type service)
         {
             Guard.AssertNotNull(service, "service");
 
-            var instances = Container.ResolveAll(service);
+            var instances = this.Container.ResolveAll(service);
 
             return instances;
         }
@@ -121,7 +121,7 @@ namespace TecX.Agile.Infrastructure
         {
             Guard.AssertNotNull(service, "service");
 
-            var instance = Container.Resolve(service, key);
+            var instance = this.Container.Resolve(service, key);
 
             return instance;
         }
@@ -130,7 +130,7 @@ namespace TecX.Agile.Infrastructure
         {
             Guard.AssertNotNull(instance, "instance");
 
-            var builtUp = Container.BuildUp(instance.GetType(), instance);
+            var builtUp = this.Container.BuildUp(instance.GetType(), instance);
         }
 
         #endregion Overrides of Bootstrapper<T>

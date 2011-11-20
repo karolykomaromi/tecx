@@ -1,19 +1,43 @@
-﻿using System.Windows;
-
-using Caliburn.Micro;
-
-namespace TecX.Agile.ViewModels
+﻿namespace TecX.Agile.ViewModels
 {
-    public class TranslateOnlyAreaViewModel : Screen
+    using System.Windows;
+
+    using Caliburn.Micro;
+
+    public class TranslateOnlyAreaViewModel : ViewAware
     {
         /// <summary>75.0 </summary>
         public const double DefaultRadius = 75.0;
 
         private double diameter;
 
-        private bool _visible;
+        private bool visible;
 
-        private IInputElement _inputArea;
+        private IInputElement inputArea;
+
+        public TranslateOnlyAreaViewModel()
+        {
+            this.Diameter = 2 * DefaultRadius;
+        }
+
+        public IInputElement InputArea
+        {
+            get
+            {
+                return this.inputArea;
+            }
+
+            set
+            {
+                if (this.inputArea == value)
+                {
+                    return;
+                }
+
+                this.inputArea = value;
+                this.NotifyOfPropertyChange(() => this.InputArea);
+            }
+        }
 
         public double Diameter
         {
@@ -24,13 +48,13 @@ namespace TecX.Agile.ViewModels
 
             set
             {
-                if (diameter == value)
+                if (this.diameter == value)
                 {
                     return;
                 }
 
-                diameter = value;
-                NotifyOfPropertyChange(() => Diameter);
+                this.diameter = value;
+                this.NotifyOfPropertyChange(() => this.Diameter);
             }
         }
 
@@ -38,60 +62,36 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _visible;
+                return this.visible;
             }
 
             set
             {
-                if (_visible == value)
+                if (this.visible == value)
                 {
                     return;
                 }
 
-                _visible = value;
-                NotifyOfPropertyChange(() => Visible);
+                this.visible = value;
+                this.NotifyOfPropertyChange(() => this.Visible);
             }
-        }
-
-        public IInputElement InputArea
-        {
-            get
-            {
-                return _inputArea;
-            }
-
-            set
-            {
-                if (_inputArea == value)
-                {
-                    return;
-                }
-
-                _inputArea = value;
-                NotifyOfPropertyChange(() => InputArea);
-            }
-        }
-
-        protected override void OnViewAttached(object view, object context)
-        {
-            // ugly but it does the job
-            InputArea = (IInputElement)LogicalTreeHelper.FindLogicalNode((DependencyObject)view, "Toa");
-        }
-
-        public TranslateOnlyAreaViewModel()
-        {
-            Diameter = 2 * DefaultRadius;
         }
 
         public bool IsInsideTranslateOnlyArea(Point point)
         {
-            Point center = new Point(Diameter / 2, Diameter / 2);
+            Point center = new Point(this.Diameter / 2, this.Diameter / 2);
 
             double distance = GeometryHelper.GetDistanceBetween(point, center);
 
-            bool inside = distance < (Diameter / 2);
+            bool inside = distance < (this.Diameter / 2);
 
             return inside;
+        }
+        
+        protected override void OnViewAttached(object view, object context)
+        {
+            // ugly but it does the job
+            this.InputArea = (IInputElement)LogicalTreeHelper.FindLogicalNode((DependencyObject)view, "Toa");
         }
     }
 }

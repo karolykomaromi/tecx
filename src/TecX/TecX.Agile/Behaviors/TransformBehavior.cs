@@ -1,15 +1,15 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Interactivity;
-using System.Windows.Media;
-
-using TecX.Common.Extensions.Error;
-
-namespace TecX.Agile.Behaviors
+﻿namespace TecX.Agile.Behaviors
 {
+    using System;
+    using System.ComponentModel;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Interactivity;
+    using System.Windows.Media;
+
+    using TecX.Common.Extensions.Error;
+
     public class TransformBehavior : Behavior<UserControl>
     {
         protected override void OnAttached()
@@ -33,7 +33,7 @@ namespace TecX.Agile.Behaviors
                 AssociatedObject.RenderTransform = transformGroup;
             }
 
-            AssertPreconditions();
+            this.AssertPreconditions();
 
             Binding x = new Binding("X")
             {
@@ -80,7 +80,16 @@ namespace TecX.Agile.Behaviors
 
             hookForInitialUpdate.UpdateTarget();
 
-            AssociatedObject.Loaded += OnLoaded;
+            this.AssociatedObject.Loaded += this.OnLoaded;
+        }
+
+        private static void ThrowTransformsException(Transform transform)
+        {
+            throw new InvalidOperationException("The UIElement's RenderTransform " +
+                                                "property is not set to a TransformGroup containing a " +
+                                                "RotateTransform, ScaleTransform and TranslateTransform. " +
+                                                "The order of the elements in the group matters!")
+                .WithAdditionalInfo("transform", transform);
         }
 
         private void AssertPreconditions()
@@ -89,7 +98,7 @@ namespace TecX.Agile.Behaviors
 
             if (group == null)
             {
-                ThrowTransformsException(group);
+                ThrowTransformsException(null);
             }
 
             int count = group.Children.Count;
@@ -140,16 +149,7 @@ namespace TecX.Agile.Behaviors
             scale.CenterX = center.X;
             scale.CenterY = center.Y;
 
-            AssociatedObject.Loaded -= OnLoaded;
-        }
-
-        private static void ThrowTransformsException(Transform transform)
-        {
-            throw new InvalidOperationException("The UIElement's RenderTransform " +
-                                                "property is not set to a TransformGroup containing a " +
-                                                "RotateTransform, ScaleTransform and TranslateTransform. " +
-                                                "The order of the elements in the group matters!")
-                .WithAdditionalInfo("transform", transform);
+            this.AssociatedObject.Loaded -= this.OnLoaded;
         }
     }
 }
