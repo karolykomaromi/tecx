@@ -1,8 +1,11 @@
-﻿namespace TecX.Common.Event.Unity
+﻿namespace TecX.Event.Unity
 {
     using System;
 
     using Microsoft.Practices.ObjectBuilder2;
+
+    using TecX.Common;
+    using TecX.Event;
 
     public class EventAggregatorSubscriptionStrategy : BuilderStrategy
     {

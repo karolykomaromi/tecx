@@ -1,9 +1,11 @@
-﻿namespace TecX.Common.Event.Unity
+﻿namespace TecX.Event.Unity
 {
     using System.Windows.Threading;
 
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.ObjectBuilder;
+
+    using TecX.Event;
 
     public class EventAggregatorExtension : UnityContainerExtension
     {

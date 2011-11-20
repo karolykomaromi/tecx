@@ -10,7 +10,7 @@ namespace TecX.Agile.ViewModels
     using TecX.Agile.Infrastructure.Events;
     using TecX.Common;
 
-    using IEventAggregator = TecX.Common.Event.IEventAggregator;
+    using IEventAggregator = TecX.Event.IEventAggregator;
 
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShell
     {
