@@ -82,14 +82,14 @@
     <Compile Include="DefaultLogger.cs" />
     <Compile Include="Error\AgileBaseException.cs" />
     <Compile Include="Events\AddedStoryCard.cs" />
-    <Compile Include="IModule.cs" />
     <Compile Include="IShell.cs" />
+    <Compile Include="Modularization\IModule.cs" />
     <Compile Include="Modularization\IModuleCatalog.cs" />
     <Compile Include="Modularization\IModuleManager.cs" />
+    <Compile Include="Modularization\Module.cs" />
     <Compile Include="Modularization\ModuleCatalog.cs" />
     <Compile Include="Modularization\ModuleInfo.cs" />
     <Compile Include="Modularization\ModuleManager.cs" />
-    <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnityBootstrapper.cs" />
   </ItemGroup>
