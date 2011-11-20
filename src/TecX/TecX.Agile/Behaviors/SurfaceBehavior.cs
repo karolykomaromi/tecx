@@ -1,33 +1,33 @@
-﻿using System;
-using System.Windows.Controls;
-using System.Windows.Interactivity;
-
-namespace TecX.Agile.Behaviors
+﻿namespace TecX.Agile.Behaviors
 {
+    using System;
+    using System.Windows.Controls;
+    using System.Windows.Interactivity;
+
     public class SurfaceBehavior : Behavior<Canvas>
     {
-        private static Canvas _surface;
+        private static Canvas surface;
 
         public static Canvas Surface
         {
             get
             {
-                if (_surface == null)
+                if (surface == null)
                 {
                     throw new InvalidOperationException("No Canvas is decorated with the SurfaceBehavior.");
                 }
 
-                return _surface;
+                return surface;
             }
 
             set
             {
-                if (_surface != null)
+                if (surface != null)
                 {
                     throw new InvalidOperationException("There are multiple Canvas decorated with the SurfaceBehavior");
                 }
 
-                _surface = value;
+                surface = value;
             }
         }
 

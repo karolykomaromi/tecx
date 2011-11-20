@@ -1,11 +1,11 @@
-﻿using Caliburn.Micro;
-
-using TecX.Agile.Infrastructure;
-using TecX.Agile.ViewModels;
-using TecX.Unity.Configuration;
-
-namespace TecX.Agile.Registration
+﻿namespace TecX.Agile.Registration
 {
+    using Caliburn.Micro;
+
+    using TecX.Agile.Infrastructure;
+    using TecX.Agile.ViewModels;
+    using TecX.Unity.Configuration;
+
     public class CaliburnConfigurationBuilder : ConfigurationBuilder
     {
         public CaliburnConfigurationBuilder()

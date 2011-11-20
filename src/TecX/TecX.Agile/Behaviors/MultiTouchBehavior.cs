@@ -1,13 +1,13 @@
-﻿using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Interactivity;
-
-using TecX.Agile.ViewModels;
-
-namespace TecX.Agile.Behaviors
+﻿namespace TecX.Agile.Behaviors
 {
+    using System.ComponentModel;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Interactivity;
+
+    using TecX.Agile.ViewModels;
+
     public class MultiTouchBehavior : Behavior<UserControl>
     {
         private StoryCardViewModel Card { get; set; }
@@ -21,12 +21,12 @@ namespace TecX.Agile.Behaviors
                 return;
             }
 
-            Card = (StoryCardViewModel)AssociatedObject.DataContext;
+            this.Card = (StoryCardViewModel)this.AssociatedObject.DataContext;
 
             AssociatedObject.IsManipulationEnabled = true;
 
             AssociatedObject.ManipulationStarting += OnManipulationStarting;
-            AssociatedObject.ManipulationDelta += OnManipulationDelta;
+            this.AssociatedObject.ManipulationDelta += this.OnManipulationDelta;
             AssociatedObject.ManipulationInertiaStarting += OnManipulationInertiaStarting;
         }
 
@@ -35,8 +35,14 @@ namespace TecX.Agile.Behaviors
             AssociatedObject.IsManipulationEnabled = false;
 
             AssociatedObject.ManipulationStarting -= OnManipulationStarting;
-            AssociatedObject.ManipulationDelta -= OnManipulationDelta;
+            this.AssociatedObject.ManipulationDelta -= this.OnManipulationDelta;
             AssociatedObject.ManipulationInertiaStarting -= OnManipulationInertiaStarting;
+        }
+
+        private static void OnManipulationStarting(object sender, ManipulationStartingEventArgs e)
+        {
+            e.ManipulationContainer = SurfaceBehavior.Surface;
+            e.Handled = true;
         }
 
         private static void OnManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
@@ -65,18 +71,19 @@ namespace TecX.Agile.Behaviors
 
             rotation.CenterX = e.ManipulationOrigin.X;
             rotation.CenterY = e.ManipulationOrigin.Y;
-            //TODO weberse 2011-10-31 delta or total?
+
+            // TODO weberse 2011-10-31 delta or total?
             rotation.Angle += e.DeltaManipulation.Rotation;
 
-            //TODO weberse dont want to scale the card right now. dont think that is a good idea
+            // TODO weberse dont want to scale the card right now. dont think that is a good idea
             //// Resize the Rectangle.  Keep it square 
             //// so use only the X value of Scale.
-            //matrix.ScaleAt(e.DeltaManipulation.Scale.X,
+            // matrix.ScaleAt(e.DeltaManipulation.Scale.X,
             //               e.DeltaManipulation.Scale.X,
             //               e.ManipulationOrigin.X,
             //               e.ManipulationOrigin.Y);
 
-            //move
+            // move
             var translation = AssociatedObject.Translation();
             translation.X += e.DeltaManipulation.Translation.X;
             translation.Y += e.DeltaManipulation.Translation.Y;
@@ -92,12 +99,6 @@ namespace TecX.Agile.Behaviors
                 e.Complete();
             }
 
-            e.Handled = true;
-        }
-
-        private static void OnManipulationStarting(object sender, ManipulationStartingEventArgs e)
-        {
-            e.ManipulationContainer = SurfaceBehavior.Surface;
             e.Handled = true;
         }
     }

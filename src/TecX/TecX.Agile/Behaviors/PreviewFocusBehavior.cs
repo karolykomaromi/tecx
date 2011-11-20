@@ -1,12 +1,12 @@
-﻿using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-
-using TecX.Common;
-
-namespace TecX.Agile.Behaviors
+﻿namespace TecX.Agile.Behaviors
 {
+    using System.ComponentModel;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+
+    using TecX.Common;
+
     public static class PreviewFocusBehavior
     {
         public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
@@ -29,8 +29,7 @@ namespace TecX.Agile.Behaviors
             return (bool)textBox.GetValue(IsEnabledProperty);
         }
 
-        private static void OnEnabledChanged(DependencyObject dependencyObject,
-            DependencyPropertyChangedEventArgs args)
+        private static void OnEnabledChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             if (!DesignerProperties.GetIsInDesignMode(dependencyObject))
             {

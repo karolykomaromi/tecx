@@ -1,10 +1,9 @@
-﻿using System;
-using System.Windows;
-
-using Caliburn.Micro;
-
-namespace TecX.Agile.Infrastructure
+﻿namespace TecX.Agile.Infrastructure
 {
+    using System.Windows;
+
+    using Caliburn.Micro;
+
     public interface IShell
     {
         void AddOverlay(Screen overlay);

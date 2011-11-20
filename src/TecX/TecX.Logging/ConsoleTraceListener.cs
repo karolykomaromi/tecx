@@ -1,35 +1,30 @@
-﻿using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
-using Microsoft.Practices.EnterpriseLibrary.Logging;
-using Microsoft.Practices.EnterpriseLibrary.Logging.Configuration;
-using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
-using TecX.Common;
-
-namespace TecX.Logging
+﻿namespace TecX.Logging
 {
+    using System;
+    using System.Diagnostics;
+
+    using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+    using Microsoft.Practices.EnterpriseLibrary.Logging;
+    using Microsoft.Practices.EnterpriseLibrary.Logging.Configuration;
+    using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
+
+    using TecX.Common;
+
     /// <summary>
     /// Writes logging information to the console
     /// </summary>
-    [ConfigurationElementType(typeof (CustomTraceListenerData))]
+    [ConfigurationElementType(typeof(CustomTraceListenerData))]
     public class ConsoleTraceListener : CustomTraceListener
     {
-        #region c'tor
-
         /// <summary>
         /// Creates a new <see cref="ConsoleTraceListener"/> instance
         /// </summary>
         public ConsoleTraceListener()
         {
-            //makes sure that a console is allocated for the current thread, even if it is a
-            //WinForms or WPF application
+            // makes sure that a console is allocated for the current thread, even if it is a
+            // WinForms or WPF application
             Win32.AllocConsole();
         }
-
-        #endregion c'tor
-
-        #region CustomTraceListener Members
 
         /// <summary>
         /// When overridden in a derived class, writes the specified message to the listener you create in the derived class.
@@ -62,18 +57,17 @@ namespace TecX.Logging
         /// <param name="id">A numeric identifier for the event.</param>
         /// <param name="data">The trace data to emit.</param>
         /// <PermissionSet>
-        /// 	<IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/>
-        /// 	<IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode"/>
+        ///     <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/>
+        ///     <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode"/>
         /// </PermissionSet>
-        public override void TraceData(TraceEventCache eventCache, string source, TraceEventType eventType, int id,
-                                       object data)
+        public override void TraceData(TraceEventCache eventCache, string source, TraceEventType eventType, int id, object data)
         {
             LogEntry entry = data as LogEntry;
 
             if (entry != null &&
                 Formatter != null)
             {
-                TraceData(eventCache, source, eventType, id, Formatter.Format(entry));
+                this.TraceData(eventCache, source, eventType, id, this.Formatter.Format(entry));
             }
             else
             {
@@ -90,20 +84,28 @@ namespace TecX.Logging
         /// <param name="id">A numeric identifier for the event.</param>
         /// <param name="message">A message to write.</param>
         /// <PermissionSet>
-        /// 	<IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/>
-        /// 	<IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode"/>
+        ///     <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/>
+        ///     <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode"/>
         /// </PermissionSet>
-        public override void TraceEvent(TraceEventCache eventCache, string source, TraceEventType eventType, int id,
-                                        string message)
+        public override void TraceEvent(TraceEventCache eventCache, string source, TraceEventType eventType, int id, string message)
         {
             SwitchForegroundColor(eventType);
 
             base.TraceEvent(eventCache, source, eventType, id, message);
         }
 
-        #endregion CustomTraceListener Members
+        /// <summary>
+        /// Overrides <see cref="TraceListener.Dispose(bool)"/>
+        /// Assures that the console buffer is flushed when the object is disposed.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            Console.Out.Flush();
 
-        #region Private Methods
+            Win32.FreeConsole();
+
+            base.Dispose(disposing);
+        }
 
         /// <summary>
         /// Changes the color of the text on the console depending on the type of event that
@@ -149,46 +151,5 @@ namespace TecX.Logging
                     break;
             }
         }
-
-        #endregion Private Methods
-
-        #region Protected Methods
-
-        /// <summary>
-        /// Overrides <see cref="TraceListener.Dispose(bool)"/>
-        /// Assures that the console buffer is flushed when the object is disposed.
-        /// </summary>
-        protected override void Dispose(bool disposing)
-        {
-            Console.Out.Flush();
-
-            Win32.FreeConsole();
-
-            base.Dispose(disposing);
-        }
-
-        #endregion Protected Methods
-    }
-
-    /// <summary>
-    /// Wrapper class for Win32 API calls
-    /// </summary>
-    public static class Win32
-    {
-        /// <summary>
-        /// Allocates a new console for the calling process.
-        /// </summary>
-        /// <returns><c>true</c> if the function succeeds; otherwise <c>false</c>
-        /// </returns>
-        [DllImport("kernel32.dll")]
-        public static extern Boolean AllocConsole();
-
-        /// <summary>
-        /// Detaches the calling process from its console.
-        /// </summary>
-        /// <returns><c>true</c> if the function succeeds; otherwise <c>false</c>
-        /// </returns>
-        [DllImport("kernel32.dll")]
-        public static extern Boolean FreeConsole();
     }
 }

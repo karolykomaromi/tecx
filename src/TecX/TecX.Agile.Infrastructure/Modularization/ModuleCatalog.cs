@@ -7,18 +7,18 @@ namespace TecX.Agile.Infrastructure.Modularization
 
     public class ModuleCatalog : IModuleCatalog
     {
-        private readonly List<ModuleInfo> _modules;
+        private readonly List<ModuleInfo> modules;
 
         public ModuleCatalog()
         {
-            _modules = new List<ModuleInfo>();
+            this.modules = new List<ModuleInfo>();
         }
 
         public IEnumerable<ModuleInfo> Modules
         {
             get
             {
-                return _modules;
+                return this.modules;
             }
         }
 
@@ -32,14 +32,14 @@ namespace TecX.Agile.Infrastructure.Modularization
                     ModuleType = moduleType.AssemblyQualifiedName
                 };
 
-            AddModule(module);
+            this.AddModule(module);
         }
 
         public void AddModule(ModuleInfo module)
         {
             Guard.AssertNotNull(module, "module");
 
-            _modules.Add(module);
+            this.modules.Add(module);
         }
     }
 }

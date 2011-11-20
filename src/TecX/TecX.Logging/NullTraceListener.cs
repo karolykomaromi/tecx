@@ -1,7 +1,7 @@
-﻿using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
-
-namespace TecX.Logging
+﻿namespace TecX.Logging
 {
+    using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
+
     /// <summary>
     /// Implements the NullObject-pattern and does absolutely nothing
     /// </summary>

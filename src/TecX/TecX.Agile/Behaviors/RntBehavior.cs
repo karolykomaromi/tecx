@@ -1,14 +1,19 @@
-﻿using TecX.Agile.ViewModels;
-
-namespace TecX.Agile.Behaviors
+﻿namespace TecX.Agile.Behaviors
 {
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Interactivity;
 
+    using TecX.Agile.ViewModels;
+
     public class RntBehavior : Behavior<UserControl>
     {
+        public RntBehavior()
+        {
+            this.Toa = new TranslateOnlyAreaViewModel { Visible = false };
+        }
+
         private Point Previous { get; set; }
 
         private bool IsTranslated { get; set; }
@@ -17,45 +22,39 @@ namespace TecX.Agile.Behaviors
 
         private TranslateOnlyAreaViewModel Toa { get; set; }
 
-        public RntBehavior()
-        {
-            Toa = new TranslateOnlyAreaViewModel();
-            Toa.Visible = false;
-        }
-
-        private void AddTranslateOnlyArea(object sender, RoutedEventArgs e)
-        {
-            Card.Decorators.Add(Toa);
-
-            AssociatedObject.Loaded -= AddTranslateOnlyArea;
-        }
-
         protected override void OnAttached()
         {
-            AssociatedObject.Loaded += AddTranslateOnlyArea;
+            this.AssociatedObject.Loaded += this.AddTranslateOnlyArea;
 
-            AssociatedObject.MouseEnter += OnMouseEnter;
-            AssociatedObject.MouseLeave += OnMouseLeave;
+            this.AssociatedObject.MouseEnter += this.OnMouseEnter;
+            this.AssociatedObject.MouseLeave += this.OnMouseLeave;
 
-            AssociatedObject.PreviewMouseLeftButtonDown += OnMouseLeftButtonDown;
-            AssociatedObject.PreviewMouseLeftButtonUp += OnMouseLeftButtonUp;
-            AssociatedObject.PreviewMouseMove += OnMouseMove;
+            this.AssociatedObject.PreviewMouseLeftButtonDown += this.OnMouseLeftButtonDown;
+            this.AssociatedObject.PreviewMouseLeftButtonUp += this.OnMouseLeftButtonUp;
+            this.AssociatedObject.PreviewMouseMove += this.OnMouseMove;
 
-            Card = (StoryCardViewModel)AssociatedObject.DataContext;
+            this.Card = (StoryCardViewModel)this.AssociatedObject.DataContext;
         }
 
         protected override void OnDetaching()
         {
-            AssociatedObject.PreviewMouseLeftButtonDown -= OnMouseLeftButtonDown;
-            AssociatedObject.PreviewMouseLeftButtonUp -= OnMouseLeftButtonUp;
-            AssociatedObject.PreviewMouseMove -= OnMouseMove;
+            this.AssociatedObject.PreviewMouseLeftButtonDown -= this.OnMouseLeftButtonDown;
+            this.AssociatedObject.PreviewMouseLeftButtonUp -= this.OnMouseLeftButtonUp;
+            this.AssociatedObject.PreviewMouseMove -= this.OnMouseMove;
 
-            AssociatedObject.MouseEnter -= OnMouseEnter;
-            AssociatedObject.MouseLeave -= OnMouseLeave;
+            this.AssociatedObject.MouseEnter -= this.OnMouseEnter;
+            this.AssociatedObject.MouseLeave -= this.OnMouseLeave;
 
-            Card.Decorators.Remove(Toa);
+            this.Card.Decorators.Remove(this.Toa);
 
-            Card = null;
+            this.Card = null;
+        }
+
+        private void AddTranslateOnlyArea(object sender, RoutedEventArgs e)
+        {
+            this.Card.Decorators.Add(this.Toa);
+
+            this.AssociatedObject.Loaded -= this.AddTranslateOnlyArea;
         }
 
         /// <summary>
@@ -63,9 +62,9 @@ namespace TecX.Agile.Behaviors
         /// </summary>
         private void OnMouseLeave(object sender, MouseEventArgs e)
         {
-            if (Toa != null)
+            if (this.Toa != null)
             {
-                Toa.Visible = false;
+                this.Toa.Visible = false;
             }
         }
 
@@ -74,17 +73,17 @@ namespace TecX.Agile.Behaviors
         /// </summary>
         private void OnMouseEnter(object sender, MouseEventArgs e)
         {
-            if (Toa != null &&
-                !Card.IsPinned)
+            if (this.Toa != null &&
+                !this.Card.IsPinned)
             {
-                Toa.Visible = true;
+                this.Toa.Visible = true;
             }
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            //ignore click if the item is pinned
-            if (Card.IsPinned ||
+            // ignore click if the item is pinned
+            if (this.Card.IsPinned ||
                 !AssociatedObject.IsMouseCaptured)
             {
                 return;
@@ -92,84 +91,68 @@ namespace TecX.Agile.Behaviors
 
             if (e.LeftButton.Equals(MouseButtonState.Pressed))
             {
-                //the actual point is set to the absolute coordinates of the mouse click
+                // the actual point is set to the absolute coordinates of the mouse click
                 Point actual = e.GetPosition(SurfaceBehavior.Surface);
 
-                //ApplyRNT(actual);
-                Transition by = GeometryHelper.CalculateRntStep(actual, Previous, AssociatedObject.CenterOnSurface(),
-                                                                IsTranslated);
+                // ApplyRNT(actual);
+                Transition by = GeometryHelper.CalculateRntStep(
+                    actual, 
+                    this.Previous, 
+                    this.AssociatedObject.CenterOnSurface(), 
+                    this.IsTranslated);
 
-                Card.Move(by.X, by.Y, by.Angle);
+                this.Card.Move(by.X, by.Y, by.Angle);
 
-                //after the movement set the previous point to the coordinates of the last mouse event
-                Previous = actual;
+                // after the movement set the previous point to the coordinates of the last mouse event
+                this.Previous = actual;
             }
         }
 
         private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            //ignore click if the item is pinned
-            if (Card.IsPinned)
+            // ignore click if the item is pinned
+            if (this.Card.IsPinned)
             {
                 return;
             }
 
-            //the item is no longer moved
-            IsTranslated = false;
+            // the item is no longer moved
+            this.IsTranslated = false;
 
-            //release the captured mouse input
+            // release the captured mouse input
             AssociatedObject.ReleaseMouseCapture();
 
-            //fire the drop-event
-
+            // fire the drop-event
             Point dropPoint = e.GetPosition(SurfaceBehavior.Surface);
             dropPoint = SurfaceBehavior.Surface.PointToScreen(dropPoint);
 
-            //EventAggregator.GetEvent<TabletopItemDropEvent>().Publish(new TabletopItemDropEventArgs(AssociatedObject, dropPoint));
+            // EventAggregator.GetEvent<TabletopItemDropEvent>().Publish(new TabletopItemDropEventArgs(AssociatedObject, dropPoint));
         }
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //if the item is pinned do nothing
-            if (Card.IsPinned)
+            // if the item is pinned do nothing
+            if (this.Card.IsPinned)
             {
                 return;
             }
 
-            //set the previous mouse point to the absolute coordinates of the event
-            Previous = e.GetPosition(SurfaceBehavior.Surface);
+            // set the previous mouse point to the absolute coordinates of the event
+            this.Previous = e.GetPosition(SurfaceBehavior.Surface);
 
-            //if the click occured inside the translate only area the movement is translate-only
-            Point click = e.GetPosition(Toa.InputArea);
+            // if the click occured inside the translate only area the movement is translate-only
+            Point click = e.GetPosition(this.Toa.InputArea);
 
-            if (Toa != null && Toa.IsInsideTranslateOnlyArea(click)) 
+            if (this.Toa != null && this.Toa.IsInsideTranslateOnlyArea(click)) 
             {
-                IsTranslated = true;
+                this.IsTranslated = true;
             }
 
-            //capture the mouse input
-
+            // capture the mouse input
             if (AssociatedObject.IsEnabled)
             {
                 AssociatedObject.CaptureMouse();
             }
-        }
-    }
-
-    public struct Transition
-    {
-        public double X { get; set; }
-
-        public double Y { get; set; }
-
-        public double Angle { get; set; }
-
-        public Transition(double x, double y, double angle)
-            : this()
-        {
-            X = x;
-            Y = y;
-            Angle = angle % 360.0;
         }
     }
 }

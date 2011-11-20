@@ -1,13 +1,13 @@
-﻿using Microsoft.Practices.Unity;
-
-using TecX.Common.Event.Unity;
-using TecX.Unity.Collections;
-using TecX.Unity.Configuration;
-using TecX.Unity.Enrichment;
-using TecX.Unity.TypedFactory;
-
-namespace TecX.Agile.Registration
+﻿namespace TecX.Agile.Registration
 {
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common.Event.Unity;
+    using TecX.Unity.Collections;
+    using TecX.Unity.Configuration;
+    using TecX.Unity.Enrichment;
+    using TecX.Unity.TypedFactory;
+
     public class AppConfigurationBuilder : ConfigurationBuilder
     {
         public AppConfigurationBuilder()

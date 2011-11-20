@@ -1,15 +1,17 @@
-﻿using System;
-using System.Windows.Data;
-using System.Windows.Media;
-
-namespace TecX.Agile.Infrastructure.Converters
+﻿namespace TecX.Agile.Infrastructure.Converters
 {
+    using System;
+    using System.Windows.Data;
+    using System.Windows.Media;
+
     public class ColorToSolidColorBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (null == value)
+            {
                 return null;
+            }
 
             if (value is Color)
             {
@@ -24,7 +26,9 @@ namespace TecX.Agile.Infrastructure.Converters
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (null == value)
+            {
                 return null;
+            }
 
             if (value is SolidColorBrush)
             {
@@ -34,6 +38,7 @@ namespace TecX.Agile.Infrastructure.Converters
             }
 
             Type type = value.GetType();
+
             throw new NotSupportedException("Unsupported type [" + type.Name + "]");
         }
     }

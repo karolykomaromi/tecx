@@ -8,26 +8,26 @@ namespace TecX.Agile.Infrastructure.Modularization
 
     public class ModuleManager : IModuleManager
     {
-        private readonly IModuleCatalog _catalog;
+        private readonly IModuleCatalog catalog;
 
-        private readonly IUnityContainer _container;
+        private readonly IUnityContainer container;
 
         public ModuleManager(IModuleCatalog catalog, IUnityContainer container)
         {
             Guard.AssertNotNull(catalog, "catalog");
             Guard.AssertNotNull(container, "container");
 
-            _catalog = catalog;
-            _container = container;
+            this.catalog = catalog;
+            this.container = container;
         }
 
         public void Run()
         {
-            foreach (var moduleInfo in _catalog.Modules)
+            foreach (var moduleInfo in this.catalog.Modules)
             {
                 Type moduleType = Type.GetType(moduleInfo.ModuleType);
 
-                IModule module = (IModule)_container.Resolve(moduleType, moduleInfo.Name);
+                IModule module = (IModule)this.container.Resolve(moduleType, moduleInfo.Name);
 
                 module.Initialize();
             }

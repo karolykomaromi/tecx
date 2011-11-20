@@ -1,59 +1,59 @@
-﻿using System;
-using System.Windows.Media;
-
-using Caliburn.Micro;
-
-namespace TecX.Agile.ViewModels
+﻿namespace TecX.Agile.ViewModels
 {
+    using System;
+    using System.Windows.Media;
+
+    using Caliburn.Micro;
+
     public class StoryCardViewModel : Screen
     {
         #region Fields
 
-        private readonly IObservableCollection<object> _decorators;
+        private readonly IObservableCollection<object> decorators;
 
-        private Color _background;
+        private Color background;
 
-        private double _x;
+        private double x;
 
-        private double _y;
+        private double y;
 
-        private double _angle;
+        private double angle;
 
-        private double _width;
+        private double width;
 
-        private double _height;
+        private double height;
 
-        private Guid _id;
+        private Guid id;
 
-        private bool _isPinned;
+        private bool isPinned;
 
-        private double _scale;
+        private double scale;
 
-        private double _opacity;
+        private double opacity;
 
-        private string _name;
+        private string name;
 
-        private double _mostLikelyEstimate;
+        private double mostLikelyEstimate;
 
-        private double _actualEffort;
+        private double actualEffort;
 
-        private string _taskOwner;
+        private string taskOwner;
 
-        private bool _isHandWritingEnabled;
+        private bool isHandWritingEnabled;
 
-        private string _description;
+        private string description;
 
         #endregion Fields
 
         public StoryCardViewModel()
         {
-            Width = Constants.StoryCard.Width;
-            Height = Constants.StoryCard.Height;
-            Opacity = Constants.Opacity;
+            this.Width = Constants.StoryCard.Width;
+            this.Height = Constants.StoryCard.Height;
+            this.Opacity = Constants.Opacity;
 
-            Background = Constants.Colors.Yellow;
+            this.Background = Constants.Colors.Yellow;
 
-            _decorators = new BindableCollection<object>();
+            this.decorators = new BindableCollection<object>();
         }
 
         #region Properties
@@ -62,7 +62,7 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _decorators;
+                return this.decorators;
             }
         }
 
@@ -70,18 +70,18 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _x;
+                return this.x;
             }
 
             set
             {
-                if (_x == value)
+                if (this.x == value)
                 {
                     return;
                 }
 
-                _x = value;
-                NotifyOfPropertyChange(() => X);
+                this.x = value;
+                this.NotifyOfPropertyChange(() => this.X);
             }
         }
 
@@ -89,18 +89,18 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _y;
+                return this.y;
             }
 
             set
             {
-                if (_y == value)
+                if (this.y == value)
                 {
                     return;
                 }
 
-                _y = value;
-                NotifyOfPropertyChange(() => Y);
+                this.y = value;
+                this.NotifyOfPropertyChange(() => this.Y);
             }
         }
 
@@ -108,18 +108,18 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _angle;
+                return this.angle;
             }
 
             set
             {
-                if (_angle == value)
+                if (this.angle == value)
                 {
                     return;
                 }
 
-                _angle = value;
-                NotifyOfPropertyChange(() => Angle);
+                this.angle = value;
+                this.NotifyOfPropertyChange(() => this.Angle);
             }
         }
 
@@ -127,18 +127,18 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _id;
+                return this.id;
             }
 
             set
             {
-                if (_id == value)
+                if (this.id == value)
                 {
                     return;
                 }
 
-                _id = value;
-                NotifyOfPropertyChange(() => Id);
+                this.id = value;
+                this.NotifyOfPropertyChange(() => this.Id);
             }
         }
 
@@ -146,18 +146,18 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _isPinned;
+                return this.isPinned;
             }
 
             set
             {
-                if (_isPinned == value)
+                if (this.isPinned == value)
                 {
                     return;
                 }
 
-                _isPinned = value;
-                NotifyOfPropertyChange(() => IsPinned);
+                this.isPinned = value;
+                this.NotifyOfPropertyChange(() => this.IsPinned);
             }
         }
 
@@ -165,18 +165,18 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _width;
+                return this.width;
             }
 
             set
             {
-                if (_width == value)
+                if (this.width == value)
                 {
                     return;
                 }
 
-                _width = value;
-                NotifyOfPropertyChange(() => Width);
+                this.width = value;
+                this.NotifyOfPropertyChange(() => this.Width);
             }
         }
 
@@ -184,18 +184,18 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _height;
+                return this.height;
             }
 
             set
             {
-                if (_height == value)
+                if (this.height == value)
                 {
                     return;
                 }
 
-                _height = value;
-                NotifyOfPropertyChange(() => Height);
+                this.height = value;
+                this.NotifyOfPropertyChange(() => this.Height);
             }
         }
 
@@ -203,18 +203,18 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _scale;
+                return this.scale;
             }
 
             set
             {
-                if (_scale == value)
+                if (this.scale == value)
                 {
                     return;
                 }
 
-                _scale = value;
-                NotifyOfPropertyChange(() => Scale);
+                this.scale = value;
+                this.NotifyOfPropertyChange(() => this.Scale);
             }
         }
 
@@ -222,18 +222,18 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _opacity;
+                return this.opacity;
             }
 
             set
             {
-                if (_opacity == value)
+                if (this.opacity == value)
                 {
                     return;
                 }
 
-                _opacity = value;
-                NotifyOfPropertyChange(() => Opacity);
+                this.opacity = value;
+                this.NotifyOfPropertyChange(() => this.Opacity);
             }
         }
 
@@ -241,18 +241,18 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _name;
+                return this.name;
             }
 
             set
             {
-                if (_name == value)
+                if (this.name == value)
                 {
                     return;
                 }
 
-                _name = value;
-                NotifyOfPropertyChange(() => Name);
+                this.name = value;
+                this.NotifyOfPropertyChange(() => this.Name);
             }
         }
 
@@ -260,18 +260,18 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _mostLikelyEstimate;
+                return this.mostLikelyEstimate;
             }
 
             set
             {
-                if (_mostLikelyEstimate == value)
+                if (this.mostLikelyEstimate == value)
                 {
                     return;
                 }
 
-                _mostLikelyEstimate = value;
-                NotifyOfPropertyChange(() => MostLikelyEstimate);
+                this.mostLikelyEstimate = value;
+                this.NotifyOfPropertyChange(() => this.MostLikelyEstimate);
             }
         }
 
@@ -279,18 +279,18 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _actualEffort;
+                return this.actualEffort;
             }
 
             set
             {
-                if (_actualEffort == value)
+                if (this.actualEffort == value)
                 {
                     return;
                 }
 
-                _actualEffort = value;
-                NotifyOfPropertyChange(() => ActualEffort);
+                this.actualEffort = value;
+                this.NotifyOfPropertyChange(() => this.ActualEffort);
             }
         }
 
@@ -298,18 +298,18 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _taskOwner;
+                return this.taskOwner;
             }
 
             set
             {
-                if (_taskOwner == value)
+                if (this.taskOwner == value)
                 {
                     return;
                 }
 
-                _taskOwner = value;
-                NotifyOfPropertyChange(() => TaskOwner);
+                this.taskOwner = value;
+                this.NotifyOfPropertyChange(() => this.TaskOwner);
             }
         }
 
@@ -317,18 +317,18 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _isHandWritingEnabled;
+                return this.isHandWritingEnabled;
             }
 
             set
             {
-                if (_isHandWritingEnabled == value)
+                if (this.isHandWritingEnabled == value)
                 {
                     return;
                 }
 
-                _isHandWritingEnabled = value;
-                NotifyOfPropertyChange(() => IsHandWritingEnabled);
+                this.isHandWritingEnabled = value;
+                this.NotifyOfPropertyChange(() => this.IsHandWritingEnabled);
             }
         }
 
@@ -336,33 +336,37 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _description;
+                return this.description;
             }
 
             set
             {
-                if (_description == value)
+                if (this.description == value)
                 {
                     return;
                 }
 
-                _description = value;
-                NotifyOfPropertyChange(() => Description);
+                this.description = value;
+                this.NotifyOfPropertyChange(() => this.Description);
             }
         }
 
         public Color Background
         {
-            get { return _background; }
+            get
+            {
+                return this.background;
+            }
+
             set
             {
-                if (_background == value)
+                if (this.background == value)
                 {
                     return;
                 }
 
-                _background = value;
-                NotifyOfPropertyChange(() => Background);
+                this.background = value;
+                this.NotifyOfPropertyChange(() => this.Background);
             }
         }
 
@@ -370,9 +374,9 @@ namespace TecX.Agile.ViewModels
 
         public void Move(double dx, double dy, double angle)
         {
-            X += dx;
-            Y += dy;
-            Angle += angle;
+            this.X += dx;
+            this.Y += dy;
+            this.Angle += angle;
         }
     }
 }

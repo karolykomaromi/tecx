@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-
-using TecX.Agile.Infrastructure;
-using TecX.Agile.Infrastructure.Modularization;
-using TecX.Agile.ViewModels;
-
-namespace TecX.Agile
+﻿namespace TecX.Agile
 {
+    using System.Collections.Generic;
+    using System.Reflection;
+
+    using TecX.Agile.Infrastructure;
+    using TecX.Agile.Infrastructure.Modularization;
+    using TecX.Agile.ViewModels;
+
     public class AppBootstrapper : UnityBootstrapper<ShellViewModel>
     {
         protected override void ConfigureModuleCatalog()

@@ -1,7 +1,7 @@
-﻿using System;
-    
-namespace TecX.Agile.Infrastructure.Events
+﻿namespace TecX.Agile.Infrastructure.Events
 {
+    using System;
+
     public class AddedStoryCard
     {
         public double X { get; set; }

@@ -1,7 +1,7 @@
-using System.Windows;
-
 namespace TecX.Agile.Views
 {
+    using System.Windows;
+
     /// <summary>
     /// Interaction logic for ShellView.xaml
     /// </summary>
@@ -9,7 +9,7 @@ namespace TecX.Agile.Views
     {
         public ShellView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

@@ -1,36 +1,36 @@
-using System;
-using System.Windows;
-using System.Windows.Media;
-
-using Caliburn.Micro;
-
-using TecX.Agile.Infrastructure;
-using TecX.Agile.Infrastructure.Events;
-using TecX.Common;
-
-using IEventAggregator = TecX.Common.Event.IEventAggregator;
-
 namespace TecX.Agile.ViewModels
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Media;
+
+    using Caliburn.Micro;
+
+    using TecX.Agile.Infrastructure;
+    using TecX.Agile.Infrastructure.Events;
+    using TecX.Common;
+
+    using IEventAggregator = TecX.Common.Event.IEventAggregator;
+
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShell
     {
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IEventAggregator eventAggregator;
 
-        private readonly Conductor<IScreen>.Collection.AllActive _overlays;
+        private readonly Conductor<IScreen>.Collection.AllActive overlays;
 
         public ShellViewModel(IEventAggregator eventAggregator)
         {
             Guard.AssertNotNull(eventAggregator, "eventAggregator");
 
-            _eventAggregator = eventAggregator;
-            _overlays = new Conductor<IScreen>.Collection.AllActive();
+            this.eventAggregator = eventAggregator;
+            this.overlays = new Conductor<IScreen>.Collection.AllActive();
         }
 
         public IEventAggregator EventAggregator
         {
             get
             {
-                return _eventAggregator;
+                return this.eventAggregator;
             }
         }
 
@@ -38,24 +38,8 @@ namespace TecX.Agile.ViewModels
         {
             get
             {
-                return _overlays.Items;
+                return this.overlays.Items;
             }
-        }
-
-        private int counter = 0;
-
-        public void AddItem()
-        {
-            if (counter % 2 == 0)
-            {
-                AddStoryCard(counter * 10 + 10, counter * 10 + 10, counter * 10 + 10);
-            }
-            else
-            {
-                Items.Add(new IterationViewModel());
-            }
-
-            counter++;
         }
 
         public bool CanAddItem
@@ -70,7 +54,7 @@ namespace TecX.Agile.ViewModels
         {
             Guard.AssertNotNull(overlay, "overlay");
 
-            Overlays.Add(overlay);
+            this.Overlays.Add(overlay);
         }
 
         public void AddStoryCard(double x, double y, double angle)
@@ -79,7 +63,7 @@ namespace TecX.Agile.ViewModels
 
             Items.Add(storyCard);
 
-            EventAggregator.Publish(new AddedStoryCard { Id = storyCard.Id, X = x, Y = y, Angle = angle });
+            this.EventAggregator.Publish(new AddedStoryCard { Id = storyCard.Id, X = x, Y = y, Angle = angle });
 
             ActivateItem(storyCard);
         }

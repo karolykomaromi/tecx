@@ -1,12 +1,12 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-
-using TecX.Agile.ViewModels;
-using TecX.Common;
-
-namespace TecX.Agile
+﻿namespace TecX.Agile
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Controls;
+
+    using TecX.Agile.ViewModels;
+    using TecX.Common;
+
     public class SurfaceDataTemplateSelector : DataTemplateSelector
     {
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
@@ -18,7 +18,10 @@ namespace TecX.Agile
 
             FrameworkElement element = container as FrameworkElement;
 
-            if (element == null) return null;
+            if (element == null)
+            {
+                return null;
+            }
 
             if (itemType == typeof(StoryCardViewModel))
             {
@@ -27,7 +30,7 @@ namespace TecX.Agile
                 return template as DataTemplate;
             }
 
-            if(itemType == typeof(IterationViewModel))
+            if (itemType == typeof(IterationViewModel))
             {
                 object template = element.TryFindResource(Constants.Templates.Iteration);
 
