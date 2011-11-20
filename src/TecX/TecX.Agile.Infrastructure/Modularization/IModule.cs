@@ -1,4 +1,4 @@
-﻿namespace TecX.Agile.Infrastructure
+namespace TecX.Agile.Infrastructure.Modularization
 {
     public interface IModule
     {

@@ -3,6 +3,7 @@
     using System.Diagnostics;
 
     using TecX.Agile.Infrastructure;
+    using TecX.Agile.Infrastructure.Modularization;
     using TecX.Agile.Modules.Gestures.ViewModels;
     using TecX.Common;
 

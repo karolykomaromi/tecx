@@ -4,6 +4,8 @@
 
     using Infrastructure;
 
+    using TecX.Agile.Infrastructure.Modularization;
+
     [DebuggerDisplay("{Description}")]
     public class MainModule : Module
     {
