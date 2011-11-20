@@ -73,10 +73,6 @@
       <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
       <Name>TecX.Agile.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.csproj">
-      <Project>{266522EB-9DCB-451A-8CD7-678188DCB5F6}</Project>
-      <Name>TecX.Common.Event</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>

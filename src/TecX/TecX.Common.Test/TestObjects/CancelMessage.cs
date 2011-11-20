@@ -1,4 +1,4 @@
-﻿using TecX.Common.Event;
+﻿using TecX.Event;
 
 namespace TecX.Common.Test.TestObjects
 {

@@ -2,7 +2,7 @@
 {
     using Microsoft.Practices.Unity;
 
-    using TecX.Common.Event.Unity;
+    using TecX.Event.Unity;
     using TecX.Unity.Collections;
     using TecX.Unity.Configuration;
     using TecX.Unity.Enrichment;

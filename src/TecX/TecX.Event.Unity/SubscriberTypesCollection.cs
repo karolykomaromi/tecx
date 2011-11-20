@@ -1,7 +1,9 @@
-namespace TecX.Common.Event.Unity
+namespace TecX.Event.Unity
 {
     using System;
     using System.Collections.Generic;
+
+    using TecX.Common;
 
     public class SubscriberTypesCollection
     {

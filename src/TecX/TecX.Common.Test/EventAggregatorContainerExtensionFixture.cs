@@ -1,8 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using TecX.Common.Event;
-using TecX.Common.Event.Unity;
+using TecX.Event;
+using TecX.Event.Unity;
 using TecX.Common.Test.TestObjects;
 using TecX.TestTools;
 

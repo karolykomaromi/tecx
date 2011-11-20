@@ -4,7 +4,7 @@ using System.Windows.Threading;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using TecX.Common.Event;
+using TecX.Event;
 using TecX.Common.Test.TestObjects;
 using TecX.TestTools;
 

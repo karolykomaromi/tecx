@@ -1,4 +1,4 @@
-﻿namespace TecX.Common.Event
+﻿namespace TecX.Event
 {
     public interface ISubscribeTo<in TMessage>
     {

@@ -114,17 +114,17 @@
     <Compile Include="TypeHelperFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TecX.Common.Event.Unity\TecX.Common.Event.Unity.csproj">
-      <Project>{A763CC8F-835E-444C-9A9F-88E7A443C1B2}</Project>
-      <Name>TecX.Common.Event.Unity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.csproj">
-      <Project>{266522EB-9DCB-451A-8CD7-678188DCB5F6}</Project>
-      <Name>TecX.Common.Event</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Event.Unity\TecX.Event.Unity.csproj">
+      <Project>{A763CC8F-835E-444C-9A9F-88E7A443C1B2}</Project>
+      <Name>TecX.Event.Unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Event\TecX.Event.csproj">
+      <Project>{266522EB-9DCB-451A-8CD7-678188DCB5F6}</Project>
+      <Name>TecX.Event</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.TestTools\TecX.TestTools.csproj">
       <Project>{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}</Project>
