@@ -23,11 +23,11 @@
             this.alterations = new List<Action<RegistrationFamily>>();
             this.children = new List<Action<Configuration>>();
 
-            builder.AddExpression(graph =>
+            builder.AddExpression(config =>
                 {
-                    RegistrationFamily family = graph.FindFamily(this.@from);
+                    RegistrationFamily family = config.FindFamily(this.@from);
 
-                    this.children.ForEach(action => action(graph));
+                    this.children.ForEach(action => action(config));
                     this.alterations.ForEach(action => action(family));
                 });
         }
