@@ -77,3 +77,8 @@ src/TecX/TecX.Agile.Infrastructure/StyleCop.Cache
 src/TecX/TecX.Agile.Modules.Gestures/StyleCop.Cache
 src/TecX/TecX.Event/obj
 src/TecX/TecX.Event.Unity/obj
+src/TecX/TecX.Event/StyleCop.Cache
+src/TecX/TecX.Event.Unity/bin
+src/TecX/_ReSharper.TecX.Agile
+src/TecX/TecX.Event.Unity/StyleCop.Cache
+src/TecX/TecX.Event/bin
