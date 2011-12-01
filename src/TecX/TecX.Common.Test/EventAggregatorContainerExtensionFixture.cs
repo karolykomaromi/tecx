@@ -1,8 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using TecX.Event;
-using TecX.Event.Unity;
+//using TecX.Event;
+//using TecX.Event.Unity;
 using TecX.Common.Test.TestObjects;
 using TecX.TestTools;
 
@@ -14,40 +14,43 @@ namespace TecX.Common.Test
         [TestMethod]
         public void CanAutoSubscribeUsingUnity()
         {
-            IUnityContainer container = new UnityContainer();
+            Assert.Fail();
+            //IUnityContainer container = new UnityContainer();
             
-            container.AddNewExtension<EventAggregatorExtension>();
+            //container.AddNewExtension<EventAggregatorExtension>();
 
-            IEventAggregator eventAggregator = container.Resolve<IEventAggregator>();
+            //IEventAggregator eventAggregator = container.Resolve<IEventAggregator>();
 
-            Assert.IsNotNull(eventAggregator);
+            //Assert.IsNotNull(eventAggregator);
 
-            SimpleSubscriber subscriber = container.Resolve<SimpleSubscriber>();
+            //SimpleSubscriber subscriber = container.Resolve<SimpleSubscriber>();
 
-            eventAggregator.Publish(new SimpleMessage());
+            //eventAggregator.Publish(new SimpleMessage());
 
-            DispatcherUtil.DoEvents();
+            //DispatcherUtil.DoEvents();
 
-            Assert.IsTrue(subscriber.MessageReceived);
-            Assert.AreEqual(1, subscriber.MessageCounter);
+            //Assert.IsTrue(subscriber.MessageReceived);
+            //Assert.AreEqual(1, subscriber.MessageCounter);
         }
 
         [TestMethod]
         public void CanPublishUsingUnityInfrastructure()
         {
-            IUnityContainer container = new UnityContainer();
-            container.AddNewExtension<EventAggregatorExtension>();
+            Assert.Fail();
 
-            SimpleSubscriber subscriber = container.Resolve<SimpleSubscriber>();
+            //IUnityContainer container = new UnityContainer();
+            //container.AddNewExtension<EventAggregatorExtension>();
 
-            SimplePublisher publisher = container.Resolve<SimplePublisher>();
+            //SimpleSubscriber subscriber = container.Resolve<SimpleSubscriber>();
 
-            publisher.Publish();
+            //SimplePublisher publisher = container.Resolve<SimplePublisher>();
 
-            DispatcherUtil.DoEvents();
+            //publisher.Publish();
 
-            Assert.IsTrue(subscriber.MessageReceived);
-            Assert.AreEqual(1, subscriber.MessageCounter);
+            //DispatcherUtil.DoEvents();
+
+            //Assert.IsTrue(subscriber.MessageReceived);
+            //Assert.AreEqual(1, subscriber.MessageCounter);
         }
     }
 }
