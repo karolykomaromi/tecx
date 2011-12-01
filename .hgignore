@@ -82,3 +82,12 @@ src/TecX/TecX.Event.Unity/bin
 src/TecX/_ReSharper.TecX.Agile
 src/TecX/TecX.Event.Unity/StyleCop.Cache
 src/TecX/TecX.Event/bin
+src/TecX/TecX.Caching.Test/bin
+src/TecX/TecX.Caching.Test/obj
+src/TecX/TecX.Caching/StyleCop.Cache
+src/TecX/TecX.Caching/bin
+src/TecX/TecX.Common.Measures.Test/bin
+src/TecX/TecX.Common.Measures.Test/obj
+src/TecX/TecX.Common.Measures/obj
+src/TecX/TecX.Common.Measures/bin
+src/TecX/TecX.Caching/obj
