@@ -118,10 +118,6 @@
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TecX.Event\TecX.Event.csproj">
-      <Project>{F1B1FD4F-F40F-4739-8EE4-D683440396DA}</Project>
-      <Name>TecX.Event</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TecX.TestTools\TecX.TestTools.csproj">
       <Project>{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}</Project>
       <Name>TecX.TestTools</Name>
