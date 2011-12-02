@@ -1,9 +1,6 @@
 ﻿namespace TecX.Search.Indexing
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    using TecX.Common.Extensions.Primitives;
 
     using Topshelf;
 
@@ -13,6 +10,17 @@
         {
             HostFactory.Run(x =>
                 {
+                    x.Service<FullTextIndexingService>(
+                        s =>
+                            {
+                                s.ConstructUsing(() => new FullTextIndexingService(10.Minutes()));
+                                s.WhenStarted(idx => idx.Start());
+                                s.WhenStopped(idx => idx.Stop());
+                                s.SetServiceName("idxSvc");
+                            });
+                    x.SetDescription("Runs indexing for full-text search.");
+                    x.SetDisplayName("Customers full-text index service");
+                    x.SetServiceName("idxSvc");
                     x.RunAsLocalSystem();
                 });
         }
