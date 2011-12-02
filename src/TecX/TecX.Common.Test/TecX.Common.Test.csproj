@@ -80,7 +80,6 @@
   <ItemGroup>
     <Compile Include="EntityPredicateExtensionsFixture.cs" />
     <Compile Include="EventAggregatorContainerExtensionFixture.cs" />
-    <Compile Include="EventAggregatorFixture.cs" />
     <Compile Include="ExceptionExtensionFixture.cs" />
     <Compile Include="ExceptionExtensionsFixture.cs" />
     <Compile Include="GuardFixture.cs" />
@@ -90,8 +89,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectionHelperFixture.cs" />
     <Compile Include="SpecificationFixture.cs" />
-    <Compile Include="TestObjects\CancelingSubscriber.cs" />
-    <Compile Include="TestObjects\CancelMessage.cs" />
     <Compile Include="TestObjects\ClassA.cs" />
     <Compile Include="TestObjects\ClassB.cs" />
     <Compile Include="TestObjects\DummySpec1.cs" />
@@ -100,13 +97,9 @@
     <Compile Include="TestObjects\HasSomeFlag.cs" />
     <Compile Include="TestObjects\NumberBetween.cs" />
     <Compile Include="TestObjects\NumberMatches.cs" />
-    <Compile Include="TestObjects\OneTimeSubscriber.cs" />
     <Compile Include="TestObjects\Order.cs" />
     <Compile Include="TestObjects\ReflectionHelperTestClass.cs" />
     <Compile Include="TestObjects\SearchTestEntity.cs" />
-    <Compile Include="TestObjects\SimpleMessage.cs" />
-    <Compile Include="TestObjects\SimplePublisher.cs" />
-    <Compile Include="TestObjects\SimpleSubscriber.cs" />
     <Compile Include="TestObjects\Status.cs" />
     <Compile Include="TestObjects\StatusMatches.cs" />
     <Compile Include="TestObjects\TextMatches.cs" />
