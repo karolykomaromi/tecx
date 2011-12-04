@@ -1,8 +1,10 @@
-﻿namespace TecX.Common.Measures
+﻿namespace TecX.Measures
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
+
+    using TecX.Common;
 
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
