@@ -32,44 +32,44 @@
             return new Meter(distance);
         }
 
-        public static Ton Tons(this double weight)
+        public static Weight Tons(this double weight)
         {
-            return new Ton(weight);
+            return Weight.FromTons(weight);
         }
 
-        public static Ton Tons(this int weight)
+        public static Weight Tons(this int weight)
         {
-            return new Ton(weight);
+            return Weight.FromTons(weight);
         }
 
-        public static Kilogram Kilograms(this double weight)
+        public static Weight Kilograms(this double weight)
         {
-            return new Kilogram(weight);
+            return Weight.FromKilograms(weight);
         }
 
-        public static Kilogram Kilograms(this int weight)
+        public static Weight Kilograms(this int weight)
         {
-            return new Kilogram(weight);
+            return Weight.FromKilograms(weight);
         }
 
-        public static Gram Grams(this double weight)
+        public static Weight Grams(this double weight)
         {
-            return new Gram(weight);
+            return Weight.FromGrams(weight);
         }
 
-        public static Gram Grams(this int weight)
+        public static Weight Grams(this int weight)
         {
-            return new Gram(weight);
+            return Weight.FromGrams(weight);
         }
 
-        public static Milligram Milligrams(this double weight)
+        public static Weight Milligrams(this double weight)
         {
-            return new Milligram(weight);
+            return Weight.FromMilligrams(weight);
         }
 
-        public static Milligram Milligrams(this int weight)
+        public static Weight Milligrams(this int weight)
         {
-            return new Milligram(weight);
+            return Weight.FromMilligrams(weight);
         }
     }
 }

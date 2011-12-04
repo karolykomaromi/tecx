@@ -1,19 +1,19 @@
-﻿using System;
-using System.Diagnostics;
-using System.Globalization;
-
-using TecX.Common.Comparison;
-
-namespace TecX.Common.Measures
+﻿namespace TecX.Common.Measures
 {
+    using System;
+    using System.Diagnostics;
+    using System.Globalization;
+
+    using TecX.Common.Comparison;
+
     [DebuggerDisplay("{_value} km/h")]
     public struct KilometersPerHour : IFormattable
     {
-        private readonly double _value;
+        private readonly double value;
 
         public KilometersPerHour(double value)
         {
-            _value = value;
+            this.value = value;
         }
 
         public static implicit operator KilometersPerHour(double value)
@@ -23,47 +23,62 @@ namespace TecX.Common.Measures
 
         public static explicit operator double(KilometersPerHour speed)
         {
-            return speed._value;
+            return speed.value;
         }
 
         public static KilometersPerHour operator +(KilometersPerHour speed1, KilometersPerHour speed2)
         {
-            return new KilometersPerHour(speed1._value + speed2._value);
+            return new KilometersPerHour(speed1.value + speed2.value);
         }
 
         public static KilometersPerHour operator +(KilometersPerHour speed1, double speed2)
         {
-            return new KilometersPerHour(speed1._value + speed2);
+            return new KilometersPerHour(speed1.value + speed2);
         }
 
         public static KilometersPerHour operator -(KilometersPerHour speed1, KilometersPerHour speed2)
         {
-            return new KilometersPerHour(speed1._value - speed2._value);
+            return new KilometersPerHour(speed1.value - speed2.value);
         }
 
         public static KilometersPerHour operator -(KilometersPerHour speed1, double speed2)
         {
-            return new KilometersPerHour(speed1._value - speed2);
+            return new KilometersPerHour(speed1.value - speed2);
         }
 
         public static bool operator ==(KilometersPerHour speed1, KilometersPerHour speed2)
         {
-            return EpsilonComparer.AreEqual(speed1._value, speed2._value);
+            return EpsilonComparer.AreEqual(speed1.value, speed2.value);
         }
 
         public static bool operator !=(KilometersPerHour speed1, KilometersPerHour speed2)
         {
-            return !EpsilonComparer.AreEqual(speed1._value, speed2._value);
+            return !EpsilonComparer.AreEqual(speed1.value, speed2.value);
         }
 
         public static Kilometer operator *(KilometersPerHour speed, TimeSpan time)
         {
-            return speed._value * time.TotalHours;
+            return speed.value * time.TotalHours;
         }
 
         public static KilometersPerHour FromDistanceAndTime(double distanceInKilometers, TimeSpan time)
         {
             return new KilometersPerHour(distanceInKilometers / time.TotalHours);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is KilometersPerHour))
+            {
+                return false;
+            }
+
+            return ((KilometersPerHour)obj) == this;
+        }
+
+        public override int GetHashCode()
+        {
+            return (int)this.value;
         }
 
         public override string ToString()
@@ -73,7 +88,7 @@ namespace TecX.Common.Measures
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            return _value.ToString(format, formatProvider) + " km/h";
+            return this.value.ToString(format, formatProvider) + " km/h";
         }
     }
 }
