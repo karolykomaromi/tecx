@@ -1,4 +1,4 @@
-﻿namespace TecX.Common.Measures
+﻿namespace TecX.Measures
 {
     public static class MeasuresExtensions
     {

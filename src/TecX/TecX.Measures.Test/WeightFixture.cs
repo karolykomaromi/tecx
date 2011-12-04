@@ -1,11 +1,9 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace TecX.Common.Measures.Test
+﻿namespace TecX.Measures.Test
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using TecX.Measures;
+
     [TestClass]
     public class WeightFixture
     {

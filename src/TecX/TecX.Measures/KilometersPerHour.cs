@@ -1,4 +1,4 @@
-﻿namespace TecX.Common.Measures
+﻿namespace TecX.Measures
 {
     using System;
     using System.Diagnostics;
@@ -6,7 +6,7 @@
 
     using TecX.Common.Comparison;
 
-    [DebuggerDisplay("{_value} km/h")]
+    [DebuggerDisplay("{value} km/h")]
     public struct KilometersPerHour : IFormattable
     {
         private readonly double value;

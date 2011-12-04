@@ -1,4 +1,4 @@
-namespace TecX.Common.Measures
+namespace TecX.Measures
 {
     using System;
     using System.Diagnostics;

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TecX.Common.Extensions.Primitives;
-
-namespace TecX.Common.Measures.Test
+﻿namespace TecX.Measures.Test
 {
+    using System;
+
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using TecX.Common.Extensions.Primitives;
+    using TecX.Measures;
+
     [TestClass]
     public class KilometersPerHourFixture
     {
