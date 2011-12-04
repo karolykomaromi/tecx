@@ -7,6 +7,8 @@
     {
         private readonly string uniqueId;
 
+        private ExpirationToken expirationToken;
+
         public ExternallyControlledChangeMonitor()
         {
             this.uniqueId = Guid.NewGuid().ToString();
@@ -22,6 +24,29 @@
             }
         }
 
+        public ExpirationToken ExpirationToken
+        {
+            get
+            {
+                return this.expirationToken;
+            }
+
+            set
+            {
+                if (this.expirationToken != null)
+                {
+                    this.expirationToken.Expired -= this.OnExpired;
+                }
+
+                this.expirationToken = value;
+
+                if (this.expirationToken != null)
+                {
+                    this.expirationToken.Expired += this.OnExpired;
+                }
+            }
+        }
+
         public void Release()
         {
             this.OnChanged(null);
@@ -29,7 +54,13 @@
 
         protected override void Dispose(bool disposing)
         {
-            // TODO weberse 2011-12-01 unhook from external controller like event aggregator
+            this.ExpirationToken = null;
+            this.Release();
+        }
+
+        private void OnExpired(object sender, EventArgs e)
+        {
+            this.Release();
         }
     }
 }

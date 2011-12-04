@@ -6,7 +6,13 @@ namespace TecX.Caching.KeyGeneration
 
     /// <summary>
     /// Evaluates & replaces sub-trees when first candidate is reached (top-down)
-    /// </summary>
+    /// </summary>    
+    /// <remarks>
+    /// Copyright (c) 2010 Pete Montgomery.
+    /// http://petemontgomery.wordpress.com
+    /// Licenced under GNU LGPL v3.
+    /// http://www.gnu.org/licenses/lgpl.html
+    /// </remarks>
     internal class SubtreeEvaluator : ExpressionVisitor
     {
         private readonly HashSet<Expression> candidates;

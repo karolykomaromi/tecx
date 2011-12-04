@@ -7,7 +7,13 @@ namespace TecX.Caching.KeyGeneration
     /// <summary>
     /// Performs bottom-up analysis to determine which nodes can possibly
     /// be part of an evaluated sub-tree.
-    /// </summary>
+    /// </summary>    
+    /// <remarks>
+    /// Copyright (c) 2010 Pete Montgomery.
+    /// http://petemontgomery.wordpress.com
+    /// Licenced under GNU LGPL v3.
+    /// http://www.gnu.org/licenses/lgpl.html
+    /// </remarks>
     internal class Nominator : ExpressionVisitor
     {
         private readonly Func<Expression, bool> canBeEvaluated;

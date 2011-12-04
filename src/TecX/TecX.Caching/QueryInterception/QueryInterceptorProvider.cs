@@ -4,6 +4,7 @@ namespace TecX.Caching.QueryInterception
     using System.Linq;
     using System.Linq.Expressions;
 
+    using TecX.Caching.KeyGeneration;
     using TecX.Common;
 
     public class QueryInterceptorProvider : IQueryProvider
@@ -47,12 +48,14 @@ namespace TecX.Caching.QueryInterception
         {
             Guard.AssertNotNull(expression, "expression");
 
+            string cacheKey = expression.GetCacheKey();
+
             object value;
-            bool handled = this.NotifyExecuting(expression, out value);
+            bool handled = this.NotifyExecuting(expression, cacheKey, out value);
 
             TResult result = !handled ? this.wrapped.Execute<TResult>(expression) : (TResult)value;
 
-            this.NotifyExecuted(expression, result);
+            this.NotifyExecuted(expression, cacheKey, result);
 
             return result;
         }
@@ -61,21 +64,28 @@ namespace TecX.Caching.QueryInterception
         {
             Guard.AssertNotNull(expression, "expression");
 
+            string cacheKey = expression.GetCacheKey();
+
             object value;
-            bool handled = this.NotifyExecuting(expression, out value);
+            bool handled = this.NotifyExecuting(expression, cacheKey, out value);
 
             object result = !handled ? this.wrapped.Execute(expression) : value;
 
-            this.NotifyExecuted(expression, result);
+            this.NotifyExecuted(expression, cacheKey, result);
 
             return result;
         }
 
-        public bool NotifyExecuting(Expression expression, out object result)
+        private bool NotifyExecuting(Expression expression, string cacheKey, out object result)
         {
             Guard.AssertNotNull(expression, "expression");
+            Guard.AssertNotEmpty(cacheKey, "cacheKey");
 
-            var e = new ExpressionExecuteEventArgs { Expression = expression };
+            var e = new ExpressionExecuteEventArgs
+                {
+                    Expression = expression, 
+                    CacheKey = cacheKey
+                };
 
             this.Executing(this, e);
 
@@ -89,13 +99,15 @@ namespace TecX.Caching.QueryInterception
             return false;
         }
 
-        public void NotifyExecuted(Expression expression, object result)
+        private void NotifyExecuted(Expression expression, string cacheKey, object result)
         {
             Guard.AssertNotNull(expression, "expression");
+            Guard.AssertNotEmpty(cacheKey, "cacheKey");
 
             var e = new ExpressionExecuteEventArgs
                 {
                     Expression = expression,
+                    CacheKey = cacheKey,
                     Result = result
                 };
 
