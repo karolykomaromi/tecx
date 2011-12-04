@@ -4,7 +4,6 @@ namespace TecX.Caching.Test.TestObjects
     using System.Linq;
     using System.Runtime.Caching;
 
-    using TecX.Caching.KeyGeneration;
     using TecX.Caching.QueryInterception;
     using TecX.Common;
     using TecX.Common.Extensions.Primitives;
@@ -17,8 +16,7 @@ namespace TecX.Caching.Test.TestObjects
 
         private readonly QueryInterceptor<Customer> customers;
 
-        // TODO weberse 2011-12-01 better use WeakReference here
-        private readonly List<ExternallyControlledChangeMonitor> monitors;
+        private readonly ExpirationToken expirationToken;
 
         public CachingCustomerRepository(ICustomerRepository inner)
         {
@@ -27,12 +25,11 @@ namespace TecX.Caching.Test.TestObjects
             this.inner = inner;
             this.cache = new MemoryCache(typeof(CachingCustomerRepository).Name);
 
-            this.customers = new QueryInterceptor<Customer>(this.inner.Customers, new QueryInterceptorProvider(this.inner.Customers.Provider));
+            this.customers = new QueryInterceptor<Customer>(this.inner.Customers);
 
             this.customers.QueryProvider.Executing += this.OnQueryExecuting;
             this.customers.QueryProvider.Executed += this.OnQueryExecuted;
-
-            this.monitors = new List<ExternallyControlledChangeMonitor>();
+            this.expirationToken = new ExpirationToken();
         }
 
         public IQueryable<Customer> Customers
@@ -49,16 +46,15 @@ namespace TecX.Caching.Test.TestObjects
 
             this.inner.Add(customer);
 
-            this.monitors.ForEach(m => m.Release());
-            this.monitors.Clear();
+            this.expirationToken.Expire();
         }
 
         private void OnQueryExecuted(object sender, ExpressionExecuteEventArgs e)
         {
-            // if we dont have the value in the cache add it
-            string cacheKey = e.Expression.GetCacheKey();
+            Guard.AssertNotEmpty(e.CacheKey, "e.CacheKey");
 
-            IQueryable<Customer> cachedResult = this.cache[cacheKey] as IQueryable<Customer>;
+            // if we dont have the value in the cache add it
+            IQueryable<Customer> cachedResult = this.cache[e.CacheKey] as IQueryable<Customer>;
 
             if (cachedResult == null)
             {
@@ -66,26 +62,27 @@ namespace TecX.Caching.Test.TestObjects
 
                 // add value with expiration of 10 minutes and the ability to control when the item
                 // is invalidated in case a write/update occurs
-                CacheItem cacheItem = new CacheItem(cacheKey, evaluatedQueryable);
+                CacheItem cacheItem = new CacheItem(e.CacheKey, evaluatedQueryable);
 
-                CacheItemPolicy policy = new CacheItemPolicy { SlidingExpiration = 10.Minutes() };
+                CacheItemPolicy policy = new CacheItemPolicy { SlidingExpiration = 1.Minutes() };
 
-                ExternallyControlledChangeMonitor monitor = new ExternallyControlledChangeMonitor();
+                ExternallyControlledChangeMonitor monitor = new ExternallyControlledChangeMonitor
+                    {
+                        ExpirationToken = this.expirationToken
+                    };
 
                 policy.ChangeMonitors.Add(monitor);
-
-                this.monitors.Add(monitor);
-
+                
                 this.cache.Add(cacheItem, policy);
             }
         }
 
         private void OnQueryExecuting(object sender, ExpressionExecuteEventArgs e)
         {
-            // check wether we have that value in the cache and return cached data instead
-            string cacheKey = e.Expression.GetCacheKey();
+            Guard.AssertNotEmpty(e.CacheKey, "e.CacheKey");
 
-            IQueryable<Customer> cachedResult = this.cache[cacheKey] as IQueryable<Customer>;
+            // check wether we have that value in the cache and return cached data instead
+            IQueryable<Customer> cachedResult = this.cache[e.CacheKey] as IQueryable<Customer>;
 
             if (cachedResult != null)
             {

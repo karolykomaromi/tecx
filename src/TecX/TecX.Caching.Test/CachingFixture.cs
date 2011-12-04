@@ -36,7 +36,7 @@
             Assert.IsTrue(r2.SequenceEqual(r3));
             Assert.IsTrue(r3.SequenceEqual(r4));
 
-            mock.VerifyGet(r => r.Customers, Times.Exactly(2));
+            mock.VerifyGet(r => r.Customers, Times.Once());
         }
 
         [TestMethod]

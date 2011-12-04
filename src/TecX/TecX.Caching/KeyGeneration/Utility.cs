@@ -6,6 +6,12 @@ namespace TecX.Caching.KeyGeneration
     using System.Security.Cryptography;
     using System.Text;
 
+    /// <remarks>
+    /// Copyright (c) 2010 Pete Montgomery.
+    /// http://petemontgomery.wordpress.com
+    /// Licenced under GNU LGPL v3.
+    /// http://www.gnu.org/licenses/lgpl.html
+    /// </remarks>
     public static class Utility
     {
         /// <summary>

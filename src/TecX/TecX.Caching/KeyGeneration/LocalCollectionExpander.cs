@@ -9,6 +9,12 @@ namespace TecX.Caching.KeyGeneration
     /// <summary>
     /// Enables cache key support for local collection values.
     /// </summary>
+    /// <remarks>
+    /// Copyright (c) 2010 Pete Montgomery.
+    /// http://petemontgomery.wordpress.com
+    /// Licenced under GNU LGPL v3.
+    /// http://www.gnu.org/licenses/lgpl.html
+    /// </remarks>
     public class LocalCollectionExpander : ExpressionVisitor
     {
         public static Expression Rewrite(Expression expression)

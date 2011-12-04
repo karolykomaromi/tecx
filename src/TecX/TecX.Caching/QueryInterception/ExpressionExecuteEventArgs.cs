@@ -10,5 +10,7 @@ namespace TecX.Caching.QueryInterception
         public object Result { get; set; }
 
         public Expression Expression { get; set; }
+
+        public string CacheKey { get; set; }
     }
 }

@@ -11,14 +11,14 @@ namespace TecX.Caching.QueryInterception
 
     public class QueryInterceptor<T> : QueryInterceptor, IQueryable<T>
     {
-        private readonly IQueryable<T> wrapped;
+        public QueryInterceptor(IQueryable<T> wrapped)
+            : this(wrapped, new QueryInterceptorProvider(wrapped.Provider))
+        {
+        }
 
         public QueryInterceptor(IQueryable<T> wrapped, QueryInterceptorProvider provider)
             : base(wrapped, provider)
         {
-            Guard.AssertNotNull(wrapped, "wrapped");
-
-            this.wrapped = wrapped;
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -82,7 +82,7 @@ namespace TecX.Caching.QueryInterception
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            var enumerable = this.Provider.Execute(this.Expression) as IEnumerable;
+            var enumerable = (IEnumerable)this.Provider.Execute(this.Expression);
 
             var enumerator = enumerable.GetEnumerator();
 
