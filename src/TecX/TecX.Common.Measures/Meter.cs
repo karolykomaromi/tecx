@@ -1,17 +1,17 @@
-﻿using System;
-using System.Diagnostics;
-using System.Globalization;
-
-namespace TecX.Common.Measures
+﻿namespace TecX.Common.Measures
 {
-    [DebuggerDisplay("{_value,{F2},{en-US}} m")]
+    using System;
+    using System.Diagnostics;
+    using System.Globalization;
+
+    [DebuggerDisplay("{value,{F2},{en-US}} m")]
     public struct Meter : IFormattable
     {
-        private readonly double _value;
+        private readonly double value;
 
         public Meter(double value)
         {
-            this._value = value;
+            this.value = value;
         }
 
         public static implicit operator Meter(double distance)
@@ -21,32 +21,32 @@ namespace TecX.Common.Measures
 
         public static explicit operator double(Meter distance)
         {
-            return distance._value;
+            return distance.value;
         }
 
         public static Meter operator +(Meter distance1, Meter distance2)
         {
-            return new Meter(distance1._value + distance2._value);
+            return new Meter(distance1.value + distance2.value);
         }
 
         public static Meter operator +(Meter distance1, double distance2)
         {
-            return new Meter(distance1._value + distance2);
+            return new Meter(distance1.value + distance2);
         }
 
         public static Meter operator -(Meter distance1, Meter distance2)
         {
-            return new Meter(distance1._value - distance2._value);
+            return new Meter(distance1.value - distance2.value);
         }
 
         public static Meter operator -(Meter distance1, double distance2)
         {
-            return new Meter(distance1._value - distance2);
+            return new Meter(distance1.value - distance2);
         }
 
         public Kilometer ToKilometers()
         {
-            return new Kilometer(_value / 1000.0);
+            return new Kilometer(this.value / 1000.0);
         }
 
         public override string ToString()
@@ -56,7 +56,7 @@ namespace TecX.Common.Measures
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            return _value.ToString(format, formatProvider) + " m";
+            return this.value.ToString(format, formatProvider) + " m";
         }
     }
 }
