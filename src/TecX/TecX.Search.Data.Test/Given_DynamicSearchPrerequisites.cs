@@ -39,10 +39,10 @@ namespace TecX.Search.Data.Test
 
         protected override void Given()
         {
-            this.msg0 = new Message { Description = "mfs123", SentAt = new DateTime(2011, 11, 10), Id = 0 };
-            this.msg1 = new Message { Description = "aabc", SentAt = new DateTime(2011, 11, 13), Id = 1 };
-            this.msg2 = new Message { Description = "mfs123", SentAt = new DateTime(2011, 11, 14), Id = 2 };
-            this.msg3 = new Message { Description = "123", SentAt = new DateTime(2011, 11, 13), Id = 3 };
+            this.msg0 = new Message { Source = "mfs123", SentAt = new DateTime(2011, 11, 10), Id = 0 };
+            this.msg1 = new Message { Source = "aabc", SentAt = new DateTime(2011, 11, 13), Id = 1 };
+            this.msg2 = new Message { Source = "mfs123", SentAt = new DateTime(2011, 11, 14), Id = 2 };
+            this.msg3 = new Message { Source = "123", SentAt = new DateTime(2011, 11, 13), Id = 3 };
 
             this.set = new InMemoryDbSet<Message> { this.msg0, this.msg1, this.msg2, this.msg3 };
 

@@ -1,5 +1,6 @@
 namespace TecX.Search.Data.EF
 {
+    using System.ComponentModel.DataAnnotations;
     using System.Data.Entity.ModelConfiguration;
 
     using TecX.Search.Model;
@@ -8,17 +9,14 @@ namespace TecX.Search.Data.EF
     {
         public MessageConfiguration()
         {
-            ////            HasKey(b => b.Id);
+            HasKey(b => b.Id);
 
-            ////            Property(b => b.Id)
-            ////                .HasColumnName("id")
-            ////                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
-            ////                .IsRequired();
+            Property(b => b.Id)
+                .HasColumnName("Id")
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
+                .IsRequired();
 
-            ////            ////Ignore(b => b.CurrentPoll);
-            ////            Ignore(b => b.AttributeId);
-
-            ////            ToTable("Messages");
+            ToTable("Messages");
         }
     }
 }
