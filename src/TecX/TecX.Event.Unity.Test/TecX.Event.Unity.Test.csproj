@@ -6,11 +6,11 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{943AD349-5431-4B9F-9DF4-A6DF5390B484}</ProjectGuid>
+    <ProjectGuid>{438532B9-F354-4156-9F72-630D4FBD4531}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TecX.Unity.Test</RootNamespace>
-    <AssemblyName>TecX.Unity.Test</AssemblyName>
+    <RootNamespace>TecX.Event.Unity.Test</RootNamespace>
+    <AssemblyName>TecX.Event.Unity.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -37,29 +37,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Practices.Unity">
       <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
       <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -71,49 +58,31 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CollectionResolutionExtensionFixture.cs" />
-    <Compile Include="EnrichmentFixture.cs" />
+    <Compile Include="EventAggregatorContainerExtensionFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ClozeInjectionConstructorFixture.cs" />
-    <Compile Include="SemanticGroupFixture.cs" />
-    <Compile Include="TestObjects\Bar.cs" />
-    <Compile Include="TestObjects\Car.cs" />
-    <Compile Include="TestObjects\CarEngine.cs" />
-    <Compile Include="TestObjects\CarWheel.cs" />
-    <Compile Include="TestObjects\CtorTest.cs" />
-    <Compile Include="TestObjects\Foo.cs" />
-    <Compile Include="TestObjects\ICtorTest.cs" />
-    <Compile Include="TestObjects\IEngine.cs" />
-    <Compile Include="TestObjects\IFoo.cs" />
-    <Compile Include="TestObjects\ILogger.cs" />
-    <Compile Include="TestObjects\IVehicle.cs" />
-    <Compile Include="TestObjects\IWheel.cs" />
-    <Compile Include="TestObjects\Motorcycle.cs" />
-    <Compile Include="TestObjects\MotorcycleEngine.cs" />
-    <Compile Include="TestObjects\MotorcycleWheel.cs" />
-    <Compile Include="TestObjects\NeedsCollection.cs" />
-    <Compile Include="TestObjects\Snafu.cs" />
-    <Compile Include="TestObjects\TestLogger.cs" />
-    <Compile Include="WasResolvedFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
-      <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
-      <Name>TecX.Common</Name>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TecX.Event.Test\TecX.Event.Test.csproj">
+      <Project>{C0EB3FDE-75C3-441C-A37D-EF51BCCFD988}</Project>
+      <Name>TecX.Event.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Event.Unity\TecX.Event.Unity.csproj">
+      <Project>{A763CC8F-835E-444C-9A9F-88E7A443C1B2}</Project>
+      <Name>TecX.Event.Unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Event\TecX.Event.csproj">
+      <Project>{F1B1FD4F-F40F-4739-8EE4-D683440396DA}</Project>
+      <Name>TecX.Event</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.TestTools\TecX.TestTools.csproj">
       <Project>{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}</Project>
       <Name>TecX.TestTools</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TecX.Unity\TecX.Unity.csproj">
-      <Project>{69621991-8933-41FD-8493-87E7FA5A26FE}</Project>
-      <Name>TecX.Unity</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

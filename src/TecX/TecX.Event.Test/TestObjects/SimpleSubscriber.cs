@@ -6,7 +6,7 @@ namespace TecX.Event.Test.TestObjects
 
     using TecX.Event;
 
-    internal class SimpleSubscriber : ISubscribeTo<SimpleMessage>
+    public class SimpleSubscriber : ISubscribeTo<SimpleMessage>
     {
         public bool MessageReceived = false;
         public int MessageCounter = 0;

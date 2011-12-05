@@ -45,14 +45,4 @@ namespace TecX.Unity.Test
             Assert.IsInstanceOfType(sut.Collection, typeof(List<string>));
         }
     }
-
-    class NeedsCollection
-    {
-        public IEnumerable<string> Collection { get; set; }
-
-        public NeedsCollection(IEnumerable<string> collection)
-        {
-            Collection = collection;
-        }
-    }
 }

@@ -2,7 +2,7 @@ namespace TecX.Event.Test.TestObjects
 {
     using TecX.Event;
 
-    internal class SimplePublisher
+    public class SimplePublisher
     {
         private readonly IEventAggregator eventAggregator;
 
