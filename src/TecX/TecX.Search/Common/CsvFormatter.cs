@@ -4,6 +4,7 @@ namespace TecX.Search.Common
     using System.Text;
     
     using TecX.Common;
+    using TecX.Search.Model;
 
     public static class CsvFormatter
     {

@@ -1,4 +1,4 @@
-namespace TecX.Search
+namespace TecX.Search.Model
 {
     using System;
 

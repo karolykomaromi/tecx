@@ -10,6 +10,7 @@
     using TecX.Search;
     using TecX.Search.Data.EF;
     using TecX.Search.Data.Test.TestObjects;
+    using TecX.Search.Model;
 
     [TestClass]
     public class EFMessageRepositoryFixture

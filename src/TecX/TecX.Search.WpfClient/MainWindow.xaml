@@ -9,7 +9,8 @@
         xmlns:Converter="clr-namespace:TecX.Search.WpfClient.Converter"
         xmlns:ViewModel="clr-namespace:TecX.Search.WpfClient.ViewModel"
         xmlns:ValidationRules="clr-namespace:TecX.Search.WpfClient.ValidationRules"
-        xmlns:Search="clr-namespace:TecX.Search;assembly=TecX.Search" mc:Ignorable="d" 
+        xmlns:Search="clr-namespace:TecX.Search;assembly=TecX.Search"
+        xmlns:Model="clr-namespace:TecX.Search.Model;assembly=TecX.Search.Model" mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance Type={x:Type ViewModel:MainWindowViewModel}}"
         FocusManager.FocusedElement="{Binding ElementName=searchTextBox}"
         Icon="pack://application:,,,/Resources/Magnifier.png">
@@ -128,7 +129,7 @@
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type Search:Message}">
+                <DataTemplate DataType="{x:Type Model:Message}">
                     <UserControl      
                         BorderBrush="DarkGray"
                         BorderThickness="1"

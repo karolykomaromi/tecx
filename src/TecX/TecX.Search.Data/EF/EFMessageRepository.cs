@@ -8,6 +8,7 @@
 
     using TecX.Common;
     using TecX.Common.Extensions.LinqTo.Entities;
+    using TecX.Search.Model;
 
     public class EFMessageRepository : IMessageRepository
     {

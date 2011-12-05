@@ -7,6 +7,7 @@
 
     using TecX.Search;
     using TecX.Search.Data.EntLib;
+    using TecX.Search.Model;
     using TecX.Search.Test.TestObjects;
     using TecX.TestTools;
 

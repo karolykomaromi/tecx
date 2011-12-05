@@ -2,6 +2,8 @@ namespace TecX.Search.Data.EF
 {
     using System.Data.Entity.ModelConfiguration;
 
+    using TecX.Search.Model;
+
     public class MessageConfiguration : EntityTypeConfiguration<Message>
     {
         public MessageConfiguration()

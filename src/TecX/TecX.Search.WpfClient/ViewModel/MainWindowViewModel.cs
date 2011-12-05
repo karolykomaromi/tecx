@@ -10,6 +10,7 @@ namespace TecX.Search.WpfClient.ViewModel
     using TecX.Common;
     using TecX.Search;
     using TecX.Search.Data;
+    using TecX.Search.Model;
     using TecX.Search.WpfClient.Commands;
 
     using Constants = TecX.Search.WpfClient.Constants;

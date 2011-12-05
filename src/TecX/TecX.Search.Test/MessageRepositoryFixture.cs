@@ -8,6 +8,7 @@
 
     using TecX.Search;
     using TecX.Search.Data.EntLib;
+    using TecX.Search.Model;
 
     using Constants = TecX.Search.Data.EntLib.Constants;
 
@@ -15,7 +16,8 @@
     public class MessageRepositoryFixture
     {
         [TestMethod]
-        public void TestMethod1()
+        [Ignore]
+        public void CanSearchUsingEntLib()
         {
             var repository = new EntLibMessageRepository(new SqlDatabase(Constants.ConnectionString), new AccessorFactory());
 
@@ -36,7 +38,8 @@
             }
         }
 
-        //[TestMethod]
+        [TestMethod]
+        [Ignore]
         public void CustomAccessorWithOutputParameter()
         {
             var rowMapper = MapBuilder<Message>.MapAllProperties().Build();

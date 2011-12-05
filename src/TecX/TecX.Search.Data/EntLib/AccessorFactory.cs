@@ -6,7 +6,8 @@ namespace TecX.Search.Data.EntLib
 
     using TecX.Common;
     using TecX.Search;
-    
+    using TecX.Search.Model;
+
     public class AccessorFactory
     {
         private readonly IRowMapper<Message> rowMapper;

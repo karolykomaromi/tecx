@@ -4,6 +4,8 @@ namespace TecX.Search.Data.EF
     using System.Collections.Generic;
     using System.Data.Entity;
 
+    using TecX.Search.Model;
+
     public interface IMessageEntities
     {
         IDbSet<Message> Messages { get; }

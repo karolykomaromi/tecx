@@ -101,6 +101,10 @@
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Search.Model\TecX.Search.Model.csproj">
+      <Project>{F55B4E0F-DD0F-40EE-A2F3-B8C514CFD18B}</Project>
+      <Name>TecX.Search.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Search\TecX.Search.csproj">
       <Project>{A872CF9F-FCA9-43CE-ADBF-D97C34BADF0C}</Project>
       <Name>TecX.Search</Name>

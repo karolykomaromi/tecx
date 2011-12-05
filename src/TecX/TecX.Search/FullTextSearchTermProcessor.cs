@@ -5,6 +5,7 @@ namespace TecX.Search
     using System.Text;
 
     using TecX.Common;
+    using TecX.Search.Model;
     using TecX.Search.Split;
 
     public class FullTextSearchTermProcessor
