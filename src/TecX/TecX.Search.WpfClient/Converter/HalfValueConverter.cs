@@ -4,7 +4,7 @@
     using System.Globalization;
     using System.Windows.Data;
 
-    class HalfValueConverter : IMultiValueConverter
+    public class HalfValueConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
