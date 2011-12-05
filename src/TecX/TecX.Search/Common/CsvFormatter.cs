@@ -13,8 +13,15 @@ namespace TecX.Search.Common
             Guard.AssertNotNull(messages, "messages");
 
             StringBuilder sb = new StringBuilder(1000);
+            
+            sb.Append("Description").Append(";")
+                .Append("Id").Append(";")
+                .Append("MessageText").Append(";")
+                .Append("Priority").Append(";")
+                .Append("SentAt").Append(";")
+                .Append("Source").Append(";")
+                .AppendLine();
 
-            // TODO weberse 2011-12-05 add headers
             foreach (Message msg in messages)
             {
                 sb.AppendLine(ToCsv(msg));
@@ -29,7 +36,14 @@ namespace TecX.Search.Common
 
             StringBuilder sb = new StringBuilder(500);
 
-            // TODO weberse 2011-12-05 add field values
+            sb.Append(msg.Description).Append(";")
+                .Append(msg.Id).Append(";")
+                .Append(msg.MessageText).Append(";")
+                .Append(msg.Priority).Append(";")
+                .Append(msg.SentAt.ToString(Defaults.Culture))
+                .Append(";").Append(msg.Source).Append(";")
+                .AppendLine();
+
             return sb.ToString();
         }
     }

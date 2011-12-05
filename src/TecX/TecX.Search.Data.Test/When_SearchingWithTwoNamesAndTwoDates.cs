@@ -23,7 +23,7 @@ namespace TecX.Search.Data.Test
         public void Then_CreatesDynamicQuery()
         {
             Assert.AreEqual(1, this.result.Count);
-            Assert.AreSame(this.cust1, result[0]);
+            Assert.AreSame(this.msg1, result[0]);
         }
     }
 }
