@@ -1,8 +1,177 @@
 ﻿<Window x:Class="TecX.Search.WpfClient.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Message Search" 
+        Height="480" 
+        Width="800"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:Converter="clr-namespace:TecX.Search.WpfClient.Converter"
+        xmlns:ViewModel="clr-namespace:TecX.Search.WpfClient.ViewModel"
+        xmlns:ValidationRules="clr-namespace:TecX.Search.WpfClient.ValidationRules"
+        xmlns:Search="clr-namespace:TecX.Search;assembly=TecX.Search" mc:Ignorable="d" 
+        d:DataContext="{d:DesignInstance Type={x:Type ViewModel:MainWindowViewModel}}"
+        FocusManager.FocusedElement="{Binding ElementName=searchTextBox}"
+        Icon="pack://application:,,,/Resources/Magnifier.png">
+    <Window.Resources>
+        <ResourceDictionary>
+            <Converter:MessagePriorityConverter x:Key="msgPriorityConverter" />
+            <Converter:DateTimeConverter x:Key="dateTimeConverter"/>
+            <Converter:PriorityToBrushConverter x:Key="priorityConverter" />
+            <Converter:StatusToBrushConverter x:Key="statusConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding 
+            Key="C" 
+            Modifiers="Ctrl" 
+            Command="{Binding Copy}" 
+            CommandParameter="{Binding ElementName=searchResults, Path=SelectedItems}"/>
+    </Window.InputBindings>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBox 
+            x:Name="searchTextBox"
+            VerticalAlignment="Center" 
+            Text="{Binding Path=SearchTerms, UpdateSourceTrigger=PropertyChanged}" 
+            Margin="2,10,2,10" 
+            TabIndex="1">
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding Search}" Key="Enter"/>
+            </TextBox.InputBindings>
+        </TextBox>
+        <Button 
+            Grid.Column="1" 
+            VerticalAlignment="Center" 
+            Command="{Binding Search}" 
+            Margin="2" 
+            TabIndex="2"
+            Content="Search"/>
+        <Expander 
+            Grid.Row="1"
+            Margin="2">
+            <Expander.Header>
+                <TextBlock FontSize="10">Advanced Search Options</TextBlock>
+            </Expander.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBox Style="{StaticResource textBoxInError}">
+                    <TextBox.Text>
+                        <Binding Path="MaxResultCount" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <ValidationRules:NumbersOnlyValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <Label Grid.Column="1">Maximum number of displayed results</Label>
+                <DatePicker Grid.Row="1" SelectedDate="{Binding SearchOnlyAfterThisDate}"/>
+                <Label Grid.Column="1" Grid.Row="1">Search only logs after this date</Label>
+                <DatePicker Grid.Row="2" SelectedDate="{Binding SearchOnlyBeforeThisDate}"/>
+                <Label Grid.Column="1" Grid.Row="2">Search only logs before this date</Label>
+            </Grid>
+        </Expander>
+        <Grid
+            Grid.Column="1"
+            Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button
+                Margin="2"
+                Content="Copy"
+                VerticalAlignment="Top"
+                Command="{Binding Copy}"
+                CommandParameter="{Binding ElementName=searchResults, Path=SelectedItems}"/>
+            <Button
+                Grid.Column="1"
+                Margin="2"
+                VerticalAlignment="Top"
+                Content="Copy all"
+                Command="{Binding Copy}"
+                CommandParameter="{Binding ElementName=searchResults, Path=Items}"/>
+        </Grid>
+        <ListBox 
+            x:Name="searchResults"
+            Grid.Row="2" 
+            Grid.ColumnSpan="2" 
+            ItemsSource="{Binding Messages}" 
+            Margin="2" 
+            SelectionMode="Multiple"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel 
+                        CanHorizontallyScroll="False" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type Search:Message}">
+                    <UserControl      
+                        BorderBrush="DarkGray"
+                        BorderThickness="1"
+                        Padding="1"
+                        Background="{Binding Path=Priority, Converter={StaticResource priorityConverter}}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                Text="{Binding Path=Priority,Converter={StaticResource msgPriorityConverter}}"/>
+                            <TextBlock
+                                Grid.Column="1"                            
+                                HorizontalAlignment="Right"
+                                Text="{Binding Path=SentAt,Converter={StaticResource dateTimeConverter}}"/>
+                            <TextBlock 
+                                Grid.Row="1" 
+                                Text="{Binding Source}"
+                                Padding="5"
+                                FontSize="16"/>
+                            <TextBlock
+                                Grid.Column="1"
+                                Grid.Row="1"                                
+                                Text="{Binding MessageText}"
+                                Padding="5"
+                                FontSize="16"/>
+                        </Grid>
+                    </UserControl>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBlock 
+            Grid.Row="2" 
+            Grid.ColumnSpan="2" 
+            VerticalAlignment="Bottom"
+            Text="{Binding Status}" 
+            Background="{Binding Status, Converter={StaticResource ResourceKey=statusConverter}}"
+            Margin="2,10,2,2"/>
     </Grid>
 </Window>
