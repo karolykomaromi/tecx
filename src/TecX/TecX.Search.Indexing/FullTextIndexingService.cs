@@ -1,19 +1,24 @@
 ﻿namespace TecX.Search.Indexing
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Timers;
+
+    using TecX.Common;
+    using TecX.Search.Data;
 
     public class FullTextIndexingService
     {
+        private readonly IMessageRepository repository;
+
         private readonly Timer timer;
 
-        public FullTextIndexingService(TimeSpan indexingIntervall)
+        public FullTextIndexingService(TimeSpan indexingIntervall, IMessageRepository repository)
         {
+            Guard.AssertNotNull(repository, "repository");
+
             this.timer = new Timer(indexingIntervall.TotalSeconds);
             this.timer.Elapsed += this.OnElapsed;
+            this.repository = repository;
         }
 
         public void Start()
@@ -28,6 +33,7 @@
 
         private void OnElapsed(object sender, ElapsedEventArgs e)
         {
+            this.repository.IndexMessagesForFullTextSearch();
         }
     }
 }

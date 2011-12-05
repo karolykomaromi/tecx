@@ -38,10 +38,14 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.4.2.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -61,12 +65,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Search.Data\TecX.Search.Data.csproj">
+      <Project>{770C8133-03B9-46D1-B25F-036DF7F6838D}</Project>
+      <Name>TecX.Search.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Search\TecX.Search.csproj">
+      <Project>{A872CF9F-FCA9-43CE-ADBF-D97C34BADF0C}</Project>
+      <Name>TecX.Search</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
