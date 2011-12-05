@@ -6,7 +6,7 @@ namespace TecX.Event.Test.TestObjects
 
     using TecX.Event;
 
-    internal class OneTimeSubscriber : ISubscribeTo<SimpleMessage>
+    public class OneTimeSubscriber : ISubscribeTo<SimpleMessage>
     {
         public int Counter = 0;
 

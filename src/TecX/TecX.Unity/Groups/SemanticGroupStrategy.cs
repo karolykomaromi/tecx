@@ -45,7 +45,7 @@ namespace TecX.Unity.Groups
                 {
                     IDependencyResolverPolicy resolverPolicy = new NamedTypeDependencyResolverPolicy(scopedMapping.From, scopedMapping.Name);
                     context.Policies.Set<IDependencyResolverPolicy>(resolverPolicy, parameterKeys[i]);
-                    break;
+                    continue;
                 }
 
                 if (parameterType.IsGenericType)

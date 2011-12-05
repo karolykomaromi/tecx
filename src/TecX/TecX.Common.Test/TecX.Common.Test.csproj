@@ -79,7 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityPredicateExtensionsFixture.cs" />
-    <Compile Include="EventAggregatorContainerExtensionFixture.cs" />
     <Compile Include="ExceptionExtensionFixture.cs" />
     <Compile Include="ExceptionExtensionsFixture.cs" />
     <Compile Include="GuardFixture.cs" />

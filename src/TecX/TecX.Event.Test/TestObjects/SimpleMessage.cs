@@ -1,6 +1,6 @@
 namespace TecX.Event.Test.TestObjects
 {
-    internal class SimpleMessage
+    public class SimpleMessage
     {
     }
 }
