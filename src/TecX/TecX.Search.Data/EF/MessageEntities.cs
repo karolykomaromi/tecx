@@ -10,6 +10,7 @@
 
     using TecX.Common;
     using TecX.Search.Data.EF.Reader;
+    using TecX.Search.Model;
 
     public class MessageEntities : DbContext, IMessageEntities
     {

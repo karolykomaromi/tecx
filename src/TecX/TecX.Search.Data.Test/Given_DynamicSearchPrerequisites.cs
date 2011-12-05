@@ -9,6 +9,7 @@ namespace TecX.Search.Data.Test
     using TecX.Search;
     using TecX.Search.Data.EF;
     using TecX.Search.Data.Test.TestObjects;
+    using TecX.Search.Model;
     using TecX.Search.Test.TestObjects;
     using TecX.TestTools;
 

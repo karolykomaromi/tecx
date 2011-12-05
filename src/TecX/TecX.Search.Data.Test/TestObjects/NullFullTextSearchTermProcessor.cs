@@ -3,6 +3,7 @@
     using System.Collections.Generic;
 
     using TecX.Search;
+    using TecX.Search.Model;
 
     public class NullFullTextSearchTermProcessor : FullTextSearchTermProcessor
     {

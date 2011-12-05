@@ -49,7 +49,6 @@
     </Compile>
     <Compile Include="Common\CsvFormatter.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Message.cs" />
     <Compile Include="Defaults.cs" />
     <Compile Include="FullTextSearchTermProcessor.cs" />
     <Compile Include="NullSearchParameter.cs" />
@@ -95,6 +94,10 @@
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Search.Model\TecX.Search.Model.csproj">
+      <Project>{F55B4E0F-DD0F-40EE-A2F3-B8C514CFD18B}</Project>
+      <Name>TecX.Search.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

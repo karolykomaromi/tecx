@@ -93,6 +93,10 @@
       <Project>{770C8133-03B9-46D1-B25F-036DF7F6838D}</Project>
       <Name>TecX.Search.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Search.Model\TecX.Search.Model.csproj">
+      <Project>{F55B4E0F-DD0F-40EE-A2F3-B8C514CFD18B}</Project>
+      <Name>TecX.Search.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Search.Test\TecX.Search.Test.csproj">
       <Project>{209BC7EC-8BE3-4DC6-B887-10841B50857F}</Project>
       <Name>TecX.Search.Test</Name>

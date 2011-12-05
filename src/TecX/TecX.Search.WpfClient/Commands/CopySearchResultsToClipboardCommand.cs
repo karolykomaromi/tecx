@@ -11,6 +11,7 @@
     using TecX.Common;
     using TecX.Search;
     using TecX.Search.Common;
+    using TecX.Search.Model;
 
     public class CopySearchResultsToClipboardCommand : ICommand
     {

@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using TecX.Search.Model;
+
     public interface IMessageRepository
     {
         void AddMessage(Message message);

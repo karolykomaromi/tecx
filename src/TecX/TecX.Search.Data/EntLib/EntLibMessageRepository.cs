@@ -7,6 +7,7 @@ namespace TecX.Search.Data.EntLib
     using TecX.Common;
     using TecX.Search;
     using TecX.Search.Data;
+    using TecX.Search.Model;
 
     public class EntLibMessageRepository : IMessageRepository
     {
