@@ -17,7 +17,6 @@
                                           ? css.ConnectionString
                                           : @"Data Source=.;Initial Catalog=MessageStore;Integrated Security=SSPI;";
 
-
             var context = new MessageEntities(connectionString);
 
             var repository = new EFMessageRepository(context, new FullTextSearchTermProcessor());
