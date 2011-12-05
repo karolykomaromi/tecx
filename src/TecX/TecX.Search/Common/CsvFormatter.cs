@@ -14,8 +14,7 @@ namespace TecX.Search.Common
 
             StringBuilder sb = new StringBuilder(1000);
             
-            sb.Append("Description").Append(";")
-                .Append("Id").Append(";")
+            sb.Append("Id").Append(";")
                 .Append("MessageText").Append(";")
                 .Append("Priority").Append(";")
                 .Append("SentAt").Append(";")
@@ -36,12 +35,11 @@ namespace TecX.Search.Common
 
             StringBuilder sb = new StringBuilder(500);
 
-            sb.Append(msg.Description).Append(";")
-                .Append(msg.Id).Append(";")
+            sb.Append(msg.Id).Append(";")
                 .Append(msg.MessageText).Append(";")
                 .Append(msg.Priority).Append(";")
-                .Append(msg.SentAt.ToString(Defaults.Culture))
-                .Append(";").Append(msg.Source).Append(";")
+                .Append(msg.SentAt.ToString(Defaults.Culture)).Append(";")
+                .Append(msg.Source).Append(";")
                 .AppendLine();
 
             return sb.ToString();

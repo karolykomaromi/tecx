@@ -86,8 +86,8 @@
             {
                 // access to modified closure. we need to copy the search term to a variable that
                 // is local to the scope of the loop and won't change when we iterate over the parameters
-                string name = (string)parameter.Value;
-                where = where.Or(msg => msg.Description.Contains(name));
+                string source = (string)parameter.Value;
+                where = where.Or(msg => msg.Source.Contains(source));
             }
 
             var dates = searchParameters.OfType<SearchParameter<DateTime>>().OrderBy(p => p.Value).ToList();

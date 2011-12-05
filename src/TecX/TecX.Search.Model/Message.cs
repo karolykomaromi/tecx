@@ -10,10 +10,8 @@ namespace TecX.Search.Model
 
         public int Priority { get; set; }
 
-        public string Source { get; set; }
-
-        public string Description { get; set; }
-
         public DateTime SentAt { get; set; }
+
+        public string Source { get; set; }
     }
 }
