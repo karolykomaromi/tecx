@@ -37,11 +37,38 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.4.2.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
+      <HintPath>..\packages\EnterpriseLibrary.Data.5.0.505.0\lib\NET35\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration">
+      <HintPath>..\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
@@ -49,7 +76,46 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessorFactoryFixture.cs" />
+    <Compile Include="MessageRepositoryFixture.cs" />
+    <Compile Include="BraceStringSplitStrategyFixture.cs" />
+    <Compile Include="FullTextSearchTermProcessorFixture.cs" />
+    <Compile Include="OrStringSplitStrategyFixture.cs" />
+    <Compile Include="ParameterParseStrategyFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchParameterCollectionFixture.cs" />
+    <Compile Include="SearchParameterHelperFixture.cs" />
+    <Compile Include="SearchTermAnalyzerFixture.cs" />
+    <Compile Include="SqlServerHelperFixture.cs" />
+    <Compile Include="StringCrawlerFixture.cs" />
+    <Compile Include="StringSplitParameterCollectionFixture.cs" />
+    <Compile Include="StringSplitParameterFixture.cs" />
+    <Compile Include="StringSplitStrategyFixture.cs" />
+    <Compile Include="TestObjects\InMemoryDbSet.cs" />
+    <Compile Include="TestObjects\MockDatabase.cs" />
+    <Compile Include="TestObjects\MockDbProviderFactory.cs" />
+    <Compile Include="TestObjects\NullStringSplitStrategy.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
+      <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
+      <Name>TecX.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Search.Data\TecX.Search.Data.csproj">
+      <Project>{770C8133-03B9-46D1-B25F-036DF7F6838D}</Project>
+      <Name>TecX.Search.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Search\TecX.Search.csproj">
+      <Project>{A872CF9F-FCA9-43CE-ADBF-D97C34BADF0C}</Project>
+      <Name>TecX.Search</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.TestTools\TecX.TestTools.csproj">
+      <Project>{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}</Project>
+      <Name>TecX.TestTools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

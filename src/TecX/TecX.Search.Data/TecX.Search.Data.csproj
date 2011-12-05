@@ -38,6 +38,27 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.2.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
+      <HintPath>..\packages\EnterpriseLibrary.Data.5.0.505.0\lib\NET35\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration">
+      <HintPath>..\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -52,24 +73,37 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Customer.cs" />
-    <Compile Include="EF\CustomerConfiguration.cs" />
-    <Compile Include="EF\EFCustomerRepository.cs" />
-    <Compile Include="EF\ISearchEntities.cs" />
-    <Compile Include="EF\SearchEntities.cs" />
-    <Compile Include="ICustomerRepository.cs" />
+    <Compile Include="EF\Constants.cs" />
+    <Compile Include="EF\MessageConfiguration.cs" />
+    <Compile Include="EF\EFMessageRepository.cs" />
+    <Compile Include="EF\IMessageEntities.cs" />
+    <Compile Include="EF\Reader\EntityDataReader.cs" />
+    <Compile Include="EF\Reader\EntityDataReaderExtensions.cs" />
+    <Compile Include="EF\Reader\EntityDataReaderOptions.cs" />
+    <Compile Include="EF\MessageEntities.cs" />
+    <Compile Include="EF\SqlServerHelper.cs" />
+    <Compile Include="EntLib\AccessorFactory.cs" />
+    <Compile Include="EntLib\Constants.cs" />
+    <Compile Include="EntLib\CustomSprocAccessor.cs" />
+    <Compile Include="EntLib\EntLibMessageRepository.cs" />
+    <Compile Include="IMessageRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="EntLib\" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Search\TecX.Search.csproj">
+      <Project>{A872CF9F-FCA9-43CE-ADBF-D97C34BADF0C}</Project>
+      <Name>TecX.Search</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
