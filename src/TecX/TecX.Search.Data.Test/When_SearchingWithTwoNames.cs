@@ -19,9 +19,9 @@ namespace TecX.Search.Data.Test
         public void Then_CreatesDynamicQuery()
         {
             Assert.AreEqual(3, this.result.Count);
-            Assert.AreSame(this.cust2, result[0]);
-            Assert.AreSame(this.cust1, result[1]);
-            Assert.AreSame(this.cust0, result[2]);
+            Assert.AreSame(this.msg2, result[0]);
+            Assert.AreSame(this.msg1, result[1]);
+            Assert.AreSame(this.msg0, result[2]);
         }
     }
 }

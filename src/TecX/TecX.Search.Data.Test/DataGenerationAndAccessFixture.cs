@@ -1,78 +1,80 @@
 ﻿namespace TecX.Search.Data.Test
 {
-    using System;
+    using System.Collections.Generic;
     using System.Configuration;
     using System.Data.Entity.Infrastructure;
-    using System.Diagnostics;
+    using System.Data.SqlClient;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using TecX.Common;
-    using TecX.Common.Time;
+    using Ploeh.AutoFixture;
+
     using TecX.Logging;
     using TecX.Search;
     using TecX.Search.Data.EF;
+    using TecX.Search.Data.EF.Reader;
+    using TecX.Search.Data.Test.TestObjects;
+    using TecX.Search.Model;
 
+    [TestClass]
+    public class MessageTestDataGeneration
+    {
+        [TestMethod]
+        [Ignore]
+        public void GenerateAndSafeData()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MessageSearch"].ConnectionString;
+            
+            int count = 50000;
 
-    //[TestClass]
-    //public class MessageTestDataGeneration
-    //{
-    //    [TestMethod]
-    //    public void GenerateAndSafeData()
-    //    {
-    //        string connectionString = ConfigurationManager.ConnectionStrings["MessageSearch"].ConnectionString;
+            var fixture = new Fixture();
 
-    //        //var entities = new MessageEntities(connectionString);
+            fixture.Customizations.Add(new CurrentDateTimeGenerator());
+            fixture.Customizations.Add(new MessagePriorityGenerator());
 
-    //        int count = 50000;
+            List<Message> messages = new List<Message>(count);
 
-    //        var fixture = new Fixture();
+            for (int i = 0; i < count; i++)
+            {
+                var msg = fixture.CreateAnonymous<Message>();
 
-    //        fixture.Customizations.Add(new CurrentDateTimeGenerator());
-    //        fixture.Customizations.Add(new PriorityGenerator());
+                messages.Add(msg);
+            }
 
-    //        List<Message> messages = new List<Message>(count);
+            var reader = messages.AsDataReader();
 
-    //        for (int i = 0; i < count; i++)
-    //        {
-    //            var msg = fixture.CreateAnonymous<Message>();
+            SqlBulkCopy copy = new SqlBulkCopy(connectionString);
 
-    //            messages.Add(msg);
-    //        }
+            copy.ColumnMappings.Add("Id", "id");
 
-    //        var reader = messages.AsDataReader();
+            copy.DestinationTableName = "Messages";
 
-    //        SqlBulkCopy copy = new SqlBulkCopy(connectionString);
+            copy.WriteToServer(reader);
+        }
+    }
 
-    //        copy.ColumnMappings.Add("Id", "id");
+    [TestClass]
+    public class FullTextSearchTermsFixture
+    {
+        [TestMethod]
+        [Ignore]
+        public void CanAddSearchTermsUsingTableValuedParameter()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MessageSearch"].ConnectionString;
 
-    //        copy.DestinationTableName = "Messages";
+            var entities = new MessageEntities(connectionString);
 
-    //        copy.WriteToServer(reader);
-    //    }
-    //}
+            var searchTerms = new[]
+                {
+                    new SearchTerm { MessageId = 1, Text = "MFS" }, 
+                    new SearchTerm { MessageId = 1, Text = "TENG" },
+                    new SearchTerm { MessageId = 9, Text = "VLAN" }, 
+                    new SearchTerm { MessageId = 9, Text = "MFS" }
+                };
 
-    //[TestClass]
-    //public class FullTextSearchTermsFixture
-    //{
-    //    [TestMethod]
-    //    public void CanAddSearchTermsUsingTableValuedParameter()
-    //    {
-    //        string connectionString = ConfigurationManager.ConnectionStrings["MessageSearch"].ConnectionString;
-
-    //        var entities = new MessageEntities(connectionString);
-
-    //        var searchTerms = new[]
-    //            {
-    //                new SearchTerm { MessageId = 1, Text = "MFS" }, 
-    //                new SearchTerm { MessageId = 1, Text = "TENG" },
-    //                new SearchTerm { MessageId = 9, Text = "VLAN" }, 
-    //                new SearchTerm { MessageId = 9, Text = "MFS" }
-    //            };
-
-    //        entities.AddSearchTerms(searchTerms);
-    //    }
-    //}
+            entities.AddSearchTerms(searchTerms);
+        }
+    }
 
     [TestClass]
     public class FullTextProcessingFixture
