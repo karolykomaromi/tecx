@@ -51,7 +51,7 @@
     </SuppressWarnings>
     <DeploymentConfigFile>Properties\Database.sqldeployment</DeploymentConfigFile>
     <SqlCommandVariablesFile>Properties\Database.sqlcmdvars</SqlCommandVariablesFile>
-    <DeployToDatabase>True</DeployToDatabase>
+    <DeployToDatabase>False</DeployToDatabase>
   </PropertyGroup>
   <!--Import the settings-->
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\TeamData\Microsoft.Data.Schema.SqlTasks.targets" />
@@ -141,10 +141,10 @@
     <BuildContributorArgument Include="OutDir=$(OutDir)" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Schema Objects\Database Level Objects\Storage\Files\NemoAlarmLog_log.sqlfile.sql">
+    <Build Include="Schema Objects\Database Level Objects\Storage\Files\MessageStore_log.sqlfile.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Database Level Objects\Storage\Files\NemoAlarmLog.sqlfile.sql">
+    <Build Include="Schema Objects\Database Level Objects\Storage\Files\MessageStore.sqlfile.sql">
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\FK_AlarmLog2SearchTerms_SearchTerms.fkey.sql">
@@ -218,5 +218,13 @@
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\FindNonProcessedMessagesAndTagWithMarker.proc.sql">
       <SubType>Code</SubType>
     </Build>
+  </ItemGroup>
+  <ItemGroup>
+    <NotInBuild Include="Data Generation Plans\TestData.dgen">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+    <NotInBuild Include="Schema Comparisons\Db2Project.scmp">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
   </ItemGroup>
 </Project>

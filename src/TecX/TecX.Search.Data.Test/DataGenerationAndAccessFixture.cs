@@ -56,11 +56,13 @@
     [TestClass]
     public class FullTextSearchTermsFixture
     {
+        private const string MessageSearchConnectionStringName = "MessageSearch";
+
         [TestMethod]
         [Ignore]
         public void CanAddSearchTermsUsingTableValuedParameter()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["MessageSearch"].ConnectionString;
+            string connectionString = ConfigurationManager.ConnectionStrings[MessageSearchConnectionStringName].ConnectionString;
 
             var entities = new MessageEntities(connectionString);
 
