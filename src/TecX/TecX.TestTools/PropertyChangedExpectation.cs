@@ -7,13 +7,13 @@
 
     using TecX.Common;
 
-    public class NotifyChangedExpectation<T> where T : INotifyPropertyChanged
+    public class PropertyChangedExpectation<T> where T : INotifyPropertyChanged
     {
         private readonly T owner;
         private readonly string propertyName;
         private readonly bool eventExpected;
 
-        public NotifyChangedExpectation(T owner, string propertyName, bool eventExpected)
+        public PropertyChangedExpectation(T owner, string propertyName, bool eventExpected)
         {
             Guard.AssertNotNull(owner, "owner");
             Guard.AssertNotEmpty(propertyName, "propertyName");

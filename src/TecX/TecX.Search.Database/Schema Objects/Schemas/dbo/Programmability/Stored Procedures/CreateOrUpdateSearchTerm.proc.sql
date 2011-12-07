@@ -11,10 +11,13 @@ BEGIN
 	DECLARE @searchTermId int;
 	
 	SELECT @searchTermId = id FROM SearchTerms WHERE SearchTerm = @searchTerm
-	if (@searchTermId is null)
+	IF (@searchTermId IS NULL)
 	BEGIN
 		INSERT INTO SearchTerms (SearchTerm) values (@searchTerm);
 		SET @searchTermId = SCOPE_IDENTITY();
-	end
-	INSERT INTO Messages2SearchTerms(MessageId, SearchTermId) values (@messageId, @searchTermId);
+	END
+	IF NOT EXISTS (SELECT TOP(1) * FROM Messages2SearchTerms WHERE MessageId = @messageId AND SearchTermId = @searchTermId)
+	BEGIN
+		INSERT INTO Messages2SearchTerms(MessageId, SearchTermId) values (@messageId, @searchTermId);
+	END
 END

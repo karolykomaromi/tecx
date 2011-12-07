@@ -10,9 +10,9 @@ namespace TecX.Search.Data.EntLib
         public static class ProcedureNames
         {
             /// <summary>
-            /// SearchByInterfaceAndTimeFrame
+            /// SearchBySourceAndTimeFrame
             /// </summary>
-            public const string SearchByInterfaceAndTimeFrame = "SearchByInterfaceAndTimeFrame";
+            public const string SearchByInterfaceAndTimeFrame = "SearchBySourceAndTimeFrame";
 
             /// <summary>
             /// SearchByInterfaceAndDate

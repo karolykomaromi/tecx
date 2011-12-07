@@ -7,6 +7,13 @@ using TecX.TestTools.Test.TestObjects;
 
 namespace TecX.TestTools.Test
 {
+    using System.Collections.Generic;
+    using System.Text;
+
+    using Newtonsoft.Json;
+
+    using TecX.TestTools.AutoFixture;
+
     [TestClass]
     public class AutoFixtureExtensionsFixture
     {
@@ -43,6 +50,16 @@ namespace TecX.TestTools.Test
             Assert.AreNotEqual(0, parent.Child.Bar);
             Assert.IsFalse(string.IsNullOrEmpty(parent.Child.Foo));
             Assert.AreNotEqual(0, parent.Child.Bar2);
+        }
+
+        [TestMethod]
+        public void CanCreateMoreRealisticValuesUsingObjectHydrator()
+        {
+            var fixture = new Fixture().Customize(new ObjectHydratorCustomization());
+
+            var customer = fixture.CreateAnonymous<Customer>();
+
+            string y = JsonConvert.SerializeObject(customer, Formatting.Indented);
         }
     }
 }

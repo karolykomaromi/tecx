@@ -39,7 +39,7 @@
             SqlParameter dt1 = new SqlParameter(Constants.ParameterNames.After, after);
             SqlParameter dt2 = new SqlParameter(Constants.ParameterNames.Before, before);
 
-            IEnumerable<Message> messages = Database.SqlQuery<Message>(Constants.Sql.SearchByInterfaceAndTimeFrame, max, total, name, dt1, dt2);
+            IEnumerable<Message> messages = Database.SqlQuery<Message>(Constants.Sql.SearchBySourceAndTimeFrame, max, total, name, dt1, dt2);
 
             // output parameters are not evaluated until the underlying SqlCommand is completed.
             // thus we need to force the materialization of the query

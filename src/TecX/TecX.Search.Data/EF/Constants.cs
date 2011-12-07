@@ -52,29 +52,11 @@ namespace TecX.Search.Data.EF
         public static class Sql
         {
             /// <summary>
-            /// SearchByTimeFrame @maxResultCount, @totalRowsCount OUT, @after, @before
+            /// SearchBySourceAndTimeFrame @maxResultCount, @totalRowsCount OUT, @interfaceName, @after, @before
             /// </summary>
-            public const string SearchByTimeFrame =
-                "SearchByTimeFrame @maxResultCount, @totalRowsCount OUT, @after, @before";
-
-            /// <summary>
-            /// SearchByInterfaceAndDate @maxResultCount, @totalRowsCount OUT, @interfaceName, @after
-            /// </summary>
-            public const string SearchByInterfaceAndDate =
-                "SearchByInterfaceAndDate @maxResultCount, @totalRowsCount OUT, @interfaceName, @after";
-
-            /// <summary>
-            /// SearchByInterfaceAndTimeFrame @maxResultCount, @totalRowsCount OUT, @interfaceName, @after, @before
-            /// </summary>
-            public const string SearchByInterfaceAndTimeFrame = 
-                "SearchByInterfaceAndTimeFrame @maxResultCount, @totalRowsCount OUT, @interfaceName, @after, @before";
-
-            /// <summary>
-            /// SearchByInterface @maxResultCount, @totalRowsCount OUT, @interfaceName
-            /// </summary>
-            public const string SearchByInterface =
-                "SearchByInterface @maxResultCount, @totalRowsCount OUT, @interfaceName";
-
+            public const string SearchBySourceAndTimeFrame = 
+                "SearchBySourceAndTimeFrame @maxResultCount, @totalRowsCount OUT, @interfaceName, @after, @before";
+            
             /// <summary>
             /// FindNonProcessedMessagesAndTagWithMarker
             /// </summary>
