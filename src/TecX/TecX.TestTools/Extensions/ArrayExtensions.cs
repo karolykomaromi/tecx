@@ -11,12 +11,9 @@
 
             for (int i = 0; i < array.Length; i++)
             {
-                if (array[i] != null)
+                if (Equals(array[i], item))
                 {
-                    if (array[i].Equals(item))
-                    {
-                        return i;
-                    }
+                    return i;
                 }
             }
 

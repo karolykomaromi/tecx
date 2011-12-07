@@ -72,6 +72,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestObjects\MessagePriorityGenerator.cs" />
     <Compile Include="TestObjects\NullFullTextSearchTermProcessor.cs" />
+    <Compile Include="TestObjects\SqlBulkCopyColumnMappingCollectionExtensions.cs" />
+    <Compile Include="TestObjects\SqlBulkCopyColumnMappingsBuilder.cs" />
     <Compile Include="When_SearchingWithTwoNames.cs" />
     <Compile Include="When_SearchingWithTwoNamesAndOneDate.cs" />
     <Compile Include="When_SearchingWithTwoNamesAndTwoDates.cs" />

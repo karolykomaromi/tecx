@@ -4,6 +4,7 @@
     using System.Configuration;
     using System.Data.Entity.Infrastructure;
     using System.Data.SqlClient;
+    using System.Linq;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -15,6 +16,7 @@
     using TecX.Search.Data.EF.Reader;
     using TecX.Search.Data.Test.TestObjects;
     using TecX.Search.Model;
+    using TecX.TestTools.AutoFixture;
 
     [TestClass]
     public class MessageTestDataGeneration
@@ -24,13 +26,14 @@
         public void GenerateAndSafeData()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["MessageSearch"].ConnectionString;
-            
+
             int count = 50000;
 
             var fixture = new Fixture();
 
             fixture.Customizations.Add(new CurrentDateTimeGenerator());
             fixture.Customizations.Add(new MessagePriorityGenerator());
+            fixture.Customize(new ObjectHydratorCustomization());
 
             List<Message> messages = new List<Message>(count);
 
@@ -45,7 +48,7 @@
 
             SqlBulkCopy copy = new SqlBulkCopy(connectionString);
 
-            copy.ColumnMappings.Add("Id", "id");
+            copy.ColumnMappings.MapAllPropertiesOf(typeof(Message));
 
             copy.DestinationTableName = "Messages";
 

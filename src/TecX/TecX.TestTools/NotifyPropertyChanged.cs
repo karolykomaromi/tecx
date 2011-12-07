@@ -8,7 +8,7 @@
 
     public static class NotifyPropertyChanged
     {
-        public static NotifyChangedExpectation<T> ShouldNotifyOn<T, TProperty>(this T owner, Expression<Func<T, TProperty>> propertyPicker)
+        public static PropertyChangedExpectation<T> ShouldNotifyOn<T, TProperty>(this T owner, Expression<Func<T, TProperty>> propertyPicker)
             where T : INotifyPropertyChanged
         {
             Guard.AssertNotNull(owner, "owner");
@@ -17,7 +17,7 @@
             return CreateExpectation(owner, propertyPicker, true);
         }
 
-        public static NotifyChangedExpectation<T> ShouldNotNotifyOn<T, TProperty>(this T owner, Expression<Func<T, TProperty>> propertyPicker)
+        public static PropertyChangedExpectation<T> ShouldNotNotifyOn<T, TProperty>(this T owner, Expression<Func<T, TProperty>> propertyPicker)
             where T : INotifyPropertyChanged
         {
             Guard.AssertNotNull(owner, "owner");
@@ -26,12 +26,12 @@
             return CreateExpectation(owner, propertyPicker, false);
         }
 
-        private static NotifyChangedExpectation<T> CreateExpectation<T, TProperty>(T owner, Expression<Func<T, TProperty>> pickProperty, bool eventExpected)
+        private static PropertyChangedExpectation<T> CreateExpectation<T, TProperty>(T owner, Expression<Func<T, TProperty>> pickProperty, bool eventExpected)
             where T : INotifyPropertyChanged
         {
             string propertyName = ((MemberExpression)pickProperty.Body).Member.Name;
 
-            return new NotifyChangedExpectation<T>(owner, propertyName, eventExpected);
+            return new PropertyChangedExpectation<T>(owner, propertyName, eventExpected);
         }
     }
 }
