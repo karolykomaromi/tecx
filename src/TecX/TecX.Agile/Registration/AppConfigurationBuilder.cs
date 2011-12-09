@@ -1,7 +1,5 @@
 ﻿namespace TecX.Agile.Registration
 {
-    using Microsoft.Practices.Unity;
-
     using TecX.Event.Unity;
     using TecX.Unity.Collections;
     using TecX.Unity.Configuration;
@@ -12,10 +10,10 @@
     {
         public AppConfigurationBuilder()
         {
-            AddExpression(x => x.AddModification(container => container.AddNewExtension<TypedFactoryExtension>()));
-            AddExpression(x => x.AddModification(container => container.AddNewExtension<EnrichmentExtension>()));
-            AddExpression(x => x.AddModification(container => container.AddNewExtension<CollectionResolutionExtension>()));
-            AddExpression(x => x.AddModification(container => container.AddNewExtension<EventAggregatorExtension>()));
+            this.ExtendWithNew<TypedFactoryExtension>();
+            this.ExtendWithNew<EnrichmentExtension>();
+            this.ExtendWithNew<CollectionResolutionExtension>();
+            this.ExtendWithNew<EventAggregatorExtension>();
         }
     }
 }

@@ -78,7 +78,6 @@
     <Compile Include="Expressions\NamedInstanceRegistrationExpression.cs" />
     <Compile Include="Expressions\RegistrationExpression.cs" />
     <Compile Include="Expressions\NamedTypeRegistrationExpression.cs" />
-    <Compile Include="ExtensionConfiguration.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="IContainerConfigurator.cs" />
     <Compile Include="InstanceRegistration.cs" />

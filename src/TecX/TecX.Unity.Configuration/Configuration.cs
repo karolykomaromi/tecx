@@ -45,13 +45,6 @@
             this.scanners.Fill(scanner);
         }
 
-        public void AddModification(Action<IUnityContainer> modification)
-        {
-            Guard.AssertNotNull(modification, "modification");
-
-            this.modifications.Add(modification);
-        }
-
         public RegistrationFamily FindFamily(Type pluginType)
         {
             return this.registrationFamilies[pluginType];
@@ -95,6 +88,13 @@
             {
                 modification(container);
             }
+        }
+
+        public void AddExtension(UnityContainerExtension extension)
+        {
+            Guard.AssertNotNull(extension, "extension");
+
+            this.modifications.Add(container => container.AddExtension(extension));
         }
     }
 }

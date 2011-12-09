@@ -1,6 +1,7 @@
 ﻿namespace TecX.Unity.Configuration.Expressions
 {
     using System;
+    using System.Collections.Generic;
 
     using Microsoft.Practices.Unity;
 
@@ -8,30 +9,42 @@
 
     public class ConfigureContainerExtensionExpression
     {
-        private readonly ConfigurationBuilder builder;
+        private readonly UnityContainerExtension extension;
 
-        public ConfigureContainerExtensionExpression(ConfigurationBuilder builder)
+        private readonly List<Action<UnityContainerExtension>> alternations;
+
+        public ConfigureContainerExtensionExpression(ConfigurationBuilder builder, UnityContainerExtension extension)
         {
             Guard.AssertNotNull(builder, "builder");
+            Guard.AssertNotNull(extension, "extension");
 
-            this.builder = builder;
+            this.extension = extension;
+            this.alternations = new List<Action<UnityContainerExtension>>();
 
             builder.AddExpression(config =>
                 {
+                    config.AddExtension(this.extension);
+
+                    this.alternations.ForEach(action => action(this.extension));
                 });
         }
 
-        public void With<TExtensionConfigurator>(Action<TExtensionConfigurator> action)
-            where TExtensionConfigurator : IUnityContainerExtensionConfigurator
+        public void Using<TExtensionConfigurator>(Action<TExtensionConfigurator> action)
+            where TExtensionConfigurator : class, IUnityContainerExtensionConfigurator
         {
-            this.builder.AddExpression(
-                config => config.AddModification(
-                    container =>
-                        {
-                            TExtensionConfigurator configurator = container.Configure<TExtensionConfigurator>();
+            if (!typeof(TExtensionConfigurator).IsAssignableFrom(this.extension.GetType()))
+            {
+                throw new ArgumentException("The extension you try to configure does not implement the specified interface.", "TExtensionConfigurator");
+            }
 
-                            action(configurator);
-                        }));
+            this.alternations.Add(ext => action(this.extension as TExtensionConfigurator));
+        }
+
+        public void Using(Action<UnityContainerExtension> action)
+        {
+            Guard.AssertNotNull(action, "action");
+
+            this.alternations.Add(action);
         }
     }
 }

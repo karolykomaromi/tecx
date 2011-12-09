@@ -16,11 +16,11 @@ namespace TecX.Unity.Configuration.Test
             base.Given();
 
             builder.Scan(
-                s =>
+                scanner =>
                     {
-                        s.AssemblyContainingType(typeof(IInterfaceName));
+                        scanner.AssemblyContainingType(typeof(IInterfaceName));
 
-                        s.With(new ImplementsIInterfaceNameConvention());
+                        scanner.With(new ImplementsIInterfaceNameConvention());
                     });
         }
 

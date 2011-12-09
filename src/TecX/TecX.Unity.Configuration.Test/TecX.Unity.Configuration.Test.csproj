@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Given_ContainerAndBuilder.cs" />
+    <Compile Include="TestObjects\DummyExtension.cs" />
     <Compile Include="When_ApplyingFindAllTypesConvention.cs" />
     <Compile Include="When_ApplyingFindAllTypesConventionWithSpecificNaming.cs" />
     <Compile Include="When_ApplyingFindConfigBuildersConvention.cs" />
