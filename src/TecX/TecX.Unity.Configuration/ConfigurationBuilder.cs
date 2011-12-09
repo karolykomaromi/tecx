@@ -54,6 +54,19 @@
             return new CreateRegistrationFamilyExpression(from, this);
         }
 
+        public ConfigureContainerExtensionExpression ExtendWithNew<TExtension>()
+            where TExtension : UnityContainerExtension, new()
+        {
+            return this.ExtendWith(new TExtension());
+        }
+
+        public ConfigureContainerExtensionExpression ExtendWith(UnityContainerExtension extension)
+        {
+            Guard.AssertNotNull(extension, "extension");
+
+            return new ConfigureContainerExtensionExpression(this, extension);
+        }
+
         public void ImportBuilder<T>()
             where T : ConfigurationBuilder, new()
         {

@@ -12,14 +12,14 @@ namespace TecX.Unity.Configuration.Test
 
         protected override void Given()
         {
-            container = new UnityContainer();
+            this.container = new UnityContainer();
 
-            builder = new ConfigurationBuilder();
+            this.builder = new ConfigurationBuilder();
         }
 
         protected override void When()
         {
-            container.AddExtension(builder);
+            this.container.AddExtension(this.builder);
         }
     }
 }

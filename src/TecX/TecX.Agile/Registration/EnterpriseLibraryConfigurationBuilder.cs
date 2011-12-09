@@ -6,7 +6,6 @@
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration.ContainerModel.Unity;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration.Unity;
-    using Microsoft.Practices.Unity;
 
     using TecX.Logging;
     using TecX.Unity.Configuration;
@@ -38,38 +37,36 @@
 
         public EnterpriseLibraryConfigurationBuilder()
         {
-            AddExpression(
-                graph => graph.AddModification(
-                    container =>
-                    {
-                        container.AddNewExtension<EnterpriseLibraryCoreExtension>();
+            this.ExtendWithNew<EnterpriseLibraryCoreExtension>();
+        }
 
-                        var builder = new ConfigurationSourceBuilder();
+        protected override void PostBuildUp()
+        {
+            var builder = new ConfigurationSourceBuilder();
 
-                        builder.ConfigureLogging()
-                            .SpecialSources
-                                .AllEventsCategory
-                                    .SendTo.Custom(Constants.Logging.Listener, typeof(DebugTraceListener))
-                                    .FormatWith(new FormatterBuilder().TextFormatterNamed(Constants.Logging.Formatter)
-                                    .UsingTemplate(Constants.Logging.Template))
-                            .SpecialSources
-                                .LoggingErrorsAndWarningsCategory
-                                    .SendTo.SharedListenerNamed(Constants.Logging.Listener)
-                            .SpecialSources
-                                .UnprocessedCategory
-                                    .SendTo.SharedListenerNamed(Constants.Logging.Listener);
+            builder.ConfigureLogging()
+                .SpecialSources
+                    .AllEventsCategory
+                        .SendTo.Custom(Constants.Logging.Listener, typeof(DebugTraceListener))
+                        .FormatWith(new FormatterBuilder().TextFormatterNamed(Constants.Logging.Formatter)
+                        .UsingTemplate(Constants.Logging.Template))
+                .SpecialSources
+                    .LoggingErrorsAndWarningsCategory
+                        .SendTo.SharedListenerNamed(Constants.Logging.Listener)
+                .SpecialSources
+                    .UnprocessedCategory
+                        .SendTo.SharedListenerNamed(Constants.Logging.Listener);
 
-                        builder.ConfigureExceptionHandling().GivenPolicyWithName(Constants.ExceptionHandling.Policy)
-                            .ForExceptionType(typeof(Exception)).ThenNotifyRethrow();
+            builder.ConfigureExceptionHandling().GivenPolicyWithName(Constants.ExceptionHandling.Policy)
+                .ForExceptionType(typeof(Exception)).ThenNotifyRethrow();
 
-                        var config = new DictionaryConfigurationSource();
+            var configSource = new DictionaryConfigurationSource();
 
-                        builder.UpdateConfigurationWithReplace(config);
+            builder.UpdateConfigurationWithReplace(configSource);
 
-                        var configurator = new UnityContainerConfigurator(container);
+            var configurator = new UnityContainerConfigurator(this.Container);
 
-                        EnterpriseLibraryContainer.ConfigureContainer(configurator, config);
-                    }));
+            EnterpriseLibraryContainer.ConfigureContainer(configurator, configSource);
         }
     }
 }
