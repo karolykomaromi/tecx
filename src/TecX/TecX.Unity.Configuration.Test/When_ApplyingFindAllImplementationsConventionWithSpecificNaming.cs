@@ -9,7 +9,7 @@ namespace TecX.Unity.Configuration.Test
     using TecX.Unity.Configuration.Test.TestObjects;
 
     [TestClass]
-    public class When_ApplyingFindAllTypesConventionWithSpecificNaming : Given_ContainerAndBuilder
+    public class When_ApplyingFindAllImplementationsConventionWithSpecificNaming : Given_ContainerAndBuilder
     {
         protected override void Given()
         {
@@ -17,7 +17,7 @@ namespace TecX.Unity.Configuration.Test
 
             builder.Scan(s =>
                 {
-                    var convention = new FindAllTypesConvention(typeof(IMyInterface));
+                    var convention = new FindAllImplementationsConvention(typeof(IMyInterface));
 
                     convention.NameBy(t => t.FullName + "123");
 

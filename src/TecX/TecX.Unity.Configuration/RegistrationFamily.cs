@@ -9,7 +9,7 @@
     using TecX.Common;
     using TecX.Unity.Configuration.Common;
 
-    public class RegistrationFamily : IEnumerable<Registration>, IContainerConfigurator
+    public class RegistrationFamily : IEnumerable<Registration>, IConfigAction
     {
         private static readonly string DefaultRegistrationKey = string.Empty;
         private readonly Type @from;

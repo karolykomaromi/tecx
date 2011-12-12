@@ -2,7 +2,7 @@
 {
     using Microsoft.Practices.Unity;
 
-    public interface IContainerConfigurator
+    public interface IConfigAction
     {
         void Configure(IUnityContainer container);
     }

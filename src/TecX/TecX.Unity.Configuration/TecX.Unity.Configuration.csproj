@@ -64,8 +64,9 @@
     <Compile Include="Common\CompositeFilter.cs" />
     <Compile Include="Common\TypePool.cs" />
     <Compile Include="Conventions\AssemblyScanner.cs" />
+    <Compile Include="Conventions\FindAllImplementationsOfOpenGenericInterfaceConvention.cs" />
     <Compile Include="Conventions\ImplementsIInterfaceNameConvention.cs" />
-    <Compile Include="Conventions\FindAllTypesConvention.cs" />
+    <Compile Include="Conventions\FindAllImplementationsConvention.cs" />
     <Compile Include="Conventions\FindConfigBuildersConvention.cs" />
     <Compile Include="Conventions\FirstInterfaceConvention.cs" />
     <Compile Include="Conventions\IRegistrationConvention.cs" />
@@ -79,7 +80,7 @@
     <Compile Include="Expressions\RegistrationExpression.cs" />
     <Compile Include="Expressions\NamedTypeRegistrationExpression.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="IContainerConfigurator.cs" />
+    <Compile Include="IConfigAction.cs" />
     <Compile Include="InstanceRegistration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration.cs" />

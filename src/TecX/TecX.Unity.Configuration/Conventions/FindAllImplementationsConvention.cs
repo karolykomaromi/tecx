@@ -5,17 +5,17 @@
     using TecX.Common;
     using TecX.Common.Reflection;
 
-    public class FindAllTypesConvention : IRegistrationConvention
+    public class FindAllImplementationsConvention : IRegistrationConvention
     {
         private readonly Type @from;
         private Func<Type, string> getName;
 
-        public FindAllTypesConvention(Type from)
+        public FindAllImplementationsConvention(Type from)
         {
             Guard.AssertNotNull(from, "from");
 
             this.@from = from;
-            this.getName = type => type.FullName;
+            this.getName = type => type.Name;
         }
 
         public void Process(Type type, ConfigurationBuilder builder)

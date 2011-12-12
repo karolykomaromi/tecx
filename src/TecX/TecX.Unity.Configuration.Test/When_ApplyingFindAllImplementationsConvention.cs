@@ -10,7 +10,7 @@ namespace TecX.Unity.Configuration.Test
     using TecX.Unity.Configuration.Test.TestObjects;
 
     [TestClass]
-    public class When_ApplyingFindAllTypesConvention : Given_ContainerAndBuilder
+    public class When_ApplyingFindAllImplementationsConvention : Given_ContainerAndBuilder
     {
         private List<IMyInterface> all;
 
@@ -20,7 +20,7 @@ namespace TecX.Unity.Configuration.Test
 
             builder.Scan(x =>
                 {
-                    x.With(new FindAllTypesConvention(typeof(IMyInterface)));
+                    x.With(new FindAllImplementationsConvention(typeof(IMyInterface)));
 
                     x.AssemblyContainingType<IMyInterface>();
 

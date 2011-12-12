@@ -11,7 +11,7 @@
     using TecX.Unity.Configuration.Common;
     using TecX.Unity.Configuration.Conventions;
 
-    public class Configuration : IContainerConfigurator
+    public class Configuration : IConfigAction
     {
         private readonly RegistrationFamilyCollection registrationFamilies;
         private readonly List<ConfigurationBuilder> builders;
@@ -76,11 +76,6 @@
             {
                 this.scanners[i].ScanForAll(this);
             }
-
-                foreach (AssemblyScanner scanner in this.scanners)
-                {
-                    scanner.ScanForAll(this);
-                }
 
             this.registrationFamilies.Configure(container);
 
