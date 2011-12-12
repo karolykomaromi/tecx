@@ -8,7 +8,7 @@
 
     using TecX.Common;
 
-    public class RegistrationFamilyCollection : IEnumerable<RegistrationFamily>, IContainerConfigurator
+    public class RegistrationFamilyCollection : IEnumerable<RegistrationFamily>, IConfigAction
     {
         private readonly Dictionary<Type, RegistrationFamily> registrationFamilies;
 

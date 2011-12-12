@@ -209,16 +209,16 @@
             this.With<FindConfigBuildersConvention>();
         }
 
-        public FindAllTypesConvention AddAllTypesOf<TPlugin>()
+        public FindAllImplementationsConvention AddAllTypesOf<TPlugin>()
         {
             return this.AddAllTypesOf(typeof(TPlugin));
         }
 
-        public FindAllTypesConvention AddAllTypesOf(Type pluginType)
+        public FindAllImplementationsConvention AddAllTypesOf(Type pluginType)
         {
             Guard.AssertNotNull(pluginType, "pluginType");
 
-            var convention = new FindAllTypesConvention(pluginType);
+            var convention = new FindAllImplementationsConvention(pluginType);
 
             this.With(convention);
 

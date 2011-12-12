@@ -6,7 +6,7 @@
 
     using TecX.Common;
 
-    public abstract class Registration : IContainerConfigurator
+    public abstract class Registration : IConfigAction
     {
         private readonly string name;
         private readonly Type @from;

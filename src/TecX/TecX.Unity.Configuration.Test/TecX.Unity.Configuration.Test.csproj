@@ -66,8 +66,13 @@
   <ItemGroup>
     <Compile Include="Given_ContainerAndBuilder.cs" />
     <Compile Include="TestObjects\DummyExtension.cs" />
-    <Compile Include="When_ApplyingFindAllTypesConvention.cs" />
-    <Compile Include="When_ApplyingFindAllTypesConventionWithSpecificNaming.cs" />
+    <Compile Include="TestObjects\Handler1.cs" />
+    <Compile Include="TestObjects\Handler2.cs" />
+    <Compile Include="TestObjects\Handler3.cs" />
+    <Compile Include="TestObjects\IMessageHandler.cs" />
+    <Compile Include="When_ApplyingFindAllImplementationsOfOpenGenericInterfaceConvention.cs" />
+    <Compile Include="When_ApplyingFindAllImplementationsConvention.cs" />
+    <Compile Include="When_ApplyingFindAllImplementationsConventionWithSpecificNaming.cs" />
     <Compile Include="When_ApplyingFindConfigBuildersConvention.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistrationExpressionFixture.cs" />
