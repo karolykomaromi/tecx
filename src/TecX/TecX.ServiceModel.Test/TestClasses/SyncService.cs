@@ -1,7 +1,7 @@
-﻿using TecX.ServiceModel.AutoMagic;
-
-namespace TecX.ServiceModel.Test.TestClasses
+﻿namespace TecX.ServiceModel.Test.TestClasses
 {
+    using TecX.ServiceModel.AutoMagic;
+
     [BindingDiscoveryServiceBehavior("http://texc.codeplex.com/wcfautomagic",
         "http://it-republik.de/dotnet/dotnet-magazin/wcfautomagic")]
     public class SyncService : ISyncService
