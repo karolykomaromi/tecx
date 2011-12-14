@@ -1,6 +1,6 @@
 namespace TecX.Unity.Configuration.Test.TestObjects
 {
-    public interface IMessageHandler<TMessage>
+    public interface IMessageHandler<in TMessage>
     {
         void Handle(TMessage message);
     }

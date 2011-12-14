@@ -62,6 +62,7 @@
     </Compile>
     <Compile Include="Common\Cache.cs" />
     <Compile Include="Common\CompositeFilter.cs" />
+    <Compile Include="Common\RunOnce.cs" />
     <Compile Include="Common\TypePool.cs" />
     <Compile Include="Conventions\AssemblyScanner.cs" />
     <Compile Include="Conventions\FindAllImplementationsOfOpenGenericInterfaceConvention.cs" />
@@ -70,7 +71,6 @@
     <Compile Include="Conventions\FindConfigBuildersConvention.cs" />
     <Compile Include="Conventions\FirstInterfaceConvention.cs" />
     <Compile Include="Conventions\IRegistrationConvention.cs" />
-    <Compile Include="Conventions\RunOnce.cs" />
     <Compile Include="Conventions\SingleImplementationOfInterfaceConvention.cs" />
     <Compile Include="Expressions\ConfigureContainerExtensionExpression.cs" />
     <Compile Include="Expressions\CreateRegistrationFamilyExpression.cs" />

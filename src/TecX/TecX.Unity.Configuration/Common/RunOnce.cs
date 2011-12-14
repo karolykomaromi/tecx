@@ -1,4 +1,4 @@
-namespace TecX.Unity.Configuration.Conventions
+namespace TecX.Unity.Configuration.Common
 {
     using System;
 
