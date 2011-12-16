@@ -5,6 +5,8 @@
 
     using Caliburn.Micro;
 
+    using TecX.Common.Comparison;
+
     public class StoryCardViewModel : Screen
     {
         #region Fields
@@ -75,7 +77,7 @@
 
             set
             {
-                if (this.x == value)
+                if (EpsilonComparer.AreEqual(this.x, value))
                 {
                     return;
                 }
@@ -94,7 +96,7 @@
 
             set
             {
-                if (this.y == value)
+                if (EpsilonComparer.AreEqual(this.y, value))
                 {
                     return;
                 }
@@ -113,7 +115,7 @@
 
             set
             {
-                if (this.angle == value)
+                if (EpsilonComparer.AreEqual(this.angle, value))
                 {
                     return;
                 }
@@ -170,7 +172,7 @@
 
             set
             {
-                if (this.width == value)
+                if (EpsilonComparer.AreEqual(this.width, value))
                 {
                     return;
                 }
@@ -189,7 +191,7 @@
 
             set
             {
-                if (this.height == value)
+                if (EpsilonComparer.AreEqual(this.height, value))
                 {
                     return;
                 }
@@ -208,7 +210,7 @@
 
             set
             {
-                if (this.scale == value)
+                if (EpsilonComparer.AreEqual(this.scale, value))
                 {
                     return;
                 }
@@ -227,7 +229,7 @@
 
             set
             {
-                if (this.opacity == value)
+                if (EpsilonComparer.AreEqual(this.opacity, value))
                 {
                     return;
                 }
@@ -265,7 +267,7 @@
 
             set
             {
-                if (this.mostLikelyEstimate == value)
+                if (EpsilonComparer.AreEqual(this.mostLikelyEstimate, value))
                 {
                     return;
                 }
@@ -284,7 +286,7 @@
 
             set
             {
-                if (this.actualEffort == value)
+                if (EpsilonComparer.AreEqual(this.actualEffort, value))
                 {
                     return;
                 }

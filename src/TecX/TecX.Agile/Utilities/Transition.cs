@@ -1,4 +1,4 @@
-namespace TecX.Agile
+namespace TecX.Agile.Utilities
 {
     public struct Transition
     {

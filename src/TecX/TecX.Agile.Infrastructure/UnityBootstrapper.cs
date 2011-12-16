@@ -6,6 +6,7 @@ namespace TecX.Agile.Infrastructure
     using Caliburn.Micro;
 
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+    using Microsoft.Practices.ServiceLocation;
     using Microsoft.Practices.Unity;
 
     using TecX.Agile.Infrastructure.Modularization;
@@ -22,7 +23,7 @@ namespace TecX.Agile.Infrastructure
 
         protected virtual Func<Type, ILog> CreateLogger()
         {
-            return type => new DebugLogger(type);
+            return type => new DebugLog(type);
         }
 
         protected virtual IModuleCatalog CreateModuleCatalog()
@@ -62,6 +63,8 @@ namespace TecX.Agile.Infrastructure
             UnityServiceLocator locator = new UnityServiceLocator(this.Container);
 
             EnterpriseLibraryContainer.Current = locator;
+
+            ServiceLocator.SetLocatorProvider(() => locator);
         }
 
         protected virtual void InitializeModules()
