@@ -5,6 +5,7 @@
     using System.Windows.Input;
     using System.Windows.Interactivity;
 
+    using TecX.Agile.Utilities;
     using TecX.Agile.ViewModels;
 
     public class RntBehavior : Behavior<UserControl>

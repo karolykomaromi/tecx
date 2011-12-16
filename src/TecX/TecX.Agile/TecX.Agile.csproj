@@ -107,12 +107,12 @@
     <Compile Include="Behaviors\SurfaceBehavior.cs" />
     <Compile Include="Behaviors\TransformBehavior.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="GeometryHelper.cs" />
     <Compile Include="Registration\AppConfigurationBuilder.cs" />
     <Compile Include="Registration\CaliburnConfigurationBuilder.cs" />
-    <Compile Include="SurfaceDataTemplateSelector.cs" />
-    <Compile Include="Transition.cs" />
-    <Compile Include="TreeHelper.cs" />
+    <Compile Include="Utilities\GeometryHelper.cs" />
+    <Compile Include="Utilities\SurfaceDataTemplateSelector.cs" />
+    <Compile Include="Utilities\Transition.cs" />
+    <Compile Include="Utilities\TreeHelper.cs" />
     <Compile Include="ViewModels\IterationViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\StoryCardViewModel.cs" />

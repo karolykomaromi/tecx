@@ -4,6 +4,8 @@
 
     using Caliburn.Micro;
 
+    using TecX.Agile.Utilities;
+
     public class TranslateOnlyAreaViewModel : ViewAware
     {
         /// <summary>75.0 </summary>

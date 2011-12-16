@@ -1,4 +1,4 @@
-namespace TecX.Agile
+namespace TecX.Agile.Utilities
 {
     using System;
     using System.Windows;
@@ -6,6 +6,7 @@ namespace TecX.Agile
 
     using TecX.Agile.Behaviors;
     using TecX.Common;
+    using TecX.Common.Comparison;
 
     public static class GeometryHelper
     {
@@ -53,11 +54,11 @@ namespace TecX.Agile
 
             double width;
 
-            if (!double.IsNaN(element.ActualWidth) && element.ActualWidth != 0)
+            if (!double.IsNaN(element.ActualWidth) && EpsilonComparer.IsAlmostZero(element.ActualWidth))
             {
                 width = element.ActualWidth;
             }
-            else if (!double.IsNaN(element.Width) && element.Width != 0)
+            else if (!double.IsNaN(element.Width) && EpsilonComparer.IsAlmostZero(element.Width))
             {
                 width = element.Width;
             }
@@ -75,11 +76,11 @@ namespace TecX.Agile
 
             double height;
 
-            if (!double.IsNaN(element.ActualHeight) && element.ActualHeight != 0)
+            if (!double.IsNaN(element.ActualHeight) && !EpsilonComparer.IsAlmostZero(element.ActualHeight))
             {
                 height = element.ActualHeight;
             }
-            else if (!double.IsNaN(element.Height) && element.Height != 0)
+            else if (!double.IsNaN(element.Height) && !EpsilonComparer.IsAlmostZero(element.Height))
             {
                 height = element.Height;
             }

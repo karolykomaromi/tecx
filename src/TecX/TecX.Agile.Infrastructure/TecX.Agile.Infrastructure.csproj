@@ -79,7 +79,7 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Converters\ColorToSolidColorBrushConverter.cs" />
-    <Compile Include="DefaultLogger.cs" />
+    <Compile Include="DebugLog.cs" />
     <Compile Include="Error\AgileBaseException.cs" />
     <Compile Include="Events\AddedStoryCard.cs" />
     <Compile Include="IShell.cs" />

@@ -8,6 +8,7 @@
     using System.Windows.Interactivity;
     using System.Windows.Media;
 
+    using TecX.Agile.Utilities;
     using TecX.Common.Extensions.Error;
 
     public class TransformBehavior : Behavior<UserControl>

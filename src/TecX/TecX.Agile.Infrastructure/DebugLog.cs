@@ -7,11 +7,11 @@ namespace TecX.Agile.Infrastructure
 
     using TecX.Common;
 
-    public class DebugLogger : ILog
+    public class DebugLog : ILog
     {
         private readonly Type type;
 
-        public DebugLogger(Type type)
+        public DebugLog(Type type)
         {
             Guard.AssertNotNull(type, "type");
 
