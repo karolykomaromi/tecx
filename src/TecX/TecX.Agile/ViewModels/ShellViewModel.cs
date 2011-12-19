@@ -7,12 +7,14 @@ namespace TecX.Agile.ViewModels
     using Caliburn.Micro;
 
     using TecX.Agile.Infrastructure;
+    using TecX.Agile.Infrastructure.Commands;
     using TecX.Agile.Infrastructure.Events;
     using TecX.Common;
+    using TecX.Event;
 
     using IEventAggregator = TecX.Event.IEventAggregator;
 
-    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShell
+    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShell, ISubscribeTo<AddStoryCard>
     {
         private readonly IEventAggregator eventAggregator;
 
@@ -57,9 +59,9 @@ namespace TecX.Agile.ViewModels
             this.Overlays.Add(overlay);
         }
 
-        public void AddStoryCard(double x, double y, double angle)
+        public void AddStoryCard(Guid id, double x, double y, double angle)
         {
-            StoryCardViewModel storyCard = new StoryCardViewModel { Id = Guid.NewGuid(), X = x, Y = y, Angle = angle };
+            StoryCardViewModel storyCard = new StoryCardViewModel(this.EventAggregator) { Id = id, X = x, Y = y, Angle = angle };
 
             Items.Add(storyCard);
 
@@ -80,6 +82,13 @@ namespace TecX.Agile.ViewModels
             Point p = ((Visual)this.GetView()).PointToScreen(point);
 
             return p;
+        }
+
+        public void Handle(AddStoryCard message)
+        {
+            Guard.AssertNotNull(message, "message");
+
+            this.AddStoryCard(message.Id, message.X, message.Y, message.Angle);
         }
     }
 }

@@ -82,7 +82,7 @@
             // matrix.ScaleAt(e.DeltaManipulation.Scale.X,
             //               e.DeltaManipulation.Scale.X,
             //               e.ManipulationOrigin.X,
-            //               e.ManipulationOrigin.Y);
+            //               e.ManipulationOrigin.AbsoluteY);
 
             // move
             var translation = AssociatedObject.Translation();

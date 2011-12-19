@@ -5,14 +5,23 @@
     using System.Windows.Input;
     using System.Windows.Interactivity;
 
+    using Microsoft.Practices.ServiceLocation;
+
+    using TecX.Agile.Infrastructure.Events;
     using TecX.Agile.Utilities;
     using TecX.Agile.ViewModels;
+    using TecX.Event;
 
     public class RntBehavior : Behavior<UserControl>
     {
+        private readonly IEventAggregator eventAggregator;
+
         public RntBehavior()
         {
             this.Toa = new TranslateOnlyAreaViewModel { Visible = false };
+
+            // can't inject to behavior :(
+            this.eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
         }
 
         private Point Previous { get; set; }
@@ -127,7 +136,7 @@
             Point dropPoint = e.GetPosition(SurfaceBehavior.Surface);
             dropPoint = SurfaceBehavior.Surface.PointToScreen(dropPoint);
 
-            // EventAggregator.GetEvent<TabletopItemDropEvent>().Publish(new TabletopItemDropEventArgs(AssociatedObject, dropPoint));
+            this.eventAggregator.Publish(new DroppedStoryCard(this.Card.Id, dropPoint.X, dropPoint.Y));
         }
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

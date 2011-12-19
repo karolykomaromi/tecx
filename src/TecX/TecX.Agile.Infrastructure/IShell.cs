@@ -1,5 +1,6 @@
 ﻿namespace TecX.Agile.Infrastructure
 {
+    using System;
     using System.Windows;
 
     using Caliburn.Micro;
@@ -12,6 +13,6 @@
 
         Point PointToScreen(Point point);
 
-        void AddStoryCard(double x, double y, double angle);
+        void AddStoryCard(Guid id, double x, double y, double angle);
     }
 }

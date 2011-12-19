@@ -1,7 +1,6 @@
-﻿namespace TecX.Agile.Modules.Gestures.ViewModels
+namespace TecX.Agile.Modules.Gestures.Recognition
 {
     using System.Collections.Generic;
-    using System.Windows.Ink;
 
     using TecX.Common;
 
@@ -21,13 +20,15 @@
             this.strategies.Add(strategy);
         }
 
-        public void Process(ApplicationGesture gesture, StrokeCollection strokes)
+        public void Process(GestureRecognitionContext context)
         {
-            Guard.AssertNotNull(strokes, "strokes");
+            Guard.AssertNotNull(context, "context");
 
             for (int i = 0; i < this.strategies.Count; i++)
             {
-                if (this.strategies[i].Process(gesture, strokes))
+                this.strategies[i].Process(context);
+
+                if (context.RecognitionCompleted)
                 {
                     return;
                 }

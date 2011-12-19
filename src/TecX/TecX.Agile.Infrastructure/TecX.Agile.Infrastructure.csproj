@@ -78,10 +78,18 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Commands\AddStoryCard.cs" />
+    <Compile Include="Commands\ChangeProperty.cs" />
+    <Compile Include="Commands\HighlightField.cs" />
+    <Compile Include="Commands\MoveCaret.cs" />
     <Compile Include="Converters\ColorToSolidColorBrushConverter.cs" />
     <Compile Include="DebugLog.cs" />
     <Compile Include="Error\AgileBaseException.cs" />
     <Compile Include="Events\AddedStoryCard.cs" />
+    <Compile Include="Events\CaretMoved.cs" />
+    <Compile Include="Events\DroppedStoryCard.cs" />
+    <Compile Include="Events\FieldHighlighted.cs" />
+    <Compile Include="Events\PropertyChanged.cs" />
     <Compile Include="IShell.cs" />
     <Compile Include="Modularization\IModule.cs" />
     <Compile Include="Modularization\IModuleCatalog.cs" />
@@ -106,6 +114,7 @@
       <Name>TecX.Unity.Configuration</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(ProgramFiles)\MSBuild\StyleCop\v4.6\StyleCop.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

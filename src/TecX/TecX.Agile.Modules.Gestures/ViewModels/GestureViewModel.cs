@@ -14,11 +14,15 @@
     {
         private readonly IShell shell;
 
-        public GestureViewModel(IShell shell)
+        private readonly IEventAggregator eventAggregator;
+
+        public GestureViewModel(IShell shell, IEventAggregator eventAggregator)
         {
             Guard.AssertNotNull(shell, "shell");
+            Guard.AssertNotNull(eventAggregator, "eventAggregator");
 
             this.shell = shell;
+            this.eventAggregator = eventAggregator;
         }
 
         public IShell Shell
@@ -44,7 +48,7 @@
             {
                 case ApplicationGesture.ChevronUp:
                 case ApplicationGesture.ArrowUp:
-                    this.Shell.AddStoryCard(gestureCenter.X, gestureCenter.Y, 0.0);
+                    this.Shell.AddStoryCard(Guid.NewGuid(), gestureCenter.X, gestureCenter.Y, 0.0);
                     break;
                 default:
                     return;
@@ -136,7 +140,6 @@
         private Point GetGestureCenter(Rect gestureBounds)
         {
             // TODO need to decide which corner of the bounds to use dependent on which gesture was used
-            // return gestureBounds.TopLeft;
             var topLeft = this.Shell.PointFromScreen(gestureBounds.TopLeft);
             var bottomRight = this.Shell.PointFromScreen(gestureBounds.BottomRight);
 
