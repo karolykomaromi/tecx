@@ -101,6 +101,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\HighlightFieldBehavior.cs" />
     <Compile Include="Behaviors\MultiTouchBehavior.cs" />
     <Compile Include="Behaviors\PreviewFocusBehavior.cs" />
     <Compile Include="Behaviors\RntBehavior.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Utilities\SurfaceDataTemplateSelector.cs" />
     <Compile Include="Utilities\Transition.cs" />
     <Compile Include="Utilities\TreeHelper.cs" />
+    <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\IterationViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\StoryCardViewModel.cs" />

@@ -1,37 +1,16 @@
 ﻿namespace TecX.Agile.ViewModels
 {
-    using System;
-    using System.Windows.Media;
-
     using Caliburn.Micro;
 
     using TecX.Common.Comparison;
 
-    public class StoryCardViewModel : Screen
+    using IEventAggregator = TecX.Event.IEventAggregator;
+
+    public class StoryCardViewModel : CardViewModel
     {
         #region Fields
 
         private readonly IObservableCollection<object> decorators;
-
-        private Color background;
-
-        private double x;
-
-        private double y;
-
-        private double angle;
-
-        private double width;
-
-        private double height;
-
-        private Guid id;
-
-        private bool isPinned;
-
-        private double scale;
-
-        private double opacity;
 
         private string name;
 
@@ -47,7 +26,8 @@
 
         #endregion Fields
 
-        public StoryCardViewModel()
+        public StoryCardViewModel(IEventAggregator eventAggregator)
+            : base(eventAggregator)
         {
             this.Width = Constants.StoryCard.Width;
             this.Height = Constants.StoryCard.Height;
@@ -65,177 +45,6 @@
             get
             {
                 return this.decorators;
-            }
-        }
-
-        public double X
-        {
-            get
-            {
-                return this.x;
-            }
-
-            set
-            {
-                if (EpsilonComparer.AreEqual(this.x, value))
-                {
-                    return;
-                }
-
-                this.x = value;
-                this.NotifyOfPropertyChange(() => this.X);
-            }
-        }
-
-        public double Y
-        {
-            get
-            {
-                return this.y;
-            }
-
-            set
-            {
-                if (EpsilonComparer.AreEqual(this.y, value))
-                {
-                    return;
-                }
-
-                this.y = value;
-                this.NotifyOfPropertyChange(() => this.Y);
-            }
-        }
-
-        public double Angle
-        {
-            get
-            {
-                return this.angle;
-            }
-
-            set
-            {
-                if (EpsilonComparer.AreEqual(this.angle, value))
-                {
-                    return;
-                }
-
-                this.angle = value;
-                this.NotifyOfPropertyChange(() => this.Angle);
-            }
-        }
-
-        public Guid Id
-        {
-            get
-            {
-                return this.id;
-            }
-
-            set
-            {
-                if (this.id == value)
-                {
-                    return;
-                }
-
-                this.id = value;
-                this.NotifyOfPropertyChange(() => this.Id);
-            }
-        }
-
-        public bool IsPinned
-        {
-            get
-            {
-                return this.isPinned;
-            }
-
-            set
-            {
-                if (this.isPinned == value)
-                {
-                    return;
-                }
-
-                this.isPinned = value;
-                this.NotifyOfPropertyChange(() => this.IsPinned);
-            }
-        }
-
-        public double Width
-        {
-            get
-            {
-                return this.width;
-            }
-
-            set
-            {
-                if (EpsilonComparer.AreEqual(this.width, value))
-                {
-                    return;
-                }
-
-                this.width = value;
-                this.NotifyOfPropertyChange(() => this.Width);
-            }
-        }
-
-        public double Height
-        {
-            get
-            {
-                return this.height;
-            }
-
-            set
-            {
-                if (EpsilonComparer.AreEqual(this.height, value))
-                {
-                    return;
-                }
-
-                this.height = value;
-                this.NotifyOfPropertyChange(() => this.Height);
-            }
-        }
-
-        public double Scale
-        {
-            get
-            {
-                return this.scale;
-            }
-
-            set
-            {
-                if (EpsilonComparer.AreEqual(this.scale, value))
-                {
-                    return;
-                }
-
-                this.scale = value;
-                this.NotifyOfPropertyChange(() => this.Scale);
-            }
-        }
-
-        public double Opacity
-        {
-            get
-            {
-                return this.opacity;
-            }
-
-            set
-            {
-                if (EpsilonComparer.AreEqual(this.opacity, value))
-                {
-                    return;
-                }
-
-                this.opacity = value;
-                this.NotifyOfPropertyChange(() => this.Opacity);
             }
         }
 
@@ -353,32 +162,6 @@
             }
         }
 
-        public Color Background
-        {
-            get
-            {
-                return this.background;
-            }
-
-            set
-            {
-                if (this.background == value)
-                {
-                    return;
-                }
-
-                this.background = value;
-                this.NotifyOfPropertyChange(() => this.Background);
-            }
-        }
-
         #endregion Properties
-
-        public void Move(double dx, double dy, double angle)
-        {
-            this.X += dx;
-            this.Y += dy;
-            this.Angle += angle;
-        }
     }
 }

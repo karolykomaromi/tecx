@@ -51,7 +51,7 @@
 
             hookForInitialUpdate.UpdateTarget();
 
-            Binding y = new Binding("Y")
+            Binding y = new Binding("AbsoluteY")
             {
                 Source = AssociatedObject.DataContext,
                 Mode = BindingMode.TwoWay,

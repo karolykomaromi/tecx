@@ -5,6 +5,7 @@
     using Caliburn.Micro;
 
     using TecX.Agile.Utilities;
+    using TecX.Common.Comparison;
 
     public class TranslateOnlyAreaViewModel : ViewAware
     {
@@ -50,7 +51,7 @@
 
             set
             {
-                if (this.diameter == value)
+                if (EpsilonComparer.AreEqual(this.diameter, value))
                 {
                     return;
                 }
