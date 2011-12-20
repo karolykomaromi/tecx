@@ -50,6 +50,10 @@
             this.eventAggregator = eventAggregator;
 
             this.EventAggregator.Subscribe(this);
+
+            this.x = 0.0;
+            this.y = 0.0;
+            this.angle = 0.0;
         }
 
         #region Properties
