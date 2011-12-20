@@ -83,8 +83,10 @@
     <Compile Include="Commands\ChangeProperty.cs" />
     <Compile Include="Commands\HighlightField.cs" />
     <Compile Include="Commands\MoveCaret.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Converters\ColorToSolidColorBrushConverter.cs" />
     <Compile Include="DebugLog.cs" />
+    <Compile Include="Defaults.cs" />
     <Compile Include="Error\AgileBaseException.cs" />
     <Compile Include="Events\AddedStoryCard.cs" />
     <Compile Include="Events\CaretMoved.cs" />

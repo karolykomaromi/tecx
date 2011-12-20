@@ -6,15 +6,15 @@
 
     public class GestureRecognitionContext
     {
-        private readonly ApplicationGesture applicationGesture;
+        private readonly ApplicationGesture gesture;
 
         private readonly StrokeCollection strokes;
 
-        public GestureRecognitionContext(ApplicationGesture applicationGesture, StrokeCollection strokes)
+        public GestureRecognitionContext(ApplicationGesture gesture, StrokeCollection strokes)
         {
             Guard.AssertNotNull(strokes, "strokes");
 
-            this.applicationGesture = applicationGesture;
+            this.gesture = gesture;
             this.strokes = strokes;
         }
 
@@ -26,11 +26,11 @@
             }
         }
 
-        public ApplicationGesture ApplicationGesture
+        public ApplicationGesture Gesture
         {
             get
             {
-                return this.applicationGesture;
+                return this.gesture;
             }
         }
 

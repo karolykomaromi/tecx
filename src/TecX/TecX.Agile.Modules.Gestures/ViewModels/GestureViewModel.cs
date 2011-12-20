@@ -1,6 +1,8 @@
 ﻿namespace TecX.Agile.Modules.Gestures.ViewModels
 {
     using System;
+    using System.Linq.Expressions;
+    using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Ink;
@@ -8,8 +10,10 @@
     using Caliburn.Micro;
 
     using TecX.Agile.Infrastructure;
+    using TecX.Agile.Modules.Gestures.Recognition;
     using TecX.Common;
 
+    using Expression = System.Linq.Expressions.Expression;
     using IEventAggregator = TecX.Event.IEventAggregator;
 
     public class GestureViewModel : Screen
@@ -18,6 +22,8 @@
 
         private readonly IEventAggregator eventAggregator;
 
+        private readonly GestureStrategyChain gestureStrategyChain;
+
         public GestureViewModel(IShell shell, IEventAggregator eventAggregator)
         {
             Guard.AssertNotNull(shell, "shell");
@@ -25,6 +31,7 @@
 
             this.shell = shell;
             this.eventAggregator = eventAggregator;
+            this.gestureStrategyChain = new GestureStrategyChain().Initialize();
         }
 
         public IShell Shell
@@ -32,9 +39,11 @@
             get { return this.shell; }
         }
 
-        public void Gesture(InkCanvasGestureEventArgs e)
+        public void Gesture(InkCanvasGestureEventArgs eventArgs)
         {
-            var recognitionResults = e.GetGestureRecognitionResults();
+            Guard.AssertNotNull(eventArgs, "eventArgs");
+
+            var recognitionResults = eventArgs.GetGestureRecognitionResults();
 
             if (recognitionResults.IsEmpty() ||
                 recognitionResults[0].RecognitionConfidence < RecognitionConfidence.Strong)
@@ -44,17 +53,28 @@
 
             ApplicationGesture gesture = recognitionResults[0].ApplicationGesture;
 
-            Point gestureCenter = this.GetGestureCenter(e.Strokes.GetBounds());
+            var context = new GestureRecognitionContext(gesture, eventArgs.Strokes);
 
-            switch (gesture)
+            this.gestureStrategyChain.Process(context);
+
+            if (context.Message != null)
             {
-                case ApplicationGesture.ChevronUp:
-                case ApplicationGesture.ArrowUp:
-                    this.Shell.AddStoryCard(Guid.NewGuid(), gestureCenter.X, gestureCenter.Y, 0.0);
-                    break;
-                default:
-                    return;
+                var publisher = new MessagePublisher(this.eventAggregator);
+
+                publisher.Publish(context.Message);
             }
+
+            ////Point gestureCenter = GestureHelper.GetGestureCenter(eventArgs.Strokes.GetBounds());
+
+            ////switch (gesture)
+            ////{
+            ////    case ApplicationGesture.ChevronUp:
+            ////    case ApplicationGesture.ArrowUp:
+            ////        this.Shell.AddStoryCard(Guid.NewGuid(), gestureCenter.X, gestureCenter.Y, 0.0);
+            ////        break;
+            ////    default:
+            ////        return;
+            ////}
 
             ////if (IsAddStoryCardGesture(topGesture))
             ////{
@@ -84,7 +104,7 @@
 
             ////try to interpret the gesture as lasso
 
-            this.Lasso(e);
+            this.Lasso(eventArgs);
         }
 
         private void Redo()
@@ -137,19 +157,6 @@
             ////    //    ControlHelper.LayoutTabletopItems(storycards);
             ////    //}
             ////}
-        }
-
-        private Point GetGestureCenter(Rect gestureBounds)
-        {
-            // TODO need to decide which corner of the bounds to use dependent on which gesture was used
-            var topLeft = this.Shell.PointFromScreen(gestureBounds.TopLeft);
-            var bottomRight = this.Shell.PointFromScreen(gestureBounds.BottomRight);
-
-            var vector = (bottomRight - topLeft) / 2;
-
-            Point center = topLeft + vector;
-
-            return center;
         }
     }
 }

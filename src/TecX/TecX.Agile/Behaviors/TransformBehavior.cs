@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Data;
@@ -13,6 +14,8 @@
 
     public class TransformBehavior : Behavior<UserControl>
     {
+        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
+            Justification = "Reviewed. Suppression is OK here.")]
         private static class Constants
         {
             public static class Properties
@@ -43,8 +46,7 @@
 
             var transform = AssociatedObject.RenderTransform;
 
-            if (transform == null ||
-                transform == Transform.Identity)
+            if (transform == null || transform == Transform.Identity)
             {
                 var transformGroup = new TransformGroup();
 
@@ -58,47 +60,41 @@
             this.AssertPreconditions();
 
             Binding x = new Binding(Constants.Properties.X)
-            {
-                Source = AssociatedObject.DataContext,
-                Mode = BindingMode.TwoWay,
-                NotifyOnSourceUpdated = true,
-                NotifyOnTargetUpdated = true
-            };
+                {
+                    Source = AssociatedObject.DataContext,
+                    Mode = BindingMode.TwoWay,
+                    NotifyOnSourceUpdated = true,
+                    NotifyOnTargetUpdated = true
+                };
 
             BindingExpressionBase hookForInitialUpdate = BindingOperations.SetBinding(
-                AssociatedObject.Translation(),
-                TranslateTransform.XProperty,
-                x);
+                AssociatedObject.Translation(), TranslateTransform.XProperty, x);
 
             hookForInitialUpdate.UpdateTarget();
 
             Binding y = new Binding(Constants.Properties.Y)
-            {
-                Source = AssociatedObject.DataContext,
-                Mode = BindingMode.TwoWay,
-                NotifyOnSourceUpdated = true,
-                NotifyOnTargetUpdated = true
-            };
+                {
+                    Source = AssociatedObject.DataContext,
+                    Mode = BindingMode.TwoWay,
+                    NotifyOnSourceUpdated = true,
+                    NotifyOnTargetUpdated = true
+                };
 
             hookForInitialUpdate = BindingOperations.SetBinding(
-                AssociatedObject.Translation(),
-                TranslateTransform.YProperty,
-                y);
+                AssociatedObject.Translation(), TranslateTransform.YProperty, y);
 
             hookForInitialUpdate.UpdateTarget();
 
             Binding angle = new Binding(Constants.Properties.Angle)
-            {
-                Source = AssociatedObject.DataContext,
-                Mode = BindingMode.TwoWay,
-                NotifyOnSourceUpdated = true,
-                NotifyOnTargetUpdated = true
-            };
+                {
+                    Source = AssociatedObject.DataContext,
+                    Mode = BindingMode.TwoWay,
+                    NotifyOnSourceUpdated = true,
+                    NotifyOnTargetUpdated = true
+                };
 
             hookForInitialUpdate = BindingOperations.SetBinding(
-                AssociatedObject.Rotation(),
-                RotateTransform.AngleProperty,
-                angle);
+                AssociatedObject.Rotation(), RotateTransform.AngleProperty, angle);
 
             hookForInitialUpdate.UpdateTarget();
 
@@ -107,11 +103,10 @@
 
         private static void ThrowTransformsException(Transform transform)
         {
-            throw new InvalidOperationException("The UIElement's RenderTransform " +
-                                                "property is not set to a TransformGroup containing a " +
-                                                "RotateTransform, ScaleTransform and TranslateTransform. " +
-                                                "The order of the elements in the group matters!")
-                .WithAdditionalInfo("transform", transform);
+            throw new InvalidOperationException(
+                "The UIElement's RenderTransform " + "property is not set to a TransformGroup containing a "
+                + "RotateTransform, ScaleTransform and TranslateTransform. "
+                + "The order of the elements in the group matters!").WithAdditionalInfo("transform", transform);
         }
 
         private void AssertPreconditions()

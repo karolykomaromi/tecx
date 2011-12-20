@@ -2,6 +2,7 @@
 {
     using Caliburn.Micro;
 
+    using TecX.Agile.Infrastructure;
     using TecX.Common.Comparison;
 
     using IEventAggregator = TecX.Event.IEventAggregator;
@@ -29,9 +30,9 @@
         public StoryCardViewModel(IEventAggregator eventAggregator)
             : base(eventAggregator)
         {
-            this.Width = Constants.StoryCard.Width;
-            this.Height = Constants.StoryCard.Height;
-            this.Opacity = Constants.Opacity;
+            this.Width = Defaults.StoryCard.Width;
+            this.Height = Defaults.StoryCard.Height;
+            this.Opacity = Defaults.Opacity;
 
             this.Background = Constants.Colors.Yellow;
 

@@ -4,6 +4,7 @@ namespace TecX.Agile.Utilities
     using System.Windows;
     using System.Windows.Controls;
 
+    using TecX.Agile.Infrastructure;
     using TecX.Agile.ViewModels;
     using TecX.Common;
 
@@ -25,14 +26,14 @@ namespace TecX.Agile.Utilities
 
             if (itemType == typeof(StoryCardViewModel))
             {
-                object template = element.TryFindResource(Constants.Templates.StoryCard);
+                object template = element.TryFindResource(Constants.DataTemplates.StoryCard);
 
                 return template as DataTemplate;
             }
 
             if (itemType == typeof(IterationViewModel))
             {
-                object template = element.TryFindResource(Constants.Templates.Iteration);
+                object template = element.TryFindResource(Constants.DataTemplates.Iteration);
 
                 return template as DataTemplate;
             }

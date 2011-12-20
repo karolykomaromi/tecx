@@ -64,6 +64,9 @@
     <Compile Include="Recognition\GestureRecognitionContext.cs" />
     <Compile Include="Recognition\GestureRecognitionStrategy.cs" />
     <Compile Include="Recognition\GestureStrategyChain.cs" />
+    <Compile Include="Recognition\GestureStrategyChainExtensions.cs" />
+    <Compile Include="Recognition\MessagePublisher.cs" />
+    <Compile Include="ViewModels\GestureHelper.cs" />
     <Compile Include="ViewModels\GestureViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
