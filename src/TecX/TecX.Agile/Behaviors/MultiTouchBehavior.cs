@@ -1,11 +1,13 @@
 ﻿namespace TecX.Agile.Behaviors
 {
+    using System;
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Interactivity;
 
+    using TecX.Agile.Infrastructure;
     using TecX.Agile.Utilities;
     using TecX.Agile.ViewModels;
 
@@ -42,7 +44,11 @@
 
         private static void OnManipulationStarting(object sender, ManipulationStartingEventArgs e)
         {
-            e.ManipulationContainer = SurfaceBehavior.Surface;
+            ////e.ManipulationContainer = SurfaceBehavior.Surface;
+
+            var adapter = (InputElementAdapter)Surface.Current;
+
+            e.ManipulationContainer = adapter.InputElement;
             e.Handled = true;
         }
 

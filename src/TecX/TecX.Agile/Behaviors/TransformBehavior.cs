@@ -13,6 +13,27 @@
 
     public class TransformBehavior : Behavior<UserControl>
     {
+        private static class Constants
+        {
+            public static class Properties
+            {
+                /// <summary>
+                /// X
+                /// </summary>
+                public const string X = "X";
+
+                /// <summary>
+                /// Y
+                /// </summary>
+                public const string Y = "Y";
+
+                /// <summary>
+                /// Angle
+                /// </summary>
+                public const string Angle = "Angle";
+            }
+        }
+
         protected override void OnAttached()
         {
             if (DesignerProperties.GetIsInDesignMode(AssociatedObject))
@@ -36,7 +57,7 @@
 
             this.AssertPreconditions();
 
-            Binding x = new Binding("X")
+            Binding x = new Binding(Constants.Properties.X)
             {
                 Source = AssociatedObject.DataContext,
                 Mode = BindingMode.TwoWay,
@@ -51,7 +72,7 @@
 
             hookForInitialUpdate.UpdateTarget();
 
-            Binding y = new Binding("AbsoluteY")
+            Binding y = new Binding(Constants.Properties.Y)
             {
                 Source = AssociatedObject.DataContext,
                 Mode = BindingMode.TwoWay,
@@ -66,7 +87,7 @@
 
             hookForInitialUpdate.UpdateTarget();
 
-            Binding angle = new Binding("Angle")
+            Binding angle = new Binding(Constants.Properties.Angle)
             {
                 Source = AssociatedObject.DataContext,
                 Mode = BindingMode.TwoWay,

@@ -5,6 +5,7 @@ namespace TecX.Agile.Utilities
     using System.Windows.Media;
 
     using TecX.Agile.Behaviors;
+    using TecX.Agile.Infrastructure;
     using TecX.Common;
     using TecX.Common.Comparison;
 
@@ -26,11 +27,12 @@ namespace TecX.Agile.Utilities
         {
             Guard.AssertNotNull(element, "element");
 
-            var surface = SurfaceBehavior.Surface;
+            ////var surface = SurfaceBehavior.Surface;
 
             var center = element.PointToScreen(element.Center());
 
-            Point centerOnSurface = surface.PointFromScreen(center);
+            ////Point centerOnSurface = surface.PointFromScreen(center);
+            Point centerOnSurface = Surface.Current.PointFromScreen(center);
 
             return centerOnSurface;
         }
