@@ -10,6 +10,8 @@
     using TecX.Agile.Infrastructure;
     using TecX.Common;
 
+    using IEventAggregator = TecX.Event.IEventAggregator;
+
     public class GestureViewModel : Screen
     {
         private readonly IShell shell;

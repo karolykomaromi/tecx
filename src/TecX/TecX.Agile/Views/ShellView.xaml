@@ -20,7 +20,13 @@
         <ItemsControl
             Grid.RowSpan="3"
             Grid.ColumnSpan="3"
-            ItemsSource="{Binding Overlays}"/>
+            ItemsSource="{Binding Overlays}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
         <ItemsControl 
             Grid.RowSpan="3"
             Grid.ColumnSpan="3"
