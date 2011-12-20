@@ -7,6 +7,7 @@
 
     using Microsoft.Practices.ServiceLocation;
 
+    using TecX.Agile.Infrastructure;
     using TecX.Agile.Infrastructure.Events;
     using TecX.Agile.Utilities;
     using TecX.Agile.ViewModels;
@@ -102,7 +103,8 @@
             if (e.LeftButton.Equals(MouseButtonState.Pressed))
             {
                 // the actual point is set to the absolute coordinates of the mouse click
-                Point actual = e.GetPosition(SurfaceBehavior.Surface);
+                ////Point actual = e.GetPosition(SurfaceBehavior.Surface);
+                Point actual = Surface.Current.GetMousePositionOnSurface();
 
                 // ApplyRNT(actual);
                 Transition by = GeometryHelper.CalculateRntStep(
@@ -133,8 +135,9 @@
             AssociatedObject.ReleaseMouseCapture();
 
             // fire the drop-event
-            Point dropPoint = e.GetPosition(SurfaceBehavior.Surface);
-            dropPoint = SurfaceBehavior.Surface.PointToScreen(dropPoint);
+            ////Point dropPoint = e.GetPosition(SurfaceBehavior.Surface);
+            ////dropPoint = SurfaceBehavior.Surface.PointToScreen(dropPoint);
+            Point dropPoint = Surface.Current.GetMousePositionOnSurface();
 
             this.eventAggregator.Publish(new DroppedStoryCard(this.Card.Id, dropPoint.X, dropPoint.Y));
         }
@@ -148,7 +151,8 @@
             }
 
             // set the previous mouse point to the absolute coordinates of the event
-            this.Previous = e.GetPosition(SurfaceBehavior.Surface);
+            ////this.Previous = e.GetPosition(SurfaceBehavior.Surface);
+            this.Previous = Surface.Current.GetMousePositionOnSurface();
 
             // if the click occured inside the translate only area the movement is translate-only
             Point click = e.GetPosition(this.Toa.InputArea);
