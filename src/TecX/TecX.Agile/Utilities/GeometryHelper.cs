@@ -54,11 +54,11 @@ namespace TecX.Agile.Utilities
 
             double width;
 
-            if (!double.IsNaN(element.ActualWidth) && EpsilonComparer.IsAlmostZero(element.ActualWidth))
+            if (!double.IsNaN(element.ActualWidth) && !EpsilonComparer.IsAlmostZero(element.ActualWidth))
             {
                 width = element.ActualWidth;
             }
-            else if (!double.IsNaN(element.Width) && EpsilonComparer.IsAlmostZero(element.Width))
+            else if (!double.IsNaN(element.Width) && !EpsilonComparer.IsAlmostZero(element.Width))
             {
                 width = element.Width;
             }
