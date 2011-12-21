@@ -93,6 +93,10 @@
       <Project>{DC6E218E-4C6C-41DB-A13E-9464985EB6BF}</Project>
       <Name>TecX.Unity.ContextualBinding</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Unity\TecX.Unity.csproj">
+      <Project>{69621991-8933-41FD-8493-87E7FA5A26FE}</Project>
+      <Name>TecX.Unity</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
