@@ -119,3 +119,5 @@ src/TecX/TecX.Measures/obj
 src/TecX/TecX.Measures.Test/obj
 src/TecX/TecX.Agile.Messaging/obj
 src/TecX/TecX.Agile.Messaging.Test/obj
+src/TecX/TecX.Agile.Messaging.Test/bin
+src/TecX/TecX.Agile.Messaging/bin
