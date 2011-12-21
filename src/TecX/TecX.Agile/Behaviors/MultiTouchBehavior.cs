@@ -46,7 +46,7 @@
         {
             ////e.ManipulationContainer = SurfaceBehavior.Surface;
 
-            var adapter = (InputElementAdapter)Surface.Current;
+            var adapter = (IInputElementAdapter)Surface.Current;
 
             e.ManipulationContainer = adapter.InputElement;
             e.Handled = true;

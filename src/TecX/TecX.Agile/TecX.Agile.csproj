@@ -115,8 +115,10 @@
     <Compile Include="Utilities\TreeHelper.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\IterationViewModel.cs" />
+    <Compile Include="ViewModels\NullTranslateOnlyArea.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\StoryCardViewModel.cs" />
+    <Compile Include="ViewModels\TranslateOnlyArea.cs" />
     <Compile Include="ViewModels\TranslateOnlyAreaViewModel.cs" />
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>

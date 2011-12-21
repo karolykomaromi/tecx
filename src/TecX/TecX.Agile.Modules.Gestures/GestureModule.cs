@@ -31,7 +31,7 @@
             }
         }
 
-        protected override void OnInitialize()
+        protected override void Initialize()
         {
             this.shell.AddOverlay(this.gestureViewModel);
         }

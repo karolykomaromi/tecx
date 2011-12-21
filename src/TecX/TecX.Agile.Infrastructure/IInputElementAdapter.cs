@@ -2,7 +2,7 @@ namespace TecX.Agile.Infrastructure
 {
     using System.Windows;
 
-    public interface InputElementAdapter
+    public interface IInputElementAdapter
     {
         IInputElement InputElement { get; }
     }

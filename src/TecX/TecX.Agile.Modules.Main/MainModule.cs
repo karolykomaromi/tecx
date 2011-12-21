@@ -14,7 +14,7 @@
             get { return "Main Module"; }
         }
 
-        protected override void OnInitialize()
+        protected override void Initialize()
         {
         }
     }

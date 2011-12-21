@@ -16,14 +16,15 @@
 
         private bool visible;
 
-        private IInputElement inputArea;
+        private TranslateOnlyArea inputArea;
 
         public TranslateOnlyAreaViewModel()
         {
             this.Diameter = 2 * DefaultRadius;
+            this.inputArea = new NullTranslateOnlyArea();
         }
 
-        public IInputElement InputArea
+        public TranslateOnlyArea InputArea
         {
             get
             {
@@ -90,11 +91,31 @@
 
             return inside;
         }
-        
+
         protected override void OnViewAttached(object view, object context)
         {
             // ugly but it does the job
-            this.InputArea = (IInputElement)LogicalTreeHelper.FindLogicalNode((DependencyObject)view, "Toa");
+            ////this.InputArea = new InputElementTranslateOnlyArea((IInputElement)LogicalTreeHelper.FindLogicalNode((DependencyObject)view, "Toa"));
+            DependencyObject depObj = view as DependencyObject;
+
+            if (depObj == null)
+            {
+                return;
+            }
+
+            var node = LogicalTreeHelper.FindLogicalNode(depObj, "Toa");
+
+            if (node == null)
+            {
+                return;
+            }
+
+            var element = node as IInputElement;
+
+            if (element != null)
+            {
+                this.InputArea = new InputElementTranslateOnlyArea(element);
+            }
         }
     }
 }

@@ -84,9 +84,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntLibConfigBuilderFixture.cs" />
+    <Compile Include="MessagingFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.csproj">
+      <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
+      <Name>TecX.Agile.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile\TecX.Agile.csproj">
       <Project>{D1D13473-4D5E-409D-9C95-35750985378E}</Project>
       <Name>TecX.Agile</Name>

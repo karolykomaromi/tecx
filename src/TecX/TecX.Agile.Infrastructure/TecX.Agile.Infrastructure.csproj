@@ -93,8 +93,13 @@
     <Compile Include="Events\DroppedStoryCard.cs" />
     <Compile Include="Events\FieldHighlighted.cs" />
     <Compile Include="Events\PropertyChanged.cs" />
-    <Compile Include="InputElementAdapter.cs" />
+    <Compile Include="IInputElementAdapter.cs" />
     <Compile Include="IShell.cs" />
+    <Compile Include="Messaging\IInboundCommandContext.cs" />
+    <Compile Include="Messaging\IMessageChannel.cs" />
+    <Compile Include="Messaging\InboundCommandContext.cs" />
+    <Compile Include="Messaging\IMessageSubscriber.cs" />
+    <Compile Include="Messaging\PropertyChangedContext.cs" />
     <Compile Include="Modularization\IModule.cs" />
     <Compile Include="Modularization\IModuleCatalog.cs" />
     <Compile Include="Modularization\IModuleManager.cs" />

@@ -7,14 +7,38 @@ namespace TecX.Agile.Infrastructure.Modularization
     {
         public abstract string Description { get; }
 
-        public void Initialize()
+        void IModule.Initialize()
         {
-            this.OnLoadLocalStyles();
+            this.PreLoadStyles();
 
-            this.OnInitialize();
+            this.LoadStyles();
+
+            this.PostLoadStyles();
+
+            this.PreInitialize();
+
+            this.Initialize();
+
+            this.PostInitialize();
         }
 
-        protected virtual void OnLoadLocalStyles()
+        protected virtual void PostInitialize()
+        {
+        }
+
+        protected virtual void PreInitialize()
+        {
+        }
+
+        protected virtual void PostLoadStyles()
+        {
+        }
+
+        protected virtual void PreLoadStyles()
+        {
+        }
+
+        protected virtual void LoadStyles()
         {
             string assemblyName = GetType().Assembly.GetName().Name;
 
@@ -26,7 +50,7 @@ namespace TecX.Agile.Infrastructure.Modularization
             Application.Current.Resources.MergedDictionaries.Add(dictionary);
         }
 
-        protected virtual void OnInitialize()
+        protected virtual void Initialize()
         {
         }
     }
