@@ -1,5 +1,6 @@
 ﻿namespace TecX.Agile.Behaviors
 {
+    using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -15,14 +16,11 @@
 
     public class RntBehavior : Behavior<UserControl>
     {
-        private readonly IEventAggregator eventAggregator;
-
+        private IEventAggregator eventAggregator;
+        
         public RntBehavior()
         {
             this.TranslateOnlyArea = new TranslateOnlyAreaViewModel { Visible = false };
-
-            // can't inject to behavior :(
-            this.eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
         }
 
         private Point Previous { get; set; }
@@ -35,7 +33,13 @@
 
         protected override void OnAttached()
         {
-            this.AssociatedObject.Loaded += this.AddTranslateOnlyArea;
+            if (DesignerProperties.GetIsInDesignMode(this))
+            {
+                return;
+            }
+
+            // can't inject to behavior :(
+            this.eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
 
             this.AssociatedObject.MouseEnter += this.OnMouseEnter;
             this.AssociatedObject.MouseLeave += this.OnMouseLeave;
@@ -44,7 +48,13 @@
             this.AssociatedObject.PreviewMouseLeftButtonUp += this.OnMouseLeftButtonUp;
             this.AssociatedObject.PreviewMouseMove += this.OnMouseMove;
 
+            this.AssociatedObject.DataContextChanged += this.OnDataContextChanged;
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
             this.Card = (StoryCardViewModel)this.AssociatedObject.DataContext;
+            this.Card.Decorators.Add(this.TranslateOnlyArea);
         }
 
         protected override void OnDetaching()
@@ -59,13 +69,6 @@
             this.Card.Decorators.Remove(this.TranslateOnlyArea);
 
             this.Card = null;
-        }
-
-        private void AddTranslateOnlyArea(object sender, RoutedEventArgs e)
-        {
-            this.Card.Decorators.Add(this.TranslateOnlyArea);
-
-            this.AssociatedObject.Loaded -= this.AddTranslateOnlyArea;
         }
 
         /// <summary>
@@ -108,9 +111,9 @@
 
                 // ApplyRNT(actual);
                 Transition by = GeometryHelper.CalculateRntStep(
-                    actual, 
-                    this.Previous, 
-                    this.AssociatedObject.CenterOnSurface(), 
+                    actual,
+                    this.Previous,
+                    this.AssociatedObject.CenterOnSurface(),
                     this.IsTranslated);
 
                 this.Card.Move(by.X, by.Y, by.Angle);
@@ -157,8 +160,8 @@
             // if the click occured inside the translate only area the movement is translate-only
             Point click = this.TranslateOnlyArea.InputArea.GetMousePositionOnTranslateOnlyArea();
 
-            if (this.TranslateOnlyArea != null && 
-                this.TranslateOnlyArea.IsInsideTranslateOnlyArea(click)) 
+            if (this.TranslateOnlyArea != null &&
+                this.TranslateOnlyArea.IsInsideTranslateOnlyArea(click))
             {
                 this.IsTranslated = true;
             }

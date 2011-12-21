@@ -59,13 +59,20 @@
 
             this.AssertPreconditions();
 
+            this.AssociatedObject.DataContextChanged += this.OnDataContextChanged;
+
+            this.AssociatedObject.Loaded += this.OnLoaded;
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
             Binding x = new Binding(Constants.Properties.X)
-                {
-                    Source = AssociatedObject.DataContext,
-                    Mode = BindingMode.TwoWay,
-                    NotifyOnSourceUpdated = true,
-                    NotifyOnTargetUpdated = true
-                };
+            {
+                Source = AssociatedObject.DataContext,
+                Mode = BindingMode.TwoWay,
+                NotifyOnSourceUpdated = true,
+                NotifyOnTargetUpdated = true
+            };
 
             BindingExpressionBase hookForInitialUpdate = BindingOperations.SetBinding(
                 AssociatedObject.Translation(), TranslateTransform.XProperty, x);
@@ -73,12 +80,12 @@
             hookForInitialUpdate.UpdateTarget();
 
             Binding y = new Binding(Constants.Properties.Y)
-                {
-                    Source = AssociatedObject.DataContext,
-                    Mode = BindingMode.TwoWay,
-                    NotifyOnSourceUpdated = true,
-                    NotifyOnTargetUpdated = true
-                };
+            {
+                Source = AssociatedObject.DataContext,
+                Mode = BindingMode.TwoWay,
+                NotifyOnSourceUpdated = true,
+                NotifyOnTargetUpdated = true
+            };
 
             hookForInitialUpdate = BindingOperations.SetBinding(
                 AssociatedObject.Translation(), TranslateTransform.YProperty, y);
@@ -86,19 +93,19 @@
             hookForInitialUpdate.UpdateTarget();
 
             Binding angle = new Binding(Constants.Properties.Angle)
-                {
-                    Source = AssociatedObject.DataContext,
-                    Mode = BindingMode.TwoWay,
-                    NotifyOnSourceUpdated = true,
-                    NotifyOnTargetUpdated = true
-                };
+            {
+                Source = AssociatedObject.DataContext,
+                Mode = BindingMode.TwoWay,
+                NotifyOnSourceUpdated = true,
+                NotifyOnTargetUpdated = true
+            };
 
             hookForInitialUpdate = BindingOperations.SetBinding(
                 AssociatedObject.Rotation(), RotateTransform.AngleProperty, angle);
 
             hookForInitialUpdate.UpdateTarget();
 
-            this.AssociatedObject.Loaded += this.OnLoaded;
+            this.AssociatedObject.DataContextChanged -= this.OnDataContextChanged;
         }
 
         private static void ThrowTransformsException(Transform transform)
