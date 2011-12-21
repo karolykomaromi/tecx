@@ -117,3 +117,5 @@ src/TecX/TecX.Search.WpfClient/obj
 src/TecX/TestResults/webeseb_NEMO02 2011-12-09 16_12_25.trx
 src/TecX/TecX.Measures/obj
 src/TecX/TecX.Measures.Test/obj
+src/TecX/TecX.Agile.Messaging/obj
+src/TecX/TecX.Agile.Messaging.Test/obj
