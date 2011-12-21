@@ -7,8 +7,10 @@
 
     using Caliburn.Micro;
 
+    using TecX.Agile.Infrastructure;
     using TecX.Agile.Infrastructure.Commands;
     using TecX.Agile.Infrastructure.Events;
+    using TecX.Agile.Infrastructure.Messaging;
     using TecX.Common;
     using TecX.Common.Comparison;
     using TecX.Event;
@@ -285,13 +287,26 @@
                 {
                     string propertyName = this.ToPropertyName(field.Name);
 
-                    var msg = new PropertyChanged(this.Id, propertyName, currentValue, value);
-
                     field.SetValue(this, value);
 
                     NotifyOfPropertyChange(propertyName);
 
-                    this.EventAggregator.Publish(msg);
+                    PropertyChanged @event = new PropertyChanged(this.Id, propertyName, currentValue, value);
+
+                    var context = InboundCommandContext.Current;
+
+                    if (context != null)
+                    {
+                        // TODO weberse 2011-12-21 should be published anyway but only not sent out to other clients. needs to be relocated!
+                        // check wether the outbound event matches the context's incoming command. 
+                        // if it matches -> abort, else -> publish (avoids sending events over and over again.
+                        if (context.MatchesEvent(@event))
+                        {
+                            return;
+                        }
+                    }
+
+                    this.EventAggregator.Publish(@event);
                 }
             }
         }
@@ -303,7 +318,7 @@
             var property = typeof(CardViewModel).GetProperty(
                 message.PropertyName, BindingFlags.Instance | BindingFlags.Public);
 
-            if (property != null && 
+            if (property != null &&
                 property.PropertyType.IsAssignableFrom(message.To.GetType()))
             {
                 property.SetValue(this, message.To, null);

@@ -4,7 +4,7 @@
 
     using TecX.Common;
 
-    public abstract class Surface : InputElementAdapter
+    public abstract class Surface : IInputElementAdapter
     {
         private static Surface current;
 
@@ -28,7 +28,7 @@
             }
         }
 
-        IInputElement InputElementAdapter.InputElement
+        IInputElement IInputElementAdapter.InputElement
         {
             get { return this.InputElement; }
         }

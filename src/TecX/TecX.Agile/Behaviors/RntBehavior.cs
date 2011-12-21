@@ -19,7 +19,7 @@
 
         public RntBehavior()
         {
-            this.Toa = new TranslateOnlyAreaViewModel { Visible = false };
+            this.TranslateOnlyArea = new TranslateOnlyAreaViewModel { Visible = false };
 
             // can't inject to behavior :(
             this.eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
@@ -31,7 +31,7 @@
 
         private StoryCardViewModel Card { get; set; }
 
-        private TranslateOnlyAreaViewModel Toa { get; set; }
+        private TranslateOnlyAreaViewModel TranslateOnlyArea { get; set; }
 
         protected override void OnAttached()
         {
@@ -56,14 +56,14 @@
             this.AssociatedObject.MouseEnter -= this.OnMouseEnter;
             this.AssociatedObject.MouseLeave -= this.OnMouseLeave;
 
-            this.Card.Decorators.Remove(this.Toa);
+            this.Card.Decorators.Remove(this.TranslateOnlyArea);
 
             this.Card = null;
         }
 
         private void AddTranslateOnlyArea(object sender, RoutedEventArgs e)
         {
-            this.Card.Decorators.Add(this.Toa);
+            this.Card.Decorators.Add(this.TranslateOnlyArea);
 
             this.AssociatedObject.Loaded -= this.AddTranslateOnlyArea;
         }
@@ -73,9 +73,9 @@
         /// </summary>
         private void OnMouseLeave(object sender, MouseEventArgs e)
         {
-            if (this.Toa != null)
+            if (this.TranslateOnlyArea != null)
             {
-                this.Toa.Visible = false;
+                this.TranslateOnlyArea.Visible = false;
             }
         }
 
@@ -84,10 +84,10 @@
         /// </summary>
         private void OnMouseEnter(object sender, MouseEventArgs e)
         {
-            if (this.Toa != null &&
+            if (this.TranslateOnlyArea != null &&
                 !this.Card.IsPinned)
             {
-                this.Toa.Visible = true;
+                this.TranslateOnlyArea.Visible = true;
             }
         }
 
@@ -155,9 +155,10 @@
             this.Previous = Surface.Current.GetMousePositionOnSurface();
 
             // if the click occured inside the translate only area the movement is translate-only
-            Point click = e.GetPosition(this.Toa.InputArea);
+            Point click = this.TranslateOnlyArea.InputArea.GetMousePositionOnTranslateOnlyArea();
 
-            if (this.Toa != null && this.Toa.IsInsideTranslateOnlyArea(click)) 
+            if (this.TranslateOnlyArea != null && 
+                this.TranslateOnlyArea.IsInsideTranslateOnlyArea(click)) 
             {
                 this.IsTranslated = true;
             }
