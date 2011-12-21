@@ -56,14 +56,11 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="BuildTreeNode.cs" />
-    <Compile Include="BuildTreeTrackerStrategy.cs" />
     <Compile Include="ContextualBuildKeyMappingPolicy.cs" />
     <Compile Include="ContextualBindingException.cs" />
     <Compile Include="ContextualBindingExtension.cs" />
     <Compile Include="ContextualBuildKeyMapping.cs" />
     <Compile Include="IBindingContext.cs" />
-    <Compile Include="IBuildTreeNodeVisitor.cs" />
     <Compile Include="IContextualBindingConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnityContainerExtensions.cs" />
@@ -72,6 +69,10 @@
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Unity\TecX.Unity.csproj">
+      <Project>{69621991-8933-41FD-8493-87E7FA5A26FE}</Project>
+      <Name>TecX.Unity</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -85,15 +85,20 @@
     <Compile Include="TestObjects\ICtorTest.cs" />
     <Compile Include="TestObjects\IEngine.cs" />
     <Compile Include="TestObjects\IFoo.cs" />
+    <Compile Include="TestObjects\ILog.cs" />
     <Compile Include="TestObjects\ILogger.cs" />
     <Compile Include="TestObjects\IVehicle.cs" />
     <Compile Include="TestObjects\IWheel.cs" />
+    <Compile Include="TestObjects\Log.cs" />
+    <Compile Include="TestObjects\LogManager.cs" />
     <Compile Include="TestObjects\Motorcycle.cs" />
     <Compile Include="TestObjects\MotorcycleEngine.cs" />
     <Compile Include="TestObjects\MotorcycleWheel.cs" />
     <Compile Include="TestObjects\NeedsCollection.cs" />
     <Compile Include="TestObjects\Snafu.cs" />
     <Compile Include="TestObjects\TestLogger.cs" />
+    <Compile Include="TestObjects\UsesLog.cs" />
+    <Compile Include="TrackingExtensionFixture.cs" />
     <Compile Include="WasResolvedFixture.cs" />
   </ItemGroup>
   <ItemGroup>

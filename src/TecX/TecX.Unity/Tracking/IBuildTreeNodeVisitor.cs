@@ -1,4 +1,4 @@
-namespace TecX.Unity.ContextualBinding
+namespace TecX.Unity.Tracking
 {
     public interface IBuildTreeNodeVisitor
     {

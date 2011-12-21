@@ -8,6 +8,7 @@
     using Microsoft.Practices.Unity.ObjectBuilder;
 
     using TecX.Common;
+    using TecX.Unity.Tracking;
 
     public class ContextualBindingExtension : UnityContainerExtension, IContextualBindingConfigurator
     {
