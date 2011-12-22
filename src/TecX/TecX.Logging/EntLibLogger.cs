@@ -8,6 +8,7 @@
     using Microsoft.Practices.EnterpriseLibrary.Logging;
 
     using TecX.Common;
+    using TecX.Common.Error;
 
     public class EntLibLogger : ILogger
     {

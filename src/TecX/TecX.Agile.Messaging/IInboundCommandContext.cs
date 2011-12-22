@@ -1,4 +1,4 @@
-namespace TecX.Agile.Infrastructure.Messaging
+namespace TecX.Agile.Messaging
 {
     using System;
 
@@ -11,6 +11,6 @@ namespace TecX.Agile.Infrastructure.Messaging
 
     public interface IInboundCommandContext<out TCommand> : IInboundCommandContext
     {
-        TCommand Command { get; }
+        new TCommand Command { get; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace TecX.Agile.Test
+namespace TecX.Agile.Messaging.Test
 {
     using System;
 
@@ -6,7 +6,6 @@
 
     using TecX.Agile.Infrastructure.Commands;
     using TecX.Agile.Infrastructure.Events;
-    using TecX.Agile.Infrastructure.Messaging;
 
     [TestClass]
     public class MessagingFixture
@@ -20,7 +19,7 @@
 
             var @event = new PropertyChanged(id, "1", 1, 2);
 
-            var ctx = new PropertyChangedContext(command);
+            var ctx = new ChangePropertyContext(command);
 
             Assert.IsTrue(ctx.MatchesEvent(@event));
         }

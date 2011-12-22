@@ -1,10 +1,19 @@
-namespace TecX.Agile.Infrastructure.Messaging
+namespace TecX.Agile.Messaging
 {
     using TecX.Common;
 
     public abstract class InboundCommandContext : IInboundCommandContext
     {
+        public static readonly IInboundCommandContext Empty = new NullInboundCommandContext();
+
         protected readonly object command;
+
+        private static IInboundCommandContext current;
+
+        static InboundCommandContext()
+        {
+            Current = InboundCommandContext.Empty;
+        }
 
         protected InboundCommandContext(object message)
         {
@@ -15,7 +24,20 @@ namespace TecX.Agile.Infrastructure.Messaging
             Current = this;
         }
 
-        public static IInboundCommandContext Current { get; set; }
+        public static IInboundCommandContext Current
+        {
+            get
+            {
+                return current;
+            }
+
+            set
+            {
+                Guard.AssertNotNull(value, "Current");
+
+                current = value;
+            }
+        }
 
         object IInboundCommandContext.Command
         {
@@ -31,7 +53,7 @@ namespace TecX.Agile.Infrastructure.Messaging
         {
             if (Current == this)
             {
-                Current = null;
+                Current = InboundCommandContext.Empty;
             }
         }
     }

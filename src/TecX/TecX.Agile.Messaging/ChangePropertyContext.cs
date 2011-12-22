@@ -1,12 +1,12 @@
-﻿namespace TecX.Agile.Infrastructure.Messaging
+namespace TecX.Agile.Messaging
 {
     using TecX.Agile.Infrastructure.Commands;
     using TecX.Agile.Infrastructure.Events;
     using TecX.Common;
 
-    public class PropertyChangedContext : InboundCommandContext<ChangeProperty>
+    public class ChangePropertyContext : InboundCommandContext<ChangeProperty>
     {
-        public PropertyChangedContext(ChangeProperty command)
+        public ChangePropertyContext(ChangeProperty command)
             : base(command)
         {
         }
