@@ -176,6 +176,10 @@
       <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
       <Name>TecX.Agile.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Messaging\TecX.Agile.Messaging.csproj">
+      <Project>{C955D066-015D-40A4-B8AD-921888D1DA95}</Project>
+      <Name>TecX.Agile.Messaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile.Modules.Gestures\TecX.Agile.Modules.Gestures.csproj">
       <Project>{41785223-CF12-4A54-9D09-E017A5C362E9}</Project>
       <Name>TecX.Agile.Modules.Gestures</Name>

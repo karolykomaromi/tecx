@@ -9,7 +9,7 @@
 
     using TecX.Agile.Infrastructure.Commands;
     using TecX.Agile.Infrastructure.Events;
-    using TecX.Agile.Infrastructure.Messaging;
+    using TecX.Agile.Messaging;
     using TecX.Common;
     using TecX.Common.Comparison;
     using TecX.Event;

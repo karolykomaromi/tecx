@@ -1,14 +1,10 @@
-﻿using System;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using TecX.Common.Test.TestObjects;
-
-namespace TecX.Common.Test
+﻿namespace TecX.Common.Test
 {
-    /// <summary>
-    /// Summary description for TestArgumentHelper
-    /// </summary>
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using TecX.Common.Error;
+    using TecX.Common.Test.TestObjects;
+
     [TestClass]
     public class GuardFixture
     {
@@ -20,30 +16,30 @@ namespace TecX.Common.Test
         }
 
         [TestMethod]
-        [ExpectedException(typeof (ArgumentOutOfRangeException))]
+        [ExpectedException(typeof (GuardArgumentOutOfRangeException))]
         public void CanAssertArgumentIsBelowRangeBound()
         {
             Guard.AssertIsInRange(0, "paramToCheck", 1, 2);
         }
 
         [TestMethod]
-        [ExpectedException(typeof (ArgumentOutOfRangeException))]
+        [ExpectedException(typeof (GuardArgumentOutOfRangeException))]
         public void CanAssertArgumentIsGreaterThanUpperRangeBound()
         {
             Guard.AssertIsInRange(3, "paramToCheck", 1, 2);
         }
 
         [TestMethod]
-        [ExpectedException(typeof (ArgumentOutOfRangeException))]
+        [ExpectedException(typeof (GuardArgumentOutOfRangeException))]
         public void CanAssertArgumentIsOfWrongType()
         {
-            Guard.AssertIsType<ClassA>(string.Empty, "paramToCheck");
+            Guard.AssertIsType(typeof(ClassA), string.Empty, "paramToCheck");
         }
 
         [TestMethod]
         public void CanAssertArgumentIsOfCorrectType()
         {
-            Guard.AssertIsType<ClassA>(new ClassB(), "paramToCheck");
+            Guard.AssertIsType(typeof(ClassA), new ClassB(), "paramToCheck");
         }
     }
 }

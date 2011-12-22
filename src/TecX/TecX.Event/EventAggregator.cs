@@ -41,18 +41,6 @@
         }
 
         /// <summary>
-        /// Gets the subscribers. For UnitTesting.
-        /// </summary>
-        /// <value>The subscribers.</value>
-        internal IEnumerable<WeakReference> Subscribers
-        {
-            get
-            {
-                return this.subscribers;
-            }
-        }
-
-        /// <summary>
         /// Subscribes an object to the event aggregator.
         /// </summary>
         /// <param name="subscriber">The subscriber.</param>
@@ -189,7 +177,7 @@
         /// </returns>
         private bool IsAlreadyInCollection(object subscriber)
         {
-            var element = this.subscribers.Select(o => o).Where(o => o.Target == subscriber).FirstOrDefault();
+            var element = this.subscribers.Select(o => o).FirstOrDefault(o => o.Target == subscriber);
 
             return element != null;
         }

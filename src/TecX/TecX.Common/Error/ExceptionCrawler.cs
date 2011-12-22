@@ -1,4 +1,4 @@
-namespace TecX.Common
+namespace TecX.Common.Error
 {
     using System;
     using System.Text;

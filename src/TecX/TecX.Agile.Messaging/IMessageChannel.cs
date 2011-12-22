@@ -1,4 +1,4 @@
-namespace TecX.Agile.Infrastructure.Messaging
+namespace TecX.Agile.Messaging
 {
     public interface IMessageChannel
     {
@@ -6,6 +6,6 @@ namespace TecX.Agile.Infrastructure.Messaging
 
         void Unsubscribe(object subscriber);
 
-        void Publish<TMessage>(TMessage message) where TMessage : class;
+        void Send<TMessage>(TMessage message) where TMessage : class;
     }
 }
