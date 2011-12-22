@@ -8,6 +8,7 @@
     using TecX.Agile.Infrastructure;
     using TecX.Agile.Modules.Gestures.Recognition;
     using TecX.Common;
+    using TecX.Event;
 
     using IEventAggregator = TecX.Event.IEventAggregator;
 
