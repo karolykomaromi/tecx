@@ -1,9 +1,10 @@
 ﻿namespace TecX.Agile.ViewModels
 {
+    using System;
+
     using Caliburn.Micro;
 
-    using TecX.Agile.Infrastructure;
-    using TecX.Common.Comparison;
+    using TecX.Common;
 
     using IEventAggregator = TecX.Event.IEventAggregator;
 
@@ -30,12 +31,12 @@
         public StoryCardViewModel(IEventAggregator eventAggregator)
             : base(eventAggregator)
         {
-            this.Width = Defaults.StoryCard.Width;
-            this.Height = Defaults.StoryCard.Height;
-            this.Opacity = Defaults.Opacity;
-
-            this.Background = Constants.Colors.Yellow;
-
+            this.title = string.Empty;
+            this.mostLikelyEstimate = 0.0;
+            this.actualEffort = 0.0;
+            this.taskOwner = string.Empty;
+            this.isHandWritingEnabled = false;
+            this.description = string.Empty;
             this.decorators = new BindableCollection<object>();
         }
 
@@ -58,13 +59,7 @@
 
             set
             {
-                if (this.title == value)
-                {
-                    return;
-                }
-
-                this.title = value;
-                this.NotifyOfPropertyChange(() => this.Title);
+                this.Set(() => this.title, value);
             }
         }
 
@@ -77,13 +72,7 @@
 
             set
             {
-                if (EpsilonComparer.AreEqual(this.mostLikelyEstimate, value))
-                {
-                    return;
-                }
-
-                this.mostLikelyEstimate = value;
-                this.NotifyOfPropertyChange(() => this.MostLikelyEstimate);
+                this.Set(() => this.mostLikelyEstimate, value);
             }
         }
 
@@ -96,13 +85,7 @@
 
             set
             {
-                if (EpsilonComparer.AreEqual(this.actualEffort, value))
-                {
-                    return;
-                }
-
-                this.actualEffort = value;
-                this.NotifyOfPropertyChange(() => this.ActualEffort);
+                this.Set(() => this.actualEffort, value);
             }
         }
 
@@ -115,13 +98,7 @@
 
             set
             {
-                if (this.taskOwner == value)
-                {
-                    return;
-                }
-
-                this.taskOwner = value;
-                this.NotifyOfPropertyChange(() => this.TaskOwner);
+                this.Set(() => this.taskOwner, value);
             }
         }
 
@@ -134,13 +111,7 @@
 
             set
             {
-                if (this.isHandWritingEnabled == value)
-                {
-                    return;
-                }
-
-                this.isHandWritingEnabled = value;
-                this.NotifyOfPropertyChange(() => this.IsHandWritingEnabled);
+                this.Set(() => this.isHandWritingEnabled, value);
             }
         }
 
@@ -153,16 +124,21 @@
 
             set
             {
-                if (this.description == value)
-                {
-                    return;
-                }
-
-                this.description = value;
-                this.NotifyOfPropertyChange(() => this.Description);
+                this.Set(() => this.description, value);
             }
         }
 
         #endregion Properties
+
+        public static StoryCardViewModel Create(IEventAggregator eventAggregator, Guid id, double x, double y, double angle)
+        {
+            Guard.AssertNotNull(eventAggregator, "eventAggregator");
+
+            StoryCardViewModel storyCard = new StoryCardViewModel(eventAggregator);
+
+            storyCard.Initialize(id, x, y, angle);
+
+            return storyCard;
+        }
     }
 }

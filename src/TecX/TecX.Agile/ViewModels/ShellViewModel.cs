@@ -1,14 +1,13 @@
 namespace TecX.Agile.ViewModels
 {
     using System;
-    using System.Windows;
-    using System.Windows.Media;
 
     using Caliburn.Micro;
 
     using TecX.Agile.Infrastructure;
     using TecX.Agile.Infrastructure.Commands;
     using TecX.Agile.Infrastructure.Events;
+    using TecX.Agile.Messaging;
     using TecX.Common;
     using TecX.Event;
 
@@ -18,13 +17,17 @@ namespace TecX.Agile.ViewModels
     {
         private readonly IEventAggregator eventAggregator;
 
+        private readonly MessageHub messageHub;
+
         private readonly Conductor<IScreen>.Collection.AllActive overlays;
 
-        public ShellViewModel(IEventAggregator eventAggregator)
+        public ShellViewModel(IEventAggregator eventAggregator, MessageHub messageHub)
         {
             Guard.AssertNotNull(eventAggregator, "eventAggregator");
+            Guard.AssertNotNull(messageHub, "messageHub");
 
             this.eventAggregator = eventAggregator;
+            this.messageHub = messageHub;
             this.overlays = new Conductor<IScreen>.Collection.AllActive();
         }
 
@@ -61,27 +64,14 @@ namespace TecX.Agile.ViewModels
 
         public void AddStoryCard(Guid id, double x, double y, double angle)
         {
-            StoryCardViewModel storyCard = new StoryCardViewModel(this.EventAggregator) { Id = id, X = x, Y = y, Angle = angle };
+            //StoryCardViewModel storyCard = new StoryCardViewModel(this.EventAggregator) { Id = id, X = x, Y = y, Angle = angle };
+            StoryCardViewModel storyCard = StoryCardViewModel.Create(this.EventAggregator, id, x, y, angle);
 
             Items.Add(storyCard);
 
-            this.EventAggregator.Publish(new AddedStoryCard { Id = storyCard.Id, X = x, Y = y, Angle = angle });
+            this.EventAggregator.Publish(new StoryCardAdded(storyCard.Id, x, y, angle));
 
             ActivateItem(storyCard);
-        }
-
-        public Point PointFromScreen(Point point)
-        {
-            Point p = ((Visual)this.GetView()).PointFromScreen(point);
-
-            return p;
-        }
-
-        public Point PointToScreen(Point point)
-        {
-            Point p = ((Visual)this.GetView()).PointToScreen(point);
-
-            return p;
         }
 
         public void Handle(AddStoryCard message)

@@ -145,7 +145,7 @@
                     TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName)));
         }
 
-        //[DebuggerStepThrough]
+        [DebuggerStepThrough]
         public static void AssertIsInRange<T>(T param, string paramName, T min, T max) where T : IComparable
         {
             string message = TypeHelper.SafeFormat(Constants.Messages.ParameterNotInRange, paramName, param, min, max);

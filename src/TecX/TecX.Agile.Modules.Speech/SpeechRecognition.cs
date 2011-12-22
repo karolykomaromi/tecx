@@ -1,111 +1,71 @@
-﻿using System;
-using System.Globalization;
-using System.Speech.Recognition;
-using System.Windows.Threading;
-
-using TecX.Agile.Infrastructure;
-using TecX.Agile.Infrastructure.Events;
-using TecX.Common;
-
-namespace TecX.Agile.Moduls.Speech
+﻿namespace TecX.Agile.Modules.Speech
 {
+    using System.Speech.Recognition;
+
+    using TecX.Common;
+    using TecX.Event;
+
     public class SpeechRecognition
     {
-        #region Constants
+        private readonly IEventAggregator eventAggregator;
 
-        private static class Constants
+        private readonly SpeechRecognizer recognizer;
+
+        public SpeechRecognition(IEventAggregator eventAggregator)
         {
-            public static class VoiceCommands
-            {
-                /// <summary>add storycard</summary>
-                public const string AddStoryCard = "add storycard";
+            Guard.AssertNotNull(eventAggregator, "eventAggregator");
 
-                /// <summary>reveal</summary>
-                public const string ShowSystemInfo = "reveal";
-            }
-        }
-
-
-        #endregion Constants
-
-        #region Fields
-
-        private readonly Dispatcher _dispatcher;
-        private readonly SpeechRecognizer _recognizer;
-
-        #endregion Fields
-
-        #region c'tor
-
-        public SpeechRecognition(Dispatcher dispatcher)
-        {
-            Guard.AssertNotNull(dispatcher, "dispatcher");
-
-            _dispatcher = dispatcher;
-
-            _recognizer = new SpeechRecognizer
+            this.eventAggregator = eventAggregator;
+            this.recognizer = new SpeechRecognizer
                                    {
                                        PauseRecognizerOnRecognition = true
                                    };
 
-            InitializeSpeechRecognizer();
+            this.InitializeSpeechRecognizer();
         }
-
-
-        #endregion c'tor
-
-        #region Initialization
 
         private void InitializeSpeechRecognizer()
         {
-            _recognizer.UnloadAllGrammars();
-
-            var culture = CultureInfo.CreateSpecificCulture("en-US");
+            this.recognizer.UnloadAllGrammars();
 
 
-            GrammarBuilder ssi = new GrammarBuilder(Constants.VoiceCommands.ShowSystemInfo) { Culture = culture };
+            GrammarBuilder ssi = new GrammarBuilder(VoiceCommands.ShowSystemInfo) { Culture = Defaults.Culture };
 
             Grammar showSystemInfo = new Grammar(ssi);
 
-            showSystemInfo.SpeechRecognized += OnShowSystemInfo;
+            showSystemInfo.SpeechRecognized += this.OnShowSystemInfo;
 
-            _recognizer.LoadGrammar(showSystemInfo);
+            this.recognizer.LoadGrammar(showSystemInfo);
 
 
-            GrammarBuilder @as = new GrammarBuilder(Constants.VoiceCommands.AddStoryCard) { Culture = culture };
+            GrammarBuilder @as = new GrammarBuilder(VoiceCommands.AddStoryCard) { Culture = Defaults.Culture };
 
             Grammar addStoryCard = new Grammar(@as);
 
-            addStoryCard.SpeechRecognized += OnAddStoryCard;
+            addStoryCard.SpeechRecognized += this.OnAddStoryCard;
 
-            _recognizer.LoadGrammar(addStoryCard);
+            this.recognizer.LoadGrammar(addStoryCard);
         }
-
-        #endregion Initialization
-
-        #region EventHandling
 
         private void OnShowSystemInfo(object sender, SpeechRecognizedEventArgs e)
         {
-            _dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
-                                                                              {
-                                                                                  if (Commands.ShowSystemInfo.CanExecute(null))
-                                                                                      Commands.ShowSystemInfo.Execute(null);
-                                                                              }));
+            //this.dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+            //                                                                  {
+            //                                                                      if (Commands.ShowSystemInfo.CanExecute(null))
+            //                                                                          Commands.ShowSystemInfo.Execute(null);
+            //                                                                  }));
         }
 
         private void OnAddStoryCard(object sender, SpeechRecognizedEventArgs e)
         {
-            //TODO weberse 2011-01-14 should put the card in the center of the screen in the future
-            StoryCardAdded commandArgs = new StoryCardAdded(Guid.NewGuid(), Guid.Empty, 0.0, 0.0, 0.0);
+            ////TODO weberse 2011-01-14 should put the card in the center of the screen in the future
+            //StoryCardAdded commandArgs = new StoryCardAdded(Guid.NewGuid(), Guid.Empty, 0.0, 0.0, 0.0);
 
-            _dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
-                                                                         {
-                                                                             if (Commands.AddStoryCard.CanExecute(commandArgs))
-                                                                                 Commands.AddStoryCard.Execute(commandArgs);
-                                                                         }));
+            //this.dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
+            //                                                             {
+            //                                                                 if (Commands.AddStoryCard.CanExecute(commandArgs))
+            //                                                                     Commands.AddStoryCard.Execute(commandArgs);
+            //                                                             }));
         }
-
-        #endregion EventHandling
     }
 }

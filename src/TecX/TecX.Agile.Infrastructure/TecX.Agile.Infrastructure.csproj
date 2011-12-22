@@ -73,7 +73,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Converters\ColorToSolidColorBrushConverter.cs" />
     <Compile Include="Defaults.cs" />
-    <Compile Include="Events\AddedStoryCard.cs" />
+    <Compile Include="Events\StoryCardAdded.cs" />
     <Compile Include="Events\CaretMoved.cs" />
     <Compile Include="Events\DroppedStoryCard.cs" />
     <Compile Include="Events\FieldHighlighted.cs" />

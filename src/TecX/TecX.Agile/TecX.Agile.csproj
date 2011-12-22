@@ -188,6 +188,10 @@
       <Project>{1EB35F86-DA6C-4691-A2C5-8587129B520D}</Project>
       <Name>TecX.Agile.Modules.Main</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Modules.Speech\TecX.Agile.Modules.Speech.csproj">
+      <Project>{14949F38-1BE4-4733-9B72-49D7454AF88F}</Project>
+      <Name>TecX.Agile.Modules.Speech</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.CaliburnEx\TecX.CaliburnEx.csproj">
       <Project>{4244D026-9657-41AD-8CFB-AA70E2372CF5}</Project>
       <Name>TecX.CaliburnEx</Name>

@@ -6,6 +6,7 @@ namespace TecX.Agile.Messaging.Test
 
     using TecX.Agile.Infrastructure.Commands;
     using TecX.Agile.Infrastructure.Events;
+    using TecX.Agile.Messaging.Context;
 
     [TestClass]
     public class MessagingFixture
