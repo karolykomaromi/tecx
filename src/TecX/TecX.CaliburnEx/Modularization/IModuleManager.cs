@@ -1,4 +1,4 @@
-namespace TecX.Agile.Infrastructure.Modularization
+namespace TecX.CaliburnEx.Modularization
 {
     public interface IModuleManager
     {

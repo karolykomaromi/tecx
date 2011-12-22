@@ -41,7 +41,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <TextBox
-                    x:Name="Name" 
+                    x:Name="Title" 
                     Style="{StaticResource HiddenTextBoxStyle}"
                     Grid.ColumnSpan="6" />
         <TextBox 

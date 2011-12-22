@@ -1,4 +1,4 @@
-namespace TecX.Agile.Infrastructure.Modularization
+namespace TecX.CaliburnEx.Modularization
 {
     using System;
     using System.Windows;
@@ -40,7 +40,7 @@ namespace TecX.Agile.Infrastructure.Modularization
 
         protected virtual void LoadStyles()
         {
-            string assemblyName = GetType().Assembly.GetName().Name;
+            string assemblyName = this.GetType().Assembly.GetName().Name;
 
             ResourceDictionary dictionary = new ResourceDictionary
             {

@@ -52,7 +52,7 @@ namespace TecX.Agile.ViewModels
             }
         }
 
-        public void AddOverlay(Screen overlay)
+        public void AddOverlay(IScreen overlay)
         {
             Guard.AssertNotNull(overlay, "overlay");
 

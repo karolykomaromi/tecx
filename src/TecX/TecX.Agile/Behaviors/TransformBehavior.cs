@@ -64,6 +64,14 @@
             this.AssociatedObject.Loaded += this.OnLoaded;
         }
 
+        private static void ThrowTransformsException(Transform transform)
+        {
+            throw new InvalidOperationException(
+                "The UIElement's RenderTransform " + "property is not set to a TransformGroup containing a "
+                + "RotateTransform, ScaleTransform and TranslateTransform. "
+                + "The order of the elements in the group matters!").WithAdditionalInfo("transform", transform);
+        }
+
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             Binding x = new Binding(Constants.Properties.X)
@@ -106,14 +114,6 @@
             hookForInitialUpdate.UpdateTarget();
 
             this.AssociatedObject.DataContextChanged -= this.OnDataContextChanged;
-        }
-
-        private static void ThrowTransformsException(Transform transform)
-        {
-            throw new InvalidOperationException(
-                "The UIElement's RenderTransform " + "property is not set to a TransformGroup containing a "
-                + "RotateTransform, ScaleTransform and TranslateTransform. "
-                + "The order of the elements in the group matters!").WithAdditionalInfo("transform", transform);
         }
 
         private void AssertPreconditions()

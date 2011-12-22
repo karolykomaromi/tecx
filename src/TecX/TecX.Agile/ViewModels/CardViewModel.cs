@@ -7,7 +7,6 @@
 
     using Caliburn.Micro;
 
-    using TecX.Agile.Infrastructure;
     using TecX.Agile.Infrastructure.Commands;
     using TecX.Agile.Infrastructure.Events;
     using TecX.Agile.Infrastructure.Messaging;
@@ -289,7 +288,7 @@
 
                     field.SetValue(this, value);
 
-                    NotifyOfPropertyChange(propertyName);
+                    this.NotifyOfPropertyChange(propertyName);
 
                     PropertyChanged @event = new PropertyChanged(this.Id, propertyName, currentValue, value);
 
@@ -318,8 +317,7 @@
             var property = typeof(CardViewModel).GetProperty(
                 message.PropertyName, BindingFlags.Instance | BindingFlags.Public);
 
-            if (property != null &&
-                property.PropertyType.IsAssignableFrom(message.To.GetType()))
+            if (property != null && property.PropertyType.IsAssignableFrom(message.To.GetType()))
             {
                 property.SetValue(this, message.To, null);
             }

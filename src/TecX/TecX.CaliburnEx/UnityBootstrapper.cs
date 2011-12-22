@@ -1,17 +1,17 @@
-namespace TecX.Agile.Infrastructure
+namespace TecX.CaliburnEx
 {
     using System;
     using System.Collections.Generic;
-
-    using Caliburn.Micro;
 
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
     using Microsoft.Practices.ServiceLocation;
     using Microsoft.Practices.Unity;
 
-    using TecX.Agile.Infrastructure.Modularization;
+    using TecX.CaliburnEx.Modularization;
     using TecX.Common;
     using TecX.Unity.Configuration;
+
+    using Caliburn.Micro;
 
     public class UnityBootstrapper<T> : Bootstrapper<T>
     {

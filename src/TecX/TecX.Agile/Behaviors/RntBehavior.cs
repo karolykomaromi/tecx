@@ -51,12 +51,6 @@
             this.AssociatedObject.DataContextChanged += this.OnDataContextChanged;
         }
 
-        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            this.Card = (StoryCardViewModel)this.AssociatedObject.DataContext;
-            this.Card.Decorators.Add(this.TranslateOnlyArea);
-        }
-
         protected override void OnDetaching()
         {
             this.AssociatedObject.PreviewMouseLeftButtonDown -= this.OnMouseLeftButtonDown;
@@ -69,6 +63,12 @@
             this.Card.Decorators.Remove(this.TranslateOnlyArea);
 
             this.Card = null;
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            this.Card = (StoryCardViewModel)this.AssociatedObject.DataContext;
+            this.Card.Decorators.Add(this.TranslateOnlyArea);
         }
 
         /// <summary>

@@ -13,7 +13,7 @@
 
         private readonly IObservableCollection<object> decorators;
 
-        private string name;
+        private string title;
 
         private double mostLikelyEstimate;
 
@@ -49,22 +49,22 @@
             }
         }
 
-        public string Name
+        public string Title
         {
             get
             {
-                return this.name;
+                return this.title;
             }
 
             set
             {
-                if (this.name == value)
+                if (this.title == value)
                 {
                     return;
                 }
 
-                this.name = value;
-                this.NotifyOfPropertyChange(() => this.Name);
+                this.title = value;
+                this.NotifyOfPropertyChange(() => this.Title);
             }
         }
 

@@ -1,11 +1,11 @@
-namespace TecX.Agile.Infrastructure
+namespace TecX.CaliburnEx
 {
     using System;
     using System.Diagnostics;
 
-    using Caliburn.Micro;
-
     using TecX.Common;
+
+    using global::Caliburn.Micro;
 
     public class DebugLog : ILog
     {

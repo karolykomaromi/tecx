@@ -59,7 +59,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Messaging", "Tec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Agile.Messaging.Test", "TecX.Agile.Messaging.Test\TecX.Agile.Messaging.Test.csproj", "{8600AA6F-79D2-4BE2-89AD-4CAEDFC182D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Caliburn", "TecX.Caliburn\TecX.Caliburn.csproj", "{4244D026-9657-41AD-8CFB-AA70E2372CF5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.CaliburnEx", "TecX.CaliburnEx\TecX.CaliburnEx.csproj", "{4244D026-9657-41AD-8CFB-AA70E2372CF5}"
 EndProject
 Global
 	GlobalSection(MercurialSourceControlSolutionProperties) = preSolution

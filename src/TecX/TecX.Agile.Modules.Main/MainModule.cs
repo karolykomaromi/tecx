@@ -1,10 +1,8 @@
 ﻿namespace TecX.Agile.Modules.Main
 {
     using System.Diagnostics;
-
-    using Infrastructure;
-
-    using TecX.Agile.Infrastructure.Modularization;
+    
+    using TecX.CaliburnEx.Modularization;
 
     [DebuggerDisplay("{Description}")]
     public class MainModule : Module
