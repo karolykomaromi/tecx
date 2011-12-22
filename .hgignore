@@ -121,3 +121,10 @@ src/TecX/TecX.Agile.Messaging/obj
 src/TecX/TecX.Agile.Messaging.Test/obj
 src/TecX/TecX.Agile.Messaging.Test/bin
 src/TecX/TecX.Agile.Messaging/bin
+src/TecX/TecX.Agile.Modules.Speech/bin
+src/TecX/TecX.Agile.Modules.Speech/obj
+src/TecX/TecX.Caliburn/bin
+src/TecX/TecX.Caliburn/obj
+src/TecX/TecX.CaliburnEx/bin
+src/TecX/TecX.CaliburnEx/obj
+src/TecX/TecX.Agile.Messaging.Unity/obj
