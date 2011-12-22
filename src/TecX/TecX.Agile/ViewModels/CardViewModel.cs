@@ -7,9 +7,10 @@
 
     using Caliburn.Micro;
 
+    using TecX.Agile.Infrastructure;
     using TecX.Agile.Infrastructure.Commands;
     using TecX.Agile.Infrastructure.Events;
-    using TecX.Agile.Messaging;
+    using TecX.Agile.Messaging.Context;
     using TecX.Common;
     using TecX.Common.Comparison;
     using TecX.Event;
@@ -20,9 +21,7 @@
     {
         #region Fields
 
-        private readonly IEventAggregator eventAggregator;
-
-        private Color background;
+        private Guid id;
 
         private double x;
 
@@ -30,11 +29,13 @@
 
         private double angle;
 
+        private readonly IEventAggregator eventAggregator;
+
+        private Color background;
+
         private double width;
 
         private double height;
-
-        private Guid id;
 
         private bool isPinned;
 
@@ -55,6 +56,12 @@
             this.x = 0.0;
             this.y = 0.0;
             this.angle = 0.0;
+            this.isPinned = false;
+            this.scale = Defaults.Scale;
+            this.width = Defaults.StoryCard.Width;
+            this.height = Defaults.StoryCard.Height;
+            this.opacity = Defaults.Opacity;
+            this.background = Constants.Colors.Yellow;
         }
 
         #region Properties
@@ -68,13 +75,6 @@
 
             set
             {
-                if (EpsilonComparer.AreEqual(this.x, value))
-                {
-                    return;
-                }
-
-                ////this.x = value;
-                ////this.NotifyOfPropertyChange(() => this.X);
                 this.Set(() => this.x, value);
             }
         }
@@ -88,13 +88,6 @@
 
             set
             {
-                if (EpsilonComparer.AreEqual(this.y, value))
-                {
-                    return;
-                }
-
-                ////this.y = value;
-                ////this.NotifyOfPropertyChange(() => this.AbsoluteY);
                 this.Set(() => this.y, value);
             }
         }
@@ -108,13 +101,6 @@
 
             set
             {
-                if (EpsilonComparer.AreEqual(this.angle, value))
-                {
-                    return;
-                }
-
-                ////this.angle = value;
-                ////this.NotifyOfPropertyChange(() => this.Angle);
                 this.Set(() => this.angle, value);
             }
         }
@@ -128,13 +114,7 @@
 
             set
             {
-                if (this.id == value)
-                {
-                    return;
-                }
-
-                this.id = value;
-                this.NotifyOfPropertyChange(() => this.Id);
+                this.Set(() => this.id, value);
             }
         }
 
@@ -147,13 +127,7 @@
 
             set
             {
-                if (this.isPinned == value)
-                {
-                    return;
-                }
-
-                this.isPinned = value;
-                this.NotifyOfPropertyChange(() => this.IsPinned);
+                this.Set(() => this.isPinned, value);
             }
         }
 
@@ -166,13 +140,7 @@
 
             set
             {
-                if (EpsilonComparer.AreEqual(this.width, value))
-                {
-                    return;
-                }
-
-                this.width = value;
-                this.NotifyOfPropertyChange(() => this.Width);
+                this.Set(() => this.width, value);
             }
         }
 
@@ -185,13 +153,7 @@
 
             set
             {
-                if (EpsilonComparer.AreEqual(this.height, value))
-                {
-                    return;
-                }
-
-                this.height = value;
-                this.NotifyOfPropertyChange(() => this.Height);
+                this.Set(() => this.height, value);
             }
         }
 
@@ -204,13 +166,7 @@
 
             set
             {
-                if (EpsilonComparer.AreEqual(this.scale, value))
-                {
-                    return;
-                }
-
-                this.scale = value;
-                this.NotifyOfPropertyChange(() => this.Scale);
+                this.Set(() => this.scale, value);
             }
         }
 
@@ -223,13 +179,7 @@
 
             set
             {
-                if (EpsilonComparer.AreEqual(this.opacity, value))
-                {
-                    return;
-                }
-
-                this.opacity = value;
-                this.NotifyOfPropertyChange(() => this.Opacity);
+                this.Set(() => this.opacity, value);
             }
         }
 
@@ -242,13 +192,7 @@
 
             set
             {
-                if (this.background == value)
-                {
-                    return;
-                }
-
-                this.background = value;
-                this.NotifyOfPropertyChange(() => this.Background);
+                this.Set(() => this.background, value);
             }
         }
 
@@ -279,10 +223,22 @@
 
             if (field != null)
             {
-                var currentValue = field.GetValue(this);
+                object currentValue = field.GetValue(this);
+
+                bool areEqual = false;
+
+                if(value is double)
+                {
+                    // TODO weberse 2011-12-22 how can I avoid two casts?
+                    areEqual = EpsilonComparer.AreEqual((double)currentValue, (double)(object)value);
+                }
+                else
+                {
+                    areEqual = Equals(currentValue, value);
+                }
 
                 // TODO weberse 2011-12-19 should use EpsilonComparer for double values
-                if (!Equals(currentValue, value))
+                if (!areEqual)
                 {
                     string propertyName = this.ToPropertyName(field.Name);
 
@@ -292,19 +248,6 @@
 
                     PropertyChanged @event = new PropertyChanged(this.Id, propertyName, currentValue, value);
 
-                    var context = InboundCommandContext.Current;
-
-                    if (context != null)
-                    {
-                        // TODO weberse 2011-12-21 should be published anyway but only not sent out to other clients. needs to be relocated!
-                        // check wether the outbound event matches the context's incoming command. 
-                        // if it matches -> abort, else -> publish (avoids sending events over and over again.
-                        if (context.MatchesEvent(@event))
-                        {
-                            return;
-                        }
-                    }
-
                     this.EventAggregator.Publish(@event);
                 }
             }
@@ -313,14 +256,38 @@
         public void Handle(ChangeProperty message)
         {
             Guard.AssertNotNull(message, "message");
+            Guard.AssertNotEmpty(message.PropertyName, "message.PropertyName");
 
-            var property = typeof(CardViewModel).GetProperty(
+            var property = this.GetType().GetProperty(
                 message.PropertyName, BindingFlags.Instance | BindingFlags.Public);
 
-            if (property != null && property.PropertyType.IsAssignableFrom(message.To.GetType()))
+            Type propertyType;
+
+            if (message.To != null)
+            {
+                propertyType = message.To.GetType();
+            }
+            else if (message.From != null)
+            {
+                propertyType = message.From.GetType();
+            }
+            else
+            {
+                return;
+            }
+
+            if (property != null && property.PropertyType.IsAssignableFrom(propertyType))
             {
                 property.SetValue(this, message.To, null);
             }
+        }
+
+        protected void Initialize(Guid id, double x, double y, double angle)
+        {
+            this.id = id;
+            this.x = x;
+            this.y = y;
+            this.angle = angle;
         }
 
         private string ToPropertyName(string fieldName)

@@ -42,12 +42,19 @@ namespace TecX.CaliburnEx.Modularization
         {
             string assemblyName = this.GetType().Assembly.GetName().Name;
 
-            ResourceDictionary dictionary = new ResourceDictionary
+            try
             {
-                Source = new Uri(assemblyName + ";component/ModuleStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
+                ResourceDictionary dictionary = new ResourceDictionary
+                    {
+                        Source = new Uri(assemblyName + ";component/ModuleStyles.xaml", UriKind.RelativeOrAbsolute)
+                    };
 
-            Application.Current.Resources.MergedDictionaries.Add(dictionary);
+                Application.Current.Resources.MergedDictionaries.Add(dictionary);
+            }
+            catch
+            {
+                // TODO weberse 2011-12-22 see if there is a better way to ignore the non-existence of the dictionary
+            }
         }
 
         protected virtual void Initialize()

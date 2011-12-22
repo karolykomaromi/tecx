@@ -20,6 +20,10 @@
             var main = typeof(Modules.Main.MainModule);
 
             ModuleCatalog.AddModule(new ModuleInfo(main));
+
+            var speech = typeof(Modules.Speech.SpeechModule);
+
+            ModuleCatalog.AddModule(new ModuleInfo(speech));
         }
 
         protected override IEnumerable<Assembly> SelectAssemblies()

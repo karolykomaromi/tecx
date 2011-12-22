@@ -3,6 +3,9 @@
     public static class Defaults
     {
         /// <summary>1.0 </summary>
+        public const double Scale = 1.0;
+
+        /// <summary>1.0 </summary>
         public const double Opacity = 1.0;
 
         public static class StoryCard

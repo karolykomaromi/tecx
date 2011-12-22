@@ -1,4 +1,4 @@
-namespace TecX.Agile.Messaging
+namespace TecX.Agile.Messaging.Context
 {
     using TecX.Common;
 
