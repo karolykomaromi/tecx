@@ -1,4 +1,4 @@
-namespace TecX.Agile.Infrastructure.Modularization
+namespace TecX.CaliburnEx.Modularization
 {
     using System;
     using System.Collections.Generic;

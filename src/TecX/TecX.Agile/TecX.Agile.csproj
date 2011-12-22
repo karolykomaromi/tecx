@@ -111,6 +111,7 @@
     <Compile Include="Utilities\Transition.cs" />
     <Compile Include="Utilities\TreeHelper.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
+    <Compile Include="ViewModels\InputElementTranslateOnlyArea.cs" />
     <Compile Include="ViewModels\IterationViewModel.cs" />
     <Compile Include="ViewModels\NullTranslateOnlyArea.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -183,9 +184,9 @@
       <Project>{1EB35F86-DA6C-4691-A2C5-8587129B520D}</Project>
       <Name>TecX.Agile.Modules.Main</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TecX.Caliburn\TecX.Caliburn.csproj">
+    <ProjectReference Include="..\TecX.CaliburnEx\TecX.CaliburnEx.csproj">
       <Project>{4244D026-9657-41AD-8CFB-AA70E2372CF5}</Project>
-      <Name>TecX.Caliburn</Name>
+      <Name>TecX.CaliburnEx</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>

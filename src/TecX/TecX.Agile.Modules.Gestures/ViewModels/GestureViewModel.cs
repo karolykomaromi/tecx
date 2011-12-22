@@ -1,9 +1,5 @@
 ﻿namespace TecX.Agile.Modules.Gestures.ViewModels
 {
-    using System;
-    using System.Linq.Expressions;
-    using System.Reflection;
-    using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Ink;
 
@@ -13,7 +9,6 @@
     using TecX.Agile.Modules.Gestures.Recognition;
     using TecX.Common;
 
-    using Expression = System.Linq.Expressions.Expression;
     using IEventAggregator = TecX.Event.IEventAggregator;
 
     public class GestureViewModel : Screen

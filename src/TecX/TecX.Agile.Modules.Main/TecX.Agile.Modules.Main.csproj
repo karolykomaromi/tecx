@@ -73,6 +73,10 @@
       <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
       <Name>TecX.Agile.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.CaliburnEx\TecX.CaliburnEx.csproj">
+      <Project>{4244D026-9657-41AD-8CFB-AA70E2372CF5}</Project>
+      <Name>TecX.CaliburnEx</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>

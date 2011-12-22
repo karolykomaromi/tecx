@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Reflection;
 
-    using TecX.Agile.Infrastructure;
-    using TecX.Agile.Infrastructure.Modularization;
     using TecX.Agile.ViewModels;
+    using TecX.CaliburnEx;
+    using TecX.CaliburnEx.Modularization;
 
     public class AppBootstrapper : UnityBootstrapper<ShellViewModel>
     {
