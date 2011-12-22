@@ -1,9 +1,8 @@
-﻿namespace TecX.Agile.Modules.Gestures.Recognition
+namespace TecX.Event
 {
     using System;
 
     using TecX.Common;
-    using TecX.Event;
 
     public class MessagePublisher
     {
