@@ -62,10 +62,10 @@
     <Compile Include="Recognition\SpeechRecognitionContext.cs" />
     <Compile Include="Recognition\SpeechRecognitionStrategy.cs" />
     <Compile Include="Recognition\SpeechStrategyChain.cs" />
+    <Compile Include="Recognition\SpeechStrategyChainExtensions.cs" />
     <Compile Include="SpeechModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpeechRecognition.cs" />
-    <Compile Include="SpeechStrategyChainExtensions.cs" />
     <Compile Include="VoiceCommands.cs" />
   </ItemGroup>
   <ItemGroup>

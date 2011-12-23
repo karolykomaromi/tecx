@@ -1,7 +1,6 @@
 ﻿namespace TecX.Agile.Modules.Speech
 {
     using System;
-    using System.Speech.Recognition;
 
     using TecX.Agile.Modules.Speech.Recognition;
     using TecX.Common;

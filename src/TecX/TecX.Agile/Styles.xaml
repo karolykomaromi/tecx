@@ -2,20 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ViewModels="clr-namespace:TecX.Agile.ViewModels"
                     xmlns:Behaviors="clr-namespace:TecX.Agile.Behaviors" 
-	                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:cal="http://www.caliburnproject.org"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-                    xmlns:Converters="clr-namespace:TecX.Agile.Infrastructure.Converters;assembly=TecX.Agile.Infrastructure"
                     xmlns:Views="clr-namespace:TecX.Agile.Views">
-    <DataTemplate DataType="{x:Type ViewModels:IterationViewModel}" x:Key="Iteration">
-        <Rectangle Width="200" Height="100" Fill="LightBlue"/>
-    </DataTemplate>
     <Style x:Key="HiddenTextBoxStyle" TargetType="TextBox" >
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="UndoLimit" Value="1"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Behaviors:PreviewFocusBehavior.IsEnabled" Value="True"  />
         <Setter Property="Behaviors:PreviewFocusBehavior.IsEnabled" Value="True"  />
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="False">
@@ -47,20 +40,9 @@
         <Views:StoryCardView/>
     </DataTemplate>
     <DataTemplate DataType="{x:Type ViewModels:TranslateOnlyAreaViewModel}">
-        <UserControl
-            cal:Bind.Model="{Binding}">
-            <UserControl.Resources>
-                <BooleanToVisibilityConverter x:Key="Converter"/>
-            </UserControl.Resources>
-            <Ellipse
-                x:Name="Toa"
-                Stroke="Black" 
-                Height="{Binding Diameter}" 
-                Width="{Binding Diameter}" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
-                Fill="#7F7F7F7F"
-                Visibility="{Binding Path=Visible, Converter={StaticResource Converter}}"/>
-        </UserControl>
+        <Views:TranslateOnlyAreaView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type ViewModels:IterationViewModel}" x:Key="Iteration">
+        <Views:IterationView/>
     </DataTemplate>
 </ResourceDictionary>

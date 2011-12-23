@@ -17,17 +17,10 @@
 
     public class HighlightFieldBehavior : Behavior<TextBox>, ISubscribeTo<HighlightField>, ISubscribeTo<MoveCaret>
     {
-        private readonly IEventAggregator eventAggregator;
-
+        private IEventAggregator eventAggregator;
         private Guid id;
         private string fieldName;
-
-        public HighlightFieldBehavior()
-        {
-            // can't inject dependencies to behavior :(
-            this.eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
-        }
-
+        
         public void Handle(HighlightField message)
         {
             if (message.ArtefactId == this.id &&
@@ -48,12 +41,13 @@
 
         protected override void OnAttached()
         {
-            base.OnAttached();
-
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
             {
                 return;
             }
+
+            // can't inject dependencies to behavior :(
+            this.eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
 
             UserControl ctrl;
             string fn;

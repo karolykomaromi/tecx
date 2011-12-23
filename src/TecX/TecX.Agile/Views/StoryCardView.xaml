@@ -45,53 +45,69 @@
                     Style="{StaticResource HiddenTextBoxStyle}"
                     Grid.ColumnSpan="6" />
         <TextBox 
-                    x:Name="MostLikelyEstimate"
-                    MinWidth="40" 
-                    Style="{StaticResource HiddenTextBoxStyle}"
-                    Grid.Row="1" 
-                    Grid.Column="1" />
+            x:Name="MostLikelyEstimate"
+            MinWidth="40" 
+            Style="{StaticResource HiddenTextBoxStyle}"
+            Grid.Row="1" 
+            Grid.Column="1">
+            <i:Interaction.Behaviors>
+                <Behaviors:HighlightFieldBehavior/>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <TextBox 
-                    x:Name="ActualEffort" 
-                    MinWidth="40" 
-                    Style="{StaticResource HiddenTextBoxStyle}"
-                    Grid.Row="1" 
-                    Grid.Column="3"/>
+            x:Name="ActualEffort" 
+            MinWidth="40" 
+            Style="{StaticResource HiddenTextBoxStyle}"
+            Grid.Row="1" 
+            Grid.Column="3">
+            <i:Interaction.Behaviors>
+                <Behaviors:HighlightFieldBehavior/>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <TextBox 
-                    x:Name="TaskOwner" 
-                    MinWidth="60" 
-                    Style="{StaticResource HiddenTextBoxStyle}"
-                    Grid.Row="1" 
-                    Grid.Column="5" />
+            x:Name="TaskOwner" 
+            MinWidth="60" 
+            Style="{StaticResource HiddenTextBoxStyle}"
+            Grid.Row="1" 
+            Grid.Column="5">
+            <i:Interaction.Behaviors>
+                <Behaviors:HighlightFieldBehavior/>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <TextBox 
-                    x:Name="Description" 
-                    MinHeight="150" 
-                    Style="{StaticResource HiddenTextBoxStyle}"
-                    TextWrapping="Wrap" 
-                    Grid.Row="2" 
-                    Grid.ColumnSpan="6" 
-                    VerticalContentAlignment="Top"
-                    AcceptsReturn="True" 
-                    AllowDrop="False" />
+            x:Name="Description" 
+            MinHeight="150" 
+            Style="{StaticResource HiddenTextBoxStyle}"
+            TextWrapping="Wrap" 
+            Grid.Row="2" 
+            Grid.ColumnSpan="6" 
+            VerticalContentAlignment="Top"
+            AcceptsReturn="True" 
+            AllowDrop="False">
+            <i:Interaction.Behaviors>
+                <Behaviors:HighlightFieldBehavior/>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <Label 
-                    Content="Mostlikely:" 
-                    Grid.Row="1"
-                    VerticalContentAlignment="Center" />
+            Content="Mostlikely:" 
+            Grid.Row="1"
+            VerticalContentAlignment="Center" />
         <Label
-                    Content="Actual:" 
-                    Grid.Row="1" 
-                    Grid.Column="2"
-                    VerticalContentAlignment="Center" />
+            Content="Actual:" 
+            Grid.Row="1" 
+            Grid.Column="2"
+            VerticalContentAlignment="Center" />
         <Label
-                    Content="Owner:" 
-                    Grid.Row="1" 
-                    Grid.Column="4"
-                    VerticalContentAlignment="Center" />
+            Content="Owner:" 
+            Grid.Row="1" 
+            Grid.Column="4"
+            VerticalContentAlignment="Center" />
         <Grid 
-                    x:Name="Overlay" 
-                    Grid.RowSpan="3" 
-                    Grid.ColumnSpan="6" 
-                    IsHitTestVisible="False" 
-                    Panel.ZIndex="50">
+            x:Name="Overlay" 
+            Grid.RowSpan="3" 
+            Grid.ColumnSpan="6" 
+            IsHitTestVisible="False" 
+            Panel.ZIndex="50">
             <Rectangle Style="{StaticResource TopSeparator}"  Margin="0,25,0,0"/>
             <Rectangle Style="{StaticResource Separator}" Margin="0,50,0,0" />
             <Rectangle Style="{StaticResource Separator}" Margin="0,75,0,0" />
@@ -101,16 +117,16 @@
             <Rectangle Style="{StaticResource Separator}" Margin="0,175,0,0" />
         </Grid>
         <InkCanvas            
-                    x:Name="DescriptionHandwritingImage" 
-                    Grid.Row="2" 
-                    Grid.ColumnSpan="6" 
-                    IsHitTestVisible="{Binding IsHandWritingEnabled}" 
-                    Background="Transparent"/>
+            x:Name="DescriptionHandwritingImage" 
+            Grid.Row="2" 
+            Grid.ColumnSpan="6" 
+            IsHitTestVisible="{Binding IsHandWritingEnabled}" 
+            Background="Transparent"/>
         <ItemsControl 
-                    IsHitTestVisible="False"
-                    ItemsSource="{Binding Decorators}"
-                    Grid.ColumnSpan="6" 
-                    Grid.RowSpan="3">
+            IsHitTestVisible="False"
+            ItemsSource="{Binding Decorators}"
+            Grid.ColumnSpan="6" 
+            Grid.RowSpan="3">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>

@@ -46,6 +46,37 @@
                 <Utilities:SurfaceDataTemplateSelector/>
             </ItemsControl.ItemTemplateSelector>
         </ItemsControl>
-        <Button x:Name="AddItem" Grid.Column="1">Add</Button>
+        <!--<Button x:Name="AddItem" Grid.Column="1">Add</Button>-->
+        <TextBlock
+            Grid.Row="1" 
+            TextAlignment="Center"
+            Text="{Binding InfoText}">
+            <TextBlock.LayoutTransform>
+                <RotateTransform Angle="90"/>
+            </TextBlock.LayoutTransform>
+        </TextBlock>
+        <TextBlock
+            Grid.Column="1" 
+            TextAlignment="Center"
+            Text="{Binding InfoText}">
+            <TextBlock.LayoutTransform>
+                <RotateTransform Angle="180"/>
+            </TextBlock.LayoutTransform>
+        </TextBlock>
+        <TextBlock
+            Grid.Column="2"
+            Grid.Row="1"
+            TextAlignment="Center"
+            Text="{Binding InfoText}">
+            <TextBlock.LayoutTransform>
+                <RotateTransform Angle="270"/>
+            </TextBlock.LayoutTransform>
+        </TextBlock>
+        <TextBlock
+            Grid.Column="1"
+            Grid.Row="2"
+            TextAlignment="Center"
+            Text="{Binding InfoText}">
+        </TextBlock>
     </Grid>
 </Window>
