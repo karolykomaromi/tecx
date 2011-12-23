@@ -25,7 +25,7 @@ namespace TecX.Agile.ViewModels
 
         private readonly Timer infoTextTimer;
 
-        private readonly Conductor<IScreen>.Collection.AllActive overlays;
+        private readonly IObservableCollection<IOverlay> overlays;
 
         private string infoText;
 
@@ -44,7 +44,7 @@ namespace TecX.Agile.ViewModels
 
             this.infoTextTimer.Elapsed += OnElapsed;
 
-            this.overlays = new Conductor<IScreen>.Collection.AllActive();
+            this.overlays = new BindableCollection<IOverlay>();
         }
 
         public string InfoText
@@ -74,11 +74,11 @@ namespace TecX.Agile.ViewModels
             }
         }
 
-        public IObservableCollection<IScreen> Overlays
+        public IObservableCollection<IOverlay> Overlays
         {
             get
             {
-                return this.overlays.Items;
+                return this.overlays;
             }
         }
 
@@ -90,7 +90,7 @@ namespace TecX.Agile.ViewModels
             }
         }
 
-        public void AddOverlay(IScreen overlay)
+        public void AddOverlay(IOverlay overlay)
         {
             Guard.AssertNotNull(overlay, "overlay");
 

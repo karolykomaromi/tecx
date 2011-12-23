@@ -12,7 +12,7 @@
 
     using IEventAggregator = TecX.Event.IEventAggregator;
 
-    public class GestureViewModel : Screen
+    public class GestureViewModel : Screen, IOverlay
     {
         private readonly IShell shell;
 
