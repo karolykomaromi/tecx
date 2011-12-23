@@ -1,6 +1,7 @@
 namespace TecX.Agile.ViewModels
 {
     using System;
+    using System.Timers;
 
     using Caliburn.Micro;
 
@@ -9,17 +10,24 @@ namespace TecX.Agile.ViewModels
     using TecX.Agile.Infrastructure.Events;
     using TecX.Agile.Messaging;
     using TecX.Common;
+    using TecX.Common.Extensions.Primitives;
     using TecX.Event;
 
     using IEventAggregator = TecX.Event.IEventAggregator;
 
-    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShell, ISubscribeTo<AddStoryCard>
+    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShell, 
+        ISubscribeTo<AddStoryCard>,
+        ISubscribeTo<DisplayInfoText>
     {
         private readonly IEventAggregator eventAggregator;
 
         private readonly MessageHub messageHub;
 
+        private readonly Timer infoTextTimer;
+
         private readonly Conductor<IScreen>.Collection.AllActive overlays;
+
+        private string infoText;
 
         public ShellViewModel(IEventAggregator eventAggregator, MessageHub messageHub)
         {
@@ -28,7 +36,34 @@ namespace TecX.Agile.ViewModels
 
             this.eventAggregator = eventAggregator;
             this.messageHub = messageHub;
+
+            this.infoTextTimer = new Timer
+                {
+                    Interval = 10.Seconds().TotalMilliseconds
+                };
+
+            this.infoTextTimer.Elapsed += OnElapsed;
+
             this.overlays = new Conductor<IScreen>.Collection.AllActive();
+        }
+
+        public string InfoText
+        {
+            get
+            {
+                return this.infoText;
+            }
+
+            set
+            {
+                if(Equals(this.infoText, value))
+                {
+                    return;
+                }
+
+                this.infoText = value;
+                NotifyOfPropertyChange(() => this.InfoText);
+            }
         }
 
         public IEventAggregator EventAggregator
@@ -79,6 +114,21 @@ namespace TecX.Agile.ViewModels
             Guard.AssertNotNull(message, "message");
 
             this.AddStoryCard(message.Id, message.X, message.Y, message.Angle);
+        }
+
+        public void Handle(DisplayInfoText message)
+        {
+            Guard.AssertNotNull(message, "message");
+            Guard.AssertNotEmpty(message.Text, "message.Text");
+
+            this.InfoText = message.Text;
+            this.infoTextTimer.Start();
+        }
+
+        private void OnElapsed(object sender, ElapsedEventArgs e)
+        {
+            this.infoTextTimer.Stop();
+            this.InfoText = string.Empty;
         }
     }
 }

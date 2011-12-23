@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="TecX.Agile.Views.TranslateOnlyAreaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:cal="http://www.caliburnproject.org"
+             xmlns:ViewModels="clr-namespace:TecX.Agile.ViewModels" mc:Ignorable="d" 
+             d:DesignHeight="300" 
+             d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance ViewModels:TranslateOnlyAreaViewModel, IsDesignTimeCreatable=True}"
+             cal:Bind.Model="{Binding}">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="Converter"/>
+    </UserControl.Resources>
+        <Ellipse
+        x:Name="Toa"
+        Stroke="Black" 
+        Height="{Binding Diameter}" 
+        Width="{Binding Diameter}" 
+        HorizontalAlignment="Center" 
+        VerticalAlignment="Center" 
+        Fill="#7F7F7F7F"
+        Visibility="{Binding Path=Visible, Converter={StaticResource Converter}}"/>
+</UserControl>
+

@@ -84,8 +84,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -118,6 +116,9 @@
     <Compile Include="ViewModels\StoryCardViewModel.cs" />
     <Compile Include="ViewModels\TranslateOnlyArea.cs" />
     <Compile Include="ViewModels\TranslateOnlyAreaViewModel.cs" />
+    <Compile Include="Views\IterationView.xaml.cs">
+      <DependentUpon>IterationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
@@ -133,7 +134,14 @@
     <Compile Include="Views\StoryCardView.xaml.cs">
       <DependentUpon>StoryCardView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TranslateOnlyAreaView.xaml.cs">
+      <DependentUpon>TranslateOnlyAreaView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\IterationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -144,6 +152,10 @@
     <Page Include="Views\StoryCardView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TranslateOnlyAreaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

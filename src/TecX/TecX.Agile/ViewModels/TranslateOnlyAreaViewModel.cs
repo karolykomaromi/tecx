@@ -1,5 +1,6 @@
 ﻿namespace TecX.Agile.ViewModels
 {
+    using System.ComponentModel;
     using System.Windows;
 
     using Caliburn.Micro;
@@ -21,6 +22,7 @@
         public TranslateOnlyAreaViewModel()
         {
             this.Diameter = 2 * DefaultRadius;
+            this.Visible = true;
             this.inputArea = new NullTranslateOnlyArea();
         }
 

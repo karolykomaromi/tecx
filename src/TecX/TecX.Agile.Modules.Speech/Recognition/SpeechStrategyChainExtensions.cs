@@ -1,6 +1,5 @@
-namespace TecX.Agile.Modules.Speech
+namespace TecX.Agile.Modules.Speech.Recognition
 {
-    using TecX.Agile.Modules.Speech.Recognition;
     using TecX.Common;
 
     public static class SpeechStrategyChainExtensions

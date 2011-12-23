@@ -1,8 +1,12 @@
 ﻿namespace TecX.Agile.ViewModels
 {
-    using Caliburn.Micro;
+    using TecX.Event;
 
-    public class IterationViewModel : Screen
+    public class IterationViewModel : CardViewModel
     {
+        public IterationViewModel(IEventAggregator eventAggregator)
+            : base(eventAggregator)
+        {
+        }
     }
 }

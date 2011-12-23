@@ -16,8 +16,6 @@ namespace TecX.Agile.Modules.Speech.Recognition
 
         public SpeechStrategyChain()
         {
-            Guard.AssertNotNull(recognizer, "recognizer");
-
             this.recognizer = new SpeechRecognizer
                                   {
                                       PauseRecognizerOnRecognition = true
