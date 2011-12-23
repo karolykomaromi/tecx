@@ -128,3 +128,7 @@ src/TecX/TecX.Caliburn/obj
 src/TecX/TecX.CaliburnEx/bin
 src/TecX/TecX.CaliburnEx/obj
 src/TecX/TecX.Agile.Messaging.Unity/obj
+src/TecX/TecX.Undo.Test/obj
+src/TecX/TecX.Undo/bin
+src/TecX/TecX.Undo.Test/bin
+src/TecX/TecX.Undo/obj
