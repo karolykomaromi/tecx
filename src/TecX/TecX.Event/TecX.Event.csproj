@@ -54,6 +54,10 @@
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Logging\TecX.Logging.csproj">
+      <Project>{DEDCDF0F-15B1-4E90-B0A3-5FC5331C5436}</Project>
+      <Name>TecX.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(ProgramFiles)\MSBuild\StyleCop\v4.6\StyleCop.targets" />

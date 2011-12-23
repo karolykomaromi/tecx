@@ -138,7 +138,7 @@
 
             if(@event != null)
             {
-                bool isMatch = this.Command.ArtefactId == @event.Id && 
+                bool isMatch = this.Command.Id == @event.Id && 
                     Equals(this.Command.FieldName, @event.FieldName) && 
                     this.Command.CaretIndex == @event.CaretIndex;
 

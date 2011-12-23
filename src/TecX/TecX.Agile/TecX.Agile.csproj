@@ -102,6 +102,9 @@
     <Compile Include="Behaviors\RntBehavior.cs" />
     <Compile Include="Behaviors\SurfaceBehavior.cs" />
     <Compile Include="Behaviors\TransformBehavior.cs" />
+    <Compile Include="DesignerSupport\DesignIterationViewModel.cs" />
+    <Compile Include="DesignerSupport\DesignStoryCardViewModel.cs" />
+    <Compile Include="DesignerSupport\NullEventAggregator.cs" />
     <Compile Include="Registration\AppConfigurationBuilder.cs" />
     <Compile Include="Registration\CaliburnConfigurationBuilder.cs" />
     <Compile Include="Utilities\GeometryHelper.cs" />
@@ -238,6 +241,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\buildingblocks16x16.png" />
+    <Resource Include="Resources\buildingblocks32x32.png" />
+    <Resource Include="Resources\buildingblocks48x48.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(ProgramFiles)\MSBuild\StyleCop\v4.6\StyleCop.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

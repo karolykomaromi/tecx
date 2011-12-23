@@ -6,6 +6,7 @@
     using System.Windows.Threading;
 
     using TecX.Common;
+    using TecX.Logging;
 
     public class EventAggregator : IEventAggregator
     {
@@ -91,24 +92,33 @@
         {
             Guard.AssertNotNull(message, "message");
 
-            this.RunLocked(() =>
+#if DEBUG
+            using (new TraceTimer("Publishing " + message.ToString()))
             {
-                foreach (var subscriber in GetAllSubscribersFor<TMessage>())
-                {
-                    if (this.dispatcher != null)
-                    {
+#endif
+                this.RunLocked(
+                    () =>
+                        {
+                            foreach (var subscriber in GetAllSubscribersFor<TMessage>())
+                            {
+                                if (this.dispatcher != null)
+                                {
 #if SILVERLIGHT
                         this.dispatcher.BeginInvoke(new Action(() => subscriber.Handle(message)));
 #else
-                        this.dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => subscriber.Handle(message)));
+                                    this.dispatcher.Invoke(
+                                        DispatcherPriority.Normal, new Action(() => subscriber.Handle(message)));
 #endif
-                    }
-                    else
-                    {
-                        subscriber.Handle(message);
-                    }
-                }
-            });
+                                }
+                                else
+                                {
+                                    subscriber.Handle(message);
+                                }
+                            }
+                        });
+#if DEBUG
+            }
+#endif
 
             return message;
         }

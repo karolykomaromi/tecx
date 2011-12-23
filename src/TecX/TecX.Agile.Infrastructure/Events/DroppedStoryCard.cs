@@ -7,14 +7,19 @@
         public DroppedStoryCard(Guid id, double x, double y)
         {
             this.Id = id;
-            this.AbsoluteX = x;
-            this.AbsoluteY = y;
+            this.X = x;
+            this.Y = y;
         }
 
         public Guid Id { get; set; }
 
-        public double AbsoluteX { get; set; }
+        public double X { get; set; }
 
-        public double AbsoluteY { get; set; }
+        public double Y { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("DroppedStoryCard Id:{0} X:{1} Y:{2}", this.Id, this.X, this.Y);
+        }
     }
 }

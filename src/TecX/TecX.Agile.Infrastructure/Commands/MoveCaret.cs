@@ -4,17 +4,22 @@
 
     public class MoveCaret
     {
-        public MoveCaret(Guid artefactId, string fieldName, int caretIndex)
+        public MoveCaret(Guid id, string fieldName, int caretIndex)
         {
-            this.ArtefactId = artefactId;
+            this.Id = id;
             this.FieldName = fieldName;
             this.CaretIndex = caretIndex;
         }
 
-        public Guid ArtefactId { get; private set; }
+        public Guid Id { get; private set; }
 
         public string FieldName { get; private set; }
 
         public int CaretIndex { get; private set; }
+
+        public override string ToString()
+        {
+            return string.Format("MoveCaret Id:{0} Field:{1} Idx:{2}", this.Id, this.FieldName, this.CaretIndex);
+        }
     }
 }

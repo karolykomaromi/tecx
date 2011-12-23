@@ -9,14 +9,13 @@
         <Setter Property="UndoLimit" Value="1"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Behaviors:PreviewFocusBehavior.IsEnabled" Value="True"  />
-        <Setter Property="Behaviors:PreviewFocusBehavior.IsEnabled" Value="True"  />
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="False">
                 <Setter 
                         Property="Background" 
                         Value="{Binding 
                             RelativeSource={RelativeSource FindAncestor,
-                            AncestorType={x:Type Grid}},
+                            AncestorType={x:Type UserControl}},
                         Path=Background}"/>
                 <Setter Property="BorderThickness" Value="0"/>
             </Trigger>

@@ -19,9 +19,9 @@ namespace TecX.Agile.Messaging.Context
 
             if (pc != null)
             {
-                bool matches = this.Command.ArtefactId == pc.ArtefactId && 
+                bool matches = this.Command.Id == pc.Id && 
                     string.Equals(this.Command.PropertyName, pc.PropertyName) && 
-                    Equals(this.Command.To, pc.After);
+                    Equals(this.Command.To, pc.To);
 
                 return matches;
             }
