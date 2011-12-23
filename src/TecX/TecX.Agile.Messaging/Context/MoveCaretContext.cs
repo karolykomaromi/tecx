@@ -3,11 +3,10 @@ namespace TecX.Agile.Messaging.Context
     using TecX.Agile.Infrastructure.Commands;
     using TecX.Agile.Infrastructure.Events;
     using TecX.Common;
-    using TecX.Common.Comparison;
 
-    public class AddStoryCardContext : InboundCommandContext<AddStoryCard>
+    public class MoveCaretContext : InboundCommandContext<MoveCaret>
     {
-        public AddStoryCardContext(AddStoryCard command)
+        public MoveCaretContext(MoveCaret command)
             : base(command)
         {
         }
@@ -16,14 +15,13 @@ namespace TecX.Agile.Messaging.Context
         {
             Guard.AssertNotNull(outboundEvent, "outboundEvent");
 
-            var @event = outboundEvent as StoryCardAdded;
+            var @event = outboundEvent as CaretMoved;
 
             if (@event != null)
             {
                 bool isMatch = this.Command.Id == @event.Id &&
-                               EpsilonComparer.AreEqual(this.Command.Angle, @event.Angle) &&
-                               EpsilonComparer.AreEqual(this.Command.X, @event.X) &&
-                               EpsilonComparer.AreEqual(this.Command.Y, @event.Y);
+                               Equals(this.Command.FieldName, @event.FieldName) &&
+                               this.Command.CaretIndex == @event.CaretIndex;
 
                 return isMatch;
             }

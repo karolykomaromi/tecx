@@ -6,7 +6,7 @@ namespace TecX.Agile.Infrastructure
 
     using TecX.Common;
 
-    public class CanvasSurface : Surface, IInputElementAdapter
+    public class CanvasSurface : Surface
     {
         private readonly Canvas canvas;
 
