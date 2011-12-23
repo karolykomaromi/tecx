@@ -53,12 +53,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionsFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestObjects\FlagAction.cs" />
-    <Compile Include="TestObjects\LogAction.cs" />
-    <Compile Include="TestObjects\ThrowingAction.cs" />
-    <Compile Include="TransactionFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Undo\TecX.Undo.csproj">

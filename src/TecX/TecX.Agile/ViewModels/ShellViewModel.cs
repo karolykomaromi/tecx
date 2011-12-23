@@ -15,7 +15,7 @@ namespace TecX.Agile.ViewModels
 
     using IEventAggregator = TecX.Event.IEventAggregator;
 
-    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShell, 
+    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShell,
         ISubscribeTo<AddStoryCard>,
         ISubscribeTo<DisplayInfoText>
     {
@@ -42,7 +42,7 @@ namespace TecX.Agile.ViewModels
                     Interval = 10.Seconds().TotalMilliseconds
                 };
 
-            this.infoTextTimer.Elapsed += OnElapsed;
+            this.infoTextTimer.Elapsed += this.OnElapsed;
 
             this.overlays = new BindableCollection<IOverlay>();
         }
@@ -56,7 +56,7 @@ namespace TecX.Agile.ViewModels
 
             set
             {
-                if(Equals(this.infoText, value))
+                if (Equals(this.infoText, value))
                 {
                     return;
                 }
@@ -99,7 +99,6 @@ namespace TecX.Agile.ViewModels
 
         public void AddStoryCard(Guid id, double x, double y, double angle)
         {
-            //StoryCardViewModel storyCard = new StoryCardViewModel(this.EventAggregator) { Id = id, X = x, Y = y, Angle = angle };
             StoryCardViewModel storyCard = StoryCardViewModel.Create(this.EventAggregator, id, x, y, angle);
 
             Items.Add(storyCard);

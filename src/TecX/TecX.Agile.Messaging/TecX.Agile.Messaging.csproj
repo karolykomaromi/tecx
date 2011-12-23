@@ -49,6 +49,7 @@
     <Compile Include="Context\HighlightFieldContext.cs" />
     <Compile Include="Context\IInboundCommandContext.cs" />
     <Compile Include="Context\InboundCommandContext.cs" />
+    <Compile Include="Context\MoveCaretContext.cs" />
     <Compile Include="Context\NullInboundCommandContext.cs" />
     <Compile Include="IMessageChannel.cs" />
     <Compile Include="IMessageSubscriber.cs" />

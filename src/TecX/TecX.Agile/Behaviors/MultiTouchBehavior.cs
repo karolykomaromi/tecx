@@ -1,6 +1,5 @@
 ﻿namespace TecX.Agile.Behaviors
 {
-    using System;
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;

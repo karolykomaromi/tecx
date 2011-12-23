@@ -10,7 +10,6 @@
     using TecX.Agile.Infrastructure;
     using TecX.Agile.Infrastructure.Commands;
     using TecX.Agile.Infrastructure.Events;
-    using TecX.Agile.Messaging.Context;
     using TecX.Common;
     using TecX.Common.Comparison;
     using TecX.Event;
@@ -21,6 +20,8 @@
     {
         #region Fields
 
+        private readonly IEventAggregator eventAggregator;
+
         private Guid id;
 
         private double x;
@@ -28,8 +29,6 @@
         private double y;
 
         private double angle;
-
-        private readonly IEventAggregator eventAggregator;
 
         private Color background;
 
@@ -227,7 +226,7 @@
 
                 bool areEqual = false;
 
-                if(value is double)
+                if (value is double)
                 {
                     // TODO weberse 2011-12-22 how can I avoid two casts?
                     areEqual = EpsilonComparer.AreEqual((double)currentValue, (double)(object)value);
@@ -237,7 +236,6 @@
                     areEqual = Equals(currentValue, value);
                 }
 
-                // TODO weberse 2011-12-19 should use EpsilonComparer for double values
                 if (!areEqual)
                 {
                     string propertyName = this.ToPropertyName(field.Name);
