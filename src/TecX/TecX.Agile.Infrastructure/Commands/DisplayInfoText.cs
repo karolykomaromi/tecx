@@ -20,5 +20,10 @@
                 return this.text;
             }
         }
+
+        public override string ToString()
+        {
+            return string.Format("DisplayInfoText Txt:{0}", this.Text);
+        }
     }
 }

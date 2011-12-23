@@ -1,11 +1,13 @@
 <Window x:Class="TecX.Agile.Views.ShellView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-        xmlns:Agile="clr-namespace:TecX.Agile" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:Behaviors="clr-namespace:TecX.Agile.Behaviors" xmlns:Utilities="clr-namespace:TecX.Agile.Utilities"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:Behaviors="clr-namespace:TecX.Agile.Behaviors" 
+        xmlns:Utilities="clr-namespace:TecX.Agile.Utilities"
         Title="Shell" 
         Height="350" 
-        Width="525">
+        Width="525"
+        Icon="pack://application:,,,/Resources/buildingblocks16x16.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>

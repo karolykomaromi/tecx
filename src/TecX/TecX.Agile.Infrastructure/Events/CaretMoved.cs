@@ -20,5 +20,10 @@ namespace TecX.Agile.Infrastructure.Events
         public string FieldName { get; private set; }
 
         public int CaretIndex { get; private set; }
+
+        public override string ToString()
+        {
+            return string.Format("CaretMoved Id:{0} Field:{1} Idx:{1}", this.Id, this.FieldName, this.CaretIndex);
+        }
     }
 }

@@ -19,5 +19,10 @@
         public double Angle { get; private set; }
 
         public Guid Id { get; private set; }
+
+        public override string ToString()
+        {
+            return string.Format("StoryCardAdded Id:{0} X:{1} Y:{2} Angle:{3}", this.Id, this.X, this.Y, this.Angle);
+        }
     }
 }

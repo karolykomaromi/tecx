@@ -19,7 +19,7 @@ namespace TecX.Agile.Messaging.Context
 
             if (@event != null)
             {
-                bool isMatch = this.Command.ArtefactId == @event.Id && Equals(this.Command.FieldName, @event.FieldName);
+                bool isMatch = this.Command.Id == @event.Id && Equals(this.Command.FieldName, @event.FieldName);
 
                 return isMatch;
             }

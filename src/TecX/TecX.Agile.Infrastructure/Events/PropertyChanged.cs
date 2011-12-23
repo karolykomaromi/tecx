@@ -4,20 +4,25 @@
 
     public class PropertyChanged
     {
-        public PropertyChanged(Guid artefactId, string propertyName, object before, object after)
+        public PropertyChanged(Guid id, string propertyName, object before, object after)
         {
-            this.ArtefactId = artefactId;
+            this.Id = id;
             this.PropertyName = propertyName;
-            this.Before = before;
-            this.After = after;
+            this.From = before;
+            this.To = after;
         }
 
-        public Guid ArtefactId { get; private set; }
+        public Guid Id { get; private set; }
 
         public string PropertyName { get; private set; }
 
-        public object Before { get; private set; }
+        public object From { get; private set; }
 
-        public object After { get; private set; }
+        public object To { get; private set; }
+
+        public override string ToString()
+        {
+            return string.Format("PropertyChanged Id:{0} Property:{1} From:{2} To:{3}", this.Id, this.PropertyName, this.From, this.To);
+        }
     }
 }

@@ -29,10 +29,10 @@
 
             ea.Verify(e => e.Publish(
                 It.Is((PropertyChanged pc) =>
-                    pc.ArtefactId == id &&
+                    pc.Id == id &&
                     pc.PropertyName == "TaskOwner" &&
-                    pc.Before == null &&
-                    Equals(pc.After, "John Wayne"))),
+                    pc.From == null &&
+                    Equals(pc.To, "John Wayne"))),
                 Times.Once());
 
             Assert.AreEqual("John Wayne", vm.TaskOwner);

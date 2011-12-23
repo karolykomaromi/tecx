@@ -23,7 +23,7 @@
         
         public void Handle(HighlightField message)
         {
-            if (message.ArtefactId == this.id &&
+            if (message.Id == this.id &&
                 message.FieldName == this.fieldName)
             {
                 AssociatedObject.Focus();
@@ -32,7 +32,7 @@
 
         public void Handle(MoveCaret message)
         {
-            if (message.ArtefactId == this.id &&
+            if (message.Id == this.id &&
                 message.FieldName == this.fieldName)
             {
                 AssociatedObject.CaretIndex = message.CaretIndex;
