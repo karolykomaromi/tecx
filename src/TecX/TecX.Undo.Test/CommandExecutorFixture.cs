@@ -14,15 +14,7 @@
 
             var cmd = new SubmitMessage();
 
-            executor.Execute(
-                x =>
-                    {
-                        x.Command(cmd);
-                        //x.CallbackToUI();
-                        ////Uses the SynchronizationContext around the thread that owns the message pump for callbacks.
-                        //x.OnSuccess(msg => { });
-                        //x.OnFailure((msg, ex) => { });
-                    });
+            executor.Execute(x => x.Command(cmd));
 
             Assert.AreEqual("1", cmd.Message);
         }
