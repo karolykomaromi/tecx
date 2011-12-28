@@ -2,12 +2,8 @@ namespace TecX.Undo.Test.TestObjects
 {
     using System;
 
-    public class ThrowsOnUndo : Command
+    public class ThrowsOnUndo : CountsUndoRedo
     {
-        protected override void ExecuteCore()
-        {
-        }
-
         protected override void UnexecuteCore()
         {
             throw new NotImplementedException();
