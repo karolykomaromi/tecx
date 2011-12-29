@@ -132,3 +132,6 @@ src/TecX/TecX.Undo.Test/obj
 src/TecX/TecX.Undo/bin
 src/TecX/TecX.Undo.Test/bin
 src/TecX/TecX.Undo/obj
+src/TecX/TecX.Agile.Messaging.Nsb/obj
+src/TecX/TecX.Search.Database/Import Schema Logs
+src/TecX/TecX.Agile.Messaging.Nsb.Test/obj

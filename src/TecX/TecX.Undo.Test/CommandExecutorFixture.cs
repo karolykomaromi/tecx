@@ -1,5 +1,7 @@
 ﻿namespace TecX.Undo.Test
 {
+    using System;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using TecX.Undo.Test.TestObjects;
@@ -160,13 +162,77 @@
         [TestMethod]
         public void FailureDuringUndoDoesNotPutCmdInUndostack()
         {
-            Assert.Fail("implement");
+            var executor = new CommandExecutor();
+
+            try
+            {
+                executor.Execute(x => x.Command(new ThrowsOnUndo()));
+            }
+            catch
+            {
+            }
+
+            Assert.IsFalse(executor.CanRedo);
         }
 
         [TestMethod]
         public void FailureDuringRedoDoesNotPutCmdInRedostack()
         {
-            Assert.Fail("implement");
+            var executor = new CommandExecutor();
+            executor.Execute(x => x.Command(new ThrowsOnRedo()));
+            executor.Undo();
+            try
+            {
+                executor.Redo();
+            }
+            catch
+            {
+            }
+
+            Assert.IsFalse(executor.CanUndo);
+        }
+
+        [TestMethod]
+        public void ComplexUndoRedoSequence()
+        {
+            var complex1 = new CountsUndoRedo();
+            var complex2 = new CountsUndoRedo();
+            var complex3 = new CountsUndoRedo();
+
+            var executor = new CommandExecutor();
+
+            executor.Execute(x => x.Command(complex1));
+            executor.Execute(x => x.Command(complex2));
+            executor.Undo();
+            executor.Execute(x => x.Command(complex3));
+            executor.Redo();
+
+            Assert.AreEqual(1, complex1.ExecuteCount);
+            Assert.AreEqual(1, complex2.ExecuteCount);
+            Assert.AreEqual(1, complex2.UndoCount);
+            Assert.AreEqual(1, complex3.ExecuteCount);
+        }
+
+        [TestMethod]
+        public void NotifiesOnCanUndoChanged()
+        {
+            var executor = new CommandExecutor();
+
+            executor.CanUndoRedoChanged += (s, e) => Assert.IsTrue(executor.CanUndo);
+
+            executor.Execute(x => x.Command(new CountsUndoRedo()));
+        }
+
+        [TestMethod]
+        public void NotifiesOnCanRedoChanged()
+        {
+            var executor = new CommandExecutor();
+
+            executor.Execute(x => x.Command(new CountsUndoRedo()));
+
+            executor.CanUndoRedoChanged += (s, e) => Assert.IsTrue(executor.CanRedo);
+
+            executor.Undo();
         }
     }
 }
