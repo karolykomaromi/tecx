@@ -37,11 +37,12 @@ namespace TecX.Undo
 
         public event EventHandler CanUndoRedoChanged = delegate { };
 
-        public void Execute(Action<CommandConfiguration> action)
+        public void Execute<TCommand>(Action<CommandConfiguration<TCommand>> action)
+            where TCommand : Command
         {
             Guard.AssertNotNull(action, "action");
 
-            var config = new CommandConfiguration();
+            var config = new CommandConfiguration<TCommand>();
 
             action(config);
 
