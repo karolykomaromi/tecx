@@ -16,7 +16,7 @@
 
             var cmd = new SubmitMessage();
 
-            executor.Execute(x => x.Command(cmd));
+            executor.Execute<SubmitMessage>(x => x.ConstructUsing(() => cmd));
 
             Assert.AreEqual("1", cmd.Message);
         }
@@ -30,13 +30,13 @@
 
             bool calledBack = false;
 
-            executor.Execute(
+            executor.Execute<SubmitMessage>(
                 x =>
                 {
-                    x.Command(cmd);
+                    x.ConstructUsing(() => cmd);
                     x.OnSuccess(msg => { calledBack = true; });
                 });
-            
+
             Assert.AreEqual("1", cmd.Message);
             Assert.IsTrue(calledBack);
         }
@@ -50,10 +50,10 @@
 
             bool calledBack = false;
 
-            executor.Execute(
+            executor.Execute<AlwaysThrows>(
                 x =>
                 {
-                    x.Command(cmd);
+                    x.ConstructUsing(() => cmd);
                     x.OnFailure((c, ex) =>
                         {
                             Assert.AreSame(cmd, c);
@@ -70,10 +70,10 @@
 
             var cmd = new SubmitMessage();
 
-            executor.Execute(x => x.Command(cmd));
+            executor.Execute<SubmitMessage>(x => x.ConstructUsing(() => cmd));
 
             Assert.AreEqual("1", cmd.Message);
-            
+
             executor.Undo();
 
             Assert.AreEqual("0", cmd.Message);
@@ -86,7 +86,7 @@
 
             var cmd = new SubmitMessage();
 
-            executor.Execute(x => x.Command(cmd));
+            executor.Execute<SubmitMessage>(x => x.ConstructUsing(() => cmd));
 
             Assert.AreEqual("1", cmd.Message);
 
@@ -108,9 +108,9 @@
             var cmd2 = new SubmitMessage();
             var cmd3 = new SubmitMessage();
 
-            executor.Execute(x => x.Command(cmd1));
-            executor.Execute(x => x.Command(cmd2));
-            executor.Execute(x => x.Command(cmd3));
+            executor.Execute<SubmitMessage>(x => x.ConstructUsing(() => cmd1));
+            executor.Execute<SubmitMessage>(x => x.ConstructUsing(() => cmd2));
+            executor.Execute<SubmitMessage>(x => x.ConstructUsing(() => cmd3));
 
             Assert.AreEqual("1", cmd1.Message);
             Assert.AreEqual("1", cmd2.Message);
@@ -134,9 +134,9 @@
             var cmd2 = new SubmitMessage();
             var cmd3 = new SubmitMessage();
 
-            executor.Execute(x => x.Command(cmd1));
-            executor.Execute(x => x.Command(cmd2));
-            executor.Execute(x => x.Command(cmd3));
+            executor.Execute<SubmitMessage>(x => x.ConstructUsing(() => cmd1));
+            executor.Execute<SubmitMessage>(x => x.ConstructUsing(() => cmd2));
+            executor.Execute<SubmitMessage>(x => x.ConstructUsing(() => cmd3));
 
             Assert.AreEqual("1", cmd1.Message);
             Assert.AreEqual("1", cmd2.Message);
@@ -166,7 +166,7 @@
 
             try
             {
-                executor.Execute(x => x.Command(new ThrowsOnUndo()));
+                executor.Execute<ThrowsOnUndo>(x => { });
             }
             catch
             {
@@ -179,7 +179,7 @@
         public void FailureDuringRedoDoesNotPutCmdInRedostack()
         {
             var executor = new CommandExecutor();
-            executor.Execute(x => x.Command(new ThrowsOnRedo()));
+            executor.Execute<ThrowsOnRedo>(x => { });
             executor.Undo();
             try
             {
@@ -201,10 +201,10 @@
 
             var executor = new CommandExecutor();
 
-            executor.Execute(x => x.Command(complex1));
-            executor.Execute(x => x.Command(complex2));
+            executor.Execute<CountsUndoRedo>(x => x.ConstructUsing(() => complex1));
+            executor.Execute<CountsUndoRedo>(x => x.ConstructUsing(() => complex2));
             executor.Undo();
-            executor.Execute(x => x.Command(complex3));
+            executor.Execute<CountsUndoRedo>(x => x.ConstructUsing(() => complex3));
             executor.Redo();
 
             Assert.AreEqual(1, complex1.ExecuteCount);
@@ -220,7 +220,7 @@
 
             executor.CanUndoRedoChanged += (s, e) => Assert.IsTrue(executor.CanUndo);
 
-            executor.Execute(x => x.Command(new CountsUndoRedo()));
+            executor.Execute<CountsUndoRedo>(x => { });
         }
 
         [TestMethod]
@@ -228,7 +228,7 @@
         {
             var executor = new CommandExecutor();
 
-            executor.Execute(x => x.Command(new CountsUndoRedo()));
+            executor.Execute<CountsUndoRedo>(x => { });
 
             executor.CanUndoRedoChanged += (s, e) => Assert.IsTrue(executor.CanRedo);
 

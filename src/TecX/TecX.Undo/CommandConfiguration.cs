@@ -5,15 +5,18 @@ namespace TecX.Undo
 
     using TecX.Common;
 
-    public class CommandConfiguration
+    public class CommandConfiguration<TCommand> : CommandConfiguration
+        where TCommand : Command
     {
         private readonly Dispatcher dispatcher;
 
-        private Command command;
+        private TCommand command;
 
-        private Action<Command> handleSuccess;
+        private Func<TCommand> commandFactory;
 
-        private Action<Command, Exception> handleFailure;
+        private Action<TCommand> handleSuccess;
+
+        private Action<TCommand, Exception> handleFailure;
 
         private bool callbackToUI;
 
@@ -21,43 +24,57 @@ namespace TecX.Undo
         {
             this.handleSuccess = cmd => { };
             this.handleFailure = (cmd, ex) => { };
+            this.commandFactory = () => (TCommand)Activator.CreateInstance(typeof(TCommand));
         }
 
-        public void Execute()
+        public TCommand Command
+        {
+            get
+            {
+                if (this.command == null)
+                {
+                    this.command = this.commandFactory();
+                }
+
+                return this.command;
+            }
+        }
+
+        public override void Execute()
         {
             try
             {
-                this.command.Execute();
+                this.Command.Execute();
 
                 if (this.callbackToUI)
                 {
-                    this.dispatcher.Invoke(DispatcherPriority.Normal, 
-                        new Action(() => this.handleSuccess(this.command)));
+                    this.dispatcher.Invoke(DispatcherPriority.Normal,
+                        new Action(() => this.handleSuccess(this.Command)));
                 }
                 else
                 {
-                    this.handleSuccess(this.command);
+                    this.handleSuccess(this.Command);
                 }
             }
             catch (Exception ex)
             {
                 if (this.callbackToUI)
                 {
-                    this.dispatcher.Invoke(DispatcherPriority.Normal, 
-                        new Action(() => this.handleFailure(this.command, ex)));
+                    this.dispatcher.Invoke(DispatcherPriority.Normal,
+                        new Action(() => this.handleFailure(this.Command, ex)));
                 }
                 else
                 {
-                    this.handleFailure(this.command, ex);
+                    this.handleFailure(this.Command, ex);
                 }
             }
         }
 
-        public void Command(Command command)
+        public void ConstructUsing(Func<TCommand> commandFactory)
         {
-            Guard.AssertNotNull(command, "command");
+            Guard.AssertNotNull(commandFactory, "commandFactory");
 
-            this.command = command;
+            this.commandFactory = commandFactory;
         }
 
         public void CallbackToUI()
@@ -65,34 +82,34 @@ namespace TecX.Undo
             this.callbackToUI = true;
         }
 
-        public void OnSuccess(Action<Command> handleSuccess)
+        public void OnSuccess(Action<TCommand> handleSuccess)
         {
             Guard.AssertNotNull(handleSuccess, "handleSuccess");
 
             this.handleSuccess = handleSuccess;
         }
 
-        public void OnFailure(Action<Command, Exception> handleFailure)
+        public void OnFailure(Action<TCommand, Exception> handleFailure)
         {
             Guard.AssertNotNull(handleFailure, "handleFailure");
 
             this.handleFailure = handleFailure;
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
             try
             {
-                this.command.Unexecute();
+                this.Command.Unexecute();
 
                 if (this.callbackToUI)
                 {
                     this.dispatcher.Invoke(DispatcherPriority.Normal,
-                        new Action(() => this.handleSuccess(this.command)));
+                        new Action(() => this.handleSuccess(this.Command)));
                 }
                 else
                 {
-                    this.handleSuccess(this.command);
+                    this.handleSuccess(this.Command);
                 }
             }
             catch (Exception ex)
@@ -100,13 +117,20 @@ namespace TecX.Undo
                 if (this.callbackToUI)
                 {
                     this.dispatcher.Invoke(DispatcherPriority.Normal,
-                        new Action(() => this.handleFailure(this.command, ex)));
+                        new Action(() => this.handleFailure(this.Command, ex)));
                 }
                 else
                 {
-                    this.handleFailure(this.command, ex);
+                    this.handleFailure(this.Command, ex);
                 }
             }
         }
+    }
+
+    public abstract class CommandConfiguration
+    {
+        public abstract void Execute();
+
+        public abstract void Unexecute();
     }
 }
