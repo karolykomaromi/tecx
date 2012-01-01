@@ -1,7 +1,5 @@
 ﻿namespace TecX.Undo.Test
 {
-    using System;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using TecX.Undo.Test.TestObjects;
