@@ -21,7 +21,7 @@
 
             var ea = new Mock<IEventAggregator>();
 
-            var vm = new StoryCardViewModel(ea.Object) { Id = id };
+            var vm = StoryCardViewModel.Create(ea.Object, id, 0.0, 0.0, 0.0);
 
             var cmd = new ChangeProperty(id, "TaskOwner", string.Empty, "John Wayne");
 
@@ -31,7 +31,7 @@
                 It.Is((PropertyChanged pc) =>
                     pc.Id == id &&
                     pc.PropertyName == "TaskOwner" &&
-                    pc.From == null &&
+                    Equals(pc.From, string.Empty) &&
                     Equals(pc.To, "John Wayne"))),
                 Times.Once());
 
