@@ -4,6 +4,8 @@ namespace TecX.Undo
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     using TecX.Common;
 
@@ -46,13 +48,30 @@ namespace TecX.Undo
 
             action(config);
 
-            this.executedCommands.Add(config);
-
             config.Execute();
+
+            this.executedCommands.Add(config);
 
             this.undoneCommands.Clear();
 
             this.CanUndoRedoChanged(this, EventArgs.Empty);
+        }
+
+        public CancellationTokenSource ExecuteInBackground<TCommand>(Action<CommandConfiguration<TCommand>> action)
+            where TCommand : Command
+        {
+            Guard.AssertNotNull(action, "action");
+
+            var config = new CommandConfiguration<TCommand>();
+
+            action(config);
+
+            var tokenSource = new CancellationTokenSource();
+            var token = tokenSource.Token;
+
+            Task.Factory.StartNew(config.Execute, token);
+
+            return tokenSource;
         }
 
         public void Abort()

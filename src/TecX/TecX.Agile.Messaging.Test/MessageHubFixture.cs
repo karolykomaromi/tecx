@@ -8,6 +8,7 @@
 
     using TecX.Agile.Infrastructure.Commands;
     using TecX.Agile.Infrastructure.Events;
+    using TecX.Agile.Messaging.Test.TestObjects;
     using TecX.Event;
 
     [TestClass]
@@ -95,6 +96,27 @@
 
             channel.Verify(c => c.Send(@event), Times.Never());
             ea.Verify(e => e.Publish(cmd), Times.Once());
+        }
+
+        [TestMethod]
+        public void MessagesGetTransferedBetweenHubs()
+        {
+            IMessageChannel channel = new TestMessageChannel();
+            var ea1 = new Mock<IEventAggregator>();
+            var ea2 = new Mock<IEventAggregator>();
+
+            var hub1 = new MessageHub(channel, ea1.Object);
+            var hub2 = new MessageHub(channel, ea2.Object);
+
+            var id = Guid.NewGuid();
+
+            hub1.Handle(new CaretMoved(id, "1", -1));
+
+            ea2.Verify(ea => ea.Publish(
+                It.Is<MoveCaret>(msg => id == msg.Id && 
+                                 msg.FieldName == "1" 
+                                 && msg.CaretIndex == -1)), 
+                    Times.Once());
         }
     }
 }
