@@ -20,6 +20,8 @@ namespace TecX.Undo
 
         private bool callbackToUI;
 
+        private Action<ProgressInfo> handleProgress;
+
         public CommandConfiguration()
         {
             this.handleSuccess = cmd => { };
@@ -44,6 +46,16 @@ namespace TecX.Undo
         {
             try
             {
+                if (this.callbackToUI)
+                {
+                    this.command.Progress = info => this.dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => this.handleProgress(info)));
+                }
+                else
+                {
+                    this.command.Progress = this.handleProgress;
+                }
+
+                this.Command.Progress = this.handleProgress;
                 this.Command.Execute();
 
                 if (this.callbackToUI)
@@ -96,10 +108,18 @@ namespace TecX.Undo
             this.handleFailure = handleFailure;
         }
 
+        public void OnProgress(Action<ProgressInfo> handleProgress)
+        {
+            Guard.AssertNotNull(handleProgress, "handleProgress");
+
+            this.handleProgress = handleProgress;
+        }
+
         public override void Unexecute()
         {
             try
             {
+                //TODO weberse 2012-01-03 should progress of undo also be reported?
                 this.Command.Unexecute();
 
                 if (this.callbackToUI)

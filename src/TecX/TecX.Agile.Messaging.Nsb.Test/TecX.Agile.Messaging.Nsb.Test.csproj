@@ -64,8 +64,8 @@
     <Reference Include="NServiceBus.Core">
       <HintPath>..\packages\NServiceBus.2.6.0.1505\lib\net40\NServiceBus.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NServiceBus.ObjectBuilder.Unity">
-      <HintPath>..\packages\NServiceBus.Unity-CI.3.0.1903\lib\net40\NServiceBus.ObjectBuilder.Unity.dll</HintPath>
+    <Reference Include="NServiceBus.ObjectBuilder.Unity, Version=3.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NServiceBus.Unity-CI.3.0.1925\lib\net40\NServiceBus.ObjectBuilder.Unity.dll</HintPath>
     </Reference>
     <Reference Include="NServiceBus.Testing">
       <HintPath>..\packages\NServiceBus.Testing.2.6.0.1505\lib\net40\NServiceBus.Testing.dll</HintPath>
