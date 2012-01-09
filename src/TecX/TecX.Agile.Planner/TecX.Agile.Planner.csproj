@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6E53CA3A-29FD-46A5-9110-CE0A3A69BB9D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TecX.Agile.Planner</RootNamespace>
+    <AssemblyName>TecX.Agile.Planner</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>TecX.Agile.Planner.App</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\Prism4x\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.UnityExtensions, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\Prism4x\Microsoft.Practices.Prism.UnityExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
+      <Link>Properties\GlobalAssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShellViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile.Data\TecX.Agile.Data.csproj">
+      <Project>{5A6CB6EB-7298-40B9-91FD-0378798D8F7C}</Project>
+      <Name>TecX.Agile.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.csproj">
+      <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
+      <Name>TecX.Agile.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Modules.Gestures\TecX.Agile.Modules.Gestures.csproj">
+      <Project>{41785223-CF12-4A54-9D09-E017A5C362E9}</Project>
+      <Name>TecX.Agile.Modules.Gestures</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Modules.Main\TecX.Agile.Modules.Main.csproj">
+      <Project>{1EB35F86-DA6C-4691-A2C5-8587129B520D}</Project>
+      <Name>TecX.Agile.Modules.Main</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Modules.SysInfo\TecX.Agile.Modules.SysInfo.csproj">
+      <Project>{EB3BA3A6-B5B6-48FB-A465-AE8FFC1D88A0}</Project>
+      <Name>TecX.Agile.Modules.SysInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Peer\TecX.Agile.Peer.csproj">
+      <Project>{4C9A3BE9-2E8F-44B1-965B-42AD35D36071}</Project>
+      <Name>TecX.Agile.Peer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Remote\TecX.Agile.Remote.csproj">
+      <Project>{0150B33A-390B-423D-9A2B-59BEDF902A38}</Project>
+      <Name>TecX.Agile.Remote</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.csproj">
+      <Project>{E4698C1F-EF98-480C-B923-BB986C2B7F37}</Project>
+      <Name>TecX.Agile.ViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.View\TecX.Agile.View.csproj">
+      <Project>{09B2D14D-9911-4CDA-A175-43754A2AAAFE}</Project>
+      <Name>TecX.Agile.View</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Common.Event.Unity\TecX.Common.Event.Unity.csproj">
+      <Project>{A763CC8F-835E-444C-9A9F-88E7A443C1B2}</Project>
+      <Name>TecX.Common.Event.Unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.csproj">
+      <Project>{266522EB-9DCB-451A-8CD7-678188DCB5F6}</Project>
+      <Name>TecX.Common.Event</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
+      <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
+      <Name>TecX.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Prism\TecX.Prism.csproj">
+      <Project>{FA168E91-F953-4C22-9727-4462E9DF74EF}</Project>
+      <Name>TecX.Prism</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Unity\TecX.Unity.csproj">
+      <Project>{69621991-8933-41FD-8493-87E7FA5A26FE}</Project>
+      <Name>TecX.Unity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Shell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
