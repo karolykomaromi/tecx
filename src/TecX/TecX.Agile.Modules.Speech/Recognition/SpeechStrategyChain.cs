@@ -12,8 +12,6 @@ namespace TecX.Agile.Modules.Speech.Recognition
 
         private readonly List<SpeechRecognitionStrategy> strategies;
 
-        public event EventHandler SpeechRecognized = delegate { };
-
         public SpeechStrategyChain()
         {
             this.recognizer = new SpeechRecognizer
@@ -27,6 +25,8 @@ namespace TecX.Agile.Modules.Speech.Recognition
 
             this.strategies = new List<SpeechRecognitionStrategy>();
         }
+
+        public event EventHandler SpeechRecognized = delegate { };
 
         public void Add(SpeechRecognitionStrategy strategy)
         {
@@ -54,7 +54,7 @@ namespace TecX.Agile.Modules.Speech.Recognition
 
         private void OnRecognized(object sender, SpeechRecognizedEventArgs e)
         {
-            SpeechRecognized(this, EventArgs.Empty);
+            this.SpeechRecognized(this, EventArgs.Empty);
         }
     }
 }

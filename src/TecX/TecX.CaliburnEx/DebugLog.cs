@@ -3,9 +3,9 @@ namespace TecX.CaliburnEx
     using System;
     using System.Diagnostics;
 
-    using TecX.Common;
+    using Caliburn.Micro;
 
-    using global::Caliburn.Micro;
+    using TecX.Common;
 
     public class DebugLog : ILog
     {

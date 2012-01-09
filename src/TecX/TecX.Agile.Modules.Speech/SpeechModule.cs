@@ -1,7 +1,7 @@
 ﻿namespace TecX.Agile.Modules.Speech
 {
-    using TecX.Common;
     using TecX.CaliburnEx.Modularization;
+    using TecX.Common;
 
     public class SpeechModule : Module
     {

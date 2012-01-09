@@ -6,9 +6,9 @@
 
     public abstract class SpeechRecognitionStrategy
     {
-        protected object Message { get; set; }
-
         public Grammar Grammar { get; protected set; }
+
+        protected object Message { get; set; }
 
         public void Process(SpeechRecognitionContext context)
         {

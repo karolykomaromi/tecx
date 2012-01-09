@@ -11,7 +11,7 @@ namespace TecX.Undo
 
         public virtual void Execute()
         {
-            if(this.CanExecute())
+            if (this.CanExecute())
             {
                 this.ExecuteCore();
                 this.executeCount++;

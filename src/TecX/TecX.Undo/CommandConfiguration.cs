@@ -48,7 +48,8 @@ namespace TecX.Undo
 
                 if (this.callbackToUI)
                 {
-                    this.dispatcher.Invoke(DispatcherPriority.Normal,
+                    this.dispatcher.Invoke(
+                        DispatcherPriority.Normal,
                         new Action(() => this.handleSuccess(this.Command)));
                 }
                 else
@@ -60,7 +61,8 @@ namespace TecX.Undo
             {
                 if (this.callbackToUI)
                 {
-                    this.dispatcher.Invoke(DispatcherPriority.Normal,
+                    this.dispatcher.Invoke(
+                        DispatcherPriority.Normal,
                         new Action(() => this.handleFailure(this.Command, ex)));
                 }
                 else
@@ -104,7 +106,8 @@ namespace TecX.Undo
 
                 if (this.callbackToUI)
                 {
-                    this.dispatcher.Invoke(DispatcherPriority.Normal,
+                    this.dispatcher.Invoke(
+                        DispatcherPriority.Normal,
                         new Action(() => this.handleSuccess(this.Command)));
                 }
                 else
@@ -116,7 +119,8 @@ namespace TecX.Undo
             {
                 if (this.callbackToUI)
                 {
-                    this.dispatcher.Invoke(DispatcherPriority.Normal,
+                    this.dispatcher.Invoke(
+                        DispatcherPriority.Normal,
                         new Action(() => this.handleFailure(this.Command, ex)));
                 }
                 else

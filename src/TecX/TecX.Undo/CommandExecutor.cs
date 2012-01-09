@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace TecX.Undo
+﻿namespace TecX.Undo
 {
+    using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     using TecX.Common;
 
@@ -12,6 +10,14 @@ namespace TecX.Undo
         private readonly List<CommandConfiguration> executedCommands;
 
         private readonly List<CommandConfiguration> undoneCommands;
+
+        public CommandExecutor()
+        {
+            this.executedCommands = new List<CommandConfiguration>();
+            this.undoneCommands = new List<CommandConfiguration>();
+        }
+
+        public event EventHandler CanUndoRedoChanged = delegate { };
 
         public bool CanUndo
         {
@@ -28,14 +34,6 @@ namespace TecX.Undo
                 return this.undoneCommands.Count > 0;
             }
         }
-
-        public CommandExecutor()
-        {
-            this.executedCommands = new List<CommandConfiguration>();
-            this.undoneCommands = new List<CommandConfiguration>();
-        }
-
-        public event EventHandler CanUndoRedoChanged = delegate { };
 
         public void Execute<TCommand>(Action<CommandConfiguration<TCommand>> action)
             where TCommand : Command

@@ -22,7 +22,7 @@
         {
             // TODO weberse 2011-12-22 check wether confidence is good enough
 
-            //Point center = Surface.Current.Center;
+            ////Point center = Surface.Current.Center;
 
             this.Message = new AddStoryCard(Guid.NewGuid(), 0.0, 0.0, 0.0);
         }
