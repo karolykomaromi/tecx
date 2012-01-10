@@ -1,8 +1,11 @@
 ﻿namespace TecX.Agile.Modules.Speech
 {
+    using System.Diagnostics;
+
     using TecX.CaliburnEx.Modularization;
     using TecX.Common;
 
+    [DebuggerDisplay("{Description")]
     public class SpeechModule : Module
     {
         private readonly SpeechRecognition speechRecognition;

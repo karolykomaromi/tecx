@@ -1,12 +1,16 @@
 ﻿namespace TecX.Agile.Modules.Speech.Recognition
 {
+    using System.Diagnostics;
     using System.Speech.Recognition;
 
     using TecX.Common;
 
+    [DebuggerDisplay("{Description}")]
     public abstract class SpeechRecognitionStrategy
     {
         public Grammar Grammar { get; protected set; }
+
+        public abstract string Description { get; }
 
         protected object Message { get; set; }
 

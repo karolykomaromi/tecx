@@ -37,7 +37,7 @@
 
         private void OnRoutedEvent(object sender, RoutedEventArgs args)
         {
-            base.OnEvent(args);
+            this.OnEvent(args);
         }
     }
 }

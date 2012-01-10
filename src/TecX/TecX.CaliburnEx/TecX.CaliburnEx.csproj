@@ -86,6 +86,8 @@
     <Compile Include="Modularization\ModuleManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoutedEventTrigger.cs" />
+    <Compile Include="ScrollChangedConverter.cs" />
+    <Compile Include="ScrollChangedMessageParameter.cs" />
     <Compile Include="UnityBootstrapper.cs" />
   </ItemGroup>
   <ItemGroup>
