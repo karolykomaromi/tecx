@@ -1,5 +1,7 @@
 ﻿namespace TecX.Undo.Test
 {
+    using System.Threading;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using TecX.Undo.Test.TestObjects;
@@ -7,6 +9,32 @@
     [TestClass]
     public class CommandExecutorFixture
     {
+        [TestMethod]
+        public void ExecuteInBackgroundUsesDifferentThread()
+        {
+            var executor = new CommandExecutor();
+
+            int testThreadId = Thread.CurrentThread.ManagedThreadId;
+
+            executor.ExecuteInBackground<ThreadAwareCommand>(
+                x => x.ConstructUsing(() => new ThreadAwareCommand(testThreadId)));
+        }
+
+        [TestMethod]
+        public void CanCancelExecutionInBackground()
+        {
+            var executor = new CommandExecutor();
+
+            ManualResetEvent manualResetEvent = new ManualResetEvent(false);
+
+            var tokenSource = executor.ExecuteInBackground<LongRunningCommand>(
+                x => x.OnSuccess(c => Assert.Fail("Command must not succeed.")));
+
+            manualResetEvent.WaitOne(25);
+
+            tokenSource.Cancel();
+        }
+
         [TestMethod]
         public void CanExecute()
         {

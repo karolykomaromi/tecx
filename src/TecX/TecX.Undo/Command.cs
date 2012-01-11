@@ -1,12 +1,33 @@
 namespace TecX.Undo
 {
+    using System;
+
+    using TecX.Common;
+
     public abstract class Command
     {
         private int executeCount;
 
+        private Action<ProgressInfo> progress;
+
         protected Command()
         {
             this.executeCount = 0;
+            this.Progress = info => { };
+        }
+
+        public Action<ProgressInfo> Progress
+        {
+            get
+            {
+                return this.progress;
+            }
+            set
+            {
+                Guard.AssertNotNull(value, "Progress");
+
+                this.progress = value;
+            }
         }
 
         public virtual void Execute()
@@ -40,5 +61,9 @@ namespace TecX.Undo
         protected abstract void ExecuteCore();
 
         protected abstract void UnexecuteCore();
+    }
+
+    public class ProgressInfo
+    {
     }
 }
