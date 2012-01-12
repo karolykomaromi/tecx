@@ -1,4 +1,4 @@
-﻿namespace $safeprojectname$ {
+﻿namespace TecX.Agile.Phone {
     using System.ComponentModel.Composition;
 
     [Export(typeof(IShell))]

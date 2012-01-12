@@ -68,6 +68,9 @@
     <Compile Include="Collections\CoupledToImplementationDetailsOverrideExtractor.cs" />
     <Compile Include="Collections\NullResolverOverrideExtractor.cs" />
     <Compile Include="Collections\ResolverOverrideExtractor.cs" />
+    <Compile Include="Decoration\DecoratorExtension.cs" />
+    <Compile Include="Decoration\DecoratorStrategy.cs" />
+    <Compile Include="Decoration\RegistrationStack.cs" />
     <Compile Include="Enrichment\Enrichment.cs" />
     <Compile Include="Enrichment\EnrichmentExtension.cs" />
     <Compile Include="Enrichment\EnrichmentPolicy.cs" />
