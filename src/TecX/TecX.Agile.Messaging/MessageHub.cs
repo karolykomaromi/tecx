@@ -42,7 +42,7 @@
 
             if (!InboundCommandContext.Current.MatchesEvent(@event))
             {
-                this.channel.Send(@event);
+                this.channel.Send(@event.ToCommand());
             }
         }
 
@@ -52,7 +52,7 @@
 
             if (!InboundCommandContext.Current.MatchesEvent(@event))
             {
-                this.channel.Send(@event);
+                this.channel.Send(@event.ToCommand());
             }
         }
 
@@ -62,7 +62,7 @@
 
             if (!InboundCommandContext.Current.MatchesEvent(@event))
             {
-                this.channel.Send(@event);
+                this.channel.Send(@event.ToCommand());
             }
         }
 
@@ -72,7 +72,7 @@
 
             if (!InboundCommandContext.Current.MatchesEvent(@event))
             {
-                this.channel.Send(@event);
+                this.channel.Send(@event.ToCommand());
             }
         }
 

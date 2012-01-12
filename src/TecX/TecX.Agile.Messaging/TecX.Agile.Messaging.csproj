@@ -53,10 +53,12 @@
     <Compile Include="Context\InboundCommandContext.cs" />
     <Compile Include="Context\MoveCaretContext.cs" />
     <Compile Include="Context\NullInboundCommandContext.cs" />
+    <Compile Include="EventExtensions.cs" />
     <Compile Include="IMessageChannel.cs" />
     <Compile Include="IMessageSubscriber.cs" />
     <Compile Include="MessageChannel.cs" />
     <Compile Include="MessageHub.cs" />
+    <Compile Include="MessageSender.cs" />
     <Compile Include="NullMessageChannel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

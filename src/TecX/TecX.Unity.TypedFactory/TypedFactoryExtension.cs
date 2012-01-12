@@ -1,11 +1,11 @@
-﻿extern alias CC25;
+﻿extern alias CC30;
 
 namespace TecX.Unity.TypedFactory
 {
     using System;
     using System.Reflection;
 
-    using CC25.Castle.DynamicProxy;
+    using CC30.Castle.DynamicProxy;
 
     using Microsoft.Practices.Unity;
 

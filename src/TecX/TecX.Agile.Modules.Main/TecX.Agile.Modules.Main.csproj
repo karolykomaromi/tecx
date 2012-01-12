@@ -75,6 +75,10 @@
       <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
       <Name>TecX.Agile.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Agile.Messaging\TecX.Agile.Messaging.csproj">
+      <Project>{C955D066-015D-40A4-B8AD-921888D1DA95}</Project>
+      <Name>TecX.Agile.Messaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.CaliburnEx\TecX.CaliburnEx.csproj">
       <Project>{4244D026-9657-41AD-8CFB-AA70E2372CF5}</Project>
       <Name>TecX.CaliburnEx</Name>
@@ -82,6 +86,10 @@
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Event\TecX.Event.csproj">
+      <Project>{F1B1FD4F-F40F-4739-8EE4-D683440396DA}</Project>
+      <Name>TecX.Event</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
