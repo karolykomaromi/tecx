@@ -138,3 +138,6 @@ src/TecX/TecX.Agile.Messaging.Nsb.Test/obj
 src/TecX/TecX.Agile.Messaging.Nsb.Test/bin
 src/TecX/TecX.Agile.Messaging.Nsb/bin
 src/TecX/TecX.Agile.Phone/obj
+src/TecX/TecX.Agile.Phone/Bin
+src/TecX/TecX.Agile.Phone.Service/obj
+src/TecX/TecX.Agile.Phone.Service/bin
