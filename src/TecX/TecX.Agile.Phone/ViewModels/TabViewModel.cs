@@ -1,4 +1,4 @@
-﻿namespace TecX.Agile.Phone
+﻿namespace TecX.Agile.Phone.ViewModels
 {
     using System.Windows;
 
@@ -18,33 +18,33 @@
 
         public string Text
         {
-            get { return text; }
+            get { return this.text; }
             set
             {
-                text = value;
-                NotifyOfPropertyChange(() => Text);
+                this.text = value;
+                this.NotifyOfPropertyChange(() => this.Text);
             }
         }
 
         public void Choose()
         {
-            events.RequestTask<PhoneNumberChooserTask>();
+            this.events.RequestTask<PhoneNumberChooserTask>();
         }
 
         public void Handle(TaskCompleted<PhoneNumberResult> message)
         {
-            MessageBox.Show("The result was " + message.Result.TaskResult, DisplayName, MessageBoxButton.OK);
+            MessageBox.Show("The result was " + message.Result.TaskResult, this.DisplayName, MessageBoxButton.OK);
         }
 
         protected override void OnActivate()
         {
-            events.Subscribe(this);
+            this.events.Subscribe(this);
             base.OnActivate();
         }
 
         protected override void OnDeactivate(bool close)
         {
-            events.Unsubscribe(this);
+            this.events.Unsubscribe(this);
             base.OnDeactivate(close);
         }
     }

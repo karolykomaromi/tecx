@@ -1,10 +1,10 @@
-﻿namespace TecX.Agile.Phone
+﻿namespace TecX.Agile.Phone.Views
 {
     public partial class PivotPage
     {
         public PivotPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }
