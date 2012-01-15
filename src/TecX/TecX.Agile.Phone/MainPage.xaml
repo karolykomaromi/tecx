@@ -30,7 +30,7 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True">
             <shell:ApplicationBar.Buttons>
-                <cal:AppBarButton IconUri="ApplicationIcon.png"
+                <cal:AppBarButton IconUri="/Resources/ApplicationIcon.png"
 				                  Text="Page Two"
 				                  Message="GotoPageTwo" />
             </shell:ApplicationBar.Buttons>
