@@ -1,4 +1,4 @@
-﻿<phone:PhoneApplicationPage x:Class="TecX.Agile.Phone.PivotPage"
+﻿<phone:PhoneApplicationPage x:Class="TecX.Agile.Phone.Views.PivotPage"
                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"

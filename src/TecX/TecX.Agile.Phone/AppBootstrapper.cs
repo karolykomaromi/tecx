@@ -8,6 +8,8 @@
 
     using Microsoft.Phone.Controls;
 
+    using TecX.Agile.Phone.ViewModels;
+
     public class AppBootstrapper : PhoneBootstrapper
     {
         PhoneContainer container;

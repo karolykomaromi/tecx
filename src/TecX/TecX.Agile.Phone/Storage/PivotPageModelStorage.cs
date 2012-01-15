@@ -1,6 +1,8 @@
-﻿namespace TecX.Agile.Phone
+﻿namespace TecX.Agile.Phone.Storage
 {
     using Caliburn.Micro;
+
+    using TecX.Agile.Phone.ViewModels;
 
     public class PivotPageModelStorage : StorageHandler<PivotPageViewModel>
     {

@@ -2,6 +2,8 @@
 {
     using Caliburn.Micro;
 
+    using TecX.Agile.Phone.ViewModels;
+
     public class MainPageViewModel
     {
         readonly INavigationService navigationService;

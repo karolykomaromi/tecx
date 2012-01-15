@@ -1,4 +1,4 @@
-﻿namespace TecX.Agile.Phone
+﻿namespace TecX.Agile.Phone.ViewModels
 {
     using System;
     using System.Linq;
@@ -18,14 +18,14 @@
 
         protected override void OnInitialize()
         {
-            Enumerable.Range(1, NumberOfTabs).Apply(x =>
+            Enumerable.Range(1, this.NumberOfTabs).Apply(x =>
             {
-                var tab = createTab();
+                var tab = this.createTab();
                 tab.DisplayName = "Item " + x;
-                Items.Add(tab);
+                this.Items.Add(tab);
             });
 
-            ActivateItem(Items[0]);
+            this.ActivateItem(this.Items[0]);
         }
     }
 }

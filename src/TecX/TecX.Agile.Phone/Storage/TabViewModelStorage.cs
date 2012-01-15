@@ -1,14 +1,16 @@
-﻿namespace TecX.Agile.Phone
+﻿namespace TecX.Agile.Phone.Storage
 {
     using Caliburn.Micro;
+
+    using TecX.Agile.Phone.ViewModels;
 
     public class TabViewModelStorage : StorageHandler<TabViewModel>
     {
         public override void Configure()
         {
-            Id(x => x.DisplayName);
+            this.Id(x => x.DisplayName);
 
-            Property(x => x.Text)
+            this.Property(x => x.Text)
                 .InPhoneState()
                 .RestoreAfterActivation();
         }
