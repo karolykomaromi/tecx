@@ -1,8 +1,6 @@
-﻿namespace TecX.Agile.Phone
+﻿namespace TecX.Agile.Phone.ViewModels
 {
     using Caliburn.Micro;
-
-    using TecX.Agile.Phone.ViewModels;
 
     public class MainPageViewModel
     {
@@ -15,7 +13,7 @@
 
         public void GotoPageTwo()
         {
-            navigationService.UriFor<PivotPageViewModel>()
+            this.navigationService.UriFor<PivotPageViewModel>()
                 .WithParam(x => x.NumberOfTabs, 5)
                 .Navigate();
         }

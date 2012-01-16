@@ -1,11 +1,11 @@
-﻿namespace TecX.Agile.Phone
+﻿namespace TecX.Agile.Phone.Views
 {
     public partial class MainPage
     {
         // Constructor
         public MainPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }
