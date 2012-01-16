@@ -63,6 +63,8 @@
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -77,10 +79,23 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="..\TecX.Agile.Phone.Service\IAsyncProjectService.cs">
+      <Link>Data\IAsyncProjectService.cs</Link>
+    </Compile>
+    <Compile Include="..\TecX.Agile.Phone.Service\IterationQueryResult.cs">
+      <Link>Data\IterationQueryResult.cs</Link>
+    </Compile>
+    <Compile Include="..\TecX.Agile.Phone.Service\ProjectQueryResult.cs">
+      <Link>Data\ProjectQueryResult.cs</Link>
+    </Compile>
+    <Compile Include="..\TecX.Agile.Phone.Service\StoryQueryResult.cs">
+      <Link>Data\StoryQueryResult.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Data\ProjectServiceClient.cs" />
     <Compile Include="DebugLog.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
@@ -121,6 +136,7 @@
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml" />
+    <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\ApplicationIcon.png">
@@ -131,7 +147,6 @@
     </Content>
     <Content Include="Resources\SplashScreenImage.jpg" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

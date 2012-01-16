@@ -2,12 +2,16 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ServiceModel;
+    using System.ServiceModel.Channels;
     using System.Windows.Controls;
 
     using Caliburn.Micro;
 
     using Microsoft.Phone.Controls;
 
+    using TecX.Agile.Phone.Data;
+    using TecX.Agile.Phone.Service;
     using TecX.Agile.Phone.ViewModels;
 
     public class AppBootstrapper : PhoneBootstrapper
@@ -22,6 +26,11 @@
             this.container.PerRequest<MainPageViewModel>();
             this.container.PerRequest<PivotPageViewModel>();
             this.container.PerRequest<TabViewModel>();
+
+            Binding binding = new BasicHttpBinding(BasicHttpSecurityMode.None);
+            EndpointAddress remoteAddress = new EndpointAddress("http://localhost/phone/project");
+
+            this.container.RegisterInstance(typeof(IAsyncProjectService), null, new ProjectServiceClient(binding, remoteAddress));
 
             AddCustomConventions();
 
