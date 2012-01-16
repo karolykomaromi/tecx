@@ -4,9 +4,14 @@
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:Controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                            mc:Ignorable="d" 
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                            d:DesignHeight="768" 
+                            d:DesignWidth="480"
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"
-                            shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="768" d:DesignWidth="480">
+                            shell:SystemTray.IsVisible="True">
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -15,7 +20,7 @@
 
         <StackPanel Grid.Row="0"
 		            Margin="24,24,0,12">
-            <TextBlock Text="WP7 Caliburn.Micro"
+            <TextBlock Text="TecX Phone Planner"
 			           Style="{StaticResource PhoneTextNormalStyle}" />
             <TextBlock Text="Page Two"
 			           Margin="-3,-8,0,0"

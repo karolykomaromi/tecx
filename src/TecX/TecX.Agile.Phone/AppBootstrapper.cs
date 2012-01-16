@@ -12,18 +12,20 @@
 
     public class AppBootstrapper : PhoneBootstrapper
     {
-        PhoneContainer container;
+        private PhoneContainer container;
 
         protected override void Configure()
         {
-            container = new PhoneContainer(RootFrame);
+            this.container = new PhoneContainer(this.RootFrame);
 
-            container.RegisterPhoneServices();
-            container.PerRequest<MainPageViewModel>();
-            container.PerRequest<PivotPageViewModel>();
-            container.PerRequest<TabViewModel>();
+            this.container.RegisterPhoneServices();
+            this.container.PerRequest<MainPageViewModel>();
+            this.container.PerRequest<PivotPageViewModel>();
+            this.container.PerRequest<TabViewModel>();
 
             AddCustomConventions();
+
+            LogManager.GetLog = type => new DebugLog(type);
         }
 
         static void AddCustomConventions()
@@ -65,17 +67,17 @@
 
         protected override object GetInstance(Type service, string key)
         {
-            return container.GetInstance(service, key);
+            return this.container.GetInstance(service, key);
         }
 
         protected override IEnumerable<object> GetAllInstances(Type service)
         {
-            return container.GetAllInstances(service);
+            return this.container.GetAllInstances(service);
         }
 
         protected override void BuildUp(object instance)
         {
-            container.BuildUp(instance);
+            this.container.BuildUp(instance);
         }
     }
 }

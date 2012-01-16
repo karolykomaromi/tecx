@@ -1,12 +1,17 @@
-﻿<phone:PhoneApplicationPage x:Class="TecX.Agile.Phone.MainPage"
+﻿<phone:PhoneApplicationPage x:Class="TecX.Agile.Phone.Views.MainPage"
                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+                            mc:Ignorable="d" 
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                            d:DesignHeight="696" 
+                            d:DesignWidth="480"
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"
-                            shell:SystemTray.IsVisible="True" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="696" d:DesignWidth="480">
+                            shell:SystemTray.IsVisible="True" >
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -14,9 +19,9 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"
 		            Margin="24,24,0,12">
-            <TextBlock Text="WP7 Caliburn.Micro"
+            <TextBlock Text="TecX Phone Planner"
 			           Style="{StaticResource PhoneTextNormalStyle}" />
-            <TextBlock Text="Main Page"
+            <TextBlock Text="Projects"
 			           Margin="-3,-8,0,0"
 			           Style="{StaticResource PhoneTextTitle1Style}" />
         </StackPanel>
