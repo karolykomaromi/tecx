@@ -2,7 +2,6 @@
 {
     using System;
     using System.ServiceModel;
-    using System.ServiceModel.Description;
 
     class Program
     {
@@ -12,20 +11,8 @@
 
             try
             {
-                host = new ServiceHost(typeof(ProjectService), new Uri("http://localhost/phone/project"));
-
-                host.AddServiceEndpoint(
-                    typeof(IProjectService), new BasicHttpBinding(BasicHttpSecurityMode.None), string.Empty);
-
-                ServiceMetadataBehavior behavior = new ServiceMetadataBehavior();
-
-                host.Description.Behaviors.Add(behavior);
-
-                host.AddServiceEndpoint(
-                    typeof(IMetadataExchange),
-                    MetadataExchangeBindings.CreateMexHttpBinding(),
-                    new Uri("http://localhost/phone/project/mex", UriKind.Absolute));
-
+                host = new ServiceHost(typeof(ProjectService));
+                
                 Console.WriteLine("Starting host...");
 
                 host.Open();
