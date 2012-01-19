@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tecx.codeplex.com/phone/project" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://tecx.codeplex.com/phone/project" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tecx.codeplex.com/phone/project/Imports">
+      <xsd:import schemaLocation="http://localhost/phone/project?xsd=xsd0" namespace="http://tecx.codeplex.com/phone/project" />
+      <xsd:import schemaLocation="http://localhost/phone/project?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/phone/project?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/TecX.Agile.Phone.Service" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IProjectService_GetProjects_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProjects" />
+  </wsdl:message>
+  <wsdl:message name="IProjectService_GetProjects_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProjectsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProjectService_GetIterations_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetIterations" />
+  </wsdl:message>
+  <wsdl:message name="IProjectService_GetIterations_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetIterationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProjectService_GetUserStories_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserStories" />
+  </wsdl:message>
+  <wsdl:message name="IProjectService_GetUserStories_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserStoriesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IProjectService">
+    <wsdl:operation name="GetProjects">
+      <wsdl:input wsaw:Action="http://tecx.codeplex.com/phone/project/IProjectService/GetProjects" message="tns:IProjectService_GetProjects_InputMessage" />
+      <wsdl:output wsaw:Action="http://tecx.codeplex.com/phone/project/IProjectService/GetProjectsResponse" message="tns:IProjectService_GetProjects_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIterations">
+      <wsdl:input wsaw:Action="http://tecx.codeplex.com/phone/project/IProjectService/GetIterations" message="tns:IProjectService_GetIterations_InputMessage" />
+      <wsdl:output wsaw:Action="http://tecx.codeplex.com/phone/project/IProjectService/GetIterationsResponse" message="tns:IProjectService_GetIterations_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserStories">
+      <wsdl:input wsaw:Action="http://tecx.codeplex.com/phone/project/IProjectService/GetUserStories" message="tns:IProjectService_GetUserStories_InputMessage" />
+      <wsdl:output wsaw:Action="http://tecx.codeplex.com/phone/project/IProjectService/GetUserStoriesResponse" message="tns:IProjectService_GetUserStories_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

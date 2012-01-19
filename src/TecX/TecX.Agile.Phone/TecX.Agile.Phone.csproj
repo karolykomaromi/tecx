@@ -79,25 +79,18 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="..\TecX.Agile.Phone.Service\IAsyncProjectService.cs">
-      <Link>Data\IAsyncProjectService.cs</Link>
-    </Compile>
-    <Compile Include="..\TecX.Agile.Phone.Service\IterationQueryResult.cs">
-      <Link>Data\IterationQueryResult.cs</Link>
-    </Compile>
-    <Compile Include="..\TecX.Agile.Phone.Service\ProjectQueryResult.cs">
-      <Link>Data\ProjectQueryResult.cs</Link>
-    </Compile>
-    <Compile Include="..\TecX.Agile.Phone.Service\StoryQueryResult.cs">
-      <Link>Data\StoryQueryResult.cs</Link>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="Data\ProjectServiceClient.cs" />
+    <Compile Include="Data\ProjectApplicationService.cs" />
     <Compile Include="DebugLog.cs" />
     <Compile Include="Guard.cs" />
+    <Compile Include="Service References\ProjectService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -136,7 +129,34 @@
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml" />
+    <None Include="Service References\ProjectService\project.disco" />
+    <None Include="Service References\ProjectService\configuration91.svcinfo" />
+    <None Include="Service References\ProjectService\configuration.svcinfo" />
+    <None Include="Service References\ProjectService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\ProjectService\project.wsdl" />
+    <None Include="Service References\ProjectService\project.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectService\project1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectService\project2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProjectService\ProjectService.wsdl" />
+    <None Include="Service References\ProjectService\TecX.Agile.Phone.ProjectService.IterationQueryResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ProjectService\TecX.Agile.Phone.ProjectService.ProjectQueryResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ProjectService\TecX.Agile.Phone.ProjectService.StoryQueryResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\ApplicationIcon.png">
@@ -147,6 +167,13 @@
     </Content>
     <Content Include="Resources\SplashScreenImage.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ProjectService\" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
