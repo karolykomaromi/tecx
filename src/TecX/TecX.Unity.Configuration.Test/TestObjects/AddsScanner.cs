@@ -7,7 +7,7 @@ namespace TecX.Unity.Configuration.Test.TestObjects
             Scan(x =>
                      {
                          x.AssembliesFromApplicationBaseDirectory();
-                         x.AddAllTypesOf<IMyInterface>();
+                         x.AddAllImplementationsOf<IMyInterface>();
                          x.ExcludeType<MyClassWithCtorParams>();
                      });
         }
