@@ -6,8 +6,9 @@
                             xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
                             mc:Ignorable="d" 
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-                            d:DesignHeight="696" 
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                            xmlns:Triggers="clr-namespace:TecX.Agile.Phone.Triggers" d:DesignHeight="696" 
                             d:DesignWidth="480"
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"
@@ -27,8 +28,23 @@
         </StackPanel>
 
         <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
             <Button x:Name="GotoPageTwo"
 			        Content="Goto Page Two" />
+            <ListBox Grid.Row="1" 
+                     x:Name="Projects" 
+                     ItemsSource="{Binding Projects}">
+                <i:Interaction.Triggers>
+                    <Triggers:ScrollingTrigger>
+                        <cal:ActionMessage MethodName="LoadMoreProjects">
+                            <cal:Parameter Value="$eventArgs"/>
+                        </cal:ActionMessage>
+                    </Triggers:ScrollingTrigger>
+                </i:Interaction.Triggers>
+            </ListBox>
         </Grid>
     </Grid>
 

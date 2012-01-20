@@ -83,6 +83,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Data\Project.cs" />
     <Compile Include="Data\ProjectApplicationService.cs" />
     <Compile Include="DebugLog.cs" />
     <Compile Include="Guard.cs" />
@@ -91,6 +92,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Triggers\BindingChangedEventArgs.cs" />
+    <Compile Include="Triggers\DependencyPropertyListener.cs" />
+    <Compile Include="Triggers\ScrollChangedEventArgs.cs" />
+    <Compile Include="Triggers\ScrollingTrigger.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
