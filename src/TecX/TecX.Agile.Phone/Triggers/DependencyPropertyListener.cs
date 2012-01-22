@@ -6,9 +6,9 @@ namespace TecX.Agile.Phone.Triggers
 
     public class DependencyPropertyListener
     {
-        static int index;
-        readonly DependencyProperty property;
-        FrameworkElement target;
+        private static int index;
+        private readonly DependencyProperty property;
+        private FrameworkElement target;
 
         public DependencyPropertyListener()
         {
@@ -16,31 +16,16 @@ namespace TecX.Agile.Phone.Triggers
                 "DependencyPropertyListener" + index++,
                 typeof(object),
                 typeof(DependencyPropertyListener),
-                new PropertyMetadata(null, this.HandleValueChanged));
+                new PropertyMetadata(null, this.OnValueChanged));
         }
 
-        public event EventHandler<BindingChangedEventArgs> Changed;
-
-        void HandleValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        {
-            this.OnChanged(new BindingChangedEventArgs(e));
-        }
-
-        protected void OnChanged(BindingChangedEventArgs e)
-        {
-            var temp = this.Changed;
-            if (temp != null)
-            {
-                temp(this.target, e);
-            }
-        }
+        public event EventHandler<BindingChangedEventArgs> Changed = delegate { };
 
         public void Attach(FrameworkElement element, Binding binding)
         {
             if (this.target != null)
             {
-                throw new Exception(
-                    "Cannot attach an already attached listener");
+                throw new Exception("Cannot attach an already attached listener");
             }
 
             this.target = element;
@@ -51,6 +36,11 @@ namespace TecX.Agile.Phone.Triggers
         {
             this.target.ClearValue(this.property);
             this.target = null;
+        }
+
+        private void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            this.Changed(this.target, new BindingChangedEventArgs(e));
         }
     }
 }

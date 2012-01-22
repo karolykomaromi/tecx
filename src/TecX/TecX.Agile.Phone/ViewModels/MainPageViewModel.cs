@@ -5,6 +5,7 @@
     using Caliburn.Micro;
 
     using TecX.Agile.Phone.Data;
+    using TecX.CaliburnEx;
 
     public class MainPageViewModel
     {
@@ -18,6 +19,7 @@
 
             this.navigationService = navigationService;
             this.projects = new BindableCollection<Project>();
+
             for(int i = 0; i < 100; i++)
             {
                 this.projects.Add(new Project());
@@ -49,7 +51,7 @@
             //    this.projectService);
         }
 
-        public void LoadMoreProjects(object parameter)
+        public void LoadMoreProjects(ScrollChangedParameter parameter)
         {
             
         }

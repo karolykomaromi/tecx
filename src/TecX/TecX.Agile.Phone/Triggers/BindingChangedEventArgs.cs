@@ -7,6 +7,8 @@ namespace TecX.Agile.Phone.Triggers
     {
         public BindingChangedEventArgs(DependencyPropertyChangedEventArgs e)
         {
+            Guard.AssertNotNull(e, "e");
+
             this.EventArgs = e;
         }
 
