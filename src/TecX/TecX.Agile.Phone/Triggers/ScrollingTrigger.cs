@@ -42,7 +42,17 @@ namespace TecX.Agile.Phone.Triggers
 
                     //if (atBottom)
                     //{
-                    this.OnEvent(new ScrollChangedEventArgs());
+                    var scea = new ScrollChangedEventArgs
+                        {
+                            ExtentHeight = scrollViewer.ExtentHeight,
+                            ExtentWidth = scrollViewer.ExtentWidth,
+                            HorizontalOffset = scrollViewer.HorizontalOffset,
+                            VerticalOffset = scrollViewer.VerticalOffset,
+                            ViewportHeight = scrollViewer.ViewportHeight,
+                            ViewportWidth = scrollViewer.ViewportWidth
+                        };
+
+                    this.OnEvent(scea);
                     //}
                 };
 

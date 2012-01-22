@@ -15,7 +15,7 @@
             For<IShell>().Use<ShellViewModel>().AsSingleton();
             For<IWindowManager>().Use<WindowManager>().AsSingleton();
 
-            MessageBinder.CustomConverters.Add(typeof(ScrollChangedMessageParameter), new ScrollChangedConverter().Convert);
+            MessageBinder.CustomConverters.Add(typeof(ScrollChangedParameter), new ScrollChangedConverter().Convert);
         }
     }
 }

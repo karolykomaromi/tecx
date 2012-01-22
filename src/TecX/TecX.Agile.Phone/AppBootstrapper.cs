@@ -9,6 +9,7 @@
     using Microsoft.Phone.Controls;
 
     using TecX.Agile.Phone.ViewModels;
+    using TecX.CaliburnEx;
 
     public class AppBootstrapper : PhoneBootstrapper
     {
@@ -26,6 +27,8 @@
             AddCustomConventions();
 
             LogManager.GetLog = type => new DebugLog(type);
+
+            MessageBinder.CustomConverters.Add(typeof(ScrollChangedParameter), new ScrollChangedConverter().Convert);
         }
 
         static void AddCustomConventions()

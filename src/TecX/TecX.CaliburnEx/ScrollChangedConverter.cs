@@ -1,6 +1,7 @@
 namespace TecX.CaliburnEx
 {
     using System;
+
     using System.Windows.Controls;
 
     public class ScrollChangedConverter
@@ -14,7 +15,15 @@ namespace TecX.CaliburnEx
                 throw new ArgumentException("Provided value must be of type ScrollChangedEventArgs.", "providedValue");
             }
 
-            return new ScrollChangedMessageParameter();
+            return new ScrollChangedParameter
+                {
+                    ExtentHeight = eventArgs.ExtentHeight,
+                    ExtentWidth = eventArgs.ExtentWidth,
+                    HorizontalOffset = eventArgs.HorizontalOffset,
+                    VerticalOffset = eventArgs.VerticalOffset,
+                    ViewportHeight = eventArgs.ViewportHeight,
+                    ViewportWidth = eventArgs.ViewportWidth
+                };
         }
     }
 }
