@@ -1,20 +1,22 @@
 namespace TecX.Agile.Phone.Service
 {
+    using System;
+
     public class ProjectService : IProjectService
     {
-        public ProjectQueryResult GetProjects(int maxResultCount)
+        public ProjectQueryResult GetProjects(int startingFromIndex, int takeCount)
         {
-            return new ProjectQueryResult();
+            throw new System.NotImplementedException();
         }
 
-        public IterationQueryResult GetIterations(int maxResultCount, int projectId)
+        public IterationQueryResult GetIterations(int startingFromIndex, int takeCount, Guid projectId)
         {
-            return new IterationQueryResult();
+            throw new System.NotImplementedException();
         }
 
-        public StoryQueryResult GetUserStories(int maxResultCount, int iterationId)
+        public StoryQueryResult GetUserStories(int startingFromIndex, int takeCount, Guid iterationId)
         {
-            return new StoryQueryResult();
+            throw new System.NotImplementedException();
         }
     }
 }

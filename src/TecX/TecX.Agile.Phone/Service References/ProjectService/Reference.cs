@@ -20,6 +20,81 @@ namespace TecX.Agile.Phone.ProjectService {
     [System.Runtime.Serialization.DataContractAttribute(Name="ProjectQueryResult", Namespace="http://schemas.datacontract.org/2004/07/TecX.Agile.Phone.Service")]
     public partial class ProjectQueryResult : object, System.ComponentModel.INotifyPropertyChanged {
         
+        private System.Collections.ObjectModel.ObservableCollection<TecX.Agile.Phone.ProjectService.Project> ProjectsField;
+        
+        private int TotalResultCountField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<TecX.Agile.Phone.ProjectService.Project> Projects {
+            get {
+                return this.ProjectsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProjectsField, value) != true)) {
+                    this.ProjectsField = value;
+                    this.RaisePropertyChanged("Projects");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TotalResultCount {
+            get {
+                return this.TotalResultCountField;
+            }
+            set {
+                if ((this.TotalResultCountField.Equals(value) != true)) {
+                    this.TotalResultCountField = value;
+                    this.RaisePropertyChanged("TotalResultCount");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Project", Namespace="http://schemas.datacontract.org/2004/07/TecX.Agile.Phone.Service")]
+    public partial class Project : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Guid IdField;
+        
+        private string NameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -34,6 +109,96 @@ namespace TecX.Agile.Phone.ProjectService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="IterationQueryResult", Namespace="http://schemas.datacontract.org/2004/07/TecX.Agile.Phone.Service")]
     public partial class IterationQueryResult : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Collections.ObjectModel.ObservableCollection<TecX.Agile.Phone.ProjectService.Iteration> IterationsField;
+        
+        private int TotalResultCountField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<TecX.Agile.Phone.ProjectService.Iteration> Iterations {
+            get {
+                return this.IterationsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IterationsField, value) != true)) {
+                    this.IterationsField = value;
+                    this.RaisePropertyChanged("Iterations");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TotalResultCount {
+            get {
+                return this.TotalResultCountField;
+            }
+            set {
+                if ((this.TotalResultCountField.Equals(value) != true)) {
+                    this.TotalResultCountField = value;
+                    this.RaisePropertyChanged("TotalResultCount");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Iteration", Namespace="http://schemas.datacontract.org/2004/07/TecX.Agile.Phone.Service")]
+    public partial class Iteration : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Guid IdField;
+        
+        private string NameField;
+        
+        private System.Guid ProjectIdField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid ProjectId {
+            get {
+                return this.ProjectIdField;
+            }
+            set {
+                if ((this.ProjectIdField.Equals(value) != true)) {
+                    this.ProjectIdField = value;
+                    this.RaisePropertyChanged("ProjectId");
+                }
+            }
+        }
         
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
@@ -50,6 +215,96 @@ namespace TecX.Agile.Phone.ProjectService {
     [System.Runtime.Serialization.DataContractAttribute(Name="StoryQueryResult", Namespace="http://schemas.datacontract.org/2004/07/TecX.Agile.Phone.Service")]
     public partial class StoryQueryResult : object, System.ComponentModel.INotifyPropertyChanged {
         
+        private System.Collections.ObjectModel.ObservableCollection<TecX.Agile.Phone.ProjectService.StoryCard> StoriesField;
+        
+        private int TotalResultCountField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<TecX.Agile.Phone.ProjectService.StoryCard> Stories {
+            get {
+                return this.StoriesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StoriesField, value) != true)) {
+                    this.StoriesField = value;
+                    this.RaisePropertyChanged("Stories");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TotalResultCount {
+            get {
+                return this.TotalResultCountField;
+            }
+            set {
+                if ((this.TotalResultCountField.Equals(value) != true)) {
+                    this.TotalResultCountField = value;
+                    this.RaisePropertyChanged("TotalResultCount");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StoryCard", Namespace="http://schemas.datacontract.org/2004/07/TecX.Agile.Phone.Service")]
+    public partial class StoryCard : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Guid IdField;
+        
+        private System.Guid IterationIdField;
+        
+        private string NameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid IterationId {
+            get {
+                return this.IterationIdField;
+            }
+            set {
+                if ((this.IterationIdField.Equals(value) != true)) {
+                    this.IterationIdField = value;
+                    this.RaisePropertyChanged("IterationId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -65,17 +320,17 @@ namespace TecX.Agile.Phone.ProjectService {
     public interface IProjectService {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tecx.codeplex.com/phone/project/IProjectService/GetProjects", ReplyAction="http://tecx.codeplex.com/phone/project/IProjectService/GetProjectsResponse")]
-        System.IAsyncResult BeginGetProjects(int maxResultCount, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetProjects(int startingFromIndex, int takeCount, System.AsyncCallback callback, object asyncState);
         
         TecX.Agile.Phone.ProjectService.ProjectQueryResult EndGetProjects(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tecx.codeplex.com/phone/project/IProjectService/GetIterations", ReplyAction="http://tecx.codeplex.com/phone/project/IProjectService/GetIterationsResponse")]
-        System.IAsyncResult BeginGetIterations(int maxResultCount, int projectId, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetIterations(int startingFromIndex, int takeCount, System.Guid projectId, System.AsyncCallback callback, object asyncState);
         
         TecX.Agile.Phone.ProjectService.IterationQueryResult EndGetIterations(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tecx.codeplex.com/phone/project/IProjectService/GetUserStories", ReplyAction="http://tecx.codeplex.com/phone/project/IProjectService/GetUserStoriesResponse")]
-        System.IAsyncResult BeginGetUserStories(int maxResultCount, int iterationId, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetUserStories(int startingFromIndex, int takeCount, System.Guid iterationId, System.AsyncCallback callback, object asyncState);
         
         TecX.Agile.Phone.ProjectService.StoryQueryResult EndGetUserStories(System.IAsyncResult result);
     }
@@ -227,8 +482,8 @@ namespace TecX.Agile.Phone.ProjectService {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult TecX.Agile.Phone.ProjectService.IProjectService.BeginGetProjects(int maxResultCount, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetProjects(maxResultCount, callback, asyncState);
+        System.IAsyncResult TecX.Agile.Phone.ProjectService.IProjectService.BeginGetProjects(int startingFromIndex, int takeCount, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetProjects(startingFromIndex, takeCount, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -237,8 +492,9 @@ namespace TecX.Agile.Phone.ProjectService {
         }
         
         private System.IAsyncResult OnBeginGetProjects(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            int maxResultCount = ((int)(inValues[0]));
-            return ((TecX.Agile.Phone.ProjectService.IProjectService)(this)).BeginGetProjects(maxResultCount, callback, asyncState);
+            int startingFromIndex = ((int)(inValues[0]));
+            int takeCount = ((int)(inValues[1]));
+            return ((TecX.Agile.Phone.ProjectService.IProjectService)(this)).BeginGetProjects(startingFromIndex, takeCount, callback, asyncState);
         }
         
         private object[] OnEndGetProjects(System.IAsyncResult result) {
@@ -254,11 +510,11 @@ namespace TecX.Agile.Phone.ProjectService {
             }
         }
         
-        public void GetProjectsAsync(int maxResultCount) {
-            this.GetProjectsAsync(maxResultCount, null);
+        public void GetProjectsAsync(int startingFromIndex, int takeCount) {
+            this.GetProjectsAsync(startingFromIndex, takeCount, null);
         }
         
-        public void GetProjectsAsync(int maxResultCount, object userState) {
+        public void GetProjectsAsync(int startingFromIndex, int takeCount, object userState) {
             if ((this.onBeginGetProjectsDelegate == null)) {
                 this.onBeginGetProjectsDelegate = new BeginOperationDelegate(this.OnBeginGetProjects);
             }
@@ -269,12 +525,13 @@ namespace TecX.Agile.Phone.ProjectService {
                 this.onGetProjectsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetProjectsCompleted);
             }
             base.InvokeAsync(this.onBeginGetProjectsDelegate, new object[] {
-                        maxResultCount}, this.onEndGetProjectsDelegate, this.onGetProjectsCompletedDelegate, userState);
+                        startingFromIndex,
+                        takeCount}, this.onEndGetProjectsDelegate, this.onGetProjectsCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult TecX.Agile.Phone.ProjectService.IProjectService.BeginGetIterations(int maxResultCount, int projectId, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetIterations(maxResultCount, projectId, callback, asyncState);
+        System.IAsyncResult TecX.Agile.Phone.ProjectService.IProjectService.BeginGetIterations(int startingFromIndex, int takeCount, System.Guid projectId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetIterations(startingFromIndex, takeCount, projectId, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -283,9 +540,10 @@ namespace TecX.Agile.Phone.ProjectService {
         }
         
         private System.IAsyncResult OnBeginGetIterations(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            int maxResultCount = ((int)(inValues[0]));
-            int projectId = ((int)(inValues[1]));
-            return ((TecX.Agile.Phone.ProjectService.IProjectService)(this)).BeginGetIterations(maxResultCount, projectId, callback, asyncState);
+            int startingFromIndex = ((int)(inValues[0]));
+            int takeCount = ((int)(inValues[1]));
+            System.Guid projectId = ((System.Guid)(inValues[2]));
+            return ((TecX.Agile.Phone.ProjectService.IProjectService)(this)).BeginGetIterations(startingFromIndex, takeCount, projectId, callback, asyncState);
         }
         
         private object[] OnEndGetIterations(System.IAsyncResult result) {
@@ -301,11 +559,11 @@ namespace TecX.Agile.Phone.ProjectService {
             }
         }
         
-        public void GetIterationsAsync(int maxResultCount, int projectId) {
-            this.GetIterationsAsync(maxResultCount, projectId, null);
+        public void GetIterationsAsync(int startingFromIndex, int takeCount, System.Guid projectId) {
+            this.GetIterationsAsync(startingFromIndex, takeCount, projectId, null);
         }
         
-        public void GetIterationsAsync(int maxResultCount, int projectId, object userState) {
+        public void GetIterationsAsync(int startingFromIndex, int takeCount, System.Guid projectId, object userState) {
             if ((this.onBeginGetIterationsDelegate == null)) {
                 this.onBeginGetIterationsDelegate = new BeginOperationDelegate(this.OnBeginGetIterations);
             }
@@ -316,13 +574,14 @@ namespace TecX.Agile.Phone.ProjectService {
                 this.onGetIterationsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetIterationsCompleted);
             }
             base.InvokeAsync(this.onBeginGetIterationsDelegate, new object[] {
-                        maxResultCount,
+                        startingFromIndex,
+                        takeCount,
                         projectId}, this.onEndGetIterationsDelegate, this.onGetIterationsCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult TecX.Agile.Phone.ProjectService.IProjectService.BeginGetUserStories(int maxResultCount, int iterationId, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetUserStories(maxResultCount, iterationId, callback, asyncState);
+        System.IAsyncResult TecX.Agile.Phone.ProjectService.IProjectService.BeginGetUserStories(int startingFromIndex, int takeCount, System.Guid iterationId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetUserStories(startingFromIndex, takeCount, iterationId, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -331,9 +590,10 @@ namespace TecX.Agile.Phone.ProjectService {
         }
         
         private System.IAsyncResult OnBeginGetUserStories(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            int maxResultCount = ((int)(inValues[0]));
-            int iterationId = ((int)(inValues[1]));
-            return ((TecX.Agile.Phone.ProjectService.IProjectService)(this)).BeginGetUserStories(maxResultCount, iterationId, callback, asyncState);
+            int startingFromIndex = ((int)(inValues[0]));
+            int takeCount = ((int)(inValues[1]));
+            System.Guid iterationId = ((System.Guid)(inValues[2]));
+            return ((TecX.Agile.Phone.ProjectService.IProjectService)(this)).BeginGetUserStories(startingFromIndex, takeCount, iterationId, callback, asyncState);
         }
         
         private object[] OnEndGetUserStories(System.IAsyncResult result) {
@@ -349,11 +609,11 @@ namespace TecX.Agile.Phone.ProjectService {
             }
         }
         
-        public void GetUserStoriesAsync(int maxResultCount, int iterationId) {
-            this.GetUserStoriesAsync(maxResultCount, iterationId, null);
+        public void GetUserStoriesAsync(int startingFromIndex, int takeCount, System.Guid iterationId) {
+            this.GetUserStoriesAsync(startingFromIndex, takeCount, iterationId, null);
         }
         
-        public void GetUserStoriesAsync(int maxResultCount, int iterationId, object userState) {
+        public void GetUserStoriesAsync(int startingFromIndex, int takeCount, System.Guid iterationId, object userState) {
             if ((this.onBeginGetUserStoriesDelegate == null)) {
                 this.onBeginGetUserStoriesDelegate = new BeginOperationDelegate(this.OnBeginGetUserStories);
             }
@@ -364,7 +624,8 @@ namespace TecX.Agile.Phone.ProjectService {
                 this.onGetUserStoriesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetUserStoriesCompleted);
             }
             base.InvokeAsync(this.onBeginGetUserStoriesDelegate, new object[] {
-                        maxResultCount,
+                        startingFromIndex,
+                        takeCount,
                         iterationId}, this.onEndGetUserStoriesDelegate, this.onGetUserStoriesCompletedDelegate, userState);
         }
         
@@ -444,9 +705,10 @@ namespace TecX.Agile.Phone.ProjectService {
                     base(client) {
             }
             
-            public System.IAsyncResult BeginGetProjects(int maxResultCount, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = maxResultCount;
+            public System.IAsyncResult BeginGetProjects(int startingFromIndex, int takeCount, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = startingFromIndex;
+                _args[1] = takeCount;
                 System.IAsyncResult _result = base.BeginInvoke("GetProjects", _args, callback, asyncState);
                 return _result;
             }
@@ -457,10 +719,11 @@ namespace TecX.Agile.Phone.ProjectService {
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetIterations(int maxResultCount, int projectId, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
-                _args[0] = maxResultCount;
-                _args[1] = projectId;
+            public System.IAsyncResult BeginGetIterations(int startingFromIndex, int takeCount, System.Guid projectId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = startingFromIndex;
+                _args[1] = takeCount;
+                _args[2] = projectId;
                 System.IAsyncResult _result = base.BeginInvoke("GetIterations", _args, callback, asyncState);
                 return _result;
             }
@@ -471,10 +734,11 @@ namespace TecX.Agile.Phone.ProjectService {
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetUserStories(int maxResultCount, int iterationId, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
-                _args[0] = maxResultCount;
-                _args[1] = iterationId;
+            public System.IAsyncResult BeginGetUserStories(int startingFromIndex, int takeCount, System.Guid iterationId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = startingFromIndex;
+                _args[1] = takeCount;
+                _args[2] = iterationId;
                 System.IAsyncResult _result = base.BeginInvoke("GetUserStories", _args, callback, asyncState);
                 return _result;
             }

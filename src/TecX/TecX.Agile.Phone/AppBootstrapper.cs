@@ -8,6 +8,7 @@
 
     using Microsoft.Phone.Controls;
 
+    using TecX.Agile.Phone.Data;
     using TecX.Agile.Phone.ViewModels;
     using TecX.CaliburnEx;
 
@@ -23,6 +24,7 @@
             this.container.PerRequest<MainPageViewModel>();
             this.container.PerRequest<PivotPageViewModel>();
             this.container.PerRequest<TabViewModel>();
+            this.container.Handler<IProjectApplicationService>(sc => new DummyProjectApplicationService());
 
             AddCustomConventions();
 

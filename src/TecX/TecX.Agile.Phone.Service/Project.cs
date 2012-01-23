@@ -1,14 +1,15 @@
 namespace TecX.Agile.Phone.Service
 {
+    using System;
     using System.Runtime.Serialization;
 
     [DataContract]
-    public class IterationQueryResult
+    public class Project
     {
         [DataMember]
-        public int TotalResultCount { get; set; }
+        public string Name { get; set; }
 
         [DataMember]
-        public Iteration[] Iterations { get; set; }
+        public Guid Id { get; set; }
     }
 }
