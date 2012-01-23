@@ -49,13 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAsyncProjectService.cs" />
     <Compile Include="IProjectService.cs" />
+    <Compile Include="Iteration.cs" />
     <Compile Include="IterationQueryResult.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Project.cs" />
     <Compile Include="ProjectQueryResult.cs" />
     <Compile Include="ProjectService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoryCard.cs" />
     <Compile Include="StoryQueryResult.cs" />
   </ItemGroup>
   <ItemGroup>
