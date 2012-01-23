@@ -141,3 +141,5 @@ src/TecX/TecX.Agile.Phone/obj
 src/TecX/TecX.Agile.Phone/Bin
 src/TecX/TecX.Agile.Phone.Service/obj
 src/TecX/TecX.Agile.Phone.Service/bin
+src/TecX/TecX.Agile.Phone.Test/Bin
+src/TecX/TecX.Agile.Phone.Test/obj

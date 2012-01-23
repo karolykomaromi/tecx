@@ -22,7 +22,7 @@
         private readonly IProjectApplicationService projectService;
 
         private readonly BindableCollection<Project> projects;
-        
+
         public MainPageViewModel(INavigationService navigationService, IProjectApplicationService projectService)
         {
             Guard.AssertNotNull(navigationService, "navigationService");
@@ -43,9 +43,20 @@
 
         public void GotoPageTwo()
         {
-            this.navigationService.UriFor<PivotPageViewModel>()
-                .WithParam(x => x.NumberOfTabs, 5)
-                .Navigate();
+            //this.navigationService.UriFor<PivotPageViewModel>()
+            //    .WithParam(x => x.NumberOfTabs, 5)
+            //    .Navigate();
+
+            this.projectService.GetProjectsAsync(
+                this.Projects.Count,
+                Constants.LoadBatchSize,
+                result =>
+                {
+                    Guard.AssertNotNull(result, "result");
+                    Guard.AssertNotNull(result.Projects, "result.Projects");
+
+                    this.Projects.AddRange(result.Projects);
+                });
         }
 
         public void LoadMoreProjects(ScrollChangedParameter parameter)
@@ -64,13 +75,35 @@
             //        },
             //    this.projectService);
 
-            this.projectService.GetProjectsAsync(this.Projects.Count, Constants.LoadBatchSize, result =>
-                {
-                    Guard.AssertNotNull(result, "result");
-                    Guard.AssertNotNull(result.Projects, "result.Projects");
+            if (this.Projects.Count == 0)
+            {
+                return;
+            }
 
-                    this.Projects.AddRange(result.Projects);
-                });
+            //double totalHeight = parameter.ExtentHeight;
+            //double heightPerItem = totalHeight / this.Projects.Count;
+
+            //double remainingHeight = totalHeight - (parameter.VerticalOffset + parameter.ViewportHeight);
+
+            //double remainingItems = remainingHeight / heightPerItem;
+
+            //if (remainingItems < (Constants.LoadBatchSize / 2))
+            //{
+
+            if((parameter.VerticalOffset + parameter.ViewportHeight) >= parameter.ExtentHeight)
+            {
+                this.projectService.GetProjectsAsync(
+                    this.Projects.Count,
+                    Constants.LoadBatchSize,
+                    result =>
+                    {
+                        Guard.AssertNotNull(result, "result");
+                        Guard.AssertNotNull(result.Projects, "result.Projects");
+
+                        //TODO weberse 2012-01-23 the listbox seems to loose the binding if I add items here.
+                        this.Projects.AddRange(result.Projects);
+                    });
+            }
         }
     }
 }
