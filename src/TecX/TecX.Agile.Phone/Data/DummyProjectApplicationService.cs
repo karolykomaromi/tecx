@@ -38,11 +38,15 @@
         public void GetIterationsAsync(int startingFromIndex, int takeCount, Guid projectId, Action<IterationQueryResult> callback)
         {
             Guard.AssertNotNull(callback, "callback");
+
+            callback(new IterationQueryResult());
         }
 
         public void GetUserStoriesAsync(int startingFromIndex, int takeCount, Guid iterationId, Action<StoryQueryResult> callback)
         {
             Guard.AssertNotNull(callback, "callback");
+
+            callback(new StoryQueryResult());
         }
     }
 }
