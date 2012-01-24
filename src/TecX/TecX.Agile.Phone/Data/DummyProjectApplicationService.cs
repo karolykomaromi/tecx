@@ -3,6 +3,7 @@
     using System;
     using System.Collections.ObjectModel;
     using System.Globalization;
+    using System.Windows;
 
     using TecX.Agile.Phone.ProjectService;
 
@@ -10,6 +11,16 @@
     {
         public void GetProjectsAsync(int startingFromIndex, int takeCount, Action<ProjectQueryResult> callback)
         {
+            if(startingFromIndex == takeCount * 10)
+            {
+                Deployment.Current.Dispatcher.BeginInvoke(
+                    () => callback(new ProjectQueryResult
+                                    {
+                                        TotalResultCount = 250, 
+                                        Projects = new ObservableCollection<Project>()
+                                    }));
+            }
+
             Guard.AssertNotNull(callback, "callback");
 
             var projects = new ObservableCollection<Project>();
@@ -32,7 +43,7 @@
                 projects.Add(prj);
             }
 
-            callback(result);
+            Deployment.Current.Dispatcher.BeginInvoke(() => callback(result));
         }
 
         public void GetIterationsAsync(int startingFromIndex, int takeCount, Guid projectId, Action<IterationQueryResult> callback)

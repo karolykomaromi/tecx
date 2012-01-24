@@ -8,7 +8,8 @@
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-                            xmlns:Triggers="clr-namespace:TecX.Agile.Phone.Triggers" d:DesignHeight="696" 
+                            xmlns:Triggers="clr-namespace:TecX.Agile.Phone.Triggers"
+                            xmlns:Views="clr-namespace:TecX.Agile.Phone.Views" d:DesignHeight="696" 
                             d:DesignWidth="480"
                             SupportedOrientations="Portrait"
                             Orientation="Portrait"
@@ -36,7 +37,8 @@
 			        Content="Goto Page Two" />
             <ListBox Grid.Row="1" 
                      x:Name="Projects" 
-                     ItemsSource="{Binding Projects}">
+                     ItemsSource="{Binding Projects}"
+                     VirtualizingStackPanel.VirtualizationMode="Recycling">
                 <i:Interaction.Triggers>
                     <Triggers:ScrollingTrigger>
                         <cal:ActionMessage MethodName="LoadMoreProjects">
@@ -44,6 +46,11 @@
                         </cal:ActionMessage>
                     </Triggers:ScrollingTrigger>
                 </i:Interaction.Triggers>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Views:ProjectView />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
     </Grid>
