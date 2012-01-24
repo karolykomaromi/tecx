@@ -10,9 +10,19 @@ namespace TecX.Agile.Phone.Triggers
 
     public class ScrollingTrigger : EventTriggerBase<ListBox>
     {
+        /// <summary>
+        /// ScrollChanged
+        /// </summary>
+        private const string ScrollChangedEventName = "ScrollChanged";
+
+        /// <summary>
+        /// VerticalOffset
+        /// </summary>
+        private const string VerticalOffsetPropertyName = "VerticalOffset";
+
         protected override string GetEventName()
         {
-            return "ScrollChanged";
+            return ScrollChangedEventName;
         }
 
         protected override void OnAttached()
@@ -38,10 +48,6 @@ namespace TecX.Agile.Phone.Triggers
 
             listener.Changed += (sender1, e1) =>
                 {
-                    //bool atBottom = scrollViewer.VerticalOffset >= scrollViewer.ScrollableHeight;
-
-                    //if (atBottom)
-                    //{
                     var scea = new ScrollChangedEventArgs
                         {
                             ExtentHeight = scrollViewer.ExtentHeight,
@@ -53,10 +59,9 @@ namespace TecX.Agile.Phone.Triggers
                         };
 
                     this.OnEvent(scea);
-                    //}
                 };
 
-            Binding binding = new Binding("VerticalOffset") { Source = scrollViewer };
+            Binding binding = new Binding(VerticalOffsetPropertyName) { Source = scrollViewer };
             listener.Attach(scrollViewer, binding);
         }
 

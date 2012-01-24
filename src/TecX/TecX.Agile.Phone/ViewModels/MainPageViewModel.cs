@@ -1,9 +1,5 @@
 ﻿namespace TecX.Agile.Phone.ViewModels
 {
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Windows;
-
     using Caliburn.Micro;
 
     using TecX.Agile.Phone.Data;
@@ -30,7 +26,7 @@
 
             this.navigationService = navigationService;
             this.projectService = projectService;
-            this.projects = new BindableCollection<Project>();
+            this.projects = new BindableCollection<Project> { IsNotifying = true };
         }
 
         public IObservableCollection<Project> Projects
@@ -47,6 +43,27 @@
             //    .WithParam(x => x.NumberOfTabs, 5)
             //    .Navigate();
 
+            this.GetNextProjects();
+        }
+
+        public void LoadMoreProjects(ScrollChangedParameter parameter)
+        {
+            //TODO weberse 2012-01-23 check how far down the list we are and only load if we are close to the end
+            if (this.Projects.Count == 0)
+            {
+                return;
+            }
+
+            double scrollableHeight = parameter.ExtentHeight - parameter.ViewportHeight;
+
+            if (parameter.VerticalOffset >= scrollableHeight)
+            {
+                this.GetNextProjects();
+            }
+        }
+
+        private void GetNextProjects()
+        {
             this.projectService.GetProjectsAsync(
                 this.Projects.Count,
                 Constants.LoadBatchSize,
@@ -55,55 +72,8 @@
                     Guard.AssertNotNull(result, "result");
                     Guard.AssertNotNull(result.Projects, "result.Projects");
 
-                    this.Projects.AddRange(result.Projects);
+                    result.Projects.ForEach(p => this.Projects.Add(p));
                 });
-        }
-
-        public void LoadMoreProjects(ScrollChangedParameter parameter)
-        {
-            //TODO weberse 2012-01-23 check how far down the list we are and only load if we are close to the end
-
-            //Application.Current.ApplicationLifetimeObjects.OfType<IProjectApplicationService>().Single() ...
-
-            //var x = this.projectService.BeginGetProjects(
-            //    100,
-            //    asyncResult =>
-            //        {
-            //            var svc = (IAsyncProjectService)asyncResult.AsyncState;
-            //            var projectQueryResult = svc.EndGetProjects(asyncResult);
-            //            Debug.WriteLine("call successfull");
-            //        },
-            //    this.projectService);
-
-            if (this.Projects.Count == 0)
-            {
-                return;
-            }
-
-            //double totalHeight = parameter.ExtentHeight;
-            //double heightPerItem = totalHeight / this.Projects.Count;
-
-            //double remainingHeight = totalHeight - (parameter.VerticalOffset + parameter.ViewportHeight);
-
-            //double remainingItems = remainingHeight / heightPerItem;
-
-            //if (remainingItems < (Constants.LoadBatchSize / 2))
-            //{
-
-            if((parameter.VerticalOffset + parameter.ViewportHeight) >= parameter.ExtentHeight)
-            {
-                this.projectService.GetProjectsAsync(
-                    this.Projects.Count,
-                    Constants.LoadBatchSize,
-                    result =>
-                    {
-                        Guard.AssertNotNull(result, "result");
-                        Guard.AssertNotNull(result.Projects, "result.Projects");
-
-                        //TODO weberse 2012-01-23 the listbox seems to loose the binding if I add items here.
-                        this.Projects.AddRange(result.Projects);
-                    });
-            }
         }
     }
 }

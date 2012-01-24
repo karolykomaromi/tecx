@@ -54,7 +54,7 @@
       <HintPath>..\packages\Moq.4.0.10827\lib\Silverlight4\Moq.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="NUnit.Silverlight.Framework">
-      <HintPath>..\..\..\lib\NUnit.Silverlight\NUnit.Silverlight.Bin v 2010.11.01\NUnit.Silverlight.Bin\Silverlight3-NUnit2.5.8-Apr2010\NUnit.Silverlight.Framework.dll</HintPath>
+      <HintPath>..\..\..\lib\NUnit.Silverlight\Silverlight3-NUnit2.5.8-Apr2010\NUnit.Silverlight.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
