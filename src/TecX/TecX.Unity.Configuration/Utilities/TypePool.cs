@@ -1,4 +1,4 @@
-﻿namespace TecX.Unity.Configuration.Common
+namespace TecX.Unity.Configuration.Utilities
 {
     using System;
     using System.Collections.Generic;

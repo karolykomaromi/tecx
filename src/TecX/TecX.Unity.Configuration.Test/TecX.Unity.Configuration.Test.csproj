@@ -67,11 +67,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Given_ContainerAndBuilder.cs" />
+    <Compile Include="TestObjects\Bar.cs" />
     <Compile Include="TestObjects\DummyExtension.cs" />
+    <Compile Include="TestObjects\Foo.cs" />
     <Compile Include="TestObjects\Handler1.cs" />
     <Compile Include="TestObjects\Handler2.cs" />
     <Compile Include="TestObjects\Handler3.cs" />
+    <Compile Include="TestObjects\IFoo.cs" />
     <Compile Include="TestObjects\IMessageHandler.cs" />
+    <Compile Include="TestObjects\IMyService.cs" />
+    <Compile Include="TestObjects\MyService.cs" />
+    <Compile Include="TestObjects\TypeExtClass.cs" />
+    <Compile Include="TypeExtensionFixture.cs" />
     <Compile Include="When_ApplyingFindAllImplementationsOfOpenGenericInterfaceConvention.cs" />
     <Compile Include="When_ApplyingFindAllImplementationsConvention.cs" />
     <Compile Include="When_ApplyingFindAllImplementationsConventionWithSpecificNaming.cs" />
@@ -98,7 +105,7 @@
     <Compile Include="When_ApplyingImplementsIInterfaceNameConvention.cs" />
     <Compile Include="When_ApplyingSingleImplementationOfInterfaceConvention.cs" />
     <Compile Include="When_RegisteringMappingForOpenGenericType.cs" />
-    <Compile Include="When_SpecifyingDependsOn.cs" />
+    <Compile Include="When_SpecifyingOverrides.cs" />
     <Compile Include="When_UsingLifetimeForFamily.cs" />
   </ItemGroup>
   <ItemGroup>

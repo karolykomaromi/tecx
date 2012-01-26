@@ -9,8 +9,8 @@
 
     using TecX.Common;
     using TecX.Common.Extensions.Collections;
-    using TecX.Unity.Configuration.Common;
     using TecX.Unity.Configuration.Extensions;
+    using TecX.Unity.Configuration.Utilities;
 
     public class AssemblyScanner
     {

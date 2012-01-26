@@ -5,8 +5,8 @@
     using System.Linq;
 
     using TecX.Common;
-    using TecX.Unity.Configuration.Common;
     using TecX.Unity.Configuration.Extensions;
+    using TecX.Unity.Configuration.Utilities;
 
     public class SingleImplementationOfInterfaceConvention : IRegistrationConvention
     {
