@@ -8,8 +8,8 @@
 
     using TecX.Common;
     using TecX.Common.Extensions.Collections;
-    using TecX.Unity.Configuration.Common;
     using TecX.Unity.Configuration.Conventions;
+    using TecX.Unity.Configuration.Utilities;
 
     public class Configuration : IConfigAction
     {
