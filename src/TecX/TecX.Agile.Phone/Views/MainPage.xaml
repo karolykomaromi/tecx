@@ -45,6 +45,9 @@
                             <cal:Parameter Value="$eventArgs"/>
                         </cal:ActionMessage>
                     </Triggers:ScrollingTrigger>
+                    <Triggers:ScrollingStateChangedTrigger>
+                        
+                    </Triggers:ScrollingStateChangedTrigger>
                 </i:Interaction.Triggers>
                 <ListBox.ItemTemplate>
                     <DataTemplate>

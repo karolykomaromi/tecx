@@ -113,6 +113,34 @@
             return this;
         }
 
+        public TypeRegistrationExpression Property(string propertyName)
+        {
+            Guard.AssertNotEmpty(propertyName, "propertyName");
+
+            this.enrichments.Add(new InjectionProperty(propertyName));
+
+            return this;
+        }
+
+        public TypeRegistrationExpression Property(string propertyName, object value)
+        {
+            Guard.AssertNotEmpty(propertyName, "propertyName");
+            Guard.AssertNotNull(value, "value");
+
+            this.enrichments.Add(new InjectionProperty(propertyName, value));
+
+            return this;
+        }
+
+        public TypeRegistrationExpression Method(string methodName, params object[] args)
+        {
+            Guard.AssertNotEmpty(methodName, "methodName");
+
+            this.enrichments.Add(new InjectionMethod(methodName, args));
+
+            return this;
+        }
+
         public override Registration Compile()
         {
             return new TypeRegistration(this.From, this.To, null, this.Lifetime, this.Enrichments);

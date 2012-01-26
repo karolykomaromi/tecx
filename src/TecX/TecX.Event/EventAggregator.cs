@@ -106,8 +106,8 @@
 #if SILVERLIGHT
                         this.dispatcher.BeginInvoke(new Action(() => subscriber.Handle(message)));
 #else
-                                    this.dispatcher.Invoke(
-                                        DispatcherPriority.Normal, new Action(() => subscriber.Handle(message)));
+                                    this.dispatcher.Invoke(DispatcherPriority.Normal, 
+                                        new Action(() => subscriber.Handle(message)));
 #endif
                                 }
                                 else

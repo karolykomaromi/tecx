@@ -9,11 +9,20 @@
 
     public class DummyProjectApplicationService : IProjectApplicationService
     {
+        private readonly IDispatcher dispatcher;
+
+        public DummyProjectApplicationService(IDispatcher dispatcher)
+        {
+            Guard.AssertNotNull(dispatcher, "dispatcher");
+
+            this.dispatcher = dispatcher;
+        }
+
         public void GetProjectsAsync(int startingFromIndex, int takeCount, Action<ProjectQueryResult> callback)
         {
             if(startingFromIndex == takeCount * 10)
             {
-                Deployment.Current.Dispatcher.BeginInvoke(
+                this.dispatcher.BeginInvoke(
                     () => callback(new ProjectQueryResult
                                     {
                                         TotalResultCount = 250, 
@@ -43,7 +52,7 @@
                 projects.Add(prj);
             }
 
-            Deployment.Current.Dispatcher.BeginInvoke(() => callback(result));
+            this.dispatcher.BeginInvoke(() => callback(result));
         }
 
         public void GetIterationsAsync(int startingFromIndex, int takeCount, Guid projectId, Action<IterationQueryResult> callback)
