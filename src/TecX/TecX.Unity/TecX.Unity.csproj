@@ -91,7 +91,7 @@
     <Compile Include="Injection\ConstructorArgument.cs" />
     <Compile Include="Injection\ConstructorArgumentCollection.cs" />
     <Compile Include="Injection\ParameterMatcher.cs" />
-    <Compile Include="Injection\ClozeInjectionConstructur.cs" />
+    <Compile Include="Injection\ClozeInjectionConstructor.cs" />
     <Compile Include="Lifetime\CacheLifetimeManager.cs" />
     <Compile Include="Lifetime\CacheLifetimeStrategy.cs" />
     <Compile Include="Lifetime\CacheLifetimeStrategyExtension.cs" />

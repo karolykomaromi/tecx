@@ -28,7 +28,7 @@ namespace TecX.Unity.Test
             container.RegisterType<ILogger, TestLogger>();
 
             container.RegisterType<ICtorTest, CtorTest>(
-                new ClozeInjectionConstructur("connectionString", Constants.ConnectionStringValue));
+                new ClozeInjectionConstructor("connectionString", Constants.ConnectionStringValue));
 
             ICtorTest sut = container.Resolve<ICtorTest>();
             Assert.IsNotNull(sut);
@@ -42,7 +42,7 @@ namespace TecX.Unity.Test
             container.RegisterType<ILogger, TestLogger>();
 
             container.RegisterType<ICtorTest, CtorTest>(
-                new ClozeInjectionConstructur(new ConstructorArgumentCollection
+                new ClozeInjectionConstructor(new ConstructorArgumentCollection
                                                   {
                                                       new ConstructorArgument("connectionString", Constants.ConnectionStringValue),
                                                       new ConstructorArgument("anotherParam", "I'm a string")
