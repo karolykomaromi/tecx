@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
 
@@ -10,8 +9,8 @@
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
+    using TecX.Unity.Configuration.Utilities;
     using TecX.Unity.Enrichment;
-    using TecX.Unity.Injection;
 
     public class TypeRegistrationExpression : RegistrationExpression<TypeRegistrationExpression>
     {
@@ -143,35 +142,13 @@
             return this;
         }
 
-        public TypeRegistrationExpression DependsOn(object anonymous)
+        public TypeRegistrationExpression Override(object anonymous)
         {
             Guard.AssertNotNull(anonymous, "anonymous");
 
-            var properties = anonymous.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var overrides = new AnonymousTypeOverrideSpec(anonymous, this.To);
 
-            var arguments = new ConstructorArgumentCollection();
-
-            foreach (var property in properties)
-            {
-                if (property.PropertyType == typeof(string))
-                {
-                    var ctors = this.To.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-
-                    var ctor = ctors.FirstOrDefault(c => c.GetParameters().Any(p => p.Name == property.Name));
-
-                    if (ctor != null)
-                    {
-                        var parameter = ctor.GetParameters().Single(p => p.Name == property.Name);
-
-                        var argument = new ConstructorArgument(
-                            property.Name, new ResolvedParameter(parameter.ParameterType, (string)property.GetValue(anonymous, null)));
-
-                        arguments.Add(argument);
-                    }
-                }
-            }
-
-            this.enrichments.Add(new ClozeInjectionConstructor(arguments));
+            this.enrichments.Add(overrides);
 
             return this;
         }

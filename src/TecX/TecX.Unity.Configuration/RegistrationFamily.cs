@@ -7,7 +7,7 @@
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
-    using TecX.Unity.Configuration.Common;
+    using TecX.Unity.Configuration.Utilities;
 
     public class RegistrationFamily : IEnumerable<Registration>, IConfigAction
     {
