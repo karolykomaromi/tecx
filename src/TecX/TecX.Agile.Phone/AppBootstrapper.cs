@@ -24,7 +24,8 @@
             this.container.PerRequest<MainPageViewModel>();
             this.container.PerRequest<PivotPageViewModel>();
             this.container.PerRequest<TabViewModel>();
-            this.container.Handler<IProjectApplicationService>(sc => new DummyProjectApplicationService());
+            this.container.Handler<IDispatcher>(sc => new DefaultDispatcher());
+            this.container.Handler<IProjectApplicationService>(sc => new DummyProjectApplicationService(new DefaultDispatcher()));
 
             AddCustomConventions();
 
