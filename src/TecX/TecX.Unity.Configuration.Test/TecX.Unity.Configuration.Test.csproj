@@ -98,6 +98,7 @@
     <Compile Include="When_ApplyingImplementsIInterfaceNameConvention.cs" />
     <Compile Include="When_ApplyingSingleImplementationOfInterfaceConvention.cs" />
     <Compile Include="When_RegisteringMappingForOpenGenericType.cs" />
+    <Compile Include="When_SpecifyingDependsOn.cs" />
     <Compile Include="When_UsingLifetimeForFamily.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +113,10 @@
     <ProjectReference Include="..\TecX.Unity.Configuration\TecX.Unity.Configuration.csproj">
       <Project>{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}</Project>
       <Name>TecX.Unity.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Unity.Test\TecX.Unity.Test.csproj">
+      <Project>{943AD349-5431-4B9F-9DF4-A6DF5390B484}</Project>
+      <Name>TecX.Unity.Test</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

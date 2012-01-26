@@ -11,11 +11,11 @@
 
     using TecX.Common;
 
-    public class ClozeInjectionConstructur : InjectionMember
+    public class ClozeInjectionConstructor : InjectionMember
     {
         private readonly ConstructorArgumentCollection constructorArguments;
 
-        public ClozeInjectionConstructur(string argumentName, object value)
+        public ClozeInjectionConstructor(string argumentName, object value)
             : this()
         {
             Guard.AssertNotEmpty(argumentName, "argumentName");
@@ -23,7 +23,7 @@
             this.constructorArguments.Add(new ConstructorArgument(argumentName, value));
         }
 
-        public ClozeInjectionConstructur(IEnumerable<ConstructorArgument> ctorArguments)
+        public ClozeInjectionConstructor(IEnumerable<ConstructorArgument> ctorArguments)
             : this()
         {
             Guard.AssertNotNull(ctorArguments, "ctorArguments");
@@ -34,7 +34,7 @@
             }
         }
 
-        private ClozeInjectionConstructur()
+        private ClozeInjectionConstructor()
         {
             this.constructorArguments = new ConstructorArgumentCollection();
         }

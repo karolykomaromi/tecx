@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Reflection;
 
+    using Microsoft.Practices.Unity;
+
     using TecX.Common;
 
     public class ParameterMatcher
@@ -15,8 +17,8 @@
 
         public ParameterMatcher(IEnumerable<ConstructorArgument> ctorArgs)
         {
-            Guard.AssertNotNull(ctorArgs, "ctorArgs"); 
-            
+            Guard.AssertNotNull(ctorArgs, "ctorArgs");
+
             this.ctorArgs = new ConstructorArgumentCollection();
 
             this.filters = new CompositePredicate<ConstructorInfo>();
@@ -129,9 +131,14 @@
             foreach (ParameterInfo parameter in ctor.GetParameters())
             {
                 ConstructorArgument argument;
+
                 if (this.ctorArgs.TryGetArgumentByName(parameter.Name, out argument))
                 {
-                    if (parameter.ParameterType != argument.Value.GetType())
+                    var value = argument.Value as ResolvedParameter;
+
+                    Type valueType = value != null ? value.ParameterType : argument.Value.GetType();
+
+                    if (parameter.ParameterType != valueType)
                     {
                         return true;
                     }
