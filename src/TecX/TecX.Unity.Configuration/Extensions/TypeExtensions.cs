@@ -6,6 +6,7 @@
     using System.Reflection;
 
     using TecX.Common;
+    using TecX.Common.Extensions.Error;
 
     public static class TypeExtensions
     {
@@ -16,40 +17,59 @@
             return obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
         }
 
-        public static PropertyInfo[] OfString(this IEnumerable<PropertyInfo> properties)
+        public static IEnumerable<PropertyInfo> OfString(this IEnumerable<PropertyInfo> properties)
         {
             Guard.AssertNotNull(properties, "properties");
 
-            return properties.Where(p => p.PropertyType == typeof(string)).ToArray();
+            return properties.Where(p => p.PropertyType == typeof(string));
         }
 
-        public static ConstructorInfo[] PublicCtors(this Type type)
+        public static IEnumerable<PropertyInfo> NotOfString(this IEnumerable<PropertyInfo> properties)
+        {
+            Guard.AssertNotNull(properties, "properties");
+
+            return properties.Where(p => p.PropertyType != typeof(string));
+        }
+
+        public static ConstructorInfo MostGreedyPublicCtor(this Type type)
         {
             Guard.AssertNotNull(type, " type");
 
-            return type.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-        }
+            var ctors =
+                type.GetConstructors(BindingFlags.Public | BindingFlags.Instance).OrderByDescending(
+                    c => c.GetParameters().Length).ToArray();
 
-        public static IEnumerable<ConstructorInfo> WithParameterNamed(this IEnumerable<ConstructorInfo> ctors, string parameterName)
-        {
-            Guard.AssertNotNull(ctors, "ctors");
-            Guard.AssertNotEmpty(parameterName, "parameterName");
-
-            foreach (var ctor in ctors)
+            if (ctors.Length == 0)
             {
-                if (ctor.GetParameters().Any(p => p.Name == parameterName))
-                {
-                    yield return ctor;
-                }
+                throw new ArgumentException("No public constructor found.", "type").WithAdditionalInfo("type", type);
             }
+
+            if (ctors.Length == 1)
+            {
+                return ctors[0];
+            }
+
+            if (ctors[0].GetParameters().Length == ctors[1].GetParameters().Length)
+            {
+                throw new ArgumentException("Multiple constructors with same number of parameters. Cannot disambiguate.");
+            }
+
+            return ctors[0];
         }
 
-        public static ParameterInfo GetParameter(this ConstructorInfo ctor, string name)
+        public static ParameterInfo FindParameterNamed(this ConstructorInfo ctor, string parameterName)
         {
             Guard.AssertNotNull(ctor, "ctor");
-            Guard.AssertNotEmpty(name, "name");
+            Guard.AssertNotEmpty(parameterName, "parameterName");
 
-            return ctor.GetParameters().FirstOrDefault(p => p.Name == name);
+            var parameter = ctor.GetParameters().SingleOrDefault(p => p.Name == parameterName);
+
+            if (parameter != null)
+            {
+                return parameter;
+            }
+
+            throw new ArgumentException("No parameter with given name could be found.", "parameterName");
         }
     }
 }

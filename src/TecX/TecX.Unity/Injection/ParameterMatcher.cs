@@ -138,7 +138,7 @@
 
                     Type valueType = value != null ? value.ParameterType : argument.Value.GetType();
 
-                    if (parameter.ParameterType != valueType)
+                    if (!parameter.ParameterType.IsAssignableFrom(valueType))
                     {
                         return true;
                     }
