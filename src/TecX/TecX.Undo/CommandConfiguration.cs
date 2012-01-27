@@ -8,7 +8,7 @@ namespace TecX.Undo
     public class CommandConfiguration<TCommand> : CommandConfiguration
         where TCommand : Command
     {
-        private readonly Dispatcher dispatcher;
+        private Action<Action> executor;
 
         private TCommand command;
 
@@ -18,15 +18,16 @@ namespace TecX.Undo
 
         private Action<TCommand, Exception> handleFailure;
 
-        private bool callbackToUI;
-
         private Action<ProgressInfo> handleProgress;
 
         public CommandConfiguration()
         {
             this.handleSuccess = cmd => { };
             this.handleFailure = (cmd, ex) => { };
+            this.handleProgress = progressInfo => { };
             this.commandFactory = () => (TCommand)Activator.CreateInstance(typeof(TCommand));
+
+            this.executor = action => action();
         }
 
         public TCommand Command
@@ -46,41 +47,15 @@ namespace TecX.Undo
         {
             try
             {
-                if (this.callbackToUI)
-                {
-                    this.command.Progress = info => this.dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => this.handleProgress(info)));
-                }
-                else
-                {
-                    this.command.Progress = this.handleProgress;
-                }
+                this.executor(() => this.handleProgress(new ProgressInfo()));
 
-                this.Command.Progress = this.handleProgress;
                 this.Command.Execute();
 
-                if (this.callbackToUI)
-                {
-                    this.dispatcher.Invoke(
-                        DispatcherPriority.Normal,
-                        new Action(() => this.handleSuccess(this.Command)));
-                }
-                else
-                {
-                    this.handleSuccess(this.Command);
-                }
+                this.executor(() => this.handleSuccess(this.Command));
             }
             catch (Exception ex)
             {
-                if (this.callbackToUI)
-                {
-                    this.dispatcher.Invoke(
-                        DispatcherPriority.Normal,
-                        new Action(() => this.handleFailure(this.Command, ex)));
-                }
-                else
-                {
-                    this.handleFailure(this.Command, ex);
-                }
+                this.executor(() => this.handleFailure(this.Command, ex));
             }
         }
 
@@ -93,7 +68,19 @@ namespace TecX.Undo
 
         public void CallbackToUI()
         {
-            this.callbackToUI = true;
+            Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+            this.executor = delegate(Action action)
+            {
+                if (dispatcher.CheckAccess())
+                {
+                    action();
+                }
+                else
+                {
+                    dispatcher.Invoke(action, new object[0]);
+                }
+            };
         }
 
         public void OnSuccess(Action<TCommand> handleSuccess)
@@ -124,29 +111,11 @@ namespace TecX.Undo
                 //TODO weberse 2012-01-03 should progress of undo also be reported?
                 this.Command.Unexecute();
 
-                if (this.callbackToUI)
-                {
-                    this.dispatcher.Invoke(
-                        DispatcherPriority.Normal,
-                        new Action(() => this.handleSuccess(this.Command)));
-                }
-                else
-                {
-                    this.handleSuccess(this.Command);
-                }
+                this.executor(() => this.handleSuccess(this.Command));
             }
             catch (Exception ex)
             {
-                if (this.callbackToUI)
-                {
-                    this.dispatcher.Invoke(
-                        DispatcherPriority.Normal,
-                        new Action(() => this.handleFailure(this.Command, ex)));
-                }
-                else
-                {
-                    this.handleFailure(this.Command, ex);
-                }
+                this.executor(() => this.handleFailure(this.Command, ex));
             }
         }
     }
