@@ -7,7 +7,7 @@
     using TecX.Unity.Configuration.Test.TestObjects;
 
     [TestClass]
-    public class When_SpecifyingOverrides : Given_ContainerAndBuilder
+    public class When_OverridingInterfaceTypeDependency : Given_ContainerAndBuilder
     {
         private MyService service;
 
@@ -29,7 +29,7 @@
         }
 
         [TestMethod]
-        public void Then_OverridesSpecifiedParameter()
+        public void Then_ResolvesSpecifiedNamedMapping()
         {
             Assert.IsNotNull(this.service);
             Assert.IsInstanceOfType(this.service.SomeInterface, typeof(MyClass));

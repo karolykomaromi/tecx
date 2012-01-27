@@ -23,20 +23,33 @@ namespace TecX.Unity.Configuration.Utilities
 
             foreach (var property in properties.OfString())
             {
-                var ctors = to.PublicCtors();
+                var ctor = to.MostGreedyPublicCtor();
 
-                var ctor = ctors.WithParameterNamed(property.Name).FirstOrDefault();
+                var parameter = ctor.FindParameterNamed(property.Name);
 
-                if (ctor != null)
+                ConstructorArgument argument;
+                string anonymousPropertyValue = (string)property.GetValue(anonymous, null);
+                if (parameter.ParameterType == typeof(string))
                 {
-                    var parameter = ctor.GetParameter(property.Name);
-
-                    var argument = new ConstructorArgument(
-                        property.Name, 
-                        new ResolvedParameter(parameter.ParameterType, (string)property.GetValue(anonymous, null)));
-
-                    this.arguments.Add(argument);
+                    argument = new ConstructorArgument(
+                        property.Name,
+                        anonymousPropertyValue);
                 }
+                else
+                {
+                    argument = new ConstructorArgument(
+                        property.Name,
+                        new ResolvedParameter(parameter.ParameterType, anonymousPropertyValue));
+                }
+
+                this.arguments.Add(argument);
+            }
+
+            foreach (var property in properties.NotOfString())
+            {
+                object value = property.GetValue(anonymous, null);
+                ConstructorArgument argument = new ConstructorArgument(property.Name, value);
+                this.arguments.Add(argument);
             }
 
             // TODO weberse 2012-01-26 add the values of all non-string properties as well

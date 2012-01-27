@@ -13,12 +13,5 @@
     [TestClass]
     public class TypeExtensionFixture
     {
-        [TestMethod]
-        public void QueryingForNonExistentParameterNameDoesNotReturnNull()
-        {
-            var ctors = typeof(TypeExtClass).PublicCtors().WithParameterNamed("anotherThing");
-
-            Assert.IsNotNull(ctors);
-        }
     }
 }
