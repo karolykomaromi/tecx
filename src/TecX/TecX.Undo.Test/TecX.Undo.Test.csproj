@@ -56,6 +56,7 @@
     <Compile Include="TestObjects\AlwaysThrows.cs" />
     <Compile Include="TestObjects\CountsUndoRedo.cs" />
     <Compile Include="TestObjects\LongRunningCommand.cs" />
+    <Compile Include="TestObjects\ReportsProgress.cs" />
     <Compile Include="TestObjects\SubmitMessage.cs" />
     <Compile Include="TestObjects\ThreadAwareCommand.cs" />
     <Compile Include="TestObjects\ThrowsOnRedo.cs" />
