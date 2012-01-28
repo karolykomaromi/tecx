@@ -14,16 +14,16 @@ namespace TecX.Undo
 
         private Func<TCommand> commandFactory;
 
-        private Action<TCommand> handleSuccess;
+        private Action<Success> handleSuccess;
 
-        private Action<TCommand, Exception> handleFailure;
+        private Action<Failure> handleFailure;
 
-        private Action<ProgressInfo> handleProgress;
+        private Action<Progress> handleProgress;
 
         public CommandConfiguration()
         {
             this.handleSuccess = cmd => { };
-            this.handleFailure = (cmd, ex) => { };
+            this.handleFailure = failureInfo => { };
             this.handleProgress = progressInfo => { };
             this.commandFactory = () => (TCommand)Activator.CreateInstance(typeof(TCommand));
 
@@ -47,15 +47,15 @@ namespace TecX.Undo
         {
             try
             {
-                this.executor(() => this.handleProgress(new ProgressInfo()));
+                this.Command.Progress = progress => this.executor(() => this.handleProgress(progress));
 
                 this.Command.Execute();
 
-                this.executor(() => this.handleSuccess(this.Command));
+                this.executor(() => this.handleSuccess(new Success(this.Command)));
             }
             catch (Exception ex)
             {
-                this.executor(() => this.handleFailure(this.Command, ex));
+                this.executor(() => this.handleFailure(new Failure(this.Command, ex)));
             }
         }
 
@@ -83,21 +83,21 @@ namespace TecX.Undo
             };
         }
 
-        public void OnSuccess(Action<TCommand> handleSuccess)
+        public void OnSuccess(Action<Success> handleSuccess)
         {
             Guard.AssertNotNull(handleSuccess, "handleSuccess");
 
             this.handleSuccess = handleSuccess;
         }
 
-        public void OnFailure(Action<TCommand, Exception> handleFailure)
+        public void OnFailure(Action<Failure> handleFailure)
         {
             Guard.AssertNotNull(handleFailure, "handleFailure");
 
             this.handleFailure = handleFailure;
         }
 
-        public void OnProgress(Action<ProgressInfo> handleProgress)
+        public void OnProgress(Action<Progress> handleProgress)
         {
             Guard.AssertNotNull(handleProgress, "handleProgress");
 
@@ -111,11 +111,11 @@ namespace TecX.Undo
                 //TODO weberse 2012-01-03 should progress of undo also be reported?
                 this.Command.Unexecute();
 
-                this.executor(() => this.handleSuccess(this.Command));
+                this.executor(() => this.handleSuccess(new Success(this.Command)));
             }
             catch (Exception ex)
             {
-                this.executor(() => this.handleFailure(this.Command, ex));
+                this.executor(() => this.handleFailure(new Failure(this.Command, ex)));
             }
         }
     }

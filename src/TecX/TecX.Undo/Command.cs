@@ -8,15 +8,15 @@ namespace TecX.Undo
     {
         private int executeCount;
 
-        private Action<ProgressInfo> progress;
+        private Action<Progress> progress;
 
         protected Command()
         {
             this.executeCount = 0;
-            this.Progress = info => { };
+            this.Progress = x => { };
         }
 
-        public Action<ProgressInfo> Progress
+        public Action<Progress> Progress
         {
             get
             {
@@ -61,9 +61,5 @@ namespace TecX.Undo
         protected abstract void ExecuteCore();
 
         protected abstract void UnexecuteCore();
-    }
-
-    public class ProgressInfo
-    {
     }
 }

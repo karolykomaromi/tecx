@@ -80,9 +80,9 @@
                 x =>
                 {
                     x.ConstructUsing(() => cmd);
-                    x.OnFailure((c, ex) =>
+                    x.OnFailure(info =>
                         {
-                            Assert.AreSame(cmd, c);
+                            Assert.AreSame(cmd, info.Command);
                             calledBack = true;
                         });
                 });
@@ -183,6 +183,19 @@
             Assert.AreEqual("1", cmd1.Message);
             Assert.AreEqual("1", cmd2.Message);
             Assert.AreEqual("1", cmd3.Message);
+        }
+
+        [TestMethod]
+        public void CanReportProgress()
+        {
+            var executor = new CommandExecutor();
+
+            bool reportedProgress = false;
+
+            executor.Execute<ReportsProgress>(
+                x => x.OnProgress(p => reportedProgress = true));
+
+            Assert.IsTrue(reportedProgress);
         }
 
         [TestMethod]

@@ -1,7 +1,6 @@
 namespace TecX.Unity.Configuration.Utilities
 {
     using System;
-    using System.Linq;
 
     using Microsoft.Practices.Unity;
 
@@ -51,8 +50,6 @@ namespace TecX.Unity.Configuration.Utilities
                 ConstructorArgument argument = new ConstructorArgument(property.Name, value);
                 this.arguments.Add(argument);
             }
-
-            // TODO weberse 2012-01-26 add the values of all non-string properties as well
         }
 
         public static implicit operator InjectionMember(AnonymousTypeOverrideSpec @override)
