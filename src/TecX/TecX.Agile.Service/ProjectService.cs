@@ -1,6 +1,8 @@
-namespace TecX.Agile.Phone.Service
+namespace TecX.Agile.Service
 {
     using System;
+
+    using TecX.Agile.Service.Results;
 
     public class ProjectService : IProjectService
     {

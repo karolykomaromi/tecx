@@ -1,10 +1,10 @@
-namespace TecX.Agile.Phone.Service
+namespace TecX.Agile.Service
 {
     using System;
     using System.Runtime.Serialization;
 
     [DataContract]
-    public class StoryCard
+    public class Iteration
     {
         [DataMember]
         public string Name { get; set; }
@@ -13,6 +13,6 @@ namespace TecX.Agile.Phone.Service
         public Guid Id { get; set; }
 
         [DataMember]
-        public Guid IterationId { get; set; }
+        public Guid ProjectId { get; set; }
     }
 }
