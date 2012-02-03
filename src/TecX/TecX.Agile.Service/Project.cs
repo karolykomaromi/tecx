@@ -1,4 +1,4 @@
-namespace TecX.Agile.Phone.Service
+namespace TecX.Agile.Service
 {
     using System;
     using System.Runtime.Serialization;
