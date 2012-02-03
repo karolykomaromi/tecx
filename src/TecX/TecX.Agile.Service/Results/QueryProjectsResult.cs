@@ -3,13 +3,13 @@ namespace TecX.Agile.Service.Results
     using System.Runtime.Serialization;
 
     [DataContract]
-    [KnownType(typeof(StoryCard))]
-    public class StoryQueryResult
+    [KnownType(typeof(Project))]
+    public class QueryProjectsResult
     {
         [DataMember]
         public int TotalResultCount { get; set; }
 
         [DataMember]
-        public StoryCard[] Stories { get; set; }
+        public Project[] Projects { get; set; }
     }
 }
