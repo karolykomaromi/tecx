@@ -63,12 +63,12 @@
     <Compile Include="Results\AddIterationResult.cs" />
     <Compile Include="Results\AddProjectResult.cs" />
     <Compile Include="Results\AddStoryResult.cs" />
-    <Compile Include="Results\IterationQueryResult.cs" />
-    <Compile Include="Results\ProjectQueryResult.cs" />
+    <Compile Include="Results\QueryIterationsResult.cs" />
+    <Compile Include="Results\QueryProjectsResult.cs" />
     <Compile Include="Results\RemoveIterationResult.cs" />
     <Compile Include="Results\RemoveProjectResult.cs" />
     <Compile Include="Results\RemoveStoryResult.cs" />
-    <Compile Include="Results\StoryQueryResult.cs" />
+    <Compile Include="Results\QueryStoriesResult.cs" />
     <Compile Include="StoryCard.cs" />
   </ItemGroup>
   <ItemGroup>

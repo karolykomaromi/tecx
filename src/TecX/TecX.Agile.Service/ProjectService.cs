@@ -6,19 +6,61 @@ namespace TecX.Agile.Service
 
     public class ProjectService : IProjectService
     {
-        public ProjectQueryResult GetProjects(int startingFromIndex, int takeCount)
+        public QueryProjectsResult GetProjects(int startingFromIndex, int takeCount)
         {
-            throw new System.NotImplementedException();
+            return new QueryProjectsResult
+                {
+                    Projects = new Project[0], 
+                    TotalResultCount = 0
+                };
         }
 
-        public IterationQueryResult GetIterations(int startingFromIndex, int takeCount, Guid projectId)
+        public QueryIterationsResult GetIterations(int startingFromIndex, int takeCount, Guid projectId)
         {
-            throw new System.NotImplementedException();
+            return new QueryIterationsResult
+                {
+                    Iterations = new Iteration[0], 
+                    TotalResultCount = 0
+                };
         }
 
-        public StoryQueryResult GetUserStories(int startingFromIndex, int takeCount, Guid iterationId)
+        public QueryStoriesResult GetUserStories(int startingFromIndex, int takeCount, Guid iterationId)
         {
-            throw new System.NotImplementedException();
+            return new QueryStoriesResult
+                {
+                    Stories = new StoryCard[0], 
+                    TotalResultCount = 0
+                };
+        }
+
+        public AddProjectResult AddProject(Project newProject)
+        {
+            return new AddProjectResult();
+        }
+
+        public AddIterationResult AddIteration(Iteration newIteration)
+        {
+            return new AddIterationResult();
+        }
+
+        public AddStoryResult AddStory(StoryCard newStory)
+        {
+            return new AddStoryResult();
+        }
+
+        public RemoveProjectResult RemoveProject(Guid projectId)
+        {
+            return new RemoveProjectResult();
+        }
+
+        public RemoveIterationResult RemoveIteration(Guid iterationId)
+        {
+            return new RemoveIterationResult();
+        }
+
+        public RemoveStoryResult RemoveStory(Guid storyId)
+        {
+            return new RemoveStoryResult();
         }
     }
 }

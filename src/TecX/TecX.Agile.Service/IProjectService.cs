@@ -9,13 +9,13 @@
     public interface IProjectService
     {
         [OperationContract]
-        ProjectQueryResult GetProjects(int startingFromIndex, int takeCount);
+        QueryProjectsResult GetProjects(int startingFromIndex, int takeCount);
 
         [OperationContract]
-        IterationQueryResult GetIterations(int startingFromIndex, int takeCount, Guid projectId);
+        QueryIterationsResult GetIterations(int startingFromIndex, int takeCount, Guid projectId);
 
         [OperationContract]
-        StoryQueryResult GetUserStories(int startingFromIndex, int takeCount, Guid iterationId);
+        QueryStoriesResult GetUserStories(int startingFromIndex, int takeCount, Guid iterationId);
 
         [OperationContract]
         AddProjectResult AddProject(Project newProject);
