@@ -61,7 +61,7 @@ namespace TecX.Unity.Test
                         new ConstructorArgument("connectionString", Constants.ConnectionStringValue)
                     });
 
-            Predicate<ConstructorInfo> filter = matcher.ConstructorTakesAllArguments;
+            Predicate<ConstructorInfo> filter = matcher.ConstructorDoesNotTakeAllArguments;
 
             IEnumerable<Predicate<ConstructorInfo>> filters = new[] {filter};
 
@@ -109,7 +109,7 @@ namespace TecX.Unity.Test
                         new ConstructorArgument("anotherParam", "I'm a string")
                     });
 
-            Predicate<ConstructorInfo> filter = matcher.ArgumentTypesMatch;
+            Predicate<ConstructorInfo> filter = matcher.ArgumentTypesMismatch;
 
             IEnumerable<Predicate<ConstructorInfo>> filters = new[] { filter };
 

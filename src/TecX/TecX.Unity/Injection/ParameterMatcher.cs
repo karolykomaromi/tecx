@@ -22,9 +22,9 @@
             this.ctorArgs = new ConstructorArgumentCollection();
 
             this.filters = new CompositePredicate<ConstructorInfo>();
-            this.filters += this.ConstructorTakesAllArguments;
+            this.filters += this.ConstructorDoesNotTakeAllArguments;
             this.filters += this.NonSatisfiedPrimitiveArgs;
-            this.filters += this.ArgumentTypesMatch;
+            this.filters += this.ArgumentTypesMismatch;
 
             foreach (var arg in ctorArgs)
             {
@@ -39,17 +39,17 @@
             // sort by number of arguments the ctor takes
             ctors = ctors.OrderByDescending(ctor => ctor.GetParameters().Length);
 
-            IEnumerable<ConstructorInfo> potentialMatches = ctors
-                .Where(ctor => !this.filters.MatchesAny(ctor));
+            List<ConstructorInfo> potentialMatches = ctors
+                .Where(ctor => !this.filters.MatchesAny(ctor)).ToList();
 
             // no match -> exceptional situation which should cause some error))
-            if (potentialMatches.Count() == 0)
+            if (potentialMatches.Count == 0)
             {
                 throw new ArgumentException("no matching ctor found");
             }
 
             // one perfect match
-            if (potentialMatches.Count() == 1)
+            if (potentialMatches.Count == 1)
             {
                 return potentialMatches.Single();
             }
@@ -66,7 +66,7 @@
         /// <param name="ctor">The ctor.</param>
         /// <returns><c>true</c> when a constructor does not take one of the provided
         /// arguments; otherwise <c>false</c></returns>
-        public bool ConstructorTakesAllArguments(ConstructorInfo ctor)
+        public bool ConstructorDoesNotTakeAllArguments(ConstructorInfo ctor)
         {
             Guard.AssertNotNull(ctor, "ctor");
 
@@ -74,7 +74,7 @@
 
             foreach (var argument in this.ctorArgs)
             {
-                if (!parameters.Any(p => p.Name == argument.Name))
+                if (!parameters.Any(p => argument.NameMatches(p.Name)))
                 {
                     return true;
                 }
@@ -97,9 +97,8 @@
             ParameterInfo[] parameters = ctor.GetParameters();
 
             // find parameters not satisfied by provided args
-            var noMatch = from p in parameters
-                          where !this.ctorArgs.Names.Any(key => p.Name == key)
-                          select p;
+            ConstructorArgument dummy;
+            var noMatch = parameters.Where(parameter => !this.ctorArgs.TryGetArgumentByName(parameter.Name, out dummy));
 
             foreach (ParameterInfo parameter in noMatch)
             {
@@ -124,7 +123,7 @@
         /// <param name="ctor">The ctor.</param>
         /// <returns><c>true</c> if ctor takes argument with correct argument name but wrong
         /// argument Type; otherwise <c>false</c></returns>
-        public bool ArgumentTypesMatch(ConstructorInfo ctor)
+        public bool ArgumentTypesMismatch(ConstructorInfo ctor)
         {
             Guard.AssertNotNull(ctor, "ctor");
 

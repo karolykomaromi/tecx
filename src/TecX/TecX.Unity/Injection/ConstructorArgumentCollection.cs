@@ -1,50 +1,45 @@
 namespace TecX.Unity.Injection
 {
+    using System.Collections;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
 
     using TecX.Common;
 
-    public class ConstructorArgumentCollection : KeyedCollection<string, ConstructorArgument>
+    public class ConstructorArgumentCollection : IEnumerable<ConstructorArgument>
     {
+        private readonly List<ConstructorArgument> constructorArguments;
+
         public ConstructorArgumentCollection()
-            : base(null, 0)
         {
-        }
-
-        public IEnumerable<string> Names
-        {
-            get
-            {
-                if (this.Dictionary == null)
-                {
-                    return this.Items.Select(i => i.Name);
-                }
-
-                return this.Dictionary.Keys;
-            }
+            this.constructorArguments = new List<ConstructorArgument>();
         }
 
         public bool TryGetArgumentByName(string argumentName, out ConstructorArgument argument)
         {
             Guard.AssertNotEmpty(argumentName, "argumentName");
 
-            if (this.Dictionary == null)
-            {
-                var found = this.Items.FirstOrDefault(a => a.Name == argumentName);
+            argument = this.constructorArguments.FirstOrDefault(arg => arg.NameMatches(argumentName));
 
-                argument = found;
-
-                return found != null;
-            }
-
-            return Dictionary.TryGetValue(argumentName, out argument);
+            return argument != null;
         }
 
-        protected override string GetKeyForItem(ConstructorArgument item)
+        public void Add(ConstructorArgument constructorArgument)
         {
-            return item.Name;
+            Guard.AssertNotNull(constructorArgument, "constructorArgument");
+
+            this.constructorArguments.Add(constructorArgument);
+        }
+
+        public IEnumerator<ConstructorArgument> GetEnumerator()
+        {
+            return this.constructorArguments.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }
