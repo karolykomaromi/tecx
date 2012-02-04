@@ -38,7 +38,7 @@
         {
             Context.Container.RegisterInstance(this.eventAggregator, new ExternallyControlledLifetimeManager());
 
-            EventAggregatorSubscriptionStrategy strategy = new EventAggregatorSubscriptionStrategy(this.eventAggregator);
+            SubscriptionStrategy strategy = new SubscriptionStrategy(this.eventAggregator);
 
             Context.Strategies.Add(strategy, UnityBuildStage.PostInitialization);
         }

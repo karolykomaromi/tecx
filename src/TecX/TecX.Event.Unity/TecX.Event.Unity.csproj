@@ -56,7 +56,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="EventAggregatorSubscriptionStrategy.cs" />
+    <Compile Include="SubscriptionStrategy.cs" />
     <Compile Include="EventAggregatorExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubscriberTypesCollection.cs" />
