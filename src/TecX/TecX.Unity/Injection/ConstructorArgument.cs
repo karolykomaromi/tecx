@@ -1,33 +1,53 @@
 namespace TecX.Unity.Injection
 {
+    using System;
+
     using TecX.Common;
 
     public class ConstructorArgument
     {
-        private string name;
+        private readonly Func<string, bool> nameMatches;
 
         public ConstructorArgument(string argumentName, object value)
         {
             Guard.AssertNotEmpty(argumentName, "argumentName");
 
-            this.name = argumentName;
+            this.nameMatches = name => string.Equals(argumentName, name, StringComparison.InvariantCultureIgnoreCase);
             this.Value = value;
         }
 
-        public string Name
+        public ConstructorArgument(object value)
         {
-            get
-            {
-                return this.name;
-            }
+            Guard.AssertNotNull(value, "value");
+            this.Value = value;
+            this.nameMatches = new DefaultNamingConvention(value.GetType()).NameMatches;
+        }
 
-            set
-            {
-                Guard.AssertNotNull(value, "Name");
-                this.name = value;
-            }
+        public bool NameMatches(string name)
+        {
+            Guard.AssertNotEmpty(name, "name");
+
+            return this.nameMatches(name);
         }
 
         public object Value { get; set; }
+    }
+
+    public class DefaultNamingConvention
+    {
+        private readonly Type type;
+
+        public DefaultNamingConvention(Type type)
+        {
+            Guard.AssertNotNull(type, "type");
+            this.type = type;
+        }
+
+        public bool NameMatches(string name)
+        {
+            Guard.AssertNotEmpty(name, "name");
+
+            return false;
+        }
     }
 }

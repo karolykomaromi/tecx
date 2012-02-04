@@ -6,7 +6,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using TecX.Unity.Configuration.Plugin;
-    using TecX.Unity.Test.TestObjects;
+    using TecX.Unity.Configuration.TestObjects;
 
     [TestClass]
     public class PluginFinderFixture
