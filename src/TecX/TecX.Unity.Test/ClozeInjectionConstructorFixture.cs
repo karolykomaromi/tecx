@@ -126,5 +126,39 @@ namespace TecX.Unity.Test
             Assert.AreEqual(2, result.ElementAt(1).GetParameters().Length);
             Assert.AreEqual(3, result.ElementAt(2).GetParameters().Length);
         }
+
+        [TestMethod]
+        public void CanMatchArgumentNamesByConvention()
+        {
+            var container = new UnityContainer();
+
+            var instance = new MatchByConvention();
+
+            container.RegisterType<MyService>(
+                new ClozeInjectionConstructor(new[] { new ConstructorArgument(instance) }));
+
+            var sut = container.Resolve<MyService>();
+
+            Assert.IsNotNull(sut.Convention);
+            Assert.AreSame(instance, sut.Convention);
+        }
+    }
+
+    public class MatchByConvention : IMatchByConvention
+    {
+    }
+
+    public class MyService
+    {
+        public IMatchByConvention Convention { get; set; }
+
+        public MyService(IMatchByConvention convention)
+        {
+            Convention = convention;
+        }
+    }
+
+    public interface IMatchByConvention
+    {
     }
 }
