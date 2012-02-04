@@ -7,17 +7,17 @@
     using TecX.Common;
     using TecX.Event;
 
-    public class EventAggregatorSubscriptionStrategy : BuilderStrategy
+    public class SubscriptionStrategy : BuilderStrategy
     {
         private readonly IEventAggregator eventAggregator;
 
         private readonly SubscriberTypesCollection knownSubscribers;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventAggregatorSubscriptionStrategy"/> class
+        /// Initializes a new instance of the <see cref="SubscriptionStrategy"/> class
         /// </summary>
         /// <param name="eventAggregator">The <see cref="IEventAggregator"/> instance used for this application</param>
-        public EventAggregatorSubscriptionStrategy(IEventAggregator eventAggregator)
+        public SubscriptionStrategy(IEventAggregator eventAggregator)
         {
             Guard.AssertNotNull(eventAggregator, "eventAggregator");
 
