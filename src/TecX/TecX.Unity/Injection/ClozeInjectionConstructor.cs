@@ -34,16 +34,46 @@
             }
         }
 
-        private ClozeInjectionConstructor()
+        public ClozeInjectionConstructor()
         {
             this.constructorArguments = new ConstructorArgumentCollection();
         }
 
+        public ClozeInjectionConstructor With(object value)
+        {
+            Guard.AssertNotNull(value, "value");
+
+            this.constructorArguments.Add(new ConstructorArgument(value));
+
+            return this;
+        }
+
+        public ClozeInjectionConstructor With(string argumentName, object value)
+        {
+            Guard.AssertNotEmpty(argumentName, "argumentName");
+
+            this.constructorArguments.Add(new ConstructorArgument(argumentName, value));
+
+            return this;
+        }
+
         public override void AddPolicies(Type serviceType, Type implementationType, string name, IPolicyList policies)
         {
-            ConstructorInfo ctor = this.FindConstructor(implementationType);
+            ConstructorInfo ctor;
+            InjectionParameterValue[] parameterValues;
 
-            InjectionParameterValue[] parameterValues = this.GetParameterValues(ctor);
+            if(this.constructorArguments.IsEmpty)
+            {
+                ctor = implementationType.GetConstructor(Type.EmptyTypes);
+
+                parameterValues = new InjectionParameterValue[0];
+            }
+            else
+            {
+                ctor = this.FindConstructor(implementationType);
+
+                parameterValues = this.GetParameterValues(ctor);
+            }
 
             policies.Set<IConstructorSelectorPolicy>(
                 new SpecifiedConstructorSelectorPolicy(ctor, parameterValues),

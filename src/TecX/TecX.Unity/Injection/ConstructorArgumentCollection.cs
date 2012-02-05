@@ -16,6 +16,14 @@ namespace TecX.Unity.Injection
             this.constructorArguments = new List<ConstructorArgument>();
         }
 
+        public bool IsEmpty
+        {
+            get
+            {
+                return this.constructorArguments.Count == 0;
+            }
+        }
+
         public bool TryGetArgumentByName(string argumentName, out ConstructorArgument argument)
         {
             Guard.AssertNotEmpty(argumentName, "argumentName");
