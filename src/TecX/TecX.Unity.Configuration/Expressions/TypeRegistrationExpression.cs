@@ -11,6 +11,7 @@
     using TecX.Common;
     using TecX.Unity.Configuration.Utilities;
     using TecX.Unity.Enrichment;
+    using TecX.Unity.Injection;
 
     public class TypeRegistrationExpression : RegistrationExpression<TypeRegistrationExpression>
     {
@@ -66,7 +67,7 @@
             return this;
         }
 
-        public TypeRegistrationExpression CreatedUsing(Func<IUnityContainer, Type, string, object> factoryMethod)
+        public TypeRegistrationExpression Factory(Func<IUnityContainer, Type, string, object> factoryMethod)
         {
             Guard.AssertNotNull(factoryMethod, "factoryMethod");
 
@@ -75,11 +76,24 @@
             return this;
         }
 
-        public TypeRegistrationExpression CreatedUsing(Func<IUnityContainer, object> factoryMethod)
+        public TypeRegistrationExpression Factory(Func<IUnityContainer, object> factoryMethod)
         {
             Guard.AssertNotNull(factoryMethod, "factoryMethod");
 
             this.enrichments.Add(new InjectionFactory(factoryMethod));
+
+            return this;
+        }
+
+        public TypeRegistrationExpression Ctor(Action<ClozeInjectionConstructor> action)
+        {
+            Guard.AssertNotNull(action, "action");
+
+            ClozeInjectionConstructor ctor = new ClozeInjectionConstructor();
+
+            action(ctor);
+
+            this.enrichments.Add(ctor);
 
             return this;
         }

@@ -142,23 +142,17 @@ namespace TecX.Unity.Test
             Assert.IsNotNull(sut.Convention);
             Assert.AreSame(instance, sut.Convention);
         }
-    }
 
-    public class MatchByConvention : IMatchByConvention
-    {
-    }
-
-    public class MyService
-    {
-        public IMatchByConvention Convention { get; set; }
-
-        public MyService(IMatchByConvention convention)
+        [TestMethod]
+        public void CanInvokeDefaultCtor()
         {
-            Convention = convention;
-        }
-    }
+            var container = new UnityContainer();
 
-    public interface IMatchByConvention
-    {
+            container.RegisterType<DefaultCtorOnly>(new ClozeInjectionConstructor());
+
+            var sut = container.Resolve<DefaultCtorOnly>();
+
+            Assert.IsNotNull(sut);
+        }
     }
 }
