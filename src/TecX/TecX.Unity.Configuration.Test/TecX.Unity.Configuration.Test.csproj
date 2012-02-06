@@ -82,7 +82,6 @@
     <Compile Include="TestObjects\IMyService.cs" />
     <Compile Include="TestObjects\MyService.cs" />
     <Compile Include="TestObjects\TypeExtClass.cs" />
-    <Compile Include="TypeExtensionFixture.cs" />
     <Compile Include="When_ApplyingFindAllImplementationsOfOpenGenericInterfaceConvention.cs" />
     <Compile Include="When_ApplyingFindAllImplementationsConvention.cs" />
     <Compile Include="When_ApplyingFindAllImplementationsConventionWithSpecificNaming.cs" />

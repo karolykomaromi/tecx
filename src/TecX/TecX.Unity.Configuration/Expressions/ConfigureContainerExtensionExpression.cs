@@ -32,7 +32,7 @@
         public void Using<TExtensionConfigurator>(Action<TExtensionConfigurator> action)
             where TExtensionConfigurator : class, IUnityContainerExtensionConfigurator
         {
-            if (!typeof(TExtensionConfigurator).IsAssignableFrom(this.extension.GetType()))
+            if (!(this.extension is TExtensionConfigurator))
             {
                 throw new ArgumentException("The extension you try to configure does not implement the specified interface.", "TExtensionConfigurator");
             }

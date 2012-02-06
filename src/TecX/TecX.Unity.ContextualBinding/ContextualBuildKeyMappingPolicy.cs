@@ -57,17 +57,17 @@
                 return this.DefaultMapping.Map(buildKey, builderContext);
             }
 
-            throw new ContextualBindingException("No contextual mapping that isMatch the current context was " +
+            throw new ContextualBindingException("No contextual mapping that matches the current context was " +
                                                  "defined and no default mapping could be found.");
         }
 
-        public void AddMapping(Predicate<IBindingContext, IBuilderContext> isMatch, Type mapTo, string uniqueMappingName)
+        public void AddMapping(Predicate<IBindingContext, IBuilderContext> predicate, Type mapTo, string uniqueMappingName)
         {
-            Guard.AssertNotNull(isMatch, "isMatch");
+            Guard.AssertNotNull(predicate, "predicate");
             Guard.AssertNotNull(mapTo, "mapTo");
             Guard.AssertNotNull(uniqueMappingName, "uniqueMappingName");
 
-            this.mappings.Add(new ContextualBuildKeyMapping(isMatch, mapTo, uniqueMappingName));
+            this.mappings.Add(new ContextualBuildKeyMapping(predicate, mapTo, uniqueMappingName));
         }
     }
 }

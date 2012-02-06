@@ -13,7 +13,15 @@
         {
             Guard.AssertNotNull(container, "container");
 
-            return RegisterFactory<TFactory>(container, new DefaultTypedFactoryComponentSelector());
+            return RegisterFactory(container, typeof(TFactory), new DefaultTypedFactoryComponentSelector());
+        }
+
+        public static IUnityContainer RegisterFactory(this IUnityContainer container, Type factoryType)
+        {
+            Guard.AssertNotNull(container, "container");
+            Guard.AssertNotNull(factoryType, "factoryType");
+
+            return RegisterFactory(container, factoryType, new DefaultTypedFactoryComponentSelector());
         }
 
         public static IUnityContainer RegisterFactory<TFactory>(
@@ -22,21 +30,31 @@
             where TFactory : class
         {
             Guard.AssertNotNull(container, "container");
+
+            return RegisterFactory(container, typeof(TFactory), selector);
+        }
+
+        public static IUnityContainer RegisterFactory(
+            this IUnityContainer container,
+            Type factoryType,
+            ITypedFactoryComponentSelector selector)
+        {
+            Guard.AssertNotNull(container, "container");
+            Guard.AssertNotNull(factoryType, "factoryType");
             Guard.AssertNotNull(selector, "selector");
 
-            Type factoryType = typeof(TFactory);
-
             Guard.AssertCondition(
-                factoryType.IsInterface, 
-                factoryType, 
-                "TFactory", 
+                factoryType.IsInterface,
+                factoryType,
+                "TFactory",
                 "Cannot generate an implementation for a non-interface factory type.");
 
             ITypedFactoryConfiguration configuration = container.Configure<ITypedFactoryConfiguration>();
 
-            configuration.RegisterFactory<TFactory>(selector);
+            configuration.RegisterFactory(factoryType, selector);
 
             return container;
+            
         }
     }
 }
