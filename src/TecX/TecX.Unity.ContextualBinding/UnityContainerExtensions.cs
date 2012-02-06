@@ -70,6 +70,19 @@
             LifetimeManager lifetime)
         {
             Guard.AssertNotNull(container, "container");
+
+            return RegisterInstance(container, typeof(TFrom), instance, isMatch, lifetime);
+        }
+
+        public static IUnityContainer RegisterInstance(
+            this IUnityContainer container,
+            Type from,
+            object instance,
+            Predicate<IBindingContext, IBuilderContext> isMatch,
+            LifetimeManager lifetime)
+        {
+            Guard.AssertNotNull(container, "container");
+            Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(isMatch, "isMatch");
             Guard.AssertNotNull(instance, "instance");
 
@@ -80,9 +93,10 @@
                 throw new ContextualBindingException("ContextualBindingExtension must be registered with the container!");
             }
 
-            configuration.RegisterInstance(typeof(TFrom), instance, isMatch, lifetime);
+            configuration.RegisterInstance(from, instance, isMatch, lifetime);
 
             return container;
+            
         }
     }
 }

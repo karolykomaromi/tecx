@@ -10,14 +10,19 @@
 
     using TecX.Common;
     using TecX.Unity.Configuration.Utilities;
+    using TecX.Unity.ContextualBinding;
     using TecX.Unity.Enrichment;
     using TecX.Unity.Injection;
 
     public class TypeRegistrationExpression : RegistrationExpression<TypeRegistrationExpression>
     {
         private readonly InjectionMembers enrichments;
+
         private readonly Type @from;
+
         private readonly Type to;
+
+        private Func<TypeRegistration> compile;
 
         public TypeRegistrationExpression(Type from, Type to)
         {
@@ -25,7 +30,10 @@
             Guard.AssertNotNull(to, "to");
 
             this.@from = from;
+
             this.to = to;
+
+            this.compile = () => new TypeRegistration(this.From, this.To, null, this.Lifetime, this.Enrichments);
 
             this.enrichments = new InjectionMembers();
         }
@@ -169,7 +177,46 @@
 
         public override Registration Compile()
         {
-            return new TypeRegistration(this.From, this.To, null, this.Lifetime, this.Enrichments);
+            return this.compile();
+        }
+
+        public TypeRegistrationExpression If(Predicate<IBindingContext, IBuilderContext> predicate)
+        {
+            Guard.AssertNotNull(predicate, "predicate");
+
+            this.compile = () =>
+                {
+                    var p = predicate;
+                    return new ContextualTypeRegistration(this.From, this.To, null, this.Lifetime, p, this.Enrichments);
+                };
+
+            return this;
+        }
+
+        private class ContextualTypeRegistration : TypeRegistration
+        {
+            private readonly Predicate<IBindingContext, IBuilderContext> predicate;
+
+            public ContextualTypeRegistration(
+                Type @from, 
+                Type to, 
+                string name, 
+                LifetimeManager lifetime, 
+                Predicate<IBindingContext, IBuilderContext> predicate, 
+                params InjectionMember[] enrichments)
+                : base(@from, to, name, lifetime, enrichments)
+            {
+                Guard.AssertNotNull(predicate, "predicate");
+
+                this.predicate = predicate;
+            }
+
+            public override void Configure(IUnityContainer container)
+            {
+                Guard.AssertNotNull(container, "container");
+
+                container.RegisterType(this.From, this.To, this.predicate, this.Lifetime, this.Enrichments);
+            }
         }
     }
 }
