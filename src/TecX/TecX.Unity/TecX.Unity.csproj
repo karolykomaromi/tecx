@@ -88,10 +88,14 @@
     <Compile Include="Groups\UnityContainerExtensions.cs" />
     <Compile Include="Groups\ScopedMapping.cs" />
     <Compile Include="InjectionMembers.cs" />
+    <Compile Include="Injection\ByTypeNamingConvention.cs" />
+    <Compile Include="Injection\ConnectionStringNamingConvention.cs" />
     <Compile Include="Injection\ConstructorArgument.cs" />
     <Compile Include="Injection\ConstructorArgumentCollection.cs" />
+    <Compile Include="Injection\NamingConvention.cs" />
     <Compile Include="Injection\ParameterMatcher.cs" />
     <Compile Include="Injection\ClozeInjectionConstructor.cs" />
+    <Compile Include="Injection\SpecifiedNameConvention.cs" />
     <Compile Include="Lifetime\CacheLifetimeManager.cs" />
     <Compile Include="Lifetime\CacheLifetimeStrategy.cs" />
     <Compile Include="Lifetime\CacheLifetimeStrategyExtension.cs" />

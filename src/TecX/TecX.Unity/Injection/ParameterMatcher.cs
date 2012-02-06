@@ -11,7 +11,7 @@
 
     public class ParameterMatcher
     {
-        private readonly ConstructorArgumentCollection ctorArgs;
+        private readonly ConstructorArgumentCollection constructorArguments;
 
         private readonly CompositePredicate<ConstructorInfo> filters;
 
@@ -19,17 +19,14 @@
         {
             Guard.AssertNotNull(ctorArgs, "ctorArgs");
 
-            this.ctorArgs = new ConstructorArgumentCollection();
+            this.constructorArguments = new ConstructorArgumentCollection();
 
             this.filters = new CompositePredicate<ConstructorInfo>();
             this.filters += this.ConstructorDoesNotTakeAllArguments;
             this.filters += this.NonSatisfiedPrimitiveArgs;
             this.filters += this.ArgumentTypesMismatch;
 
-            foreach (var arg in ctorArgs)
-            {
-                this.ctorArgs.Add(arg);
-            }
+            this.constructorArguments.AddRange(ctorArgs);
         }
 
         public ConstructorInfo BestMatch(IEnumerable<ConstructorInfo> ctors)
@@ -72,7 +69,7 @@
 
             ParameterInfo[] parameters = ctor.GetParameters();
 
-            foreach (var argument in this.ctorArgs)
+            foreach (var argument in this.constructorArguments)
             {
                 if (!parameters.Any(p => argument.NameMatches(p.Name)))
                 {
@@ -98,7 +95,7 @@
 
             // find parameters not satisfied by provided args
             ConstructorArgument dummy;
-            var noMatch = parameters.Where(parameter => !this.ctorArgs.TryGetArgumentByName(parameter.Name, out dummy));
+            var noMatch = parameters.Where(parameter => !this.constructorArguments.TryGetArgumentByName(parameter.Name, out dummy));
 
             foreach (ParameterInfo parameter in noMatch)
             {
@@ -131,7 +128,7 @@
             {
                 ConstructorArgument argument;
 
-                if (this.ctorArgs.TryGetArgumentByName(parameter.Name, out argument))
+                if (this.constructorArguments.TryGetArgumentByName(parameter.Name, out argument))
                 {
                     var value = argument.Value as ResolvedParameter;
 
