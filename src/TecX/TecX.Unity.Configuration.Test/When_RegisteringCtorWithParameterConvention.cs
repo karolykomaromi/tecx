@@ -31,14 +31,4 @@
             Assert.IsNotNull(this.sut.Foo);
         }
     }
-
-    public class HasCtorWithParameterConvention
-    {
-        public IFoo Foo { get; set; }
-
-        public HasCtorWithParameterConvention(IFoo foo)
-        {
-            Foo = foo;
-        }
-    }
 }

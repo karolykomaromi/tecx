@@ -76,6 +76,7 @@
     <Compile Include="TestObjects\Handler1.cs" />
     <Compile Include="TestObjects\Handler2.cs" />
     <Compile Include="TestObjects\Handler3.cs" />
+    <Compile Include="TestObjects\HasCtorWithParameterConvention.cs" />
     <Compile Include="TestObjects\IFoo.cs" />
     <Compile Include="TestObjects\IMessageHandler.cs" />
     <Compile Include="TestObjects\IMyService.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="When_ApplyingSingleImplementationOfInterfaceConvention.cs" />
     <Compile Include="When_OverridingPrimitiveString.cs" />
     <Compile Include="When_OverridingWithValue.cs" />
+    <Compile Include="When_RegisteringConnectionStringCtorParameter.cs" />
     <Compile Include="When_RegisteringCtorWithParameterConvention.cs" />
     <Compile Include="When_RegisteringMappingForOpenGenericType.cs" />
     <Compile Include="When_OverridingInterfaceTypeDependency.cs" />

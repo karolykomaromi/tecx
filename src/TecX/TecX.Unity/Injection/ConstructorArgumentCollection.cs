@@ -40,6 +40,14 @@ namespace TecX.Unity.Injection
             this.constructorArguments.Add(constructorArgument);
         }
 
+        public void AddRange(IEnumerable<ConstructorArgument> ctorArgs)
+        {
+            Guard.AssertNotNull(ctorArgs, "ctorArgs");
+
+            this.constructorArguments.AddRange(ctorArgs);
+        }
+
+
         public IEnumerator<ConstructorArgument> GetEnumerator()
         {
             return this.constructorArguments.GetEnumerator();
