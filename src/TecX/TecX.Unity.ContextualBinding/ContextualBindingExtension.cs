@@ -75,13 +75,13 @@
         public void RegisterType(
             Type from,
             Type to,
-            Predicate<IBindingContext, IBuilderContext> isMatch,
+            Predicate<IBindingContext, IBuilderContext> predicate,
             LifetimeManager lifetime,
             params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(to, "to");
-            Guard.AssertNotNull(isMatch, "isMatch");
+            Guard.AssertNotNull(predicate, "predicate");
 
             // if no lifetime manager is registered we use the transient lifetime (new instance is created for
             // every resolve). this is identical to the unity default behavior
@@ -95,22 +95,22 @@
             string uniqueMappingName = Guid.NewGuid().ToString();
 
             // add another contextual mapping to the policy
-            policy.AddMapping(isMatch, to, uniqueMappingName);
+            policy.AddMapping(predicate, to, uniqueMappingName);
 
             // by registering our mapping under a name that is guaranteed to be unique we can make use
             // of the full container infrastructure that is already in place
-            Container.RegisterType(from, to, uniqueMappingName, lifetime, injectionMembers);
+            this.Container.RegisterType(from, to, uniqueMappingName, lifetime, injectionMembers);
         }
 
         public void RegisterInstance(
             Type from, 
             object instance, 
-            Predicate<IBindingContext, IBuilderContext> matches, 
+            Predicate<IBindingContext, IBuilderContext> predicate, 
             LifetimeManager lifetime)
         {
             Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(instance, "instance");
-            Guard.AssertNotNull(matches, "isMatch");
+            Guard.AssertNotNull(predicate, "isMatch");
 
             if (lifetime == null)
             {
@@ -124,11 +124,11 @@
             // add another contextual mapping to the policy. this is a speciality of Unity. seems like they call
             // it "identityKey" where from -> to.
             // see UnityDefaultBehaviorExtension.OnRegisterInstance
-            policy.AddMapping(matches, from, uniqueMappingName);
+            policy.AddMapping(predicate, from, uniqueMappingName);
 
             // by registering our mapping under a name that is guaranteed to be unique we can make use
             // of the full container infrastructure that is already in place
-            Container.RegisterInstance(from, uniqueMappingName, instance, lifetime);
+            this.Container.RegisterInstance(from, uniqueMappingName, instance, lifetime);
         }
 
         protected override void Initialize()
@@ -153,7 +153,7 @@
             {
                 // if something is already registered -> check if we have a registration with same name
                 // do the replace and last chance hookup if neccessary
-                IBuildKeyMappingPolicy existingPolicy = Context.Policies.Get<IBuildKeyMappingPolicy>(key);
+                IBuildKeyMappingPolicy existingPolicy = this.Context.Policies.Get<IBuildKeyMappingPolicy>(key);
                 ContextualBuildKeyMappingPolicy existingContextualPolicy = existingPolicy as ContextualBuildKeyMappingPolicy;
 
                 if (existingPolicy != null && 
@@ -163,7 +163,7 @@
                     policy.DefaultMapping = existingPolicy;
                 }
 
-                Context.Policies.Set<IBuildKeyMappingPolicy>(policy, key);
+                this.Context.Policies.Set<IBuildKeyMappingPolicy>(policy, key);
             }
         }
 
@@ -171,7 +171,7 @@
         {
             NamedTypeBuildKey key = new NamedTypeBuildKey(from);
 
-            IBuildKeyMappingPolicy existingPolicy = Context.Policies.Get<IBuildKeyMappingPolicy>(key);
+            IBuildKeyMappingPolicy existingPolicy = this.Context.Policies.Get<IBuildKeyMappingPolicy>(key);
             ContextualBuildKeyMappingPolicy existingContextualPolicy = existingPolicy as ContextualBuildKeyMappingPolicy;
 
             ContextualBuildKeyMappingPolicy policy;
@@ -190,7 +190,7 @@
 
                 this.Mappings[key] = policy;
 
-                Context.Policies.Set<IBuildKeyMappingPolicy>(policy, key);
+                this.Context.Policies.Set<IBuildKeyMappingPolicy>(policy, key);
             }
 
             return policy;

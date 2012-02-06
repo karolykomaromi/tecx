@@ -1,9 +1,11 @@
 namespace TecX.Unity.TypedFactory
 {
+    using System;
+
     using Microsoft.Practices.Unity;
 
     public interface ITypedFactoryConfiguration : IUnityContainerExtensionConfigurator
     {
-        void RegisterFactory<TFactory>(ITypedFactoryComponentSelector selector) where TFactory : class;
+        void RegisterFactory(Type factoryType, ITypedFactoryComponentSelector selector);
     }
 }
