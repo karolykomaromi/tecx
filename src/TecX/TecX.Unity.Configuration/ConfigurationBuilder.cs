@@ -54,13 +54,13 @@
             return new CreateRegistrationFamilyExpression(from, this);
         }
 
-        public ConfigureContainerExtensionExpression ExtendWithNew<TExtension>()
+        public ConfigureContainerExtensionExpression Extension<TExtension>()
             where TExtension : UnityContainerExtension, new()
         {
-            return this.ExtendWith(new TExtension());
+            return this.Extension(new TExtension());
         }
 
-        public ConfigureContainerExtensionExpression ExtendWith(UnityContainerExtension extension)
+        public ConfigureContainerExtensionExpression Extension(UnityContainerExtension extension)
         {
             Guard.AssertNotNull(extension, "extension");
 

@@ -7,13 +7,6 @@
 
     using TecX.Common;
 
-    public interface IExtensibilityInfrastructure
-    {
-        void AddAlternation(CreateRegistrationFamilyExpression expression, Action<RegistrationFamily> action);
-
-        void SetCompilationStrategy(Func<Registration> compilationStrategy);
-    }
-
     public abstract class RegistrationExpression : IExtensibilityInfrastructure
     {
         private Func<Registration> compilationStrategy;
@@ -58,6 +51,8 @@
     public abstract class RegistrationExpression<TRegistrationExpression> : RegistrationExpression
         where TRegistrationExpression : RegistrationExpression
     {
+        private string name;
+
         private LifetimeManager lifetime;
 
         protected RegistrationExpression()
@@ -71,6 +66,23 @@
             {
                 return this.lifetime;
             }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return this.name;
+            }
+        }
+
+        public TRegistrationExpression Named(string name)
+        {
+            Guard.AssertNotEmpty(name, "name");
+
+            this.name = name;
+
+            return this as TRegistrationExpression;
         }
 
         public TRegistrationExpression LifetimeIs(LifetimeManager lifetime)

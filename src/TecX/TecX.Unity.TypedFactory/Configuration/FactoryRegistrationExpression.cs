@@ -11,6 +11,8 @@ namespace TecX.Unity.TypedFactory.Configuration
 
         private ITypedFactoryComponentSelector selector;
 
+        private string name;
+
         public FactoryRegistrationExpression(CreateRegistrationFamilyExpression expression, Type factoryType)
         {
             Guard.AssertNotNull(factoryType, "factoryType");
@@ -20,6 +22,39 @@ namespace TecX.Unity.TypedFactory.Configuration
             this.selector = new DefaultTypedFactoryComponentSelector();
 
             ((IExtensibilityInfrastructure)this).AddAlternation(expression, family => family.AddRegistration(this));
+        }
+
+        public Type FactoryType
+        {
+            get
+            {
+                return this.factoryType;
+            }
+        }
+
+        public ITypedFactoryComponentSelector Selector
+        {
+            get
+            {
+                return this.selector;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return this.name;
+            }
+        }
+
+        public FactoryRegistrationExpression Named(string name)
+        {
+            Guard.AssertNotEmpty(name, "name");
+
+            this.name = name;
+
+            return this;
         }
 
         public FactoryRegistrationExpression WithSelector(ITypedFactoryComponentSelector selector)
@@ -33,7 +68,7 @@ namespace TecX.Unity.TypedFactory.Configuration
 
         protected override Unity.Configuration.Registration DefaultCompilationStrategy()
         {
-            return new FactoryRegistration(this.factoryType, null, this.Lifetime, this.selector);
+            return new FactoryRegistration(this.FactoryType, this.Name, this.Lifetime, this.Selector);
         }
     }
 }

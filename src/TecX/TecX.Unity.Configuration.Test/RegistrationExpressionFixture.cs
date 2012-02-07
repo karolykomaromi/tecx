@@ -34,10 +34,7 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            var expression = new NamedTypeRegistrationExpression(typeof(IMyInterface), typeof(MyClass))
-                {
-                    Name = "1"
-                };
+            var expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClass)).Named("1");
 
             expression.Compile().Configure(container);
 
