@@ -10,7 +10,9 @@
     {
         private readonly Type @from;
 
-        private readonly object instance;
+        private readonly object instance; 
+        
+        private string name;
 
         public InstanceRegistrationExpression(Type from, object instance)
         {
@@ -35,7 +37,7 @@
 
         protected override Registration DefaultCompilationStrategy()
         {
-            return new InstanceRegistration(this.From, null, this.Instance, this.Lifetime);
+            return new InstanceRegistration(this.From, this.Name, this.Instance, this.Lifetime);
         }
     }
 }

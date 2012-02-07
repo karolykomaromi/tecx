@@ -53,7 +53,7 @@
 
         protected override Registration DefaultCompilationStrategy()
         {
-            return new TypeRegistration(this.From, this.To, null, this.Lifetime, this.Enrichments);
+            return new TypeRegistration(this.From, this.To, this.Name, this.Lifetime, this.Enrichments);
         }
 
         public TypeRegistrationExpression EnrichWith<T>(Action<T, IBuilderContext> action)

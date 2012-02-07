@@ -74,16 +74,16 @@
             return expression;
         }
 
-        public NamedTypeRegistrationExpression Add<TTo>()
+        public TypeRegistrationExpression Add<TTo>()
         {
             return Add(typeof(TTo));
         }
 
-        public NamedTypeRegistrationExpression Add(Type to)
+        public TypeRegistrationExpression Add(Type to)
         {
             Guard.AssertNotNull(to, "to");
 
-            var expression = new NamedTypeRegistrationExpression(this.From, to);
+            var expression = new TypeRegistrationExpression(this.From, to).Named(Guid.NewGuid().ToString());
 
             this.alterations.Add(family =>
             {
@@ -95,11 +95,11 @@
             return expression;
         }
 
-        public NamedInstanceRegistrationExpression Add(object instance)
+        public InstanceRegistrationExpression Add(object instance)
         {
             Guard.AssertNotNull(instance, "instance");
 
-            var expression = new NamedInstanceRegistrationExpression(this.From, instance);
+            var expression = new InstanceRegistrationExpression(this.From, instance).Named(Guid.NewGuid().ToString());
 
             this.alterations.Add(family =>
             {
