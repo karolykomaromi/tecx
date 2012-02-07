@@ -13,7 +13,7 @@
         protected override void Initialize()
         {
             this.registrationStack = new RegistrationStack();
-            this.Context.Registering += AddRegistration;
+            this.Context.Registering += this.AddRegistration;
 
             this.Context.Strategies.Add(new DecoratorStrategy(this.registrationStack), UnityBuildStage.PreCreation);
         }

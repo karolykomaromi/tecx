@@ -18,7 +18,7 @@ namespace TecX.Unity.Injection
                 return new ConnectionStringNamingConvention();
             }
 
-            //get all base classes, get all interfaces
+            // get all base classes, get all interfaces
             List<Type> allTypes = new List<Type>();
 
             Type current = type;

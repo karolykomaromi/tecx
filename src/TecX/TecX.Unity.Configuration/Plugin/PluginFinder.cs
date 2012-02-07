@@ -28,7 +28,7 @@
 
             this.watcher = new FileSystemWatcher(path);
 
-            this.watcher.Created += OnFileCreated;
+            this.watcher.Created += this.OnFileCreated;
         }
 
         public void ImportBuildersFromNewAssembly(string assemblyFile)

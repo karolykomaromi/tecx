@@ -28,8 +28,6 @@
             return this.compilationStrategy();
         }
 
-        protected abstract Registration DefaultCompilationStrategy();
-
         void IExtensibilityInfrastructure.AddAlternation(CreateRegistrationFamilyExpression expression, Action<RegistrationFamily> action)
         {
             Guard.AssertNotNull(expression, "expression");
@@ -44,6 +42,8 @@
 
             this.compilationStrategy = compilationStrategy;
         }
+
+        protected abstract Registration DefaultCompilationStrategy();
     }
 
     [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass",

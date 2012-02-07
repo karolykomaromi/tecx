@@ -11,8 +11,6 @@ namespace TecX.Unity.TypedFactory.Configuration
 
         private ITypedFactoryComponentSelector selector;
 
-        private string name;
-
         public FactoryRegistrationExpression(CreateRegistrationFamilyExpression expression, Type factoryType)
         {
             Guard.AssertNotNull(factoryType, "factoryType");
@@ -38,23 +36,6 @@ namespace TecX.Unity.TypedFactory.Configuration
             {
                 return this.selector;
             }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return this.name;
-            }
-        }
-
-        public FactoryRegistrationExpression Named(string name)
-        {
-            Guard.AssertNotEmpty(name, "name");
-
-            this.name = name;
-
-            return this;
         }
 
         public FactoryRegistrationExpression WithSelector(ITypedFactoryComponentSelector selector)
