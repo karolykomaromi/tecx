@@ -7,7 +7,7 @@
 
     using TecX.Common;
 
-    public class CreateRegistrationFamilyExpression : IExtensibleConfiguration
+    public class CreateRegistrationFamilyExpression
     {
         private readonly Type @from;
         private readonly List<Action<RegistrationFamily>> alterations;
@@ -124,7 +124,7 @@
         /// For configurationExtensions only!
         /// </summary>
         /// <param name="action"></param>
-        void IExtensibleConfiguration.AddAlternation(Action<RegistrationFamily> action)
+        internal void AddAlternation(Action<RegistrationFamily> action)
         {
             Guard.AssertNotNull(action, "action");
 

@@ -2,7 +2,7 @@ namespace TecX.Unity.ContextualBinding.Test
 {
     using TecX.Unity.ContextualBinding.Test.TestObjects;
 
-    public abstract class Given_Instance : Given_ContainerWithContextualBindingExtension
+    public abstract class Given_BuilderAndInstance : Given_BuilderAndContainerWithContextualBindingExtension
     {
         protected MyParameterLessClass instance;
 

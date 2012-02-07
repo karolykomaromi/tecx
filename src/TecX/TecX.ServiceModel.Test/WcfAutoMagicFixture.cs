@@ -14,6 +14,7 @@
     public class WcfAutoMagicFixture
     {
         [TestMethod]
+        [TestCategory("LongRunning")]
         public void CanAddDiscoveryBehaviorUsingAttribute()
         {
             using (ServiceHost host = new ServiceHost(typeof(SyncService), Constants.BaseAddress))
