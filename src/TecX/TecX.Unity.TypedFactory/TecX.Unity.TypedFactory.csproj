@@ -61,6 +61,9 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Configuration\CreateRegistrationFamilyExpressionExtensions.cs" />
+    <Compile Include="Configuration\FactoryRegistration.cs" />
+    <Compile Include="Configuration\FactoryRegistrationExpression.cs" />
     <Compile Include="DefaultTypedFactoryComponentSelector.cs" />
     <Compile Include="FactoryInterceptor.cs" />
     <Compile Include="ITypedFactoryComponentSelector.cs" />
@@ -80,7 +83,12 @@
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Unity.Configuration\TecX.Unity.Configuration.csproj">
+      <Project>{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}</Project>
+      <Name>TecX.Unity.Configuration</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(ProgramFiles)\MSBuild\StyleCop\v4.7\StyleCop.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

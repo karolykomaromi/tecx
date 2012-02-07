@@ -53,6 +53,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Given_ContainerWithFactoryExtensionAndBuilder.cs" />
     <Compile Include="Given_ContainerWithBarRegistration.cs" />
     <Compile Include="Given_ContainerWithFooRegistration.cs" />
     <Compile Include="Given_ContainerWithTypedFactoryExtension.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="TestObjects\IFoo.cs" />
     <Compile Include="TestObjects\IMyFactory.cs" />
     <Compile Include="TestObjects\Snafu.cs" />
+    <Compile Include="When_RegisteringFactoryViaBuilder.cs" />
     <Compile Include="When_ResolvingArray.cs" />
     <Compile Include="When_ResolvingCollection.cs" />
     <Compile Include="When_ResolvingCollectionWithParameter.cs" />
@@ -75,6 +77,10 @@
     <ProjectReference Include="..\TecX.TestTools\TecX.TestTools.csproj">
       <Project>{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}</Project>
       <Name>TecX.TestTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Unity.Configuration\TecX.Unity.Configuration.csproj">
+      <Project>{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}</Project>
+      <Name>TecX.Unity.Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Unity.TypedFactory\TecX.Unity.TypedFactory.csproj">
       <Project>{2BF97DAC-6DEC-4576-B994-813686F5B0CA}</Project>

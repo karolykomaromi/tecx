@@ -7,7 +7,7 @@
 
     using TecX.Common;
 
-    public class CreateRegistrationFamilyExpression
+    public class CreateRegistrationFamilyExpression : IExtensibleConfiguration
     {
         private readonly Type @from;
         private readonly List<Action<RegistrationFamily>> alterations;
@@ -23,10 +23,18 @@
 
             builder.AddExpression(config =>
                 {
-                    RegistrationFamily family = config.FindFamily(this.@from);
+                    RegistrationFamily family = config.FindFamily(this.From);
 
                     this.alterations.ForEach(action => action(family));
                 });
+        }
+
+        public Type From
+        {
+            get
+            {
+                return this.@from;
+            }
         }
 
         public TypeRegistrationExpression Use<TTo>()
@@ -38,7 +46,7 @@
         {
             Guard.AssertNotNull(to, "to");
 
-            var expression = new TypeRegistrationExpression(this.@from, to);
+            var expression = new TypeRegistrationExpression(this.From, to);
 
             this.alterations.Add(family =>
             {
@@ -54,7 +62,7 @@
         {
             Guard.AssertNotNull(instance, "instance");
 
-            var expression = new InstanceRegistrationExpression(this.@from, instance);
+            var expression = new InstanceRegistrationExpression(this.From, instance);
 
             this.alterations.Add(family =>
             {
@@ -75,7 +83,7 @@
         {
             Guard.AssertNotNull(to, "to");
 
-            var expression = new NamedTypeRegistrationExpression(this.@from, to);
+            var expression = new NamedTypeRegistrationExpression(this.From, to);
 
             this.alterations.Add(family =>
             {
@@ -91,7 +99,7 @@
         {
             Guard.AssertNotNull(instance, "instance");
 
-            var expression = new NamedInstanceRegistrationExpression(this.@from, instance);
+            var expression = new NamedInstanceRegistrationExpression(this.From, instance);
 
             this.alterations.Add(family =>
             {
@@ -110,6 +118,17 @@
             this.alterations.Add(family => family.LifetimeIs(lifetime));
 
             return this;
+        }
+
+        /// <summary>
+        /// For configurationExtensions only!
+        /// </summary>
+        /// <param name="action"></param>
+        void IExtensibleConfiguration.AddAlternation(Action<RegistrationFamily> action)
+        {
+            Guard.AssertNotNull(action, "action");
+
+            this.alterations.Add(action);
         }
     }
 }
