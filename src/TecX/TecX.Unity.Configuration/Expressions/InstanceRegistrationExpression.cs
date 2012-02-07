@@ -11,8 +11,6 @@
         private readonly Type @from;
 
         private readonly object instance; 
-        
-        private string name;
 
         public InstanceRegistrationExpression(Type from, object instance)
         {

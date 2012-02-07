@@ -24,13 +24,13 @@ namespace TecX.Unity.Injection
             this.convention = NamingConvention.CreateForType(value.GetType());
         }
 
+        public object Value { get; private set; }
+
         public bool NameMatches(string name)
         {
             Guard.AssertNotEmpty(name, "name");
 
             return this.convention.NameMatches(name);
         }
-
-        public object Value { get; private set; }
     }
 }

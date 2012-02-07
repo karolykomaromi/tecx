@@ -10,11 +10,11 @@
     public static class UnityContainerExtensions
     {
         public static IUnityContainer RegisterType(
-            this IUnityContainer container, 
+            this IUnityContainer container,
             Type from,
             Type to,
-            Predicate<IBindingContext, IBuilderContext> predicate, 
-            LifetimeManager lifetime, 
+            Predicate<IBindingContext, IBuilderContext> predicate,
+            LifetimeManager lifetime,
             params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(container, "container");
@@ -35,7 +35,7 @@
         public static IUnityContainer RegisterType<TFrom, TTo>(
             this IUnityContainer container,
             Predicate<IBindingContext, IBuilderContext> predicate,
-            LifetimeManager lifetime, 
+            LifetimeManager lifetime,
             params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(container, "container");
@@ -54,8 +54,8 @@
         }
 
         public static IUnityContainer RegisterInstance<TFrom>(
-            this IUnityContainer container, 
-            object instance, 
+            this IUnityContainer container,
+            object instance,
             Predicate<IBindingContext, IBuilderContext> predicate)
         {
             Guard.AssertNotNull(container, "container");
@@ -64,9 +64,9 @@
         }
 
         public static IUnityContainer RegisterInstance<TFrom>(
-            this IUnityContainer container, 
+            this IUnityContainer container,
             object instance,
-            Predicate<IBindingContext, IBuilderContext> predicate, 
+            Predicate<IBindingContext, IBuilderContext> predicate,
             LifetimeManager lifetime)
         {
             Guard.AssertNotNull(container, "container");
@@ -96,7 +96,6 @@
             configuration.RegisterInstance(from, instance, predicate, lifetime);
 
             return container;
-            
         }
     }
 }

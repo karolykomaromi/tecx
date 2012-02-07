@@ -47,7 +47,6 @@ namespace TecX.Unity.Injection
             this.constructorArguments.AddRange(ctorArgs);
         }
 
-
         public IEnumerator<ConstructorArgument> GetEnumerator()
         {
             return this.constructorArguments.GetEnumerator();

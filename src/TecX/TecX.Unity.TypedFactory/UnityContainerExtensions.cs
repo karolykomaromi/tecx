@@ -54,7 +54,6 @@
             configuration.RegisterFactory(factoryType, selector);
 
             return container;
-            
         }
     }
 }

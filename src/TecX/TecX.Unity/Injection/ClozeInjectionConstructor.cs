@@ -62,7 +62,7 @@
             ConstructorInfo ctor;
             InjectionParameterValue[] parameterValues;
 
-            if(this.constructorArguments.IsEmpty)
+            if (this.constructorArguments.IsEmpty)
             {
                 ctor = implementationType.GetConstructor(Type.EmptyTypes);
 
