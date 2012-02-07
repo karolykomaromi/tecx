@@ -1,5 +1,6 @@
 ﻿namespace TecX.Unity.Configuration.Expressions
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
 
     using Microsoft.Practices.Unity;
@@ -16,6 +17,14 @@
         }
 
         public abstract Registration Compile();
+
+        protected void AddAlternation(CreateRegistrationFamilyExpression expression, Action<RegistrationFamily> action)
+        {
+            Guard.AssertNotNull(expression, "expression");
+            Guard.AssertNotNull(action, "action");
+
+            ((IExtensibleConfiguration)expression).AddAlternation(action);
+        }
     }
 
     [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass",
