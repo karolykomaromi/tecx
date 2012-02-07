@@ -7,8 +7,22 @@
 
     using TecX.Common;
 
-    public abstract class RegistrationExpression
+    public interface IExtensibilityInfrastructure
     {
+        void AddAlternation(CreateRegistrationFamilyExpression expression, Action<RegistrationFamily> action);
+
+        void SetCompilationStrategy(Func<Registration> compilationStrategy);
+    }
+
+    public abstract class RegistrationExpression : IExtensibilityInfrastructure
+    {
+        private Func<Registration> compilationStrategy;
+
+        protected RegistrationExpression()
+        {
+            ((IExtensibilityInfrastructure)this).SetCompilationStrategy(this.DefaultCompilationStrategy);
+        }
+
         public static implicit operator Registration(RegistrationExpression expression)
         {
             Guard.AssertNotNull(expression, "expression");
@@ -16,14 +30,26 @@
             return expression.Compile();
         }
 
-        public abstract Registration Compile();
+        public Registration Compile()
+        {
+            return this.compilationStrategy();
+        }
 
-        protected void AddAlternation(CreateRegistrationFamilyExpression expression, Action<RegistrationFamily> action)
+        protected abstract Registration DefaultCompilationStrategy();
+
+        void IExtensibilityInfrastructure.AddAlternation(CreateRegistrationFamilyExpression expression, Action<RegistrationFamily> action)
         {
             Guard.AssertNotNull(expression, "expression");
             Guard.AssertNotNull(action, "action");
 
-            ((IExtensibleConfiguration)expression).AddAlternation(action);
+            expression.AddAlternation(action);
+        }
+
+        void IExtensibilityInfrastructure.SetCompilationStrategy(Func<Registration> compilationStrategy)
+        {
+            Guard.AssertNotNull(compilationStrategy, "compilationStrategy");
+
+            this.compilationStrategy = compilationStrategy;
         }
     }
 

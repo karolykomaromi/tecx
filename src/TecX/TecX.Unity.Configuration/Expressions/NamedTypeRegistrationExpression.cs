@@ -38,7 +38,7 @@
             return this;
         }
 
-        public override Registration Compile()
+        protected override Registration DefaultCompilationStrategy()
         {
             return new TypeRegistration(this.From, this.To, this.Name, this.Lifetime, this.Enrichments);
         }

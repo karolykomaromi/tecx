@@ -10,7 +10,6 @@
 
     using TecX.Common;
     using TecX.Unity.Configuration.Utilities;
-    using TecX.Unity.ContextualBinding;
     using TecX.Unity.Enrichment;
     using TecX.Unity.Injection;
 
@@ -22,8 +21,6 @@
 
         private readonly Type to;
 
-        private Func<TypeRegistration> compile;
-
         public TypeRegistrationExpression(Type from, Type to)
         {
             Guard.AssertNotNull(from, "from");
@@ -33,27 +30,30 @@
 
             this.to = to;
 
-            this.compile = () => new TypeRegistration(this.From, this.To, null, this.Lifetime, this.Enrichments);
-
             this.enrichments = new InjectionMembers();
         }
 
-        protected Type From
+        public Type From
         {
             get { return this.@from; }
         }
 
-        protected Type To
+        public Type To
         {
             get { return this.to; }
         }
 
-        protected InjectionMember[] Enrichments
+        public InjectionMember[] Enrichments
         {
             get
             {
                 return this.enrichments.ToArray();
             }
+        }
+
+        protected override Registration DefaultCompilationStrategy()
+        {
+            return new TypeRegistration(this.From, this.To, null, this.Lifetime, this.Enrichments);
         }
 
         public TypeRegistrationExpression EnrichWith<T>(Action<T, IBuilderContext> action)
@@ -173,50 +173,6 @@
             this.enrichments.Add(overrides);
 
             return this;
-        }
-
-        public override Registration Compile()
-        {
-            return this.compile();
-        }
-
-        public TypeRegistrationExpression If(Predicate<IBindingContext, IBuilderContext> predicate)
-        {
-            Guard.AssertNotNull(predicate, "predicate");
-
-            this.compile = () =>
-                {
-                    var p = predicate;
-                    return new ContextualTypeRegistration(this.From, this.To, null, this.Lifetime, p, this.Enrichments);
-                };
-
-            return this;
-        }
-
-        private class ContextualTypeRegistration : TypeRegistration
-        {
-            private readonly Predicate<IBindingContext, IBuilderContext> predicate;
-
-            public ContextualTypeRegistration(
-                Type @from, 
-                Type to, 
-                string name, 
-                LifetimeManager lifetime, 
-                Predicate<IBindingContext, IBuilderContext> predicate, 
-                params InjectionMember[] enrichments)
-                : base(@from, to, name, lifetime, enrichments)
-            {
-                Guard.AssertNotNull(predicate, "predicate");
-
-                this.predicate = predicate;
-            }
-
-            public override void Configure(IUnityContainer container)
-            {
-                Guard.AssertNotNull(container, "container");
-
-                container.RegisterType(this.From, this.To, this.predicate, this.Lifetime, this.Enrichments);
-            }
         }
     }
 }

@@ -6,7 +6,7 @@ namespace TecX.Unity.ContextualBinding.Test
     using TecX.Unity.ContextualBinding.Test.TestObjects;
 
     [TestClass]
-    public class When_RegisteringContextualAfterDefaultMapping : Given_ContainerWithContextualBindingExtension
+    public class When_RegisteringContextualAfterDefaultMapping : Given_BuilderAndContainerWithContextualBindingExtension
     {
         protected override void When()
         {

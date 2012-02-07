@@ -38,7 +38,7 @@
             return this;
         }
 
-        public override Registration Compile()
+        protected override Registration DefaultCompilationStrategy()
         {
             return new InstanceRegistration(this.From, this.Name, this.Instance, this.Lifetime);
         }

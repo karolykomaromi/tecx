@@ -25,6 +25,7 @@ namespace TecX.ServiceModel.Test
         }
 
         [TestMethod]
+        [TestCategory("LongRunning")]
         public void Then_FindsCorrectEndPoints()
         {
             Assert.AreEqual(1, this.response.Endpoints.Count);

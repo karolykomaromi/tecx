@@ -1,22 +1,19 @@
-﻿namespace TecX.Unity.Configuration.Test
+namespace TecX.Unity.ContextualBinding.Test
 {
     using Microsoft.Practices.Unity;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using TecX.Unity.Configuration.Test.TestObjects;
-    using TecX.Unity.ContextualBinding;
+    using TecX.Unity.ContextualBinding.Configuration;
+    using TecX.Unity.ContextualBinding.Test.TestObjects;
 
     [TestClass]
-    public class When_ConfiguringContextualBindingForType : Given_ContainerAndBuilder
+    public class When_ConfiguringContextualBindingForType : Given_BuilderAndContainerWithContextualBindingExtension
     {
         private IFoo sut;
 
         protected override void Given()
         {
             base.Given();
-
-            this.container.AddNewExtension<ContextualBindingExtension>();
 
             this.builder.For<IFoo>().Use<Foo>().If((bindingCtx, builderCtx) => true);
         }

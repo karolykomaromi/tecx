@@ -56,6 +56,9 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Configuration\ContextualInstanceRegistration.cs" />
+    <Compile Include="Configuration\ContextualTypeRegistration.cs" />
+    <Compile Include="Configuration\ExpressionExtensions.cs" />
     <Compile Include="ContextualBuildKeyMappingPolicy.cs" />
     <Compile Include="ContextualBindingException.cs" />
     <Compile Include="ContextualBindingExtension.cs" />
@@ -70,6 +73,10 @@
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Unity.Configuration\TecX.Unity.Configuration.csproj">
+      <Project>{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}</Project>
+      <Name>TecX.Unity.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Unity\TecX.Unity.csproj">
       <Project>{69621991-8933-41FD-8493-87E7FA5A26FE}</Project>
       <Name>TecX.Unity</Name>
@@ -78,6 +85,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(ProgramFiles)\MSBuild\StyleCop\v4.7\StyleCop.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

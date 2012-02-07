@@ -50,6 +50,7 @@ namespace TecX.ServiceModel.Test
         }
 
         [TestMethod]
+        [TestCategory("LongRunning")]
         public void Then_CallIsExecutedAsynchronously()
         {
             Assert.IsTrue(this.callbackOccured);

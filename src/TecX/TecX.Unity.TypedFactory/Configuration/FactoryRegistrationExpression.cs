@@ -3,7 +3,6 @@ namespace TecX.Unity.TypedFactory.Configuration
     using System;
 
     using TecX.Common;
-    using TecX.Unity.Configuration;
     using TecX.Unity.Configuration.Expressions;
 
     public class FactoryRegistrationExpression : RegistrationExpression<FactoryRegistrationExpression>
@@ -20,7 +19,7 @@ namespace TecX.Unity.TypedFactory.Configuration
 
             this.selector = new DefaultTypedFactoryComponentSelector();
 
-            this.AddAlternation(expression, family => family.AddRegistration(this));
+            ((IExtensibilityInfrastructure)this).AddAlternation(expression, family => family.AddRegistration(this));
         }
 
         public FactoryRegistrationExpression WithSelector(ITypedFactoryComponentSelector selector)
@@ -32,7 +31,7 @@ namespace TecX.Unity.TypedFactory.Configuration
             return this;
         }
 
-        public override Registration Compile()
+        protected override Unity.Configuration.Registration DefaultCompilationStrategy()
         {
             return new FactoryRegistration(this.factoryType, null, this.Lifetime, this.selector);
         }

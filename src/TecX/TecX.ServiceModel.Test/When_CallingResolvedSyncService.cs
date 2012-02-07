@@ -28,6 +28,7 @@ namespace TecX.ServiceModel.Test
         }
 
         [TestMethod]
+        [TestCategory("LongRunning")]
         public void Then_ServiceReturnsExpectedValue()
         {
             Assert.AreEqual("Service called", response);
