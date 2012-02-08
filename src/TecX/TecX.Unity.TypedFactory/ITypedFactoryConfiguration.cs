@@ -6,6 +6,6 @@ namespace TecX.Unity.TypedFactory
 
     public interface ITypedFactoryConfiguration : IUnityContainerExtensionConfigurator
     {
-        void RegisterFactory(Type factoryType, ITypedFactoryComponentSelector selector);
+        void RegisterFactory(Type factoryType, string name, ITypedFactoryComponentSelector selector, LifetimeManager lifetime, params InjectionMember[] injectionMembers);
     }
 }
