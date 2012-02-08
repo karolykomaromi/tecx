@@ -8,14 +8,6 @@
 
     public static class LiteralExtensions
     {
-        public static void Times(this int i, Action action)
-        {
-            for (int j = 0; j < i; j++)
-            {
-                action();
-            }
-        }
-
         public static void Pass(this TimeSpan ts)
         {
             var previousTime = TimeProvider.Current.UtcNow;
