@@ -3,7 +3,7 @@ namespace TecX.ServiceModel.Test
     using Microsoft.Practices.Unity;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using TecX.ServiceModel.AutoMagic;
+    using TecX.ServiceModel.AutoMagic.Configuration;
     using TecX.ServiceModel.Test.TestClasses;
 
     [TestClass]
@@ -17,7 +17,7 @@ namespace TecX.ServiceModel.Test
         {
             base.Given();
 
-            this.container.RegisterForAutoDiscovery<ISyncService>();
+            this.container.RegisterType<ISyncService>(new AutoDiscoveryProxyFactory());
 
             this.service = this.container.Resolve<ISyncService>();
         }

@@ -28,7 +28,7 @@ namespace TecX.ServiceModel.AutoMagic.Configuration
         {
             SpecifiedSetupBuildPlanPolicy policy = new SpecifiedSetupBuildPlanPolicy(this.address, this.binding);
 
-            policies.Set<IBuildPlanPolicy>(policy, new NamedTypeBuildKey(serviceType, name));
+            policies.Set<IBuildPlanPolicy>(policy, new NamedTypeBuildKey(implementationType, name));
         }
     }
 }
