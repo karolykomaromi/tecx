@@ -6,28 +6,37 @@
 
     using TecX.Common;
 
-    public class TypeRegistration : Registration
+    public abstract class EnrichableRegistration : Registration
     {
-        private readonly Type to;
         private readonly InjectionMember[] enrichments;
 
-        public TypeRegistration(Type from, Type to, string name, LifetimeManager lifetime, params InjectionMember[] enrichments)
-            : base(from, name, lifetime)
+        protected EnrichableRegistration(Type @from, string name, LifetimeManager lifetime, params InjectionMember[] enrichments)
+            : base(@from, name, lifetime)
         {
-            Guard.AssertNotNull(to, "to");
-
-            this.to = to;
             this.enrichments = enrichments;
-        }
-
-        public Type To
-        {
-            get { return this.to; }
         }
 
         public InjectionMember[] Enrichments
         {
             get { return this.enrichments; }
+        }
+    }
+
+    public class TypeRegistration : EnrichableRegistration
+    {
+        private readonly Type to;
+
+        public TypeRegistration(Type from, Type to, string name, LifetimeManager lifetime, params InjectionMember[] enrichments)
+            : base(from, name, lifetime, enrichments)
+        {
+            Guard.AssertNotNull(to, "to");
+
+            this.to = to;
+        }
+
+        public Type To
+        {
+            get { return this.to; }
         }
 
         public override void Configure(IUnityContainer container)

@@ -8,24 +8,16 @@
 
     public class InstanceRegistrationExpression : RegistrationExpression<InstanceRegistrationExpression>
     {
-        private readonly Type @from;
-
         private readonly object instance; 
 
         public InstanceRegistrationExpression(Type from, object instance)
+            : base(from)
         {
-            Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(instance, "instance");
 
-            this.@from = from;
             this.instance = instance;
 
             LifetimeIs(new ContainerControlledLifetimeManager());
-        }
-
-        public Type From
-        {
-            get { return this.@from; }
         }
 
         public object Instance

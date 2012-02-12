@@ -11,22 +11,15 @@
     /// </summary>
     public interface IWcfProxyConfiguration : IUnityContainerExtensionConfigurator
     {
-        /// <summary>
-        /// Registers the type with the <see cref="WcfProxyContainerExtension"/>
-        /// </summary>
-        /// <typeparam name="TTypeToBuild">The type of the type to build.</typeparam>
-        /// <param name="name">Registers a named mapping that can be resolved via
-        ///   <code>container.Resolve{TTypeToBuild}("name")</code></param>
-        /// <param name="scopes"></param>
-        /// <returns></returns>
+        IWcfProxyConfiguration RegisterForAutoDiscovery(
+            Type contract,
+            string name,
+            LifetimeManager lifetime,
+            Uri[] scopes,
+            params InjectionMember[] injectionMembers);
+
         IWcfProxyConfiguration RegisterForAutoDiscovery<TTypeToBuild>(string name, params Uri[] scopes);
 
-        /// <summary>
-        /// Registers the type with the <see cref="WcfProxyContainerExtension"/>
-        /// </summary>
-        /// <param name="scopes"></param>
-        /// <typeparam name="TTypeToBuild">The type of the type to build.</typeparam>
-        /// <returns>A wcf client that uses auto-discovery to find the service</returns>
         IWcfProxyConfiguration RegisterForAutoDiscovery<TTypeToBuild>(params Uri[] scopes);
 
         IWcfProxyConfiguration RegisterForUsingAppConfig<TTypeToBuild>(string name, string endpointConfigName);

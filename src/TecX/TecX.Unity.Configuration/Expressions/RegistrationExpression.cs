@@ -51,12 +51,18 @@
     public abstract class RegistrationExpression<TRegistrationExpression> : RegistrationExpression
         where TRegistrationExpression : RegistrationExpression
     {
+        private readonly Type from;
+
         private string name;
 
         private LifetimeManager lifetime;
 
-        protected RegistrationExpression()
+        protected RegistrationExpression(Type @from)
         {
+            Guard.AssertNotNull(from, "from");
+
+            this.from = from;
+
             this.lifetime = new TransientLifetimeManager();
         }
 
@@ -74,6 +80,11 @@
             {
                 return this.name;
             }
+        }
+
+        public Type From
+        {
+            get { return this.@from; }
         }
 
         public TRegistrationExpression Named(string name)

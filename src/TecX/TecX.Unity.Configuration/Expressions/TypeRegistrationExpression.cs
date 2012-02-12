@@ -17,25 +17,16 @@
     {
         private readonly InjectionMembers enrichments;
 
-        private readonly Type @from;
-
         private readonly Type to;
 
         public TypeRegistrationExpression(Type from, Type to)
+            : base(from)
         {
-            Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(to, "to");
-
-            this.@from = from;
-
+            
             this.to = to;
 
             this.enrichments = new InjectionMembers();
-        }
-
-        public Type From
-        {
-            get { return this.@from; }
         }
 
         public Type To
