@@ -7,11 +7,11 @@
     using TecX.Common;
     using TecX.Common.Extensions.Error;
 
-    public class AppConfigBuildPlanPolicy : IBuildPlanPolicy
+    public class ConfigFileBuildPlanPolicy : IBuildPlanPolicy
     {
         private readonly string endpointConfigName;
 
-        public AppConfigBuildPlanPolicy(string endpointConfigName)
+        public ConfigFileBuildPlanPolicy(string endpointConfigName)
         {
             Guard.AssertNotNull(endpointConfigName, "endpointConfigName");
 

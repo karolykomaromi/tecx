@@ -10,7 +10,19 @@
 
     public static class UnityContainerExtensions
     {
-        public static IWcfProxyConfiguration RegisterForAutoDiscovery<TTypeToBuild>(this IUnityContainer container, string name, params Uri[] scopes)
+        public static IUnityContainer RegisterForAutoDiscovery(this IUnityContainer container, Type contract, string name, LifetimeManager lifetime, Uri[] scopes, params InjectionMember[] injectionMembers)
+        {
+            Guard.AssertNotNull(container, "container");
+            Guard.AssertNotNull(contract, "contract");
+
+            var config = container.Configure<IWcfProxyConfiguration>();
+
+            config.RegisterForAutoDiscovery(contract, name, lifetime, scopes, injectionMembers);
+
+            return container;
+        }
+
+        public static IUnityContainer RegisterForAutoDiscovery<TTypeToBuild>(this IUnityContainer container, string name, params Uri[] scopes)
         {
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotEmpty(name, "name");
@@ -19,10 +31,10 @@
 
             config.RegisterForAutoDiscovery<TTypeToBuild>(name, scopes);
 
-            return config;
+            return container;
         }
 
-        public static IWcfProxyConfiguration RegisterForAutoDiscovery<TTypeToBuild>(this IUnityContainer container, params Uri[] scopes)
+        public static IUnityContainer RegisterForAutoDiscovery<TTypeToBuild>(this IUnityContainer container, params Uri[] scopes)
         {
             Guard.AssertNotNull(container, "container");
 
@@ -30,10 +42,10 @@
 
             config.RegisterForAutoDiscovery<TTypeToBuild>(scopes);
 
-            return config;
+            return container;
         }
 
-        public static IWcfProxyConfiguration RegisterForUsingAppConfig<TTypeToBuild>(this IUnityContainer container, string name, string endpointConfigName)
+        public static IUnityContainer RegisterForUsingAppConfig<TTypeToBuild>(this IUnityContainer container, string name, string endpointConfigName)
         {
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotEmpty(name, "name");
@@ -43,10 +55,10 @@
 
             config.RegisterForUsingAppConfig<TTypeToBuild>(name, endpointConfigName);
 
-            return config;
+            return container;
         }
 
-        public static IWcfProxyConfiguration RegisterForUsingAppConfig<TTypeToBuild>(this IUnityContainer container, string endpointConfigName)
+        public static IUnityContainer RegisterForUsingAppConfig<TTypeToBuild>(this IUnityContainer container, string endpointConfigName)
         {
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotEmpty(endpointConfigName, "endpointConfigName");
@@ -55,10 +67,10 @@
 
             config.RegisterForUsingAppConfig<TTypeToBuild>(endpointConfigName);
 
-            return config;
+            return container;
         }
 
-        public static IWcfProxyConfiguration RegisterForManualSetup<TTypeToBuild>(this IUnityContainer container, string name, EndpointAddress address, Binding binding)
+        public static IUnityContainer RegisterForManualSetup<TTypeToBuild>(this IUnityContainer container, string name, EndpointAddress address, Binding binding)
         {
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotEmpty(name, "name");
@@ -69,10 +81,10 @@
 
             config.RegisterForManualSetup<TTypeToBuild>(name, address, binding);
 
-            return config;
+            return container;
         }
 
-        public static IWcfProxyConfiguration RegisterForManualSetup<TTypeToBuild>(this IUnityContainer container, EndpointAddress address, Binding binding)
+        public static IUnityContainer RegisterForManualSetup<TTypeToBuild>(this IUnityContainer container, EndpointAddress address, Binding binding)
         {
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(address, "address");
@@ -82,7 +94,7 @@
 
             config.RegisterForManualSetup<TTypeToBuild>(address, binding);
 
-            return config;
+            return container;
         }
     }
 }

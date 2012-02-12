@@ -11,6 +11,11 @@
 
     public class WcfProxyContainerExtension : UnityContainerExtension, IWcfProxyConfiguration
     {
+        public IWcfProxyConfiguration RegisterForAutoDiscovery(Type contract, string name, LifetimeManager lifetime, Uri[] scopes, params InjectionMember[] injectionMembers)
+        {
+            return this;
+        }
+
         /// <summary>
         /// Registers the type with the <see cref="WcfProxyContainerExtension"/>
         /// </summary>
@@ -43,7 +48,7 @@
         {
             Guard.AssertNotNull(endpointConfigName, "endpointConfigName");
 
-            AppConfigBuildPlanPolicy policy = new AppConfigBuildPlanPolicy(endpointConfigName);
+            ConfigFileBuildPlanPolicy policy = new ConfigFileBuildPlanPolicy(endpointConfigName);
 
             Context.Policies.Set<IBuildPlanPolicy>(policy, NamedTypeBuildKey.Make<TTypeToBuild>(name));
 
@@ -60,7 +65,7 @@
             Guard.AssertNotNull(address, "address");
             Guard.AssertNotNull(binding, "binding");
 
-            ManualSetupBuildPlanPolicy policy = new ManualSetupBuildPlanPolicy(address, binding);
+            SpecifiedSetupBuildPlanPolicy policy = new SpecifiedSetupBuildPlanPolicy(address, binding);
 
             Context.Policies.Set<IBuildPlanPolicy>(policy, NamedTypeBuildKey.Make<TTypeToBuild>(name));
 

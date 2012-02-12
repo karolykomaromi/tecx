@@ -58,12 +58,16 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="AppConfigBuildPlanPolicy.cs" />
+    <Compile Include="ConfigFileBuildPlanPolicy.cs" />
     <Compile Include="BindingDiscoveryServiceBehavior.cs" />
     <Compile Include="AutoDiscoveryBuildPlanPolicy.cs" />
+    <Compile Include="Configuration\AutoDiscoveryProxyFactory.cs" />
+    <Compile Include="Configuration\ConfigFileProxyFactory.cs" />
+    <Compile Include="Configuration\ExpressionExtensions.cs" />
+    <Compile Include="Configuration\SpecifiedSetupProxyFactory.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="IWcfProxyConfiguration.cs" />
-    <Compile Include="ManualSetupBuildPlanPolicy.cs" />
+    <Compile Include="SpecifiedSetupBuildPlanPolicy.cs" />
     <Compile Include="MetadataExportFailedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxyCreationFailedException.cs" />
@@ -80,7 +84,16 @@
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Unity.Configuration\TecX.Unity.Configuration.csproj">
+      <Project>{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}</Project>
+      <Name>TecX.Unity.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Unity\TecX.Unity.csproj">
+      <Project>{69621991-8933-41FD-8493-87E7FA5A26FE}</Project>
+      <Name>TecX.Unity</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(ProgramFiles)\MSBuild\StyleCop\v4.7\StyleCop.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

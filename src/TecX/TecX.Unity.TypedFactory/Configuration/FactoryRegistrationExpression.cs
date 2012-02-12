@@ -7,16 +7,11 @@ namespace TecX.Unity.TypedFactory.Configuration
 
     public class FactoryRegistrationExpression : RegistrationExpression<FactoryRegistrationExpression>
     {
-        private readonly Type factoryType;
-
         private ITypedFactoryComponentSelector selector;
 
         public FactoryRegistrationExpression(CreateRegistrationFamilyExpression expression, Type factoryType)
+            : base(factoryType)
         {
-            Guard.AssertNotNull(factoryType, "factoryType");
-
-            this.factoryType = factoryType;
-
             this.selector = new DefaultTypedFactoryComponentSelector();
 
             ((IExtensibilityInfrastructure)this).AddAlternation(expression, family => family.AddRegistration(this));
@@ -26,7 +21,7 @@ namespace TecX.Unity.TypedFactory.Configuration
         {
             get
             {
-                return this.factoryType;
+                return this.From;
             }
         }
 
