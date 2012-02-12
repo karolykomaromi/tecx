@@ -7,6 +7,7 @@ namespace TecX.ServiceModel.Test
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using TecX.ServiceModel.AutoMagic;
+    using TecX.ServiceModel.AutoMagic.Configuration;
     using TecX.ServiceModel.Test.TestClasses;
 
     [TestClass]
@@ -28,7 +29,7 @@ namespace TecX.ServiceModel.Test
 
             this.manualResetEvent = new ManualResetEvent(false);
 
-            this.container.RegisterForAutoDiscovery<IAsyncService>();
+            this.container.RegisterType(typeof(IAsyncService), new AutoDiscoveryProxyFactory());
 
             this.service = this.container.Resolve<IAsyncService>();
         }

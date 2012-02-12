@@ -22,7 +22,7 @@ namespace TecX.ServiceModel.AutoMagic.Configuration
         {
             ConfigFileBuildPlanPolicy policy = new ConfigFileBuildPlanPolicy(this.endpointConfigName);
 
-            policies.Set<IBuildPlanPolicy>(policy, new NamedTypeBuildKey(serviceType, name));
+            policies.Set<IBuildPlanPolicy>(policy, new NamedTypeBuildKey(implementationType, name));
         }
     }
 }

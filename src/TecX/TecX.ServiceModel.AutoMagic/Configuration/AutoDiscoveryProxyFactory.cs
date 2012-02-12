@@ -21,7 +21,7 @@ namespace TecX.ServiceModel.AutoMagic.Configuration
         {
             AutoDiscoveryBuildPlanPolicy policy = new AutoDiscoveryBuildPlanPolicy(this.scopes);
 
-            policies.Set<IBuildPlanPolicy>(policy, new NamedTypeBuildKey(serviceType, name));
+            policies.Set<IBuildPlanPolicy>(policy, new NamedTypeBuildKey(implementationType, name));
         }
     }
 }
