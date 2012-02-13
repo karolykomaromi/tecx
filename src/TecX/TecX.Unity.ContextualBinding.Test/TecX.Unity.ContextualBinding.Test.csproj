@@ -82,6 +82,7 @@
     <Compile Include="When_RegisteringBuilderAndInstanceAfterDefaultMapping.cs" />
     <Compile Include="When_RegisteringBuilderAndInstanceWithContext.cs" />
     <Compile Include="When_RegisteringBuilderAndInstanceWithFailingPredicate.cs" />
+    <Compile Include="When_RegisteringMultipleInstances.cs" />
     <Compile Include="When_RegisteringWithParentNamespaceCondition.cs" />
   </ItemGroup>
   <ItemGroup>

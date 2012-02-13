@@ -10,7 +10,7 @@
     using TecX.Common;
     using TecX.Unity.Tracking;
 
-    public class ContextualBindingExtension : UnityContainerExtension, IContextualBindingConfigurator, IContextPolicy
+    public class ContextualBindingExtension : UnityContainerExtension, IContextualBindingConfigurator
     {
         private readonly Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy> mappings;
 
@@ -25,30 +25,6 @@
             this.treeTracker = new BuildTreeTrackerStrategy();
         }
 
-        public IDictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy> Mappings
-        {
-            get
-            {
-                return this.mappings;
-            }
-        }
-
-        public IDictionary<string, object> BindingContext
-        {
-            get
-            {
-                return this.bindingContext;
-            }
-        }
-
-        public BuildTreeTrackerStrategy TreeTracker
-        {
-            get
-            {
-                return this.treeTracker;
-            }
-        }
-
         public object this[string key]
         {
             get
@@ -56,7 +32,7 @@
                 Guard.AssertNotEmpty(key, "key");
 
                 object value;
-                if (this.BindingContext.TryGetValue(key, out value))
+                if (this.bindingContext.TryGetValue(key, out value))
                 {
                     return value;
                 }
@@ -68,16 +44,11 @@
             {
                 Guard.AssertNotEmpty(key, "key");
 
-                this.BindingContext[key] = value;
+                this.bindingContext[key] = value;
             }
         }
 
-        public void RegisterType(
-            Type from,
-            Type to,
-            Predicate<IBindingContext, IBuilderContext> predicate,
-            LifetimeManager lifetime,
-            params InjectionMember[] injectionMembers)
+        public void RegisterType(Type @from, Type to, LifetimeManager lifetime, Predicate<IBindingContext, IBuilderContext> predicate, params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(to, "to");
@@ -102,11 +73,7 @@
             this.Container.RegisterType(from, to, uniqueMappingName, lifetime, injectionMembers);
         }
 
-        public void RegisterInstance(
-            Type from, 
-            object instance, 
-            Predicate<IBindingContext, IBuilderContext> predicate, 
-            LifetimeManager lifetime)
+        public void RegisterInstance(Type @from, object instance, LifetimeManager lifetime, Predicate<IBindingContext, IBuilderContext> predicate)
         {
             Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(instance, "instance");
@@ -135,9 +102,9 @@
         {
             this.Context.Registering += this.OnRegistering;
 
-            this.Context.Strategies.Add(this.TreeTracker, UnityBuildStage.PreCreation);
+            this.Context.RegisteringInstance += this.OnRegisteringInstance;
 
-            this.Context.Policies.Set<IContextPolicy>(this, Constants.ContextPolicyKey);
+            this.Context.Strategies.Add(this.treeTracker, UnityBuildStage.PreCreation);
         }
 
         private void OnRegistering(object sender, RegisterEventArgs e)
@@ -150,16 +117,33 @@
 
             NamedTypeBuildKey key = new NamedTypeBuildKey(e.TypeFrom);
 
+            this.AdjustMappingPolicy(key);
+        }
+
+        private void OnRegisteringInstance(object sender, RegisterInstanceEventArgs e)
+        {
+            // we are only interested in default mappings
+            if (!string.IsNullOrEmpty(e.Name))
+            {
+                return;
+            }
+
+            NamedTypeBuildKey key = new NamedTypeBuildKey(e.RegisteredType);
+
+            this.AdjustMappingPolicy(key);
+        }
+
+        private void AdjustMappingPolicy(NamedTypeBuildKey key)
+        {
             ContextualBuildKeyMappingPolicy policy;
-            if (this.Mappings.TryGetValue(key, out policy))
+            if (this.mappings.TryGetValue(key, out policy))
             {
                 // if something is already registered -> check if we have a registration with same name
                 // do the replace and last chance hookup if neccessary
                 IBuildKeyMappingPolicy existingPolicy = this.Context.Policies.Get<IBuildKeyMappingPolicy>(key);
                 ContextualBuildKeyMappingPolicy existingContextualPolicy = existingPolicy as ContextualBuildKeyMappingPolicy;
 
-                if (existingPolicy != null && 
-                    existingContextualPolicy == null)
+                if (existingPolicy != null && existingContextualPolicy == null)
                 {
                     // means that there is a default mapping registered but its not a contextual mapping
                     policy.DefaultMapping = existingPolicy;
@@ -177,20 +161,20 @@
             ContextualBuildKeyMappingPolicy existingContextualPolicy = existingPolicy as ContextualBuildKeyMappingPolicy;
 
             ContextualBuildKeyMappingPolicy policy;
-            if (!this.Mappings.TryGetValue(key, out policy))
+            if (!this.mappings.TryGetValue(key, out policy))
             {
                 // no existing contextual mapping policy for this build key so we have to create an
                 // new one and hook it up
                 policy = new ContextualBuildKeyMappingPolicy(new DefaultBindingContext(this));
 
-                if (existingPolicy != null && 
+                if (existingPolicy != null &&
                     existingContextualPolicy == null)
                 {
                     // means that there is a default mapping registered but its not a contextual mapping
                     policy.DefaultMapping = existingPolicy;
                 }
 
-                this.Mappings[key] = policy;
+                this.mappings[key] = policy;
 
                 this.Context.Policies.Set<IBuildKeyMappingPolicy>(policy, key);
             }
@@ -218,7 +202,7 @@
             {
                 get
                 {
-                    return this.Extension.TreeTracker.CurrentBuildNode;
+                    return this.Extension.treeTracker.CurrentBuildNode;
                 }
             }
 
@@ -236,29 +220,16 @@
                 {
                     Guard.AssertNotEmpty(key, "key");
 
-                    return this.Extension.BindingContext[key];
+                    return this.Extension.bindingContext[key];
                 }
 
                 set
                 {
                     Guard.AssertNotEmpty(key, "key");
 
-                    this.Extension.BindingContext[key] = value;
+                    this.Extension.bindingContext[key] = value;
                 }
             }
-        }
-
-        public void AddContextualMapping(Type from, Type to, Predicate<IBindingContext, IBuilderContext> predicate)
-        {
-            Guard.AssertNotNull(from, "from");
-            Guard.AssertNotNull(to, "to");
-
-            ContextualBuildKeyMappingPolicy policy = this.GetPolicy(from);
-
-            string uniqueMappingName = Guid.NewGuid().ToString();
-
-            // add another contextual mapping to the policy
-            policy.AddMapping(to, uniqueMappingName, predicate);
         }
     }
 }

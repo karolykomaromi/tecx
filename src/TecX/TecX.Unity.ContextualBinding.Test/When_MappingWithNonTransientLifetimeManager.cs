@@ -12,8 +12,7 @@ namespace TecX.Unity.ContextualBinding.Test
 
         protected override void When()
         {
-            container.RegisterType<IMyInterface, MyParameterLessClass>((bindingContext, builderContext) => true,
-                new ContainerControlledLifetimeManager());
+            container.RegisterType<IMyInterface, MyParameterLessClass>(new ContainerControlledLifetimeManager(), (bindingContext, builderContext) => true);
 
             first = container.Resolve<IMyInterface>();
 

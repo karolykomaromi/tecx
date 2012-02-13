@@ -60,7 +60,6 @@
     <Compile Include="Configuration\ContextualTypeRegistration.cs" />
     <Compile Include="Configuration\ExpressionExtensions.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="ContextualBinding.cs" />
     <Compile Include="ContextualBuildKeyMappingPolicy.cs" />
     <Compile Include="ContextualBindingException.cs" />
     <Compile Include="ContextualBindingExtension.cs" />

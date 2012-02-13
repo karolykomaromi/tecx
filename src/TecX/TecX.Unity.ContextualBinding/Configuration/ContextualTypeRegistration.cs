@@ -30,7 +30,7 @@ namespace TecX.Unity.ContextualBinding.Configuration
         {
             Guard.AssertNotNull(container, "container");
 
-            container.RegisterType(this.From, this.To, this.predicate, this.Lifetime, this.Enrichments);
+            container.RegisterType(this.From, this.To, this.Lifetime, this.predicate, this.Enrichments);
         }
     }
 }

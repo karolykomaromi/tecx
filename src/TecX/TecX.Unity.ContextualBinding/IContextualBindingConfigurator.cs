@@ -11,8 +11,8 @@
     {
         object this[string key] { get; set; }
 
-        void RegisterType(Type from, Type to, Predicate<IBindingContext, IBuilderContext> predicate, LifetimeManager lifetime, params InjectionMember[] injectionMembers);
+        void RegisterType(Type @from, Type to, LifetimeManager lifetime, Predicate<IBindingContext, IBuilderContext> predicate, params InjectionMember[] injectionMembers);
 
-        void RegisterInstance(Type from, object instance, Predicate<IBindingContext, IBuilderContext> predicate, LifetimeManager lifetime);
+        void RegisterInstance(Type @from, object instance, LifetimeManager lifetime, Predicate<IBindingContext, IBuilderContext> predicate);
     }
 }
