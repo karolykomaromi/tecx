@@ -6,7 +6,6 @@ namespace TecX.ServiceModel.Test
 
     using Microsoft.Practices.Unity;
 
-    using TecX.ServiceModel.AutoMagic;
     using TecX.ServiceModel.Test.TestClasses;
     using TecX.TestTools;
 
@@ -30,8 +29,6 @@ namespace TecX.ServiceModel.Test
             this.host.Open();
 
             this.container = new UnityContainer();
-
-            this.container.AddNewExtension<WcfProxyContainerExtension>();
         }
 
         protected override void Teardown()

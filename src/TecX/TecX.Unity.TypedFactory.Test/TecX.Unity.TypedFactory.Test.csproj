@@ -53,7 +53,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Given_ContainerWithFactoryExtensionAndBuilder.cs" />
+    <Compile Include="Given_ContainerAndBuilder.cs" />
     <Compile Include="Given_ContainerWithBarRegistration.cs" />
     <Compile Include="Given_ContainerWithFooRegistration.cs" />
     <Compile Include="Given_ContainerWithTypedFactoryExtension.cs" />

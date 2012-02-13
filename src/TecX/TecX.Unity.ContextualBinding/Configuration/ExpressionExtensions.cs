@@ -12,7 +12,7 @@
             Guard.AssertNotNull(expression, "expression");
             Guard.AssertNotNull(predicate, "predicate");
 
-            ((IExtensibilityInfrastructure)expression).SetCompilationStrategy(() =>
+            expression.SetCompilationStrategy(() =>
                 {
                     var p = predicate;
                     var expr = expression;
@@ -28,7 +28,7 @@
             Guard.AssertNotNull(expression, "expression");
             Guard.AssertNotNull(predicate, "predicate");
 
-            ((IExtensibilityInfrastructure)expression).SetCompilationStrategy(() =>
+            expression.SetCompilationStrategy(() =>
             {
                 var p = predicate;
                 var expr = expression;

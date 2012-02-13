@@ -1,12 +1,10 @@
-using System.Collections.Generic;
-
-using Microsoft.Practices.Unity;
-
-using TecX.TestTools;
-using TecX.Unity.TypedFactory.Test.TestObjects;
-
 namespace TecX.Unity.TypedFactory.Test
 {
+    using Microsoft.Practices.Unity;
+
+    using TecX.TestTools;
+    using TecX.Unity.TypedFactory.Test.TestObjects;
+
     public abstract class Given_ContainerWithTypedFactoryExtension : GivenWhenThen
     {
         protected IUnityContainer container;
@@ -18,8 +16,7 @@ namespace TecX.Unity.TypedFactory.Test
         protected override void Given()
         {
             container = new UnityContainer();
-            container.AddNewExtension<TypedFactoryExtension>();
-            container.RegisterFactory<IMyFactory>();
+            container.RegisterType<IMyFactory>(new TypedFactory());
 
             _factory = container.Resolve<IMyFactory>();
         }
