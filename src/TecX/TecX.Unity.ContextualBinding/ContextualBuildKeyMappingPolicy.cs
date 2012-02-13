@@ -61,7 +61,7 @@
                                                  "defined and no default mapping could be found.");
         }
 
-        public void AddMapping(Predicate<IBindingContext, IBuilderContext> predicate, Type mapTo, string uniqueMappingName)
+        public void AddMapping(Type mapTo, string uniqueMappingName, Predicate<IBindingContext, IBuilderContext> predicate)
         {
             Guard.AssertNotNull(predicate, "predicate");
             Guard.AssertNotNull(mapTo, "mapTo");

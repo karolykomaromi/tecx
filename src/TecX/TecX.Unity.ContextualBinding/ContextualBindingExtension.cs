@@ -10,7 +10,7 @@
     using TecX.Common;
     using TecX.Unity.Tracking;
 
-    public class ContextualBindingExtension : UnityContainerExtension, IContextualBindingConfigurator
+    public class ContextualBindingExtension : UnityContainerExtension, IContextualBindingConfigurator, IContextPolicy
     {
         private readonly Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy> mappings;
 
@@ -95,7 +95,7 @@
             string uniqueMappingName = Guid.NewGuid().ToString();
 
             // add another contextual mapping to the policy
-            policy.AddMapping(predicate, to, uniqueMappingName);
+            policy.AddMapping(to, uniqueMappingName, predicate);
 
             // by registering our mapping under a name that is guaranteed to be unique we can make use
             // of the full container infrastructure that is already in place
@@ -124,7 +124,7 @@
             // add another contextual mapping to the policy. this is a speciality of Unity. seems like they call
             // it "identityKey" where from -> to.
             // see UnityDefaultBehaviorExtension.OnRegisterInstance
-            policy.AddMapping(predicate, from, uniqueMappingName);
+            policy.AddMapping(@from, uniqueMappingName, predicate);
 
             // by registering our mapping under a name that is guaranteed to be unique we can make use
             // of the full container infrastructure that is already in place
@@ -136,6 +136,8 @@
             this.Context.Registering += this.OnRegistering;
 
             this.Context.Strategies.Add(this.TreeTracker, UnityBuildStage.PreCreation);
+
+            this.Context.Policies.Set<IContextPolicy>(this, Constants.ContextPolicyKey);
         }
 
         private void OnRegistering(object sender, RegisterEventArgs e)
@@ -244,6 +246,19 @@
                     this.Extension.BindingContext[key] = value;
                 }
             }
+        }
+
+        public void AddContextualMapping(Type from, Type to, Predicate<IBindingContext, IBuilderContext> predicate)
+        {
+            Guard.AssertNotNull(from, "from");
+            Guard.AssertNotNull(to, "to");
+
+            ContextualBuildKeyMappingPolicy policy = this.GetPolicy(from);
+
+            string uniqueMappingName = Guid.NewGuid().ToString();
+
+            // add another contextual mapping to the policy
+            policy.AddMapping(to, uniqueMappingName, predicate);
         }
     }
 }
