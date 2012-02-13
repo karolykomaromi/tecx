@@ -10,11 +10,11 @@
     public static class UnityContainerExtensions
     {
         public static IUnityContainer RegisterType(
-            this IUnityContainer container,
-            Type from,
-            Type to,
-            Predicate<IBindingContext, IBuilderContext> predicate,
-            LifetimeManager lifetime,
+            this IUnityContainer container, 
+            Type @from, 
+            Type to, 
+            LifetimeManager lifetime, 
+            Predicate<IBindingContext, IBuilderContext> predicate, 
             params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(container, "container");
@@ -27,59 +27,59 @@
                 throw new ContextualBindingException("ContextualBindingExtension must be registered with the container!");
             }
 
-            configuration.RegisterType(from, to, predicate, lifetime, injectionMembers);
+            configuration.RegisterType(@from, to, lifetime, predicate, injectionMembers);
 
             return container;
         }
 
         public static IUnityContainer RegisterType<TFrom, TTo>(
-            this IUnityContainer container,
-            Predicate<IBindingContext, IBuilderContext> predicate,
-            LifetimeManager lifetime,
+            this IUnityContainer container, 
+            LifetimeManager lifetime, 
+            Predicate<IBindingContext, IBuilderContext> predicate, 
             params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(container, "container");
 
-            return RegisterType(container, typeof(TFrom), typeof(TTo), predicate, lifetime, injectionMembers);
+            return RegisterType(container, typeof(TFrom), typeof(TTo), lifetime, predicate, injectionMembers);
         }
 
         public static IUnityContainer RegisterType<TFrom, TTo>(
-            this IUnityContainer container,
-            Predicate<IBindingContext, IBuilderContext> predicate,
+            this IUnityContainer container, 
+            Predicate<IBindingContext, IBuilderContext> predicate, 
             params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(container, "container");
 
-            return RegisterType(container, typeof(TFrom), typeof(TTo), predicate, new TransientLifetimeManager(), injectionMembers);
+            return RegisterType(container, typeof(TFrom), typeof(TTo), new TransientLifetimeManager(), predicate, injectionMembers);
         }
 
         public static IUnityContainer RegisterInstance<TFrom>(
-            this IUnityContainer container,
-            object instance,
+            this IUnityContainer container, 
+            object instance, 
             Predicate<IBindingContext, IBuilderContext> predicate)
         {
             Guard.AssertNotNull(container, "container");
 
-            return RegisterInstance<TFrom>(container, instance, predicate, new ContainerControlledLifetimeManager());
+            return RegisterInstance<TFrom>(container, instance, new ContainerControlledLifetimeManager(), predicate);
         }
 
         public static IUnityContainer RegisterInstance<TFrom>(
-            this IUnityContainer container,
-            object instance,
-            Predicate<IBindingContext, IBuilderContext> predicate,
-            LifetimeManager lifetime)
+            this IUnityContainer container, 
+            object instance, 
+            LifetimeManager lifetime, 
+            Predicate<IBindingContext, IBuilderContext> predicate)
         {
             Guard.AssertNotNull(container, "container");
 
-            return RegisterInstance(container, typeof(TFrom), instance, predicate, lifetime);
+            return RegisterInstance(container, typeof(TFrom), instance, lifetime, predicate);
         }
 
         public static IUnityContainer RegisterInstance(
-            this IUnityContainer container,
-            Type from,
-            object instance,
-            Predicate<IBindingContext, IBuilderContext> predicate,
-            LifetimeManager lifetime)
+            this IUnityContainer container, 
+            Type @from, 
+            object instance, 
+            LifetimeManager lifetime, 
+            Predicate<IBindingContext, IBuilderContext> predicate)
         {
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(from, "from");
@@ -93,7 +93,7 @@
                 throw new ContextualBindingException("ContextualBindingExtension must be registered with the container!");
             }
 
-            configuration.RegisterInstance(from, instance, predicate, lifetime);
+            configuration.RegisterInstance(@from, instance, lifetime, predicate);
 
             return container;
         }

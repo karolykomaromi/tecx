@@ -29,7 +29,7 @@ namespace TecX.Unity.ContextualBinding.Configuration
         {
             Guard.AssertNotNull(container, "container");
 
-            container.RegisterInstance(this.From, this.Instance, this.predicate, this.Lifetime);
+            container.RegisterInstance(this.From, this.Instance, this.Lifetime, this.predicate);
         }
     }
 }
