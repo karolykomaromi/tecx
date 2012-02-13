@@ -5,11 +5,27 @@
 
     public static class CreateRegistrationFamilyExpressionExtensions
     {
-        public static FactoryRegistrationExpression UseFactory(this CreateRegistrationFamilyExpression expression)
+        public static TypeRegistrationExpression UseFactory(this CreateRegistrationFamilyExpression expression)
         {
             Guard.AssertNotNull(expression, "expression");
 
-            return new FactoryRegistrationExpression(expression, expression.From);
+            var x = expression.Use(expression.From);
+
+            x.EnrichWith(im => im.Add(new TypedFactory()));
+
+            return x;
+        }
+
+        public static TypeRegistrationExpression UseFactory(this CreateRegistrationFamilyExpression expression, ITypedFactoryComponentSelector selector)
+        {
+            Guard.AssertNotNull(expression, "expression");
+            Guard.AssertNotNull(selector, "selector");
+
+            var x = expression.Use(expression.From);
+
+            x.EnrichWith(im => im.Add(new TypedFactory(selector)));
+
+            return x;
         }
     }
 }

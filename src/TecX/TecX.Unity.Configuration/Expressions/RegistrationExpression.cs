@@ -7,13 +7,13 @@
 
     using TecX.Common;
 
-    public abstract class RegistrationExpression : IExtensibilityInfrastructure
+    public abstract class RegistrationExpression
     {
         private Func<Registration> compilationStrategy;
 
         protected RegistrationExpression()
         {
-            ((IExtensibilityInfrastructure)this).SetCompilationStrategy(this.DefaultCompilationStrategy);
+            this.SetCompilationStrategy(this.DefaultCompilationStrategy);
         }
 
         public static implicit operator Registration(RegistrationExpression expression)
@@ -28,15 +28,7 @@
             return this.compilationStrategy();
         }
 
-        void IExtensibilityInfrastructure.AddAlternation(CreateRegistrationFamilyExpression expression, Action<RegistrationFamily> action)
-        {
-            Guard.AssertNotNull(expression, "expression");
-            Guard.AssertNotNull(action, "action");
-
-            expression.AddAlternation(action);
-        }
-
-        void IExtensibilityInfrastructure.SetCompilationStrategy(Func<Registration> compilationStrategy)
+        public void SetCompilationStrategy(Func<Registration> compilationStrategy)
         {
             Guard.AssertNotNull(compilationStrategy, "compilationStrategy");
 

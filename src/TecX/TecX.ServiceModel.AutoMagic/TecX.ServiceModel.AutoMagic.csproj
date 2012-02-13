@@ -66,13 +66,11 @@
     <Compile Include="Configuration\ExpressionExtensions.cs" />
     <Compile Include="Configuration\SpecifiedSetupProxyFactory.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="IWcfProxyConfiguration.cs" />
     <Compile Include="SpecifiedSetupBuildPlanPolicy.cs" />
     <Compile Include="MetadataExportFailedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxyCreationFailedException.cs" />
     <Compile Include="ServiceInfo.cs" />
-    <Compile Include="WcfProxyContainerExtension.cs" />
     <Compile Include="WcfServiceHelper.cs" />
   </ItemGroup>
   <ItemGroup>

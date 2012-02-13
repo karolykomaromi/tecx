@@ -7,7 +7,7 @@ namespace TecX.Unity.TypedFactory.Test
     using TecX.Unity.TypedFactory.Test.TestObjects;
 
     [TestClass]
-    public class When_RegisteringFactoryViaBuilder : Given_ContainerWithFactoryExtensionAndBuilder
+    public class When_RegisteringFactoryViaBuilder : Given_ContainerAndBuilder
     {
         private IMyFactory sut;
 

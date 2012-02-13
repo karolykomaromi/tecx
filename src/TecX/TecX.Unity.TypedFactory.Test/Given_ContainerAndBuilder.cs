@@ -5,7 +5,7 @@
     using TecX.TestTools;
     using TecX.Unity.Configuration;
 
-    public abstract class Given_ContainerWithFactoryExtensionAndBuilder : GivenWhenThen
+    public abstract class Given_ContainerAndBuilder : GivenWhenThen
     {
         protected IUnityContainer container;
 
@@ -16,8 +16,6 @@
             this.container = new UnityContainer();
 
             this.builder = new ConfigurationBuilder();
-
-            this.container.AddNewExtension<TypedFactoryExtension>();
         }
 
         protected override void When()
