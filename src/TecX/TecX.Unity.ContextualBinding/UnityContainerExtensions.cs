@@ -20,7 +20,7 @@
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(predicate, "predicate");
 
-            var configuration = container.Configure<IContextualBindingConfigurator>();
+            var configuration = container.Configure<IContextualBinding>();
 
             if (configuration == null)
             {
@@ -86,7 +86,7 @@
             Guard.AssertNotNull(predicate, "predicate");
             Guard.AssertNotNull(instance, "instance");
 
-            var configuration = container.Configure<IContextualBindingConfigurator>();
+            var configuration = container.Configure<IContextualBinding>();
 
             if (configuration == null)
             {
