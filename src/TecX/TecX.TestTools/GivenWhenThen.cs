@@ -1,5 +1,7 @@
 ﻿namespace TecX.TestTools
 {
+    using System.Diagnostics;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     /// <summary>
@@ -7,6 +9,7 @@
     /// methods to set up test actions and the "when" statements. "Then" is
     /// encapsulated by the [TestMethod]s themselves.
     /// </summary>
+    [DebuggerStepThrough]
     public abstract class GivenWhenThen
     {
         [TestInitialize]

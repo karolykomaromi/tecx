@@ -7,7 +7,7 @@
 
     using TecX.Common;
 
-    public interface IContextualBindingConfigurator : IUnityContainerExtensionConfigurator
+    public interface IContextualBinding : IUnityContainerExtensionConfigurator
     {
         object this[string key] { get; set; }
 

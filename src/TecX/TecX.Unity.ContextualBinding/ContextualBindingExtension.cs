@@ -10,7 +10,7 @@
     using TecX.Common;
     using TecX.Unity.Tracking;
 
-    public class ContextualBindingExtension : UnityContainerExtension, IContextualBindingConfigurator
+    public class ContextualBindingExtension : UnityContainerExtension, IContextualBinding
     {
         private readonly Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy> mappings;
 

@@ -11,7 +11,6 @@
 
     public class RegistrationFamily : IEnumerable<Registration>, IConfigAction
     {
-        private static readonly string DefaultRegistrationKey = string.Empty;
         private readonly Type @from;
         private readonly Cache<string, Registration> registrations;
 
@@ -32,7 +31,7 @@
         {
             Guard.AssertNotNull(registration, "registration");
 
-            this.registrations[registration.Name ?? DefaultRegistrationKey] = registration;
+            this.registrations[Guid.NewGuid().ToString()] = registration;
         }
 
         public void LifetimeIs(Func<LifetimeManager> lifetime)
