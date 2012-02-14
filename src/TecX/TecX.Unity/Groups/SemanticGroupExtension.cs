@@ -1,14 +1,21 @@
 ﻿namespace TecX.Unity.Groups
 {
+    using System;
+
     using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.ObjectBuilder;
 
+    using TecX.Common;
+
     public class SemanticGroupExtension : UnityContainerExtension, ISemanticGroupConfigurator
     {
-        public ISemanticGroup RegisterAsGroup<TFrom, TTo>(string name)
+        public ISemanticGroup RegisterAsGroup(Type from, Type to, string name)
         {
-            return new SemanticGroup(new SemanticGroupContext(this), typeof(TFrom), typeof(TTo), name);
+            Guard.AssertNotNull(from, "from");
+            Guard.AssertNotNull(to, "to");
+
+            return new SemanticGroup(new SemanticGroupContext(this), from, to, name);
         }
 
         protected override void Initialize()

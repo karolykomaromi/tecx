@@ -15,7 +15,7 @@
                 .PersistentPolicies
                 .Get<ILifetimePolicy>(context.BuildKey, out policySource);
 
-            if (object.ReferenceEquals(policySource, context.PersistentPolicies))
+            if (ReferenceEquals(policySource, context.PersistentPolicies))
             {
                 return;
             }
@@ -27,7 +27,7 @@
                 return;
             }
 
-            var childLifetime = cacheLifetime.Clone();
+            CacheLifetimeManager childLifetime = cacheLifetime.Clone();
 
             context
                 .PersistentPolicies
