@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TecX.Unity.Collections;
-using TecX.Unity.Test.TestObjects;
-
-namespace TecX.Unity.Test
+﻿namespace TecX.Unity.Test
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Microsoft.Practices.Unity;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using TecX.Unity.Collections;
+    using TecX.Unity.Test.TestObjects;
+
     [TestClass]
 	public class CollectionResolutionExtensionFixture
 	{

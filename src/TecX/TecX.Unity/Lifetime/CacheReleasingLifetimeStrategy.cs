@@ -14,7 +14,7 @@
 
             var lifetimes = context.Lifetime.OfType<CacheLifetimeManager>();
 
-            foreach (var lifetimePolicy in lifetimes)
+            foreach (CacheLifetimeManager lifetimePolicy in lifetimes)
             {
                 lifetimePolicy.RemoveValue();
             }
