@@ -5,7 +5,7 @@
 
     public static class CreateRegistrationFamilyExpressionExtensions
     {
-        public static TypeRegistrationExpression UseFactory(this CreateRegistrationFamilyExpression expression)
+        public static TypeRegistrationExpression AsFactory(this CreateRegistrationFamilyExpression expression)
         {
             Guard.AssertNotNull(expression, "expression");
 
@@ -16,7 +16,7 @@
             return x;
         }
 
-        public static TypeRegistrationExpression UseFactory(this CreateRegistrationFamilyExpression expression, ITypedFactoryComponentSelector selector)
+        public static TypeRegistrationExpression AsFactory(this CreateRegistrationFamilyExpression expression, ITypedFactoryComponentSelector selector)
         {
             Guard.AssertNotNull(expression, "expression");
             Guard.AssertNotNull(selector, "selector");
