@@ -59,10 +59,15 @@
     <Compile Include="Given_ContainerWithTypedFactoryExtension.cs" />
     <Compile Include="Given_FooAndSnafuRegistration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyOverrideFixture.cs" />
     <Compile Include="TestObjects\Bar.cs" />
+    <Compile Include="TestObjects\CustomerRepository.cs" />
     <Compile Include="TestObjects\Foo.cs" />
+    <Compile Include="TestObjects\ICustomerRepository.cs" />
+    <Compile Include="TestObjects\ICustomerRepositoryFactory.cs" />
     <Compile Include="TestObjects\IFoo.cs" />
     <Compile Include="TestObjects\IMyFactory.cs" />
+    <Compile Include="TestObjects\IRepository.cs" />
     <Compile Include="TestObjects\Snafu.cs" />
     <Compile Include="When_RegisteringFactoryViaBuilder.cs" />
     <Compile Include="When_ResolvingArray.cs" />

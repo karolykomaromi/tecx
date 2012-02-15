@@ -12,9 +12,9 @@ namespace TecX.Unity.TypedFactory
 
         private readonly Type typeToBuild;
 
-        private readonly ParameterOverrides additionalArguments;
+        private readonly ResolverOverrides additionalArguments;
 
-        public TypedFactoryComponent(Type typeToBuild, string nameToBuild, ParameterOverrides additionalArguments)
+        public TypedFactoryComponent(Type typeToBuild, string nameToBuild, ResolverOverrides additionalArguments)
             : this(typeToBuild, additionalArguments)
         {
             if (nameToBuild == string.Empty)
@@ -25,7 +25,7 @@ namespace TecX.Unity.TypedFactory
             this.nameToBuild = nameToBuild;
         }
 
-        protected TypedFactoryComponent(Type typeToBuild, ParameterOverrides additionalArguments)
+        protected TypedFactoryComponent(Type typeToBuild, ResolverOverrides additionalArguments)
         {
             Guard.AssertNotNull(typeToBuild, "typeToBuild");
             Guard.AssertNotNull(additionalArguments, "additionalArguments");
@@ -50,7 +50,7 @@ namespace TecX.Unity.TypedFactory
             }
         }
 
-        public ParameterOverrides AdditionalArguments
+        public ResolverOverrides AdditionalArguments
         {
             get
             {
@@ -62,7 +62,7 @@ namespace TecX.Unity.TypedFactory
         {
             Guard.AssertNotNull(container, "container");
 
-            object resolved = container.Resolve(this.TypeToBuild, this.NameToBuild, this.AdditionalArguments);
+            object resolved = container.Resolve(this.TypeToBuild, this.NameToBuild, this.AdditionalArguments.ToArray());
 
             return resolved;
         }
