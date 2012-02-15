@@ -13,12 +13,12 @@
         protected override void Initialize()
         {
             this.registrationStack = new RegistrationStack();
-            this.Context.Registering += this.AddRegistration;
+            this.Context.Registering += this.OnRegistering;
 
             this.Context.Strategies.Add(new DecoratorStrategy(this.registrationStack), UnityBuildStage.PreCreation);
         }
 
-        private void AddRegistration(object sender, RegisterEventArgs e)
+        private void OnRegistering(object sender, RegisterEventArgs e)
         {
             if (!e.TypeFrom.IsInterface)
             {

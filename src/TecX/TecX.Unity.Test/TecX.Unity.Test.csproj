@@ -85,7 +85,9 @@
     <Compile Include="NamingConventionFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClozeInjectionConstructorFixture.cs" />
+    <Compile Include="ReportCreationExceptionExtensionFixture.cs" />
     <Compile Include="SemanticGroupFixture.cs" />
+    <Compile Include="TestObjects\AlwaysThrows.cs" />
     <Compile Include="TestObjects\Bar.cs" />
     <Compile Include="TestObjects\Car.cs" />
     <Compile Include="TestObjects\CarEngine.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="TestObjects\CtorTest.cs" />
     <Compile Include="TestObjects\DefaultCtorOnly.cs" />
     <Compile Include="TestObjects\Foo.cs" />
+    <Compile Include="TestObjects\IAlwaysThrows.cs" />
     <Compile Include="TestObjects\IContract.cs" />
     <Compile Include="TestObjects\ICtorTest.cs" />
     <Compile Include="TestObjects\IEngine.cs" />
