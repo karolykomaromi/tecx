@@ -20,7 +20,7 @@ namespace TecX.Unity.TypedFactory
         {
             Guard.AssertNotNull(container, "container");
 
-            IEnumerable<TItem> resolved = container.ResolveAll<TItem>(AdditionalArguments.ToArray());
+            IEnumerable<TItem> resolved = container.ResolveAll<TItem>(this.AdditionalArguments);
 
             if (TypeToBuild.IsAssignableFrom(typeof(IEnumerable<TItem>)))
             {

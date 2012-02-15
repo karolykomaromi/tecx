@@ -58,6 +58,7 @@
     <Compile Include="Error\GuardArgumentOutOfRangeException.cs" />
     <Compile Include="Error\StackTraceCleaner.cs" />
     <Compile Include="Extensions\Primitives\LiteralExtensions.cs" />
+    <Compile Include="Extensions\Primitives\StringExtensions.cs" />
     <Compile Include="Predicate.cs" />
     <Compile Include="Reflection\Constructor.cs" />
     <Compile Include="Reflection\GenericsHelper.cs" />

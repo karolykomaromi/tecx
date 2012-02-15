@@ -1,12 +1,12 @@
 namespace TecX.Unity.TypedFactory
 {
     using System;
-    using System.Collections.Generic;
     using System.Reflection;
 
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
+    using TecX.Common.Extensions.Primitives;
 
     public class DefaultTypedFactoryComponentSelector : ITypedFactoryComponentSelector
     {
@@ -54,9 +54,8 @@ namespace TecX.Unity.TypedFactory
             for (int i = 0; i < input.Length; i++)
             {
                 parameters.Add(new ParameterOverride(input[i].Name, arguments[i]));
-                //parameters.Add(input[i].Name, arguments[i]);
 
-                string propertyName = input[i].Name.Substring(0, 1).ToUpper() + input[i].Name.Substring(1);
+                string propertyName = input[i].Name.ToUpper(0, 1);
 
                 parameters.Add(new PropertyOverride(propertyName, arguments[i]));
             }
@@ -83,28 +82,6 @@ namespace TecX.Unity.TypedFactory
             Guard.AssertNotNull(method, "method");
 
             return method.ReturnType;
-        }
-    }
-
-    public class ResolverOverrides
-    {
-        private readonly List<ResolverOverride> overrides;
-
-        public ResolverOverrides()
-        {
-            this.overrides = new List<ResolverOverride>();
-        }
-
-        public void Add(ResolverOverride @override)
-        {
-            Guard.AssertNotNull(@override, "override");
-
-            this.overrides.Add(@override);
-        }
-
-        public ResolverOverride[] ToArray()
-        {
-            return this.overrides.ToArray();
         }
     }
 }

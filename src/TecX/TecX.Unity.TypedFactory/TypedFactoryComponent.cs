@@ -62,7 +62,7 @@ namespace TecX.Unity.TypedFactory
         {
             Guard.AssertNotNull(container, "container");
 
-            object resolved = container.Resolve(this.TypeToBuild, this.NameToBuild, this.AdditionalArguments.ToArray());
+            object resolved = container.Resolve(this.TypeToBuild, this.NameToBuild, this.AdditionalArguments);
 
             return resolved;
         }
