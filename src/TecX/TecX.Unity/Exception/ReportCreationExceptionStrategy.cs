@@ -8,9 +8,9 @@ namespace TecX.Unity.Exception
 
     public class ReportCreationExceptionStrategy : BuilderStrategy
     {
-        private readonly Action<Exception> report;
+        private readonly Action<Exception, IBuilderContext, IBuildPlanPolicy> report;
 
-        public ReportCreationExceptionStrategy(Action<Exception> report)
+        public ReportCreationExceptionStrategy(Action<Exception, IBuilderContext, IBuildPlanPolicy> report)
         {
             Guard.AssertNotNull(report, "report");
 
