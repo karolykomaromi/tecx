@@ -1,6 +1,7 @@
 namespace TecX.Unity.TypedFactory
 {
     using System;
+    using System.Collections.Generic;
     using System.Reflection;
 
     using Microsoft.Practices.Unity;
@@ -25,7 +26,7 @@ namespace TecX.Unity.TypedFactory
             MethodInfo method,
             string nameToBuild,
             Type typeToBuild,
-            ParameterOverrides additionalArguments)
+            ResolverOverrides additionalArguments)
         {
             Type itemType;
             if (typeToBuild.TryGetCompatibleCollectionItemType(out itemType))
@@ -41,18 +42,23 @@ namespace TecX.Unity.TypedFactory
             return new TypedFactoryComponent(typeToBuild, nameToBuild, additionalArguments);
         }
 
-        protected virtual ParameterOverrides GetArguments(MethodInfo method, object[] arguments)
+        protected virtual ResolverOverrides GetArguments(MethodInfo method, object[] arguments)
         {
             Guard.AssertNotNull(method, "method");
             Guard.AssertNotNull(arguments, "arguments");
 
-            var parameters = new ParameterOverrides();
+            var parameters = new ResolverOverrides();
 
             var input = method.GetParameters();
 
             for (int i = 0; i < input.Length; i++)
             {
-                parameters.Add(input[i].Name, arguments[i]);
+                parameters.Add(new ParameterOverride(input[i].Name, arguments[i]));
+                //parameters.Add(input[i].Name, arguments[i]);
+
+                string propertyName = input[i].Name.Substring(0, 1).ToUpper() + input[i].Name.Substring(1);
+
+                parameters.Add(new PropertyOverride(propertyName, arguments[i]));
             }
 
             return parameters;
@@ -77,6 +83,28 @@ namespace TecX.Unity.TypedFactory
             Guard.AssertNotNull(method, "method");
 
             return method.ReturnType;
+        }
+    }
+
+    public class ResolverOverrides
+    {
+        private readonly List<ResolverOverride> overrides;
+
+        public ResolverOverrides()
+        {
+            this.overrides = new List<ResolverOverride>();
+        }
+
+        public void Add(ResolverOverride @override)
+        {
+            Guard.AssertNotNull(@override, "override");
+
+            this.overrides.Add(@override);
+        }
+
+        public ResolverOverride[] ToArray()
+        {
+            return this.overrides.ToArray();
         }
     }
 }

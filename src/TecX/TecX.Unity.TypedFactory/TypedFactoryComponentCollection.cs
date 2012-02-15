@@ -11,7 +11,7 @@ namespace TecX.Unity.TypedFactory
     public class TypedFactoryComponentCollection<TItem> : TypedFactoryComponent
             where TItem : class
     {
-        public TypedFactoryComponentCollection(Type typeToBuild, ParameterOverrides additionalArguments)
+        public TypedFactoryComponentCollection(Type typeToBuild, ResolverOverrides additionalArguments)
             : base(typeToBuild, additionalArguments)
         {
         }
@@ -20,7 +20,7 @@ namespace TecX.Unity.TypedFactory
         {
             Guard.AssertNotNull(container, "container");
 
-            IEnumerable<TItem> resolved = container.ResolveAll<TItem>(AdditionalArguments);
+            IEnumerable<TItem> resolved = container.ResolveAll<TItem>(AdditionalArguments.ToArray());
 
             if (TypeToBuild.IsAssignableFrom(typeof(IEnumerable<TItem>)))
             {
