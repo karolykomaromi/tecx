@@ -10,9 +10,9 @@
 
     public class ReportCreationExceptionExtension : UnityContainerExtension
     {
-        private readonly Action<Exception> report;
+        private readonly Action<Exception, IBuilderContext, IBuildPlanPolicy> report;
 
-        public ReportCreationExceptionExtension(Action<Exception> report)
+        public ReportCreationExceptionExtension(Action<Exception, IBuilderContext, IBuildPlanPolicy> report)
         {
             Guard.AssertNotNull(report, "handler");
 

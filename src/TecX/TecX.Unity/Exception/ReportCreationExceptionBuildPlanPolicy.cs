@@ -10,9 +10,9 @@ namespace TecX.Unity.Exception
     {
         private readonly IBuildPlanPolicy inner;
 
-        private readonly Action<Exception> report;
+        private readonly Action<Exception, IBuilderContext, IBuildPlanPolicy> report;
 
-        public ReportCreationExceptionBuildPlanPolicy(IBuildPlanPolicy inner, Action<Exception> report)
+        public ReportCreationExceptionBuildPlanPolicy(IBuildPlanPolicy inner, Action<Exception, IBuilderContext, IBuildPlanPolicy> report)
         {
             Guard.AssertNotNull(inner, "inner");
             Guard.AssertNotNull(report, "report");
@@ -29,7 +29,7 @@ namespace TecX.Unity.Exception
             }
             catch (Exception ex)
             {
-                this.report(ex);
+                this.report(ex, context, this.inner);
 
                 // Unity's infrastructure relies on this exception so don't consume it!
                 throw;

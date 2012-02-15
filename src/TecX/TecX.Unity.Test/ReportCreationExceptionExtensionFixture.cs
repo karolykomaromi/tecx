@@ -18,7 +18,7 @@
 
             bool notified = false;
 
-            container.AddExtension(new ReportCreationExceptionExtension(ex => notified = true));
+            container.AddExtension(new ReportCreationExceptionExtension((ex, ctx, policy) => notified = true));
 
             try
             {
@@ -39,7 +39,7 @@
 
             bool notified = false;
 
-            container.AddExtension(new ReportCreationExceptionExtension(ex => notified = true));
+            container.AddExtension(new ReportCreationExceptionExtension((ex, ctx, policy) => notified = true));
             container.RegisterType<IAlwaysThrows, AlwaysThrows>();
 
             try
@@ -61,7 +61,7 @@
 
             bool notified = false;
 
-            container.AddExtension(new ReportCreationExceptionExtension(ex => notified = true));
+            container.AddExtension(new ReportCreationExceptionExtension((ex, ctx, policy) => notified = true));
 
             Func<IUnityContainer, object> factory = c => { throw new Exception("Bang!"); };
             container.RegisterType<AlwaysThrows>(new InjectionFactory(factory));
@@ -84,7 +84,7 @@
 
             bool notified = false;
 
-            container.AddExtension(new ReportCreationExceptionExtension(ex => notified = true));
+            container.AddExtension(new ReportCreationExceptionExtension((ex, ctx, policy) => notified = true));
 
             container.RegisterType<AlwaysThrows>(new InjectionConstructor());
             try
