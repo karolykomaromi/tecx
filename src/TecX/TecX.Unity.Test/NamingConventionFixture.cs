@@ -37,6 +37,9 @@
             var convention = NamingConvention.CreateForType(typeof(string));
 
             Assert.IsTrue(convention.NameMatches("connectionString"));
+            Assert.IsTrue(convention.NameMatches("file"));
+            Assert.IsTrue(convention.NameMatches("fileName"));
+            Assert.IsTrue(convention.NameMatches("path"));
         }
     }
 }
