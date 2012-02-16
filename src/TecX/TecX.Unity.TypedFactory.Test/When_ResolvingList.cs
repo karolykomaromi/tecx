@@ -14,7 +14,7 @@ namespace TecX.Unity.TypedFactory.Test
 
         protected override void When()
         {
-            resolved = _factory.CreateList();
+            this.resolved = this.factory.CreateList();
         }
 
         [TestMethod]

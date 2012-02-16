@@ -15,12 +15,12 @@ namespace TecX.Unity.TypedFactory.Test
         {
             base.Given();
 
-            container.RegisterType<IFoo, Bar>("Bar");
+            this.container.RegisterType<IFoo, Bar>("Bar");
         }
 
         protected override void When()
         {
-            resolved = _factory.CreateCollection("1");
+           this. resolved = this.factory.CreateCollection("1");
         }
 
         [TestMethod]

@@ -1,4 +1,4 @@
-namespace TecX.Unity.Exception
+namespace TecX.Unity.Error
 {
     using System;
 
@@ -6,13 +6,13 @@ namespace TecX.Unity.Exception
 
     using TecX.Common;
 
-    public class ReportCreationExceptionBuildPlanPolicy : IBuildPlanPolicy
+    public class ReportCreationErrorBuildPlanPolicy : IBuildPlanPolicy
     {
         private readonly IBuildPlanPolicy inner;
 
         private readonly Action<Exception, IBuilderContext, IBuildPlanPolicy> report;
 
-        public ReportCreationExceptionBuildPlanPolicy(IBuildPlanPolicy inner, Action<Exception, IBuilderContext, IBuildPlanPolicy> report)
+        public ReportCreationErrorBuildPlanPolicy(IBuildPlanPolicy inner, Action<Exception, IBuilderContext, IBuildPlanPolicy> report)
         {
             Guard.AssertNotNull(inner, "inner");
             Guard.AssertNotNull(report, "report");

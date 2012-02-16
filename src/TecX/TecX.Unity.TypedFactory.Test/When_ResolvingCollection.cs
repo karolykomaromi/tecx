@@ -12,7 +12,7 @@ namespace TecX.Unity.TypedFactory.Test
 
         protected override void When()
         {
-            resolved = _factory.CreateCollection();
+            this.resolved = this.factory.CreateCollection();
         }
 
         [TestMethod]

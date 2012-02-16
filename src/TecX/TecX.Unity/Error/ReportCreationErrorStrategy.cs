@@ -1,4 +1,4 @@
-namespace TecX.Unity.Exception
+namespace TecX.Unity.Error
 {
     using System;
 
@@ -6,11 +6,11 @@ namespace TecX.Unity.Exception
 
     using TecX.Common;
 
-    public class ReportCreationExceptionStrategy : BuilderStrategy
+    public class ReportCreationErrorStrategy : BuilderStrategy
     {
         private readonly Action<Exception, IBuilderContext, IBuildPlanPolicy> report;
 
-        public ReportCreationExceptionStrategy(Action<Exception, IBuilderContext, IBuildPlanPolicy> report)
+        public ReportCreationErrorStrategy(Action<Exception, IBuilderContext, IBuildPlanPolicy> report)
         {
             Guard.AssertNotNull(report, "report");
 
@@ -40,9 +40,12 @@ namespace TecX.Unity.Exception
                 }
             }
 
-            IBuildPlanPolicy policy = new ReportCreationExceptionBuildPlanPolicy(plan, this.report);
+            if (!(plan is ReportCreationErrorBuildPlanPolicy))
+            {
+                IBuildPlanPolicy policy = new ReportCreationErrorBuildPlanPolicy(plan, this.report);
 
-            buildPlanLocation.Set(policy, context.BuildKey);
+                buildPlanLocation.Set(policy, context.BuildKey);
+            }
         }
     }
 }

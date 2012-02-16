@@ -8,6 +8,5 @@ namespace TecX.Unity.TypedFactory.Test.TestObjects
         {
             Name = name;
         }
-        
     }
 }
