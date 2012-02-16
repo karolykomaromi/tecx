@@ -1,4 +1,4 @@
-﻿namespace TecX.Unity.Exception
+﻿namespace TecX.Unity.Error
 {
     using System;
 
@@ -8,11 +8,11 @@
 
     using TecX.Common;
 
-    public class ReportCreationExceptionExtension : UnityContainerExtension
+    public class ReportCreationErrorExtension : UnityContainerExtension
     {
         private readonly Action<Exception, IBuilderContext, IBuildPlanPolicy> report;
 
-        public ReportCreationExceptionExtension(Action<Exception, IBuilderContext, IBuildPlanPolicy> report)
+        public ReportCreationErrorExtension(Action<Exception, IBuilderContext, IBuildPlanPolicy> report)
         {
             Guard.AssertNotNull(report, "handler");
 
@@ -21,7 +21,7 @@
 
         protected override void Initialize()
         {
-            IBuilderStrategy strategy = new ReportCreationExceptionStrategy(this.report);
+            IBuilderStrategy strategy = new ReportCreationErrorStrategy(this.report);
 
             this.Context.Strategies.Add(strategy, UnityBuildStage.PreCreation);
         }

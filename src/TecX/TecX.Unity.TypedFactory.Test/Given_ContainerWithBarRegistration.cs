@@ -4,13 +4,13 @@ using TecX.Unity.TypedFactory.Test.TestObjects;
 
 namespace TecX.Unity.TypedFactory.Test
 {
-    public abstract class Given_ContainerWithBarRegistration : Given_ContainerWithTypedFactoryExtension
+    public abstract class Given_ContainerWithBarRegistration : Given_ContainerWithFactoryRegistration
     {
         protected override void Given()
         {
             base.Given();
 
-            container.RegisterType<IFoo, Bar>();
+            this.container.RegisterType<IFoo, Bar>();
         }
     }
 }

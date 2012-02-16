@@ -7,14 +7,14 @@ namespace TecX.Unity.TypedFactory.Test
     {
         protected override void When()
         {
-            _foo = _factory.Create("some name");
+            this.foo = this.factory.Create("some name");
         }
 
         [TestMethod]
         public void Then_ParameterIsUsed()
         {
-            Assert.IsNotNull(_foo);
-            Assert.AreEqual("some name", _foo.Name);
+            Assert.IsNotNull(this.foo);
+            Assert.AreEqual("some name", this.foo.Name);
         }
     }
 }
