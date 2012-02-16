@@ -95,6 +95,7 @@
     <Compile Include="Injection\ConnectionStringNamingConvention.cs" />
     <Compile Include="Injection\ConstructorArgument.cs" />
     <Compile Include="Injection\ConstructorArgumentCollection.cs" />
+    <Compile Include="Injection\FileNameConvention.cs" />
     <Compile Include="Injection\NamingConvention.cs" />
     <Compile Include="Injection\ParameterMatcher.cs" />
     <Compile Include="Injection\ClozeInjectionConstructor.cs" />

@@ -15,7 +15,12 @@ namespace TecX.Unity.Injection
 
             if (type == typeof(string))
             {
-                return new ConnectionStringNamingConvention();
+                var c = new ConnectionStringNamingConvention
+                    {
+                        Next = new FileNameConvention()
+                    };
+
+                return c;
             }
 
             // get all base classes, get all interfaces
