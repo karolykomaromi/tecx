@@ -29,7 +29,7 @@
             }
         }
 
-        public void NameBy(Func<Type, string> getName)
+        public void Named(Func<Type, string> getName)
         {
             Guard.AssertNotNull(getName, "getName");
 

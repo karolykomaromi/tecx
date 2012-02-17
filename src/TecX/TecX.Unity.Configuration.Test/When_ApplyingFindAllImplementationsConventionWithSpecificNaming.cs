@@ -19,7 +19,7 @@ namespace TecX.Unity.Configuration.Test
                 {
                     var convention = new FindAllImplementationsConvention(typeof(IMyInterface));
 
-                    convention.NameBy(t => t.FullName + "123");
+                    convention.Named(t => t.FullName + "123");
 
                     s.With(convention);
 
