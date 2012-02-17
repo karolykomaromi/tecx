@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Given_ContainerAndBuilder.cs" />
     <Compile Include="PluginFinderFixture.cs" />
+    <Compile Include="TestObjects\AbstractClass.cs" />
     <Compile Include="TestObjects\Bar.cs" />
     <Compile Include="TestObjects\ClassWithPredefinedObjectCtorParameter.cs" />
     <Compile Include="TestObjects\ClassWithStringCtorParameter.cs" />
@@ -109,10 +110,13 @@
     <Compile Include="When_ApplyingSingleImplementationOfInterfaceConvention.cs" />
     <Compile Include="When_OverridingPrimitiveString.cs" />
     <Compile Include="When_OverridingWithValue.cs" />
+    <Compile Include="When_RegisteringConcreteType.cs" />
     <Compile Include="When_RegisteringConnectionStringCtorParameter.cs" />
     <Compile Include="When_RegisteringCtorWithParameterConvention.cs" />
     <Compile Include="When_RegisteringMappingForOpenGenericType.cs" />
     <Compile Include="When_OverridingInterfaceTypeDependency.cs" />
+    <Compile Include="When_TryingToRegisterAbstractClassAsConcreteType.cs" />
+    <Compile Include="When_TryingToRegisterInterfaceAsConcreteType.cs" />
     <Compile Include="When_UsingLifetimeForFamily.cs" />
   </ItemGroup>
   <ItemGroup>
