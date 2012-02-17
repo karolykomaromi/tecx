@@ -26,6 +26,7 @@ namespace TecX.Unity.Error
 
             IBuildPlanPolicy plan = context.Policies.Get<IBuildPlanPolicy>(context.BuildKey, out buildPlanLocation);
             if (plan == null ||
+
                 // OverriddenBuildPlanMarkerPolicy is not accessible here so the name matching is a workaround
                 string.Equals(plan.GetType().Name, "OverriddenBuildPlanMarkerPolicy", StringComparison.InvariantCultureIgnoreCase))
             {

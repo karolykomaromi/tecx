@@ -11,7 +11,7 @@
     using TecX.Unity.Configuration.Conventions;
     using TecX.Unity.Configuration.Utilities;
 
-    public class Configuration : IConfigAction
+    public class Configuration : IConfigure
     {
         private readonly RegistrationFamilyCollection registrationFamilies;
         private readonly List<ConfigurationBuilder> builders;

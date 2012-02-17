@@ -5,10 +5,10 @@ namespace TecX.Unity.TypedFactory
     using System;
     using System.Reflection;
 
+    using CC30.Castle.DynamicProxy;
+
     using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
-
-    using CC30.Castle.DynamicProxy;
 
     using TecX.Common;
 
@@ -43,7 +43,7 @@ namespace TecX.Unity.TypedFactory
             IUnityContainer container = context.NewBuildUp<IUnityContainer>();
 
             object proxy = this.generator.CreateInterfaceProxyWithoutTarget(
-                factoryType, new FactoryInterceptor(container, selector));
+                factoryType, new FactoryInterceptor(container, this.selector));
 
             context.Existing = proxy;
         }
