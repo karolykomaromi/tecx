@@ -54,6 +54,25 @@
             return new CreateRegistrationFamilyExpression(from, this);
         }
 
+        public CreateRegistrationFamilyExpression ForConcreteType<T>()
+            where T : class
+        {
+            return this.ForConcreteType(typeof(T));
+        }
+
+        public CreateRegistrationFamilyExpression ForConcreteType(Type concreteType)
+        {
+            Guard.AssertNotNull(concreteType, "concreteType");
+            Guard.AssertCondition(!concreteType.IsInterface, concreteType, "concreteType", "concreteType must not be an interface.");
+            Guard.AssertCondition(!concreteType.IsAbstract, concreteType, "concreteType", "concreteType must not be abstract.");
+
+            var expression = new CreateRegistrationFamilyExpression(concreteType, this);
+
+            expression.Use(concreteType);
+
+            return expression;
+        }
+
         public ConfigureContainerExtensionExpression Extension<TExtension>()
             where TExtension : UnityContainerExtension, new()
         {

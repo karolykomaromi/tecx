@@ -122,7 +122,7 @@
         {
             if (!condition)
             {
-                throw new ArgumentOutOfRangeException(
+                throw new GuardArgumentException(
                     TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
                     TypeHelper.ToNullSafeString(message)).WithAdditionalInfos(
                         new Dictionary<object, object> { { "param", param } });
