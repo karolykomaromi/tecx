@@ -9,7 +9,7 @@
     using TecX.Common;
     using TecX.Unity.Configuration.Utilities;
 
-    public class RegistrationFamily : IEnumerable<Registration>, IConfigAction
+    public class RegistrationFamily : IEnumerable<Registration>, IConfigure
     {
         private readonly Type @from;
         private readonly Cache<string, Registration> registrations;
