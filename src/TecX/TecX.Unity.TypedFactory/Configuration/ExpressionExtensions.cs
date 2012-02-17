@@ -3,7 +3,7 @@
     using TecX.Common;
     using TecX.Unity.Configuration.Expressions;
 
-    public static class CreateRegistrationFamilyExpressionExtensions
+    public static class ExpressionExtensions
     {
         public static TypeRegistrationExpression AsFactory(this CreateRegistrationFamilyExpression expression)
         {
