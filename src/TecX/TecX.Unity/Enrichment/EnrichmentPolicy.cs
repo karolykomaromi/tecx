@@ -9,13 +9,13 @@
     public class EnrichmentPolicy<T> : IEnrichmentPolicy
         where T : class
     {
-        private readonly Action<T, IBuilderContext> enrichWith;
+        private readonly Action<T, IBuilderContext> enrich;
 
-        public EnrichmentPolicy(Action<T, IBuilderContext> enrichWith)
+        public EnrichmentPolicy(Action<T, IBuilderContext> enrich)
         {
-            Guard.AssertNotNull(enrichWith, "enrichWith");
+            Guard.AssertNotNull(enrich, "enrichWith");
 
-            this.enrichWith = enrichWith;
+            this.enrich = enrich;
         }
 
         public void Enrich(IBuilderContext context)
@@ -26,7 +26,7 @@
 
             if (existing != null)
             {
-                this.enrichWith(existing, context);
+                this.enrich(existing, context);
             }
         }
     }

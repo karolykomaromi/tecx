@@ -1,4 +1,4 @@
-namespace TecX.ServiceModel.AutoMagic.Configuration
+namespace TecX.ServiceModel.AutoMagic
 {
     using System;
 

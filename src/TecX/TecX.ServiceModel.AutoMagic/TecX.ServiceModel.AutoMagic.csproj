@@ -60,15 +60,15 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="AutoDiscoveryProxyFactory.cs" />
     <Compile Include="ConfigFileBuildPlanPolicy.cs" />
     <Compile Include="BindingDiscoveryServiceBehavior.cs" />
     <Compile Include="AutoDiscoveryBuildPlanPolicy.cs" />
-    <Compile Include="Configuration\AutoDiscoveryProxyFactory.cs" />
-    <Compile Include="Configuration\ConfigFileProxyFactory.cs" />
+    <Compile Include="ConfigFileProxyFactory.cs" />
     <Compile Include="Configuration\ExpressionExtensions.cs" />
-    <Compile Include="Configuration\SpecifiedSetupProxyFactory.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="SpecifiedSetupBuildPlanPolicy.cs" />
+    <Compile Include="SpecifiedProxyFactory.cs" />
+    <Compile Include="SpecifiedBuildPlanPolicy.cs" />
     <Compile Include="MetadataExportFailedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxyCreationFailedException.cs" />

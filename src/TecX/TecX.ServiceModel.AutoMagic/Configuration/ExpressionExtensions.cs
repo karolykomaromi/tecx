@@ -12,34 +12,34 @@
         {
             Guard.AssertNotNull(expression, "expression");
 
-            var x = expression.Use(expression.From);
+            TypeRegistrationExpression x = expression.Use(expression.From);
 
-            x.EnrichWith(im => im.Add(new AutoDiscoveryProxyFactory()));
+            x.Enrich(im => im.Add(new AutoDiscoveryProxyFactory()));
 
             return x;
         }
 
-        public static TypeRegistrationExpression UseServiceFromFileConfig(this CreateRegistrationFamilyExpression expression, string endpointConfigName)
+        public static TypeRegistrationExpression ServiceFromConfig(this CreateRegistrationFamilyExpression expression, string endpointConfigName)
         {
             Guard.AssertNotNull(expression, "expression");
             Guard.AssertNotEmpty(endpointConfigName, "endpointConfigName");
 
-            var x = expression.Use(expression.From);
+            TypeRegistrationExpression x = expression.Use(expression.From);
 
-            x.EnrichWith(im => im.Add(new ConfigFileProxyFactory(endpointConfigName)));
+            x.Enrich(im => im.Add(new ConfigFileProxyFactory(endpointConfigName)));
 
             return x;
         }
 
-        public static TypeRegistrationExpression UseService(this CreateRegistrationFamilyExpression expression, EndpointAddress address, Binding binding)
+        public static TypeRegistrationExpression Service(this CreateRegistrationFamilyExpression expression, EndpointAddress address, Binding binding)
         {
             Guard.AssertNotNull(expression, "expression");
             Guard.AssertNotNull(address, "address");
             Guard.AssertNotNull(binding, "binding");
 
-            var x = expression.Use(expression.From);
+            TypeRegistrationExpression x = expression.Use(expression.From);
 
-            x.EnrichWith(im => im.Add(new SpecifiedSetupProxyFactory(address, binding)));
+            x.Enrich(im => im.Add(new SpecifiedProxyFactory(address, binding)));
 
             return x;
         }
