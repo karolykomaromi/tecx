@@ -9,12 +9,12 @@
     using TecX.Common;
     using TecX.Common.Extensions.Error;
 
-    public class SpecifiedSetupBuildPlanPolicy : IBuildPlanPolicy
+    public class SpecifiedBuildPlanPolicy : IBuildPlanPolicy
     {
         private readonly EndpointAddress address;
         private readonly Binding binding;
 
-        public SpecifiedSetupBuildPlanPolicy(EndpointAddress address, Binding binding)
+        public SpecifiedBuildPlanPolicy(EndpointAddress address, Binding binding)
         {
             Guard.AssertNotNull(address, "address");
             Guard.AssertNotNull(binding, "binding");

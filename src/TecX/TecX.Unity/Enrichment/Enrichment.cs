@@ -10,13 +10,13 @@
     public class Enrichment<T> : InjectionMember
         where T : class
     {
-        private readonly Action<T, IBuilderContext> enrichWith;
+        private readonly Action<T, IBuilderContext> enrich;
 
-        public Enrichment(Action<T, IBuilderContext> enrichWith)
+        public Enrichment(Action<T, IBuilderContext> enrich)
         {
-            Guard.AssertNotNull(enrichWith, "enrichWith");
+            Guard.AssertNotNull(enrich, "enrichWith");
 
-            this.enrichWith = enrichWith;
+            this.enrich = enrich;
         }
 
         public override void AddPolicies(Type serviceType, Type implementationType, string name, IPolicyList policies)
@@ -25,7 +25,7 @@
 
             NamedTypeBuildKey buildKey = new NamedTypeBuildKey(implementationType, name);
 
-            var policy = new EnrichmentPolicy<T>(this.enrichWith);
+            var policy = new EnrichmentPolicy<T>(this.enrich);
 
             policies.Set<IEnrichmentPolicy>(policy, buildKey);
         }

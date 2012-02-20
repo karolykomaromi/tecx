@@ -11,7 +11,7 @@
 
             var x = expression.Use(expression.From);
 
-            x.EnrichWith(im => im.Add(new TypedFactory()));
+            x.Enrich(im => im.Add(new TypedFactory()));
 
             return x;
         }
@@ -23,7 +23,7 @@
 
             var x = expression.Use(expression.From);
 
-            x.EnrichWith(im => im.Add(new TypedFactory(selector)));
+            x.Enrich(im => im.Add(new TypedFactory(selector)));
 
             return x;
         }

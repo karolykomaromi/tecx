@@ -1,4 +1,4 @@
-namespace TecX.ServiceModel.AutoMagic.Configuration
+namespace TecX.ServiceModel.AutoMagic
 {
     using System;
     using System.ServiceModel;
@@ -9,13 +9,13 @@ namespace TecX.ServiceModel.AutoMagic.Configuration
 
     using TecX.Common;
 
-    public class SpecifiedSetupProxyFactory : InjectionMember
+    public class SpecifiedProxyFactory : InjectionMember
     {
         private readonly EndpointAddress address;
 
         private readonly Binding binding;
 
-        public SpecifiedSetupProxyFactory(EndpointAddress address, Binding binding)
+        public SpecifiedProxyFactory(EndpointAddress address, Binding binding)
         {
             Guard.AssertNotNull(address, "address");
             Guard.AssertNotNull(binding, "binding");
@@ -26,7 +26,7 @@ namespace TecX.ServiceModel.AutoMagic.Configuration
 
         public override void AddPolicies(Type serviceType, Type implementationType, string name, IPolicyList policies)
         {
-            SpecifiedSetupBuildPlanPolicy policy = new SpecifiedSetupBuildPlanPolicy(this.address, this.binding);
+            SpecifiedBuildPlanPolicy policy = new SpecifiedBuildPlanPolicy(this.address, this.binding);
 
             policies.Set<IBuildPlanPolicy>(policy, new NamedTypeBuildKey(implementationType, name));
         }

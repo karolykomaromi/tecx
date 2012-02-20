@@ -42,7 +42,7 @@
             }
         }
 
-        public TypeRegistrationExpression EnrichWith<T>(Action<T, IBuilderContext> action)
+        public TypeRegistrationExpression Enrich<T>(Action<T, IBuilderContext> action)
             where T : class
         {
             Guard.AssertNotNull(action, "action");
@@ -52,7 +52,7 @@
             return this;
         }
 
-        public TypeRegistrationExpression EnrichWith(Action<InjectionMembers> action)
+        public TypeRegistrationExpression Enrich(Action<InjectionMembers> action)
         {
             Guard.AssertNotNull(action, "action");
 
