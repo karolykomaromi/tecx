@@ -15,10 +15,10 @@
         {
             var container = new UnityContainer()
                 .AddExtension(new DecoratorExtension())
-                .RegisterType<IContract, ContractDecorator>()
+                .RegisterType<IContract, ContractDecorator>("1")
                 .RegisterType<IContract, Contract>("1");
 
-            var sut = container.Resolve<IContract>();
+            var sut = container.Resolve<IContract>("1");
             Assert.NotNull(sut);
             Assert.IsType(typeof(ContractDecorator), sut);
             Assert.IsType(typeof(Contract), ((ContractDecorator)sut).Base);

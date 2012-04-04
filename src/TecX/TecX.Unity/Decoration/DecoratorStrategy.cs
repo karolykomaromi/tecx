@@ -30,7 +30,7 @@ namespace TecX.Unity.Decoration
                 return;
             }
 
-            if (!this.registrationStack.IsRegistered(key.Type))
+            if (!this.registrationStack.IsRegistered(key))
             {
                 return;
             }
@@ -40,7 +40,7 @@ namespace TecX.Unity.Decoration
                 return;
             }
 
-            Stack<Type> stack = new Stack<Type>(this.registrationStack[key.Type]);
+            Stack<Type> stack = new Stack<Type>(this.registrationStack[key]);
 
             object value = null;
             stack.ForEach(

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
 
+    using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.ObjectBuilder;
 
@@ -25,7 +26,9 @@
                 return;
             }
 
-            ICollection<Type> stack = this.registrationStack[e.TypeFrom];
+            NamedTypeBuildKey key = new NamedTypeBuildKey(e.TypeFrom, e.Name);
+
+            ICollection<Type> stack = this.registrationStack[key];
 
             stack.Add(e.TypeTo);
         }

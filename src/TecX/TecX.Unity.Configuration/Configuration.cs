@@ -69,6 +69,11 @@
         {
             Guard.AssertNotNull(container, "container");
 
+            foreach (var modification in this.modifications)
+            {
+                modification(container);
+            }
+
             // don't use foreach! when adding additional config builders
             // via FindConfigBuildersConvention they might add scanners as well
             // which would cause problems with modified enumeration
@@ -78,11 +83,6 @@
             }
 
             this.registrationFamilies.Configure(container);
-
-            foreach (var modification in this.modifications)
-            {
-                modification(container);
-            }
         }
 
         public void AddExtension(UnityContainerExtension extension)
