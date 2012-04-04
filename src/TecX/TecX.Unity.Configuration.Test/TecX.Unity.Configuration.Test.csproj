@@ -66,6 +66,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandHandlerDecorationFixture.cs" />
     <Compile Include="Given_ContainerAndBuilder.cs" />
     <Compile Include="PluginFinderFixture.cs" />
     <Compile Include="TestObjects\AbstractClass.cs" />
