@@ -92,12 +92,16 @@
     <Compile Include="TestObjects\Car.cs" />
     <Compile Include="TestObjects\CarEngine.cs" />
     <Compile Include="TestObjects\CarWheel.cs" />
+    <Compile Include="TestObjects\CompanyImplementation.cs" />
+    <Compile Include="TestObjects\CompanyWrapper1.cs" />
+    <Compile Include="TestObjects\CompanyWrapper2.cs" />
     <Compile Include="TestObjects\Contract.cs" />
     <Compile Include="TestObjects\ContractDecorator.cs" />
     <Compile Include="TestObjects\CtorTest.cs" />
     <Compile Include="TestObjects\DefaultCtorOnly.cs" />
     <Compile Include="TestObjects\Foo.cs" />
     <Compile Include="TestObjects\IAlwaysThrows.cs" />
+    <Compile Include="TestObjects\ICompany.cs" />
     <Compile Include="TestObjects\IContract.cs" />
     <Compile Include="TestObjects\ICtorTest.cs" />
     <Compile Include="TestObjects\IEngine.cs" />

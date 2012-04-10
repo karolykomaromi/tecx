@@ -37,5 +37,21 @@
             Assert.Equal("2", sut.To<ContractDecorator>().Bar);
             Assert.Equal("1", sut.To<ContractDecorator>().Base.To<Contract>().Foo);
         }
+
+        [Fact]
+        public void CanWrapBusinessClass()
+        {
+            var container = new UnityContainer();
+
+            container.AddNewExtension<DecoratorExtension>();
+
+            container.RegisterType<ICompany, CompanyWrapper2>();
+            container.RegisterType<ICompany, CompanyWrapper1>();
+            container.RegisterType<ICompany, CompanyImplementation>();
+
+            var company = container.Resolve<ICompany>();
+
+            Assert.Equal("-->Wrapper2-->Wrapper1-->Company", company.Foo());
+        }
     }
 }

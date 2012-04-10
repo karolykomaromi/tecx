@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Logging", "TecX.Loggin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.Configuration.TestObjects", "TecX.Unity.Configuration.TestObjects\TecX.Unity.Configuration.TestObjects.csproj", "{673BD88D-9A3E-4E4D-864D-192FCD2AF723}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.Proxies", "TecX.Unity.Proxies\TecX.Unity.Proxies.csproj", "{547734D3-B7FD-40CE-8929-834611D4BFFE}"
+EndProject
 Global
 	GlobalSection(MercurialSourceControlSolutionProperties) = preSolution
 		SolutionIsControlled = True
@@ -300,6 +302,16 @@ Global
 		{673BD88D-9A3E-4E4D-864D-192FCD2AF723}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{673BD88D-9A3E-4E4D-864D-192FCD2AF723}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{673BD88D-9A3E-4E4D-864D-192FCD2AF723}.Release|x86.ActiveCfg = Release|Any CPU
+		{547734D3-B7FD-40CE-8929-834611D4BFFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{547734D3-B7FD-40CE-8929-834611D4BFFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{547734D3-B7FD-40CE-8929-834611D4BFFE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{547734D3-B7FD-40CE-8929-834611D4BFFE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{547734D3-B7FD-40CE-8929-834611D4BFFE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{547734D3-B7FD-40CE-8929-834611D4BFFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{547734D3-B7FD-40CE-8929-834611D4BFFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{547734D3-B7FD-40CE-8929-834611D4BFFE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{547734D3-B7FD-40CE-8929-834611D4BFFE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{547734D3-B7FD-40CE-8929-834611D4BFFE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -327,6 +339,7 @@ Global
 		{2BF97DAC-6DEC-4576-B994-813686F5B0CA} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{89FAB412-B217-4819-B8DB-4E4C967EE5D2} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{A763CC8F-835E-444C-9A9F-88E7A443C1B2} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
+		{547734D3-B7FD-40CE-8929-834611D4BFFE} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35
