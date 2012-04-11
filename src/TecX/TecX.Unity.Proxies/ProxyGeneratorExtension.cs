@@ -7,7 +7,9 @@
 
     using Microsoft.Practices.Unity;
 
-    public class ProxyGeneratorExtension : UnityContainerExtension
+    using TecX.Common;
+
+    public class ProxyGeneratorExtension : UnityContainerExtension, IProxyGenerator
     {
         private static class Constants
         {
@@ -41,5 +43,23 @@
         {
             
         }
+
+        public Type CreateFaultTolerantProxy(Type contract)
+        {
+            Guard.AssertNotNull(contract, "contract");
+
+            var proxyGenerator = new FaultTolerantProxyGenerator(this.moduleBuilder, contract);
+
+            Type proxyType = proxyGenerator.Generate();
+
+            this.assemblyBuilder.Save(Constants.AssemblyFileName);
+
+            return proxyType;
+        }
+    }
+
+    public interface IProxyGenerator : IUnityContainerExtensionConfigurator
+    {
+        Type CreateFaultTolerantProxy(Type contract);
     }
 }

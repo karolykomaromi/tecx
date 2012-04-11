@@ -10,14 +10,14 @@
 
     public class FaultTolerantProxyGenerator
     {
-        public static class Constants
+        private static class Constants
         {
             /// <summary>
             /// The property "set" and property "get" methods require a special
             /// set of attributes.
             /// </summary>
-            public const MethodAttributes GetSetAttributes = MethodAttributes.Public | 
-                                                             MethodAttributes.SpecialName | 
+            public const MethodAttributes GetSetAttributes = MethodAttributes.Public |
+                                                             MethodAttributes.SpecialName |
                                                              MethodAttributes.HideBySig;
 
             public const string ProxyNamePostfix = "_FaultTolerantProxy";
@@ -28,12 +28,12 @@
 
             public const string ChannelPropertyName = "Channel";
 
-            public const TypeAttributes TypeAttributes = TypeAttributes.Public |
-                                                         TypeAttributes.Class |
-                                                         TypeAttributes.AutoClass |
-                                                         TypeAttributes.AnsiClass |
-                                                         TypeAttributes.BeforeFieldInit |
-                                                         TypeAttributes.AutoLayout;
+            public const TypeAttributes TypeAttr = TypeAttributes.Public |
+                                                   TypeAttributes.Class |
+                                                   TypeAttributes.AutoClass |
+                                                   TypeAttributes.AnsiClass |
+                                                   TypeAttributes.BeforeFieldInit |
+                                                   TypeAttributes.AutoLayout;
         }
 
         private readonly ModuleBuilder moduleBuilder;
@@ -49,6 +49,8 @@
         private PropertyBuilder channelPropertyBuilder;
 
         private MethodBuilder channelGetterMethodBuilder;
+
+        private MethodBuilder channelSetterMethodBuilder;
 
         public FaultTolerantProxyGenerator(ModuleBuilder moduleBuilder, Type contract)
         {
@@ -143,7 +145,7 @@
                 il.Emit(OpCodes.Ret);
             }
         }
-        
+
         private void GenerateFields(TypeBuilder typeBuilder)
         {
             this.channelFieldBuilder = typeBuilder.DefineField(Constants.ChannelFieldName, this.contract, FieldAttributes.Private);
@@ -178,7 +180,7 @@
 
             il.Emit(OpCodes.Nop);
             il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Call, this.channelGetterMethodBuilder);
+            il.Emit(OpCodes.Ldfld, this.channelFieldBuilder);
             il.Emit(OpCodes.Castclass, typeof(ICommunicationObject));
 
             PropertyInfo state = typeof(ICommunicationObject).GetProperty("State");
@@ -217,10 +219,10 @@
 
         private void GenerateChannelSetter(TypeBuilder typeBuilder)
         {
-            MethodBuilder channelSetAccessor = typeBuilder.DefineMethod(
+            this.channelSetterMethodBuilder = typeBuilder.DefineMethod(
                 "set_Channel", Constants.GetSetAttributes, null, new[] { this.contract });
 
-            ILGenerator il = channelSetAccessor.GetILGenerator();
+            ILGenerator il = this.channelSetterMethodBuilder.GetILGenerator();
 
             // Load the instance and then the numeric argument, then store the
             // argument in the field.
@@ -228,7 +230,7 @@
             il.Emit(OpCodes.Ldarg_1);
             il.Emit(OpCodes.Stfld, this.channelFieldBuilder);
             il.Emit(OpCodes.Ret);
-            this.channelPropertyBuilder.SetSetMethod(channelSetAccessor);
+            this.channelPropertyBuilder.SetSetMethod(this.channelSetterMethodBuilder);
         }
 
         private void GenerateConstructor(TypeBuilder typeBuilder)
@@ -252,12 +254,25 @@
             // guard clause for factory parameter
             il.Emit(OpCodes.Ldarg_1);
             il.Emit(OpCodes.Ldstr, Constants.FactoryFieldName);
-            MethodInfo meth = typeof(Guard).GetMethod("AssertNotNull", BindingFlags.Static | BindingFlags.Public);
+            MethodInfo meth = typeof(Guard).GetMethod(
+                "AssertNotNull", 
+                BindingFlags.Static | BindingFlags.Public, 
+                (Binder)null, 
+                new[] { typeof(object), typeof(string) }, 
+                (ParameterModifier[])null);
             il.Emit(OpCodes.Call, meth);
 
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ldarg_1);
             il.Emit(OpCodes.Stfld, this.factoryFieldBuilder);
+
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Ldarg_1);
+            var invoke = this.contractFactory.GetMethod("Invoke");
+            il.Emit(OpCodes.Callvirt, invoke);
+            il.Emit(OpCodes.Stfld, this.channelFieldBuilder);
+            il.Emit(OpCodes.Nop);
+            il.Emit(OpCodes.Ret);
         }
 
         private TypeBuilder CreateTypeBuilder()
@@ -266,7 +281,7 @@
 
             TypeBuilder typeBuilder = this.moduleBuilder.DefineType(
                 name,
-                Constants.TypeAttributes,
+                Constants.TypeAttr,
                 typeof(object),
                 new[] { this.contract });
 
