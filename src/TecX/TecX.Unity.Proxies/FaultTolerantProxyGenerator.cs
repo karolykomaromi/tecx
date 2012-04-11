@@ -8,18 +8,10 @@
 
     using TecX.Common;
 
-    public class FaultTolerantProxyGenerator
+    public class FaultTolerantProxyGenerator : ProxyGenerator
     {
         private static class Constants
         {
-            /// <summary>
-            /// The property "set" and property "get" methods require a special
-            /// set of attributes.
-            /// </summary>
-            public const MethodAttributes GetSetAttributes = MethodAttributes.Public |
-                                                             MethodAttributes.SpecialName |
-                                                             MethodAttributes.HideBySig;
-
             public const string ProxyNamePostfix = "_FaultTolerantProxy";
 
             public const string FactoryFieldName = "factory";
@@ -27,20 +19,7 @@
             public const string ChannelFieldName = "channel";
 
             public const string ChannelPropertyName = "Channel";
-
-            public const TypeAttributes TypeAttr = TypeAttributes.Public |
-                                                   TypeAttributes.Class |
-                                                   TypeAttributes.AutoClass |
-                                                   TypeAttributes.AnsiClass |
-                                                   TypeAttributes.BeforeFieldInit |
-                                                   TypeAttributes.AutoLayout;
         }
-
-        private readonly ModuleBuilder moduleBuilder;
-
-        private readonly Type contract;
-
-        private readonly Type contractFactory;
 
         private FieldBuilder channelFieldBuilder;
 
@@ -52,19 +31,12 @@
 
         private MethodBuilder channelSetterMethodBuilder;
 
-        public FaultTolerantProxyGenerator(ModuleBuilder moduleBuilder, Type contract)
+        public FaultTolerantProxyGenerator(Type contract, ModuleBuilder moduleBuilder)
+            : base(contract, moduleBuilder)
         {
-            Guard.AssertNotNull(moduleBuilder, "moduleBuilder");
-            Guard.AssertNotNull(contract, "contract");
-
-            AssertIsInterface(contract);
-
-            this.moduleBuilder = moduleBuilder;
-            this.contract = contract;
-            this.contractFactory = typeof(Func<>).MakeGenericType(contract);
         }
 
-        public Type Generate()
+        public override Type Generate()
         {
             var typeBuilder = this.CreateTypeBuilder();
 
@@ -74,76 +46,11 @@
 
             this.GenerateConstructor(typeBuilder);
 
-            this.GenerateMethods(this.contract, typeBuilder);
+            this.GenerateMethods(this.contract, typeBuilder, this.channelGetterMethodBuilder);
 
             var proxyType = typeBuilder.CreateType();
 
             return proxyType;
-        }
-
-        private static void AssertIsInterface(Type type)
-        {
-            if (!type.IsInterface)
-            {
-                throw new ArgumentException(string.Format("Type {0} is not an interface", type.FullName));
-            }
-        }
-
-        private void GenerateMethods(Type contract, TypeBuilder typeBuilder)
-        {
-            var methods = contract.GetMethods();
-
-            var attributes = MethodAttributes.Public |
-                MethodAttributes.HideBySig |
-                MethodAttributes.NewSlot |
-                MethodAttributes.Virtual |
-                MethodAttributes.Final;
-
-            foreach (var method in methods)
-            {
-                var parameters = method.GetParameters();
-
-                var methodBuilder = typeBuilder.DefineMethod(
-                     method.Name,
-                     attributes,
-                     CallingConventions.HasThis,
-                     method.ReturnType,
-                     parameters.Select(p => p.ParameterType).ToArray());
-
-                for (int i = 0; i < parameters.Length; i++)
-                {
-                    methodBuilder.DefineParameter(i + 1, ParameterAttributes.None, parameters[i].Name);
-                }
-
-                var il = methodBuilder.GetILGenerator();
-                if (method.ReturnType != typeof(void))
-                {
-                    il.DeclareLocal(method.ReturnType);
-                }
-
-                il.Emit(OpCodes.Nop);
-                il.Emit(OpCodes.Ldarg_0);
-                il.Emit(OpCodes.Call, this.channelGetterMethodBuilder);
-
-                for (int i = 1; i <= parameters.Length; i++)
-                {
-                    il.Emit(OpCodes.Ldarg, i);
-                }
-
-                il.Emit(OpCodes.Callvirt, method);
-
-                if (method.ReturnType != typeof(void))
-                {
-                    il.Emit(OpCodes.Stloc_0);
-                    var local = il.DefineLabel();
-                    il.Emit(OpCodes.Br_S, local);
-                    il.MarkLabel(local);
-                    il.Emit(OpCodes.Ldloc_0);
-                }
-
-                il.Emit(OpCodes.Nop);
-                il.Emit(OpCodes.Ret);
-            }
         }
 
         private void GenerateFields(TypeBuilder typeBuilder)
@@ -168,7 +75,7 @@
 
         private void GenerateChannelGetter(TypeBuilder typeBuilder)
         {
-            this.channelGetterMethodBuilder = typeBuilder.DefineMethod("get_Channel", Constants.GetSetAttributes, this.contract, Type.EmptyTypes);
+            this.channelGetterMethodBuilder = typeBuilder.DefineMethod("get_Channel", Proxies.Constants.GetSetAttributes, this.contract, Type.EmptyTypes);
 
             ILGenerator il = this.channelGetterMethodBuilder.GetILGenerator();
 
@@ -220,7 +127,7 @@
         private void GenerateChannelSetter(TypeBuilder typeBuilder)
         {
             this.channelSetterMethodBuilder = typeBuilder.DefineMethod(
-                "set_Channel", Constants.GetSetAttributes, null, new[] { this.contract });
+                "set_Channel", Proxies.Constants.GetSetAttributes, null, new[] { this.contract });
 
             ILGenerator il = this.channelSetterMethodBuilder.GetILGenerator();
 
@@ -255,10 +162,10 @@
             il.Emit(OpCodes.Ldarg_1);
             il.Emit(OpCodes.Ldstr, Constants.FactoryFieldName);
             MethodInfo meth = typeof(Guard).GetMethod(
-                "AssertNotNull", 
-                BindingFlags.Static | BindingFlags.Public, 
-                (Binder)null, 
-                new[] { typeof(object), typeof(string) }, 
+                "AssertNotNull",
+                BindingFlags.Static | BindingFlags.Public,
+                (Binder)null,
+                new[] { typeof(object), typeof(string) },
                 (ParameterModifier[])null);
             il.Emit(OpCodes.Call, meth);
 
@@ -281,7 +188,7 @@
 
             TypeBuilder typeBuilder = this.moduleBuilder.DefineType(
                 name,
-                Constants.TypeAttr,
+                Proxies.Constants.TypeAttr,
                 typeof(object),
                 new[] { this.contract });
 
