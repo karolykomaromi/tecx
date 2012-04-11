@@ -1,10 +1,12 @@
 ﻿namespace TecX.Unity.Proxies
 {
     using System;
+    using System.Collections.Generic;
     using System.Reflection;
     using System.Reflection.Emit;
     using System.Threading;
 
+    using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
@@ -28,38 +30,64 @@
 
         private readonly ModuleBuilder moduleBuilder;
 
+        private readonly Dictionary<NamedTypeBuildKey, Type> faultTolerantProxies;
+
         public ProxyGeneratorExtension()
         {
             AssemblyName assemblyName = new AssemblyName { Name = Constants.AssemblyName };
 
             AppDomain thisDomain = Thread.GetDomain();
 
+            this.faultTolerantProxies = new Dictionary<NamedTypeBuildKey, Type>();
+
             this.assemblyBuilder = thisDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
 
             this.moduleBuilder = this.assemblyBuilder.DefineDynamicModule(this.assemblyBuilder.GetName().Name, Constants.AssemblyFileName);
-        }
-
-        protected override void Initialize()
-        {
-            
         }
 
         public Type CreateFaultTolerantProxy(Type contract)
         {
             Guard.AssertNotNull(contract, "contract");
 
-            var proxyGenerator = new FaultTolerantProxyGenerator(this.moduleBuilder, contract);
+            NamedTypeBuildKey key = new NamedTypeBuildKey(contract);
 
-            Type proxyType = proxyGenerator.Generate();
+            Type proxyType;
+            if (!this.faultTolerantProxies.TryGetValue(key, out proxyType))
+            {
+                var proxyGenerator = new FaultTolerantProxyGenerator(contract, this.moduleBuilder);
+
+                proxyType = proxyGenerator.Generate();
+
+                this.faultTolerantProxies[key] = proxyType;
+            }
 
             this.assemblyBuilder.Save(Constants.AssemblyFileName);
 
             return proxyType;
+        }
+
+        public Type CreateLazyInstantiationProxy(Type contract)
+        {
+            Guard.AssertNotNull(contract, "contract");
+
+            var proxyGenerator = new LazyProxyGenerator(contract, this.moduleBuilder);
+
+            var proxyType = proxyGenerator.Generate();
+
+            this.assemblyBuilder.Save(Constants.AssemblyFileName);
+
+            return proxyType;
+        }
+
+        protected override void Initialize()
+        {
         }
     }
 
     public interface IProxyGenerator : IUnityContainerExtensionConfigurator
     {
         Type CreateFaultTolerantProxy(Type contract);
+
+        Type CreateLazyInstantiationProxy(Type contract);
     }
 }
