@@ -8,29 +8,41 @@
 
     public static class UnityContainerExtensions
     {
-        public static IUnityContainer RegisterFaultTolerantProxy(this IUnityContainer container, Type contract, LifetimeManager lifetime, params InjectionMember[] injectionMembers)
+        public static IUnityContainer RegisterLazyProxy(this IUnityContainer container, Action<LazyProxyConfiguration> action)
         {
             Guard.AssertNotNull(container, "container");
-            Guard.AssertNotNull(contract, "contract");
+            Guard.AssertNotNull(action, "action");
 
-            var proxyGenerator = container.Configure<IProxyGenerator>();
+            IProxyGenerator generator = container.Configure<IProxyGenerator>();
 
-            if (proxyGenerator == null)
+            if (generator == null)
             {
-                throw new InvalidOperationException("ProxyGeneratorExtension not registered with the container.");
+                var extension = new ProxyGeneratorExtension();
+                generator = extension;
+                container.AddExtension(extension);
             }
 
-            var proxyType = proxyGenerator.CreateFaultTolerantProxy(contract);
+            LazyProxyConfiguration configuration = new LazyProxyConfiguration();
 
-            string uniqueName = Guid.NewGuid().ToString();
+            action(configuration);
 
-            container.RegisterType(null, contract, uniqueName, lifetime, injectionMembers);
+            configuration.Validate();
 
             container.RegisterType(
-                contract,
-                proxyType,
-                (string)null,
-                new InjectionConstructor(new ResolvedParameter(contract, uniqueName)));
+                configuration.Contract,
+                configuration.ServiceImplementation,
+                configuration.ServiceUniqueRegistrationName,
+                configuration.ServiceLifetime,
+                configuration.ServiceInjectionMembers);
+
+            Type lazyProxyType = generator.CreateLazyInstantiationProxy(configuration.Contract);
+
+            container.RegisterType(
+                configuration.Contract,
+                lazyProxyType,
+                configuration.ProxyUniqueRegistrationName,
+                configuration.ProxyLifetime,
+                configuration.ProxyInjectionMembers);
 
             return container;
         }

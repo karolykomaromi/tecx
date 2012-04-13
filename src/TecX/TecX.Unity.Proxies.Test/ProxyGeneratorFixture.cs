@@ -8,7 +8,7 @@
 
     using Xunit;
 
-    public class FaultTolerantProxyGeneratorFixture
+    public class ProxyGeneratorFixture
     {
         [Fact]
         public void CanRegisterFaultProxy()
@@ -32,6 +32,7 @@
 
             IFooService proxy = container.Resolve<IFooService>();
 
+            Assert.IsNotType(typeof(FooService), proxy);
             Assert.Equal("Foo()", proxy.Foo());
         }
 
@@ -57,6 +58,25 @@
 
             IFooService proxy = container.Resolve<IFooService>();
 
+            Assert.IsNotType(typeof(FooService), proxy);
+            Assert.Equal("Foo()", proxy.Foo());
+        }
+
+        [Fact]
+        public void CanRegisterLazyProxyUsingNestedClosureSyntax()
+        {
+            var container = new UnityContainer();
+
+            container.RegisterLazyProxy(
+                x =>
+                    {
+                        x.Contract = typeof(IFooService);
+                        x.ServiceImplementation = typeof(FooService);
+                    });
+
+            IFooService proxy = container.Resolve<IFooService>();
+
+            Assert.IsNotType(typeof(FooService), proxy);
             Assert.Equal("Foo()", proxy.Foo());
         }
     }
