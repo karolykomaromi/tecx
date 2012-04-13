@@ -79,6 +79,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllPropertiesFixture.cs" />
     <Compile Include="CollectionResolutionExtensionFixture.cs" />
     <Compile Include="DecoratorExtensionFixture.cs" />
     <Compile Include="EnrichmentFixture.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="SemanticGroupFixture.cs" />
     <Compile Include="TestObjects\AlwaysThrows.cs" />
     <Compile Include="TestObjects\Bar.cs" />
+    <Compile Include="TestObjects\Bar2.cs" />
     <Compile Include="TestObjects\Car.cs" />
     <Compile Include="TestObjects\CarEngine.cs" />
     <Compile Include="TestObjects\CarWheel.cs" />
@@ -100,7 +102,9 @@
     <Compile Include="TestObjects\CtorTest.cs" />
     <Compile Include="TestObjects\DefaultCtorOnly.cs" />
     <Compile Include="TestObjects\Foo.cs" />
+    <Compile Include="TestObjects\Foo2.cs" />
     <Compile Include="TestObjects\IAlwaysThrows.cs" />
+    <Compile Include="TestObjects\IBar.cs" />
     <Compile Include="TestObjects\ICompany.cs" />
     <Compile Include="TestObjects\IContract.cs" />
     <Compile Include="TestObjects\ICtorTest.cs" />

@@ -91,6 +91,7 @@
     <Compile Include="Groups\UnityContainerExtensions.cs" />
     <Compile Include="Groups\ScopedMapping.cs" />
     <Compile Include="InjectionMembers.cs" />
+    <Compile Include="Injection\AllProperties.cs" />
     <Compile Include="Injection\ByTypeNamingConvention.cs" />
     <Compile Include="Injection\ConnectionStringNamingConvention.cs" />
     <Compile Include="Injection\ConstructorArgument.cs" />
