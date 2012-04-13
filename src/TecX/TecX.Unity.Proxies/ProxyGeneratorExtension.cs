@@ -83,11 +83,4 @@
         {
         }
     }
-
-    public interface IProxyGenerator : IUnityContainerExtensionConfigurator
-    {
-        Type CreateFaultTolerantProxy(Type contract);
-
-        Type CreateLazyInstantiationProxy(Type contract);
-    }
 }
