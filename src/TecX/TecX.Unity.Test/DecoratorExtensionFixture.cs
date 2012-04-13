@@ -53,5 +53,21 @@
 
             Assert.Equal("-->Wrapper2-->Wrapper1-->Company", company.Foo());
         }
+
+        [Fact]
+        public void CanInjectMembers()
+        {
+            var container = new UnityContainer();
+
+            container.AddNewExtension<DecoratorExtension>();
+
+            container.RegisterType<INumber, Three>(new InjectionProperty("Value", "3"));
+            container.RegisterType<INumber, Two>(new InjectionProperty("Value", "2"));
+            container.RegisterType<INumber, One>(new InjectionProperty("Value", "1"));
+
+            var number = container.Resolve<INumber>();
+
+            Assert.Equal("321", number.Value);
+        }
     }
 }
