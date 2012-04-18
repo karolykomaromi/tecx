@@ -16,38 +16,40 @@ namespace TecX.Common.Test
         [TestMethod]
         public void CanFindOrderInOneOfManyTimeSlots()
         {
-            var timeSlots = new[]
-                                {
-                                    new TimeSlot(new DateTime(2010, 7, 1), new DateTime(2010, 7, 8)),
-                                    new TimeSlot(new DateTime(2010, 7, 15), new DateTime(2010, 7, 22))
-                                };
+            Assert.Fail("Fix test");
 
-            var matchBoth = new Order { Id = 3, ShipDate = new DateTime(2010, 7, 5) };
-            var matchNone = new Order { Id = 4, ShipDate = new DateTime(2010, 7, 13) };
-            var matchId = new Order { Id = 3, ShipDate = new DateTime(2009, 1, 1) };
-            var matchTime = new Order { Id = 4, ShipDate = new DateTime(2010, 7, 16) };
+            //var timeSlots = new[]
+            //                    {
+            //                        new TimeSlot(new DateTime(2010, 7, 1), new DateTime(2010, 7, 8)),
+            //                        new TimeSlot(new DateTime(2010, 7, 15), new DateTime(2010, 7, 22))
+            //                    };
 
-            IQueryable<Order> orders = new[]
-                             {
-                                matchBoth, matchNone, matchId, matchTime
-                             }.AsQueryable();
+            //var matchBoth = new Order { Id = 3, ShipDate = new DateTime(2010, 7, 5) };
+            //var matchNone = new Order { Id = 4, ShipDate = new DateTime(2010, 7, 13) };
+            //var matchId = new Order { Id = 3, ShipDate = new DateTime(2009, 1, 1) };
+            //var matchTime = new Order { Id = 4, ShipDate = new DateTime(2010, 7, 16) };
 
-            Expression<Func<Order, bool>> anchor = order => order.Id == 3;
+            //IQueryable<Order> orders = new[]
+            //                 {
+            //                    matchBoth, matchNone, matchId, matchTime
+            //                 }.AsQueryable();
 
-            Expression<Func<Order, bool>> whereClause = PredicateExtensions.False<Order>();
+            //Expression<Func<Order, bool>> anchor = order => order.Id == 3;
 
-            foreach (TimeSlot timeSlot in timeSlots)
-            {
-                TimeSlot timeSlot1 = timeSlot; //avoid modified closure trap
-                whereClause = whereClause.Or<Order>(order => timeSlot1.Contains(order.ShipDate, IncludeOptions.Both));
-            }
+            //Expression<Func<Order, bool>> whereClause = PredicateExtensions.False<Order>();
 
-            whereClause = anchor.And<Order>(whereClause);
+            //foreach (TimeSlot timeSlot in timeSlots)
+            //{
+            //    TimeSlot timeSlot1 = timeSlot; //avoid modified closure trap
+            //    whereClause = whereClause.Or<Order>(order => timeSlot1.Contains(order.ShipDate, IncludeOptions.Both));
+            //}
 
-            IQueryable<Order> result = orders.Where<Order>(whereClause);
+            //whereClause = anchor.And<Order>(whereClause);
 
-            Assert.AreEqual(1, result.Count());
-            Assert.AreEqual(new DateTime(2010, 7, 5), result.First().ShipDate);
+            //IQueryable<Order> result = orders.Where<Order>(whereClause);
+
+            //Assert.AreEqual(1, result.Count());
+            //Assert.AreEqual(new DateTime(2010, 7, 5), result.First().ShipDate);
         }
     }
 }

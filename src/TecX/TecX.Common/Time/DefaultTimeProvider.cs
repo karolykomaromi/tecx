@@ -11,28 +11,20 @@
         /// Gets a <see cref="DateTime"/> object that is set to the current date and time
         /// on this computer, expressed as the Coordinated Universal Time (UTC).
         /// </summary>
-        /// <value></value>
-        public override DateTime UtcNow
+        /// <returns> </returns>
+        public override DateTime GetUtcNow()
         {
-            get { return DateTime.UtcNow; }
+            return DateTime.UtcNow;
         }
 
         /// <summary>
         /// Gets a <see cref="DateTime"/>  object that is set to the current date and time on this computer,
         /// expressed as the local time.
         /// </summary>
-        /// <value></value>
-        public override DateTime Now
+        /// <returns> </returns>
+        public override DateTime GetNow()
         {
-            get { return DateTime.Now; }
-        }
-
-        /// <summary>
-        /// Gets the current date.
-        /// </summary>
-        public override DateTime Today
-        {
-            get { return DateTime.Today; }
+            return DateTime.Now;
         }
     }
 }

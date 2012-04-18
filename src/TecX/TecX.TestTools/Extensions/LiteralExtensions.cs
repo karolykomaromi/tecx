@@ -10,7 +10,7 @@
     {
         public static void Pass(this TimeSpan ts)
         {
-            var previousTime = TimeProvider.Current.UtcNow;
+            var previousTime = TimeProvider.Current.GetUtcNow();
 
             (previousTime + ts).Freeze();
         }
@@ -19,7 +19,7 @@
         {
             var timeProviderStub = new Mock<TimeProvider>();
 
-            timeProviderStub.SetupGet(tp => tp.UtcNow).Returns(dt);
+            timeProviderStub.SetupGet(tp => tp.GetUtcNow()).Returns(dt);
 
             TimeProvider.Current = timeProviderStub.Object;
         }

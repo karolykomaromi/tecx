@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="EntityPredicateExtensionsFixture.cs" />
     <Compile Include="ExceptionExtensionsFixture.cs" />
+    <Compile Include="Given_SpecificationComposite.cs" />
     <Compile Include="GuardFixture.cs" />
     <Compile Include="LatchFixture.cs" />
     <Compile Include="ListExtensionsFixture.cs" />
@@ -104,8 +105,9 @@
     <Compile Include="TestObjects\Status.cs" />
     <Compile Include="TestObjects\StatusMatches.cs" />
     <Compile Include="TestObjects\TextMatches.cs" />
-    <Compile Include="TimeSlotFixture.cs" />
     <Compile Include="TypeHelperFixture.cs" />
+    <Compile Include="When_RetrievingMatchedSpecifications.cs" />
+    <Compile Include="When_UsingVisitorToExtractDescription.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">

@@ -1,6 +1,5 @@
 ﻿namespace TecX.Common
 {
-    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Text;
@@ -10,83 +9,6 @@
     /// </summary>
     public static class Convert
     {
-        /// <summary>
-        /// Performs a safe conversion to <see cref="decimal"/>
-        /// </summary>
-        /// <param name="value">The value to convert</param>
-        /// <returns>The converted value; <i>default(decimal)</i> if an error occurs</returns>
-        public static decimal ToDecimal(object value)
-        {
-            decimal converted = ToDecimal(value, default(decimal));
-
-            return converted;
-        }
-
-        /// <summary>
-        /// Performs a safe conversion to <see cref="decimal"/>
-        /// </summary>
-        /// <param name="value">The value to convert</param>
-        /// <param name="def">The default value</param>
-        /// <returns>The converted value; <paramref name="def"/> if an error occurs</returns>
-        public static decimal ToDecimal(object value, decimal def)
-        {
-            if (value == null)
-            {
-                return def;
-            }
-
-            decimal result;
-
-            // if the value already is a string -> try to parse it
-            if (TypeHelper.TryParse(value as string, out result))
-            {
-                return result;
-            }
-
-            try
-            {
-                result = System.Convert.ToDecimal(value);
-                return result;
-            }
-            catch
-            {
-                /* Intentionally left blank */
-            }
-
-            // value cannot be converted and is not a string
-            if (TypeHelper.TryParse(value.ToString(), out result))
-            {
-                return result;
-            }
-
-            return def;
-        }
-
-        /// <summary>
-        /// Tries to convert a string representation of an enum value
-        /// </summary>
-        /// <typeparam name="T">Type of the enum</typeparam>
-        /// <param name="value">The string representation</param>
-        /// <returns>The enum value represented by the string</returns>
-        public static T ToEnum<T>(string value)
-        {
-            Guard.AssertNotEmpty(value, "value");
-
-            Type enumType = typeof(T);
-            T enumValue = default(T);
-
-            try
-            {
-                enumValue = (T)Enum.Parse(enumType, value, true);
-            }
-            catch
-            {
-                /* intentionally left blank */
-            }
-
-            return enumValue;
-        }
-
         /// <summary>
         /// Converts an array of bytes to a hexadecimal string
         /// </summary>
