@@ -2,7 +2,7 @@
 {
     public class MyClass : IMyInterface
     {
-        private readonly string _str;
+        private readonly string str;
 
         public MyClass()
             : this("parameterless c'tor")
@@ -11,12 +11,12 @@
 
         public MyClass(string str)
         {
-            _str = str;
+            this.str = str;
         }
 
         public string Str
         {
-            get { return _str; }
+            get { return this.str; }
         }
     }
 }

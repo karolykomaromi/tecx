@@ -17,7 +17,7 @@ namespace TecX.Common.Extensions.Primitives
         public static string ToUpper(this string s, int startIndex, int length, CultureInfo culture)
         {
             Guard.AssertNotNull(culture, "culture");
-            Guard.AssertIsInRange(startIndex, "startIndex", 0, int.MaxValue, "StartIndex must not be negative.");
+            Guard.AssertIsInRange(startIndex, "startIndex", 0, int.MaxValue, "startIndex must not be negative.");
 
             if (string.IsNullOrEmpty(s))
             {

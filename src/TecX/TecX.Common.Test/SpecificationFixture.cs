@@ -6,7 +6,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TecX.Common.Specifications;
 using TecX.Common.Test.TestObjects;
-using TecX.TestTools;
 
 namespace TecX.Common.Test
 {
@@ -69,66 +68,6 @@ namespace TecX.Common.Test
 
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count());
-        }
-    }
-
-    public abstract class Given_SpecificationComposite : GivenWhenThen
-    {
-        protected ISpecification<SearchTestEntity> _composite;
-
-        protected ISpecification<SearchTestEntity> _s1;
-
-        protected override void Given()
-        {
-            _s1 = new DummySpec1();
-
-            var s2 = new DummySpec2();
-
-            var s3 = new DummySpec3();
-
-            _composite = _s1.Or(s2.And(s3));
-        }
-    }
-
-    [TestClass]
-    public class When_UsingVisitorToExtractDescription : Given_SpecificationComposite
-    {
-        private DescriptionVisitor<SearchTestEntity> _visitor;
-
-        private string _descriptions;
-
-        protected override void When()
-        {
-            _visitor = new DescriptionVisitor<SearchTestEntity>();
-
-            _composite.Accept(_visitor);
-
-            _descriptions = _visitor.ToString();
-        }
-
-        [TestMethod]
-        public void Then_VisitorCrawlsGraphAndCollectsDescriptions()
-        {
-            Assert.AreEqual("(DummySpec1 OR (DummySpec2 AND DummySpec3))", _descriptions);
-        }
-    }
-
-    [TestClass]
-    public class When_RetrievingMatchedSpecifications : Given_SpecificationComposite
-    {
-        private List<ISpecification<SearchTestEntity>> _matchedSpecs;
-
-        protected override void When()
-        {
-            _matchedSpecs = new List<ISpecification<SearchTestEntity>>();
-
-            _composite.IsMatch(new SearchTestEntity(), _matchedSpecs);
-        }
-
-        [TestMethod]
-        public void Then_MatchedSpecsAreReturnedInCollection()
-        {
-            Assert.AreEqual(_s1, _matchedSpecs.Single());
         }
     }
 }

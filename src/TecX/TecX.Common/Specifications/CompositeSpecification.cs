@@ -54,8 +54,15 @@
         }
 
         /// <inheritdoc/>
+        /// <remarks>
+        /// The visitor shall be able to define the order in which it travels through the tree of specifications all by itself.
+        /// Thus there is an overload of <see cref="ISpecificationVisitor{TCandidate}.Visit(CompositeSpecification{TCandidate})"/>
+        /// that is called here.
+        /// </remarks>
         public override void Accept(ISpecificationVisitor<TCandidate> visitor)
         {
+            Guard.AssertNotNull(visitor, "visitor");
+
             visitor.Visit(this);
         }
     }

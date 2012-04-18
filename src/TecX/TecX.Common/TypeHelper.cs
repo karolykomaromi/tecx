@@ -1,10 +1,8 @@
 namespace TecX.Common
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
     using System.Text;
     using System.Text.RegularExpressions;
 
@@ -19,11 +17,6 @@ namespace TecX.Common
             Justification = "Reviewed. Suppression is OK here.")]
         private static class Constants
         {
-            /// <summary>
-            /// Stores string to represent a <i>null</i> reference
-            /// </summary>
-            public const string NullString = "<null>";
-
             /// <summary>16</summary>
             public const int DefaultLengthPerStringFormatArg = 16;
         }
@@ -62,18 +55,6 @@ namespace TecX.Common
                 // and slowest way to fill the arguments into the format string
                 return SafeFormatIntern(format, args);
             }
-        }
-
-        /// <summary>
-        /// Determines the length of a <see cref="string"/>
-        /// </summary>
-        /// <param name="arg">The string.</param>
-        /// <returns>
-        /// Length of the <see cref="string"/>, <i>-1</i> if the argument is <i>null</i>
-        /// </returns>
-        public static int SafeLength(string arg)
-        {
-            return (arg == null) ? -1 : arg.Length;
         }
 
         /// <summary>
@@ -128,151 +109,6 @@ namespace TecX.Common
             def = def ?? string.Empty;
 
             return (obj == null) ? def : obj.ToString();
-        }
-
-        /// <summary>
-        /// Checks wether the <see cref="ICollection"/> is <i>null</i> or empty
-        /// </summary>
-        /// <param name="collection">The collection</param>
-        /// <returns>
-        /// <i>true</i> if the collection is <i>null</i> or empty; <i>false</i> otherwise
-        /// </returns>
-        public static bool IsEmpty(this ICollection collection)
-        {
-            return (collection == null) || (collection.Count == 0);
-        }
-
-        /// <summary>
-        /// Checks wether the <see cref="IEnumerable"/> is <i>null</i> or empty
-        /// </summary>
-        /// <param name="enumerable">The enumerable</param>
-        /// <returns>
-        /// <i>true</i> if the enumerable is <i>null</i> or empty; <i>false</i> otherwise
-        /// </returns>
-        public static bool IsEmpty(IEnumerable enumerable)
-        {
-            if (enumerable == null)
-            {
-                return true;
-            }
-
-            IEnumerator iter = enumerable.GetEnumerator();
-
-            if (iter.MoveNext() == false)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Determines the number of elements in an <see cref="ICollection"/>
-        /// </summary>
-        /// <param name="collection">The collection</param>
-        /// <returns>The number of elements in the collection; <i>-1</i> if the collection is <i>null</i></returns>
-        public static int SafeCount(ICollection collection)
-        {
-            return (collection == null) ? -1 : collection.Count;
-        }
-
-        /// <summary>
-        /// Checks wether a <see cref="Guid"/> is a <i>Guid.Empty</i>
-        /// </summary>
-        /// <param name="guid">The value to check</param>
-        /// <returns><i>true</i> if the value is <i>Guid.Empty</i>; <i>false</i> otherwise</returns>
-        public static bool IsEmpty(Guid guid)
-        {
-            return guid == Guid.Empty;
-        }
-
-        /// <summary>
-        /// Checks wether a <see cref="DateTime"/> is either <i>DateTime.MinValue</i>, 
-        /// <i>DateTime.MaxValue</i> or <i>default(DateTime)</i>
-        /// </summary>
-        /// <param name="dateTime">The value to check</param>
-        /// <returns><i>true</i> if the value is either <i>DateTime.MinValue</i>, 
-        /// <i>DateTime.MaxValue</i> or <i>default(DateTime)</i>; <i>false</i> otherwise
-        /// </returns>
-        public static bool IsEmpty(DateTime dateTime)
-        {
-            return dateTime == default(DateTime) || (dateTime == DateTime.MaxValue) || (dateTime == DateTime.MinValue);
-        }
-
-        /// <summary>
-        /// Gets a hashcode from an object
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The hashcode of the object;<c>0</c> if the object is <c>null</c></returns>
-        public static int GetNullSafeHashCode(object value)
-        {
-            return value == null ? 0 : value.GetHashCode();
-        }
-
-        /// <summary>
-        /// Gets a hashcode from a dictionary
-        /// </summary>
-        /// <typeparam name="TKey">The type of the key.</typeparam>
-        /// <typeparam name="TValue">The type of the value.</typeparam>
-        /// <param name="value">The dictionary.</param>
-        /// <returns><c>0</c> if the dictionary is <c>null</c>; the accumulated hashcodes of the
-        /// values in the dictionary otherwise</returns>
-        public static int GetNullSafeHashCode<TKey, TValue>(IDictionary<TKey, TValue> value)
-        {
-            if (value == null)
-            {
-                return 0;
-            }
-
-            int hash = 0;
-
-            foreach (TValue item in value.Values)
-            {
-                hash ^= GetNullSafeHashCode(item);
-            }
-
-            return hash;
-        }
-
-        /// <summary>
-        /// Tries to parse a string as decimal value
-        /// </summary>
-        /// <param name="value">The string to parse</param>
-        /// <param name="result">The result</param>
-        /// <returns><i>true</i> if the string is successfully parsed; <i>false</i> otherwise</returns>
-        public static bool TryParse(string value, out decimal result)
-        {
-            // empty string or null cannot be parsed
-            if (string.IsNullOrEmpty(value))
-            {
-                result = default(decimal);
-                return false;
-            }
-
-            // determines the NumberDecimalSeparator
-            int idxComma = value.LastIndexOf(',');
-            int idxPeriod = value.LastIndexOf('.');
-
-            if (idxComma > idxPeriod)
-            {
-                // german culture uses comma as decimal separator
-                if (decimal.TryParse(value, NumberStyles.Float, new CultureInfo("de-DE"), out result))
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                // invariant culture uses period as decimal separator
-                if (decimal.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out result))
-                {
-                    return true;
-                }
-            }
-
-            // parsing not successfull
-            result = default(decimal);
-            return false;
         }
 
         /// <summary>

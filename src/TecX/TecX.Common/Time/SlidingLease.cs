@@ -10,7 +10,7 @@
         public SlidingLease(TimeSpan timeout)
         {
             this.timeout = timeout;
-            this.renewed = TimeProvider.Current.Now;
+            this.renewed = TimeProvider.Now;
         }
 
         public TimeSpan Timeout
@@ -22,13 +22,13 @@
         {
             get
             {
-                return TimeProvider.Current.Now > this.renewed + this.timeout;
+                return TimeProvider.Now > this.renewed + this.timeout;
             }
         }
 
         public void Renew()
         {
-            this.renewed = TimeProvider.Current.Now;
+            this.renewed = TimeProvider.Now;
         }
     }
 }

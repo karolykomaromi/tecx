@@ -92,7 +92,6 @@
     <Compile Include="Time\ILease.cs" />
     <Compile Include="Time\SlidingLease.cs" />
     <Compile Include="Time\TimeProvider.cs" />
-    <Compile Include="Time\TimeSlot.cs" />
     <Compile Include="TypeHelper.cs" />
     <Compile Include="Time\ZellersCongruence.cs" />
     <Compile Include="WeakReference.cs" />

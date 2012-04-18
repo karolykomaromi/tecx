@@ -1,6 +1,7 @@
 namespace TecX.Event
 {
     using System;
+    using System.Reflection;
 
     using TecX.Common;
 
@@ -21,9 +22,9 @@ namespace TecX.Event
 
             Type messageType = message.GetType();
 
-            var method = typeof(IEventAggregator).GetMethod("Publish");
+            MethodInfo method = typeof(IEventAggregator).GetMethod("Publish");
 
-            var publish = method.MakeGenericMethod(messageType);
+            MethodInfo publish = method.MakeGenericMethod(messageType);
 
             publish.Invoke(this.eventAggregator, new[] { message });
         }

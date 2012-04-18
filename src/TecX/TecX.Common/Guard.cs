@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq.Expressions;
@@ -20,35 +19,28 @@
             Justification = "Reviewed. Suppression is OK here.")]
         private static class Constants
         {
-            public static class Messages
-            {
-                /// <summary>ParameterNull '{0}' should not be NULL!</summary>
-                public const string ParameterNull = "ParameterNull '{0}' must not be NULL!";
+            /// <summary>ParameterNull '{0}' should not be NULL!</summary>
+            public const string ParameterNull = "ParameterNull '{0}' must not be NULL!";
 
-                /// <summary>paramument '{0}' should not be empty!</summary>
-                public const string ParameterEmpty = "ParameterNull '{0}' must not be empty!";
+            /// <summary>paramument '{0}' should not be empty!</summary>
+            public const string ParameterEmpty = "ParameterNull '{0}' must not be empty!";
 
-                /// <summary>Condition not met!</summary>
-                public const string ConditionNotMet = "Condition not met!";
+            /// <summary>Condition not met!</summary>
+            public const string ConditionNotMet = "Condition not met!";
 
-                /// <summary>Invalid switch value '{0}' for parameter '{1}'.</summary>
-                public const string InvalidSwitchValue = "Invalid switch value '{0}' for parameter '{1}'.";
+            /// <summary>Parameter '{0}' with a value of '{1}' is not between '{2}' and '{3}!</summary>
+            public const string ParameterNotInRange =
+                "Parameter '{0}' with a value of '{1}' is not between '{2}' and '{3}!";
 
-                /// <summary>Parameter '{0}' with a value of '{1}' is not between '{2}' and '{3}!</summary>
-                public const string ParameterNotInRange =
-                    "Parameter '{0}' with a value of '{1}' is not between '{2}' and '{3}!";
-
-                /// <summary>&lt;no parameter name&gt;</summary>
-                public const string NoParamName = "<no parameter name>";
-
-                /// <summary>Parameter {0} is not of Type {1}</summary>
-                public const string WrongType = "Parameter {0} is not of Type {1}";
-            }
+            /// <summary>&lt;no parameter name&gt;</summary>
+            public const string NoParameterName = "<no parameter name>";
         }
 
         [DebuggerStepThrough]
         public static void AssertNotNull(object param, string paramName)
         {
+            paramName = string.IsNullOrWhiteSpace(paramName) ? Constants.NoParameterName : paramName;
+
             if (param == null)
             {
                 throw new GuardArgumentNullException(paramName);
@@ -72,6 +64,8 @@
         [DebuggerStepThrough]
         public static void AssertNotEmpty(string param, string paramName)
         {
+            paramName = string.IsNullOrWhiteSpace(paramName) ? Constants.NoParameterName : paramName;
+
             if (param == null)
             {
                 throw new GuardArgumentNullException(paramName);
@@ -79,7 +73,7 @@
 
             if (string.IsNullOrEmpty(param))
             {
-                throw new GuardArgumentException(Constants.Messages.ParameterEmpty, paramName);
+                throw new GuardArgumentException(Constants.ParameterEmpty, paramName);
             }
         }
 
@@ -106,49 +100,42 @@
         [DebuggerStepThrough]
         public static void AssertNotEmpty(ICollection param, string paramName)
         {
+            paramName = string.IsNullOrWhiteSpace(paramName) ? Constants.NoParameterName : paramName;
+
             if (param == null)
             {
-                throw new GuardArgumentNullException(paramName, Constants.Messages.ParameterNull);
+                throw new GuardArgumentNullException(paramName, Constants.ParameterNull);
             }
 
             if (param.Count == 0)
             {
-                throw new GuardArgumentException(paramName, Constants.Messages.ParameterEmpty).WithAdditionalInfo("param", param);
+                throw new GuardArgumentException(paramName, Constants.ParameterEmpty).WithAdditionalInfo("param", param);
             }
         }
 
         [DebuggerStepThrough]
         public static void AssertCondition(bool condition, object param, string paramName, string message)
         {
+            paramName = string.IsNullOrWhiteSpace(paramName) ? Constants.NoParameterName : paramName;
+            message = string.IsNullOrWhiteSpace(message) ? Constants.ConditionNotMet : message;
+
             if (!condition)
             {
-                throw new GuardArgumentException(
-                    TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
-                    TypeHelper.ToNullSafeString(message)).WithAdditionalInfos(
-                        new Dictionary<object, object> { { "param", param } });
+                throw new GuardArgumentException(paramName, message)
+                    .WithAdditionalInfo("param", param);
             }
         }
 
         [DebuggerStepThrough]
         public static void AssertCondition(bool condition, object param, string paramName)
         {
-            AssertCondition(condition, param, paramName, Constants.Messages.ConditionNotMet);
-        }
-
-        [DebuggerStepThrough]
-        public static void InvalidSwitchValue(object param, string paramName)
-        {
-            throw new InvalidOperationException(
-                TypeHelper.SafeFormat(
-                    Constants.Messages.InvalidSwitchValue,
-                    TypeHelper.ToNullSafeString(param),
-                    TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName)));
+            AssertCondition(condition, param, paramName, Constants.ConditionNotMet);
         }
 
         [DebuggerStepThrough]
         public static void AssertIsInRange<T>(T param, string paramName, T min, T max) where T : IComparable
         {
-            string message = TypeHelper.SafeFormat(Constants.Messages.ParameterNotInRange, paramName, param, min, max);
+            string message = TypeHelper.SafeFormat(Constants.ParameterNotInRange, paramName, param, min, max);
 
             AssertIsInRange(
                 param, 
@@ -169,45 +156,8 @@
             if (!TypeHelper.IsInRange(param, min, max))
             {
                 throw new GuardArgumentOutOfRangeException(
-                    TypeHelper.ToNullSafeString(paramName, Constants.Messages.NoParamName),
+                    TypeHelper.ToNullSafeString(paramName, Constants.NoParameterName),
                     TypeHelper.ToNullSafeString(message)).WithAdditionalInfo("param", param);
-            }
-        }
-
-        [DebuggerStepThrough]
-        public static void AssertIsType(Type parameterType, object value, string paramName)
-        {
-            string paramTypeFullName = parameterType == null ? string.Empty : parameterType.FullName;
-
-            string message = TypeHelper.SafeFormat(Constants.Messages.WrongType, paramName, paramTypeFullName);
-
-            AssertIsType(parameterType, value, paramName, message);
-        }
-
-        [DebuggerStepThrough]
-        public static void AssertIsType(Type parameterType, object value, string paramName, string message)
-        {
-            AssertNotNull(parameterType, "parameterType");
-            AssertNotNull(value, "value");
-
-            Type sourceType = value.GetType();
-
-            if (string.IsNullOrEmpty(message))
-            {
-                message = TypeHelper.SafeFormat(Constants.Messages.WrongType, paramName, parameterType.FullName);
-            }
-
-            if (!parameterType.IsAssignableFrom(sourceType))
-            {
-                throw new GuardArgumentOutOfRangeException(TypeHelper.ToNullSafeString(paramName), message)
-                    .WithAdditionalInfos(
-                        new Dictionary<object, object>
-                            {
-                                { "parameterType", parameterType },
-                                { "sourceType", sourceType },
-                                { "value", value },
-                                { "paramName", paramName }
-                            });
             }
         }
     }

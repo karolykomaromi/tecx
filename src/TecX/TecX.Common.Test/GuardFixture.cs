@@ -28,18 +28,5 @@
         {
             Guard.AssertIsInRange(3, "paramToCheck", 1, 2);
         }
-
-        [TestMethod]
-        [ExpectedException(typeof (GuardArgumentOutOfRangeException))]
-        public void CanAssertArgumentIsOfWrongType()
-        {
-            Guard.AssertIsType(typeof(ClassA), string.Empty, "paramToCheck");
-        }
-
-        [TestMethod]
-        public void CanAssertArgumentIsOfCorrectType()
-        {
-            Guard.AssertIsType(typeof(ClassA), new ClassB(), "paramToCheck");
-        }
     }
 }
