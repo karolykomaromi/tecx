@@ -98,6 +98,13 @@
             this.Container.RegisterInstance(from, uniqueMappingName, instance, lifetime);
         }
 
+        public bool Remove(string key)
+        {
+            Guard.AssertNotEmpty(key, "key");
+
+            return this.bindingContext.Remove(key);
+        }
+
         protected override void Initialize()
         {
             this.Context.Registering += this.OnRegistering;
@@ -105,6 +112,8 @@
             this.Context.RegisteringInstance += this.OnRegisteringInstance;
 
             this.Context.Strategies.Add(this.treeTracker, UnityBuildStage.PreCreation);
+
+            this.Context.Strategies.Add(new ContextualParameterBindingStrategy(new DefaultBindingContext(this)), UnityBuildStage.PreCreation);
         }
 
         private void OnRegistering(object sender, RegisterEventArgs e)
@@ -220,7 +229,16 @@
                 {
                     Guard.AssertNotEmpty(key, "key");
 
-                    return this.Extension.bindingContext[key];
+                    object value;
+
+                    if (this.Extension.bindingContext.TryGetValue(key, out value))
+                    {
+                        return value;
+                    }
+
+                    //return this.Extension.bindingContext[key];
+
+                    return null;
                 }
 
                 set

@@ -53,6 +53,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
@@ -60,6 +61,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContextualParameterBindingFixture.cs" />
     <Compile Include="Given_BuilderAndContainerWithContextualBindingExtension.cs" />
     <Compile Include="Given_BuilderAndInstance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,6 +97,10 @@
     <ProjectReference Include="..\TecX.TestTools\TecX.TestTools.csproj">
       <Project>{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}</Project>
       <Name>TecX.TestTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Unity.Configuration.Test\TecX.Unity.Configuration.Test.csproj">
+      <Project>{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}</Project>
+      <Name>TecX.Unity.Configuration.Test</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Unity.Configuration\TecX.Unity.Configuration.csproj">
       <Project>{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}</Project>
