@@ -14,5 +14,7 @@
         void RegisterType(Type @from, Type to, LifetimeManager lifetime, Predicate<IBindingContext, IBuilderContext> predicate, params InjectionMember[] injectionMembers);
 
         void RegisterInstance(Type @from, object instance, LifetimeManager lifetime, Predicate<IBindingContext, IBuilderContext> predicate);
+
+        bool Remove(string key);
     }
 }
