@@ -17,10 +17,7 @@ namespace TecX.Unity.ContextualBinding
 
             if (policy != null)
             {
-                if (policy.IsMatch(this.bindingContext, context))
-                {
-                    policy.SetResolverOverrides(context);
-                }
+                policy.SetResolverOverrides(this.bindingContext, context);
             }
         }
     }

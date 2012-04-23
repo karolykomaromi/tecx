@@ -4,8 +4,15 @@ namespace TecX.Unity.ContextualBinding
 
     public interface IContextualParameterBindingPolicy : IBuilderPolicy
     {
-        bool IsMatch(IBindingContext bindingContext, IBuilderContext builderContext);
+        void Add(ContextualResolverOverride contextualResolverOverride);
 
-        void SetResolverOverrides(IBuilderContext context);
+        void SetResolverOverrides(IBindingContext bindingContext, IBuilderContext builderContext);
+    }
+
+    public abstract class ContextualResolverOverride
+    {
+        public abstract bool IsMatch(IBindingContext bindingContext, IBuilderContext builderContext);
+
+        public abstract void SetResolverOverrides(IBuilderContext context);
     }
 }
