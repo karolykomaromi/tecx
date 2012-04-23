@@ -1,17 +1,12 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-
-using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using Remotion.Mixins;
-
-using TecX.Unity.Mixin.Test.TestObjects;
-
-namespace TecX.Unity.Mixin.Test
+﻿namespace TecX.Unity.Mixin.Test
 {
+    using Microsoft.Practices.Unity;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using Remotion.Mixins;
+
+    using TecX.Unity.Mixin.Test.TestObjects;
+
     [TestClass]
     public class MixinExtensionFixture
     {

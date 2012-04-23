@@ -69,10 +69,15 @@
     <Compile Include="TestObjects\Foo.cs" />
     <Compile Include="TestObjects\IFoo.cs" />
     <Compile Include="TestObjects\IMyInterface.cs" />
+    <Compile Include="TestObjects\IMyService.cs" />
+    <Compile Include="TestObjects\InstanceContext.cs" />
+    <Compile Include="TestObjects\Message.cs" />
+    <Compile Include="TestObjects\MessageHeaders.cs" />
     <Compile Include="TestObjects\MyClass.cs" />
     <Compile Include="TestObjects\MyOtherClass.cs" />
     <Compile Include="TestObjects\MyParameterLessClass.cs" />
     <Compile Include="TestObjects\ParentWithDependency.cs" />
+    <Compile Include="TestObjects\WritesToDatabaseService.cs" />
     <Compile Include="When_ConfiguringContextualBindingForInstance.cs" />
     <Compile Include="When_ConfiguringContextualBindingForType.cs" />
     <Compile Include="When_ContextDoesNotMatchPredicate.cs" />
