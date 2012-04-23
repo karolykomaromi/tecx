@@ -42,9 +42,6 @@
     <Reference Include="Castle.Core">
       <HintPath>..\..\..\lib\Remix\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.DynamicProxy2">
-      <HintPath>..\..\..\lib\Remix\Castle.DynamicProxy2.dll</HintPath>
-    </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\lib\Remix\log4net.dll</HintPath>
     </Reference>
@@ -61,8 +58,8 @@
     <Reference Include="Remotion">
       <HintPath>..\..\..\lib\Remix\Remotion.dll</HintPath>
     </Reference>
-    <Reference Include="Remotion.Interfaces">
-      <HintPath>..\..\..\lib\Remix\Remotion.Interfaces.dll</HintPath>
+    <Reference Include="Remotion.Mixins">
+      <HintPath>..\..\..\lib\Remix\Remotion.Mixins.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">

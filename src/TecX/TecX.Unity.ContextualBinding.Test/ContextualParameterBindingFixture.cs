@@ -7,6 +7,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using TecX.Common;
+    using TecX.Unity.ContextualBinding.Test.TestObjects;
 
     [TestClass]
     public class ContextualParameterBindingFixture
@@ -16,7 +17,9 @@
         {
             var container = new UnityContainer();
 
-            container.RegisterType<IMyService, WritesToDatabaseService>(new InjectionConstructor("1"), new DestinationToConnectionStringBinding("http://localhost/service", "2"));
+            container.RegisterType<IMyService, WritesToDatabaseService>(
+                new InjectionConstructor("1"), 
+                new DestinationToConnectionStringBinding("http://localhost/service", "2"));
 
             var instanceContext = new InstanceContext();
             var message = new Message { Headers = new MessageHeaders { To = new Uri("http://localhost/service") } };
@@ -34,21 +37,6 @@
         }
     }
 
-    public class InstanceContext
-    {
-
-    }
-
-    public class Message
-    {
-        public MessageHeaders Headers { get; set; }
-    }
-
-    public class MessageHeaders
-    {
-        public Uri To { get; set; }
-    }
-
     public class DestinationToConnectionStringBinding : InjectionMember
     {
         private readonly string url;
@@ -57,13 +45,20 @@
 
         public DestinationToConnectionStringBinding(string url, string connectionString)
         {
+            Guard.AssertNotEmpty(url, "url");
+            Guard.AssertNotEmpty(connectionString, "connectionString");
+
             this.url = url;
             this.connectionString = connectionString;
         }
 
         public override void AddPolicies(Type serviceType, Type implementationType, string name, IPolicyList policies)
         {
-            policies.Set<IContextualParameterBindingPolicy>(new DestinationToConnectionStringPolicy(this.url, this.connectionString), new NamedTypeBuildKey(implementationType, name));
+            Guard.AssertNotNull(implementationType, "implementationType");
+
+            policies.Set<IContextualParameterBindingPolicy>(
+                new DestinationToConnectionStringPolicy(this.url, this.connectionString), 
+                new NamedTypeBuildKey(implementationType, name));
         }
     }
 
@@ -105,20 +100,5 @@
 
             context.AddResolverOverrides(new[] { new ParameterOverride("connectionString", this.connectionString), });
         }
-    }
-
-    public class WritesToDatabaseService : IMyService
-    {
-        public string ConnectionString { get; set; }
-
-        public WritesToDatabaseService(string connectionString)
-        {
-            this.ConnectionString = connectionString;
-        }
-    }
-
-    public interface IMyService
-    {
-        string ConnectionString { get; set; }
     }
 }
