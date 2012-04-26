@@ -68,8 +68,11 @@
     <Compile Include="ContextualBindingException.cs" />
     <Compile Include="ContextualBindingExtension.cs" />
     <Compile Include="ContextualBuildKeyMapping.cs" />
+    <Compile Include="ContextualParameter.cs" />
     <Compile Include="ContextualParameterBindingPolicy.cs" />
     <Compile Include="ContextualParameterBindingStrategy.cs" />
+    <Compile Include="ContextualParameterOverride.cs" />
+    <Compile Include="ContextualResolverOverride.cs" />
     <Compile Include="IBindingContext.cs" />
     <Compile Include="IContextualBinding.cs" />
     <Compile Include="IContextualParameterBindingPolicy.cs" />

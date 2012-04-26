@@ -8,11 +8,4 @@ namespace TecX.Unity.ContextualBinding
 
         void SetResolverOverrides(IBindingContext bindingContext, IBuilderContext builderContext);
     }
-
-    public abstract class ContextualResolverOverride
-    {
-        public abstract bool IsMatch(IBindingContext bindingContext, IBuilderContext builderContext);
-
-        public abstract void SetResolverOverrides(IBuilderContext context);
-    }
 }

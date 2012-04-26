@@ -1,8 +1,8 @@
 namespace TecX.Unity.ContextualBinding.Test.TestObjects
 {
-    public class TakesTwoConnectionStrings : IMyService
+    public class DbFoo : IFoo
     {
-        public TakesTwoConnectionStrings(string connectionString, string connectionString2)
+        public DbFoo(string connectionString, string connectionString2)
         {
             this.ConnectionString = connectionString;
             this.ConnectionString2 = connectionString2;
