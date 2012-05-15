@@ -57,30 +57,21 @@
         [TestMethod]
         public void Test()
         {
+            var container = new UnityContainer();
+
+            container.RegisterType<IUnitOfWork, UnitOfWork>();
+
             Type delegateType = typeof(UnitOfWorkFactory);
 
-            Delegate @delegate = GetDelegate(delegateType);
+            Delegate @delegate = GetDelegate(container, delegateType);
 
-            object x = @delegate.DynamicInvoke(true);
+            UnitOfWork uow = @delegate.DynamicInvoke(true) as UnitOfWork;
 
-            //Console.WriteLine(method.ReturnType.Name + " (ret)");
-            //foreach (ParameterInfo param in method.GetParameters())
-            //{
-            //    Console.WriteLine("{0} {1}", param.ParameterType.Name, param.Name);
-            //}
-
-
-
-            // return type aufsammeln
-
-            // func definieren mit parametertypen und return type
-
-            // body definieren
-
-            // neue parameteroverrides definieren mit parametern des delegate
+            Assert.IsNotNull(uow);
+            Assert.IsTrue(uow.ReadOnly);
         }
 
-        public static Delegate GetDelegate(Type delegateType)
+        public static Delegate GetDelegate(IUnityContainer container, Type delegateType)
         {
             MethodInfo method = delegateType.GetMethod("Invoke");
 
@@ -91,31 +82,48 @@
 
             Type funcType = Expression.GetFuncType(funcParameterTypes);
 
+            // prepare expression for every parameter of the delegate
             ParameterExpression[] parameterExpressions =
                 parameters.Select(pi => Expression.Parameter(pi.ParameterType, pi.Name)).ToArray();
 
+            // get constructor ParameterOverride(string name, object value)
             ConstructorInfo ctor = typeof(ParameterOverride).GetConstructor(new[] { typeof(string), typeof(object) });
 
             List<Expression> @overrides = new List<Expression>();
 
-            for (int i = 0; i < parameterExpressions.Length; i++)
+            // prepare a ParameterOverride for every parameter of the delegate
+            foreach (ParameterExpression parameterExpression in parameterExpressions)
             {
-                ParameterExpression parameterExpression = parameterExpressions[i];
-
                 ConstantExpression parameterName = Expression.Constant(parameterExpression.Name, typeof(string));
 
                 NewExpression @new = Expression.New(ctor, new Expression[] { parameterName, Expression.Convert(parameterExpression, typeof(object)) });
 
-                @overrides.Add(@new);
+                @overrides.Add(Expression.Convert(@new, typeof(ResolverOverride)));
             }
 
+            // find the method IUnityContainer.Resolve(Type type, string name, ResolverOverride[] resolverOverrides)
             MethodInfo resolve = typeof(IUnityContainer).GetMethod(
                 "Resolve", new[] { typeof(Type), typeof(string), typeof(ResolverOverride[]) });
 
-            MethodCallExpression call = Expression.Call(resolve, @overrides.ToArray());
+            ConstantExpression ctr = Expression.Constant(container);
 
-            LambdaExpression func = Expression.Lambda(funcType, call, parameterExpressions);
+            // prepare the parameters for the resolve method
+            Expression[] resolveParameters = new Expression[]
+                {
+                    Expression.Constant(method.ReturnType, typeof(Type)), 
+                    Expression.Constant((string)null, typeof(string)),
+                    Expression.NewArrayInit(typeof(ResolverOverride), @overrides)
+                };
 
+            MethodCallExpression containerResolve = Expression.Call(ctr, resolve, resolveParameters);
+
+            // convert the result of the call to container.Resolve from object to the return type of the delegate
+            UnaryExpression returnValue = Expression.Convert(containerResolve, method.ReturnType);
+            
+            // put all the pieces into a lambda expression
+            LambdaExpression func = Expression.Lambda(funcType, returnValue, parameterExpressions);
+
+            // and finally compile it
             Delegate @delegate = func.Compile();
 
             return @delegate;
@@ -158,7 +166,7 @@
         {
             if (context.Existing != null)
             {
-                
+
             }
         }
     }
