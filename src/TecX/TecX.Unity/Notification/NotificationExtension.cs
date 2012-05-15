@@ -24,9 +24,9 @@
             this.Report = report;
         }
 
-        public event EventHandler<CreatingObjectEventArgs> Creating = delegate { };
+        public event EventHandler Creating = delegate { };
  
-        public event EventHandler<CreatedObjectEventArgs> Created = delegate { }; 
+        public event EventHandler Created = delegate { }; 
 
         public Action<Exception, IBuilderContext, IBuildPlanPolicy> Report
         {
@@ -113,9 +113,9 @@
             {
                 try
                 {
-                    this.extension.Creating(this.extension, new CreatingObjectEventArgs());
+                    this.extension.Creating(this.extension, EventArgs.Empty);
                     this.inner.BuildUp(context);
-                    this.extension.Created(this.extension, new CreatedObjectEventArgs());
+                    this.extension.Created(this.extension, EventArgs.Empty);
                 }
                 catch (Exception ex)
                 {
@@ -126,13 +126,5 @@
                 }
             }
         }
-    }
-
-    public class CreatedObjectEventArgs : EventArgs
-    {
-    }
-
-    public class CreatingObjectEventArgs : EventArgs
-    {
     }
 }

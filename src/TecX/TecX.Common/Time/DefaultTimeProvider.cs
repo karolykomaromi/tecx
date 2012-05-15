@@ -12,7 +12,7 @@
         /// on this computer, expressed as the Coordinated Universal Time (UTC).
         /// </summary>
         /// <returns> </returns>
-        public override DateTime GetUtcNow()
+        protected override DateTime GetUtcNow()
         {
             return DateTime.UtcNow;
         }
@@ -22,7 +22,7 @@
         /// expressed as the local time.
         /// </summary>
         /// <returns> </returns>
-        public override DateTime GetNow()
+        protected override DateTime GetNow()
         {
             return DateTime.Now;
         }

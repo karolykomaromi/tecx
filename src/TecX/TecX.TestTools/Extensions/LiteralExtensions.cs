@@ -2,26 +2,22 @@
 {
     using System;
 
-    using Moq;
-
     using TecX.Common.Time;
 
     public static class LiteralExtensions
     {
         public static void Pass(this TimeSpan ts)
         {
-            var previousTime = TimeProvider.Current.GetUtcNow();
+            var previousTime = TimeProvider.UtcNow;
 
             (previousTime + ts).Freeze();
         }
 
         public static void Freeze(this DateTime dt)
         {
-            var timeProviderStub = new Mock<TimeProvider>();
+            TimeProvider timeProvider = new MockTimeProvider(dt);
 
-            timeProviderStub.SetupGet(tp => tp.GetUtcNow()).Returns(dt);
-
-            TimeProvider.Current = timeProviderStub.Object;
+            TimeProvider.Current = timeProvider;
         }
     }
 }
