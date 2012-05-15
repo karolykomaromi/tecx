@@ -5,11 +5,11 @@
     using Microsoft.Practices.Unity;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using TecX.Unity.Error;
+    using TecX.Unity.Notification;
     using TecX.Unity.Test.TestObjects;
 
     [TestClass]
-    public class ReportCreationExceptionExtensionFixture
+    public class NotificationExtensionFixture
     {
         [TestMethod]
         public void GetNotificationOnCtorException()
@@ -18,7 +18,7 @@
 
             bool notified = false;
 
-            container.AddExtension(new ReportCreationErrorExtension((ex, ctx, policy) => notified = true));
+            container.AddExtension(new NotificationExtension((ex, ctx, policy) => notified = true));
 
             try
             {
@@ -39,7 +39,7 @@
 
             bool notified = false;
 
-            container.AddExtension(new ReportCreationErrorExtension((ex, ctx, policy) => notified = true));
+            container.AddExtension(new NotificationExtension((ex, ctx, policy) => notified = true));
             container.RegisterType<IAlwaysThrows, AlwaysThrows>();
 
             try
@@ -61,7 +61,7 @@
 
             bool notified = false;
 
-            container.AddExtension(new ReportCreationErrorExtension((ex, ctx, policy) => notified = true));
+            container.AddExtension(new NotificationExtension((ex, ctx, policy) => notified = true));
 
             Func<IUnityContainer, object> factory = c => { throw new Exception("Bang!"); };
             container.RegisterType<AlwaysThrows>(new InjectionFactory(factory));
@@ -84,7 +84,7 @@
 
             bool notified = false;
 
-            container.AddExtension(new ReportCreationErrorExtension((ex, ctx, policy) => notified = true));
+            container.AddExtension(new NotificationExtension((ex, ctx, policy) => notified = true));
 
             container.RegisterType<AlwaysThrows>(new InjectionConstructor());
             try
@@ -97,6 +97,42 @@
             }
 
             Assert.IsTrue(notified);
+        }
+
+        [TestMethod]
+        public void GetNotificationOnObjectCreating()
+        {
+            var container = new UnityContainer();
+
+            var extension = new NotificationExtension();
+
+            bool creating = false;
+
+            extension.Creating += (s, e) => creating = true;
+
+            container.AddExtension(extension);
+
+            container.Resolve<Foo>();
+
+            Assert.IsTrue(creating);
+        }
+
+        [TestMethod]
+        public void GetNotificationOnObjectCreated()
+        {
+            var container = new UnityContainer();
+
+            var extension = new NotificationExtension();
+
+            bool created = false;
+
+            extension.Created += (s, e) => created = true;
+
+            container.AddExtension(extension);
+
+            container.Resolve<Foo>();
+
+            Assert.IsTrue(created);
         }
     }
 }
