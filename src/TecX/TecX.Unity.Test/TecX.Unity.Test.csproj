@@ -87,7 +87,7 @@
     <Compile Include="NamingConventionFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClozeInjectionConstructorFixture.cs" />
-    <Compile Include="ReportCreationExceptionExtensionFixture.cs" />
+    <Compile Include="NotificationExtensionFixture.cs" />
     <Compile Include="SemanticGroupFixture.cs" />
     <Compile Include="TestObjects\AlwaysThrows.cs" />
     <Compile Include="TestObjects\Bar.cs" />

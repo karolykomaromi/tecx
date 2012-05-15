@@ -76,9 +76,7 @@
     <Compile Include="Enrichment\EnrichmentPolicy.cs" />
     <Compile Include="Enrichment\EnrichmentStrategy.cs" />
     <Compile Include="Enrichment\IEnrichmentPolicy.cs" />
-    <Compile Include="Error\ReportCreationErrorBuildPlanPolicy.cs" />
-    <Compile Include="Error\ReportCreationErrorExtension.cs" />
-    <Compile Include="Error\ReportCreationErrorStrategy.cs" />
+    <Compile Include="Notification\NotificationExtension.cs" />
     <Compile Include="Groups\ISemanticGroup.cs" />
     <Compile Include="Groups\ISemanticGroupConfigurator.cs" />
     <Compile Include="Groups\ISemanticGroupContext.cs" />
