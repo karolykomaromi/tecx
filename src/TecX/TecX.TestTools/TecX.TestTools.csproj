@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="AutoFixture\HydratorAdapter.cs" />
     <Compile Include="AutoFixture\ObjectHydratorCustomization.cs" />
+    <Compile Include="Extensions\MockTimeProvider.cs" />
     <Compile Include="GivenWhenThen.cs" />
     <Compile Include="DispatcherUtil.cs" />
     <Compile Include="EventExpectation.cs" />

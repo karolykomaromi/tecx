@@ -1,7 +1,6 @@
 ﻿namespace TecX.Common.Time
 {
     using System;
-    using System.Runtime.Remoting.Messaging;
 
     /// <summary>
     /// If you ever need to &quot;change time&quot; be it for tests or some kind of simulation you will have a 
@@ -64,12 +63,12 @@
         /// Gets a <see cref="DateTime"/> object that is set to the current date and time 
         /// on this computer, expressed as the Coordinated Universal Time (UTC).
         /// </summary>
-        public abstract DateTime GetUtcNow();
+        protected abstract DateTime GetUtcNow();
 
         /// <summary>
         /// Gets a <see cref="DateTime"/>  object that is set to the current date and time on this computer, 
         /// expressed as the local time.
         /// </summary>
-        public abstract DateTime GetNow();
+        protected abstract DateTime GetNow();
     }
 }
