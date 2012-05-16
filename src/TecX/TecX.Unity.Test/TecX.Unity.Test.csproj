@@ -99,6 +99,7 @@
     <Compile Include="TestObjects\CompanyImplementation.cs" />
     <Compile Include="TestObjects\CompanyWrapper1.cs" />
     <Compile Include="TestObjects\CompanyWrapper2.cs" />
+    <Compile Include="TestObjects\Consumer.cs" />
     <Compile Include="TestObjects\Contract.cs" />
     <Compile Include="TestObjects\ContractDecorator.cs" />
     <Compile Include="TestObjects\CtorTest.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="TestObjects\ILogger.cs" />
     <Compile Include="TestObjects\IMatchByConvention.cs" />
     <Compile Include="TestObjects\INumber.cs" />
+    <Compile Include="TestObjects\IUnitOfWork.cs" />
     <Compile Include="TestObjects\IVehicle.cs" />
     <Compile Include="TestObjects\IWheel.cs" />
     <Compile Include="TestObjects\Log.cs" />
@@ -133,6 +135,8 @@
     <Compile Include="TestObjects\TestLogger.cs" />
     <Compile Include="TestObjects\Three.cs" />
     <Compile Include="TestObjects\Two.cs" />
+    <Compile Include="TestObjects\UnitOfWork.cs" />
+    <Compile Include="TestObjects\UnitOfWorkFactory.cs" />
     <Compile Include="TestObjects\UsesLog.cs" />
     <Compile Include="TrackingExtensionFixture.cs" />
     <Compile Include="WasResolvedFixture.cs" />
