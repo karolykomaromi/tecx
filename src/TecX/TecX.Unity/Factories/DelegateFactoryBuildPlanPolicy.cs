@@ -13,6 +13,11 @@ namespace TecX.Unity.Factories
 
     public class DelegateFactoryBuildPlanPolicy : IBuildPlanPolicy
     {
+        private static class MethodNames
+        {
+            public const string Invoke = "Invoke";
+        }
+
         private readonly Type delegateType;
 
         public DelegateFactoryBuildPlanPolicy(Type delegateType)
@@ -38,7 +43,7 @@ namespace TecX.Unity.Factories
 
         public static Delegate GetDelegate(IUnityContainer container, Type delegateType)
         {
-            MethodInfo method = delegateType.GetMethod("Invoke");
+            MethodInfo method = delegateType.GetMethod(MethodNames.Invoke);
 
             // alle parametertypen des delegate aufsammeln
             ParameterInfo[] parameters = method.GetParameters();
@@ -53,6 +58,11 @@ namespace TecX.Unity.Factories
 
             // get constructor ParameterOverride(string name, object value)
             ConstructorInfo parameterOverrideCtor = typeof(ParameterOverride).GetConstructor(new[] { typeof(string), typeof(object) });
+
+            if (parameterOverrideCtor == null)
+            {
+                throw new InvalidOperationException("Constructor ParameterOverride(string,object) not found on Type Microsoft.Practices.Unity.ParameterOverride");
+            }
 
             List<Expression> resolverOverrides = new List<Expression>();
 
@@ -87,11 +97,12 @@ namespace TecX.Unity.Factories
 
             // put all the pieces into a lambda expression
             LambdaExpression lambda = Expression.Lambda(funcType, returnValue, parameterExpressions);
-            
+
             // and finally compile it
             Delegate func = lambda.Compile();
 
-            Delegate factoryDelegate = Delegate.CreateDelegate(delegateType, func, "Invoke");
+            // need to create the strongly typed delegate using the compiled lambda as parameter
+            Delegate factoryDelegate = Delegate.CreateDelegate(delegateType, func, MethodNames.Invoke);
 
             return factoryDelegate;
         }
