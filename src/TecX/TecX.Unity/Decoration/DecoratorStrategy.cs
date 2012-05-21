@@ -47,8 +47,8 @@ namespace TecX.Unity.Decoration
                 type =>
                 {
                     value = context.NewBuildUp(new NamedTypeBuildKey(type, key.Name));
-                    var overrides = new DependencyOverride(key.Type, value);
-                    context.AddResolverOverrides(overrides);
+                    DependencyOverride @override = new DependencyOverride(key.Type, value);
+                    context.AddResolverOverrides(@override);
                 });
 
             context.Existing = value;

@@ -13,7 +13,7 @@
 
         public EnrichmentPolicy(Action<T, IBuilderContext> enrich)
         {
-            Guard.AssertNotNull(enrich, "enrichWith");
+            Guard.AssertNotNull(enrich, "enrich");
 
             this.enrich = enrich;
         }

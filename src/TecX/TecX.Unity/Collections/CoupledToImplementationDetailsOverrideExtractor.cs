@@ -12,7 +12,7 @@ namespace TecX.Unity.Collections
     {
         [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
             Justification = "Reviewed. Suppression is OK here.")]
-        private static class Constants
+        private static class FieldNames
         {
             /// <summary>resolverOverrides</summary>
             public const string ResolverOverrides = "resolverOverrides";
@@ -31,7 +31,7 @@ namespace TecX.Unity.Collections
             }
 
             FieldInfo field = typeof(BuilderContext).GetField(
-                Constants.ResolverOverrides, BindingFlags.Instance | BindingFlags.NonPublic);
+                FieldNames.ResolverOverrides, BindingFlags.Instance | BindingFlags.NonPublic);
 
             if (field == null)
             {
