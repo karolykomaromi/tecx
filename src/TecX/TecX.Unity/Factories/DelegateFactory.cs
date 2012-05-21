@@ -12,6 +12,7 @@ namespace TecX.Unity.Factories
         public override void AddPolicies(Type serviceType, Type implementationType, string name, IPolicyList policies)
         {
             Guard.AssertNotNull(implementationType, "implementationType");
+            Guard.AssertNotNull(policies, "policies");
 
             DelegateFactoryBuildPlanPolicy policy = new DelegateFactoryBuildPlanPolicy(implementationType);
 
