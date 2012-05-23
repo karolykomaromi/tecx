@@ -150,3 +150,8 @@ src/TecX/TecX.Unity.Proxies/obj
 src/TecX/TecX.Unity.Proxies.Test/bin
 src/TecX/TecX.Unity.Proxies/bin
 src/TecX/TecX.Unity.Proxies.Test/obj
+src/TecX/TecX.Web.Unity.Test/obj/Debug/TecX.Web.Unity.Test.pdb
+src/TecX/TecX.Web.Unity/bin
+src/TecX/TecX.Web.Unity/obj
+src/TecX/TecX.Web.Unity.Test/obj
+src/TecX/TecX.Web.Unity.Test/bin
