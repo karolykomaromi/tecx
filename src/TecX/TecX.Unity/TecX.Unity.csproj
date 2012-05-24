@@ -78,6 +78,8 @@
     <Compile Include="Enrichment\IEnrichmentPolicy.cs" />
     <Compile Include="Factories\DelegateFactory.cs" />
     <Compile Include="Factories\DelegateFactoryBuildPlanPolicy.cs" />
+    <Compile Include="Mapping\DefaultMappingExtension.cs" />
+    <Compile Include="Mapping\DefaultMappingStrategy.cs" />
     <Compile Include="Notification\NotificationExtension.cs" />
     <Compile Include="Groups\ISemanticGroup.cs" />
     <Compile Include="Groups\ISemanticGroupConfigurator.cs" />
