@@ -1,6 +1,6 @@
 ﻿namespace TecX.ServiceModel.Test.TestClasses
 {
-    using TecX.ServiceModel.AutoMagic;
+    using TecX.ServiceModel.Unity.AutoMagic;
 
     [BindingDiscoveryServiceBehavior("http://texc.codeplex.com/wcfautomagic",
         "http://it-republik.de/dotnet/dotnet-magazin/wcfautomagic")]

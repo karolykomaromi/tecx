@@ -64,9 +64,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TecX.Unity.Proxies\TecX.Unity.Proxies.csproj">
-      <Project>{547734D3-B7FD-40CE-8929-834611D4BFFE}</Project>
-      <Name>TecX.Unity.Proxies</Name>
+    <ProjectReference Include="..\TecX.Unity\TecX.Unity.csproj">
+      <Project>{69621991-8933-41FD-8493-87E7FA5A26FE}</Project>
+      <Name>TecX.Unity</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

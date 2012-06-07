@@ -1,11 +1,12 @@
 ﻿using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using TecX.Unity.Configuration.Conventions;
 using TecX.Unity.Configuration.Test.TestObjects;
 
 namespace TecX.Unity.Configuration.Test
 {
+    using TecX.Unity.Configuration.Conventions;
+
     [TestClass]
     public class When_ApplyingFindConfigBuildersConvention : Given_ContainerAndBuilder
     {

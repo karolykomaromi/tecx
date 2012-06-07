@@ -4,8 +4,8 @@
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using TecX.ServiceModel.AutoMagic;
     using TecX.ServiceModel.Test.TestClasses;
+    using TecX.ServiceModel.Unity.AutoMagic;
 
     /// <summary>
     /// Summary description for UnitTest1
