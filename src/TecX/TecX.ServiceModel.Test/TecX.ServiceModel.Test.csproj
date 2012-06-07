@@ -81,9 +81,9 @@
     <Compile Include="When_DiscoveringServiceDecoratedWithBindingDiscoveryServiceBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TecX.ServiceModel.AutoMagic\TecX.ServiceModel.AutoMagic.csproj">
-      <Project>{DA32E74A-CC64-45F7-8602-C08FC93BF8B7}</Project>
-      <Name>TecX.ServiceModel.AutoMagic</Name>
+    <ProjectReference Include="..\TecX.ServiceModel.Unity\TecX.ServiceModel.Unity.csproj">
+      <Project>{0505E426-7710-4783-8D70-6B6DD1667ADB}</Project>
+      <Name>TecX.ServiceModel.Unity</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.TestTools\TecX.TestTools.csproj">
       <Project>{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}</Project>

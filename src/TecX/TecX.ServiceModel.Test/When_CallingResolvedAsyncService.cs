@@ -6,9 +6,8 @@ namespace TecX.ServiceModel.Test
     using Microsoft.Practices.Unity;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using TecX.ServiceModel.AutoMagic;
-    using TecX.ServiceModel.AutoMagic.Configuration;
     using TecX.ServiceModel.Test.TestClasses;
+    using TecX.ServiceModel.Unity.AutoMagic;
 
     [TestClass]
     public class When_CallingResolvedAsyncService : Given_DiscoverableServiceHost

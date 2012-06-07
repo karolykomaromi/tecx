@@ -54,42 +54,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Conventions\AssemblyScanner.cs" />
-    <Compile Include="Conventions\FindAllImplementationsOfOpenGenericInterfaceConvention.cs" />
-    <Compile Include="Conventions\ImplementsIInterfaceNameConvention.cs" />
-    <Compile Include="Conventions\FindAllImplementationsConvention.cs" />
-    <Compile Include="Conventions\FindConfigBuildersConvention.cs" />
-    <Compile Include="Conventions\FirstInterfaceConvention.cs" />
-    <Compile Include="Conventions\IRegistrationConvention.cs" />
-    <Compile Include="Conventions\SingleImplementationOfInterfaceConvention.cs" />
-    <Compile Include="Builders\ContainerExtensionBuilder.cs" />
-    <Compile Include="Builders\RegistrationFamilyBuilder.cs" />
-    <Compile Include="Builders\InstanceRegistrationBuilder.cs" />
-    <Compile Include="Builders\TypeRegistrationBuilder.cs" />
-    <Compile Include="Builders\RegistrationBuilder.cs" />
-    <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\TypeExtensions.cs" />
-    <Compile Include="IConfigure.cs" />
-    <Compile Include="InstanceRegistration.cs" />
-    <Compile Include="Plugin\PluginFinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registration.cs" />
-    <Compile Include="RegistrationFamily.cs" />
-    <Compile Include="RegistrationFamilyCollection.cs" />
-    <Compile Include="Configuration.cs" />
-    <Compile Include="ConfigurationBuilder.cs" />
-    <Compile Include="TypeRegistration.cs" />
-    <Compile Include="Utilities\Cache.cs" />
-    <Compile Include="Utilities\CompositeFilter.cs" />
-    <Compile Include="Utilities\AnonymousTypeOverrideSpec.cs" />
-    <Compile Include="Utilities\RunOnce.cs" />
-    <Compile Include="Utilities\TypePool.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">

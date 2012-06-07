@@ -48,45 +48,17 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Configuration\ContextualInstanceRegistration.cs" />
-    <Compile Include="Configuration\ContextualTypeRegistration.cs" />
-    <Compile Include="Configuration\BuilderExtensions.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="ContextInfo.cs" />
-    <Compile Include="ContextScope.cs" />
-    <Compile Include="ContextualBuildKeyMappingPolicy.cs" />
-    <Compile Include="ContextualBindingException.cs" />
-    <Compile Include="ContextualBindingExtension.cs" />
-    <Compile Include="ContextualBuildKeyMapping.cs" />
-    <Compile Include="ContextualParameter.cs" />
-    <Compile Include="ContextualParameterBindingPolicy.cs" />
-    <Compile Include="ContextualParameterBindingStrategy.cs" />
-    <Compile Include="ContextualParameterOverride.cs" />
-    <Compile Include="ContextualResolverOverride.cs" />
-    <Compile Include="IBindingContext.cs" />
-    <Compile Include="IContextualBinding.cs" />
-    <Compile Include="IContextualParameterBindingPolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnityContainerExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TecX.Unity.Configuration\TecX.Unity.Configuration.csproj">
-      <Project>{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}</Project>
-      <Name>TecX.Unity.Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Unity\TecX.Unity.csproj">
       <Project>{69621991-8933-41FD-8493-87E7FA5A26FE}</Project>

@@ -13,27 +13,29 @@
         [Fact]
         public void CanRegisterFaultProxy()
         {
-            var container = new UnityContainer();
+            Assert.False(true, "Fix test");
 
-            container.AddNewExtension<ProxyGeneratorExtension>();
+            ////var container = new UnityContainer();
 
-            IProxyGenerator generator = container.Configure<IProxyGenerator>();
+            ////container.AddNewExtension<ProxyGeneratorExtension>();
 
-            Type faultTolerantProxyType = generator.CreateFaultTolerantProxy(typeof(IFooService));
+            ////IProxyGenerator generator = container.Configure<IProxyGenerator>();
 
-            string uniqueName = Guid.NewGuid().ToString();
+            ////Type faultTolerantProxyType = generator.CreateFaultTolerantProxy(typeof(IFooService));
 
-            container.RegisterType<IFooService, FooService>(uniqueName);
+            ////string uniqueName = Guid.NewGuid().ToString();
 
-            container.RegisterType(
-                typeof(IFooService),
-                faultTolerantProxyType,
-                new InjectionConstructor(new ResolvedParameter(typeof(Func<IFooService>), uniqueName)));
+            ////container.RegisterType<IFooService, FooService>(uniqueName);
 
-            IFooService proxy = container.Resolve<IFooService>();
+            ////container.RegisterType(
+            ////    typeof(IFooService),
+            ////    faultTolerantProxyType,
+            ////    new InjectionConstructor(new ResolvedParameter(typeof(Func<IFooService>), uniqueName)));
 
-            Assert.IsNotType(typeof(FooService), proxy);
-            Assert.Equal("Foo()", proxy.Foo());
+            ////IFooService proxy = container.Resolve<IFooService>();
+
+            ////Assert.IsNotType(typeof(FooService), proxy);
+            ////Assert.Equal("Foo()", proxy.Foo());
         }
 
         [Fact]
