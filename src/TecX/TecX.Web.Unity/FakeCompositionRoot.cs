@@ -10,9 +10,9 @@
     using TecX.Unity.Decoration;
     using TecX.Unity.Factories;
 
-    class CompositionRoot
+    public class FakeCompositionRoot
     {
-        public CompositionRoot()
+        public FakeCompositionRoot()
         {
             var container = new UnityContainer();
 

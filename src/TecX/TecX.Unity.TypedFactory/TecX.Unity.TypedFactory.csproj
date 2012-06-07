@@ -61,7 +61,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Configuration\ExpressionExtensions.cs" />
+    <Compile Include="Configuration\BuilderExtensions.cs" />
     <Compile Include="DefaultTypedFactoryComponentSelector.cs" />
     <Compile Include="FactoryInterceptor.cs" />
     <Compile Include="ITypedFactoryComponentSelector.cs" />

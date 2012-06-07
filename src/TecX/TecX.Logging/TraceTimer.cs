@@ -5,6 +5,7 @@
     using System.Diagnostics.CodeAnalysis;
 
     using TecX.Common;
+    using TecX.Common.Time;
 
     /// <summary>
     /// Traces the duration of an operation
@@ -32,7 +33,7 @@
             public const string MessageFormatString = "Trace - {0} (took {1}s)";
 
             /// <summary>Trace</summary>
-            public const string TimerTracerCategory = "Trace";
+            public const string TraceTimerCategory = "Trace";
         }
 
         private readonly DateTime start;
@@ -44,7 +45,7 @@
         /// </summary>
         public TraceTimer(string operationName)
         {
-            this.start = DateTime.Now;
+            this.start = TimeProvider.Now;
             this.operationName = operationName;
 
             Debug.Indent();
@@ -74,11 +75,11 @@
         /// <param name="message">The message to trace</param>
         public void Write(string message)
         {
-            TimeSpan lifetime = DateTime.Now - this.start;
+            TimeSpan lifetime = TimeProvider.Now - this.start;
 
             Debug.WriteLine(
                 TypeHelper.SafeFormat(Constants.MessageFormatString, message, lifetime.TotalSeconds),
-                Constants.TimerTracerCategory);
+                Constants.TraceTimerCategory);
         }
 
         /// <summary>

@@ -16,6 +16,7 @@
         {
             var container = new UnityContainer();
 
+            container.RegisterType<IUnitOfWork, UnitOfWork>();
             container.RegisterType<UnitOfWorkFactory>(new DelegateFactory());
 
             var consumer = container.Resolve<Consumer>();

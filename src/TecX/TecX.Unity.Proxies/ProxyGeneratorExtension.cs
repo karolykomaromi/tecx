@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Reflection;
     using System.Reflection.Emit;
     using System.Threading;
@@ -13,6 +14,8 @@
 
     public class ProxyGeneratorExtension : UnityContainerExtension, IProxyGenerator
     {
+        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
+            Justification = "Reviewed. Suppression is OK here.")]
         private static class Constants
         {
             /// <summary>
@@ -42,7 +45,8 @@
 
             this.assemblyBuilder = thisDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
 
-            this.moduleBuilder = this.assemblyBuilder.DefineDynamicModule(this.assemblyBuilder.GetName().Name, Constants.AssemblyFileName);
+            this.moduleBuilder = this.assemblyBuilder.DefineDynamicModule(
+                this.assemblyBuilder.GetName().Name, Constants.AssemblyFileName);
         }
 
         public Type CreateFaultTolerantProxy(Type contract)

@@ -1,8 +1,6 @@
 namespace TecX.Unity.ContextualBinding
 {
-    using System;
-
-    public class ContextInfo : IDisposable
+    public class ContextInfo
     {
         public ContextInfo(string key, object value)
         {
@@ -13,10 +11,5 @@ namespace TecX.Unity.ContextualBinding
         public string Key { get; set; }
 
         public object Value { get; set; }
-
-        public void Dispose()
-        {
-            
-        }
     }
 }

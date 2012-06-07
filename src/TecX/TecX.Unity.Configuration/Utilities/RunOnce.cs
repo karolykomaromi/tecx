@@ -32,9 +32,14 @@ namespace TecX.Unity.Configuration.Utilities
                 return;
             }
 
-            this.action(item);
-
-            this.run = true;
+            try
+            {
+                this.action(item);
+            }
+            finally
+            {
+                this.run = true;
+            }
         }
     }
 }

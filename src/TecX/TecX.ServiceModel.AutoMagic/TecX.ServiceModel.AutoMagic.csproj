@@ -65,7 +65,7 @@
     <Compile Include="BindingDiscoveryServiceBehavior.cs" />
     <Compile Include="AutoDiscoveryBuildPlanPolicy.cs" />
     <Compile Include="ConfigFileProxyFactory.cs" />
-    <Compile Include="Configuration\ExpressionExtensions.cs" />
+    <Compile Include="Configuration\BuilderExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="SpecifiedProxyFactory.cs" />
     <Compile Include="SpecifiedBuildPlanPolicy.cs" />

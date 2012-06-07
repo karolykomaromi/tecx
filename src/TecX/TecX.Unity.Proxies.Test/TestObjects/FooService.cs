@@ -10,6 +10,18 @@ namespace TecX.Unity.Proxies.Test.TestObjects
             this.State = CommunicationState.Opened;
         }
 
+        public event EventHandler Closed = delegate { };
+
+        public event EventHandler Closing = delegate { };
+
+        public event EventHandler Faulted = delegate { };
+
+        public event EventHandler Opened = delegate { };
+
+        public event EventHandler Opening = delegate { };
+
+        public CommunicationState State { get; private set; }
+
         public void Abort()
         {
         }
@@ -57,18 +69,6 @@ namespace TecX.Unity.Proxies.Test.TestObjects
         public void EndOpen(IAsyncResult result)
         {
         }
-
-        public CommunicationState State { get; private set; }
-
-        public event EventHandler Closed;
-
-        public event EventHandler Closing;
-
-        public event EventHandler Faulted;
-
-        public event EventHandler Opened;
-
-        public event EventHandler Opening;
 
         public string Foo()
         {

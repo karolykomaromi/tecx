@@ -54,9 +54,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
@@ -70,12 +68,11 @@
     <Compile Include="Conventions\FirstInterfaceConvention.cs" />
     <Compile Include="Conventions\IRegistrationConvention.cs" />
     <Compile Include="Conventions\SingleImplementationOfInterfaceConvention.cs" />
-    <Compile Include="EnrichableRegistration.cs" />
-    <Compile Include="Expressions\ConfigureContainerExtensionExpression.cs" />
-    <Compile Include="Expressions\CreateRegistrationFamilyExpression.cs" />
-    <Compile Include="Expressions\InstanceRegistrationExpression.cs" />
-    <Compile Include="Expressions\TypeRegistrationExpression.cs" />
-    <Compile Include="Expressions\RegistrationExpression.cs" />
+    <Compile Include="Builders\ContainerExtensionBuilder.cs" />
+    <Compile Include="Builders\RegistrationFamilyBuilder.cs" />
+    <Compile Include="Builders\InstanceRegistrationBuilder.cs" />
+    <Compile Include="Builders\TypeRegistrationBuilder.cs" />
+    <Compile Include="Builders\RegistrationBuilder.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="IConfigure.cs" />

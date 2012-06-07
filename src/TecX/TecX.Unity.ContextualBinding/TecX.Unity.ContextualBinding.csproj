@@ -60,7 +60,7 @@
     </Compile>
     <Compile Include="Configuration\ContextualInstanceRegistration.cs" />
     <Compile Include="Configuration\ContextualTypeRegistration.cs" />
-    <Compile Include="Configuration\ExpressionExtensions.cs" />
+    <Compile Include="Configuration\BuilderExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContextInfo.cs" />
     <Compile Include="ContextScope.cs" />

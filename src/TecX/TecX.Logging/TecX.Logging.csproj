@@ -73,9 +73,6 @@
     </Compile>
     <Compile Include="ConsoleTraceListener.cs" />
     <Compile Include="DebugTraceListener.cs" />
-    <Compile Include="EntLibLogger.cs" />
-    <Compile Include="ILogger.cs" />
-    <Compile Include="NullLogger.cs" />
     <Compile Include="NullTraceListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TraceListenerBase.cs" />

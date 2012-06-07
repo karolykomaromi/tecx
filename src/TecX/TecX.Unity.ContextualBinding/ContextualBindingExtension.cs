@@ -236,8 +236,6 @@
                         return value;
                     }
 
-                    //return this.Extension.bindingContext[key];
-
                     return null;
                 }
 

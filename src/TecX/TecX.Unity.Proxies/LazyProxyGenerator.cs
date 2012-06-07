@@ -1,6 +1,7 @@
 ﻿namespace TecX.Unity.Proxies
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Reflection;
     using System.Reflection.Emit;
 
@@ -8,14 +9,8 @@
 
     public class LazyProxyGenerator : ProxyGenerator
     {
-        private readonly Type lazyInstanceType;
-
-        private FieldBuilder instanceFieldBuilder;
-
-        private PropertyBuilder instancePropertyBuilder;
-
-        private MethodBuilder instanceGetterMethodBuilder;
-
+        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
+            Justification = "Reviewed. Suppression is OK here.")]
         private static class Constants
         {
             public const string ProxyNamePostfix = "_LazyInstantiationProxy";
@@ -26,6 +21,14 @@
 
             public const string FactoryFieldName = "factory";
         }
+
+        private readonly Type lazyInstanceType;
+
+        private FieldBuilder instanceFieldBuilder;
+
+        private PropertyBuilder instancePropertyBuilder;
+
+        private MethodBuilder instanceGetterMethodBuilder;
 
         public LazyProxyGenerator(Type contract, ModuleBuilder moduleBuilder)
             : base(contract, moduleBuilder)
@@ -43,7 +46,7 @@
 
             this.GenerateInstanceProperty(typeBuilder);
 
-            this.GenerateMethods(this.contract, typeBuilder, this.instanceGetterMethodBuilder);
+            this.GenerateMethods(this.Contract, typeBuilder, this.instanceGetterMethodBuilder);
 
             var proxyType = typeBuilder.CreateType();
 
@@ -56,7 +59,7 @@
                 Constants.InstancePropertyName,
                 PropertyAttributes.None,
                 CallingConventions.Standard,
-                this.contract,
+                this.Contract,
                 null);
 
             this.GenerateInstanceGetter(typeBuilder);
@@ -64,12 +67,13 @@
 
         private void GenerateInstanceGetter(TypeBuilder typeBuilder)
         {
-            this.instanceGetterMethodBuilder = typeBuilder.DefineMethod("get_Instance", Proxies.Constants.GetSetAttributes, this.contract, Type.EmptyTypes);
+            this.instanceGetterMethodBuilder = typeBuilder.DefineMethod(
+                "get_Instance", Proxies.Constants.GetSetAttributes, this.Contract, Type.EmptyTypes);
 
             ILGenerator il = this.instanceGetterMethodBuilder.GetILGenerator();
             var ret = il.DefineLabel();
 
-            il.DeclareLocal(this.contract);
+            il.DeclareLocal(this.Contract);
             il.Emit(OpCodes.Nop);
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ldfld, this.instanceFieldBuilder);
@@ -88,7 +92,8 @@
 
         private void GenerateFields(TypeBuilder typeBuilder)
         {
-            this.instanceFieldBuilder = typeBuilder.DefineField(Constants.InstanceFieldName, this.lazyInstanceType, FieldAttributes.Private);
+            this.instanceFieldBuilder = typeBuilder.DefineField(
+                Constants.InstanceFieldName, this.lazyInstanceType, FieldAttributes.Private);
         }
 
         private void GenerateConstructor(TypeBuilder typeBuilder)
@@ -97,7 +102,7 @@
                 typeBuilder.DefineConstructor(
                     MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName,
                     CallingConventions.Standard,
-                    new[] { this.contractFactory });
+                    new[] { this.ContractFactory });
 
             constructor.DefineParameter(1, ParameterAttributes.None, Constants.FactoryFieldName);
 
@@ -122,12 +127,11 @@
 
             il.Emit(OpCodes.Call, meth);
 
-            ConstructorInfo funcCtor =
-                this.lazyInstanceType.GetConstructor(
-                    BindingFlags.Instance | BindingFlags.Public,
-                    (Binder)null,
-                    new[] { this.contractFactory },
-                    (ParameterModifier[])null);
+            ConstructorInfo funcCtor = this.lazyInstanceType.GetConstructor(
+                BindingFlags.Instance | BindingFlags.Public,
+                (Binder)null,
+                new[] { this.ContractFactory },
+                (ParameterModifier[])null);
 
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ldarg_1);
@@ -137,13 +141,10 @@
 
         private TypeBuilder CreateTypeBuilder()
         {
-            string name = this.contract.Name.TrimStart(new[] { 'I' }) + Constants.ProxyNamePostfix;
+            string name = this.Contract.Name.TrimStart(new[] { 'I' }) + Constants.ProxyNamePostfix;
 
-            TypeBuilder typeBuilder = this.moduleBuilder.DefineType(
-                name,
-                Proxies.Constants.TypeAttr,
-                typeof(object),
-                new[] { this.contract });
+            TypeBuilder typeBuilder = this.ModuleBuilder.DefineType(
+                name, Proxies.Constants.TypeAttr, typeof(object), new[] { this.Contract });
 
             return typeBuilder;
         }
