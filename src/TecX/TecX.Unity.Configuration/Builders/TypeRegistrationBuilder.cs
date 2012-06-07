@@ -1,4 +1,4 @@
-﻿namespace TecX.Unity.Configuration.Expressions
+﻿namespace TecX.Unity.Configuration.Builders
 {
     using System;
     using System.Collections.Generic;
@@ -13,13 +13,13 @@
     using TecX.Unity.Enrichment;
     using TecX.Unity.Injection;
 
-    public class TypeRegistrationExpression : RegistrationExpression<TypeRegistrationExpression>
+    public class TypeRegistrationBuilder : RegistrationBuilder<TypeRegistrationBuilder>
     {
         private readonly InjectionMembers enrichments;
 
         private readonly Type to;
 
-        public TypeRegistrationExpression(Type from, Type to)
+        public TypeRegistrationBuilder(Type from, Type to)
             : base(from)
         {
             Guard.AssertNotNull(to, "to");
@@ -42,7 +42,7 @@
             }
         }
 
-        public TypeRegistrationExpression Enrich<T>(Action<T, IBuilderContext> action)
+        public TypeRegistrationBuilder Enrich<T>(Action<T, IBuilderContext> action)
             where T : class
         {
             Guard.AssertNotNull(action, "action");
@@ -52,7 +52,7 @@
             return this;
         }
 
-        public TypeRegistrationExpression Enrich(Action<InjectionMembers> action)
+        public TypeRegistrationBuilder Enrich(Action<InjectionMembers> action)
         {
             Guard.AssertNotNull(action, "action");
 
@@ -61,7 +61,7 @@
             return this;
         }
 
-        public TypeRegistrationExpression Factory(Func<IUnityContainer, Type, string, object> factoryMethod)
+        public TypeRegistrationBuilder Factory(Func<IUnityContainer, Type, string, object> factoryMethod)
         {
             Guard.AssertNotNull(factoryMethod, "factoryMethod");
 
@@ -70,7 +70,7 @@
             return this;
         }
 
-        public TypeRegistrationExpression Factory(Func<IUnityContainer, object> factoryMethod)
+        public TypeRegistrationBuilder Factory(Func<IUnityContainer, object> factoryMethod)
         {
             Guard.AssertNotNull(factoryMethod, "factoryMethod");
 
@@ -79,7 +79,7 @@
             return this;
         }
 
-        public TypeRegistrationExpression Ctor(Action<ClozeInjectionConstructor> action)
+        public TypeRegistrationBuilder Ctor(Action<ClozeInjectionConstructor> action)
         {
             Guard.AssertNotNull(action, "action");
 
@@ -92,9 +92,9 @@
             return this;
         }
 
-        public TypeRegistrationExpression Ctor(Expression<Func<object>> expression)
+        public TypeRegistrationBuilder Ctor(Expression<Func<object>> expression)
         {
-            Guard.AssertNotNull(expression, "expression");
+            Guard.AssertNotNull(expression, "builder");
 
             NewExpression nx = expression.Body as NewExpression;
 
@@ -115,14 +115,14 @@
             return this;
         }
 
-        public TypeRegistrationExpression DefaultCtor()
+        public TypeRegistrationBuilder DefaultCtor()
         {
             this.enrichments.Add(new InjectionConstructor());
 
             return this;
         }
 
-        public TypeRegistrationExpression Property(string propertyName)
+        public TypeRegistrationBuilder Property(string propertyName)
         {
             Guard.AssertNotEmpty(propertyName, "propertyName");
 
@@ -131,7 +131,7 @@
             return this;
         }
 
-        public TypeRegistrationExpression Property(string propertyName, object value)
+        public TypeRegistrationBuilder Property(string propertyName, object value)
         {
             Guard.AssertNotEmpty(propertyName, "propertyName");
             Guard.AssertNotNull(value, "value");
@@ -141,7 +141,7 @@
             return this;
         }
 
-        public TypeRegistrationExpression Method(string methodName, params object[] args)
+        public TypeRegistrationBuilder Method(string methodName, params object[] args)
         {
             Guard.AssertNotEmpty(methodName, "methodName");
 
@@ -150,7 +150,7 @@
             return this;
         }
 
-        public TypeRegistrationExpression Override(object anonymous)
+        public TypeRegistrationBuilder Override(object anonymous)
         {
             Guard.AssertNotNull(anonymous, "anonymous");
 

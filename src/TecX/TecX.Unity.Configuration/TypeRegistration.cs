@@ -6,16 +6,23 @@
 
     using TecX.Common;
 
-    public class TypeRegistration : EnrichableRegistration
+    public class TypeRegistration : Registration
     {
         private readonly Type to;
+        private readonly InjectionMember[] enrichments;
 
         public TypeRegistration(Type from, Type to, string name, LifetimeManager lifetime, params InjectionMember[] enrichments)
-            : base(from, name, lifetime, enrichments)
+            : base(from, name, lifetime)
         {
             Guard.AssertNotNull(to, "to");
 
+            this.enrichments = enrichments ?? new InjectionMember[0];
             this.to = to;
+        }
+
+        public InjectionMember[] Enrichments
+        {
+            get { return this.enrichments; }
         }
 
         public Type To

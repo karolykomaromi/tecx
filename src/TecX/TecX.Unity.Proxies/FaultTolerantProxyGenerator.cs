@@ -1,7 +1,7 @@
 ﻿namespace TecX.Unity.Proxies
 {
     using System;
-    using System.Linq;
+    using System.Diagnostics.CodeAnalysis;
     using System.Reflection;
     using System.Reflection.Emit;
     using System.ServiceModel;
@@ -10,6 +10,8 @@
 
     public class FaultTolerantProxyGenerator : ProxyGenerator
     {
+        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
+            Justification = "Reviewed. Suppression is OK here.")]
         private static class Constants
         {
             public const string ProxyNamePostfix = "_FaultTolerantProxy";
@@ -46,7 +48,7 @@
 
             this.GenerateConstructor(typeBuilder);
 
-            this.GenerateMethods(this.contract, typeBuilder, this.channelGetterMethodBuilder);
+            this.GenerateMethods(this.Contract, typeBuilder, this.channelGetterMethodBuilder);
 
             var proxyType = typeBuilder.CreateType();
 
@@ -55,18 +57,16 @@
 
         private void GenerateFields(TypeBuilder typeBuilder)
         {
-            this.channelFieldBuilder = typeBuilder.DefineField(Constants.ChannelFieldName, this.contract, FieldAttributes.Private);
-            this.factoryFieldBuilder = typeBuilder.DefineField(Constants.FactoryFieldName, this.contractFactory, FieldAttributes.Private | FieldAttributes.InitOnly);
+            this.channelFieldBuilder = typeBuilder.DefineField(
+                Constants.ChannelFieldName, this.Contract, FieldAttributes.Private);
+            this.factoryFieldBuilder = typeBuilder.DefineField(
+                Constants.FactoryFieldName, this.ContractFactory, FieldAttributes.Private | FieldAttributes.InitOnly);
         }
 
         private void GenerateChannelProperty(TypeBuilder typeBuilder)
         {
             this.channelPropertyBuilder = typeBuilder.DefineProperty(
-                Constants.ChannelPropertyName,
-                PropertyAttributes.None,
-                CallingConventions.Standard,
-                this.contract,
-                null);
+                Constants.ChannelPropertyName, PropertyAttributes.None, CallingConventions.Standard, this.Contract, null);
 
             this.GenerateChannelGetter(typeBuilder);
 
@@ -75,14 +75,15 @@
 
         private void GenerateChannelGetter(TypeBuilder typeBuilder)
         {
-            this.channelGetterMethodBuilder = typeBuilder.DefineMethod("get_Channel", Proxies.Constants.GetSetAttributes, this.contract, Type.EmptyTypes);
+            this.channelGetterMethodBuilder = typeBuilder.DefineMethod(
+                "get_Channel", Proxies.Constants.GetSetAttributes, this.Contract, Type.EmptyTypes);
 
             ILGenerator il = this.channelGetterMethodBuilder.GetILGenerator();
 
             var endif = il.DefineLabel();
             var ret = il.DefineLabel();
 
-            il.DeclareLocal(this.contract);
+            il.DeclareLocal(this.Contract);
             il.DeclareLocal(typeof(bool));
 
             il.Emit(OpCodes.Nop);
@@ -106,7 +107,7 @@
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ldfld, this.factoryFieldBuilder);
 
-            var invoke = this.contractFactory.GetMethod("Invoke");
+            var invoke = this.ContractFactory.GetMethod("Invoke");
             il.Emit(OpCodes.Callvirt, invoke);
             il.Emit(OpCodes.Stfld, this.channelFieldBuilder);
             il.Emit(OpCodes.Nop);
@@ -127,7 +128,7 @@
         private void GenerateChannelSetter(TypeBuilder typeBuilder)
         {
             this.channelSetterMethodBuilder = typeBuilder.DefineMethod(
-                "set_Channel", Proxies.Constants.GetSetAttributes, null, new[] { this.contract });
+                "set_Channel", Proxies.Constants.GetSetAttributes, null, new[] { this.Contract });
 
             ILGenerator il = this.channelSetterMethodBuilder.GetILGenerator();
 
@@ -146,7 +147,7 @@
                 typeBuilder.DefineConstructor(
                     MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName,
                     CallingConventions.Standard,
-                    new[] { this.contractFactory });
+                    new[] { this.ContractFactory });
 
             constructor.DefineParameter(1, ParameterAttributes.None, Constants.FactoryFieldName);
 
@@ -175,7 +176,7 @@
 
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ldarg_1);
-            var invoke = this.contractFactory.GetMethod("Invoke");
+            var invoke = this.ContractFactory.GetMethod("Invoke");
             il.Emit(OpCodes.Callvirt, invoke);
             il.Emit(OpCodes.Stfld, this.channelFieldBuilder);
             il.Emit(OpCodes.Nop);
@@ -184,13 +185,10 @@
 
         private TypeBuilder CreateTypeBuilder()
         {
-            string name = this.contract.Name.TrimStart(new[] { 'I' }) + Constants.ProxyNamePostfix;
+            string name = this.Contract.Name.TrimStart(new[] { 'I' }) + Constants.ProxyNamePostfix;
 
-            TypeBuilder typeBuilder = this.moduleBuilder.DefineType(
-                name,
-                Proxies.Constants.TypeAttr,
-                typeof(object),
-                new[] { this.contract });
+            TypeBuilder typeBuilder = this.ModuleBuilder.DefineType(
+                name, Proxies.Constants.TypeAttr, typeof(object), new[] { this.Contract });
 
             return typeBuilder;
         }

@@ -1,4 +1,4 @@
-﻿namespace TecX.Unity.Configuration.Expressions
+﻿namespace TecX.Unity.Configuration.Builders
 {
     using System;
 
@@ -6,18 +6,18 @@
 
     using TecX.Common;
 
-    public class InstanceRegistrationExpression : RegistrationExpression<InstanceRegistrationExpression>
+    public class InstanceRegistrationBuilder : RegistrationBuilder<InstanceRegistrationBuilder>
     {
         private readonly object instance; 
 
-        public InstanceRegistrationExpression(Type from, object instance)
+        public InstanceRegistrationBuilder(Type from, object instance)
             : base(from)
         {
             Guard.AssertNotNull(instance, "instance");
 
             this.instance = instance;
 
-            LifetimeIs(new ContainerControlledLifetimeManager());
+            this.LifetimeIs(new ContainerControlledLifetimeManager());
         }
 
         public object Instance

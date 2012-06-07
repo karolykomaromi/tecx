@@ -39,8 +39,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.ContextualBindin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.ContextualBinding.Test", "TecX.Unity.ContextualBinding.Test\TecX.Unity.ContextualBinding.Test.csproj", "{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.Configuration", "TecX.Unity.Configuration\TecX.Unity.Configuration.csproj", "{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.Configuration.Test", "TecX.Unity.Configuration.Test\TecX.Unity.Configuration.Test.csproj", "{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.TypedFactory", "TecX.Unity.TypedFactory\TecX.Unity.TypedFactory.csproj", "{2BF97DAC-6DEC-4576-B994-813686F5B0CA}"
@@ -74,6 +72,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Web.Unity.Test", "TecX.Web.Unity.Test\TecX.Web.Unity.Test.csproj", "{CAC2CB3F-6552-4EFF-B451-87D40102D39A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.ServiceModel", "TecX.ServiceModel\TecX.ServiceModel.csproj", "{C65C90B7-9678-4E71-B529-F723A8AB5155}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Unity.Configuration", "TecX.Unity.Configuration\TecX.Unity.Configuration.csproj", "{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}"
 EndProject
 Global
 	GlobalSection(MercurialSourceControlSolutionProperties) = preSolution
@@ -192,16 +192,6 @@ Global
 		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DE4BB6EE-FF88-4F8D-B19E-AEAE374A0192}.Release|x86.ActiveCfg = Release|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|x86.ActiveCfg = Release|Any CPU
 		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC8B63B8-7788-4B97-A610-89C5E2ADDDA2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -372,6 +362,16 @@ Global
 		{C65C90B7-9678-4E71-B529-F723A8AB5155}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C65C90B7-9678-4E71-B529-F723A8AB5155}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C65C90B7-9678-4E71-B529-F723A8AB5155}.Release|x86.ActiveCfg = Release|Any CPU
+		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -399,12 +399,12 @@ Global
 		{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC} = {9F74F4C2-9999-4E1D-93DD-413B4E40DE5A}
 		{69621991-8933-41FD-8493-87E7FA5A26FE} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{DC6E218E-4C6C-41DB-A13E-9464985EB6BF} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
-		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{2BF97DAC-6DEC-4576-B994-813686F5B0CA} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{89FAB412-B217-4819-B8DB-4E4C967EE5D2} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{A763CC8F-835E-444C-9A9F-88E7A443C1B2} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{547734D3-B7FD-40CE-8929-834611D4BFFE} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 		{37337D50-E4F6-4709-B77B-CB1A685E8F04} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
+		{EDEA27F9-7BBB-499E-A06F-5E23F8804A62} = {1EAD9709-4A11-4DC2-A8EF-6005BA4E36EA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35

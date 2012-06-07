@@ -12,7 +12,7 @@ namespace TecX.ServiceModel
     {
         private readonly InstanceContext instanceContext;
 
-        public InstanceContextWrappers(InstanceContext instanceContext)
+        public InstanceContextWrapper(InstanceContext instanceContext)
         {
             Guard.AssertNotNull(instanceContext, "instanceContext");
 

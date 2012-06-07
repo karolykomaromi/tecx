@@ -9,11 +9,11 @@ namespace TecX.Unity.Proxies
 
     public abstract class ProxyGenerator
     {
-        protected ModuleBuilder moduleBuilder;
+        private readonly ModuleBuilder moduleBuilder;
 
-        protected Type contract;
+        private readonly Type contract;
 
-        protected Type contractFactory;
+        private readonly Type contractFactory;
 
         protected ProxyGenerator(Type contract, ModuleBuilder moduleBuilder)
         {
@@ -27,15 +27,31 @@ namespace TecX.Unity.Proxies
             this.contractFactory = typeof(Func<>).MakeGenericType(contract);
         }
 
-        public abstract Type Generate();
-
-        private static void AssertIsInterface(Type type)
+        protected ModuleBuilder ModuleBuilder
         {
-            if (!type.IsInterface)
+            get
             {
-                throw new ArgumentException(string.Format("Type {0} is not an interface", type.FullName));
+                return this.moduleBuilder;
             }
         }
+
+        protected Type Contract
+        {
+            get
+            {
+                return this.contract;
+            }
+        }
+
+        protected Type ContractFactory
+        {
+            get
+            {
+                return this.contractFactory;
+            }
+        }
+
+        public abstract Type Generate();
 
         protected void GenerateMethods(Type contract, TypeBuilder typeBuilder, MethodBuilder getter)
         {
@@ -85,6 +101,14 @@ namespace TecX.Unity.Proxies
 
                 il.Emit(OpCodes.Nop);
                 il.Emit(OpCodes.Ret);
+            }
+        }
+
+        private static void AssertIsInterface(Type type)
+        {
+            if (!type.IsInterface)
+            {
+                throw new ArgumentException(string.Format("Type {0} is not an interface", type.FullName));
             }
         }
     }

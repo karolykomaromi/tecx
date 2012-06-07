@@ -73,7 +73,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="CompositionRoot.cs" />
+    <Compile Include="FakeCompositionRoot.cs" />
     <Compile Include="ContextCapturingControllerActivator.cs" />
     <Compile Include="PerWebRequestLifetimeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

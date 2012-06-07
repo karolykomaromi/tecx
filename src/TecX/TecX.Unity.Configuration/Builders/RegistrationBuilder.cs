@@ -1,4 +1,4 @@
-﻿namespace TecX.Unity.Configuration.Expressions
+﻿namespace TecX.Unity.Configuration.Builders
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
@@ -7,20 +7,20 @@
 
     using TecX.Common;
 
-    public abstract class RegistrationExpression
+    public abstract class RegistrationBuilder
     {
         private Func<Registration> compilationStrategy;
 
-        protected RegistrationExpression()
+        protected RegistrationBuilder()
         {
             this.SetCompilationStrategy(this.DefaultCompilationStrategy);
         }
 
-        public static implicit operator Registration(RegistrationExpression expression)
+        public static implicit operator Registration(RegistrationBuilder builder)
         {
-            Guard.AssertNotNull(expression, "expression");
+            Guard.AssertNotNull(builder, "builder");
 
-            return expression.Compile();
+            return builder.Compile();
         }
 
         public Registration Compile()
@@ -40,8 +40,8 @@
 
     [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass",
         Justification = "Reviewed. Suppression is OK here.")]
-    public abstract class RegistrationExpression<TRegistrationExpression> : RegistrationExpression
-        where TRegistrationExpression : RegistrationExpression
+    public abstract class RegistrationBuilder<TRegistrationExpression> : RegistrationBuilder
+        where TRegistrationExpression : RegistrationBuilder
     {
         private readonly Type from;
 
@@ -49,7 +49,7 @@
 
         private LifetimeManager lifetime;
 
-        protected RegistrationExpression(Type @from)
+        protected RegistrationBuilder(Type @from)
         {
             Guard.AssertNotNull(from, "from");
 

@@ -105,6 +105,7 @@
     <Compile Include="TestObjects\Status.cs" />
     <Compile Include="TestObjects\StatusMatches.cs" />
     <Compile Include="TestObjects\TextMatches.cs" />
+    <Compile Include="TestObjects\TimeSlot.cs" />
     <Compile Include="TypeHelperFixture.cs" />
     <Compile Include="When_RetrievingMatchedSpecifications.cs" />
     <Compile Include="When_UsingVisitorToExtractDescription.cs" />

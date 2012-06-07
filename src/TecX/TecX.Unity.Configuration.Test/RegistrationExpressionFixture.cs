@@ -6,11 +6,12 @@ using System.Text;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using TecX.Unity.Configuration.Expressions;
 using TecX.Unity.Configuration.Test.TestObjects;
 
 namespace TecX.Unity.Configuration.Test
 {
+    using TecX.Unity.Configuration.Builders;
+
     [TestClass]
     public class RegistrationExpressionFixture
     {
@@ -19,9 +20,9 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            TypeRegistrationExpression expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClass));
+            TypeRegistrationBuilder builder = new TypeRegistrationBuilder(typeof(IMyInterface), typeof(MyClass));
 
-            expression.Compile().Configure(container);
+            builder.Compile().Configure(container);
 
             IMyInterface result = container.Resolve<IMyInterface>();
 
@@ -34,7 +35,7 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            var expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClass)).Named("1");
+            var expression = new TypeRegistrationBuilder(typeof(IMyInterface), typeof(MyClass)).Named("1");
 
             expression.Compile().Configure(container);
 
@@ -49,7 +50,7 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            var expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClassWithCtorParams));
+            var expression = new TypeRegistrationBuilder(typeof(IMyInterface), typeof(MyClassWithCtorParams));
 
             expression.Factory(c => new MyClassWithCtorParams("1"));
 
@@ -66,7 +67,7 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            var expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClassWithCtorParams));
+            var expression = new TypeRegistrationBuilder(typeof(IMyInterface), typeof(MyClassWithCtorParams));
 
             expression.Ctor(() => new MyClassWithCtorParams());
 
@@ -83,7 +84,7 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            var expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClass));
+            var expression = new TypeRegistrationBuilder(typeof(IMyInterface), typeof(MyClass));
 
             expression.LifetimeIs(new ContainerControlledLifetimeManager());
 

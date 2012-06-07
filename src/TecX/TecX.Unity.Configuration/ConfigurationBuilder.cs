@@ -6,8 +6,8 @@
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
+    using TecX.Unity.Configuration.Builders;
     using TecX.Unity.Configuration.Conventions;
-    using TecX.Unity.Configuration.Expressions;
 
     public class ConfigurationBuilder : UnityContainerExtension
     {
@@ -42,48 +42,49 @@
             return type.GetConstructor(new Type[0]) != null;
         }
 
-        public CreateRegistrationFamilyExpression For<T>()
+        public RegistrationFamilyBuilder For<T>()
         {
             return For(typeof(T));
         }
 
-        public CreateRegistrationFamilyExpression For(Type from)
+        public RegistrationFamilyBuilder For(Type from)
         {
             Guard.AssertNotNull(from, "from");
 
-            return new CreateRegistrationFamilyExpression(from, this);
+            return new RegistrationFamilyBuilder(from, this);
         }
 
-        public CreateRegistrationFamilyExpression ForConcreteType<T>()
+        public RegistrationFamilyBuilder ForConcreteType<T>()
             where T : class
         {
             return this.ForConcreteType(typeof(T));
         }
 
-        public CreateRegistrationFamilyExpression ForConcreteType(Type concreteType)
+        public RegistrationFamilyBuilder ForConcreteType(Type concreteType)
         {
             Guard.AssertNotNull(concreteType, "concreteType");
             Guard.AssertCondition(!concreteType.IsInterface, concreteType, "concreteType", "concreteType must not be an interface.");
             Guard.AssertCondition(!concreteType.IsAbstract, concreteType, "concreteType", "concreteType must not be abstract.");
 
-            var expression = new CreateRegistrationFamilyExpression(concreteType, this);
+            var expression = new RegistrationFamilyBuilder(concreteType, this);
 
             expression.Use(concreteType);
 
             return expression;
         }
 
-        public ConfigureContainerExtensionExpression Extension<TExtension>()
+        public ContainerExtensionBuilder<TExtension> Extension<TExtension>()
             where TExtension : UnityContainerExtension, new()
         {
             return this.Extension(new TExtension());
         }
 
-        public ConfigureContainerExtensionExpression Extension(UnityContainerExtension extension)
+        public ContainerExtensionBuilder<TExtension> Extension<TExtension>(TExtension extension)
+            where TExtension : UnityContainerExtension
         {
             Guard.AssertNotNull(extension, "extension");
 
-            return new ConfigureContainerExtensionExpression(this, extension);
+            return new ContainerExtensionBuilder<TExtension>(this, extension);
         }
 
         public void ImportBuilder<T>()

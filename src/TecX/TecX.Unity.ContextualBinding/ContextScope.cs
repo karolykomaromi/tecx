@@ -52,16 +52,12 @@ namespace TecX.Unity.ContextualBinding
             foreach (ContextInfo contextInfo in this.contextInfos)
             {
                 context.Remove(contextInfo.Key);
-                contextInfo.Dispose();
             }
 
             foreach (ContextInfo contextInfo in this.restoreOnDispose)
             {
                 context[contextInfo.Key] = contextInfo.Value;
-                contextInfo.Dispose();
             }
-
-
         }
     }
 }
