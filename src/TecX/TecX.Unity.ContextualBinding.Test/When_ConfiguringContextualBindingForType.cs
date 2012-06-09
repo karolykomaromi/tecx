@@ -3,7 +3,7 @@ namespace TecX.Unity.ContextualBinding.Test
     using Microsoft.Practices.Unity;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using TecX.Unity.ContextualBinding.Configuration;
+    using TecX.Unity.Configuration.Builders;
     using TecX.Unity.ContextualBinding.Test.TestObjects;
 
     [TestClass]
@@ -15,7 +15,7 @@ namespace TecX.Unity.ContextualBinding.Test
         {
             base.Given();
 
-            this.builder.For<IFoo>().Use<Foo>().If((bindingCtx, builderCtx) => true);
+            this.builder.For<IFoo>().Use<Foo>().When((bindingCtx, builderCtx) => true);
         }
 
         protected override void When()

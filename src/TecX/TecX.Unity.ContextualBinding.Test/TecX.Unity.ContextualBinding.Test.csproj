@@ -100,6 +100,7 @@
     <Compile Include="When_RegisteringBuilderAndInstanceWithFailingPredicate.cs" />
     <Compile Include="When_RegisteringMultipleInstances.cs" />
     <Compile Include="When_RegisteringWithParentNamespaceCondition.cs" />
+    <Compile Include="When_RegisteringWithWhenInjectedInto.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">

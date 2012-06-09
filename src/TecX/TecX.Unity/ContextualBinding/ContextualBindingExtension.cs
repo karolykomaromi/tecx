@@ -16,13 +16,12 @@ namespace TecX.Unity.ContextualBinding
 
         private readonly Dictionary<string, object> bindingContext;
 
-        private readonly BuildTreeTrackerStrategy treeTracker;
+        private ITracker tracker;
 
         public ContextualBindingExtension()
         {
             this.mappings = new Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy>();
             this.bindingContext = new Dictionary<string, object>();
-            this.treeTracker = new BuildTreeTrackerStrategy();
         }
 
         public object this[string key]
@@ -107,11 +106,15 @@ namespace TecX.Unity.ContextualBinding
 
         protected override void Initialize()
         {
+            var extension = new TrackingExtension();
+
+            this.tracker = extension;
+
+            this.Container.AddExtension(extension);
+
             this.Context.Registering += this.OnRegistering;
 
             this.Context.RegisteringInstance += this.OnRegisteringInstance;
-
-            this.Context.Strategies.Add(this.treeTracker, UnityBuildStage.PreCreation);
 
             this.Context.Strategies.Add(new ContextualParameterBindingStrategy(new DefaultBindingContext(this)), UnityBuildStage.PreCreation);
         }
@@ -211,7 +214,7 @@ namespace TecX.Unity.ContextualBinding
             {
                 get
                 {
-                    return this.Extension.treeTracker.CurrentBuildNode;
+                    return this.Extension.tracker.CurrentBuildNode;
                 }
             }
 

@@ -9,11 +9,19 @@ namespace TecX.Unity.Tracking
     using TecX.Common;
 
     /// <summary>
-    /// The <see cref="BuildTreeTrackerStrategy"/>
+    /// The <see cref="CreationTrackerStrategy"/>
     ///   class is used to track build trees created by the container.
     /// </summary>
-    public class BuildTreeTrackerStrategy : BuilderStrategy
+    public class CreationTrackerStrategy : BuilderStrategy
     {
+        private readonly ITracker tracker;
+
+        public CreationTrackerStrategy(ITracker tracker)
+        {
+            Guard.AssertNotNull(tracker, "tracker");
+            this.tracker = tracker;
+        }
+
         [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
             Justification = "Reviewed. Suppression is OK here.")]
         private static class Constants
@@ -32,12 +40,6 @@ namespace TecX.Unity.Tracking
         }
 
         /// <summary>
-        /// The current build node.
-        /// </summary>
-        [ThreadStatic]
-        private static BuildTreeNode currentBuildNode;
-
-        /// <summary>
         /// Gets or sets the current build node.
         /// </summary>
         /// <value>
@@ -47,19 +49,19 @@ namespace TecX.Unity.Tracking
         {
             get
             {
-                return currentBuildNode;
+                return this.tracker.CurrentBuildNode;
             }
 
             set
             {
-                currentBuildNode = value;
+                this.tracker.CurrentBuildNode = value;
             }
         }
 
         /// <inheritdoc/>
         public override void PostBuildUp(IBuilderContext context)
         {
-            Guard.AssertNotNull(() => context);
+            Guard.AssertNotNull(context, "context");
 
             this.AssignInstanceToCurrentTreeNode(context.BuildKey, context.Existing);
 
@@ -73,7 +75,7 @@ namespace TecX.Unity.Tracking
         /// <inheritdoc/>
         public override void PreBuildUp(IBuilderContext context)
         {
-            Guard.AssertNotNull(() => context);
+            Guard.AssertNotNull(context, "context");
 
             bool nodeCreatedByContainer = context.Existing == null;
 

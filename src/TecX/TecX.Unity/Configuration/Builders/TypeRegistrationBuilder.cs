@@ -10,6 +10,7 @@ namespace TecX.Unity.Configuration.Builders
 
     using TecX.Common;
     using TecX.Unity.Configuration.Utilities;
+    using TecX.Unity.ContextualBinding;
     using TecX.Unity.Enrichment;
     using TecX.Unity.Injection;
 
@@ -20,10 +21,10 @@ namespace TecX.Unity.Configuration.Builders
         private readonly Type to;
 
         public TypeRegistrationBuilder(Type from, Type to)
-            : base(from)
+            : base(@from)
         {
             Guard.AssertNotNull(to, "to");
-            
+
             this.to = to;
 
             this.enrichments = new InjectionMembers();
@@ -161,9 +162,14 @@ namespace TecX.Unity.Configuration.Builders
             return this;
         }
 
-        protected override Registration DefaultCompilationStrategy()
+        public override Registration Build()
         {
-            return new TypeRegistration(this.From, this.To, this.Name, this.Lifetime, this.Enrichments);
+            if (this.Predicate == null)
+            {
+                return new TypeRegistration(this.From, this.To, this.Name, this.Lifetime, this.Enrichments);
+            }
+
+            return new ContextualTypeRegistration(this.From, this.To, this.Name, this.Lifetime, this.Predicate, this.Enrichments);
         }
     }
 }

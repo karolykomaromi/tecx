@@ -24,7 +24,11 @@ namespace TecX.Unity.ContextualBinding
 
             if (configuration == null)
             {
-                throw new ContextualBindingException("ContextualBindingExtension must be registered with the container!");
+                ContextualBindingExtension extension = new ContextualBindingExtension();
+
+                container.AddExtension(extension);
+
+                configuration = extension;
             }
 
             configuration.RegisterType(@from, to, lifetime, predicate, injectionMembers);
@@ -90,7 +94,11 @@ namespace TecX.Unity.ContextualBinding
 
             if (configuration == null)
             {
-                throw new ContextualBindingException("ContextualBindingExtension must be registered with the container!");
+                ContextualBindingExtension extension = new ContextualBindingExtension();
+
+                container.AddExtension(extension);
+
+                configuration = extension;
             }
 
             configuration.RegisterInstance(@from, instance, lifetime, predicate);

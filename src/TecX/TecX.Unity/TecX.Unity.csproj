@@ -72,6 +72,8 @@
     <Compile Include="Configuration\Builders\TypeRegistrationBuilder.cs" />
     <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="Configuration\ConfigurationBuilder.cs" />
+    <Compile Include="Configuration\ContextualInstanceRegistration.cs" />
+    <Compile Include="Configuration\ContextualTypeRegistration.cs" />
     <Compile Include="Configuration\Conventions\AssemblyScanner.cs" />
     <Compile Include="Configuration\Conventions\FindAllImplementationsConvention.cs" />
     <Compile Include="Configuration\Conventions\FindAllImplementationsOfOpenGenericInterfaceConvention.cs" />
@@ -94,9 +96,6 @@
     <Compile Include="Configuration\Utilities\CompositeFilter.cs" />
     <Compile Include="Configuration\Utilities\RunOnce.cs" />
     <Compile Include="Configuration\Utilities\TypePool.cs" />
-    <Compile Include="ContextualBinding\Configuration\BuilderExtensions.cs" />
-    <Compile Include="ContextualBinding\Configuration\ContextualInstanceRegistration.cs" />
-    <Compile Include="ContextualBinding\Configuration\ContextualTypeRegistration.cs" />
     <Compile Include="ContextualBinding\Constants.cs" />
     <Compile Include="ContextualBinding\ContextInfo.cs" />
     <Compile Include="ContextualBinding\ContextScope.cs" />
@@ -165,7 +164,7 @@
     <Compile Include="TestSupport\WasResolvedExtension.cs" />
     <Compile Include="TestSupport\WasResolvedStrategy.cs" />
     <Compile Include="Tracking\BuildTreeNode.cs" />
-    <Compile Include="Tracking\BuildTreeTrackerStrategy.cs" />
+    <Compile Include="Tracking\CreationTrackerStrategy.cs" />
     <Compile Include="Tracking\IBuildTreeNodeVisitor.cs" />
     <Compile Include="Tracking\ITracker.cs" />
     <Compile Include="Tracking\TrackingExtension.cs" />

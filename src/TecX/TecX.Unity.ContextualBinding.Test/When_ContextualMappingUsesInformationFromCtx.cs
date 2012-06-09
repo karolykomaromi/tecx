@@ -17,7 +17,9 @@ namespace TecX.Unity.ContextualBinding.Test
             Predicate<IBindingContext, IBuilderContext> matches = (bindingContext, builderContext) =>
                 {
                     if ((int)bindingContext["someKey"] == 123)
+                    {
                         return true;
+                    }
 
                     return false;
                 };

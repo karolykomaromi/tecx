@@ -2,6 +2,7 @@ namespace TecX.Unity.Tracking
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
 
     using Microsoft.Practices.ObjectBuilder2;
@@ -11,6 +12,7 @@ namespace TecX.Unity.Tracking
     /// <summary>
     /// The <see cref="BuildTreeNode"/> is used to define a build tree node and its children.
     /// </summary>
+    [DebuggerDisplay("Type:{BuildKey.Type} Name:{BuildKey.Name}")]
     public class BuildTreeNode
     {
         [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
