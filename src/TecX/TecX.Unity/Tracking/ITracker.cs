@@ -2,6 +2,6 @@ namespace TecX.Unity.Tracking
 {
     public interface ITracker
     {
-        BuildTreeNode CurrentBuildNode { get; }
+        BuildTreeNode CurrentBuildNode { get; set; }
     }
 }

@@ -3,51 +3,36 @@ namespace TecX.Unity.Configuration.Builders
     using System;
     using System.Diagnostics.CodeAnalysis;
 
+    using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
+    using TecX.Unity.ContextualBinding;
 
     public abstract class RegistrationBuilder
     {
-        private Func<Registration> compilationStrategy;
-
-        protected RegistrationBuilder()
-        {
-            this.SetCompilationStrategy(this.DefaultCompilationStrategy);
-        }
-
         public static implicit operator Registration(RegistrationBuilder builder)
         {
             Guard.AssertNotNull(builder, "builder");
 
-            return builder.Compile();
+            return builder.Build();
         }
 
-        public Registration Compile()
-        {
-            return this.compilationStrategy();
-        }
-
-        public void SetCompilationStrategy(Func<Registration> compilationStrategy)
-        {
-            Guard.AssertNotNull(compilationStrategy, "compilationStrategy");
-
-            this.compilationStrategy = compilationStrategy;
-        }
-
-        protected abstract Registration DefaultCompilationStrategy();
+        public abstract Registration Build();
     }
 
     [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass",
         Justification = "Reviewed. Suppression is OK here.")]
-    public abstract class RegistrationBuilder<TRegistrationExpression> : RegistrationBuilder
-        where TRegistrationExpression : RegistrationBuilder
+    public abstract class RegistrationBuilder<TRegistrationBuilder> : RegistrationBuilder
+        where TRegistrationBuilder : RegistrationBuilder
     {
         private readonly Type from;
 
         private string name;
 
         private LifetimeManager lifetime;
+
+        private Predicate<IBindingContext, IBuilderContext> predicate;
 
         protected RegistrationBuilder(Type @from)
         {
@@ -79,27 +64,85 @@ namespace TecX.Unity.Configuration.Builders
             get { return this.@from; }
         }
 
-        public TRegistrationExpression Named(string name)
+        public Predicate<IBindingContext, IBuilderContext> Predicate
+        {
+            get
+            {
+                return this.predicate;
+            }
+        }
+
+        public TRegistrationBuilder Named(string name)
         {
             Guard.AssertNotEmpty(name, "name");
 
             this.name = name;
 
-            return this as TRegistrationExpression;
+            return this as TRegistrationBuilder;
         }
 
-        public TRegistrationExpression LifetimeIs(LifetimeManager lifetime)
+        public TRegistrationBuilder LifetimeIs(LifetimeManager lifetime)
         {
             Guard.AssertNotNull(lifetime, "lifetime");
 
             this.lifetime = lifetime;
 
-            return this as TRegistrationExpression;
+            return this as TRegistrationBuilder;
         }
 
-        public TRegistrationExpression AsSingleton()
+        public TRegistrationBuilder AsSingleton()
         {
             return this.LifetimeIs(new ContainerControlledLifetimeManager());
+        }
+
+        public TRegistrationBuilder When(Predicate<IBindingContext, IBuilderContext> predicate)
+        {
+            Guard.AssertNotNull(predicate, "predicate");
+
+            this.predicate = predicate;
+
+            return this as TRegistrationBuilder;
+        }
+
+        public TRegistrationBuilder WhenInjectedInto<TParent>()
+        {
+            return this.WhenInjectedInto(typeof(TParent));
+        }
+
+        public TRegistrationBuilder WhenInjectedInto(Type parentType)
+        {
+            Guard.AssertNotNull(parentType, "parentType");
+
+            this.predicate = (bindingContext, builderContext) =>
+            {
+                var parent = bindingContext.CurrentBuildNode.Parent;
+                return parent != null && parent.BuildKey.Type == parentType;
+            };
+
+            return this as TRegistrationBuilder;
+        }
+
+        public TRegistrationBuilder WhenAnyAncestorNamed(string name)
+        {
+            Guard.AssertNotEmpty(name, "name");
+
+            this.predicate = (bindingContext, builderContext) =>
+                {
+                    var parent = bindingContext.CurrentBuildNode.Parent;
+                    while (parent != null)
+                    {
+                        if (string.Equals(name, parent.BuildKey.Name, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return true;
+                        }
+
+                        parent = parent.Parent;
+                    }
+
+                    return false;
+                };
+
+            return this as TRegistrationBuilder;
         }
     }
 }

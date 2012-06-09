@@ -1,4 +1,4 @@
-namespace TecX.Unity.ContextualBinding.Configuration
+namespace TecX.Unity.Configuration
 {
     using System;
 
@@ -6,7 +6,7 @@ namespace TecX.Unity.ContextualBinding.Configuration
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
-    using TecX.Unity.Configuration;
+    using TecX.Unity.ContextualBinding;
 
     public class ContextualTypeRegistration : TypeRegistration
     {

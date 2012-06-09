@@ -8,7 +8,7 @@ namespace TecX.Unity.Configuration.Builders
 
     public class InstanceRegistrationBuilder : RegistrationBuilder<InstanceRegistrationBuilder>
     {
-        private readonly object instance; 
+        private readonly object instance;
 
         public InstanceRegistrationBuilder(Type from, object instance)
             : base(from)
@@ -25,9 +25,14 @@ namespace TecX.Unity.Configuration.Builders
             get { return this.instance; }
         }
 
-        protected override Registration DefaultCompilationStrategy()
+        public override Registration Build()
         {
-            return new InstanceRegistration(this.From, this.Name, this.Instance, this.Lifetime);
+            if (this.Predicate == null)
+            {
+                return new InstanceRegistration(this.From, this.Name, this.Instance, this.Lifetime);
+            }
+
+            return new ContextualInstanceRegistration(this.From, this.Name, this.Instance, this.Lifetime, this.Predicate);
         }
     }
 }
