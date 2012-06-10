@@ -1,22 +1,22 @@
-﻿using System;
-
-using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling;
-using Microsoft.Practices.EnterpriseLibrary.Logging;
-using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using TecX.Agile.Registration;
-using TecX.TestTools;
-
-namespace TecX.Agile.Test
+﻿namespace TecX.Agile.Test
 {
+    using System;
+
+    using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling;
+    using Microsoft.Practices.EnterpriseLibrary.Logging;
+    using Microsoft.Practices.Unity;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using TecX.Agile.Registration;
+    using TecX.TestTools;
+
     public abstract class Given_Container : GivenWhenThen
     {
         protected IUnityContainer container;
 
         protected override void Given()
         {
-            container = new UnityContainer();
+            this.container = new UnityContainer();
         }
     }
 

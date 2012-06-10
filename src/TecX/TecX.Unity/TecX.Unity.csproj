@@ -164,6 +164,7 @@
     <Compile Include="TestSupport\WasResolvedExtension.cs" />
     <Compile Include="TestSupport\WasResolvedStrategy.cs" />
     <Compile Include="Tracking\BuildTreeNode.cs" />
+    <Compile Include="Tracking\BuildTreeTrackerStrategy.cs" />
     <Compile Include="Tracking\CreationTrackerStrategy.cs" />
     <Compile Include="Tracking\IBuildTreeNodeVisitor.cs" />
     <Compile Include="Tracking\ITracker.cs" />
