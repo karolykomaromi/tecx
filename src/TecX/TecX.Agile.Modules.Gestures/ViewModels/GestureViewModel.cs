@@ -1,5 +1,6 @@
 ﻿namespace TecX.Agile.Modules.Gestures.ViewModels
 {
+    using System.Collections.ObjectModel;
     using System.Windows.Controls;
     using System.Windows.Ink;
 
@@ -39,7 +40,7 @@
         {
             Guard.AssertNotNull(eventArgs, "eventArgs");
 
-            var recognitionResults = eventArgs.GetGestureRecognitionResults();
+            ReadOnlyCollection<GestureRecognitionResult> recognitionResults = eventArgs.GetGestureRecognitionResults();
 
             if (recognitionResults.IsEmpty() ||
                 recognitionResults[0].RecognitionConfidence < RecognitionConfidence.Strong)

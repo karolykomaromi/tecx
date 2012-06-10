@@ -15,44 +15,33 @@ namespace TecX.Unity.Tracking
     [DebuggerDisplay("Type:{BuildKey.Type} Name:{BuildKey.Name}")]
     public class BuildTreeNode
     {
+        /// <summary>
+        /// Error messages
+        /// </summary>
         [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
-            Justification = "Reviewed. Suppression is OK here.")]
-        private static class Constants
+        Justification = "Reviewed. Suppression is OK here.")]
+        private static class ErrorMessages
         {
             /// <summary>
-            /// Error messages
+            /// An instance has already been assigned to this node.
             /// </summary>
-            public static class ErrorMessages
-            {
-                /// <summary>
-                /// An instance has already been assigned to this node.
-                /// </summary>
-                public const string InstanceAlreadyAssigned = "An instance has already been assigned to this node.";
-            }
+            public const string InstanceAlreadyAssigned = "An instance has already been assigned to this node.";
         }
 
         private readonly ICollection<BuildTreeNode> children;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BuildTreeNode"/> class.
-        /// </summary>
-        /// <param name="buildKey">The build key for the current build operation. </param>
-        /// <param name="nodeCreatedByContainer">If set to <c>true</c>, the node was created by the container.</param>
-        /// <param name="parentNode">The parent node of this instance in the build tree.</param>
-        public BuildTreeNode(NamedTypeBuildKey buildKey, bool nodeCreatedByContainer, BuildTreeNode parentNode)
+        public BuildTreeNode(NamedTypeBuildKey originalBuildKey, BuildTreeNode parentNode)
         {
-            Guard.AssertNotNull(() => buildKey);
+            Guard.AssertNotNull(originalBuildKey, "originalBuildKey");
 
-            this.BuildKey = buildKey;
-
-            this.NodeCreatedByContainer = nodeCreatedByContainer;
-
+            this.OriginalBuildKey = originalBuildKey;
             this.Parent = parentNode;
-
             this.children = new List<BuildTreeNode>();
         }
 
-        public NamedTypeBuildKey BuildKey { get; private set; }
+        public NamedTypeBuildKey BuildKey { get; set; }
+
+        public NamedTypeBuildKey OriginalBuildKey { get; private set; }
 
         public ICollection<BuildTreeNode> Children
         {
@@ -70,7 +59,7 @@ namespace TecX.Unity.Tracking
         /// <value>
         /// <c>true</c> if the node was created by container; otherwise, <c>false</c>.
         /// </value>
-        public bool NodeCreatedByContainer { get; private set; }
+        public bool NodeCreatedByContainer { get; set; }
 
         public BuildTreeNode Parent { get; private set; }
 
@@ -105,7 +94,7 @@ namespace TecX.Unity.Tracking
         {
             if (this.ItemReference != null)
             {
-                throw new ArgumentException(Constants.ErrorMessages.InstanceAlreadyAssigned, "instance");
+                throw new ArgumentException(ErrorMessages.InstanceAlreadyAssigned, "instance");
             }
 
             this.ItemReference = new WeakReference(instance);

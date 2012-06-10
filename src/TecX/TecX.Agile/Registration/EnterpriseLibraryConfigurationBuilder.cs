@@ -37,7 +37,7 @@
 
         public EnterpriseLibraryConfigurationBuilder()
         {
-            this.ExtendWithNew<EnterpriseLibraryCoreExtension>();
+            this.Extension<EnterpriseLibraryCoreExtension>();
         }
 
         protected override void PostBuildUp()

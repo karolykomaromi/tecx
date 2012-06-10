@@ -13,12 +13,11 @@
     {
         public AppConfigurationBuilder()
         {
-            this.ExtendWithNew<TypedFactoryExtension>();
-            this.ExtendWithNew<EnrichmentExtension>();
-            this.ExtendWithNew<CollectionResolutionExtension>();
-            this.ExtendWithNew<EventAggregatorExtension>();
+            this.Extension<EnrichmentExtension>();
+            this.Extension<CollectionResolutionExtension>();
+            this.Extension<EventAggregatorExtension>();
 
-            this.For<Dispatcher>().Use<Dispatcher>().CreatedUsing(c => Dispatcher.CurrentDispatcher);
+            this.For<Dispatcher>().Use<Dispatcher>().Factory(c => Dispatcher.CurrentDispatcher);
 
             this.For<IMessageChannel>().Use<NullMessageChannel>().AsSingleton();
         }
