@@ -8,40 +8,40 @@ namespace TecX.ServiceModel.Unity.AutoMagic.Configuration
 
     public static class BuilderExtensions
     {
-        public static TypeRegistrationBuilder DiscoverService(this RegistrationFamilyBuilder builder)
+        public static TypeRegistrationBuilder DiscoverService(this RegistrationFamilyBuilder family)
         {
-            Guard.AssertNotNull(builder, "expression");
+            Guard.AssertNotNull(family, "family");
 
-            TypeRegistrationBuilder x = builder.Use(builder.From);
+            TypeRegistrationBuilder builder = family.Use(family.From);
 
-            x.Enrich(im => im.Add(new AutoDiscoveryProxyFactory()));
+            builder.Enrich(members => members.Add(new AutoDiscoveryProxyFactory()));
 
-            return x;
+            return builder;
         }
 
-        public static TypeRegistrationBuilder ServiceFromConfig(this RegistrationFamilyBuilder builder, string endpointConfigName)
+        public static TypeRegistrationBuilder ServiceFromConfig(this RegistrationFamilyBuilder family, string endpointConfigName)
         {
-            Guard.AssertNotNull(builder, "expression");
+            Guard.AssertNotNull(family, "family");
             Guard.AssertNotEmpty(endpointConfigName, "endpointConfigName");
 
-            TypeRegistrationBuilder x = builder.Use(builder.From);
+            TypeRegistrationBuilder builder = family.Use(family.From);
 
-            x.Enrich(im => im.Add(new ConfigFileProxyFactory(endpointConfigName)));
+            builder.Enrich(members => members.Add(new ConfigFileProxyFactory(endpointConfigName)));
 
-            return x;
+            return builder;
         }
 
-        public static TypeRegistrationBuilder Service(this RegistrationFamilyBuilder builder, EndpointAddress address, Binding binding)
+        public static TypeRegistrationBuilder Service(this RegistrationFamilyBuilder family, EndpointAddress address, Binding binding)
         {
-            Guard.AssertNotNull(builder, "expression");
+            Guard.AssertNotNull(family, "family");
             Guard.AssertNotNull(address, "address");
             Guard.AssertNotNull(binding, "binding");
 
-            TypeRegistrationBuilder x = builder.Use(builder.From);
+            TypeRegistrationBuilder builder = family.Use(family.From);
 
-            x.Enrich(im => im.Add(new SpecifiedProxyFactory(address, binding)));
+            builder.Enrich(members => members.Add(new SpecifiedProxyFactory(address, binding)));
 
-            return x;
+            return builder;
         }
     }
 }
