@@ -5,27 +5,27 @@
 
     public static class BuilderExtensions
     {
-        public static TypeRegistrationBuilder AsFactory(this RegistrationFamilyBuilder builder)
+        public static TypeRegistrationBuilder UseFactory(this RegistrationFamilyBuilder family)
         {
-            Guard.AssertNotNull(builder, "expression");
+            Guard.AssertNotNull(family, "family");
 
-            var x = builder.Use(builder.From);
+            TypeRegistrationBuilder builder = family.Use(family.From);
 
-            x.Enrich(im => im.Add(new TypedFactory()));
+            builder.Enrich(members => members.Add(new TypedFactory()));
 
-            return x;
+            return builder;
         }
 
-        public static TypeRegistrationBuilder AsFactory(this RegistrationFamilyBuilder builder, ITypedFactoryComponentSelector selector)
+        public static TypeRegistrationBuilder UseFactory(this RegistrationFamilyBuilder family, ITypedFactoryComponentSelector selector)
         {
-            Guard.AssertNotNull(builder, "expression");
+            Guard.AssertNotNull(family, "family");
             Guard.AssertNotNull(selector, "selector");
 
-            var x = builder.Use(builder.From);
+            TypeRegistrationBuilder builder = family.Use(family.From);
 
-            x.Enrich(im => im.Add(new TypedFactory(selector)));
+            builder.Enrich(members => members.Add(new TypedFactory(selector)));
 
-            return x;
+            return builder;
         }
     }
 }
