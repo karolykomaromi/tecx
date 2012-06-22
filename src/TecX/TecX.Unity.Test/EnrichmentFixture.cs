@@ -1,10 +1,11 @@
-﻿using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TecX.Unity.Enrichment;
-using TecX.Unity.Test.TestObjects;
-
-namespace TecX.Unity.Test
+﻿namespace TecX.Unity.Test
 {
+    using Microsoft.Practices.Unity;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using TecX.Unity.Enrichment;
+    using TecX.Unity.Test.TestObjects;
+
     [TestClass]
     public class EnrichmentFixture
     {

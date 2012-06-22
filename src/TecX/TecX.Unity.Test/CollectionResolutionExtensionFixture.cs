@@ -10,8 +10,8 @@
     using TecX.Unity.Test.TestObjects;
 
     [TestClass]
-	public class CollectionResolutionExtensionFixture
-	{
+    public class CollectionResolutionExtensionFixture
+    {
         [TestMethod]
         public void CanResolveListWithOverrides()
         {
@@ -29,5 +29,5 @@
             Assert.AreEqual(1, list.OfType<Bar>().Count());
             Assert.AreEqual("1", list.OfType<Bar>().Single().Name);
         }
-	}
+    }
 }
