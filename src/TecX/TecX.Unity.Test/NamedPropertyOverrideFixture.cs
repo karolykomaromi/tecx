@@ -4,6 +4,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using TecX.Unity.Injection;
+    using TecX.Unity.Test.TestObjects;
 
     [TestClass]
     public class NamedPropertyOverrideFixture
@@ -27,10 +28,6 @@
         public class Person
         {
             public IFoo Foo { get; set; }
-        }
-
-        public interface IFoo
-        {
         }
 
         public class One : IFoo

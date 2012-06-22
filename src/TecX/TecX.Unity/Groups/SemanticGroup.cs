@@ -39,7 +39,7 @@ namespace TecX.Unity.Groups
             }
         }
 
-        public ISemanticGroup Use(Type from, Type to, string name, params InjectionMember[] injectionMembers)
+        public ISemanticGroup With(Type from, Type to, string name, params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(to, "to");

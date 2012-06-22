@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-
-using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using TecX.Unity.Injection;
-using TecX.Unity.Test.TestObjects;
-
-namespace TecX.Unity.Test
+﻿namespace TecX.Unity.Test
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
+    using Microsoft.Practices.Unity;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using TecX.Unity.Injection;
+    using TecX.Unity.Test.TestObjects;
+
     [TestClass]
     public class ClozeInjectionConstructorFixture
     {
@@ -63,14 +63,14 @@ namespace TecX.Unity.Test
 
             Predicate<ConstructorInfo> filter = matcher.ConstructorDoesNotTakeAllArguments;
 
-            IEnumerable<Predicate<ConstructorInfo>> filters = new[] {filter};
+            IEnumerable<Predicate<ConstructorInfo>> filters = new[] { filter };
 
-            var ctors = typeof (CtorTest).GetConstructors();
+            var ctors = typeof(CtorTest).GetConstructors();
 
             var result = ctors.Where(ctor => !filters.Any(f => f(ctor)));
 
-            //must find Ctortest(string,ILogger), CtorTest(string,ILogger,string)
-            //and CtorTest(string,ILogger,int)
+            // must find Ctortest(string,ILogger), CtorTest(string,ILogger,string)
+            // and CtorTest(string,ILogger,int)
             Assert.AreEqual(3, result.Count());
         }
 
@@ -92,8 +92,8 @@ namespace TecX.Unity.Test
             var result = ctors.Where(ctor => !filters.Any(f => f(ctor)))
                 .OrderBy(ctor => ctor.GetParameters().Length);
 
-            //must find CtorTest(ILogger) and CtorTest(string,ILogger)
-            //the other two have primitive parameters that are not satisfied
+            // must find CtorTest(ILogger) and CtorTest(string,ILogger)
+            // the other two have primitive parameters that are not satisfied
             Assert.AreEqual(2, result.Count());
             Assert.AreEqual(1, result.First().GetParameters().Length);
             Assert.AreEqual(2, result.ElementAt(1).GetParameters().Length);
@@ -118,9 +118,9 @@ namespace TecX.Unity.Test
             var result = ctors.Where(ctor => !filters.Any(f => f(ctor)))
                 .OrderBy(ctor => ctor.GetParameters().Length);
 
-            //must find CtorTest(string,ILogger,string), CtorTest(string,ILogger) and CtorTest(ILogger)
-            //ctor with one and two args do not take any argument whose type does not match the
-            //type of any provided arg
+            // must find CtorTest(string,ILogger,string), CtorTest(string,ILogger) and CtorTest(ILogger)
+            // ctor with one and two args do not take any argument whose type does not match the
+            // type of any provided arg
             Assert.AreEqual(3, result.Count());
             Assert.AreEqual(1, result.First().GetParameters().Length);
             Assert.AreEqual(2, result.ElementAt(1).GetParameters().Length);

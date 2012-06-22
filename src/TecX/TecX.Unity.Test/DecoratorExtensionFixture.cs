@@ -19,6 +19,7 @@
                 .RegisterType<IContract, Contract>("1");
 
             var sut = container.Resolve<IContract>("1");
+
             Assert.NotNull(sut);
             Assert.IsType(typeof(ContractDecorator), sut);
             Assert.IsType(typeof(Contract), ((ContractDecorator)sut).Base);
@@ -41,13 +42,11 @@
         [Fact]
         public void CanWrapBusinessClass()
         {
-            var container = new UnityContainer();
-
-            container.AddNewExtension<DecoratorExtension>();
-
-            container.RegisterType<ICompany, CompanyWrapper2>();
-            container.RegisterType<ICompany, CompanyWrapper1>();
-            container.RegisterType<ICompany, CompanyImplementation>();
+            var container = new UnityContainer()
+                .AddNewExtension<DecoratorExtension>()
+                .RegisterType<ICompany, CompanyWrapper2>()
+                .RegisterType<ICompany, CompanyWrapper1>()
+                .RegisterType<ICompany, CompanyImplementation>();
 
             var company = container.Resolve<ICompany>();
 
@@ -57,13 +56,11 @@
         [Fact]
         public void CanInjectMembers()
         {
-            var container = new UnityContainer();
-
-            container.AddNewExtension<DecoratorExtension>();
-
-            container.RegisterType<INumber, Three>(new InjectionProperty("Value", "3"));
-            container.RegisterType<INumber, Two>(new InjectionProperty("Value", "2"));
-            container.RegisterType<INumber, One>(new InjectionProperty("Value", "1"));
+            var container = new UnityContainer()
+                .AddNewExtension<DecoratorExtension>()
+                .RegisterType<INumber, Three>(new InjectionProperty("Value", "3"))
+                .RegisterType<INumber, Two>(new InjectionProperty("Value", "2"))
+                .RegisterType<INumber, One>(new InjectionProperty("Value", "1"));
 
             var number = container.Resolve<INumber>();
 

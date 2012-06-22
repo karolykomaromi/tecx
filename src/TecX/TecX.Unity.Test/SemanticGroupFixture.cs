@@ -1,12 +1,12 @@
-﻿using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using TecX.Unity.Groups;
-using TecX.Unity.Test.TestObjects;
-
-namespace TecX.Unity.Test
+﻿namespace TecX.Unity.Test
 {
     using System.Collections.Generic;
+
+    using Microsoft.Practices.Unity;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using TecX.Unity.Groups;
+    using TecX.Unity.Test.TestObjects;
 
     [TestClass]
     public class SemanticGroupFixture
@@ -18,8 +18,8 @@ namespace TecX.Unity.Test
 
             container.AddNewExtension<SemanticGroupExtension>();
 
-            container.RegisterGroup<IVehicle, Car>("Car").Use<IWheel, CarWheel>().Use<IEngine, CarEngine>();
-            container.RegisterGroup<IVehicle, Motorcycle>("Motorcycle").Use<IWheel, MotorcycleWheel>().Use<IEngine, MotorcycleEngine>();
+            container.RegisterGroup<IVehicle, Car>("Car").With<IWheel, CarWheel>().With<IEngine, CarEngine>();
+            container.RegisterGroup<IVehicle, Motorcycle>("Motorcycle").With<IWheel, MotorcycleWheel>().With<IEngine, MotorcycleEngine>();
 
             var car = container.Resolve<IVehicle>("Car");
             Assert.IsInstanceOfType(car.Wheel, typeof(CarWheel));
@@ -37,7 +37,7 @@ namespace TecX.Unity.Test
 
             container.AddNewExtension<SemanticGroupExtension>();
 
-            container.RegisterGroup<NeedsCollection, NeedsCollection>("1").Use(
+            container.RegisterGroup<NeedsCollection, NeedsCollection>("1").With(
                 typeof(IEnumerable<>), typeof(List<>), new InjectionConstructor());
 
             var sut = container.Resolve<NeedsCollection>("1");
