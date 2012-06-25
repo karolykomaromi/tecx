@@ -9,14 +9,12 @@
     using TecX.Unity.Test.TestObjects;
 
     [TestClass]
-    public class SemanticGroupFixture
+    public class MappingGroupFixture
     {
         [TestMethod]
         public void CanGroupRegistrations()
         {
             var container = new UnityContainer();
-
-            container.AddNewExtension<SemanticGroupExtension>();
 
             container.RegisterGroup(c =>
                 {
@@ -45,8 +43,6 @@
         public void CanCreateGroupWithOpenGeneric()
         {
             var container = new UnityContainer();
-
-            container.AddNewExtension<SemanticGroupExtension>();
 
             container.RegisterGroup(c =>
                 {

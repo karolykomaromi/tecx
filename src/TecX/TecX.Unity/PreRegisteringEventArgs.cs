@@ -1,4 +1,4 @@
-namespace TecX.Unity.Groups
+namespace TecX.Unity
 {
     using System;
 

@@ -2,7 +2,7 @@ namespace TecX.Unity.Groups
 {
     using System;
 
-    public class ScopedMapping
+    public class MappingInfo
     {
         public Type From { get; set; }
 

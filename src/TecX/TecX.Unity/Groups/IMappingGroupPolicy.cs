@@ -4,8 +4,8 @@ namespace TecX.Unity.Groups
 
     using Microsoft.Practices.ObjectBuilder2;
 
-    public interface ISemanticGroupPolicy : IBuilderPolicy
+    public interface IMappingGroupPolicy : IBuilderPolicy
     {
-        ICollection<ScopedMapping> ScopedMappings { get; }
+        ICollection<MappingInfo> MappingInfos { get; }
     }
 }

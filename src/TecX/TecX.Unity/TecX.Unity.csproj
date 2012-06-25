@@ -122,20 +122,18 @@
     <Compile Include="Enrichment\IEnrichmentPolicy.cs" />
     <Compile Include="Factories\DelegateFactory.cs" />
     <Compile Include="Factories\DelegateFactoryBuildPlanPolicy.cs" />
-    <Compile Include="Groups\GroupingProxyContainer.cs" />
-    <Compile Include="Groups\PreRegisteringEventArgs.cs" />
-    <Compile Include="Groups\PreRegisteringInstanceEventArgs.cs" />
+    <Compile Include="Groups\GroupingContainerProxy.cs" />
     <Compile Include="Mapping\DefaultMappingExtension.cs" />
     <Compile Include="Mapping\DefaultMappingStrategy.cs" />
     <Compile Include="Notification\NotificationExtension.cs" />
-    <Compile Include="Groups\ISemanticGroupConfigurator.cs" />
-    <Compile Include="Groups\ISemanticGroupPolicy.cs" />
+    <Compile Include="Groups\IGroupedMappings.cs" />
+    <Compile Include="Groups\IMappingGroupPolicy.cs" />
     <Compile Include="Groups\SelectedConstructorCache.cs" />
-    <Compile Include="Groups\SemanticGroupExtension.cs" />
-    <Compile Include="Groups\SemanticGroupPolicy.cs" />
-    <Compile Include="Groups\SemanticGroupStrategy.cs" />
+    <Compile Include="Groups\MappingGroupExtension.cs" />
+    <Compile Include="Groups\MappingGroupPolicy.cs" />
+    <Compile Include="Groups\MappingGroupStrategy.cs" />
     <Compile Include="Groups\UnityContainerExtensions.cs" />
-    <Compile Include="Groups\ScopedMapping.cs" />
+    <Compile Include="Groups\MappingInfo.cs" />
     <Compile Include="InjectionMembers.cs" />
     <Compile Include="Injection\AllProperties.cs" />
     <Compile Include="Injection\ByTypeNamingConvention.cs" />
@@ -152,6 +150,8 @@
     <Compile Include="Lifetime\CacheLifetimeStrategy.cs" />
     <Compile Include="Lifetime\CacheLifetimeStrategyExtension.cs" />
     <Compile Include="Lifetime\CacheReleasingLifetimeStrategy.cs" />
+    <Compile Include="PreRegisteringEventArgs.cs" />
+    <Compile Include="PreRegisteringInstanceEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxies\Constants.cs" />
     <Compile Include="Proxies\IProxyGenerator.cs" />
@@ -169,6 +169,7 @@
     <Compile Include="Tracking\IBuildTreeNodeVisitor.cs" />
     <Compile Include="Tracking\ITracker.cs" />
     <Compile Include="Tracking\TrackingExtension.cs" />
+    <Compile Include="UnityContainerProxy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
