@@ -9,7 +9,7 @@
     /// </summary>
     public abstract class TimeProvider
     {
-        private static readonly object syncRoot = new object();
+        private static readonly object SyncRoot = new object();
 
         private static TimeProvider current;
 
@@ -36,7 +36,7 @@
             {
                 Guard.AssertNotNull(value, "Current");
 
-                lock (syncRoot)
+                lock (SyncRoot)
                 {
                     current = value;
                 }

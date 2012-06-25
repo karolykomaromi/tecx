@@ -44,7 +44,7 @@
         {
             GC.SuppressFinalize(this);
 
-            Dispose(true);
+            this.Dispose(true);
         }
 
         public CacheLifetimeManager Clone()

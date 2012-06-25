@@ -65,7 +65,7 @@
             LogEntry entry = data as LogEntry;
 
             if (entry != null &&
-                Formatter != null)
+                this.Formatter != null)
             {
                 this.TraceData(eventCache, source, eventType, id, this.Formatter.Format(entry));
             }

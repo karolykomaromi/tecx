@@ -11,13 +11,14 @@ namespace TecX.Logging
         {
             LogEntry entry = data as LogEntry;
 
-            if (entry != null && Formatter != null)
+            if (entry != null && 
+                this.Formatter != null)
             {
-                WriteLine(Formatter.Format(entry));
+                this.WriteLine(Formatter.Format(entry));
             } 
             else
             {
-                WriteLine(data.ToString());
+                this.WriteLine(data.ToString());
             }
         }
     }
