@@ -15,7 +15,7 @@
                 .PersistentPolicies
                 .Get<ILifetimePolicy>(context.BuildKey, out policySource);
 
-            if (ReferenceEquals(policySource, context.PersistentPolicies))
+            if (object.ReferenceEquals(policySource, context.PersistentPolicies))
             {
                 return;
             }

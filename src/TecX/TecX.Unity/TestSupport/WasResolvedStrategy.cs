@@ -21,13 +21,12 @@ namespace TecX.Unity.TestSupport
 
         public bool WasResolved<T>()
         {
-            return WasResolved<T>(null);
+            return this.WasResolved<T>(null);
         }
 
         public bool WasResolved<T>(string name)
         {
-            var buildKey = this.buildKeys.FirstOrDefault(k =>
-                                                     typeof(T).IsAssignableFrom(k.Type) && k.Name == name);
+            var buildKey = this.buildKeys.FirstOrDefault(k => typeof(T).IsAssignableFrom(k.Type) && k.Name == name);
 
             return buildKey != null && buildKey.Type != null;
         }

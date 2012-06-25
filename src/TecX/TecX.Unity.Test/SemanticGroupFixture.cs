@@ -18,8 +18,19 @@
 
             container.AddNewExtension<SemanticGroupExtension>();
 
-            container.RegisterGroup<IVehicle, Car>("Car").With<IWheel, CarWheel>().With<IEngine, CarEngine>();
-            container.RegisterGroup<IVehicle, Motorcycle>("Motorcycle").With<IWheel, MotorcycleWheel>().With<IEngine, MotorcycleEngine>();
+            container.RegisterGroup(c =>
+                {
+                    c.RegisterType<IVehicle, Car>("Car");
+                    c.RegisterType<IWheel, CarWheel>();
+                    c.RegisterType<IEngine, CarEngine>();
+                });
+
+            container.RegisterGroup(c =>
+                {
+                    c.RegisterType<IVehicle, Motorcycle>("Motorcycle");
+                    c.RegisterType<IWheel, MotorcycleWheel>();
+                    c.RegisterType<IEngine, MotorcycleEngine>();
+                });
 
             var car = container.Resolve<IVehicle>("Car");
             Assert.IsInstanceOfType(car.Wheel, typeof(CarWheel));
@@ -37,8 +48,11 @@
 
             container.AddNewExtension<SemanticGroupExtension>();
 
-            container.RegisterGroup<NeedsCollection, NeedsCollection>("1").With(
-                typeof(IEnumerable<>), typeof(List<>), new InjectionConstructor());
+            container.RegisterGroup(c =>
+                {
+                    c.RegisterType<NeedsCollection>("1");
+                    c.RegisterType(typeof(IEnumerable<>), typeof(List<>), new InjectionConstructor());
+                });
 
             var sut = container.Resolve<NeedsCollection>("1");
 

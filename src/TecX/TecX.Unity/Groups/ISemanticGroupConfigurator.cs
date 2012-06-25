@@ -6,6 +6,6 @@ namespace TecX.Unity.Groups
 
     public interface ISemanticGroupConfigurator : IUnityContainerExtensionConfigurator
     {
-        ISemanticGroup RegisterAsGroup(Type from, Type to, string name);
+        void AddPolicy(ISemanticGroupPolicy policy, Type type, string name);
     }
 }

@@ -8,20 +8,15 @@ namespace TecX.Unity.Groups
 
     public static class UnityContainerExtensions
     {
-        public static ISemanticGroup RegisterGroup<TFrom, TTo>(this IUnityContainer container, string name)
-        {
-            return RegisterGroup(container, typeof(TFrom), typeof(TTo), name);
-        }
-
-        public static ISemanticGroup RegisterGroup(this IUnityContainer container, Type from, Type to, string name)
+        public static void RegisterGroup(this IUnityContainer container, Action<IUnityContainer> action)
         {
             Guard.AssertNotNull(container, "container");
-            Guard.AssertNotNull(from, "from");
-            Guard.AssertNotNull(to, "to");
+            Guard.AssertNotNull(action, "action");
 
-            var semantic = container.Configure<ISemanticGroupConfigurator>();
-
-            return semantic.RegisterAsGroup(from, to, name);
+            using (var proxy = new GroupingProxyContainer(container))
+            {
+                action(proxy);
+            }
         }
     }
 }

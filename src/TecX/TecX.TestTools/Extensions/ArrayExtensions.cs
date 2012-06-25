@@ -11,7 +11,7 @@
 
             for (int i = 0; i < array.Length; i++)
             {
-                if (Equals(array[i], item))
+                if (object.Equals(array[i], item))
                 {
                     return i;
                 }

@@ -9,7 +9,7 @@
 
         public bool WasResolved<T>()
         {
-            return WasResolved<T>(null);
+            return this.WasResolved<T>(null);
         }
 
         public bool WasResolved<T>(string name)
