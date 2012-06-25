@@ -1,10 +1,10 @@
 namespace TecX.Unity.ContextualBinding.Test
 {
-    using Microsoft.Practices.ObjectBuilder2;
+    using System;
+
     using Microsoft.Practices.Unity;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using TecX.Common;
     using TecX.Unity.ContextualBinding.Test.TestObjects;
 
     [TestClass]
@@ -12,9 +12,9 @@ namespace TecX.Unity.ContextualBinding.Test
     {
         protected override void When()
         {
-            Predicate<IBindingContext, IBuilderContext> condition = (bindingCtx, builderCtx) =>
+            Predicate<IRequest> condition = request =>
                 {
-                    bool isMatch = bindingCtx.CurrentBuildNode.RootNode.BuildKey.Type.Namespace.EndsWith("TestObjects");
+                    bool isMatch = request.CurrentBuildNode.RootNode.BuildKey.Type.Namespace.EndsWith("TestObjects");
                     return isMatch;
                 };
 

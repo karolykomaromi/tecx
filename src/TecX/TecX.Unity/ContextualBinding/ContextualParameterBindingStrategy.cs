@@ -4,11 +4,11 @@ namespace TecX.Unity.ContextualBinding
 
     public class ContextualParameterBindingStrategy : BuilderStrategy
     {
-        private readonly IBindingContext bindingContext;
+        private readonly IRequest request;
 
-        public ContextualParameterBindingStrategy(IBindingContext bindingContext)
+        public ContextualParameterBindingStrategy(IRequest request)
         {
-            this.bindingContext = bindingContext;
+            this.request = request;
         }
 
         public override void PreBuildUp(IBuilderContext context)
@@ -17,7 +17,7 @@ namespace TecX.Unity.ContextualBinding
 
             if (policy != null)
             {
-                policy.SetResolverOverrides(this.bindingContext, context);
+                policy.SetResolverOverrides(this.request, context);
             }
         }
     }

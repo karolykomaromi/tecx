@@ -108,7 +108,7 @@
     <Compile Include="ContextualBinding\ContextualParameterBindingStrategy.cs" />
     <Compile Include="ContextualBinding\ContextualParameterOverride.cs" />
     <Compile Include="ContextualBinding\ContextualResolverOverride.cs" />
-    <Compile Include="ContextualBinding\IBindingContext.cs" />
+    <Compile Include="ContextualBinding\IRequest.cs" />
     <Compile Include="ContextualBinding\IContextualBinding.cs" />
     <Compile Include="ContextualBinding\IContextualParameterBindingPolicy.cs" />
     <Compile Include="ContextualBinding\UnityContainerExtensions.cs" />

@@ -32,7 +32,7 @@ namespace TecX.Unity.Configuration.Builders
 
         private LifetimeManager lifetime;
 
-        private Predicate<IBindingContext, IBuilderContext> predicate;
+        private Predicate<IRequest> predicate;
 
         protected RegistrationBuilder(Type @from)
         {
@@ -64,7 +64,7 @@ namespace TecX.Unity.Configuration.Builders
             get { return this.@from; }
         }
 
-        public Predicate<IBindingContext, IBuilderContext> Predicate
+        public Predicate<IRequest> Predicate
         {
             get
             {
@@ -95,7 +95,7 @@ namespace TecX.Unity.Configuration.Builders
             return this.LifetimeIs(new ContainerControlledLifetimeManager());
         }
 
-        public TRegistrationBuilder When(Predicate<IBindingContext, IBuilderContext> predicate)
+        public TRegistrationBuilder When(Predicate<IRequest> predicate)
         {
             Guard.AssertNotNull(predicate, "predicate");
 
@@ -113,9 +113,9 @@ namespace TecX.Unity.Configuration.Builders
         {
             Guard.AssertNotNull(parentType, "parentType");
 
-            this.predicate = (bindingContext, builderContext) =>
+            this.predicate = request =>
             {
-                var parent = bindingContext.CurrentBuildNode.Parent;
+                var parent = request.CurrentBuildNode.Parent;
                 return parent != null && parent.BuildKey.Type == parentType;
             };
 
@@ -126,9 +126,9 @@ namespace TecX.Unity.Configuration.Builders
         {
             Guard.AssertNotEmpty(name, "name");
 
-            this.predicate = (bindingContext, builderContext) =>
+            this.predicate = request =>
                 {
-                    var parent = bindingContext.CurrentBuildNode.Parent;
+                    var parent = request.CurrentBuildNode.Parent;
                     while (parent != null)
                     {
                         if (string.Equals(name, parent.BuildKey.Name, StringComparison.OrdinalIgnoreCase))

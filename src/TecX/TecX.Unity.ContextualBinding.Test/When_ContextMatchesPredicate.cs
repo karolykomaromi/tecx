@@ -10,7 +10,7 @@ namespace TecX.Unity.ContextualBinding.Test
     {
         protected override void When()
         {
-            container.RegisterType<IMyInterface, MyParameterLessClass>((bindingContext, builderContext) => true);
+            container.RegisterType<IMyInterface, MyParameterLessClass>(request => true);
         }
 
         [TestMethod]

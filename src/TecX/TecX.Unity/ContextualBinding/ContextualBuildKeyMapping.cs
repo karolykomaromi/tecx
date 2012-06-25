@@ -8,11 +8,11 @@ namespace TecX.Unity.ContextualBinding
 
     public class ContextualBuildKeyMapping
     {
-        private readonly Predicate<IBindingContext, IBuilderContext> isMatch;
+        private readonly Predicate<IRequest> isMatch;
         private readonly Type mapTo;
         private readonly string uniqueMappingName;
         
-        public ContextualBuildKeyMapping(Predicate<IBindingContext, IBuilderContext> isMatch, Type mapTo, string uniqueMappingName)
+        public ContextualBuildKeyMapping(Predicate<IRequest> isMatch, Type mapTo, string uniqueMappingName)
         {
             Guard.AssertNotNull(isMatch, "isMatch");
             Guard.AssertNotNull(mapTo, "mapTo");
@@ -28,12 +28,11 @@ namespace TecX.Unity.ContextualBinding
             get { return new NamedTypeBuildKey(this.mapTo, this.uniqueMappingName); }
         }
 
-        public bool IsMatch(IBindingContext bindingContext, IBuilderContext builderContext)
+        public bool IsMatch(IRequest request)
         {
-            Guard.AssertNotNull(bindingContext, "bindingContext");
-            Guard.AssertNotNull(builderContext, "builderContext");
+            Guard.AssertNotNull(request, "request");
 
-            return this.isMatch(bindingContext, builderContext);
+            return this.isMatch(request);
         }
     }
 }

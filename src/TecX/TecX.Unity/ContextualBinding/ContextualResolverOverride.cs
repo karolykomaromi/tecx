@@ -4,7 +4,7 @@ namespace TecX.Unity.ContextualBinding
 
     public abstract class ContextualResolverOverride
     {
-        public abstract bool IsMatch(IBindingContext bindingContext, IBuilderContext builderContext);
+        public abstract bool IsMatch(IRequest request, IBuilderContext builderContext);
 
         public abstract void SetResolverOverrides(IBuilderContext context);
     }

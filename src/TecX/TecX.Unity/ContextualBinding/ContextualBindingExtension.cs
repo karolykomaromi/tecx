@@ -47,7 +47,7 @@ namespace TecX.Unity.ContextualBinding
             }
         }
 
-        public void RegisterType(Type @from, Type to, LifetimeManager lifetime, Predicate<IBindingContext, IBuilderContext> predicate, params InjectionMember[] injectionMembers)
+        public void RegisterType(Type @from, Type to, LifetimeManager lifetime, Predicate<IRequest> predicate, params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(to, "to");
@@ -72,7 +72,7 @@ namespace TecX.Unity.ContextualBinding
             this.Container.RegisterType(from, to, uniqueMappingName, lifetime, injectionMembers);
         }
 
-        public void RegisterInstance(Type @from, object instance, LifetimeManager lifetime, Predicate<IBindingContext, IBuilderContext> predicate)
+        public void RegisterInstance(Type @from, object instance, LifetimeManager lifetime, Predicate<IRequest> predicate)
         {
             Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(instance, "instance");
@@ -116,7 +116,7 @@ namespace TecX.Unity.ContextualBinding
 
             this.Context.RegisteringInstance += this.OnRegisteringInstance;
 
-            this.Context.Strategies.Add(new ContextualParameterBindingStrategy(new DefaultBindingContext(this)), UnityBuildStage.PreCreation);
+            this.Context.Strategies.Add(new ContextualParameterBindingStrategy(new DefaultRequest(this)), UnityBuildStage.PreCreation);
         }
 
         private void OnRegistering(object sender, RegisterEventArgs e)
@@ -177,7 +177,7 @@ namespace TecX.Unity.ContextualBinding
             {
                 // no existing contextual mapping policy for this build key so we have to create an
                 // new one and hook it up
-                policy = new ContextualBuildKeyMappingPolicy(new DefaultBindingContext(this));
+                policy = new ContextualBuildKeyMappingPolicy(new DefaultRequest(this));
 
                 if (existingPolicy != null &&
                     existingContextualPolicy == null)
@@ -199,16 +199,18 @@ namespace TecX.Unity.ContextualBinding
         /// thing with the default implementation of <see cref="ExtensionContext"/> which is a private, nested class called 
         /// <i>ExtensionContextImpl</i>. Looked neat so I applied the same approach here.
         /// </summary>
-        private class DefaultBindingContext : IBindingContext
+        private class DefaultRequest : IRequest
         {
             private readonly ContextualBindingExtension extension;
 
-            public DefaultBindingContext(ContextualBindingExtension extension)
+            public DefaultRequest(ContextualBindingExtension extension)
             {
                 Guard.AssertNotNull(extension, "extension");
 
                 this.extension = extension;
             }
+
+            public IBuilderContext Build { get; set; }
 
             public BuildTreeNode CurrentBuildNode
             {

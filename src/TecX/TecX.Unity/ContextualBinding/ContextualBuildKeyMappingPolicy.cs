@@ -9,17 +9,17 @@ namespace TecX.Unity.ContextualBinding
 
     public class ContextualBuildKeyMappingPolicy : IBuildKeyMappingPolicy
     {
-        private readonly IBindingContext bindingContext;
+        private readonly IRequest request;
 
         private readonly List<ContextualBuildKeyMapping> mappings;
 
         private IBuildKeyMappingPolicy defaultMapping;
 
-        public ContextualBuildKeyMappingPolicy(IBindingContext bindingContext)
+        public ContextualBuildKeyMappingPolicy(IRequest request)
         {
-            Guard.AssertNotNull(bindingContext, "bindingContext");
+            Guard.AssertNotNull(request, "request");
 
-            this.bindingContext = bindingContext;
+            this.request = request;
 
             this.mappings = new List<ContextualBuildKeyMapping>();
         }
@@ -44,24 +44,33 @@ namespace TecX.Unity.ContextualBinding
             Guard.AssertNotNull(buildKey, "buildKey");
             Guard.AssertNotNull(builderContext, "builderContext");
 
-            foreach (var mapping in this.mappings)
+            try
             {
-                if (mapping.IsMatch(this.bindingContext, builderContext))
+                this.request.Build = builderContext;
+
+                foreach (var mapping in this.mappings)
                 {
-                    return mapping.BuildKey;
+                    if (mapping.IsMatch(this.request))
+                    {
+                        return mapping.BuildKey;
+                    }
                 }
-            }
 
-            if (this.DefaultMapping != null)
+                if (this.DefaultMapping != null)
+                {
+                    return this.DefaultMapping.Map(buildKey, builderContext);
+                }
+
+                throw new ContextualBindingException("No contextual mapping that matches the current context was " +
+                                                     "defined and no default mapping could be found.");
+            }
+            finally
             {
-                return this.DefaultMapping.Map(buildKey, builderContext);
+                this.request.Build = null;
             }
-
-            throw new ContextualBindingException("No contextual mapping that matches the current context was " +
-                                                 "defined and no default mapping could be found.");
         }
 
-        public void AddMapping(Type mapTo, string uniqueMappingName, Predicate<IBindingContext, IBuilderContext> predicate)
+        public void AddMapping(Type mapTo, string uniqueMappingName, Predicate<IRequest> predicate)
         {
             Guard.AssertNotNull(predicate, "predicate");
             Guard.AssertNotNull(mapTo, "mapTo");

@@ -38,7 +38,7 @@
             var container = new UnityContainer();
 
             container.RegisterType<IFoo, Foo>(
-                (bindingContext, builderContext) => bindingContext.CurrentBuildNode != null);
+                request => request.CurrentBuildNode != null);
 
             IFoo foo = container.Resolve<IFoo>();
 
