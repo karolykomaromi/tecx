@@ -13,7 +13,7 @@ namespace TecX.Unity.Groups
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(action, "action");
 
-            using (var proxy = new GroupingProxyContainer(container))
+            using (var proxy = new GroupingContainerProxy(container))
             {
                 action(proxy);
             }

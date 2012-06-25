@@ -8,7 +8,7 @@ namespace TecX.Unity.Groups
 
     using TecX.Common;
 
-    public class SemanticGroupStrategy : BuilderStrategy
+    public class MappingGroupStrategy : BuilderStrategy
     {
         public override void PreBuildUp(IBuilderContext context)
         {
@@ -24,7 +24,7 @@ namespace TecX.Unity.Groups
                 return;
             }
 
-            ISemanticGroupPolicy policy = context.Policies.Get<ISemanticGroupPolicy>(context.BuildKey);
+            IMappingGroupPolicy policy = context.Policies.Get<IMappingGroupPolicy>(context.BuildKey);
 
             if (policy == null)
             {
@@ -39,7 +39,7 @@ namespace TecX.Unity.Groups
             {
                 Type parameterType = parameters[i].ParameterType;
 
-                ScopedMapping scopedMapping = policy.ScopedMappings.FirstOrDefault(sm => sm.From == parameterType);
+                MappingInfo scopedMapping = policy.MappingInfos.FirstOrDefault(sm => sm.From == parameterType);
 
                 if (scopedMapping != null)
                 {
@@ -52,7 +52,7 @@ namespace TecX.Unity.Groups
                 {
                     Type openGeneric = parameterType.GetGenericTypeDefinition();
 
-                    scopedMapping = policy.ScopedMappings.FirstOrDefault(sm => sm.From == openGeneric);
+                    scopedMapping = policy.MappingInfos.FirstOrDefault(sm => sm.From == openGeneric);
 
                     if (scopedMapping != null)
                     {

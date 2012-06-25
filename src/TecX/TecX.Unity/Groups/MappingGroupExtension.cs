@@ -8,20 +8,20 @@
 
     using TecX.Common;
 
-    public class SemanticGroupExtension : UnityContainerExtension, ISemanticGroupConfigurator
+    public class MappingGroupExtension : UnityContainerExtension, IGroupedMappings
     {
-        public void AddPolicy(ISemanticGroupPolicy policy, Type type, string name)
+        public void AddPolicy(IMappingGroupPolicy policy, Type type, string name)
         {
             Guard.AssertNotNull(policy, "policy");
             Guard.AssertNotNull(type, "type");
             Guard.AssertNotEmpty(name, "name");
 
-            this.Context.Policies.Set<ISemanticGroupPolicy>(policy, new NamedTypeBuildKey(type, name));
+            this.Context.Policies.Set<IMappingGroupPolicy>(policy, new NamedTypeBuildKey(type, name));
         }
 
         protected override void Initialize()
         {
-            var strategy = new SemanticGroupStrategy();
+            var strategy = new MappingGroupStrategy();
 
             Context.Strategies.Add(strategy, UnityBuildStage.PreCreation);
         }
