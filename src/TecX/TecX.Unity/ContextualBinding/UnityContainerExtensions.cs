@@ -14,7 +14,7 @@ namespace TecX.Unity.ContextualBinding
             Type @from, 
             Type to, 
             LifetimeManager lifetime, 
-            Predicate<IBindingContext, IBuilderContext> predicate, 
+            Predicate<IRequest> predicate, 
             params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(container, "container");
@@ -39,7 +39,7 @@ namespace TecX.Unity.ContextualBinding
         public static IUnityContainer RegisterType<TFrom, TTo>(
             this IUnityContainer container, 
             LifetimeManager lifetime, 
-            Predicate<IBindingContext, IBuilderContext> predicate, 
+            Predicate<IRequest> predicate, 
             params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(container, "container");
@@ -49,7 +49,7 @@ namespace TecX.Unity.ContextualBinding
 
         public static IUnityContainer RegisterType<TFrom, TTo>(
             this IUnityContainer container, 
-            Predicate<IBindingContext, IBuilderContext> predicate, 
+            Predicate<IRequest> predicate, 
             params InjectionMember[] injectionMembers)
         {
             Guard.AssertNotNull(container, "container");
@@ -60,7 +60,7 @@ namespace TecX.Unity.ContextualBinding
         public static IUnityContainer RegisterInstance<TFrom>(
             this IUnityContainer container, 
             object instance, 
-            Predicate<IBindingContext, IBuilderContext> predicate)
+            Predicate<IRequest> predicate)
         {
             Guard.AssertNotNull(container, "container");
 
@@ -71,7 +71,7 @@ namespace TecX.Unity.ContextualBinding
             this IUnityContainer container, 
             object instance, 
             LifetimeManager lifetime, 
-            Predicate<IBindingContext, IBuilderContext> predicate)
+            Predicate<IRequest> predicate)
         {
             Guard.AssertNotNull(container, "container");
 
@@ -83,7 +83,7 @@ namespace TecX.Unity.ContextualBinding
             Type @from, 
             object instance, 
             LifetimeManager lifetime, 
-            Predicate<IBindingContext, IBuilderContext> predicate)
+            Predicate<IRequest> predicate)
         {
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(from, "from");

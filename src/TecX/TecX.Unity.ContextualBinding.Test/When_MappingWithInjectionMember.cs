@@ -10,7 +10,7 @@ namespace TecX.Unity.ContextualBinding.Test
     {
         protected override void When()
         {
-            container.RegisterType<IMyInterface, MyClass>((bindingContext, builderContext) => true, new InjectionConstructor("c'tor with parameter"));
+            container.RegisterType<IMyInterface, MyClass>(request => true, new InjectionConstructor("c'tor with parameter"));
         }
 
         [TestMethod]

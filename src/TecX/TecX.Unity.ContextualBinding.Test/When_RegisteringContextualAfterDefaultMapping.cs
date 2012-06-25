@@ -12,7 +12,7 @@ namespace TecX.Unity.ContextualBinding.Test
         {
             container.RegisterType<IMyInterface, MyOtherClass>();
 
-            container.RegisterType<IMyInterface, MyClass>((bindingContext, builderContext) => false);
+            container.RegisterType<IMyInterface, MyClass>(request => false);
         }
 
         [TestMethod]

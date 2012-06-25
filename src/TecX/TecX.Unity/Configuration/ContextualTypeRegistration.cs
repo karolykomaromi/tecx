@@ -10,15 +10,9 @@ namespace TecX.Unity.Configuration
 
     public class ContextualTypeRegistration : TypeRegistration
     {
-        private readonly Predicate<IBindingContext, IBuilderContext> predicate;
+        private readonly Predicate<IRequest> predicate;
 
-        public ContextualTypeRegistration(
-            Type @from,
-            Type to,
-            string name,
-            LifetimeManager lifetime,
-            Predicate<IBindingContext, IBuilderContext> predicate,
-            params InjectionMember[] enrichments)
+        public ContextualTypeRegistration(Type @from, Type to, string name, LifetimeManager lifetime, Predicate<IRequest> predicate, params InjectionMember[] enrichments)
             : base(@from, to, name, lifetime, enrichments)
         {
             Guard.AssertNotNull(predicate, "predicate");

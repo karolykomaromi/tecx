@@ -1,11 +1,8 @@
 ﻿namespace TecX.Unity.ContextualBinding.Test
 {
-    using System;
-
     using Microsoft.Practices.Unity;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using TecX.Unity.Configuration.Builders;
     using TecX.Unity.ContextualBinding.Test.TestObjects;
 
     [TestClass]
@@ -25,7 +22,7 @@
 
             this.bar = new Bar();
 
-            this.builder.For<IFoo>().Use(this.bar).When((bindingCtx, builderCtx) => true);
+            this.builder.For<IFoo>().Use(this.bar).When(request => true);
 
             this.builder.For<IFoo>().Use(this.foo);
         }

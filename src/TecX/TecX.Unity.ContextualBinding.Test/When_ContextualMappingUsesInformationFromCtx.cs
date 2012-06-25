@@ -1,10 +1,10 @@
 namespace TecX.Unity.ContextualBinding.Test
 {
-    using Microsoft.Practices.ObjectBuilder2;
+    using System;
+
     using Microsoft.Practices.Unity;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using TecX.Common;
     using TecX.Unity.ContextualBinding.Test.TestObjects;
 
     [TestClass]
@@ -14,9 +14,9 @@ namespace TecX.Unity.ContextualBinding.Test
         {
             container.Configure<IContextualBinding>()["someKey"] = 123;
 
-            Predicate<IBindingContext, IBuilderContext> matches = (bindingContext, builderContext) =>
+            Predicate<IRequest> matches = request =>
                 {
-                    if ((int)bindingContext["someKey"] == 123)
+                    if ((int)request["someKey"] == 123)
                     {
                         return true;
                     }

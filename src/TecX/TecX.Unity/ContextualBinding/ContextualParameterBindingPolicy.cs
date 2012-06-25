@@ -22,14 +22,14 @@ namespace TecX.Unity.ContextualBinding
             this.overrides.Add(contextualResolverOverride);
         }
 
-        public void SetResolverOverrides(IBindingContext bindingContext, IBuilderContext builderContext)
+        public void SetResolverOverrides(IRequest request, IBuilderContext builderContext)
         {
-            Guard.AssertNotNull(bindingContext, "bindingContext");
+            Guard.AssertNotNull(request, "request");
             Guard.AssertNotNull(builderContext, "builderContext");
 
             foreach (ContextualResolverOverride contextualResolverOverride in this.overrides)
             {
-                if (contextualResolverOverride.IsMatch(bindingContext, builderContext))
+                if (contextualResolverOverride.IsMatch(request, builderContext))
                 {
                     contextualResolverOverride.SetResolverOverrides(builderContext);
                 }
