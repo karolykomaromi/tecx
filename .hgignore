@@ -158,3 +158,5 @@ src/TecX/TecX.Web.Unity.Test/bin
 src/TecX/TecX.ServiceModel/obj
 src/TecX/TecX.ServiceModel/bin
 src/TecX/TecX.Agile.Service/bin
+src/TecX/TecX.Data/bin
+src/TecX/TecX.Data/obj
