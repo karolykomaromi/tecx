@@ -6,8 +6,16 @@ namespace TecX.Unity.Configuration
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
+    using TecX.Unity.Collections;
     using TecX.Unity.Configuration.Builders;
     using TecX.Unity.Configuration.Conventions;
+    using TecX.Unity.ContextualBinding;
+    using TecX.Unity.Decoration;
+    using TecX.Unity.Enrichment;
+    using TecX.Unity.Groups;
+    using TecX.Unity.Literals;
+    using TecX.Unity.Mapping;
+    using TecX.Unity.Proxies;
 
     public class ConfigurationBuilder : UnityContainerExtension
     {
@@ -85,6 +93,20 @@ namespace TecX.Unity.Configuration
             Guard.AssertNotNull(extension, "extension");
 
             return new ContainerExtensionBuilder<TExtension>(this, extension);
+        }
+
+        public ConfigurationBuilder WithDefaultExtensions()
+        {
+            this.AddExpression(config => config.AddExtension(new DecoratorExtension()));
+            this.AddExpression(config => config.AddExtension(new DefaultMappingExtension()));
+            this.AddExpression(config => config.AddExtension(new ContextualBindingExtension()));
+            this.AddExpression(config => config.AddExtension(new CollectionResolutionExtension()));
+            this.AddExpression(config => config.AddExtension(new EnrichmentExtension()));
+            this.AddExpression(config => config.AddExtension(new MappingGroupExtension()));
+            this.AddExpression(config => config.AddExtension(new LiteralParametersExtension()));
+            this.AddExpression(config => config.AddExtension(new ProxyGeneratorExtension()));
+
+            return this;
         }
 
         public void ImportBuilder<T>()
