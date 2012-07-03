@@ -16,7 +16,7 @@ namespace TecX.Unity.Groups
             Guard.AssertNotNull(context.BuildKey, "context.BuildKey");
             Guard.AssertNotNull(context.BuildKey.Type, "context.BuildKey.Type");
 
-            if (context.BuildKey.Type.IsPrimitive)
+            if (context.BuildKey.Type.IsPrimitive || context.BuildKey.Type == typeof(string))
             {
                 return;
             }

@@ -22,14 +22,14 @@ namespace TecX.Unity.Injection
 
         protected override bool NameMatchesCore(string name)
         {
-            return this.snippets.Any(s => string.Equals(s, name, StringComparison.InvariantCultureIgnoreCase));
+            return this.snippets.Any(s => string.Equals(s, name, StringComparison.OrdinalIgnoreCase));
         }
 
         private void InitializeSnippets()
         {
             string typeName = this.type.Name;
 
-            if (typeName.StartsWith("i", StringComparison.InvariantCultureIgnoreCase))
+            if (typeName.StartsWith("i", StringComparison.OrdinalIgnoreCase))
             {
                 typeName = typeName.Substring(1);
             }
