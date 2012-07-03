@@ -1,26 +1,24 @@
 namespace TecX.Unity.Literals
 {
-    using System.Reflection;
-
     using Microsoft.Practices.ObjectBuilder2;
 
     using TecX.Common;
 
     public class AppSettingsConvention : IDependencyResolverConvention
     {
-        public bool CanCreateResolver(IBuilderContext context, ParameterInfo parameter)
+        public bool CanCreateResolver(IBuilderContext context, DependencyInfo dependency)
         {
-            Guard.AssertNotNull(parameter, "parameter");
-            Guard.AssertNotNull(parameter.ParameterType, "parameter.ParameterType");
+            Guard.AssertNotNull(dependency, "dependency");
+            Guard.AssertNotNull(dependency.DependencyType, "dependency.DependencyType");
 
-            return parameter.ParameterType.IsPrimitive;
+            return dependency.DependencyType.IsPrimitive;
         }
 
-        public IDependencyResolverPolicy CreateResolver(IBuilderContext context, ParameterInfo parameter)
+        public IDependencyResolverPolicy CreateResolver(IBuilderContext context, DependencyInfo dependency)
         {
-            Guard.AssertNotNull(parameter, "parameter");
+            Guard.AssertNotNull(dependency, "dependency");
 
-            return new AppSettingsResolverPolicy(parameter.Name, parameter.ParameterType);
+            return new AppSettingsResolverPolicy(dependency.DependencyName, dependency.DependencyType);
         }
     }
 }

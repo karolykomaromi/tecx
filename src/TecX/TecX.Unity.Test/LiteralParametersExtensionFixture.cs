@@ -50,5 +50,17 @@
 
             Assert.AreEqual(123, foo.Abc);
         }
+
+        [TestMethod]
+        public void CanInjectProperty()
+        {
+            var container = new UnityContainer()
+                                    .WithDefaultConventionsForLiteralParameters()
+                                    .RegisterType<PropertyTakesPrimitiveParameter>(new InjectionProperty("Abc"));
+
+            var foo = container.Resolve<PropertyTakesPrimitiveParameter>();
+
+            Assert.AreEqual(123, foo.Abc);
+        }
     }
 }
