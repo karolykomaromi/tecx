@@ -38,5 +38,17 @@
 
             Assert.AreEqual(@"Data Source=localhost;Initial Catalog=Contoso;Integrated Security=True", foo.AbcConnectionString);
         }
+
+        [TestMethod]
+        public void CanResolveMethodParameter()
+        {
+            var container = new UnityContainer()
+                                    .WithDefaultConventionsForLiteralParameters()
+                                    .RegisterType<MethodTakesPrimitiveParameter>(new InjectionMethod("InjectionGoesHere", typeof(int)));
+
+            var foo = container.Resolve<MethodTakesPrimitiveParameter>();
+
+            Assert.AreEqual(123, foo.Abc);
+        }
     }
 }
