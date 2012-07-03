@@ -1,4 +1,4 @@
-namespace TecX.Unity.Literals
+namespace TecX.Unity
 {
     using System.Collections.Generic;
 

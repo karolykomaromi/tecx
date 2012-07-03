@@ -134,6 +134,7 @@
     <Compile Include="TestObjects\NamingConventionTestObject.cs" />
     <Compile Include="TestObjects\NeedsCollection.cs" />
     <Compile Include="TestObjects\One.cs" />
+    <Compile Include="TestObjects\PropertyTakesPrimitiveParameter.cs" />
     <Compile Include="TestObjects\Snafu.cs" />
     <Compile Include="TestObjects\SomeBaseClass.cs" />
     <Compile Include="TestObjects\TakesConnectionStringParameter.cs" />

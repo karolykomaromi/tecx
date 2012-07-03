@@ -1,7 +1,6 @@
 namespace TecX.Unity.Literals
 {
     using System.Collections.Generic;
-    using System.Reflection;
 
     using Microsoft.Practices.ObjectBuilder2;
 
@@ -23,16 +22,16 @@ namespace TecX.Unity.Literals
             this.conventions.Add(convention);
         }
 
-        public IDependencyResolverPolicy CreateResolver(IBuilderContext context, ParameterInfo parameter)
+        public IDependencyResolverPolicy CreateResolver(IBuilderContext context, DependencyInfo dependency)
         {
             Guard.AssertNotNull(context, "context");
-            Guard.AssertNotNull(parameter, "parameter");
+            Guard.AssertNotNull(dependency, "dependency");
 
             foreach (IDependencyResolverConvention convention in this.conventions)
             {
-                if (convention.CanCreateResolver(context, parameter))
+                if (convention.CanCreateResolver(context, dependency))
                 {
-                    return convention.CreateResolver(context, parameter);
+                    return convention.CreateResolver(context, dependency);
                 }
             }
 
