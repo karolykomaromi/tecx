@@ -13,6 +13,13 @@ namespace TecX.Unity.Groups
         public override void PreBuildUp(IBuilderContext context)
         {
             Guard.AssertNotNull(context, "context");
+            Guard.AssertNotNull(context.BuildKey, "context.BuildKey");
+            Guard.AssertNotNull(context.BuildKey.Type, "context.BuildKey.Type");
+
+            if (context.BuildKey.Type.IsPrimitive)
+            {
+                return;
+            }
 
             IPolicyList resolverPolicyDestination;
             IConstructorSelectorPolicy selector = context.Policies.Get<IConstructorSelectorPolicy>(context.BuildKey, out resolverPolicyDestination);

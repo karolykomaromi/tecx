@@ -124,6 +124,7 @@
     <Compile Include="Factories\DelegateFactory.cs" />
     <Compile Include="Factories\DelegateFactoryBuildPlanPolicy.cs" />
     <Compile Include="Groups\GroupingContainerProxy.cs" />
+    <Compile Include="Groups\SelectedConstructorCache.cs" />
     <Compile Include="Literals\AppSettingsConvention.cs" />
     <Compile Include="Literals\AppSettingsResolverPolicy.cs" />
     <Compile Include="Literals\ConnectionStringConvention.cs" />
@@ -133,13 +134,13 @@
     <Compile Include="Literals\ILiteralParameters.cs" />
     <Compile Include="Literals\LiteralParametersExtension.cs" />
     <Compile Include="Literals\LiteralParametersStrategy.cs" />
+    <Compile Include="Literals\SelectedMethodsCache.cs" />
     <Compile Include="Literals\UnityContainerExtensions.cs" />
     <Compile Include="Mapping\DefaultMappingExtension.cs" />
     <Compile Include="Mapping\DefaultMappingStrategy.cs" />
     <Compile Include="Notification\NotificationExtension.cs" />
     <Compile Include="Groups\IGroupedMappings.cs" />
     <Compile Include="Groups\IMappingGroupPolicy.cs" />
-    <Compile Include="Groups\SelectedConstructorCache.cs" />
     <Compile Include="Groups\MappingGroupExtension.cs" />
     <Compile Include="Groups\MappingGroupPolicy.cs" />
     <Compile Include="Groups\MappingGroupStrategy.cs" />

@@ -126,6 +126,7 @@
     <Compile Include="TestObjects\Log.cs" />
     <Compile Include="TestObjects\LogManager.cs" />
     <Compile Include="TestObjects\MatchByConvention.cs" />
+    <Compile Include="TestObjects\MethodTakesPrimitiveParameter.cs" />
     <Compile Include="TestObjects\Motorcycle.cs" />
     <Compile Include="TestObjects\MotorcycleEngine.cs" />
     <Compile Include="TestObjects\MotorcycleWheel.cs" />
