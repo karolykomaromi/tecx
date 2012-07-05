@@ -69,6 +69,19 @@ namespace TecX.Unity.Proxies
 
         ////    return proxyType;
         ////}
+        
+        public Type CreateProxyWithoutTargetDummy(Type contract)
+        {
+            Guard.AssertNotNull(contract, "contract");
+
+            var proxyGenerator = new ProxyWithoutTargetGenerator(contract, this.moduleBuilder);
+
+            var proxyType = proxyGenerator.Generate();
+
+            this.assemblyBuilder.Save(Constants.AssemblyFileName);
+
+            return proxyType;
+        }
 
         public Type CreateLazyInstantiationProxy(Type contract)
         {

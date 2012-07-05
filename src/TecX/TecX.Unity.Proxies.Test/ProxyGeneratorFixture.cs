@@ -81,5 +81,72 @@
             Assert.IsNotType(typeof(FooService), proxy);
             Assert.Equal("Foo()", proxy.Foo());
         }
+
+        [Fact]
+        public void LazyProxyHandlesProperties()
+        {
+            var container = new UnityContainer();
+
+            container.RegisterLazyProxy(
+                x =>
+                    {
+                        x.Contract = typeof(IHaveProperty);
+                        x.ServiceImplementation = typeof(HasProperty);
+                    });
+
+            IHaveProperty proxy = container.Resolve<IHaveProperty>();
+
+            Assert.IsNotType(typeof(HasProperty), proxy);
+            Assert.Equal("1", proxy.MyProperty);
+
+            proxy.MyProperty = "2";
+
+            Assert.Equal("2", proxy.MyProperty);
+        }
+
+        [Fact]
+        public void CanGenerateProxyWithoutTargetDummy()
+        {
+            var container = new UnityContainer();
+
+            var extension = new ProxyGeneratorExtension();
+
+            container.AddExtension(extension);
+
+            Type dummyType = extension.CreateProxyWithoutTargetDummy(typeof(IFooService));
+
+            object dummy = container.Resolve(dummyType);
+
+            Assert.IsAssignableFrom(typeof(IFooService), dummy);
+        }
+
+        [Fact]
+        public void ProxyWithoutTargetDummyImplementsProperties()
+        {
+            var container = new UnityContainer();
+
+            var extension = new ProxyGeneratorExtension();
+
+            container.AddExtension(extension);
+
+            Type dummyType = extension.CreateProxyWithoutTargetDummy(typeof(IHaveProperty));
+
+            IHaveProperty dummy = (IHaveProperty)container.Resolve(dummyType);
+
+            Assert.Throws<NotImplementedException>(() => dummy.MyProperty);
+            Assert.Throws<NotImplementedException>(() => dummy.MyProperty = "1");
+        }
+
+        [Fact]
+        public void CanInterceptCallsToDummy()
+        {
+            var container = new UnityContainer();
+
+            container.RegisterProxyWithoutTarget(typeof(IFooService), "1", new ContainerControlledLifetimeManager(), new MyCustomBehavior());
+
+            IFooService foo = container.Resolve<IFooService>("1");
+
+            Assert.Equal("Foo()", foo.Foo());
+        }
     }
 }

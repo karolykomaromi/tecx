@@ -170,6 +170,7 @@
     <Compile Include="Proxies\LazyProxyGenerator.cs" />
     <Compile Include="Proxies\ProxyGenerator.cs" />
     <Compile Include="Proxies\ProxyGeneratorExtension.cs" />
+    <Compile Include="Proxies\ProxyWithoutTargetGenerator.cs" />
     <Compile Include="Proxies\UnityContainerExtensions.cs" />
     <Compile Include="ResolverOverrides.cs" />
     <Compile Include="SelectedConstructorCache.cs" />

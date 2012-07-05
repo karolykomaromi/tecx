@@ -9,5 +9,7 @@ namespace TecX.Unity.Proxies
         ////Type CreateFaultTolerantProxy(Type contract);
 
         Type CreateLazyInstantiationProxy(Type contract);
+
+        Type CreateProxyWithoutTargetDummy(Type contract);
     }
 }
