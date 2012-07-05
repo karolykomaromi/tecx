@@ -9,7 +9,7 @@ namespace TecX.ServiceModel.Unity.Proxies
     using TecX.Common;
     using TecX.Unity.Proxies;
 
-    public class FaultTolerantProxyGenerator : ProxyGenerator
+    public class FaultTolerantProxyGenerator : ProxyBuilder
     {
         [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
             Justification = "Reviewed. Suppression is OK here.")]
@@ -39,7 +39,7 @@ namespace TecX.ServiceModel.Unity.Proxies
         {
         }
 
-        public override Type Generate()
+        public override Type Build()
         {
             var typeBuilder = this.CreateTypeBuilder();
 
@@ -49,7 +49,7 @@ namespace TecX.ServiceModel.Unity.Proxies
 
             this.GenerateConstructor(typeBuilder);
 
-            this.GenerateMethods(this.Contract, typeBuilder, this.channelGetterMethodBuilder);
+            this.GenerateDelegatingMethods(this.Contract, typeBuilder, this.channelGetterMethodBuilder);
 
             var proxyType = typeBuilder.CreateType();
 

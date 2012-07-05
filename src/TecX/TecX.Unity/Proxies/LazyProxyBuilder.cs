@@ -7,7 +7,7 @@ namespace TecX.Unity.Proxies
 
     using TecX.Common;
 
-    public class LazyProxyGenerator : ProxyGenerator
+    public class LazyProxyBuilder : ProxyBuilder
     {
         [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
             Justification = "Reviewed. Suppression is OK here.")]
@@ -30,13 +30,13 @@ namespace TecX.Unity.Proxies
 
         private MethodBuilder instanceGetterMethodBuilder;
 
-        public LazyProxyGenerator(Type contract, ModuleBuilder moduleBuilder)
+        public LazyProxyBuilder(Type contract, ModuleBuilder moduleBuilder)
             : base(contract, moduleBuilder)
         {
             this.lazyInstanceType = typeof(Lazy<>).MakeGenericType(contract);
         }
 
-        public override Type Generate()
+        public override Type Build()
         {
             var typeBuilder = this.CreateTypeBuilder();
 
@@ -46,7 +46,7 @@ namespace TecX.Unity.Proxies
 
             this.GenerateInstanceProperty(typeBuilder);
 
-            this.GenerateMethods(this.Contract, typeBuilder, this.instanceGetterMethodBuilder);
+            this.GenerateDelegatingMethods(this.Contract, typeBuilder, this.instanceGetterMethodBuilder);
 
             var proxyType = typeBuilder.CreateType();
 

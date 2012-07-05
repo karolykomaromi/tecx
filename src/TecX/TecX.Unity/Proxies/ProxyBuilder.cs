@@ -7,7 +7,7 @@ namespace TecX.Unity.Proxies
 
     using TecX.Common;
 
-    public abstract class ProxyGenerator
+    public abstract class ProxyBuilder
     {
         private readonly ModuleBuilder moduleBuilder;
 
@@ -15,7 +15,7 @@ namespace TecX.Unity.Proxies
 
         private readonly Type contractFactory;
 
-        protected ProxyGenerator(Type contract, ModuleBuilder moduleBuilder)
+        protected ProxyBuilder(Type contract, ModuleBuilder moduleBuilder)
         {
             Guard.AssertNotNull(contract, "contract");
             Guard.AssertNotNull(moduleBuilder, "moduleBuilder");
@@ -51,9 +51,9 @@ namespace TecX.Unity.Proxies
             }
         }
 
-        public abstract Type Generate();
+        public abstract Type Build();
 
-        protected void GenerateMethods(Type contract, TypeBuilder typeBuilder, MethodBuilder getter)
+        protected void GenerateDelegatingMethods(Type contract, TypeBuilder typeBuilder, MethodBuilder getter)
         {
             var methods = contract.GetMethods();
 

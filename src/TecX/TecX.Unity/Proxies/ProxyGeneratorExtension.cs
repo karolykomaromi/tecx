@@ -1,13 +1,11 @@
 namespace TecX.Unity.Proxies
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Reflection;
     using System.Reflection.Emit;
     using System.Threading;
 
-    using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
@@ -33,15 +31,11 @@ namespace TecX.Unity.Proxies
 
         private readonly ModuleBuilder moduleBuilder;
 
-        private readonly Dictionary<NamedTypeBuildKey, Type> faultTolerantProxies;
-
         public ProxyGeneratorExtension()
         {
             AssemblyName assemblyName = new AssemblyName { Name = Constants.AssemblyName };
 
             AppDomain thisDomain = Thread.GetDomain();
-
-            this.faultTolerantProxies = new Dictionary<NamedTypeBuildKey, Type>();
 
             this.assemblyBuilder = thisDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
 
@@ -70,13 +64,13 @@ namespace TecX.Unity.Proxies
         ////    return proxyType;
         ////}
         
-        public Type CreateProxyWithoutTargetDummy(Type contract)
+        public Type CreateInterfaceProxyWithoutTargetDummy(Type contract)
         {
             Guard.AssertNotNull(contract, "contract");
 
-            var proxyGenerator = new ProxyWithoutTargetGenerator(contract, this.moduleBuilder);
+            var builder = new InterfaceProxyWithoutTargetBuilder(contract, this.moduleBuilder);
 
-            var proxyType = proxyGenerator.Generate();
+            var proxyType = builder.Build();
 
             this.assemblyBuilder.Save(Constants.AssemblyFileName);
 
@@ -87,9 +81,9 @@ namespace TecX.Unity.Proxies
         {
             Guard.AssertNotNull(contract, "contract");
 
-            var proxyGenerator = new LazyProxyGenerator(contract, this.moduleBuilder);
+            var builder = new LazyProxyBuilder(contract, this.moduleBuilder);
 
-            var proxyType = proxyGenerator.Generate();
+            var proxyType = builder.Build();
 
             this.assemblyBuilder.Save(Constants.AssemblyFileName);
 

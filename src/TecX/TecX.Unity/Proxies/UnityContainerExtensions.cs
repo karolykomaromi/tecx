@@ -75,7 +75,7 @@ namespace TecX.Unity.Proxies
 
             injectionMembers.Insert(0, new Interceptor(typeof(InterfaceInterceptor)));
 
-            Type dummy = generator.CreateProxyWithoutTargetDummy(contract);
+            Type dummy = generator.CreateInterfaceProxyWithoutTargetDummy(contract);
 
             container.RegisterType(contract, dummy, name, lifetime, injectionMembers.ToArray());
 
