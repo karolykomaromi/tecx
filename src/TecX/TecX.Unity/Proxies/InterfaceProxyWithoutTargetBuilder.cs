@@ -1,20 +1,18 @@
 ﻿namespace TecX.Unity.Proxies
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Reflection.Emit;
-    using System.Text;
 
-    public class ProxyWithoutTargetGenerator : ProxyGenerator
+    public class InterfaceProxyWithoutTargetBuilder : ProxyBuilder
     {
-        public ProxyWithoutTargetGenerator(Type contract, ModuleBuilder moduleBuilder)
+        public InterfaceProxyWithoutTargetBuilder(Type contract, ModuleBuilder moduleBuilder)
             : base(contract, moduleBuilder)
         {
         }
 
-        public override Type Generate()
+        public override Type Build()
         {
             var typeBuilder = this.CreateTypeBuilder();
 

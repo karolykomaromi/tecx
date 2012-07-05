@@ -113,7 +113,7 @@
 
             container.AddExtension(extension);
 
-            Type dummyType = extension.CreateProxyWithoutTargetDummy(typeof(IFooService));
+            Type dummyType = extension.CreateInterfaceProxyWithoutTargetDummy(typeof(IFooService));
 
             object dummy = container.Resolve(dummyType);
 
@@ -129,7 +129,7 @@
 
             container.AddExtension(extension);
 
-            Type dummyType = extension.CreateProxyWithoutTargetDummy(typeof(IHaveProperty));
+            Type dummyType = extension.CreateInterfaceProxyWithoutTargetDummy(typeof(IHaveProperty));
 
             IHaveProperty dummy = (IHaveProperty)container.Resolve(dummyType);
 

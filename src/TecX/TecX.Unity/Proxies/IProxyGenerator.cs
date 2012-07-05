@@ -10,6 +10,6 @@ namespace TecX.Unity.Proxies
 
         Type CreateLazyInstantiationProxy(Type contract);
 
-        Type CreateProxyWithoutTargetDummy(Type contract);
+        Type CreateInterfaceProxyWithoutTargetDummy(Type contract);
     }
 }

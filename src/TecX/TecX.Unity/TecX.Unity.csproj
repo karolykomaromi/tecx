@@ -167,10 +167,10 @@
     <Compile Include="Proxies\Constants.cs" />
     <Compile Include="Proxies\IProxyGenerator.cs" />
     <Compile Include="Proxies\LazyProxyConfiguration.cs" />
-    <Compile Include="Proxies\LazyProxyGenerator.cs" />
-    <Compile Include="Proxies\ProxyGenerator.cs" />
+    <Compile Include="Proxies\LazyProxyBuilder.cs" />
+    <Compile Include="Proxies\ProxyBuilder.cs" />
     <Compile Include="Proxies\ProxyGeneratorExtension.cs" />
-    <Compile Include="Proxies\ProxyWithoutTargetGenerator.cs" />
+    <Compile Include="Proxies\InterfaceProxyWithoutTargetBuilder.cs" />
     <Compile Include="Proxies\UnityContainerExtensions.cs" />
     <Compile Include="ResolverOverrides.cs" />
     <Compile Include="SelectedConstructorCache.cs" />
