@@ -1,8 +1,11 @@
 namespace TecX.Unity.Proxies
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using Microsoft.Practices.Unity;
+    using Microsoft.Practices.Unity.InterceptionExtension;
 
     using TecX.Common;
 
@@ -43,6 +46,38 @@ namespace TecX.Unity.Proxies
                 configuration.ProxyUniqueRegistrationName,
                 configuration.ProxyLifetime,
                 configuration.ProxyInjectionMembers);
+
+            return container;
+        }
+
+        public static IUnityContainer RegisterProxyWithoutTarget(this IUnityContainer container, Type contract, string name, LifetimeManager lifetime, params IInterceptionBehavior[] behaviors)
+        {
+            Guard.AssertNotNull(container, "container");
+            Guard.AssertNotNull(behaviors, "behaviors");
+
+            Interception interception = container.Configure<Interception>();
+
+            if (interception == null)
+            {
+                container.AddNewExtension<Interception>();
+            }
+
+            IProxyGenerator generator = container.Configure<IProxyGenerator>();
+
+            if (generator == null)
+            {
+                var extension = new ProxyGeneratorExtension();
+                generator = extension;
+                container.AddExtension(extension);
+            }
+
+            List<InjectionMember> injectionMembers = behaviors.Select(b => new InterceptionBehavior(b)).ToList<InjectionMember>();
+
+            injectionMembers.Insert(0, new Interceptor(typeof(InterfaceInterceptor)));
+
+            Type dummy = generator.CreateProxyWithoutTargetDummy(contract);
+
+            container.RegisterType(contract, dummy, name, lifetime, injectionMembers.ToArray());
 
             return container;
         }
