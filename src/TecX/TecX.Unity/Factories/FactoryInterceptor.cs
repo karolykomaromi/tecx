@@ -12,26 +12,33 @@ namespace TecX.Unity.Factories
 
     public class FactoryInterceptor : IInterceptionBehavior
     {
-        private readonly IUnityContainer container;
+        //private readonly IUnityContainer container;
 
         private readonly ITypedFactoryComponentSelector selector;
 
-        public FactoryInterceptor(IUnityContainer container)
-            : this(container, new DefaultTypedFactoryComponentSelector())
-        {
-        }
+        //public FactoryInterceptor(IUnityContainer container)
+        //    : this(container, new DefaultTypedFactoryComponentSelector())
+        //{
+        //}
 
-        /// <summary>
-        /// This constructor is protected on purpose! Unity is used to resolve this interceptor and
-        /// I didn't want to have to register a mapping for the selector but make it possible to use
-        /// an alternative selector.
-        /// </summary>
-        protected FactoryInterceptor(IUnityContainer container, ITypedFactoryComponentSelector selector)
+        ///// <summary>
+        ///// This constructor is protected on purpose! Unity is used to resolve this interceptor and
+        ///// I didn't want to have to register a mapping for the selector but make it possible to use
+        ///// an alternative selector.
+        ///// </summary>
+        //protected FactoryInterceptor(IUnityContainer container, ITypedFactoryComponentSelector selector)
+        //{
+        //    Guard.AssertNotNull(container, "container");
+        //    Guard.AssertNotNull(selector, "selector");
+
+        //    this.container = container;
+        //    this.selector = selector;
+        //}
+
+        public FactoryInterceptor(ITypedFactoryComponentSelector selector)
         {
-            Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(selector, "selector");
 
-            this.container = container;
             this.selector = selector;
         }
 
@@ -49,7 +56,13 @@ namespace TecX.Unity.Factories
 
             var component = this.selector.SelectComponent((MethodInfo)input.MethodBase, input.MethodBase.DeclaringType, input.Arguments.OfType<object>().ToArray());
 
-            return input.CreateMethodReturn(component.Resolve(this.container));
+            IUnityContainer container = input.InvocationContext["container"] as IUnityContainer;
+
+            object x = component.Resolve(container);
+
+            //return input.CreateMethodReturn(component.Resolve(this.container));
+
+            return input.CreateMethodReturn(x);
         }
 
         public IEnumerable<Type> GetRequiredInterfaces()
