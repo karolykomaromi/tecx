@@ -201,7 +201,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Factories\packages.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
