@@ -1,4 +1,4 @@
-namespace TecX.Unity.TypedFactory
+namespace TecX.Unity.Factories
 {
     using System;
     using System.Collections.Generic;
@@ -22,12 +22,12 @@ namespace TecX.Unity.TypedFactory
 
             IEnumerable<TItem> resolved = container.ResolveAll<TItem>(this.AdditionalArguments);
 
-            if (TypeToBuild.IsAssignableFrom(typeof(IEnumerable<TItem>)))
+            if (this.TypeToBuild.IsAssignableFrom(typeof(IEnumerable<TItem>)))
             {
                 return resolved;
             }
 
-            if (TypeToBuild.IsArray)
+            if (this.TypeToBuild.IsArray)
             {
                 return resolved.ToArray();
             }

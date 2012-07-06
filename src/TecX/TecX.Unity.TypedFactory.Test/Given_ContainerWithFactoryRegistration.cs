@@ -4,6 +4,7 @@ namespace TecX.Unity.TypedFactory.Test
     using Microsoft.Practices.Unity.InterceptionExtension;
 
     using TecX.TestTools;
+    using TecX.Unity.Factories;
     using TecX.Unity.TypedFactory.Test.TestObjects;
 
     public abstract class Given_ContainerWithFactoryRegistration : GivenWhenThen

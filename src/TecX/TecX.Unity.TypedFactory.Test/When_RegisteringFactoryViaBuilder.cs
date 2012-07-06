@@ -3,7 +3,6 @@ namespace TecX.Unity.TypedFactory.Test
     using Microsoft.Practices.Unity;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using TecX.Unity.TypedFactory.Configuration;
     using TecX.Unity.TypedFactory.Test.TestObjects;
 
     [TestClass]

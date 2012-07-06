@@ -6,6 +6,7 @@ namespace TecX.Unity.Configuration.Builders
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
+    using TecX.Unity.Factories;
 
     public class RegistrationFamilyBuilder
     {
@@ -118,6 +119,40 @@ namespace TecX.Unity.Configuration.Builders
             this.alterations.Add(family => family.LifetimeIs(lifetime));
 
             return this;
+        }
+
+        public TypeRegistrationBuilder AsFactory()
+        {
+            TypeRegistrationBuilder builder = this.Use(this.From);
+
+            if (this.From.IsInterface)
+            {
+                builder.Enrich(x => x.Add(new TypedFactory()));
+            }
+            else if (typeof(Delegate).IsAssignableFrom(this.From))
+            {
+                builder.Enrich(x => x.Add(new DelegateFactory()));
+            }
+            else
+            {
+                string msg = string.Format("Type '{0}' is neither an interface nor a delegate.", this.From.FullName);
+
+                throw new InvalidOperationException(msg);
+            }
+
+            return builder;
+        }
+
+        public TypeRegistrationBuilder AsFactory(ITypedFactoryComponentSelector selector)
+        {
+            Guard.AssertNotNull(selector, "selector");
+            Guard.AssertIsInterface(this.From, "From");
+
+            TypeRegistrationBuilder builder = this.Use(this.from);
+
+            builder.Enrich(x => x.Add(new TypedFactory(selector)));
+
+            return builder;
         }
 
         /// <summary>

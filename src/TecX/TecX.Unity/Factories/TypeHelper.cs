@@ -1,4 +1,4 @@
-namespace TecX.Unity.TypedFactory
+namespace TecX.Unity.Factories
 {
     using System;
     using System.Collections.Generic;

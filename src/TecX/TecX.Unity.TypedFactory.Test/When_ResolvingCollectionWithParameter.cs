@@ -1,11 +1,13 @@
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TecX.Unity.TypedFactory.Test.TestObjects;
-
 namespace TecX.Unity.TypedFactory.Test
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Microsoft.Practices.Unity;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using TecX.Unity.TypedFactory.Test.TestObjects;
+
     [TestClass]
     public class When_ResolvingCollectionWithParameter : Given_FooAndSnafuRegistration
     {
