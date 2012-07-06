@@ -1,9 +1,9 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Practices.Unity;
-using TecX.Unity.TypedFactory.Test.TestObjects;
-
 namespace TecX.Unity.TypedFactory.Test
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using TecX.Unity.TypedFactory.Test.TestObjects;
+
     [TestClass]
     public class When_ResolvingArray : Given_FooAndSnafuRegistration
     {
@@ -11,7 +11,7 @@ namespace TecX.Unity.TypedFactory.Test
 
         protected override void When()
         {
-            resolved = this.factory.CreateArray();
+            this.resolved = this.Factory.CreateArray();
         }
 
         [TestMethod]

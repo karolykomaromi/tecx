@@ -1,14 +1,11 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace TecX.Unity.TypedFactory.Test
+﻿namespace TecX.Unity.TypedFactory.Test
 {
     using Microsoft.Practices.Unity;
+    using Microsoft.Practices.Unity.InterceptionExtension;
 
     using TecX.Unity.TypedFactory.Test.TestObjects;
+
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public class PropertyOverrideFixture
@@ -17,6 +14,8 @@ namespace TecX.Unity.TypedFactory.Test
         public void CanInjectProperties()
         {
             var container = new UnityContainer();
+
+            container.AddNewExtension<Interception>();
 
             container.RegisterType<ICustomerRepositoryFactory>(new TypedFactory());
             container.RegisterType<ICustomerRepository, CustomerRepository>(new InjectionProperty("ConnectionString"));

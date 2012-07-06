@@ -10,8 +10,8 @@ namespace TecX.Unity.TypedFactory.Test
         {
             base.Given();
 
-            container.RegisterType<IFoo, Foo>("Foo");
-            container.RegisterType<IFoo, Snafu>("Snafu");
+            this.Container.RegisterType<IFoo, Foo>("Foo");
+            this.Container.RegisterType<IFoo, Snafu>("Snafu");
         }
     }
 }

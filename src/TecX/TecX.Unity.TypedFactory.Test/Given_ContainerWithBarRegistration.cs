@@ -10,7 +10,7 @@ namespace TecX.Unity.TypedFactory.Test
         {
             base.Given();
 
-            this.container.RegisterType<IFoo, Bar>();
+            this.Container.RegisterType<IFoo, Bar>();
         }
     }
 }

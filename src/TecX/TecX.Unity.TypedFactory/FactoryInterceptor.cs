@@ -1,20 +1,27 @@
-extern alias CC30;
-
 namespace TecX.Unity.TypedFactory
 {
-    using CC30.Castle.DynamicProxy;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
 
     using Microsoft.Practices.Unity;
+    using Microsoft.Practices.Unity.InterceptionExtension;
 
     using TecX.Common;
 
-    public class FactoryInterceptor : IInterceptor
+    public class FactoryInterceptor : IInterceptionBehavior
     {
         private readonly IUnityContainer container;
 
         private readonly ITypedFactoryComponentSelector selector;
 
-        public FactoryInterceptor(IUnityContainer container, ITypedFactoryComponentSelector selector)
+        public FactoryInterceptor(IUnityContainer container)
+            : this(container, new DefaultTypedFactoryComponentSelector())
+        {
+        }
+
+        protected FactoryInterceptor(IUnityContainer container, ITypedFactoryComponentSelector selector)
         {
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(selector, "selector");
@@ -23,13 +30,35 @@ namespace TecX.Unity.TypedFactory
             this.selector = selector;
         }
 
-        public void Intercept(IInvocation invocation)
+        public bool WillExecute
         {
-            Guard.AssertNotNull(invocation, "invocation");
+            get
+            {
+                return true;
+            }
+        }
 
-            var component = this.selector.SelectComponent(invocation.Method, invocation.TargetType, invocation.Arguments);
+        //public void Intercept(IInvocation invocation)
+        //{
+        //    Guard.AssertNotNull(invocation, "invocation");
 
-            invocation.ReturnValue = component.Resolve(this.container);
+        //    var component = this.selector.SelectComponent(invocation.Method, invocation.TargetType, invocation.Arguments);
+
+        //    invocation.ReturnValue = component.Resolve(this.container);
+        //}
+
+        public IMethodReturn Invoke(IMethodInvocation input, GetNextInterceptionBehaviorDelegate getNext)
+        {
+            Guard.AssertNotNull(input, "input");
+
+            var component = this.selector.SelectComponent((MethodInfo)input.MethodBase, input.MethodBase.DeclaringType, input.Arguments.OfType<object>().ToArray());
+
+            return input.CreateMethodReturn(component.Resolve(this.container));
+        }
+
+        public IEnumerable<Type> GetRequiredInterfaces()
+        {
+            return Type.EmptyTypes;
         }
     }
 }

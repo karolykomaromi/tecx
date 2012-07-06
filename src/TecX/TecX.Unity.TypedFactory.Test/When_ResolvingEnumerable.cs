@@ -15,7 +15,7 @@ namespace TecX.Unity.TypedFactory.Test
 
         protected override void When()
         {
-            resolved = this.factory.CreateEnumerable();
+            resolved = this.Factory.CreateEnumerable();
         }
 
         [TestMethod]

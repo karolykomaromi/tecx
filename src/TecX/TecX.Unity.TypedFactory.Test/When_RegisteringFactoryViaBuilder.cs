@@ -15,7 +15,7 @@ namespace TecX.Unity.TypedFactory.Test
         {
             base.Given();
 
-            this.builder.For<IMyFactory>().UseFactory();
+            this.builder.For<IMyFactory>().AsFactory();
             this.builder.For<IFoo>().Use<Foo>();
         }
 
