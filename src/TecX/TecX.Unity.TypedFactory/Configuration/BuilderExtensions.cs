@@ -5,7 +5,7 @@
 
     public static class BuilderExtensions
     {
-        public static TypeRegistrationBuilder UseFactory(this RegistrationFamilyBuilder family)
+        public static TypeRegistrationBuilder AsFactory(this RegistrationFamilyBuilder family)
         {
             Guard.AssertNotNull(family, "family");
 
@@ -16,7 +16,7 @@
             return builder;
         }
 
-        public static TypeRegistrationBuilder UseFactory(this RegistrationFamilyBuilder family, ITypedFactoryComponentSelector selector)
+        public static TypeRegistrationBuilder AsFactory(this RegistrationFamilyBuilder family, ITypedFactoryComponentSelector selector)
         {
             Guard.AssertNotNull(family, "family");
             Guard.AssertNotNull(selector, "selector");

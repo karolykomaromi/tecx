@@ -138,10 +138,10 @@
             string message = TypeHelper.SafeFormat(Constants.ParameterNotInRange, paramName, param, min, max);
 
             AssertIsInRange(
-                param, 
-                paramName, 
-                min, 
-                max, 
+                param,
+                paramName,
+                min,
+                max,
                 message);
         }
 
@@ -158,6 +158,17 @@
                 throw new GuardArgumentOutOfRangeException(
                     TypeHelper.ToNullSafeString(paramName, Constants.NoParameterName),
                     TypeHelper.ToNullSafeString(message)).WithAdditionalInfo("param", param);
+            }
+        }
+
+        [DebuggerStepThrough]
+        public static void AssertIsInterface(Type type, string paramName)
+        {
+            AssertNotNull(type, "type");
+
+            if (!type.IsInterface)
+            {
+                throw new GuardArgumentException(string.Format("Type '{0}' is not an interface.", type.FullName), paramName);
             }
         }
     }
