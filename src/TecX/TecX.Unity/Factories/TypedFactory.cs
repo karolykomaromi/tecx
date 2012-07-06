@@ -1,6 +1,7 @@
 namespace TecX.Unity.Factories
 {
     using System;
+    using System.Collections.Generic;
     using System.Reflection;
 
     using Microsoft.Practices.ObjectBuilder2;
@@ -54,9 +55,13 @@ namespace TecX.Unity.Factories
 
             interceptor.AddPolicies(interfaceToProxy, dummy, name, policies);
 
-            var behavior = new InterceptionBehavior<FactoryInterceptor>();
+            var containerProvider = new InterceptionBehavior<ContainerProvider>();
+
+            containerProvider.AddPolicies(interfaceToProxy, dummy, name, policies);
+
+            var factoryInterceptor = new InterceptionBehavior(new FactoryInterceptor(this.selector));
             
-            behavior.AddPolicies(interfaceToProxy, dummy, name, policies);
+            factoryInterceptor.AddPolicies(interfaceToProxy, dummy, name, policies);
         }
 
         private static void AssertNoMethodHasOutParams(Type factoryType)
@@ -72,6 +77,38 @@ namespace TecX.Unity.Factories
                         throw new ArgumentException("Methods in factory interface must not have out parameters", "factoryType");
                     }
                 }
+            }
+        }
+
+        private class ContainerProvider : IInterceptionBehavior
+        {
+            private readonly IUnityContainer container;
+
+            public ContainerProvider(IUnityContainer container)
+            {
+                Guard.AssertNotNull(container, "container");
+
+                this.container = container;
+            }
+
+            public bool WillExecute
+            {
+                get
+                {
+                    return true;
+                }
+            }
+
+            public IMethodReturn Invoke(IMethodInvocation input, GetNextInterceptionBehaviorDelegate getNext)
+            {
+                input.InvocationContext.Add("container", this.container);
+
+                return getNext()(input, getNext);
+            }
+
+            public IEnumerable<Type> GetRequiredInterfaces()
+            {
+                return Type.EmptyTypes;
             }
         }
     }
