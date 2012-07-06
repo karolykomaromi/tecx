@@ -1,4 +1,4 @@
-namespace TecX.Unity.TypedFactory
+namespace TecX.Unity.Factories
 {
     using System;
     using System.Collections.Generic;
@@ -21,6 +21,11 @@ namespace TecX.Unity.TypedFactory
         {
         }
 
+        /// <summary>
+        /// This constructor is protected on purpose! Unity is used to resolve this interceptor and
+        /// I didn't want to have to register a mapping for the selector but make it possible to use
+        /// an alternative selector.
+        /// </summary>
         protected FactoryInterceptor(IUnityContainer container, ITypedFactoryComponentSelector selector)
         {
             Guard.AssertNotNull(container, "container");
@@ -37,15 +42,6 @@ namespace TecX.Unity.TypedFactory
                 return true;
             }
         }
-
-        //public void Intercept(IInvocation invocation)
-        //{
-        //    Guard.AssertNotNull(invocation, "invocation");
-
-        //    var component = this.selector.SelectComponent(invocation.Method, invocation.TargetType, invocation.Arguments);
-
-        //    invocation.ReturnValue = component.Resolve(this.container);
-        //}
 
         public IMethodReturn Invoke(IMethodInvocation input, GetNextInterceptionBehaviorDelegate getNext)
         {

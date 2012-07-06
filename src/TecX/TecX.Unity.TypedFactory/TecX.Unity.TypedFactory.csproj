@@ -57,19 +57,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Configuration\BuilderExtensions.cs" />
-    <Compile Include="DefaultTypedFactoryComponentSelector.cs" />
-    <Compile Include="FactoryInterceptor.cs" />
-    <Compile Include="ITypedFactoryComponentSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypedFactory.cs" />
-    <Compile Include="TypedFactoryBuildPlanPolicy.cs" />
-    <Compile Include="TypedFactoryComponent.cs" />
-    <Compile Include="TypedFactoryComponentCollection.cs" />
-    <Compile Include="TypeHelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">

@@ -3,6 +3,7 @@
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.InterceptionExtension;
 
+    using TecX.Unity.Factories;
     using TecX.Unity.TypedFactory.Test.TestObjects;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;

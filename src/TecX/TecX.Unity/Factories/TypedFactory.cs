@@ -1,4 +1,4 @@
-namespace TecX.Unity.TypedFactory
+namespace TecX.Unity.Factories
 {
     using System;
     using System.Reflection;
@@ -28,16 +28,6 @@ namespace TecX.Unity.TypedFactory
             this.selector = selector;
         }
 
-        ////public override void AddPolicies(Type serviceType, Type implementationType, string name, IPolicyList policies)
-        ////{
-        ////    Guard.AssertNotNull(implementationType, "implementationType");
-        ////    Guard.AssertNotNull(policies, "policies");
-
-        ////    var policy = new TypedFactoryBuildPlanPolicy(this.selector);
-
-        ////    policies.Set<IBuildPlanPolicy>(policy, new NamedTypeBuildKey(implementationType, name));
-        ////}
-
         public override void AddPolicies(Type notNeeded, Type interfaceToProxy, string name, IPolicyList policies)
         {
             Guard.AssertNotNull(interfaceToProxy, "interfaceToProxy");
@@ -65,7 +55,7 @@ namespace TecX.Unity.TypedFactory
             interceptor.AddPolicies(interfaceToProxy, dummy, name, policies);
 
             var behavior = new InterceptionBehavior<FactoryInterceptor>();
-
+            
             behavior.AddPolicies(interfaceToProxy, dummy, name, policies);
         }
 
