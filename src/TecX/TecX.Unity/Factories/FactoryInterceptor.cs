@@ -12,28 +12,7 @@ namespace TecX.Unity.Factories
 
     public class FactoryInterceptor : IInterceptionBehavior
     {
-        //private readonly IUnityContainer container;
-
         private readonly ITypedFactoryComponentSelector selector;
-
-        //public FactoryInterceptor(IUnityContainer container)
-        //    : this(container, new DefaultTypedFactoryComponentSelector())
-        //{
-        //}
-
-        ///// <summary>
-        ///// This constructor is protected on purpose! Unity is used to resolve this interceptor and
-        ///// I didn't want to have to register a mapping for the selector but make it possible to use
-        ///// an alternative selector.
-        ///// </summary>
-        //protected FactoryInterceptor(IUnityContainer container, ITypedFactoryComponentSelector selector)
-        //{
-        //    Guard.AssertNotNull(container, "container");
-        //    Guard.AssertNotNull(selector, "selector");
-
-        //    this.container = container;
-        //    this.selector = selector;
-        //}
 
         public FactoryInterceptor(ITypedFactoryComponentSelector selector)
         {
@@ -58,11 +37,15 @@ namespace TecX.Unity.Factories
 
             IUnityContainer container = input.InvocationContext["container"] as IUnityContainer;
 
-            object x = component.Resolve(container);
+            if (container == null)
+            {
+                throw new InvalidOperationException("Could not find an IUnityContainer in the 'input.InvocationContext'. " +
+                    "The TypedFactory must add an IInterceptionBehavior to the pipeline that provides that container instance with 'container' as its key.");
+            }
 
-            //return input.CreateMethodReturn(component.Resolve(this.container));
+            object resolvedObject = component.Resolve(container);
 
-            return input.CreateMethodReturn(x);
+            return input.CreateMethodReturn(resolvedObject);
         }
 
         public IEnumerable<Type> GetRequiredInterfaces()
