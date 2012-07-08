@@ -36,13 +36,13 @@ namespace TecX.Unity.Factories
 
             AssertNoMethodHasOutParams(interfaceToProxy);
 
-            IProxyGeneratorPolicy generator = policies.Get<IProxyGeneratorPolicy>(ProxyGeneratorBuildKey);
+            IProxyGeneratorPolicy generator = policies.Get<IProxyGeneratorPolicy>(new NamedTypeBuildKey(interfaceToProxy, name));
 
             if (generator == null)
             {
                 generator = new ProxyGeneratorPolicy();
 
-                policies.Set<IProxyGeneratorPolicy>(generator, ProxyGeneratorBuildKey);
+                policies.SetDefault<IProxyGeneratorPolicy>(generator);
             }
 
             Type dummy = generator.GenerateDummyImplementation(interfaceToProxy);
@@ -55,7 +55,7 @@ namespace TecX.Unity.Factories
 
             interceptor.AddPolicies(interfaceToProxy, dummy, name, policies);
 
-            var containerProvider = new InterceptionBehavior<ContainerProvider>();
+            var containerProvider = new InterceptionBehavior<HandContainerDownTheInterceptionPipeline>();
 
             containerProvider.AddPolicies(interfaceToProxy, dummy, name, policies);
 
@@ -80,11 +80,11 @@ namespace TecX.Unity.Factories
             }
         }
 
-        private class ContainerProvider : IInterceptionBehavior
+        private class HandContainerDownTheInterceptionPipeline : IInterceptionBehavior
         {
             private readonly IUnityContainer container;
 
-            public ContainerProvider(IUnityContainer container)
+            public HandContainerDownTheInterceptionPipeline(IUnityContainer container)
             {
                 Guard.AssertNotNull(container, "container");
 

@@ -33,13 +33,20 @@ namespace TecX.Unity.Factories
         {
             Guard.AssertNotNull(input, "input");
 
+            // can't intercept calls to constructor anyway so why do they use MethodBase instead of MethodInfo?
             var component = this.selector.SelectComponent((MethodInfo)input.MethodBase, input.MethodBase.DeclaringType, input.Arguments.OfType<object>().ToArray());
 
-            IUnityContainer container = input.InvocationContext["container"] as IUnityContainer;
+            IUnityContainer container = null;
+
+            if (input.InvocationContext.ContainsKey("container"))
+            {
+                container = input.InvocationContext["container"] as IUnityContainer;
+            }
 
             if (container == null)
             {
-                throw new InvalidOperationException("Could not find an IUnityContainer in the 'input.InvocationContext'. " +
+                throw new InvalidOperationException(
+                    "Could not find an IUnityContainer in 'input.InvocationContext'. " +
                     "The TypedFactory must add an IInterceptionBehavior to the pipeline that provides that container instance with 'container' as its key.");
             }
 
