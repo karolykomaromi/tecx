@@ -93,6 +93,15 @@ namespace TecX.Unity.Configuration.Builders
             return this;
         }
 
+        public TypeRegistrationBuilder Ctor(params object[] parameterValues)
+        {
+            InjectionConstructor ctor = new InjectionConstructor(parameterValues);
+
+            this.enrichments.Add(ctor);
+
+            return this;
+        }
+
         public TypeRegistrationBuilder Ctor(Expression<Func<object>> expression)
         {
             Guard.AssertNotNull(expression, "builder");

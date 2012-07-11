@@ -50,7 +50,7 @@ namespace TecX.Unity.Proxies
             return container;
         }
 
-        public static IUnityContainer RegisterProxyWithoutTarget(this IUnityContainer container, Type contract, string name, LifetimeManager lifetime, params IInterceptionBehavior[] behaviors)
+        public static IUnityContainer RegisterInterfaceProxyWithoutTarget(this IUnityContainer container, Type contract, string name, LifetimeManager lifetime, params IInterceptionBehavior[] behaviors)
         {
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(behaviors, "behaviors");
