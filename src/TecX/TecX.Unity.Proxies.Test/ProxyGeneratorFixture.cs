@@ -142,7 +142,7 @@
         {
             var container = new UnityContainer();
 
-            container.RegisterProxyWithoutTarget(typeof(IFooService), "1", new ContainerControlledLifetimeManager(), new MyCustomBehavior());
+            container.RegisterInterfaceProxyWithoutTarget(typeof(IFooService), "1", new ContainerControlledLifetimeManager(), new MyCustomBehavior());
 
             IFooService foo = container.Resolve<IFooService>("1");
 
