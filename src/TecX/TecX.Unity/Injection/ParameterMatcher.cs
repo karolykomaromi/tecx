@@ -37,7 +37,7 @@
             ctors = ctors.OrderByDescending(ctor => ctor.GetParameters().Length);
 
             List<ConstructorInfo> potentialMatches = ctors
-                .Where(ctor => !this.filters.MatchesAny(ctor)).ToList();
+                .Where(ctor => this.filters.MatchesNone(ctor)).ToList();
 
             // no match -> exceptional situation which should cause some error))
             if (potentialMatches.Count == 0)
