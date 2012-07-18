@@ -10,7 +10,7 @@ namespace TecX.Unity.Proxies
 
     using TecX.Common;
 
-    public class ProxyGeneratorExtension : UnityContainerExtension, IProxyGenerator
+    public class ProxyGenerator : UnityContainerExtension
     {
         [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
             Justification = "Reviewed. Suppression is OK here.")]
@@ -31,7 +31,7 @@ namespace TecX.Unity.Proxies
 
         private readonly ModuleBuilder moduleBuilder;
 
-        public ProxyGeneratorExtension()
+        public ProxyGenerator()
         {
             AssemblyName assemblyName = new AssemblyName { Name = Constants.AssemblyName };
 
@@ -88,6 +88,19 @@ namespace TecX.Unity.Proxies
             this.assemblyBuilder.Save(Constants.AssemblyFileName);
 
             return proxyType;
+        }
+
+        public Type CreateNullObject(Type contract)
+        {
+            Guard.AssertNotNull(contract, "contract");
+
+            var builder = new NullObjectBuilder(contract, this.moduleBuilder);
+
+            var nullObjectType = builder.Build();
+
+            this.assemblyBuilder.Save(Constants.AssemblyFileName);
+
+            return nullObjectType;
         }
 
         protected override void Initialize()
