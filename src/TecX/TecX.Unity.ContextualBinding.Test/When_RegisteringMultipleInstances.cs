@@ -22,7 +22,7 @@
 
             this.bar = new Bar();
 
-            this.builder.For<IFoo>().Use(this.bar).When(request => true);
+            this.builder.For<IFoo>().Use(this.bar).If(request => true);
 
             this.builder.For<IFoo>().Use(this.foo);
         }

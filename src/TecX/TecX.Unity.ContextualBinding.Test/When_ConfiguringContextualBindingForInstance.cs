@@ -18,7 +18,7 @@ namespace TecX.Unity.ContextualBinding.Test
 
             this.instance = new Foo();
 
-            this.builder.For<IFoo>().Use(this.instance).When(request => true);
+            this.builder.For<IFoo>().Use(this.instance).If(request => true);
         }
 
         protected override void When()

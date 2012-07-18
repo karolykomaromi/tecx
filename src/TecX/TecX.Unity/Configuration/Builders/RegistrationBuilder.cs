@@ -95,7 +95,7 @@ namespace TecX.Unity.Configuration.Builders
             return this.LifetimeIs(new ContainerControlledLifetimeManager());
         }
 
-        public TRegistrationBuilder When(Predicate<IRequest> predicate)
+        public TRegistrationBuilder If(Predicate<IRequest> predicate)
         {
             Guard.AssertNotNull(predicate, "predicate");
 

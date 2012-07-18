@@ -14,7 +14,7 @@ namespace TecX.Unity.ContextualBinding.Test
         {
             base.Given();
 
-            this.builder.For<IFoo>().Use<Foo>().When(request => true);
+            this.builder.For<IFoo>().Use<Foo>().If(request => true);
         }
 
         protected override void When()
