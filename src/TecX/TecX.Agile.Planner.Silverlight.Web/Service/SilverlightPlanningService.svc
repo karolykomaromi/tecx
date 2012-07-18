@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="TecX.Agile.Planner.Silverlight.Web.Service.SilverlightPlanningService" CodeBehind="SilverlightPlanningService.svc.cs" Factory="CustomServiceHostFactory" %>

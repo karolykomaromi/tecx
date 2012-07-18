@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TecX.Common</RootNamespace>
+    <AssemblyName>TecX.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>&lt;Project Location In Database&gt;</SccProjectName>
+    <SccLocalPath>&lt;Local Binding Root of Project&gt;</SccLocalPath>
+    <SccAuxPath>&lt;Source Control Database&gt;</SccAuxPath>
+    <SccProvider>Mercurial Source Control Package</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\TecX\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
+      <Link>Properties\GlobalAssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="Comparison\Compare.cs" />
+    <Compile Include="Comparison\DictionaryEqualityComparer.cs" />
+    <Compile Include="Comparison\EpsilonComparer.cs" />
+    <Compile Include="Comparison\HashingHelper.cs" />
+    <Compile Include="Comparison\LambdaEqualityComparer.cs" />
+    <Compile Include="CompositePredicate.cs" />
+    <Compile Include="Convert.cs" />
+    <Compile Include="Error\ExceptionCrawler.cs" />
+    <Compile Include="Error\GuardArgumentException.cs" />
+    <Compile Include="Error\GuardArgumentNullException.cs" />
+    <Compile Include="Error\GuardArgumentOutOfRangeException.cs" />
+    <Compile Include="Error\StackTraceCleaner.cs" />
+    <Compile Include="Extensions\Primitives\LiteralExtensions.cs" />
+    <Compile Include="Extensions\Primitives\StringExtensions.cs" />
+    <Compile Include="Predicate.cs" />
+    <Compile Include="Reflection\Constructor.cs" />
+    <Compile Include="Reflection\GenericsHelper.cs" />
+    <Compile Include="Reflection\MethodNotFoundException.cs" />
+    <Compile Include="Reflection\DynamicMethodInvocation.cs" />
+    <Compile Include="Specifications\AlwaysFalseSpecification.cs" />
+    <Compile Include="Specifications\PrintGraphVisitor.cs" />
+    <Compile Include="Specifications\ISpecificationVisitor.cs" />
+    <Compile Include="Specifications\IVisitableSpecification.cs" />
+    <Compile Include="Time\DefaultTimeProvider.cs" />
+    <Compile Include="Extensions\Collections\ListExtensions.cs" />
+    <Compile Include="Extensions\Error\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\LinqTo\Entities\ParameterRebinder.cs" />
+    <Compile Include="Extensions\LinqTo\Entities\PredicateExtensions.cs" />
+    <Compile Include="Extensions\LinqTo\Objects\PredicateExtensions.cs" />
+    <Compile Include="Extensions\Primitives\ObjectExtensions.cs" />
+    <Compile Include="Extensions\Primitives\TypeExtensions.cs" />
+    <Compile Include="Guard.cs" />
+    <Compile Include="IFluentInterface.cs" />
+    <Compile Include="Latch.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Specifications\AndSpecification.cs" />
+    <Compile Include="Specifications\CompareToValueSpecification.cs" />
+    <Compile Include="Specifications\CompositeSpecification.cs" />
+    <Compile Include="Specifications\Extensions.cs" />
+    <Compile Include="Specifications\RangeSpecification.cs" />
+    <Compile Include="Specifications\ISpecification.cs" />
+    <Compile Include="Specifications\NotSpecification.cs" />
+    <Compile Include="Specifications\OrSpecification.cs" />
+    <Compile Include="Specifications\Specification.cs" />
+    <Compile Include="Time\ILease.cs" />
+    <Compile Include="Time\SlidingLease.cs" />
+    <Compile Include="Time\TimeProvider.cs" />
+    <Compile Include="TypeHelper.cs" />
+    <Compile Include="Time\ZellersCongruence.cs" />
+    <Compile Include="WeakReference.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(ProgramFiles)\MSBuild\StyleCop\v4.7\StyleCop.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
