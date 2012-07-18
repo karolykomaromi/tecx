@@ -43,9 +43,9 @@
         {
             var container = new UnityContainer();
 
-            container.AddNewExtension<ProxyGeneratorExtension>();
+            ProxyGenerator generator = new ProxyGenerator();
 
-            IProxyGenerator generator = container.Configure<IProxyGenerator>();
+            container.AddExtension(generator);
 
             Type lazyProxyType = generator.CreateLazyInstantiationProxy(typeof(IFooService));
 
@@ -109,7 +109,7 @@
         {
             var container = new UnityContainer();
 
-            var extension = new ProxyGeneratorExtension();
+            var extension = new ProxyGenerator();
 
             container.AddExtension(extension);
 
@@ -125,7 +125,7 @@
         {
             var container = new UnityContainer();
 
-            var extension = new ProxyGeneratorExtension();
+            var extension = new ProxyGenerator();
 
             container.AddExtension(extension);
 
@@ -147,6 +147,18 @@
             IFooService foo = container.Resolve<IFooService>("1");
 
             Assert.Equal("Foo()", foo.Foo());
+        }
+
+        [Fact]
+        public void CanRegisterNullObject()
+        {
+            var container = new UnityContainer();
+
+            container.RegisterNullObject(typeof(IFoo), null, null);
+
+            IFoo nullObject = container.Resolve<IFoo>();
+
+            Assert.Equal(string.Empty, nullObject.ReturnsString());
         }
     }
 }

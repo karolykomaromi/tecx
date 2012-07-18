@@ -16,14 +16,7 @@ namespace TecX.Unity.Proxies
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(action, "action");
 
-            IProxyGenerator generator = container.Configure<IProxyGenerator>();
-
-            if (generator == null)
-            {
-                var extension = new ProxyGeneratorExtension();
-                generator = extension;
-                container.AddExtension(extension);
-            }
+            ProxyGenerator generator = GetOrAddProxyGenerator(container);
 
             LazyProxyConfiguration configuration = new LazyProxyConfiguration();
 
@@ -62,14 +55,7 @@ namespace TecX.Unity.Proxies
                 container.AddNewExtension<Interception>();
             }
 
-            IProxyGenerator generator = container.Configure<IProxyGenerator>();
-
-            if (generator == null)
-            {
-                var extension = new ProxyGeneratorExtension();
-                generator = extension;
-                container.AddExtension(extension);
-            }
+            ProxyGenerator generator = GetOrAddProxyGenerator(container);
 
             List<InjectionMember> injectionMembers = behaviors.Select(b => new InterceptionBehavior(b)).ToList<InjectionMember>();
 
@@ -80,6 +66,34 @@ namespace TecX.Unity.Proxies
             container.RegisterType(contract, dummy, name, lifetime, injectionMembers.ToArray());
 
             return container;
+        }
+
+        public static IUnityContainer RegisterNullObject(this IUnityContainer container, Type contract, string name, LifetimeManager lifetime, params InjectionMember[] injectionMembers)
+        {
+            Guard.AssertNotNull(container, "container");
+            Guard.AssertNotNull(contract, "contract");
+            Guard.AssertIsInterface(contract, "contract");
+
+            ProxyGenerator generator = GetOrAddProxyGenerator(container);
+
+            Type nullObject = generator.CreateNullObject(contract);
+
+            container.RegisterType(contract, nullObject, name, lifetime, injectionMembers);
+
+            return container;
+        }
+
+        private static ProxyGenerator GetOrAddProxyGenerator(IUnityContainer container)
+        {
+            ProxyGenerator generator = container.Configure<ProxyGenerator>();
+
+            if (generator == null)
+            {
+                generator = new ProxyGenerator();
+                container.AddExtension(generator);
+            }
+
+            return generator;
         }
     }
 }
