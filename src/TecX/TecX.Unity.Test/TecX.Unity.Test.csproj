@@ -86,6 +86,7 @@
     <Compile Include="DelegateFactoryFixture.cs" />
     <Compile Include="EnrichmentFixture.cs" />
     <Compile Include="LiteralParametersExtensionFixture.cs" />
+    <Compile Include="MapParameterNamesToRegistrationNamesFixture.cs" />
     <Compile Include="NamedPropertyOverrideFixture.cs" />
     <Compile Include="NamingConventionFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="TestObjects\Foo3.cs" />
     <Compile Include="TestObjects\IAlwaysThrows.cs" />
     <Compile Include="TestObjects\IBar.cs" />
+    <Compile Include="TestObjects\ICommand.cs" />
     <Compile Include="TestObjects\ICompany.cs" />
     <Compile Include="TestObjects\IContract.cs" />
     <Compile Include="TestObjects\ICtorTest.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="TestObjects\IUnitOfWork.cs" />
     <Compile Include="TestObjects\IVehicle.cs" />
     <Compile Include="TestObjects\IWheel.cs" />
+    <Compile Include="TestObjects\LoadCommand.cs" />
     <Compile Include="TestObjects\Log.cs" />
     <Compile Include="TestObjects\LogManager.cs" />
     <Compile Include="TestObjects\MatchByConvention.cs" />
@@ -135,6 +138,7 @@
     <Compile Include="TestObjects\NeedsCollection.cs" />
     <Compile Include="TestObjects\One.cs" />
     <Compile Include="TestObjects\PropertyTakesPrimitiveParameter.cs" />
+    <Compile Include="TestObjects\SaveCommand.cs" />
     <Compile Include="TestObjects\Snafu.cs" />
     <Compile Include="TestObjects\SomeBaseClass.cs" />
     <Compile Include="TestObjects\TakesConnectionStringParameter.cs" />
@@ -145,6 +149,7 @@
     <Compile Include="TestObjects\UnitOfWork.cs" />
     <Compile Include="TestObjects\UnitOfWorkFactory.cs" />
     <Compile Include="TestObjects\UsesLog.cs" />
+    <Compile Include="TestObjects\ViewModel.cs" />
     <Compile Include="TrackingExtensionFixture.cs" />
     <Compile Include="WasResolvedFixture.cs" />
   </ItemGroup>

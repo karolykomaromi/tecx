@@ -131,6 +131,11 @@
     <Compile Include="Factories\TypedFactoryComponentCollection.cs" />
     <Compile Include="Factories\TypeHelper.cs" />
     <Compile Include="Groups\GroupingContainerProxy.cs" />
+    <Compile Include="Injection\IMapParameterNameToRegistrationNamePolicy.cs" />
+    <Compile Include="Injection\MapParameterNamesToRegistrationNamesExtension.cs" />
+    <Compile Include="Injection\MapParameterNamesToRegistrationNamesStrategy.cs" />
+    <Compile Include="Injection\MapParameterNameToRegistrationName.cs" />
+    <Compile Include="Injection\MapParameterNameToRegistrationNamePolicy.cs" />
     <Compile Include="Literals\AppSettingsConvention.cs" />
     <Compile Include="Literals\AppSettingsResolverPolicy.cs" />
     <Compile Include="Literals\ConnectionStringConvention.cs" />
