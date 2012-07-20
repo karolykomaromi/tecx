@@ -1,6 +1,7 @@
 namespace TecX.Unity.Injection
 {
     using System;
+    using System.Reflection;
 
     using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity.ObjectBuilder;
@@ -23,6 +24,11 @@ namespace TecX.Unity.Injection
             IPolicyList resolverPolicyDestination;
             IConstructorSelectorPolicy selector = context.Policies.Get<IConstructorSelectorPolicy>(context.BuildKey, out resolverPolicyDestination);
 
+            if (selector == null)
+            {
+                return;
+            }
+
             var selectedConstructor = selector.SelectConstructor(context, resolverPolicyDestination);
 
             if (selectedConstructor == null)
@@ -30,9 +36,9 @@ namespace TecX.Unity.Injection
                 return;
             }
 
-            var parameters = selectedConstructor.Constructor.GetParameters();
+            ParameterInfo[] parameters = selectedConstructor.Constructor.GetParameters();
 
-            var parameterKeys = selectedConstructor.GetParameterKeys();
+            string[] parameterKeys = selectedConstructor.GetParameterKeys();
 
             for (int i = 0; i < parameters.Length; i++)
             {
