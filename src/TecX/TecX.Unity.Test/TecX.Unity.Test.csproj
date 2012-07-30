@@ -85,7 +85,7 @@
     <Compile Include="DefaultMappingExtensionFixture.cs" />
     <Compile Include="DelegateFactoryFixture.cs" />
     <Compile Include="EnrichmentFixture.cs" />
-    <Compile Include="LiteralParametersExtensionFixture.cs" />
+    <Compile Include="LiteralParametersFixture.cs" />
     <Compile Include="MapParameterNamesToRegistrationNamesFixture.cs" />
     <Compile Include="NamedPropertyOverrideFixture.cs" />
     <Compile Include="NamingConventionFixture.cs" />
