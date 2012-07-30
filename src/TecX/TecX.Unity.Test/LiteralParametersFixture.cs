@@ -7,7 +7,7 @@
     using TecX.Unity.Test.TestObjects;
 
     [TestClass]
-    public class LiteralParametersExtensionFixture
+    public class LiteralParametersFixture
     {
         [TestMethod]
         public void CanResolveLiteralParamUsingAppSettings()
