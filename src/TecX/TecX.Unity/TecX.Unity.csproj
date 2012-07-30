@@ -143,8 +143,7 @@
     <Compile Include="Literals\DependencyInfo.cs" />
     <Compile Include="Literals\ResolverConventionCollection.cs" />
     <Compile Include="Literals\IDependencyResolverConvention.cs" />
-    <Compile Include="Literals\ILiteralParameters.cs" />
-    <Compile Include="Literals\LiteralParametersExtension.cs" />
+    <Compile Include="Literals\LiteralParameters.cs" />
     <Compile Include="Literals\LiteralParametersStrategy.cs" />
     <Compile Include="Literals\UnityContainerExtensions.cs" />
     <Compile Include="Mapping\DefaultMappingExtension.cs" />

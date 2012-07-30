@@ -5,11 +5,11 @@
 
     using TecX.Common;
 
-    public class LiteralParametersExtension : UnityContainerExtension, ILiteralParameters
+    public class LiteralParameters : UnityContainerExtension
     {
         private readonly ResolverConventionCollection conventions;
 
-        public LiteralParametersExtension()
+        public LiteralParameters()
         {
             this.conventions = new ResolverConventionCollection();
         }

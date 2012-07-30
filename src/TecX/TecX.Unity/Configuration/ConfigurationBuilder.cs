@@ -103,7 +103,7 @@ namespace TecX.Unity.Configuration
             this.AddExpression(config => config.AddExtension(new CollectionResolutionExtension()));
             this.AddExpression(config => config.AddExtension(new EnrichmentExtension()));
             this.AddExpression(config => config.AddExtension(new MappingGroupExtension()));
-            this.AddExpression(config => config.AddExtension(new LiteralParametersExtension()));
+            this.AddExpression(config => config.AddExtension(new LiteralParameters()));
             this.AddExpression(config => config.AddExtension(new ProxyGenerator()));
 
             return this;

@@ -10,15 +10,13 @@
         {
             Guard.AssertNotNull(container, "container");
 
-            ILiteralParameters parameters = container.Configure<ILiteralParameters>();
+            LiteralParameters parameters = container.Configure<LiteralParameters>();
 
             if (parameters == null)
             {
-                var extension = new LiteralParametersExtension();
+                parameters = new LiteralParameters();
 
-                container.AddExtension(extension);
-
-                parameters = extension;
+                container.AddExtension(parameters);
             }
 
             parameters.AddConvention(new ConnectionStringConvention());
@@ -27,23 +25,24 @@
             return container;
         }
 
-        public static IUnityContainer WithConventionForLiteralParameters(this IUnityContainer container, IDependencyResolverConvention convention)
+        public static IUnityContainer WithConventionsForLiteralParameters(this IUnityContainer container, params IDependencyResolverConvention[] conventions)
         {
             Guard.AssertNotNull(container, "container");
-            Guard.AssertNotNull(convention, "convention");
+            Guard.AssertNotNull(conventions, "convention");
 
-            ILiteralParameters parameters = container.Configure<ILiteralParameters>();
+            LiteralParameters parameters = container.Configure<LiteralParameters>();
 
             if (parameters == null)
             {
-                var extension = new LiteralParametersExtension();
+                parameters = new LiteralParameters();
 
-                container.AddExtension(extension);
-
-                parameters = extension;
+                container.AddExtension(parameters);
             }
 
-            parameters.AddConvention(convention);
+            foreach (var convention in conventions)
+            {
+                parameters.AddConvention(convention);
+            }
 
             return container;
         }
