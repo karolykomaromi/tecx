@@ -32,9 +32,9 @@
             var r3 = cache.Customers.Where(c => c.Id < 3).ToList();
             var r4 = cache.Customers.Where(c => c.Id < 3).ToList();
 
-            Assert.IsTrue(r1.SequenceEqual(r2));
-            Assert.IsTrue(r2.SequenceEqual(r3));
-            Assert.IsTrue(r3.SequenceEqual(r4));
+            CollectionAssert.AreEqual(r1, r2);
+            CollectionAssert.AreEqual(r2, r3);
+            CollectionAssert.AreEqual(r3, r4);
 
             mock.VerifyGet(r => r.Customers, Times.Once());
         }
