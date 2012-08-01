@@ -29,11 +29,11 @@ namespace TecX.Common
         /// <returns>The formatted string; the original format string if an error occurs</returns>
         public static string SafeFormat(string format, params object[] args)
         {
-            if (string.IsNullOrEmpty(format))
+            if (String.IsNullOrEmpty(format))
             {
                 // if the format string is already empty,
                 // then just return an empty string
-                return string.Empty;
+                return String.Empty;
             }
 
             try
@@ -45,7 +45,7 @@ namespace TecX.Common
                     return format;
                 }
 
-                string result = string.Format(format, args);
+                string result = String.Format(format, args);
 
                 return result;
             }
@@ -66,7 +66,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(string arg)
         {
-            return ToNullSafeString(arg, string.Empty);
+            return ToNullSafeString(arg, String.Empty);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(string arg, string def)
         {
-            def = def ?? string.Empty;
+            def = def ?? String.Empty;
 
             return arg ?? def;
         }
@@ -93,7 +93,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(object obj)
         {
-            return ToNullSafeString(obj, string.Empty);
+            return ToNullSafeString(obj, String.Empty);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(object obj, string def)
         {
-            def = def ?? string.Empty;
+            def = def ?? String.Empty;
 
             return (obj == null) ? def : obj.ToString();
         }
@@ -203,6 +203,23 @@ namespace TecX.Common
             Guard.AssertNotNull(type, "type");
 
             return type.IsGenericTypeDefinition || type.ContainsGenericParameters;
+        }
+
+        public static IEnumerable<Type> GetAllBaseClassesAndInterfaces(this Type type)
+        {
+            Guard.AssertNotNull(type, "type");
+
+            List<Type> allTypes = new List<Type>();
+
+            Type current = type;
+            while (current != null && current != typeof(object))
+            {
+                allTypes.Add(current);
+                current = current.BaseType;
+            }
+
+            allTypes.AddRange(type.AllInterfaces());
+            return allTypes;
         }
 
         /// <summary>

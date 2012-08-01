@@ -136,6 +136,7 @@
     <Compile Include="Injection\MapParameterNamesToRegistrationNamesStrategy.cs" />
     <Compile Include="Injection\MapParameterNameToRegistrationName.cs" />
     <Compile Include="Injection\MapParameterNameToRegistrationNamePolicy.cs" />
+    <Compile Include="Injection\CompositeNamingConvention.cs" />
     <Compile Include="Literals\AppSettingsConvention.cs" />
     <Compile Include="Literals\AppSettingsResolverPolicy.cs" />
     <Compile Include="Literals\ConnectionStringConvention.cs" />
@@ -166,7 +167,7 @@
     <Compile Include="Injection\NamedPropertyOverride.cs" />
     <Compile Include="Injection\NamingConvention.cs" />
     <Compile Include="Injection\ParameterMatcher.cs" />
-    <Compile Include="Injection\ClozeInjectionConstructor.cs" />
+    <Compile Include="Injection\SmartConstructor.cs" />
     <Compile Include="Injection\SpecifiedNameConvention.cs" />
     <Compile Include="Lifetime\CacheLifetimeManager.cs" />
     <Compile Include="Lifetime\CacheLifetimeStrategy.cs" />

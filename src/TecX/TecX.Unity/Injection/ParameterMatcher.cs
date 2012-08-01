@@ -11,22 +11,21 @@
 
     public class ParameterMatcher
     {
-        private readonly ConstructorArgumentCollection constructorArguments;
+        private readonly IEnumerable<ConstructorArgument> constructorArguments;
 
         private readonly CompositePredicate<ConstructorInfo> filters;
 
-        public ParameterMatcher(IEnumerable<ConstructorArgument> ctorArgs)
+        public ParameterMatcher(IEnumerable<ConstructorArgument> constructorArguments)
         {
-            Guard.AssertNotNull(ctorArgs, "ctorArgs");
+            Guard.AssertNotNull(constructorArguments, "ctorArgs");
 
-            this.constructorArguments = new ConstructorArgumentCollection();
+            //this.constructorArguments = new ConstructorArgumentCollection(constructorArguments);
+            this.constructorArguments = constructorArguments;
 
             this.filters = new CompositePredicate<ConstructorInfo>();
             this.filters += this.ConstructorDoesNotTakeAllArguments;
             this.filters += this.NonSatisfiedPrimitiveArgs;
             this.filters += this.ArgumentTypesMismatch;
-
-            this.constructorArguments.AddRange(ctorArgs);
         }
 
         public ConstructorInfo BestMatch(IEnumerable<ConstructorInfo> ctors)

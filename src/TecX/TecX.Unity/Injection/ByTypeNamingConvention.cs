@@ -2,32 +2,32 @@ namespace TecX.Unity.Injection
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     using TecX.Common;
 
     public class ByTypeNamingConvention : NamingConvention
     {
-        private readonly Type type;
-
-        private readonly List<string> snippets;
+        private readonly HashSet<string> snippets;
 
         public ByTypeNamingConvention(Type type)
         {
             Guard.AssertNotNull(type, "type");
-            this.type = type;
-            this.snippets = new List<string>();
-            this.InitializeSnippets();
+
+            this.snippets = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            InitializeSnippets(type, this.snippets);
         }
 
-        protected override bool NameMatchesCore(string name)
+        public override bool NameMatches(string name)
         {
-            return this.snippets.Any(s => string.Equals(s, name, StringComparison.OrdinalIgnoreCase));
+            Guard.AssertNotEmpty(name, "name");
+
+            return this.snippets.Contains(name);
         }
 
-        private void InitializeSnippets()
+        private static void InitializeSnippets(Type type, HashSet<string> snippets)
         {
-            string typeName = this.type.Name;
+            string typeName = type.Name;
 
             if (typeName.StartsWith("i", StringComparison.OrdinalIgnoreCase))
             {
@@ -41,7 +41,7 @@ namespace TecX.Unity.Injection
                 if (char.IsUpper(c))
                 {
                     string snippet = typeName.Substring(i);
-                    this.snippets.Add(snippet);
+                    snippets.Add(snippet);
                 }
             }
         }

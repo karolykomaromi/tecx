@@ -12,7 +12,7 @@
     using TecX.Unity.Test.TestObjects;
 
     [TestClass]
-    public class ClozeInjectionConstructorFixture
+    public class SmartConstructorFixture
     {
         private static class Constants
         {
@@ -28,7 +28,7 @@
             container.RegisterType<ILogger, TestLogger>();
 
             container.RegisterType<ICtorTest, CtorTest>(
-                new ClozeInjectionConstructor("connectionString", Constants.ConnectionStringValue));
+                new SmartConstructor("connectionString", Constants.ConnectionStringValue));
 
             ICtorTest sut = container.Resolve<ICtorTest>();
             Assert.IsNotNull(sut);
@@ -41,12 +41,9 @@
 
             container.RegisterType<ILogger, TestLogger>();
 
-            container.RegisterType<ICtorTest, CtorTest>(
-                new ClozeInjectionConstructor(new ConstructorArgumentCollection
-                                                  {
-                                                      new ConstructorArgument("connectionString", Constants.ConnectionStringValue),
-                                                      new ConstructorArgument("anotherParam", "I'm a string")
-                                                  }));
+            container.RegisterType<ICtorTest, CtorTest>(new SmartConstructor(
+                new ConstructorArgument("connectionString", Constants.ConnectionStringValue),
+                new ConstructorArgument("anotherParam", "I'm a string")));
 
             ICtorTest sut = container.Resolve<ICtorTest>();
             Assert.IsNotNull(sut);
@@ -55,11 +52,7 @@
         [TestMethod]
         public void WhenFilterByCtorTakesAllArgsFindsExpectedCtors()
         {
-            ParameterMatcher matcher = new ParameterMatcher(
-                new ConstructorArgumentCollection
-                    {
-                        new ConstructorArgument("connectionString", Constants.ConnectionStringValue)
-                    });
+            ParameterMatcher matcher = new ParameterMatcher(new[] { new ConstructorArgument("connectionString", Constants.ConnectionStringValue) });
 
             Predicate<ConstructorInfo> filter = matcher.ConstructorDoesNotTakeAllArguments;
 
@@ -78,10 +71,7 @@
         public void WhenFilterByNonSatisfiedPrimitiveArgsFindsExpectedCtors()
         {
             ParameterMatcher matcher = new ParameterMatcher(
-                new ConstructorArgumentCollection
-                    {
-                        new ConstructorArgument("connectionString", Constants.ConnectionStringValue)
-                    });
+                new[] { new ConstructorArgument("connectionString", Constants.ConnectionStringValue) });
 
             Predicate<ConstructorInfo> filter = matcher.NonSatisfiedPrimitiveArgs;
 
@@ -103,7 +93,7 @@
         public void WhenFilterByArgTypesFitFindsExpectedCtors()
         {
             ParameterMatcher matcher = new ParameterMatcher(
-                new ConstructorArgumentCollection
+                new[]
                     {
                         new ConstructorArgument("connectionString", Constants.ConnectionStringValue),
                         new ConstructorArgument("anotherParam", "I'm a string")
@@ -135,7 +125,7 @@
             var instance = new MatchByConvention();
 
             container.RegisterType<MyService>(
-                new ClozeInjectionConstructor(new[] { new ConstructorArgument(instance) }));
+                new SmartConstructor(new[] { new ConstructorArgument(instance) }));
 
             var sut = container.Resolve<MyService>();
 
@@ -148,7 +138,7 @@
         {
             var container = new UnityContainer();
 
-            container.RegisterType<DefaultCtorOnly>(new ClozeInjectionConstructor());
+            container.RegisterType<DefaultCtorOnly>(new SmartConstructor());
 
             var sut = container.Resolve<DefaultCtorOnly>();
 

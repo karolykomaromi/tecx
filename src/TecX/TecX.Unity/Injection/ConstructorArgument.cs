@@ -6,11 +6,13 @@ namespace TecX.Unity.Injection
     {
         private readonly NamingConvention convention;
 
+        private readonly object value;
+
         public ConstructorArgument(string argumentName, object value)
         {
             Guard.AssertNotEmpty(argumentName, "argumentName");
 
-            this.Value = value;
+            this.value = value;
 
             this.convention = new SpecifiedNameConvention(argumentName);
         }
@@ -19,12 +21,18 @@ namespace TecX.Unity.Injection
         {
             Guard.AssertNotNull(value, "value");
 
-            this.Value = value;
+            this.value = value;
 
-            this.convention = NamingConvention.CreateForType(value.GetType());
+            this.convention = NamingConvention.Create(value.GetType());
         }
 
-        public object Value { get; private set; }
+        public object Value
+        {
+            get
+            {
+                return this.value;
+            }
+        }
 
         public bool NameMatches(string name)
         {

@@ -2,13 +2,17 @@
 {
     using System;
 
+    using TecX.Common;
+
     public class FileNameConvention : NamingConvention
     {
-        protected override bool NameMatchesCore(string name)
+        public override bool NameMatches(string name)
         {
-            return string.Equals(name, "fileName", StringComparison.InvariantCultureIgnoreCase) || 
-                string.Equals(name, "file", StringComparison.InvariantCultureIgnoreCase) || 
-                string.Equals(name, "path", StringComparison.InvariantCultureIgnoreCase);
+            Guard.AssertNotEmpty(name, "name");
+
+            return string.Equals(name, "fileName", StringComparison.OrdinalIgnoreCase) || 
+                string.Equals(name, "file", StringComparison.OrdinalIgnoreCase) || 
+                string.Equals(name, "path", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

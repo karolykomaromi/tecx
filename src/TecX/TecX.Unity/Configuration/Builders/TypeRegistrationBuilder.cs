@@ -80,11 +80,11 @@ namespace TecX.Unity.Configuration.Builders
             return this;
         }
 
-        public TypeRegistrationBuilder Ctor(Action<ClozeInjectionConstructor> action)
+        public TypeRegistrationBuilder Ctor(Action<SmartConstructor> action)
         {
             Guard.AssertNotNull(action, "action");
 
-            ClozeInjectionConstructor ctor = new ClozeInjectionConstructor();
+            SmartConstructor ctor = new SmartConstructor();
 
             action(ctor);
 

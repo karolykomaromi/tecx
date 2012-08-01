@@ -1,6 +1,7 @@
 namespace TecX.Unity.Configuration.Utilities
 {
     using System;
+    using System.Collections.Generic;
 
     using Microsoft.Practices.Unity;
 
@@ -10,13 +11,13 @@ namespace TecX.Unity.Configuration.Utilities
 
     public class AnonymousTypeOverrideSpec
     {
-        private readonly ConstructorArgumentCollection arguments;
+        private readonly List<ConstructorArgument> arguments;
 
         public AnonymousTypeOverrideSpec(object anonymous, Type to)
         {
             Guard.AssertNotNull(anonymous, "anonymous");
 
-            this.arguments = new ConstructorArgumentCollection();
+            this.arguments = new List<ConstructorArgument>();
 
             var properties = anonymous.PublicProperties();
 
@@ -56,7 +57,7 @@ namespace TecX.Unity.Configuration.Utilities
         {
             Guard.AssertNotNull(@override, "override");
 
-            return new ClozeInjectionConstructor(@override.arguments);
+            return new SmartConstructor(@override.arguments);
         }
     }
 }
