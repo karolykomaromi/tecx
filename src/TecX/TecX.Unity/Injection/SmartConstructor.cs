@@ -11,35 +11,38 @@
 
     using TecX.Common;
 
-    public class ClozeInjectionConstructor : InjectionMember
+    public class SmartConstructor : InjectionMember
     {
-        private readonly ConstructorArgumentCollection constructorArguments;
+        private readonly List<ConstructorArgument> constructorArguments;
 
-        public ClozeInjectionConstructor(string argumentName, object value)
+        public SmartConstructor(string argumentName, object value)
             : this()
         {
             Guard.AssertNotEmpty(argumentName, "argumentName");
 
-            this.constructorArguments.Add(new ConstructorArgument(argumentName, value));
+            this.constructorArguments = new List<ConstructorArgument> { new ConstructorArgument(argumentName, value) };
         }
 
-        public ClozeInjectionConstructor(IEnumerable<ConstructorArgument> ctorArguments)
-            : this()
+        public SmartConstructor(IEnumerable<ConstructorArgument> constructorArguments)
         {
-            Guard.AssertNotNull(ctorArguments, "ctorArguments");
+            Guard.AssertNotNull(constructorArguments, "constructorArguments");
 
-            foreach (var ctorArgument in ctorArguments)
+            this.constructorArguments = new List<ConstructorArgument>(constructorArguments);
+        }
+
+        public SmartConstructor(params ConstructorArgument[] constructorArguments)
+        {
+            if (constructorArguments == null)
             {
-                this.constructorArguments.Add(ctorArgument);
+                this.constructorArguments = new List<ConstructorArgument>();
+            }
+            else
+            {
+                this.constructorArguments = new List<ConstructorArgument>(constructorArguments);
             }
         }
 
-        public ClozeInjectionConstructor()
-        {
-            this.constructorArguments = new ConstructorArgumentCollection();
-        }
-
-        public ClozeInjectionConstructor With(object value)
+        public SmartConstructor With(object value)
         {
             Guard.AssertNotNull(value, "value");
 
@@ -48,7 +51,7 @@
             return this;
         }
 
-        public ClozeInjectionConstructor With(string argumentName, object value)
+        public SmartConstructor With(string argumentName, object value)
         {
             Guard.AssertNotEmpty(argumentName, "argumentName");
 
@@ -59,10 +62,13 @@
 
         public override void AddPolicies(Type serviceType, Type implementationType, string name, IPolicyList policies)
         {
+            Guard.AssertNotNull(implementationType, "implementationType");
+            Guard.AssertNotNull(policies, "policies");
+
             ConstructorInfo ctor;
             InjectionParameterValue[] parameterValues;
 
-            if (this.constructorArguments.IsEmpty)
+            if (this.constructorArguments.Count == 0)
             {
                 ctor = implementationType.GetConstructor(Type.EmptyTypes);
 
@@ -75,9 +81,11 @@
                 parameterValues = this.GetParameterValues(ctor);
             }
 
-            policies.Set<IConstructorSelectorPolicy>(
-                new SpecifiedConstructorSelectorPolicy(ctor, parameterValues),
-                new NamedTypeBuildKey(implementationType, name));
+            IConstructorSelectorPolicy policy = new SpecifiedConstructorSelectorPolicy(ctor, parameterValues);
+
+            NamedTypeBuildKey buildKey = new NamedTypeBuildKey(implementationType, name);
+
+            policies.Set<IConstructorSelectorPolicy>(policy, buildKey);
         }
 
         private InjectionParameterValue[] GetParameterValues(ConstructorInfo ctor)

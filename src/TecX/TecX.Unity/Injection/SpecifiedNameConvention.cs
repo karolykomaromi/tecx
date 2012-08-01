@@ -15,9 +15,11 @@ namespace TecX.Unity.Injection
             this.name = name;
         }
 
-        protected override bool NameMatchesCore(string name)
+        public override bool NameMatches(string name)
         {
-            return string.Equals(this.name, name, StringComparison.InvariantCultureIgnoreCase);
+            Guard.AssertNotEmpty(name, "name");
+
+            return string.Equals(this.name, name, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

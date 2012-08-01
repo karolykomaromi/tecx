@@ -2,6 +2,7 @@ namespace TecX.Unity.Injection
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using TecX.Common;
 
@@ -9,70 +10,26 @@ namespace TecX.Unity.Injection
     {
         public NamingConvention Next { get; set; }
 
-        public static NamingConvention CreateForType(Type type)
+        public static NamingConvention Create(Type type)
         {
             Guard.AssertNotNull(type, "type");
 
             if (type == typeof(string))
             {
-                var c = new ConnectionStringNamingConvention
+                return new CompositeNamingConvention(new NamingConvention[]
                     {
-                        Next = new FileNameConvention()
-                    };
-
-                return c;
+                        new ConnectionStringNamingConvention(), 
+                        new FileNameConvention()
+                    });
             }
 
-            // get all base classes, get all interfaces
-            List<Type> allTypes = new List<Type>();
+            IEnumerable<Type> allTypes = type.GetAllBaseClassesAndInterfaces();
 
-            Type current = type;
-            while (current != null && current != typeof(object))
-            {
-                allTypes.Add(current);
-                current = current.BaseType;
-            }
+            List<NamingConvention> conventions = new List<NamingConvention>(allTypes.Select(t => new ByTypeNamingConvention(t)));
 
-            allTypes.AddRange(type.AllInterfaces());
-
-            NamingConvention anchor = null;
-            NamingConvention convention = null;
-
-            foreach (Type t in allTypes)
-            {
-                if (convention == null)
-                {
-                    convention = new ByTypeNamingConvention(t);
-                    anchor = convention;
-                }
-                else
-                {
-                    NamingConvention c = new ByTypeNamingConvention(t);
-                    convention.Next = c;
-                    convention = c;
-                }
-            }
-
-            return anchor;
+            return new CompositeNamingConvention(conventions);
         }
 
-        public bool NameMatches(string name)
-        {
-            Guard.AssertNotEmpty(name, "name");
-
-            if (this.NameMatchesCore(name))
-            {
-                return true;
-            }
-
-            if (this.Next != null)
-            {
-                return this.Next.NameMatches(name);
-            }
-
-            return false;
-        }
-
-        protected abstract bool NameMatchesCore(string name);
+        public abstract bool NameMatches(string name);
     }
 }

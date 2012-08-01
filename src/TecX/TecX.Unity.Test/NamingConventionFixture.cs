@@ -19,7 +19,7 @@
         [TestMethod]
         public void CanMatchByTypeName()
         {
-            var convention = NamingConvention.CreateForType(typeof(NamingConventionTestObject));
+            var convention = NamingConvention.Create(typeof(NamingConventionTestObject));
 
             Assert.IsTrue(convention.NameMatches("NamingConventionTestObject"));
             Assert.IsTrue(convention.NameMatches("ConventionTestObject"));
@@ -34,7 +34,7 @@
         [TestMethod]
         public void CanMatchConnectionString()
         {
-            var convention = NamingConvention.CreateForType(typeof(string));
+            var convention = NamingConvention.Create(typeof(string));
 
             Assert.IsTrue(convention.NameMatches("connectionString"));
             Assert.IsTrue(convention.NameMatches("file"));
