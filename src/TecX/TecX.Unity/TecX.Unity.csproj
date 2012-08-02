@@ -131,13 +131,13 @@
     <Compile Include="Factories\TypedFactoryComponentCollection.cs" />
     <Compile Include="Factories\TypeHelper.cs" />
     <Compile Include="Groups\GroupingContainerProxy.cs" />
-    <Compile Include="Injection\ArgumentMatchingConvention.cs" />
+    <Compile Include="Injection\ParameterMatchingConvention.cs" />
     <Compile Include="Injection\DefaultMatchingConventionsPolicy.cs" />
     <Compile Include="Injection\ByTypeMatchingConvention.cs" />
     <Compile Include="Injection\ConnectionStringMatchingConvention.cs" />
-    <Compile Include="Injection\ConstructorArgumentMatchingConventions.cs" />
+    <Compile Include="Injection\ConstructorParameterMatchingConventions.cs" />
     <Compile Include="Injection\FileNameMatchingConvention.cs" />
-    <Compile Include="Injection\IArgumentMatchingConventionsPolicy.cs" />
+    <Compile Include="Injection\IParameterMatchingConventionsPolicy.cs" />
     <Compile Include="Injection\IMapParameterNameToRegistrationNamePolicy.cs" />
     <Compile Include="Injection\MapParameterNamesToRegistrationNamesExtension.cs" />
     <Compile Include="Injection\MapParameterNamesToRegistrationNamesStrategy.cs" />
@@ -167,7 +167,7 @@
     <Compile Include="Groups\MappingInfo.cs" />
     <Compile Include="InjectionMembers.cs" />
     <Compile Include="Injection\AllProperties.cs" />
-    <Compile Include="Injection\ConstructorArgument.cs" />
+    <Compile Include="Injection\ConstructorParameter.cs" />
     <Compile Include="Injection\NamedPropertyOverride.cs" />
     <Compile Include="Injection\ParameterMatcher.cs" />
     <Compile Include="Injection\SmartConstructor.cs" />

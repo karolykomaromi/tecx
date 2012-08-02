@@ -5,13 +5,13 @@ namespace TecX.Unity.Injection
     using TecX.Common;
 
     [DebuggerDisplay("Name:'{Name}' Value:'{Value}'")]
-    public class ConstructorArgument
+    public class ConstructorParameter
     {
         private readonly object value;
 
         private readonly string name;
 
-        public ConstructorArgument(string name, object value)
+        public ConstructorParameter(string name, object value)
         {
             Guard.AssertNotEmpty(name, "name");
 
@@ -19,7 +19,7 @@ namespace TecX.Unity.Injection
             this.name = name;
         }
 
-        public ConstructorArgument(object value)
+        public ConstructorParameter(object value)
         {
             Guard.AssertNotNull(value, "value");
 

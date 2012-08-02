@@ -13,7 +13,7 @@
         {
             var convention = new SpecifiedNameMatchingConvention();
 
-            Assert.IsTrue(convention.Matches(new ConstructorArgument("abc", "1"), new FakeParameterInfo("abc", typeof(string))));
+            Assert.IsTrue(convention.Matches(new ConstructorParameter("abc", "1"), new FakeParameterInfo("abc", typeof(string))));
         }
 
         [TestMethod]
@@ -21,7 +21,7 @@
         {
             var convention = new ByTypeMatchingConvention();
 
-            var argument = new ConstructorArgument(new NamingConventionTestObject());
+            var argument = new ConstructorParameter(new NamingConventionTestObject());
 
             Assert.IsTrue(convention.Matches(argument, new FakeParameterInfo("NamingConventionTestObject", typeof(NamingConventionTestObject))));
             Assert.IsTrue(convention.Matches(argument, new FakeParameterInfo("ConventionTestObject", typeof(NamingConventionTestObject))));
@@ -38,7 +38,7 @@
         {
             var convention = new ConnectionStringMatchingConvention();
 
-            Assert.IsTrue(convention.Matches(new ConstructorArgument("1"), new FakeParameterInfo("abcConnectionString", typeof(string))));
+            Assert.IsTrue(convention.Matches(new ConstructorParameter("1"), new FakeParameterInfo("abcConnectionString", typeof(string))));
         }
 
         [TestMethod]
@@ -46,9 +46,9 @@
         {
             var convention = new FileNameMatchingConvention();
 
-            Assert.IsTrue(convention.Matches(new ConstructorArgument("1"), new FakeParameterInfo("file", typeof(string))));
-            Assert.IsTrue(convention.Matches(new ConstructorArgument("1"), new FakeParameterInfo("fileName", typeof(string))));
-            Assert.IsTrue(convention.Matches(new ConstructorArgument("1"), new FakeParameterInfo("path", typeof(string))));
+            Assert.IsTrue(convention.Matches(new ConstructorParameter("1"), new FakeParameterInfo("file", typeof(string))));
+            Assert.IsTrue(convention.Matches(new ConstructorParameter("1"), new FakeParameterInfo("fileName", typeof(string))));
+            Assert.IsTrue(convention.Matches(new ConstructorParameter("1"), new FakeParameterInfo("path", typeof(string))));
         }
     }
 }

@@ -8,7 +8,7 @@ namespace TecX.Unity.Injection
 
     using TecX.Common;
 
-    public class ByTypeMatchingConvention : ArgumentMatchingConvention
+    public class ByTypeMatchingConvention : ParameterMatchingConvention
     {
         private readonly Dictionary<Type, ICollection<string>> snippetsByType;
 
@@ -17,7 +17,7 @@ namespace TecX.Unity.Injection
             this.snippetsByType = new Dictionary<Type, ICollection<string>>();
         }
 
-        protected override bool MatchesCore(ConstructorArgument argument, ParameterInfo parameter)
+        protected override bool MatchesCore(ConstructorParameter argument, ParameterInfo parameter)
         {
             ResolvedParameter rp = argument.Value as ResolvedParameter;
 

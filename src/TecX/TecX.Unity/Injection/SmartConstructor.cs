@@ -13,32 +13,32 @@
 
     public class SmartConstructor : InjectionMember
     {
-        private readonly List<ConstructorArgument> constructorArguments;
+        private readonly List<ConstructorParameter> constructorArguments;
 
         public SmartConstructor(string argumentName, object value)
             : this()
         {
             Guard.AssertNotEmpty(argumentName, "argumentName");
 
-            this.constructorArguments = new List<ConstructorArgument> { new ConstructorArgument(argumentName, value) };
+            this.constructorArguments = new List<ConstructorParameter> { new ConstructorParameter(argumentName, value) };
         }
 
-        public SmartConstructor(IEnumerable<ConstructorArgument> constructorArguments)
+        public SmartConstructor(IEnumerable<ConstructorParameter> constructorArguments)
         {
             Guard.AssertNotNull(constructorArguments, "constructorArguments");
 
-            this.constructorArguments = new List<ConstructorArgument>(constructorArguments);
+            this.constructorArguments = new List<ConstructorParameter>(constructorArguments);
         }
 
-        public SmartConstructor(params ConstructorArgument[] constructorArguments)
+        public SmartConstructor(params ConstructorParameter[] constructorArguments)
         {
             if (constructorArguments == null)
             {
-                this.constructorArguments = new List<ConstructorArgument>();
+                this.constructorArguments = new List<ConstructorParameter>();
             }
             else
             {
-                this.constructorArguments = new List<ConstructorArgument>(constructorArguments);
+                this.constructorArguments = new List<ConstructorParameter>(constructorArguments);
             }
         }
 
@@ -46,7 +46,7 @@
         {
             Guard.AssertNotNull(value, "value");
 
-            this.constructorArguments.Add(new ConstructorArgument(value));
+            this.constructorArguments.Add(new ConstructorParameter(value));
 
             return this;
         }
@@ -55,7 +55,7 @@
         {
             Guard.AssertNotEmpty(name, "argumentName");
 
-            this.constructorArguments.Add(new ConstructorArgument(name, value));
+            this.constructorArguments.Add(new ConstructorParameter(name, value));
 
             return this;
         }
@@ -78,13 +78,13 @@
             {
                 NamedTypeBuildKey key = new NamedTypeBuildKey(implementationType, name);
 
-                IArgumentMatchingConventionsPolicy conventions = policies.Get<IArgumentMatchingConventionsPolicy>(key);
+                IParameterMatchingConventionsPolicy conventions = policies.Get<IParameterMatchingConventionsPolicy>(key);
 
                 if (conventions == null)
                 {
                     conventions = new DefaultMatchingConventionsPolicy();
 
-                    policies.SetDefault<IArgumentMatchingConventionsPolicy>(conventions);
+                    policies.SetDefault<IParameterMatchingConventionsPolicy>(conventions);
                 }
 
                 ctor = FindConstructor(implementationType, this.constructorArguments, conventions);
@@ -99,7 +99,7 @@
             policies.Set<IConstructorSelectorPolicy>(policy, buildKey);
         }
 
-        private static ConstructorInfo FindConstructor(Type typeToCreate, IEnumerable<ConstructorArgument> constructorArguments, IArgumentMatchingConventionsPolicy conventions)
+        private static ConstructorInfo FindConstructor(Type typeToCreate, IEnumerable<ConstructorParameter> constructorArguments, IParameterMatchingConventionsPolicy conventions)
         {
             ConstructorInfo[] ctors = typeToCreate.GetConstructors();
 
@@ -108,7 +108,7 @@
             return matcher.BestMatch(ctors);
         }
 
-        private static InjectionParameterValue[] GetParameterValues(ConstructorInfo ctor, IEnumerable<ConstructorArgument> constructorArguments, IArgumentMatchingConventionsPolicy conventions)
+        private static InjectionParameterValue[] GetParameterValues(ConstructorInfo ctor, IEnumerable<ConstructorParameter> constructorArguments, IParameterMatchingConventionsPolicy conventions)
         {
             ParameterInfo[] parameters = ctor.GetParameters();
 
@@ -119,7 +119,7 @@
             // are provided that way
             for (int i = 0; i < parameters.Length; i++)
             {
-                ConstructorArgument argument = constructorArguments.FirstOrDefault(a => conventions.Matches(a, parameters[i]));
+                ConstructorParameter argument = constructorArguments.FirstOrDefault(a => conventions.Matches(a, parameters[i]));
                 if (argument != null)
                 {
                     parameterValues[i] = argument.Value;

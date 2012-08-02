@@ -6,13 +6,13 @@ namespace TecX.Unity.Injection
 
     using TecX.Common;
 
-    public class DefaultMatchingConventionsPolicy : IArgumentMatchingConventionsPolicy
+    public class DefaultMatchingConventionsPolicy : IParameterMatchingConventionsPolicy
     {
-        private readonly HashSet<ArgumentMatchingConvention> conventions;
+        private readonly HashSet<ParameterMatchingConvention> conventions;
 
         public DefaultMatchingConventionsPolicy()
         {
-            this.conventions = new HashSet<ArgumentMatchingConvention>
+            this.conventions = new HashSet<ParameterMatchingConvention>
                 {
                     new SpecifiedNameMatchingConvention(),
                     new ConnectionStringMatchingConvention(),
@@ -21,7 +21,7 @@ namespace TecX.Unity.Injection
                 };
         }
 
-        public bool Matches(ConstructorArgument argument, ParameterInfo parameter)
+        public bool Matches(ConstructorParameter argument, ParameterInfo parameter)
         {
             Guard.AssertNotNull(argument, "argument");
             Guard.AssertNotNull(parameter, "parameter");
@@ -29,7 +29,7 @@ namespace TecX.Unity.Injection
             return this.conventions.Any(convention => convention.Matches(argument, parameter));
         }
 
-        public void Add(ArgumentMatchingConvention convention)
+        public void Add(ParameterMatchingConvention convention)
         {
             Guard.AssertNotNull(convention, "convention");
 

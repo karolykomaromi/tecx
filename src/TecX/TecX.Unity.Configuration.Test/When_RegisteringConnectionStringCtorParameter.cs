@@ -15,7 +15,7 @@
         {
             base.Given();
 
-            this.builder.For<HasCtorWithConnectionString>().Use<HasCtorWithConnectionString>().Ctor(new ConstructorArgument("I'm a ConnectionString"));
+            this.builder.For<HasCtorWithConnectionString>().Use<HasCtorWithConnectionString>().Ctor(new ConstructorParameter("I'm a ConnectionString"));
         }
 
         protected override void When()

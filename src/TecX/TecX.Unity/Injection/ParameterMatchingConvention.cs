@@ -7,9 +7,9 @@
 
     using TecX.Common;
 
-    public abstract class ArgumentMatchingConvention
+    public abstract class ParameterMatchingConvention
     {
-        public bool Matches(ConstructorArgument argument, ParameterInfo parameter)
+        public bool Matches(ConstructorParameter argument, ParameterInfo parameter)
         {
             Guard.AssertNotNull(argument, "argument");
             Guard.AssertNotNull(argument.Value, "argument.Value");
@@ -28,6 +28,6 @@
             return false;
         }
 
-        protected abstract bool MatchesCore(ConstructorArgument argument, ParameterInfo parameter);
+        protected abstract bool MatchesCore(ConstructorParameter argument, ParameterInfo parameter);
     }
 }

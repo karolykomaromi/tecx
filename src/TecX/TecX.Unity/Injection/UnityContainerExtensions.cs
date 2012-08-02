@@ -6,16 +6,16 @@ namespace TecX.Unity.Injection
 
     public static class UnityContainerExtensions
     {
-        public static IUnityContainer WithConstructorArgumentMatchingConvention(this IUnityContainer container, ArgumentMatchingConvention convention)
+        public static IUnityContainer WithConstructorArgumentMatchingConvention(this IUnityContainer container, ParameterMatchingConvention convention)
         {
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(convention, "convention");
 
-            ConstructorArgumentMatchingConventions conventions = container.Configure<ConstructorArgumentMatchingConventions>();
+            ConstructorParameterMatchingConventions conventions = container.Configure<ConstructorParameterMatchingConventions>();
 
             if (conventions == null)
             {
-                conventions = new ConstructorArgumentMatchingConventions();
+                conventions = new ConstructorParameterMatchingConventions();
 
                 container.AddExtension(conventions);
             }
