@@ -41,8 +41,8 @@
             container.RegisterType<ILogger, TestLogger>();
 
             container.RegisterType<ICtorTest, CtorTest>(new SmartConstructor(
-                new ConstructorArgument("connectionString", Constants.ConnectionStringValue),
-                new ConstructorArgument("anotherParam", "I'm a string")));
+                new ConstructorParameter("connectionString", Constants.ConnectionStringValue),
+                new ConstructorParameter("anotherParam", "I'm a string")));
 
             ICtorTest sut = container.Resolve<ICtorTest>();
             Assert.IsNotNull(sut);
@@ -54,7 +54,7 @@
             ParameterMatcher matcher = new ParameterMatcher(
                 new[]
                     {
-                        new ConstructorArgument("connectionString", Constants.ConnectionStringValue)
+                        new ConstructorParameter("connectionString", Constants.ConnectionStringValue)
                     },
                 new DefaultMatchingConventionsPolicy());
 
@@ -77,7 +77,7 @@
             ParameterMatcher matcher = new ParameterMatcher(
                 new[]
                     {
-                        new ConstructorArgument("connectionString", Constants.ConnectionStringValue)
+                        new ConstructorParameter("connectionString", Constants.ConnectionStringValue)
                     }, 
                 new DefaultMatchingConventionsPolicy());
 
@@ -103,7 +103,7 @@
             var instance = new MatchByConvention();
 
             container.RegisterType<MyService>(
-                new SmartConstructor(new[] { new ConstructorArgument(instance) }));
+                new SmartConstructor(new[] { new ConstructorParameter(instance) }));
 
             var sut = container.Resolve<MyService>();
 

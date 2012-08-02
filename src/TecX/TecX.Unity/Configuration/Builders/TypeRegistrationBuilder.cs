@@ -80,7 +80,7 @@ namespace TecX.Unity.Configuration.Builders
             return this;
         }
 
-        public TypeRegistrationBuilder Ctor(params ConstructorArgument[] parameterValues)
+        public TypeRegistrationBuilder Ctor(params ConstructorParameter[] parameterValues)
         {
             SmartConstructor ctor = new SmartConstructor(parameterValues);
 

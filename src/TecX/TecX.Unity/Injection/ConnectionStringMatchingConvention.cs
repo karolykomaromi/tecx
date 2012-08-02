@@ -5,9 +5,9 @@ namespace TecX.Unity.Injection
 
     using TecX.Common.Extensions.Primitives;
 
-    public class ConnectionStringMatchingConvention : ArgumentMatchingConvention
+    public class ConnectionStringMatchingConvention : ParameterMatchingConvention
     {
-        protected override bool MatchesCore(ConstructorArgument argument, ParameterInfo parameter)
+        protected override bool MatchesCore(ConstructorParameter argument, ParameterInfo parameter)
         {
             if (parameter.ParameterType == typeof(string))
             {

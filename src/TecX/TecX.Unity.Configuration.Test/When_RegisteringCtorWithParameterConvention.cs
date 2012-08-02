@@ -15,7 +15,7 @@
         {
             base.Given();
 
-            this.builder.For<HasCtorWithParameterConvention>().Use<HasCtorWithParameterConvention>().Ctor(new ConstructorArgument(new Foo()));
+            this.builder.For<HasCtorWithParameterConvention>().Use<HasCtorWithParameterConvention>().Ctor(new ConstructorParameter(new Foo()));
         }
 
         protected override void When()

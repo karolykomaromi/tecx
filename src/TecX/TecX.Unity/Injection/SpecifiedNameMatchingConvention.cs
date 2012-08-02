@@ -3,9 +3,9 @@ namespace TecX.Unity.Injection
     using System;
     using System.Reflection;
 
-    public class SpecifiedNameMatchingConvention : ArgumentMatchingConvention
+    public class SpecifiedNameMatchingConvention : ParameterMatchingConvention
     {
-        protected override bool MatchesCore(ConstructorArgument argument, ParameterInfo parameter)
+        protected override bool MatchesCore(ConstructorParameter argument, ParameterInfo parameter)
         {
             if (!string.IsNullOrEmpty(argument.Name))
             {

@@ -11,13 +11,13 @@ namespace TecX.Unity.Configuration.Utilities
 
     public class AnonymousTypeOverrideSpec
     {
-        private readonly List<ConstructorArgument> arguments;
+        private readonly List<ConstructorParameter> arguments;
 
         public AnonymousTypeOverrideSpec(object anonymous, Type to)
         {
             Guard.AssertNotNull(anonymous, "anonymous");
 
-            this.arguments = new List<ConstructorArgument>();
+            this.arguments = new List<ConstructorParameter>();
 
             var properties = anonymous.PublicProperties();
 
@@ -27,17 +27,17 @@ namespace TecX.Unity.Configuration.Utilities
 
                 var parameter = ctor.FindParameterNamed(property.Name);
 
-                ConstructorArgument argument;
+                ConstructorParameter argument;
                 string anonymousPropertyValue = (string)property.GetValue(anonymous, null);
                 if (parameter.ParameterType == typeof(string))
                 {
-                    argument = new ConstructorArgument(
+                    argument = new ConstructorParameter(
                         property.Name,
                         anonymousPropertyValue);
                 }
                 else
                 {
-                    argument = new ConstructorArgument(
+                    argument = new ConstructorParameter(
                         property.Name,
                         new ResolvedParameter(parameter.ParameterType, anonymousPropertyValue));
                 }
@@ -48,7 +48,7 @@ namespace TecX.Unity.Configuration.Utilities
             foreach (var property in properties.NotOfString())
             {
                 object value = property.GetValue(anonymous, null);
-                ConstructorArgument argument = new ConstructorArgument(property.Name, value);
+                ConstructorParameter argument = new ConstructorParameter(property.Name, value);
                 this.arguments.Add(argument);
             }
         }

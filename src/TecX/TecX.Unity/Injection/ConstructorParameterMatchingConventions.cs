@@ -5,13 +5,13 @@
 
     using TecX.Common;
 
-    public class ConstructorArgumentMatchingConventions : UnityContainerExtension
+    public class ConstructorParameterMatchingConventions : UnityContainerExtension
     {
-        public void Add(ArgumentMatchingConvention convention)
+        public void Add(ParameterMatchingConvention convention)
         {
             Guard.AssertNotNull(convention, "convention");
 
-            IArgumentMatchingConventionsPolicy policy = this.Context.Policies.Get<IArgumentMatchingConventionsPolicy>(null);
+            IParameterMatchingConventionsPolicy policy = this.Context.Policies.Get<IParameterMatchingConventionsPolicy>(null);
 
             if (policy != null)
             {
@@ -21,7 +21,7 @@
 
         protected override void Initialize()
         {
-            this.Context.Policies.SetDefault<IArgumentMatchingConventionsPolicy>(new DefaultMatchingConventionsPolicy());
+            this.Context.Policies.SetDefault<IParameterMatchingConventionsPolicy>(new DefaultMatchingConventionsPolicy());
         }
     }
 }

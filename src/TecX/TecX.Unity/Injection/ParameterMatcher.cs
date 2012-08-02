@@ -10,13 +10,13 @@
 
     public class ParameterMatcher
     {
-        private readonly IEnumerable<ConstructorArgument> constructorArguments;
+        private readonly IEnumerable<ConstructorParameter> constructorArguments;
 
-        private readonly IArgumentMatchingConventionsPolicy conventions;
+        private readonly IParameterMatchingConventionsPolicy conventions;
 
         private readonly CompositePredicate<ConstructorInfo> filters;
 
-        public ParameterMatcher(IEnumerable<ConstructorArgument> constructorArguments, IArgumentMatchingConventionsPolicy conventions)
+        public ParameterMatcher(IEnumerable<ConstructorParameter> constructorArguments, IParameterMatchingConventionsPolicy conventions)
         {
             Guard.AssertNotNull(constructorArguments, "ctorArgs");
             Guard.AssertNotNull(conventions, "conventions");
