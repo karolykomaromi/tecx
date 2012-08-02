@@ -160,7 +160,7 @@ namespace TecX.Unity.Configuration.Builders
         {
             Guard.AssertNotNull(anonymous, "anonymous");
 
-            var overrides = new AnonymousTypeOverrideSpec(anonymous, this.To);
+            var overrides = new AnonymousParameterOverride(anonymous, this.To);
 
             this.enrichments.Add(overrides);
 
