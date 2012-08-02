@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace TecX.Unity.Test.TestObjects
+﻿namespace TecX.Unity.Test.TestObjects
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     internal class CtorTest : ICtorTest
     {
         public CtorTest(ILogger logger)
@@ -9,9 +9,6 @@ namespace TecX.Unity.Test.TestObjects
             Assert.Fail("must not be called");
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CtorTest"/> class
-        /// </summary>
         public CtorTest(string connectionString, ILogger logger)
         {
             Assert.AreEqual("blablub", connectionString);

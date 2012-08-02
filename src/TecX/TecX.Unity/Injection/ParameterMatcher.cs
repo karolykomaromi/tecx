@@ -5,27 +5,28 @@
     using System.Linq;
     using System.Reflection;
 
-    using Microsoft.Practices.Unity;
-
     using TecX.Common;
+    using TecX.Common.Extensions.Collections;
 
     public class ParameterMatcher
     {
         private readonly IEnumerable<ConstructorArgument> constructorArguments;
 
+        private readonly IArgumentMatchingConventionsPolicy conventions;
+
         private readonly CompositePredicate<ConstructorInfo> filters;
 
-        public ParameterMatcher(IEnumerable<ConstructorArgument> constructorArguments)
+        public ParameterMatcher(IEnumerable<ConstructorArgument> constructorArguments, IArgumentMatchingConventionsPolicy conventions)
         {
             Guard.AssertNotNull(constructorArguments, "ctorArgs");
+            Guard.AssertNotNull(conventions, "conventions");
 
-            //this.constructorArguments = new ConstructorArgumentCollection(constructorArguments);
             this.constructorArguments = constructorArguments;
+            this.conventions = conventions;
 
             this.filters = new CompositePredicate<ConstructorInfo>();
             this.filters += this.ConstructorDoesNotTakeAllArguments;
             this.filters += this.NonSatisfiedPrimitiveArgs;
-            this.filters += this.ArgumentTypesMismatch;
         }
 
         public ConstructorInfo BestMatch(IEnumerable<ConstructorInfo> ctors)
@@ -53,7 +54,7 @@
             // several matches -> return ctor with most arguments
             return potentialMatches
                 .OrderByDescending(ctor => ctor.GetParameters().Length)
-                .FirstOrDefault();
+                .First();
         }
 
         /// <summary>
@@ -70,7 +71,7 @@
 
             foreach (var argument in this.constructorArguments)
             {
-                if (!parameters.Any(p => argument.NameMatches(p.Name)))
+                if (parameters.None(p => this.conventions.Matches(argument, p)))
                 {
                     return true;
                 }
@@ -93,10 +94,9 @@
             ParameterInfo[] parameters = ctor.GetParameters();
 
             // find parameters not satisfied by provided args
-            ConstructorArgument dummy;
-            var noMatch = parameters.Where(parameter => !this.constructorArguments.TryGetArgumentByName(parameter.Name, out dummy));
+            IEnumerable<ParameterInfo> parametersWithNoMatchingCtorArgument = parameters.Where(p => this.constructorArguments.None(a => this.conventions.Matches(a, p)));
 
-            foreach (ParameterInfo parameter in noMatch)
+            foreach (ParameterInfo parameter in parametersWithNoMatchingCtorArgument)
             {
                 Type paramType = parameter.ParameterType;
 
@@ -105,38 +105,6 @@
                     paramType == typeof(string))
                 {
                     return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Filters ctor that takes argument that matches name of a provided argument but
-        /// not the provided arguments Type (e.g. ctor takes 'anotherParam' of Type string but argument
-        /// 'anotherParam' of type int is provided)
-        /// </summary>
-        /// <param name="ctor">The ctor.</param>
-        /// <returns><c>true</c> if ctor takes argument with correct argument name but wrong
-        /// argument Type; otherwise <c>false</c></returns>
-        public bool ArgumentTypesMismatch(ConstructorInfo ctor)
-        {
-            Guard.AssertNotNull(ctor, "ctor");
-
-            foreach (ParameterInfo parameter in ctor.GetParameters())
-            {
-                ConstructorArgument argument;
-
-                if (this.constructorArguments.TryGetArgumentByName(parameter.Name, out argument))
-                {
-                    var value = argument.Value as ResolvedParameter;
-
-                    Type valueType = value != null ? value.ParameterType : argument.Value.GetType();
-
-                    if (!parameter.ParameterType.IsAssignableFrom(valueType))
-                    {
-                        return true;
-                    }
                 }
             }
 

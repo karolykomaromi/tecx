@@ -1,5 +1,6 @@
 namespace TecX.Common.Extensions.Primitives
 {
+    using System;
     using System.Globalization;
 
     public static class StringExtensions
@@ -41,6 +42,14 @@ namespace TecX.Common.Extensions.Primitives
             string upperPart = s.Substring(startIndex, length).ToUpper(culture);
 
             return prefix + upperPart + postfix;
+        }
+
+        public static bool Contains(this string s, string pattern, StringComparison comparison)
+        {
+            Guard.AssertNotNull(s, "s");
+            Guard.AssertNotNull(pattern, "pattern");
+
+            return s.IndexOf(pattern, comparison) != -1;
         }
     }
 }
