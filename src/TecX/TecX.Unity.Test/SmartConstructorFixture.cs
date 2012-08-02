@@ -1,7 +1,6 @@
 ﻿namespace TecX.Unity.Test
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
 
@@ -52,15 +51,20 @@
         [TestMethod]
         public void WhenFilterByCtorTakesAllArgsFindsExpectedCtors()
         {
-            ParameterMatcher matcher = new ParameterMatcher(new[] { new ConstructorArgument("connectionString", Constants.ConnectionStringValue) });
+            ParameterMatcher matcher = new ParameterMatcher(
+                new[]
+                    {
+                        new ConstructorArgument("connectionString", Constants.ConnectionStringValue)
+                    },
+                new DefaultMatchingConventionsPolicy());
 
             Predicate<ConstructorInfo> filter = matcher.ConstructorDoesNotTakeAllArguments;
 
-            IEnumerable<Predicate<ConstructorInfo>> filters = new[] { filter };
-
             var ctors = typeof(CtorTest).GetConstructors();
 
-            var result = ctors.Where(ctor => !filters.Any(f => f(ctor)));
+            var result = ctors
+                .Where(ctor => !filter(ctor))
+                .OrderBy(ctor => ctor.GetParameters().Length);
 
             // must find Ctortest(string,ILogger), CtorTest(string,ILogger,string)
             // and CtorTest(string,ILogger,int)
@@ -71,50 +75,24 @@
         public void WhenFilterByNonSatisfiedPrimitiveArgsFindsExpectedCtors()
         {
             ParameterMatcher matcher = new ParameterMatcher(
-                new[] { new ConstructorArgument("connectionString", Constants.ConnectionStringValue) });
+                new[]
+                    {
+                        new ConstructorArgument("connectionString", Constants.ConnectionStringValue)
+                    }, 
+                new DefaultMatchingConventionsPolicy());
 
             Predicate<ConstructorInfo> filter = matcher.NonSatisfiedPrimitiveArgs;
 
-            IEnumerable<Predicate<ConstructorInfo>> filters = new[] { filter };
-
             var ctors = typeof(CtorTest).GetConstructors();
 
-            var result = ctors.Where(ctor => !filters.Any(f => f(ctor)))
+            var result = ctors.Where(ctor => !filter(ctor))
                 .OrderBy(ctor => ctor.GetParameters().Length);
 
             // must find CtorTest(ILogger) and CtorTest(string,ILogger)
             // the other two have primitive parameters that are not satisfied
             Assert.AreEqual(2, result.Count());
-            Assert.AreEqual(1, result.First().GetParameters().Length);
+            Assert.AreEqual(1, result.ElementAt(0).GetParameters().Length);
             Assert.AreEqual(2, result.ElementAt(1).GetParameters().Length);
-        }
-
-        [TestMethod]
-        public void WhenFilterByArgTypesFitFindsExpectedCtors()
-        {
-            ParameterMatcher matcher = new ParameterMatcher(
-                new[]
-                    {
-                        new ConstructorArgument("connectionString", Constants.ConnectionStringValue),
-                        new ConstructorArgument("anotherParam", "I'm a string")
-                    });
-
-            Predicate<ConstructorInfo> filter = matcher.ArgumentTypesMismatch;
-
-            IEnumerable<Predicate<ConstructorInfo>> filters = new[] { filter };
-
-            var ctors = typeof(CtorTest).GetConstructors();
-
-            var result = ctors.Where(ctor => !filters.Any(f => f(ctor)))
-                .OrderBy(ctor => ctor.GetParameters().Length);
-
-            // must find CtorTest(string,ILogger,string), CtorTest(string,ILogger) and CtorTest(ILogger)
-            // ctor with one and two args do not take any argument whose type does not match the
-            // type of any provided arg
-            Assert.AreEqual(3, result.Count());
-            Assert.AreEqual(1, result.First().GetParameters().Length);
-            Assert.AreEqual(2, result.ElementAt(1).GetParameters().Length);
-            Assert.AreEqual(3, result.ElementAt(2).GetParameters().Length);
         }
 
         [TestMethod]

@@ -51,11 +51,11 @@
             return this;
         }
 
-        public SmartConstructor With(string argumentName, object value)
+        public SmartConstructor With(object value, string name)
         {
-            Guard.AssertNotEmpty(argumentName, "argumentName");
+            Guard.AssertNotEmpty(name, "argumentName");
 
-            this.constructorArguments.Add(new ConstructorArgument(argumentName, value));
+            this.constructorArguments.Add(new ConstructorArgument(name, value));
 
             return this;
         }
@@ -76,9 +76,20 @@
             }
             else
             {
-                ctor = this.FindConstructor(implementationType);
+                NamedTypeBuildKey key = new NamedTypeBuildKey(implementationType, name);
 
-                parameterValues = this.GetParameterValues(ctor);
+                IArgumentMatchingConventionsPolicy conventions = policies.Get<IArgumentMatchingConventionsPolicy>(key);
+
+                if (conventions == null)
+                {
+                    conventions = new DefaultMatchingConventionsPolicy();
+
+                    policies.SetDefault<IArgumentMatchingConventionsPolicy>(conventions);
+                }
+
+                ctor = FindConstructor(implementationType, this.constructorArguments, conventions);
+
+                parameterValues = GetParameterValues(ctor, this.constructorArguments, conventions);
             }
 
             IConstructorSelectorPolicy policy = new SpecifiedConstructorSelectorPolicy(ctor, parameterValues);
@@ -88,38 +99,38 @@
             policies.Set<IConstructorSelectorPolicy>(policy, buildKey);
         }
 
-        private InjectionParameterValue[] GetParameterValues(ConstructorInfo ctor)
+        private static ConstructorInfo FindConstructor(Type typeToCreate, IEnumerable<ConstructorArgument> constructorArguments, IArgumentMatchingConventionsPolicy conventions)
         {
-            ParameterInfo[] infos = ctor.GetParameters();
+            ConstructorInfo[] ctors = typeToCreate.GetConstructors();
 
-            object[] parameterValues = new object[infos.Length];
+            ParameterMatcher matcher = new ParameterMatcher(constructorArguments, conventions);
+
+            return matcher.BestMatch(ctors);
+        }
+
+        private static InjectionParameterValue[] GetParameterValues(ConstructorInfo ctor, IEnumerable<ConstructorArgument> constructorArguments, IArgumentMatchingConventionsPolicy conventions)
+        {
+            ParameterInfo[] parameters = ctor.GetParameters();
+
+            object[] parameterValues = new object[parameters.Length];
 
             // fill in the provided values and add the type of the parameter that the
             // ctor expects otherwise. unity will take care of resolving parameters that
             // are provided that way
-            for (int i = 0; i < infos.Length; i++)
+            for (int i = 0; i < parameters.Length; i++)
             {
-                ConstructorArgument argument;
-                if (this.constructorArguments.TryGetArgumentByName(infos[i].Name, out argument))
+                ConstructorArgument argument = constructorArguments.FirstOrDefault(a => conventions.Matches(a, parameters[i]));
+                if (argument != null)
                 {
                     parameterValues[i] = argument.Value;
                 }
                 else
                 {
-                    parameterValues[i] = infos[i].ParameterType;
+                    parameterValues[i] = parameters[i].ParameterType;
                 }
             }
 
             return InjectionParameterValue.ToParameters(parameterValues).ToArray();
-        }
-
-        private ConstructorInfo FindConstructor(Type typeToCreate)
-        {
-            var ctors = typeToCreate.GetConstructors();
-
-            ParameterMatcher matcher = new ParameterMatcher(this.constructorArguments);
-
-            return matcher.BestMatch(ctors);
         }
     }
 }

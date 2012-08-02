@@ -80,13 +80,9 @@ namespace TecX.Unity.Configuration.Builders
             return this;
         }
 
-        public TypeRegistrationBuilder Ctor(Action<SmartConstructor> action)
+        public TypeRegistrationBuilder Ctor(params ConstructorArgument[] parameterValues)
         {
-            Guard.AssertNotNull(action, "action");
-
-            SmartConstructor ctor = new SmartConstructor();
-
-            action(ctor);
+            SmartConstructor ctor = new SmartConstructor(parameterValues);
 
             this.enrichments.Add(ctor);
 

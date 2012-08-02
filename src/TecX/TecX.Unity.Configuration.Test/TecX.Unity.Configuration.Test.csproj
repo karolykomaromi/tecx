@@ -85,6 +85,7 @@
     <Compile Include="TestObjects\Handler1.cs" />
     <Compile Include="TestObjects\Handler2.cs" />
     <Compile Include="TestObjects\Handler3.cs" />
+    <Compile Include="TestObjects\HasCtorWithConnectionString.cs" />
     <Compile Include="TestObjects\HasCtorWithParameterConvention.cs" />
     <Compile Include="TestObjects\ICommandHandler.cs" />
     <Compile Include="TestObjects\IFoo.cs" />

@@ -4,6 +4,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using TecX.Unity.Configuration.Test.TestObjects;
+    using TecX.Unity.Injection;
 
     [TestClass]
     public class When_RegisteringCtorWithParameterConvention : Given_ContainerAndBuilder
@@ -14,8 +15,7 @@
         {
             base.Given();
 
-            this.builder.For<HasCtorWithParameterConvention>().Use<HasCtorWithParameterConvention>().Ctor(
-                x => x.With(new Foo()));
+            this.builder.For<HasCtorWithParameterConvention>().Use<HasCtorWithParameterConvention>().Ctor(new ConstructorArgument(new Foo()));
         }
 
         protected override void When()

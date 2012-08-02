@@ -1,20 +1,22 @@
 namespace TecX.Unity.Injection
 {
+    using System.Diagnostics;
+
     using TecX.Common;
 
+    [DebuggerDisplay("Name:'{Name}' Value:'{Value}'")]
     public class ConstructorArgument
     {
-        private readonly NamingConvention convention;
-
         private readonly object value;
 
-        public ConstructorArgument(string argumentName, object value)
+        private readonly string name;
+
+        public ConstructorArgument(string name, object value)
         {
-            Guard.AssertNotEmpty(argumentName, "argumentName");
+            Guard.AssertNotEmpty(name, "name");
 
             this.value = value;
-
-            this.convention = new SpecifiedNameConvention(argumentName);
+            this.name = name;
         }
 
         public ConstructorArgument(object value)
@@ -22,8 +24,7 @@ namespace TecX.Unity.Injection
             Guard.AssertNotNull(value, "value");
 
             this.value = value;
-
-            this.convention = NamingConvention.Create(value.GetType());
+            this.name = string.Empty;
         }
 
         public object Value
@@ -34,11 +35,12 @@ namespace TecX.Unity.Injection
             }
         }
 
-        public bool NameMatches(string name)
+        public string Name
         {
-            Guard.AssertNotEmpty(name, "name");
-
-            return this.convention.NameMatches(name);
+            get
+            {
+                return this.name;
+            }
         }
     }
 }
