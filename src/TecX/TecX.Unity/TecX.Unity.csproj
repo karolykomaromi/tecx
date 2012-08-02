@@ -92,7 +92,6 @@
     <Compile Include="Configuration\RegistrationFamily.cs" />
     <Compile Include="Configuration\RegistrationFamilyCollection.cs" />
     <Compile Include="Configuration\TypeRegistration.cs" />
-    <Compile Include="Configuration\Utilities\AnonymousTypeOverrideSpec.cs" />
     <Compile Include="Configuration\Utilities\Cache.cs" />
     <Compile Include="Configuration\Utilities\CompositeFilter.cs" />
     <Compile Include="Configuration\Utilities\RunOnce.cs" />
@@ -131,6 +130,7 @@
     <Compile Include="Factories\TypedFactoryComponentCollection.cs" />
     <Compile Include="Factories\TypeHelper.cs" />
     <Compile Include="Groups\GroupingContainerProxy.cs" />
+    <Compile Include="Injection\AnonymousParameterOverride.cs" />
     <Compile Include="Injection\ParameterMatchingConvention.cs" />
     <Compile Include="Injection\DefaultMatchingConventionsPolicy.cs" />
     <Compile Include="Injection\ByTypeMatchingConvention.cs" />

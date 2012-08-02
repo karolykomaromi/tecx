@@ -1,19 +1,19 @@
-namespace TecX.Unity.Configuration.Utilities
+namespace TecX.Unity.Injection
 {
     using System;
     using System.Collections.Generic;
 
+    using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
     using TecX.Unity.Configuration.Extensions;
-    using TecX.Unity.Injection;
 
-    public class AnonymousTypeOverrideSpec
+    public class AnonymousParameterOverride : InjectionMember
     {
         private readonly List<ConstructorParameter> arguments;
 
-        public AnonymousTypeOverrideSpec(object anonymous, Type to)
+        public AnonymousParameterOverride(object anonymous, Type to)
         {
             Guard.AssertNotNull(anonymous, "anonymous");
 
@@ -53,11 +53,14 @@ namespace TecX.Unity.Configuration.Utilities
             }
         }
 
-        public static implicit operator InjectionMember(AnonymousTypeOverrideSpec @override)
+        public override void AddPolicies(Type serviceType, Type implementationType, string name, IPolicyList policies)
         {
-            Guard.AssertNotNull(@override, "override");
+            Guard.AssertNotNull(implementationType, "implementationType");
+            Guard.AssertNotNull(policies, "policies");
 
-            return new SmartConstructor(@override.arguments);
+            var ctor = new SmartConstructor(this.arguments);
+
+            ctor.AddPolicies(serviceType, implementationType, name, policies);
         }
     }
 }
