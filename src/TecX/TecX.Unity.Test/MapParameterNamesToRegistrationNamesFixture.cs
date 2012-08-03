@@ -26,11 +26,5 @@
             Assert.IsType(typeof(LoadCommand), vm.LoadCommand);
             Assert.IsType(typeof(SaveCommand), vm.SaveCommand);
         }
-
-        [Fact]
-        public void X()
-        {
-            Assert.False(typeof(string).IsClass);
-        }
     }
 }
