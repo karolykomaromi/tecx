@@ -19,12 +19,18 @@
             container.RegisterType<ICommand, LoadCommand>("loadCommand");
             container.RegisterType<ICommand, SaveCommand>("saveCommand");
 
-            container.RegisterType<ViewModel>(new MapParameterNameToRegistrationName());
+            container.RegisterType<ViewModel>(new MapParameterNamesToRegistrationNames());
 
             var vm = container.Resolve<ViewModel>();
 
             Assert.IsType(typeof(LoadCommand), vm.LoadCommand);
             Assert.IsType(typeof(SaveCommand), vm.SaveCommand);
+        }
+
+        [Fact]
+        public void X()
+        {
+            Assert.False(typeof(string).IsClass);
         }
     }
 }

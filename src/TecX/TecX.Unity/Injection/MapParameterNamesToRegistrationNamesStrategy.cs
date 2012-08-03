@@ -44,7 +44,7 @@ namespace TecX.Unity.Injection
             {
                 Type parameterType = parameters[i].ParameterType;
 
-                if (parameterType.IsAbstract || parameterType.IsInterface)
+                if (parameterType.IsAbstract || parameterType.IsInterface || (parameterType.IsClass && parameterType != typeof(string)))
                 {
                     IDependencyResolverPolicy resolverPolicy = new NamedTypeDependencyResolverPolicy(parameterType, parameters[i].Name);
                     context.Policies.Set<IDependencyResolverPolicy>(resolverPolicy, parameterKeys[i]);
