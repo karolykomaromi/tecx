@@ -74,17 +74,17 @@ namespace TecX.Unity.ContextualBinding.Test.ParameterBinding
             container.RegisterType<SomeClass>(
                 new InjectionConstructor("1"),
                 new ContextualParameter(
-                    (bindingContext, builderContext) =>
-                        { 
-                            object foo = bindingContext["foo"];
-                            return foo != null && (bool)foo;
-                        }, 
-                        "foo", 
+                    request =>
+                    {
+                        object foo = request["foo"];
+                        return foo != null && (bool)foo;
+                    },
+                        "foo",
                         "2"));
 
             SomeClass sut;
 
-            using(new ContextScope(container, new ContextInfo("foo", true)))
+            using (new ContextScope(container, new ContextInfo("foo", true)))
             {
                 sut = container.Resolve<SomeClass>();
 

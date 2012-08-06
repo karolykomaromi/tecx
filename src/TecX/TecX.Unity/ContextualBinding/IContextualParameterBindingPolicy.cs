@@ -6,6 +6,6 @@ namespace TecX.Unity.ContextualBinding
     {
         void Add(ContextualResolverOverride contextualResolverOverride);
 
-        void SetResolverOverrides(IRequest request, IBuilderContext builderContext);
+        void SetResolverOverrides(IRequest request);
     }
 }

@@ -40,11 +40,8 @@ namespace TecX.Unity.ContextualBinding.Test.ParameterBinding
             }
         }
 
-        public override bool IsMatch(IRequest request, IBuilderContext builderContext)
+        public override bool IsMatch(IRequest request)
         {
-            Guard.AssertNotNull(request, "request");
-            Guard.AssertNotNull(builderContext, "builderContext");
-
             OperationContext operationContext = OperationContext.Current;
 
             if (operationContext == null ||

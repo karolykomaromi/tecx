@@ -9,13 +9,13 @@ namespace TecX.Unity.ContextualBinding
 
     public class ContextualParameter : InjectionMember
     {
-        private readonly Predicate<IRequest, IBuilderContext> isMatch;
+        private readonly Predicate<IRequest> isMatch;
 
         private readonly string parameterName;
 
         private readonly object parameterValue;
 
-        public ContextualParameter(Predicate<IRequest, IBuilderContext> isMatch, string parameterName, object parameterValue)
+        public ContextualParameter(Predicate<IRequest> isMatch, string parameterName, object parameterValue)
         {
             Guard.AssertNotNull(isMatch, "isMatch");
             Guard.AssertNotEmpty(parameterName, "parameterName");
