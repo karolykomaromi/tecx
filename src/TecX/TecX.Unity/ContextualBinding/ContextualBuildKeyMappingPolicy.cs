@@ -44,6 +44,8 @@ namespace TecX.Unity.ContextualBinding
             Guard.AssertNotNull(buildKey, "buildKey");
             Guard.AssertNotNull(builderContext, "builderContext");
 
+            IBuilderContext before = this.request.Build;
+
             try
             {
                 this.request.Build = builderContext;
@@ -66,7 +68,7 @@ namespace TecX.Unity.ContextualBinding
             }
             finally
             {
-                this.request.Build = null;
+                this.request.Build = before;
             }
         }
 
