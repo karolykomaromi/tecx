@@ -92,7 +92,6 @@
     <Compile Include="Configuration\Utilities\CompositeFilter.cs" />
     <Compile Include="Configuration\Utilities\RunOnce.cs" />
     <Compile Include="Configuration\Utilities\TypePool.cs" />
-    <Compile Include="ContextualBinding\Constants.cs" />
     <Compile Include="ContextualBinding\ContextInfo.cs" />
     <Compile Include="ContextualBinding\ContextScope.cs" />
     <Compile Include="ContextualBinding\ContextualBindingException.cs" />

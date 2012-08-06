@@ -2,8 +2,6 @@ namespace TecX.Unity.ContextualBinding
 {
     using System.Collections.Generic;
 
-    using Microsoft.Practices.ObjectBuilder2;
-
     using TecX.Common;
 
     public class ContextualParameterBindingPolicy : IContextualParameterBindingPolicy
