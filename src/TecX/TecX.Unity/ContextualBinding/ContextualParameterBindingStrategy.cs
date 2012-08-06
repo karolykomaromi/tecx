@@ -17,7 +17,13 @@ namespace TecX.Unity.ContextualBinding
 
             if (policy != null)
             {
-                policy.SetResolverOverrides(this.request, context);
+                IBuilderContext before = this.request.Build;
+
+                this.request.Build = context;
+
+                policy.SetResolverOverrides(this.request);
+
+                this.request.Build = before;
             }
         }
     }

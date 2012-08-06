@@ -1,5 +1,7 @@
 namespace TecX.Unity.ContextualBinding
 {
+    using System;
+
     using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
 
@@ -7,13 +9,13 @@ namespace TecX.Unity.ContextualBinding
 
     public class ContextualParameterOverride : ContextualResolverOverride
     {
-        private readonly Predicate<IRequest, IBuilderContext> isMatch;
+        private readonly Predicate<IRequest> isMatch;
 
         private readonly string parameterName;
 
         private readonly object parameterValue;
 
-        public ContextualParameterOverride(Predicate<IRequest, IBuilderContext> isMatch, string parameterName, object parameterValue)
+        public ContextualParameterOverride(Predicate<IRequest> isMatch, string parameterName, object parameterValue)
         {
             Guard.AssertNotNull(isMatch, "isMatch");
             Guard.AssertNotEmpty(parameterName, "parameterName");
@@ -24,12 +26,11 @@ namespace TecX.Unity.ContextualBinding
             this.parameterValue = parameterValue;
         }
 
-        public override bool IsMatch(IRequest request, IBuilderContext builderContext)
+        public override bool IsMatch(IRequest request)
         {
             Guard.AssertNotNull(request, "request");
-            Guard.AssertNotNull(builderContext, "builderContext");
 
-            return this.isMatch(request, builderContext);
+            return this.isMatch(request);
         }
 
         public override void SetResolverOverrides(IBuilderContext context)
