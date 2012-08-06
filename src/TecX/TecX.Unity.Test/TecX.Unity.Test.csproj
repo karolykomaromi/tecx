@@ -97,6 +97,8 @@
     <Compile Include="TestObjects\Car.cs" />
     <Compile Include="TestObjects\CarEngine.cs" />
     <Compile Include="TestObjects\CarWheel.cs" />
+    <Compile Include="TestObjects\ClassWithInterfaceCtorParameter.cs" />
+    <Compile Include="TestObjects\ClassWithStringCtorParameter.cs" />
     <Compile Include="TestObjects\CompanyImplementation.cs" />
     <Compile Include="TestObjects\CompanyWrapper1.cs" />
     <Compile Include="TestObjects\CompanyWrapper2.cs" />

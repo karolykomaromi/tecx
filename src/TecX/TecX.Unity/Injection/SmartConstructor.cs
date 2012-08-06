@@ -10,35 +10,56 @@
     using Microsoft.Practices.Unity.ObjectBuilder;
 
     using TecX.Common;
+    using TecX.Unity.Configuration.Extensions;
 
     public class SmartConstructor : InjectionMember
     {
-        private readonly List<ConstructorParameter> constructorArguments;
+        private readonly List<ConstructorParameter> parameters;
 
-        public SmartConstructor(string argumentName, object value)
-            : this()
+        public SmartConstructor(object anonymous)
+        {
+            Guard.AssertNotNull(anonymous, "anonymous");
+
+            this.parameters = new List<ConstructorParameter>();
+
+            if (anonymous.GetType().IsAnonymous())
+            {
+                var properties = anonymous.PublicProperties();
+
+                foreach (var property in properties)
+                {
+                    this.parameters.Add(new ConstructorParameter(property.GetValue(anonymous, null), property.Name));
+                }
+            }
+            else
+            {
+                this.parameters.Add(new ConstructorParameter(anonymous));
+            }
+        }
+
+        public SmartConstructor(object value, string argumentName)
         {
             Guard.AssertNotEmpty(argumentName, "argumentName");
 
-            this.constructorArguments = new List<ConstructorParameter> { new ConstructorParameter(argumentName, value) };
+            this.parameters = new List<ConstructorParameter> { new ConstructorParameter(value, argumentName) };
         }
 
         public SmartConstructor(IEnumerable<ConstructorParameter> constructorArguments)
         {
             Guard.AssertNotNull(constructorArguments, "constructorArguments");
 
-            this.constructorArguments = new List<ConstructorParameter>(constructorArguments);
+            this.parameters = new List<ConstructorParameter>(constructorArguments);
         }
 
         public SmartConstructor(params ConstructorParameter[] constructorArguments)
         {
             if (constructorArguments == null)
             {
-                this.constructorArguments = new List<ConstructorParameter>();
+                this.parameters = new List<ConstructorParameter>();
             }
             else
             {
-                this.constructorArguments = new List<ConstructorParameter>(constructorArguments);
+                this.parameters = new List<ConstructorParameter>(constructorArguments);
             }
         }
 
@@ -46,7 +67,7 @@
         {
             Guard.AssertNotNull(value, "value");
 
-            this.constructorArguments.Add(new ConstructorParameter(value));
+            this.parameters.Add(new ConstructorParameter(value));
 
             return this;
         }
@@ -55,7 +76,7 @@
         {
             Guard.AssertNotEmpty(name, "argumentName");
 
-            this.constructorArguments.Add(new ConstructorParameter(name, value));
+            this.parameters.Add(new ConstructorParameter(value, name));
 
             return this;
         }
@@ -68,7 +89,7 @@
             ConstructorInfo ctor;
             InjectionParameterValue[] parameterValues;
 
-            if (this.constructorArguments.Count == 0)
+            if (this.parameters.Count == 0)
             {
                 ctor = implementationType.GetConstructor(Type.EmptyTypes);
 
@@ -87,9 +108,9 @@
                     policies.SetDefault<IParameterMatchingConventionsPolicy>(conventions);
                 }
 
-                ctor = FindConstructor(implementationType, this.constructorArguments, conventions);
+                ctor = FindConstructor(implementationType, this.parameters, conventions);
 
-                parameterValues = GetParameterValues(ctor, this.constructorArguments, conventions);
+                parameterValues = GetParameterValues(ctor, this.parameters, conventions);
             }
 
             IConstructorSelectorPolicy policy = new SpecifiedConstructorSelectorPolicy(ctor, parameterValues);
@@ -122,7 +143,18 @@
                 ConstructorParameter argument = constructorArguments.FirstOrDefault(a => conventions.Matches(a, parameters[i]));
                 if (argument != null)
                 {
-                    parameterValues[i] = argument.Value;
+                    Type parameterType = parameters[i].ParameterType;
+
+                    if (argument.Value is string &&
+                        parameterType != typeof(string) &&
+                        (parameterType.IsInterface || parameterType.IsClass))
+                    {
+                        parameterValues[i] = new ResolvedParameter(parameterType, (string)argument.Value);
+                    }
+                    else
+                    {
+                        parameterValues[i] = argument.Value;
+                    }
                 }
                 else
                 {

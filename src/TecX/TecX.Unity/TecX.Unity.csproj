@@ -126,7 +126,6 @@
     <Compile Include="Factories\TypedFactoryComponentCollection.cs" />
     <Compile Include="Factories\TypeHelper.cs" />
     <Compile Include="Groups\GroupingContainerProxy.cs" />
-    <Compile Include="Injection\AnonymousParameterOverride.cs" />
     <Compile Include="Injection\ParameterMatchingConvention.cs" />
     <Compile Include="Injection\DefaultMatchingConventionsPolicy.cs" />
     <Compile Include="Injection\ByTypeMatchingConvention.cs" />
@@ -140,6 +139,7 @@
     <Compile Include="Injection\MapParameterNamesToRegistrationNames.cs" />
     <Compile Include="Injection\MapParameterNameToRegistrationNamePolicy.cs" />
     <Compile Include="Injection\SpecifiedNameMatchingConvention.cs" />
+    <Compile Include="Injection\StringAsMappingNameMatchingConvention.cs" />
     <Compile Include="Injection\UnityContainerExtensions.cs" />
     <Compile Include="Literals\AppSettingsConvention.cs" />
     <Compile Include="Literals\AppSettingsResolverPolicy.cs" />

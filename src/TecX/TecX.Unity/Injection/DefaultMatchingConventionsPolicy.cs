@@ -14,6 +14,7 @@ namespace TecX.Unity.Injection
         {
             this.conventions = new HashSet<ParameterMatchingConvention>
                 {
+                    new StringAsMappingNameMatchingConvention(),
                     new SpecifiedNameMatchingConvention(),
                     new ConnectionStringMatchingConvention(),
                     new FileNameMatchingConvention(),

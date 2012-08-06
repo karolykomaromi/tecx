@@ -4,12 +4,24 @@ namespace TecX.Unity.Configuration.Extensions
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Runtime.CompilerServices;
 
     using TecX.Common;
     using TecX.Common.Extensions.Error;
+    using TecX.Common.Extensions.Primitives;
 
     public static class TypeExtensions
     {
+        public static bool IsAnonymous(this Type type)
+        {
+            Guard.AssertNotNull(type, "type");
+
+            bool hasCompilerGeneratedAttribute = type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Length > 0;
+            bool nameContainsAnonymousType = type.Name.Contains("AnonymousType", StringComparison.OrdinalIgnoreCase);
+
+            return hasCompilerGeneratedAttribute && nameContainsAnonymousType;
+        }
+
         public static PropertyInfo[] PublicProperties(this object obj)
         {
             Guard.AssertNotNull(obj, "obj");
