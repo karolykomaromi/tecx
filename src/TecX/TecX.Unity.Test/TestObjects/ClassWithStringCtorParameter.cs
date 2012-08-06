@@ -1,4 +1,4 @@
-namespace TecX.Unity.Configuration.Test.TestObjects
+namespace TecX.Unity.Test.TestObjects
 {
     public class ClassWithStringCtorParameter
     {

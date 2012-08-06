@@ -27,7 +27,7 @@
             container.RegisterType<ILogger, TestLogger>();
 
             container.RegisterType<ICtorTest, CtorTest>(
-                new SmartConstructor("connectionString", Constants.ConnectionStringValue));
+                new SmartConstructor(Constants.ConnectionStringValue, "connectionString"));
 
             ICtorTest sut = container.Resolve<ICtorTest>();
             Assert.IsNotNull(sut);
@@ -41,8 +41,8 @@
             container.RegisterType<ILogger, TestLogger>();
 
             container.RegisterType<ICtorTest, CtorTest>(new SmartConstructor(
-                new ConstructorParameter("connectionString", Constants.ConnectionStringValue),
-                new ConstructorParameter("anotherParam", "I'm a string")));
+                new ConstructorParameter(Constants.ConnectionStringValue, "connectionString"),
+                new ConstructorParameter("I'm a string", "anotherParam")));
 
             ICtorTest sut = container.Resolve<ICtorTest>();
             Assert.IsNotNull(sut);
@@ -54,7 +54,7 @@
             ParameterMatcher matcher = new ParameterMatcher(
                 new[]
                     {
-                        new ConstructorParameter("connectionString", Constants.ConnectionStringValue)
+                        new ConstructorParameter(Constants.ConnectionStringValue, "connectionString")
                     },
                 new DefaultMatchingConventionsPolicy());
 
@@ -77,7 +77,7 @@
             ParameterMatcher matcher = new ParameterMatcher(
                 new[]
                     {
-                        new ConstructorParameter("connectionString", Constants.ConnectionStringValue)
+                        new ConstructorParameter(Constants.ConnectionStringValue, "connectionString")
                     }, 
                 new DefaultMatchingConventionsPolicy());
 
@@ -121,6 +121,44 @@
             var sut = container.Resolve<DefaultCtorOnly>();
 
             Assert.IsNotNull(sut);
+        }
+
+        [TestMethod]
+        public void CanOverrideStringDependency()
+        {
+            var container = new UnityContainer();
+
+            container.RegisterType<ClassWithStringCtorParameter>(new SmartConstructor(new { someString = "1" }));
+
+            var sut = container.Resolve<ClassWithStringCtorParameter>();
+
+            Assert.AreEqual("1", sut.SomeString);
+        }
+
+        [TestMethod]
+        public void CanOverrideInterfaceDependency()
+        {
+            var container = new UnityContainer();
+
+            container.RegisterType<IFoo, Foo>("Bar");
+
+            container.RegisterType<ClassWithInterfaceCtorParameter>(new SmartConstructor(new { foo = "Bar" }));
+
+            var sut = container.Resolve<ClassWithInterfaceCtorParameter>();
+
+            Assert.IsInstanceOfType(sut.Foo, typeof(Foo));
+        }
+
+        [TestMethod]
+        public void CanOverrideDependencyWithValue()
+        {
+            var container = new UnityContainer();
+
+            container.RegisterType<ClassWithInterfaceCtorParameter>(new SmartConstructor(new { foo = new Foo() }));
+
+            var sut = container.Resolve<ClassWithInterfaceCtorParameter>();
+
+            Assert.IsInstanceOfType(sut.Foo, typeof(Foo));
         }
     }
 }

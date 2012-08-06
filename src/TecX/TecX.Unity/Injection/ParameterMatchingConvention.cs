@@ -6,10 +6,11 @@
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
+    using TecX.Unity.Configuration.Extensions;
 
     public abstract class ParameterMatchingConvention
     {
-        public bool Matches(ConstructorParameter argument, ParameterInfo parameter)
+        public virtual bool Matches(ConstructorParameter argument, ParameterInfo parameter)
         {
             Guard.AssertNotNull(argument, "argument");
             Guard.AssertNotNull(argument.Value, "argument.Value");

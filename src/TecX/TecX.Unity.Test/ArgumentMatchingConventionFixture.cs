@@ -9,11 +9,27 @@
     public class ArgumentMatchingConventionFixture
     {
         [TestMethod]
+        public void CanMatchStringAsMappingName()
+        {
+            var convention = new StringAsMappingNameMatchingConvention();
+
+            Assert.IsTrue(convention.Matches(new ConstructorParameter("1", "abc"), new FakeParameterInfo("abc", typeof(IFoo))));
+        }
+
+        [TestMethod]
+        public void WontMatchStringAsMappingNameForPrimitiveParam()
+        {
+            var convention = new StringAsMappingNameMatchingConvention();
+
+            Assert.IsFalse(convention.Matches(new ConstructorParameter("1", "abc"), new FakeParameterInfo("abc", typeof(int))));
+        }
+
+        [TestMethod]
         public void CanMatchSpecifiedName()
         {
             var convention = new SpecifiedNameMatchingConvention();
 
-            Assert.IsTrue(convention.Matches(new ConstructorParameter("abc", "1"), new FakeParameterInfo("abc", typeof(string))));
+            Assert.IsTrue(convention.Matches(new ConstructorParameter("1", "abc"), new FakeParameterInfo("abc", typeof(string))));
         }
 
         [TestMethod]
