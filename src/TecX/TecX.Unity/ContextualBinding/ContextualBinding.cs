@@ -10,7 +10,7 @@ namespace TecX.Unity.ContextualBinding
     using TecX.Common;
     using TecX.Unity.Tracking;
 
-    public class ContextualBindingExtension : UnityContainerExtension, IContextualBinding
+    public class ContextualBinding : UnityContainerExtension
     {
         private readonly Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy> mappings;
 
@@ -18,7 +18,7 @@ namespace TecX.Unity.ContextualBinding
 
         private ITracker tracker;
 
-        public ContextualBindingExtension()
+        public ContextualBinding()
         {
             this.mappings = new Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy>();
             this.bindingContext = new Dictionary<string, object>();
@@ -201,9 +201,9 @@ namespace TecX.Unity.ContextualBinding
         /// </summary>
         private class DefaultRequest : IRequest
         {
-            private readonly ContextualBindingExtension extension;
+            private readonly ContextualBinding extension;
 
-            public DefaultRequest(ContextualBindingExtension extension)
+            public DefaultRequest(ContextualBinding extension)
             {
                 Guard.AssertNotNull(extension, "extension");
 
@@ -220,7 +220,7 @@ namespace TecX.Unity.ContextualBinding
                 }
             }
 
-            private ContextualBindingExtension Extension
+            private ContextualBinding Extension
             {
                 get
                 {

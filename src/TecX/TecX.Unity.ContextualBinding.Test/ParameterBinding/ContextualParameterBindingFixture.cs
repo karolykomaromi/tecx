@@ -18,7 +18,7 @@ namespace TecX.Unity.ContextualBinding.Test.ParameterBinding
         {
             var container = new UnityContainer();
 
-            container.AddNewExtension<ContextualBindingExtension>();
+            container.AddNewExtension<ContextualBinding>();
 
             container.RegisterType<IMyService, WritesToDatabaseService>(
                 new InjectionConstructor("1"),
@@ -69,7 +69,7 @@ namespace TecX.Unity.ContextualBinding.Test.ParameterBinding
         {
             var container = new UnityContainer();
 
-            container.AddNewExtension<ContextualBindingExtension>();
+            container.AddNewExtension<ContextualBinding>();
 
             container.RegisterType<SomeClass>(
                 new InjectionConstructor("1"),

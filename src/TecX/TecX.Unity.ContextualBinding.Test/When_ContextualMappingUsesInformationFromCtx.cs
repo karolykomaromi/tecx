@@ -12,7 +12,7 @@ namespace TecX.Unity.ContextualBinding.Test
     {
         protected override void When()
         {
-            container.Configure<IContextualBinding>()["someKey"] = 123;
+            container.Configure<ContextualBinding>()["someKey"] = 123;
 
             Predicate<IRequest> matches = request =>
                 {
