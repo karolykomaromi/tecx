@@ -15,7 +15,7 @@ namespace TecX.Unity.ContextualBinding.Test
         {
             this.container = new UnityContainer();
 
-            this.container.AddNewExtension<ContextualBindingExtension>();
+            this.container.AddNewExtension<ContextualBinding>();
 
             this.builder = new ConfigurationBuilder();
         }

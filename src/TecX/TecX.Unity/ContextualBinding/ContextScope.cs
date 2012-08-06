@@ -24,12 +24,12 @@ namespace TecX.Unity.ContextualBinding
             this.contextInfos = new List<ContextInfo>(contextInfos);
             this.restoreOnDispose = new List<ContextInfo>();
 
-            IContextualBinding context = container.Configure<IContextualBinding>();
+            ContextualBinding context = container.Configure<ContextualBinding>();
 
             if (context == null)
             {
-                container.AddNewExtension<ContextualBindingExtension>();
-                context = container.Configure<IContextualBinding>();
+                context = new ContextualBinding();
+                container.AddExtension(context);
             }
 
             foreach (var contextInfo in contextInfos)
@@ -47,7 +47,12 @@ namespace TecX.Unity.ContextualBinding
 
         public void Dispose()
         {
-            IContextualBinding context = this.container.Configure<IContextualBinding>();
+            ContextualBinding context = this.container.Configure<ContextualBinding>();
+
+            if (context == null)
+            {
+                return;
+            }
 
             foreach (ContextInfo contextInfo in this.contextInfos)
             {

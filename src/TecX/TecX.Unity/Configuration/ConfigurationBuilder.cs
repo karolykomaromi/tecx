@@ -99,7 +99,7 @@ namespace TecX.Unity.Configuration
         {
             this.AddExpression(config => config.AddExtension(new DecoratorExtension()));
             this.AddExpression(config => config.AddExtension(new DefaultMappingExtension()));
-            this.AddExpression(config => config.AddExtension(new ContextualBindingExtension()));
+            this.AddExpression(config => config.AddExtension(new ContextualBinding()));
             this.AddExpression(config => config.AddExtension(new CollectionResolutionExtension()));
             this.AddExpression(config => config.AddExtension(new EnrichmentExtension()));
             this.AddExpression(config => config.AddExtension(new MappingGroupExtension()));

@@ -2,7 +2,6 @@ namespace TecX.Unity.ContextualBinding
 {
     using System;
 
-    using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
@@ -20,18 +19,16 @@ namespace TecX.Unity.ContextualBinding
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(predicate, "predicate");
 
-            var configuration = container.Configure<IContextualBinding>();
+            ContextualBinding context = container.Configure<ContextualBinding>();
 
-            if (configuration == null)
+            if (context == null)
             {
-                ContextualBindingExtension extension = new ContextualBindingExtension();
+                context = new ContextualBinding();
 
-                container.AddExtension(extension);
-
-                configuration = extension;
+                container.AddExtension(context);
             }
 
-            configuration.RegisterType(@from, to, lifetime, predicate, injectionMembers);
+            context.RegisterType(@from, to, lifetime, predicate, injectionMembers);
 
             return container;
         }
@@ -90,18 +87,16 @@ namespace TecX.Unity.ContextualBinding
             Guard.AssertNotNull(predicate, "predicate");
             Guard.AssertNotNull(instance, "instance");
 
-            var configuration = container.Configure<IContextualBinding>();
+            ContextualBinding context = container.Configure<ContextualBinding>();
 
-            if (configuration == null)
+            if (context == null)
             {
-                ContextualBindingExtension extension = new ContextualBindingExtension();
+                context = new ContextualBinding();
 
-                container.AddExtension(extension);
-
-                configuration = extension;
+                container.AddExtension(context);
             }
 
-            configuration.RegisterInstance(@from, instance, lifetime, predicate);
+            context.RegisterInstance(@from, instance, lifetime, predicate);
 
             return container;
         }
