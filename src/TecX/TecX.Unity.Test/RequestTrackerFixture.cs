@@ -1,6 +1,8 @@
 ﻿namespace TecX.Unity.Test
 {
     using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Reflection;
 
     using Microsoft.Practices.ObjectBuilder2;
@@ -24,6 +26,8 @@
             container.RegisterType<IBar, Bar2>();
 
             Consumer2 consumer = container.Resolve<Consumer2>();
+
+            consumer = container.Resolve<Consumer2>();
         }
     }
 
@@ -35,8 +39,8 @@
 
         public Consumer2(IFoo foo, IBar bar)
         {
-            Foo = foo;
-            Bar = bar;
+            this.Foo = foo;
+            this.Bar = bar;
         }
     }
 
@@ -53,16 +57,110 @@
     {
         public override void PreBuildUp(IBuilderContext context)
         {
+        }
+    }
 
+    public interface IRequest
+    {
+        Type Service { get; }
+
+        IRequest ParentRequest { get; }
+
+        IBuilderContext Context { get; }
+
+        ITarget Target { get; }
+
+        int Depth { get; }
+
+        IRequest CreateChild(Type service, IBuilderContext context, ITarget target);
+    }
+
+    [DebuggerDisplay("Service:'{Service}' Depth:'{Depth}'")]
+    public class Request : IRequest
+    {
+        private WeakReference context;
+
+        public Request(Type service)
+        {
+            Guard.AssertNotNull(service, "service");
+
+            this.Service = service;
+            this.Depth = 0;
+        }
+
+        public Request(IRequest parentRequest, IBuilderContext context, Type service, ITarget target)
+        {
+            Guard.AssertNotNull(parentRequest, "parentRequest");
+            Guard.AssertNotNull(context, "context");
+            Guard.AssertNotNull(service, "service");
+            Guard.AssertNotNull(target, "target");
+
+            this.Context = context;
+            this.ParentRequest = parentRequest;
+            this.Service = service;
+            this.Target = target;
+            this.Depth = this.ParentRequest.Depth + 1;
+        }
+
+        public Type Service { get; private set; }
+
+        public IRequest ParentRequest { get; private set; }
+
+        public IBuilderContext Context
+        {
+            get
+            {
+                if (this.context.IsAlive)
+                {
+                    return (IBuilderContext)this.context.Target;
+                }
+
+                return null;
+            }
+
+            private set
+            {
+                this.context = new WeakReference(value);
+            }
+        }
+
+        public ITarget Target { get; private set; }
+
+        public int Depth { get; private set; }
+
+        public IRequest CreateChild(Type service, IBuilderContext context, ITarget target)
+        {
+            return new Request(this, context, service, target);
         }
     }
 
     public class RequestTrackerStrategy : BuilderStrategy
     {
+        [ThreadStatic]
+        private static IRequest request;
+
+        private readonly Dictionary<NamedTypeBuildKey, ParameterInfo> lookup;
+
+        public RequestTrackerStrategy()
+        {
+            this.lookup = new Dictionary<NamedTypeBuildKey, ParameterInfo>();
+        }
+
         public override void PreBuildUp(IBuilderContext context)
         {
+            ParameterInfo parameter;
+            if (this.lookup.TryGetValue(context.BuildKey, out parameter))
+            {
+                return;
+            }
+
             IPolicyList destination;
             IConstructorSelectorPolicy selector = context.Policies.Get<IConstructorSelectorPolicy>(context.BuildKey, out destination);
+
+            if (selector as SelectedConstructorCache != null)
+            {
+                return;
+            }
 
             if (selector != null)
             {
@@ -70,53 +168,155 @@
 
                 ConstructorInfo constructor = selectedConstructor.Constructor;
 
-                ParameterInfo[] parameters = selectedConstructor.Constructor.GetParameters();
+                ParameterInfo[] parameters = constructor.GetParameters();
                 string[] keys = selectedConstructor.GetParameterKeys();
+
+                //for (int i = 0; i < parameters.Length; i++)
+                //{
+                //    this.lookup.Add(new NamedTypeBuildKey(parameters[i].ParameterType, keys[i]), parameters[i]);
+                //}
 
                 for (int i = 0; i < parameters.Length; i++)
                 {
-                    IDependencyResolverPolicy resolver = context.Policies.Get<IDependencyResolverPolicy>(keys[i]);
+                    var resolver = context.Policies.Get<IDependencyResolverPolicy>(keys[i]) as NamedTypeDependencyResolverPolicy;
 
-                    context.Policies.Set<IDependencyResolverPolicy>(new NotifyingDependencyResolver(resolver, constructor, parameters[i], this.Callback), keys[i]);
+                    if (resolver != null)
+                    {
+                        this.lookup.Add(new NamedTypeBuildKey(resolver.Type, resolver.Name), parameters[i]);
+                    }
+
+                    //context.Policies.Set<IDependencyResolverPolicy>(new NotifyingDependencyResolver(resolver, constructor, parameters[i], this.Callback), keys[i]);
                 }
 
-                destination.Set<IConstructorSelectorPolicy>(
-                    new SelectedConstructorCache(selectedConstructor), context.BuildKey);
+                destination.Set<IConstructorSelectorPolicy>(new SelectedConstructorCache(selectedConstructor), context.BuildKey);
             }
         }
 
-        private void Callback(MethodBase method, ParameterInfo parameter)
-        {
+        //private void Callback(MethodBase method, ParameterInfo parameter, IBuilderContext context)
+        //{
+        //    if (request == null)
+        //    {
+        //        request = new Request(method.DeclaringType);
 
-        }
+        //        request = request.CreateChild(method.DeclaringType, context, new ParameterTarget(method, parameter));
+        //    }
+        //    else
+        //    {
+        //        IRequest current = request;
+
+        //        while (current != null &&
+        //            current.Service == method.DeclaringType &&
+        //            current.Target != null)
+        //        {
+        //            current = current.ParentRequest;
+        //        }
+
+        //        if (current != null)
+        //        {
+        //            request = current.CreateChild(method.DeclaringType, context, new ParameterTarget(method, parameter));
+        //        }
+        //        else
+        //        {
+        //            request = new Request(method.DeclaringType);
+        //            request = request.CreateChild(method.DeclaringType, context, new ParameterTarget(method, parameter));
+        //        }
+        //    }
+        //}
     }
 
-    public class NotifyingDependencyResolver : IDependencyResolverPolicy
+    public interface ITarget
     {
-        private readonly IDependencyResolverPolicy inner;
+        Type Type { get; }
 
-        private readonly MethodBase method;
+        string Name { get; }
 
-        private readonly ParameterInfo parameter;
+        MemberInfo Member { get; }
+    }
 
-        private readonly Action<MethodBase, ParameterInfo> callback;
-
-        public NotifyingDependencyResolver(IDependencyResolverPolicy inner, MethodBase method, ParameterInfo parameter, Action<MethodBase, ParameterInfo> callback)
+    [DebuggerDisplay("Name:'{Name}' Type:'{Type}'")]
+    public abstract class Target<T> : ITarget
+        where T : ICustomAttributeProvider
+    {
+        protected Target(MemberInfo member, T site)
         {
-            Guard.AssertNotNull(inner, "inner");
-            Guard.AssertNotNull(callback, "callback");
+            Guard.AssertNotNull(member, "member");
+            Guard.AssertNotNull(site, "site");
 
-            this.inner = inner;
-            this.method = method;
-            this.parameter = parameter;
-            this.callback = callback;
+            this.Member = member;
+            this.Site = site;
         }
 
-        public object Resolve(IBuilderContext context)
-        {
-            this.callback(this.method, this.parameter);
+        public MemberInfo Member { get; private set; }
 
-            return this.inner.Resolve(context);
+        public T Site { get; private set; }
+
+        public abstract string Name { get; }
+
+        public abstract Type Type { get; }
+    }
+
+    public class PropertyTarget : Target<PropertyInfo>
+    {
+        public PropertyTarget(PropertyInfo site)
+            : base(site, site)
+        {
+        }
+
+        public override string Name
+        {
+            get { return Site.Name; }
+        }
+
+        public override Type Type
+        {
+            get { return Site.PropertyType; }
         }
     }
+
+    public class ParameterTarget : Target<ParameterInfo>
+    {
+        public ParameterTarget(MethodBase method, ParameterInfo site)
+            : base(method, site)
+        {
+        }
+
+        public override string Name
+        {
+            get { return Site.Name; }
+        }
+
+        public override Type Type
+        {
+            get { return Site.ParameterType; }
+        }
+    }
+
+    //public class NotifyingDependencyResolver : IDependencyResolverPolicy
+    //{
+    //    private readonly IDependencyResolverPolicy inner;
+
+    //    private readonly MethodBase method;
+
+    //    private readonly ParameterInfo parameter;
+
+    //    private readonly Action<MethodBase, ParameterInfo, IBuilderContext> callback;
+
+    //    public NotifyingDependencyResolver(IDependencyResolverPolicy inner, MethodBase method, ParameterInfo parameter, Action<MethodBase, ParameterInfo, IBuilderContext> callback)
+    //    {
+    //        Guard.AssertNotNull(inner, "inner");
+    //        Guard.AssertNotNull(callback, "callback");
+
+    //        this.inner = inner;
+    //        this.method = method;
+    //        this.parameter = parameter;
+    //        this.callback = callback;
+    //    }
+
+    //    public object Resolve(IBuilderContext context)
+    //    {
+    //        this.callback(this.method, this.parameter, context);
+
+    //        return this.inner.Resolve(context);
+    //    }
+    //}
 }
