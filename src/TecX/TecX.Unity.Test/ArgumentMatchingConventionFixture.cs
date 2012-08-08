@@ -13,7 +13,7 @@
         {
             var convention = new StringAsMappingNameMatchingConvention();
 
-            Assert.IsTrue(convention.Matches(new ConstructorParameter("1", "abc"), new FakeParameterInfo("abc", typeof(IFoo))));
+            Assert.IsTrue(convention.Matches(new ConstructorParameter("abc", "1"), new FakeParameterInfo("abc", typeof(IFoo))));
         }
 
         [TestMethod]
@@ -21,7 +21,7 @@
         {
             var convention = new StringAsMappingNameMatchingConvention();
 
-            Assert.IsFalse(convention.Matches(new ConstructorParameter("1", "abc"), new FakeParameterInfo("abc", typeof(int))));
+            Assert.IsFalse(convention.Matches(new ConstructorParameter("abc", "1"), new FakeParameterInfo("abc", typeof(int))));
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@
         {
             var convention = new SpecifiedNameMatchingConvention();
 
-            Assert.IsTrue(convention.Matches(new ConstructorParameter("1", "abc"), new FakeParameterInfo("abc", typeof(string))));
+            Assert.IsTrue(convention.Matches(new ConstructorParameter("abc", "1"), new FakeParameterInfo("abc", typeof(string))));
         }
 
         [TestMethod]

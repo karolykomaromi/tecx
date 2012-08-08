@@ -28,7 +28,7 @@
 
                 foreach (var property in properties)
                 {
-                    this.parameters.Add(new ConstructorParameter(property.GetValue(anonymous, null), property.Name));
+                    this.parameters.Add(new ConstructorParameter(property.Name, property.GetValue(anonymous, null)));
                 }
             }
             else
@@ -37,11 +37,11 @@
             }
         }
 
-        public SmartConstructor(object value, string argumentName)
+        public SmartConstructor(string argumentName, object value)
         {
             Guard.AssertNotEmpty(argumentName, "argumentName");
 
-            this.parameters = new List<ConstructorParameter> { new ConstructorParameter(value, argumentName) };
+            this.parameters = new List<ConstructorParameter> { new ConstructorParameter(argumentName, value) };
         }
 
         public SmartConstructor(IEnumerable<ConstructorParameter> constructorArguments)
@@ -72,11 +72,11 @@
             return this;
         }
 
-        public SmartConstructor With(object value, string name)
+        public SmartConstructor With(string name, object value)
         {
             Guard.AssertNotEmpty(name, "argumentName");
 
-            this.parameters.Add(new ConstructorParameter(value, name));
+            this.parameters.Add(new ConstructorParameter(name, value));
 
             return this;
         }
