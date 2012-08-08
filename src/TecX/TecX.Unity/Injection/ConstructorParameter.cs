@@ -11,7 +11,7 @@ namespace TecX.Unity.Injection
 
         private readonly string name;
 
-        public ConstructorParameter(object value, string name)
+        public ConstructorParameter(string name, object value)
         {
             Guard.AssertNotEmpty(name, "name");
 
