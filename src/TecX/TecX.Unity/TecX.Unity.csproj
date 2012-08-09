@@ -191,7 +191,15 @@
     <Compile Include="Tracking\BuildTreeTrackerStrategy.cs" />
     <Compile Include="Tracking\CreationTrackerStrategy.cs" />
     <Compile Include="Tracking\IBuildTreeNodeVisitor.cs" />
+    <Compile Include="Tracking\IRequest.cs" />
+    <Compile Include="Tracking\ITarget.cs" />
     <Compile Include="Tracking\ITracker.cs" />
+    <Compile Include="Tracking\ParameterTarget.cs" />
+    <Compile Include="Tracking\PropertyTarget.cs" />
+    <Compile Include="Tracking\Request.cs" />
+    <Compile Include="Tracking\RequestTracker.cs" />
+    <Compile Include="Tracking\RequestTrackerStrategy.cs" />
+    <Compile Include="Tracking\Target.cs" />
     <Compile Include="Tracking\TrackingExtension.cs" />
     <Compile Include="UnityContainerProxy.cs" />
   </ItemGroup>
