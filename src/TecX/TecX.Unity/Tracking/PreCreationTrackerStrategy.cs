@@ -4,7 +4,7 @@ namespace TecX.Unity.Tracking
 
     using Microsoft.Practices.ObjectBuilder2;
 
-    public class RequestTrackerStrategy : BuilderStrategy
+    public class PreCreationTrackerStrategy : BuilderStrategy
     {
         public override void PreBuildUp(IBuilderContext context)
         {

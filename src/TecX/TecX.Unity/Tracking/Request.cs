@@ -64,9 +64,11 @@ namespace TecX.Unity.Tracking
             : this(service, builderContext)
         {
             Guard.AssertNotNull(parentRequest, "parentRequest");
-            //Guard.AssertNotNull(target, "target");
 
             this.parentRequest = parentRequest;
+
+            // target can actually be null if you have out-of-band calls to the container. These can occur
+            // if you use InjectionFactories or similar constructs.
             this.target = target;
 
             this.depth = this.ParentRequest.Depth + 1;

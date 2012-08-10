@@ -2,8 +2,8 @@
 {
     using Microsoft.Practices.Unity;
 
-    using TecX.Unity.Test.TestObjects;
     using TecX.Unity.ContextualBinding;
+    using TecX.Unity.Test.TestObjects;
     using TecX.Unity.Tracking;
 
     using Xunit;
@@ -37,6 +37,29 @@
                     var parentType = Request.Current.ParentRequest.BuildKey.Type;
 
                     return LogManager.GetLogger(parentType);
+                }));
+
+            var sut = container.Resolve<UsesLog>();
+
+            // InjectionFactory resolves IUnityContainer which is not a target available for UsesLog.
+            Assert.Equal(typeof(UsesLog), sut.Log.Type);
+        }
+
+        [Fact]
+        public void CanResolveLogManagerAndLogWithParentType()
+        {
+            var container = new UnityContainer();
+
+            container.AddNewExtension<RequestTracker>();
+
+            container.RegisterType<ILog>(
+                new InjectionFactory((ctr, type, name) =>
+                {
+                    var parentType = Request.Current.ParentRequest.BuildKey.Type;
+
+                    LogManager manager = ctr.Resolve<LogManager>();
+
+                    return manager.GetLoggerX(parentType);
                 }));
 
             var sut = container.Resolve<UsesLog>();
