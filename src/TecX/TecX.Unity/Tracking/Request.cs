@@ -68,7 +68,7 @@ namespace TecX.Unity.Tracking
             this.parentRequest = parentRequest;
 
             // target can actually be null if you have out-of-band calls to the container. These can occur
-            // if you use InjectionFactories or similar constructs.
+            // if you use InjectionFactories or similar
             this.target = target;
 
             this.depth = this.ParentRequest.Depth + 1;

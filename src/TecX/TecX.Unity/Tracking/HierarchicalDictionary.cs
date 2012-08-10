@@ -21,40 +21,15 @@ namespace TecX.Unity.Tracking
             this.down = down;
         }
 
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        public bool IsReadOnly
         {
-            throw new NotImplementedException();
+            get
+            {
+                return false;
+            }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
-
-        public void Add(KeyValuePair<TKey, TValue> item)
-        {
-            this.down.Add(item);
-        }
-
-        public void Clear()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Contains(KeyValuePair<TKey, TValue> item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Remove(KeyValuePair<TKey, TValue> item)
-        {
-            return this.down.Remove(item) || this.top.Remove(item);
-        }
+        #region Properties - NotImplemented
 
         public int Count
         {
@@ -64,12 +39,56 @@ namespace TecX.Unity.Tracking
             }
         }
 
-        public bool IsReadOnly
+        public ICollection<TKey> Keys
         {
             get
             {
                 throw new NotImplementedException();
             }
+        }
+
+        public ICollection<TValue> Values
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion Properties - NotImplemented
+
+        public TValue this[TKey key]
+        {
+            get
+            {
+                TValue value;
+                if (this.TryGetValue(key, out value))
+                {
+                    return value;
+                }
+
+                throw new KeyNotFoundException(string.Format("Key {0} not found.", key));
+            }
+
+            set
+            {
+                this.down[key] = value;
+            }
+        }
+
+        public void Add(KeyValuePair<TKey, TValue> item)
+        {
+            this.down.Add(item);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        public bool Remove(KeyValuePair<TKey, TValue> item)
+        {
+            return this.down.Remove(item) || this.top.Remove(item);
         }
 
         public bool ContainsKey(TKey key)
@@ -103,39 +122,28 @@ namespace TecX.Unity.Tracking
             return false;
         }
 
-        public TValue this[TKey key]
+        #region Methods - NotImplemented
+
+        public void Clear()
         {
-            get
-            {
-                TValue value;
-                if (this.TryGetValue(key, out value))
-                {
-                    return value;
-                }
-
-                throw new KeyNotFoundException(string.Format("Key {0} not found.", key));
-            }
-
-            set
-            {
-                this.down[key] = value;
-            }
+            throw new NotImplementedException();
         }
 
-        public ICollection<TKey> Keys
+        public bool Contains(KeyValuePair<TKey, TValue> item)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
         }
 
-        public ICollection<TValue> Values
+        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
         }
+
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion Methods - NotImplemented
     }
 }
