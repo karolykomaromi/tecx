@@ -152,7 +152,6 @@
     <Compile Include="TestObjects\UnitOfWorkFactory.cs" />
     <Compile Include="TestObjects\UsesLog.cs" />
     <Compile Include="TestObjects\ViewModel.cs" />
-    <Compile Include="TrackingExtensionFixture.cs" />
     <Compile Include="WasResolvedFixture.cs" />
   </ItemGroup>
   <ItemGroup>

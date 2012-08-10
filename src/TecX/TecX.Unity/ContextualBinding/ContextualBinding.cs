@@ -14,37 +14,9 @@ namespace TecX.Unity.ContextualBinding
     {
         private readonly Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy> mappings;
 
-        private readonly Dictionary<string, object> requestContext;
-
-        private ITracker tracker;
-
         public ContextualBinding()
         {
             this.mappings = new Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy>();
-            this.requestContext = new Dictionary<string, object>();
-        }
-
-        public object this[string key]
-        {
-            get
-            {
-                Guard.AssertNotEmpty(key, "key");
-
-                object value;
-                if (this.requestContext.TryGetValue(key, out value))
-                {
-                    return value;
-                }
-
-                return null;
-            }
-
-            set
-            {
-                Guard.AssertNotEmpty(key, "key");
-
-                this.requestContext[key] = value;
-            }
         }
 
         public void RegisterType(Type @from, Type to, LifetimeManager lifetime, Predicate<IRequest> predicate, params InjectionMember[] injectionMembers)
@@ -97,26 +69,15 @@ namespace TecX.Unity.ContextualBinding
             this.Container.RegisterInstance(from, uniqueMappingName, instance, lifetime);
         }
 
-        public bool Remove(string key)
-        {
-            Guard.AssertNotEmpty(key, "key");
-
-            return this.requestContext.Remove(key);
-        }
-
         protected override void Initialize()
         {
-            var extension = new TrackingExtension();
-
-            this.tracker = extension;
-
-            this.Container.AddExtension(extension);
+            this.Container.AddExtension(new RequestTracker());
 
             this.Context.Registering += this.OnRegistering;
 
             this.Context.RegisteringInstance += this.OnRegisteringInstance;
 
-            this.Context.Strategies.Add(new ContextualParameterBindingStrategy(new DefaultRequest(this)), UnityBuildStage.PreCreation);
+            this.Context.Strategies.Add(new ContextualParameterBindingStrategy(), UnityBuildStage.PreCreation);
         }
 
         private void OnRegistering(object sender, RegisterEventArgs e)
@@ -177,7 +138,7 @@ namespace TecX.Unity.ContextualBinding
             {
                 // no existing contextual mapping policy for this build key so we have to create an
                 // new one and hook it up
-                policy = new ContextualBuildKeyMappingPolicy(new DefaultRequest(this));
+                policy = new ContextualBuildKeyMappingPolicy();
 
                 if (existingPolicy != null &&
                     existingContextualPolicy == null)
@@ -192,49 +153,6 @@ namespace TecX.Unity.ContextualBinding
             }
 
             return policy;
-        }
-
-        /// <summary>
-        /// The default context is more or less a direct link to the extensions data store. The <see cref="UnityContainer"/> does the same
-        /// thing with the default implementation of <see cref="ExtensionContext"/> which is a private, nested class called 
-        /// <i>ExtensionContextImpl</i>. Looked neat so I applied the same approach here.
-        /// </summary>
-        private class DefaultRequest : IRequest
-        {
-            private readonly ContextualBinding extension;
-
-            public DefaultRequest(ContextualBinding extension)
-            {
-                Guard.AssertNotNull(extension, "extension");
-
-                this.extension = extension;
-            }
-
-            public IBuilderContext Build { get; set; }
-
-            public BuildTreeNode CurrentBuildNode
-            {
-                get
-                {
-                    return this.Extension.tracker.CurrentBuildNode;
-                }
-            }
-
-            public IDictionary<string, object> RequestContext
-            {
-                get
-                {
-                    return this.Extension.requestContext;
-                }
-            }
-
-            private ContextualBinding Extension
-            {
-                get
-                {
-                    return this.extension;
-                }
-            }
         }
     }
 }

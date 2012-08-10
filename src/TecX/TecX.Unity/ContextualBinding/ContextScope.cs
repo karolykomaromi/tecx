@@ -6,6 +6,7 @@ namespace TecX.Unity.ContextualBinding
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
+    using TecX.Unity.Tracking;
 
     public class ContextScope : IDisposable
     {
@@ -34,14 +35,13 @@ namespace TecX.Unity.ContextualBinding
 
             foreach (var contextInfo in contextInfos)
             {
-                object current = context[contextInfo.Key];
-
-                if (current != null)
+                object current;
+                if (Request.StaticRequestContext.TryGetValue(contextInfo.Key, out current))
                 {
                     this.restoreOnDispose.Add(new ContextInfo(contextInfo.Key, current));
                 }
 
-                context[contextInfo.Key] = contextInfo.Value;
+                Request.StaticRequestContext[contextInfo.Key] = contextInfo.Value;
             }
         }
 
@@ -56,12 +56,12 @@ namespace TecX.Unity.ContextualBinding
 
             foreach (ContextInfo contextInfo in this.contextInfos)
             {
-                context.Remove(contextInfo.Key);
+                Request.StaticRequestContext.Remove(contextInfo.Key);
             }
 
             foreach (ContextInfo contextInfo in this.restoreOnDispose)
             {
-                context[contextInfo.Key] = contextInfo.Value;
+                Request.StaticRequestContext[contextInfo.Key] = contextInfo.Value;
             }
         }
     }

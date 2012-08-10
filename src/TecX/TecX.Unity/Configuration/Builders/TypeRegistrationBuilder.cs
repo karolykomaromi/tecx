@@ -9,9 +9,7 @@ namespace TecX.Unity.Configuration.Builders
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
-    using TecX.Unity.Configuration.Utilities;
     using TecX.Unity.Enrichment;
-    using TecX.Unity.Factories;
     using TecX.Unity.Injection;
 
     public class TypeRegistrationBuilder : RegistrationBuilder<TypeRegistrationBuilder>

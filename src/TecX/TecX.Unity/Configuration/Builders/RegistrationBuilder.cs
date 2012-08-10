@@ -3,11 +3,10 @@ namespace TecX.Unity.Configuration.Builders
     using System;
     using System.Diagnostics.CodeAnalysis;
 
-    using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
-    using TecX.Unity.ContextualBinding;
+    using TecX.Unity.Tracking;
 
     public abstract class RegistrationBuilder
     {
@@ -115,8 +114,8 @@ namespace TecX.Unity.Configuration.Builders
 
             this.predicate = request =>
             {
-                var parent = request.CurrentBuildNode.Parent;
-                return parent != null && parent.BuildKey.Type == parentType;
+                IRequest parent = request.ParentRequest;
+                return parent != null && parent.Service == parentType;
             };
 
             return this as TRegistrationBuilder;
@@ -128,15 +127,15 @@ namespace TecX.Unity.Configuration.Builders
 
             this.predicate = request =>
                 {
-                    var parent = request.CurrentBuildNode.Parent;
+                    IRequest parent = request.ParentRequest;
                     while (parent != null)
                     {
-                        if (string.Equals(name, parent.BuildKey.Name, StringComparison.OrdinalIgnoreCase))
+                        if (string.Equals(name, parent.BuilderContext.BuildKey.Name, StringComparison.OrdinalIgnoreCase))
                         {
                             return true;
                         }
 
-                        parent = parent.Parent;
+                        parent = parent.ParentRequest;
                     }
 
                     return false;

@@ -6,13 +6,14 @@ namespace TecX.Unity.ContextualBinding.Test
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using TecX.Unity.ContextualBinding.Test.TestObjects;
+    using TecX.Unity.Tracking;
 
     [TestClass]
     public class When_ContextualMappingUsesInformationFromCtx : Given_BuilderAndContainerWithContextualBindingExtension
     {
         protected override void When()
         {
-            container.Configure<ContextualBinding>()["someKey"] = 123;
+            Request.StaticRequestContext["someKey"] = 123;
 
             Predicate<IRequest> matches = request =>
                 {

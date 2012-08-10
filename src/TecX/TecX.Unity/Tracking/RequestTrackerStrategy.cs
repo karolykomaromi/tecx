@@ -6,26 +6,27 @@ namespace TecX.Unity.Tracking
 
     public class RequestTrackerStrategy : BuilderStrategy
     {
-        [ThreadStatic]
-        private static IRequest request;
-
         public override void PreBuildUp(IBuilderContext context)
         {
-            request = Request != null ? Request.CreateChild(context.BuildKey.Type, context) : new Request(context.BuildKey.Type, context);
-            //Console.WriteLine(request);
+            //current == null ==> new
+
+            //current != null && originalbuildkey
+
+            if (Request.Current != null && Request.Current.ParentRequest != null)
+            {
+                Request.Current = Request.Current.ParentRequest.CreateChild(context.BuildKey.Type, context);
+            }
+            else
+            {
+                Request.Current = new Request(context.BuildKey.Type, context);
+            }
+
+            Console.WriteLine(Request.Current);
         }
 
         public override void PostBuildUp(IBuilderContext context)
         {
-            request = Request.ParentRequest;
-        }
-
-        public IRequest Request
-        {
-            get
-            {
-                return request;
-            }
+            Request.Current = Request.Current.ParentRequest;
         }
     }
 }

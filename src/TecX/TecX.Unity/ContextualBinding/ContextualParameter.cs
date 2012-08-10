@@ -6,6 +6,7 @@ namespace TecX.Unity.ContextualBinding
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
+    using TecX.Unity.Tracking;
 
     public class ContextualParameter : InjectionMember
     {
