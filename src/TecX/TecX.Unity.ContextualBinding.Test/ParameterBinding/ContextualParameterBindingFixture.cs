@@ -76,8 +76,13 @@ namespace TecX.Unity.ContextualBinding.Test.ParameterBinding
                 new ContextualParameter(
                     request =>
                     {
-                        object foo = request.RequestContext["foo"];
-                        return foo != null && (bool)foo;
+                        object foo;
+                        if (request.RequestContext.TryGetValue("foo", out foo))
+                        {
+                            return (bool)foo;
+                        }
+
+                        return false;
                     },
                         "foo",
                         "2"));

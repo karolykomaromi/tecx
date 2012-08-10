@@ -14,11 +14,20 @@ namespace TecX.Unity.Tracking
     [DebuggerDisplay("Service:'{Service}' Depth:'{Depth}'")]
     public class Request : IRequest
     {
+        private static readonly IDictionary<string, object> staticRequestContext;
+
+        [ThreadStatic]
+        private static IRequest current;
+
         private readonly ITarget[] availableTargets;
 
         private readonly WeakReference builderContext;
 
+        private readonly NamedTypeBuildKey buildKey;
+
         private readonly int depth;
+
+        private readonly NamedTypeBuildKey originalBuildKey;
 
         private readonly IRequest parentRequest;
 
@@ -30,6 +39,11 @@ namespace TecX.Unity.Tracking
 
         private int currentTarget;
 
+        static Request()
+        {
+            staticRequestContext = new Dictionary<string, object>();
+        }
+
         public Request(Type service, IBuilderContext builderContext)
         {
             Guard.AssertNotNull(service, "service");
@@ -39,22 +53,45 @@ namespace TecX.Unity.Tracking
             this.builderContext = new WeakReference(builderContext);
 
             this.availableTargets = GetAvailableTargets(builderContext);
+            this.buildKey = builderContext.BuildKey;
             this.currentTarget = 0;
             this.depth = 0;
-            this.requestContext = new Dictionary<string, object>();
+            this.originalBuildKey = builderContext.OriginalBuildKey;
+            this.requestContext = new HierarchicalDictionary<string, object>(StaticRequestContext, new Dictionary<string, object>());
         }
 
         public Request(IRequest parentRequest, Type service, IBuilderContext builderContext, ITarget target)
             : this(service, builderContext)
         {
             Guard.AssertNotNull(parentRequest, "parentRequest");
-            Guard.AssertNotNull(target, "target");
+            //Guard.AssertNotNull(target, "target");
 
             this.parentRequest = parentRequest;
             this.target = target;
 
             this.depth = this.ParentRequest.Depth + 1;
             this.requestContext = this.ParentRequest.RequestContext;
+        }
+
+        public static IRequest Current
+        {
+            get
+            {
+                return current;
+            }
+
+            set
+            {
+                current = value;
+            }
+        }
+
+        public static IDictionary<string, object> StaticRequestContext
+        {
+            get
+            {
+                return staticRequestContext;
+            }
         }
 
         public IBuilderContext BuilderContext
@@ -101,7 +138,7 @@ namespace TecX.Unity.Tracking
                 return this.service;
             }
         }
-        
+
         public ITarget Target
         {
             get
@@ -110,9 +147,27 @@ namespace TecX.Unity.Tracking
             }
         }
 
+        public NamedTypeBuildKey BuildKey
+        {
+            get
+            {
+                return this.buildKey;
+            }
+        }
+
+        public NamedTypeBuildKey OriginalBuildKey
+        {
+            get
+            {
+                return this.originalBuildKey;
+            }
+        }
+
         public IRequest CreateChild(Type service, IBuilderContext context)
         {
-            return new Request(this, service, context, this.GetNextTarget());
+            ITarget targetForChild = this.GetNextTarget();
+
+            return new Request(this, service, context, targetForChild);
         }
 
         public override string ToString()
@@ -136,11 +191,16 @@ namespace TecX.Unity.Tracking
             {
                 SelectedConstructor selectedConstructor = selector.SelectConstructor(context, destination);
 
-                ConstructorInfo constructor = selectedConstructor.Constructor;
+                if (selectedConstructor != null)
+                {
+                    ConstructorInfo constructor = selectedConstructor.Constructor;
 
-                targets = targets.Concat(constructor.GetParameters().Select(p => new ParameterTarget(constructor, p)));
+                    targets =
+                        targets.Concat(constructor.GetParameters().Select(p => new ParameterTarget(constructor, p)));
 
-                destination.Set<IConstructorSelectorPolicy>(new SelectedConstructorCache(selectedConstructor), context.BuildKey);
+                    destination.Set<IConstructorSelectorPolicy>(
+                        new SelectedConstructorCache(selectedConstructor), context.BuildKey);
+                }
             }
 
             IPropertySelectorPolicy propertySelector = context.Policies.Get<IPropertySelectorPolicy>(context.BuildKey, out destination);
@@ -148,10 +208,10 @@ namespace TecX.Unity.Tracking
             if (propertySelector != null)
             {
                 var selectedProperties = propertySelector.SelectProperties(context, destination).ToArray();
-
                 targets = targets.Concat(selectedProperties.Select(p => new PropertyTarget(p.Property)));
 
-                destination.Set<IPropertySelectorPolicy>(new SelectedPropertiesCache(selectedProperties), context.BuildKey);
+                destination.Set<IPropertySelectorPolicy>(
+                    new SelectedPropertiesCache(selectedProperties), context.BuildKey);
             }
 
             IMethodSelectorPolicy methodSelector = context.Policies.Get<IMethodSelectorPolicy>(context.BuildKey, out destination);
@@ -175,9 +235,18 @@ namespace TecX.Unity.Tracking
 
         private ITarget GetNextTarget()
         {
+            //int i = this.currentTarget;
+            //int m = this.availableTargets.Length;
+
+            //i = ((i % m) + m) % m;
+
             if (this.currentTarget < this.availableTargets.Length)
             {
-                return this.availableTargets[this.currentTarget++];
+                ITarget t = this.availableTargets[this.currentTarget++];
+
+                this.currentTarget = this.currentTarget % this.availableTargets.Length;
+
+                return t;
             }
 
             return null;

@@ -6,21 +6,16 @@ namespace TecX.Unity.ContextualBinding
     using Microsoft.Practices.ObjectBuilder2;
 
     using TecX.Common;
+    using TecX.Unity.Tracking;
 
     public class ContextualBuildKeyMappingPolicy : IBuildKeyMappingPolicy
     {
-        private readonly IRequest request;
-
         private readonly List<ContextualBuildKeyMapping> mappings;
 
         private IBuildKeyMappingPolicy defaultMapping;
 
-        public ContextualBuildKeyMappingPolicy(IRequest request)
+        public ContextualBuildKeyMappingPolicy()
         {
-            Guard.AssertNotNull(request, "request");
-
-            this.request = request;
-
             this.mappings = new List<ContextualBuildKeyMapping>();
         }
 
@@ -44,32 +39,21 @@ namespace TecX.Unity.ContextualBinding
             Guard.AssertNotNull(buildKey, "buildKey");
             Guard.AssertNotNull(builderContext, "builderContext");
 
-            IBuilderContext before = this.request.Build;
-
-            try
+            foreach (var mapping in this.mappings)
             {
-                this.request.Build = builderContext;
-
-                foreach (var mapping in this.mappings)
+                if (mapping.IsMatch(Request.Current))
                 {
-                    if (mapping.IsMatch(this.request))
-                    {
-                        return mapping.BuildKey;
-                    }
+                    return mapping.BuildKey;
                 }
-
-                if (this.DefaultMapping != null)
-                {
-                    return this.DefaultMapping.Map(buildKey, builderContext);
-                }
-
-                throw new ContextualBindingException("No contextual mapping that matches the current context was " +
-                                                     "defined and no default mapping could be found.");
             }
-            finally
+
+            if (this.DefaultMapping != null)
             {
-                this.request.Build = before;
+                return this.DefaultMapping.Map(buildKey, builderContext);
             }
+
+            throw new ContextualBindingException("No contextual mapping that matches the current context was " +
+                                                 "defined and no default mapping could be found.");
         }
 
         public void AddMapping(Type mapTo, string uniqueMappingName, Predicate<IRequest> predicate)

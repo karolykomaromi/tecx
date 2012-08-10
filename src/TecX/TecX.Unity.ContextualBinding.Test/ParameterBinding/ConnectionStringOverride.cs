@@ -9,6 +9,7 @@ namespace TecX.Unity.ContextualBinding.Test.ParameterBinding
 
     using TecX.Common;
     using TecX.Unity.ContextualBinding.Test.TestObjects;
+    using TecX.Unity.Tracking;
 
     public class ConnectionStringOverride : ContextualResolverOverride
     {

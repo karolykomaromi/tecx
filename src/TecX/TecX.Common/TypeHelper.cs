@@ -29,11 +29,11 @@ namespace TecX.Common
         /// <returns>The formatted string; the original format string if an error occurs</returns>
         public static string SafeFormat(string format, params object[] args)
         {
-            if (String.IsNullOrEmpty(format))
+            if (string.IsNullOrEmpty(format))
             {
                 // if the format string is already empty,
                 // then just return an empty string
-                return String.Empty;
+                return string.Empty;
             }
 
             try
@@ -45,7 +45,7 @@ namespace TecX.Common
                     return format;
                 }
 
-                string result = String.Format(format, args);
+                string result = string.Format(format, args);
 
                 return result;
             }
@@ -66,7 +66,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(string arg)
         {
-            return ToNullSafeString(arg, String.Empty);
+            return ToNullSafeString(arg, string.Empty);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(string arg, string def)
         {
-            def = def ?? String.Empty;
+            def = def ?? string.Empty;
 
             return arg ?? def;
         }
@@ -93,7 +93,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(object obj)
         {
-            return ToNullSafeString(obj, String.Empty);
+            return ToNullSafeString(obj, string.Empty);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace TecX.Common
         /// </returns>
         public static string ToNullSafeString(object obj, string def)
         {
-            def = def ?? String.Empty;
+            def = def ?? string.Empty;
 
             return (obj == null) ? def : obj.ToString();
         }

@@ -6,19 +6,27 @@ namespace TecX.Unity.ContextualBinding.Test
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using TecX.Unity.ContextualBinding.Test.TestObjects;
+    using TecX.Unity.Tracking;
 
     [TestClass]
     public class When_RegisteringWithParentNamespaceCondition : Given_BuilderAndContainerWithContextualBindingExtension
     {
         protected override void When()
         {
-            Predicate<IRequest> condition = request =>
+            Predicate<IRequest> predicate = request =>
                 {
-                    bool isMatch = request.CurrentBuildNode.RootNode.BuildKey.Type.Namespace.EndsWith("TestObjects");
+                    IRequest current = Request.Current;
+
+                    while (current.ParentRequest != null)
+                    {
+                        current = current.ParentRequest;
+                    }
+
+                    bool isMatch = current.BuildKey.Type.Namespace.EndsWith("TestObjects");
                     return isMatch;
                 };
 
-            container.RegisterType<IMyInterface, MyOtherClass>(condition);
+            container.RegisterType<IMyInterface, MyOtherClass>(predicate);
         }
 
         [TestMethod]

@@ -2,11 +2,11 @@ namespace TecX.Unity.Configuration
 {
     using System;
 
-    using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
     using TecX.Unity.ContextualBinding;
+    using TecX.Unity.Tracking;
 
     public class ContextualTypeRegistration : TypeRegistration
     {

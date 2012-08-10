@@ -18,7 +18,11 @@ namespace TecX.Unity.Tracking
         Type Service { get; }
 
         ITarget Target { get; }
-            
+
+        NamedTypeBuildKey BuildKey { get; }
+
+        NamedTypeBuildKey OriginalBuildKey { get; }
+
         IRequest CreateChild(Type service, IBuilderContext context);
     }
 }
