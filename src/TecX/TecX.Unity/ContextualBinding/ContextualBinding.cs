@@ -14,14 +14,14 @@ namespace TecX.Unity.ContextualBinding
     {
         private readonly Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy> mappings;
 
-        private readonly Dictionary<string, object> bindingContext;
+        private readonly Dictionary<string, object> requestContext;
 
         private ITracker tracker;
 
         public ContextualBinding()
         {
             this.mappings = new Dictionary<NamedTypeBuildKey, ContextualBuildKeyMappingPolicy>();
-            this.bindingContext = new Dictionary<string, object>();
+            this.requestContext = new Dictionary<string, object>();
         }
 
         public object this[string key]
@@ -31,7 +31,7 @@ namespace TecX.Unity.ContextualBinding
                 Guard.AssertNotEmpty(key, "key");
 
                 object value;
-                if (this.bindingContext.TryGetValue(key, out value))
+                if (this.requestContext.TryGetValue(key, out value))
                 {
                     return value;
                 }
@@ -43,7 +43,7 @@ namespace TecX.Unity.ContextualBinding
             {
                 Guard.AssertNotEmpty(key, "key");
 
-                this.bindingContext[key] = value;
+                this.requestContext[key] = value;
             }
         }
 
@@ -101,7 +101,7 @@ namespace TecX.Unity.ContextualBinding
         {
             Guard.AssertNotEmpty(key, "key");
 
-            return this.bindingContext.Remove(key);
+            return this.requestContext.Remove(key);
         }
 
         protected override void Initialize()
@@ -220,35 +220,19 @@ namespace TecX.Unity.ContextualBinding
                 }
             }
 
+            public IDictionary<string, object> RequestContext
+            {
+                get
+                {
+                    return this.Extension.requestContext;
+                }
+            }
+
             private ContextualBinding Extension
             {
                 get
                 {
                     return this.extension;
-                }
-            }
-
-            public object this[string key]
-            {
-                get
-                {
-                    Guard.AssertNotEmpty(key, "key");
-
-                    object value;
-
-                    if (this.Extension.bindingContext.TryGetValue(key, out value))
-                    {
-                        return value;
-                    }
-
-                    return null;
-                }
-
-                set
-                {
-                    Guard.AssertNotEmpty(key, "key");
-
-                    this.Extension.bindingContext[key] = value;
                 }
             }
         }
