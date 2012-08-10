@@ -189,11 +189,12 @@
     <Compile Include="Tracking\HierarchicalDictionary.cs" />
     <Compile Include="Tracking\IRequest.cs" />
     <Compile Include="Tracking\ITarget.cs" />
+    <Compile Include="Tracking\LifetimeTrackerStrategy.cs" />
     <Compile Include="Tracking\ParameterTarget.cs" />
     <Compile Include="Tracking\PropertyTarget.cs" />
     <Compile Include="Tracking\Request.cs" />
     <Compile Include="Tracking\RequestTracker.cs" />
-    <Compile Include="Tracking\RequestTrackerStrategy.cs" />
+    <Compile Include="Tracking\PreCreationTrackerStrategy.cs" />
     <Compile Include="Tracking\SetupTrackerStrategy.cs" />
     <Compile Include="Tracking\Target.cs" />
     <Compile Include="UnityContainerProxy.cs" />
