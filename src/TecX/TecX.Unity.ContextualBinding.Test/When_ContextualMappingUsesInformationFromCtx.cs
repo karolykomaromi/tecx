@@ -16,7 +16,7 @@ namespace TecX.Unity.ContextualBinding.Test
 
             Predicate<IRequest> matches = request =>
                 {
-                    if ((int)request["someKey"] == 123)
+                    if ((int)request.RequestContext["someKey"] == 123)
                     {
                         return true;
                     }

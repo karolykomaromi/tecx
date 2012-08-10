@@ -1,5 +1,7 @@
 namespace TecX.Unity.ContextualBinding
 {
+    using System.Collections.Generic;
+
     using Microsoft.Practices.ObjectBuilder2;
 
     using TecX.Unity.Tracking;
@@ -10,6 +12,6 @@ namespace TecX.Unity.ContextualBinding
 
         BuildTreeNode CurrentBuildNode { get; }
 
-        object this[string key] { get; set; }
+        IDictionary<string, object> RequestContext { get; }
     }
 }

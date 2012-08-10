@@ -7,18 +7,18 @@ namespace TecX.Unity.Tracking
 
     public interface IRequest
     {
-        Type Service { get; }
-
-        IRequest ParentRequest { get; }
-
-        IBuilderContext Context { get; }
-
-        ITarget Target { get; }
+        IBuilderContext BuilderContext { get; }
 
         int Depth { get; }
 
-        ITarget GetNextTarget();
+        IRequest ParentRequest { get; }
 
-        IRequest CreateChild(Type service, IBuilderContext context, IEnumerable<ITarget> target);
+        IDictionary<string, object> RequestContext { get; }
+
+        Type Service { get; }
+
+        ITarget Target { get; }
+            
+        IRequest CreateChild(Type service, IBuilderContext context);
     }
 }
