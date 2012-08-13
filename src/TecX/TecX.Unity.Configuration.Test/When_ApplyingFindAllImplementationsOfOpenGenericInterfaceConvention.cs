@@ -10,9 +10,9 @@
     [TestClass]
     public class When_ApplyingFindAllImplementationsOfOpenGenericInterfaceConvention : Given_ContainerAndBuilder
     {
-        protected override void Given()
+        protected override void Arrange()
         {
-            base.Given();
+            base.Arrange();
 
             this.builder.Scan(x =>
                 {

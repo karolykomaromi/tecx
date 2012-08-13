@@ -10,16 +10,16 @@
     {
         private Parent parent;
 
-        protected override void Given()
+        protected override void Arrange()
         {
-            base.Given();
+            base.Arrange();
 
             this.builder.For<IFoo>().Use<Foo>().WhenInjectedInto<Parent>();
         }
 
-        protected override void When()
+        protected override void Act()
         {
-            base.When();
+            base.Act();
 
             this.parent = this.container.Resolve<Parent>();
         }

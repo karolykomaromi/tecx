@@ -10,16 +10,16 @@ namespace TecX.Unity.ContextualBinding.Test
     {
         private IFoo sut;
 
-        protected override void Given()
+        protected override void Arrange()
         {
-            base.Given();
+            base.Arrange();
 
-            this.builder.For<IFoo>().Use<Foo>().If(request => true);
+            this.builder.For<IFoo>().Use<Foo>().When(request => true);
         }
 
-        protected override void When()
+        protected override void Act()
         {
-            base.When();
+            base.Act();
 
             this.sut = this.container.Resolve<IFoo>();
         }

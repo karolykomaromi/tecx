@@ -7,7 +7,7 @@ namespace TecX.Unity.TypedFactory.Test
     using TecX.Unity.Factories;
     using TecX.Unity.TypedFactory.Test.TestObjects;
 
-    public abstract class Given_ContainerWithFactoryRegistration : GivenWhenThen
+    public abstract class Given_ContainerWithFactoryRegistration : ArrangeActAssert
     {
         protected IUnityContainer Container { get; set; }
 
@@ -15,7 +15,7 @@ namespace TecX.Unity.TypedFactory.Test
 
         protected IMyFactory Factory { get; set; }
 
-        protected override void Given()
+        protected override void Arrange()
         {
             this.Container = new UnityContainer();
 

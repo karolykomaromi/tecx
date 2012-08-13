@@ -11,16 +11,16 @@
     {
         private HasCtorWithConnectionString sut;
 
-        protected override void Given()
+        protected override void Arrange()
         {
-            base.Given();
+            base.Arrange();
 
             this.builder.For<HasCtorWithConnectionString>().Use<HasCtorWithConnectionString>().Ctor(new ConstructorParameter("I'm a ConnectionString"));
         }
 
-        protected override void When()
+        protected override void Act()
         {
-            base.When();
+            base.Act();
 
             this.sut = this.container.Resolve<HasCtorWithConnectionString>();
         }

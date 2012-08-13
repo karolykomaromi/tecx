@@ -10,17 +10,17 @@ namespace TecX.Unity.TypedFactory.Test
     {
         private IMyFactory sut;
 
-        protected override void Given()
+        protected override void Arrange()
         {
-            base.Given();
+            base.Arrange();
 
             this.builder.For<IMyFactory>().AsFactory();
             this.builder.For<IFoo>().Use<Foo>();
         }
 
-        protected override void When()
+        protected override void Act()
         {
-            base.When();
+            base.Act();
 
             this.sut = this.container.Resolve<IMyFactory>();
         }

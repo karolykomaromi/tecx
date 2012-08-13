@@ -12,18 +12,18 @@ namespace TecX.Unity.ContextualBinding.Test
 
         private object instance;
 
-        protected override void Given()
+        protected override void Arrange()
         {
-            base.Given();
+            base.Arrange();
 
             this.instance = new Foo();
 
-            this.builder.For<IFoo>().Use(this.instance).If(request => true);
+            this.builder.For<IFoo>().Use(this.instance).When(request => true);
         }
 
-        protected override void When()
+        protected override void Act()
         {
-            base.When();
+            base.Act();
 
             this.sut = this.container.Resolve<IFoo>();
         }

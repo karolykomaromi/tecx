@@ -13,7 +13,7 @@ namespace TecX.Common.Test
     {
         private List<ISpecification<SearchTestEntity>> matchedSpecs;
 
-        protected override void When()
+        protected override void Act()
         {
             this.matchedSpecs = new List<ISpecification<SearchTestEntity>>();
 

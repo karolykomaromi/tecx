@@ -9,13 +9,13 @@ namespace TecX.ServiceModel.Test
     using TecX.ServiceModel.Test.TestClasses;
     using TecX.TestTools;
 
-    public abstract class Given_DiscoverableServiceHost : GivenWhenThen
+    public abstract class Given_DiscoverableServiceHost : ArrangeActAssert
     {
         protected ServiceHost host;
 
         protected IUnityContainer container;
 
-        protected override void Given()
+        protected override void Arrange()
         {
             this.host = new ServiceHost(typeof(SyncService), Constants.BaseAddress);
 

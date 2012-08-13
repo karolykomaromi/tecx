@@ -20,9 +20,9 @@ namespace TecX.ServiceModel.Test
 
         private IAsyncResult result;
 
-        protected override void Given()
+        protected override void Arrange()
         {
-            base.Given();
+            base.Arrange();
 
             this.callbackOccured = false;
 
@@ -33,7 +33,7 @@ namespace TecX.ServiceModel.Test
             this.service = this.container.Resolve<IAsyncService>();
         }
 
-        protected override void When()
+        protected override void Act()
         {
             this.result = this.service.BeginDoWork(
                 "input",

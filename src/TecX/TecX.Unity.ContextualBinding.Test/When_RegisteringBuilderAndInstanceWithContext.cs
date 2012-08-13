@@ -8,7 +8,7 @@ namespace TecX.Unity.ContextualBinding.Test
     [TestClass]
     public class When_RegisteringBuilderAndInstanceWithContext : Given_BuilderAndInstance
     {
-        protected override void When()
+        protected override void Act()
         {
             container.RegisterInstance<IMyInterface>(instance, request => true);
         }

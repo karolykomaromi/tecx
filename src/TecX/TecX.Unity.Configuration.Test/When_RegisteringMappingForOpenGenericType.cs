@@ -8,9 +8,9 @@ namespace TecX.Unity.Configuration.Test
     [TestClass]
     public class When_RegisteringMappingForOpenGenericType : Given_ContainerAndBuilder
     {
-        protected override void Given()
+        protected override void Arrange()
         {
-            base.Given();
+            base.Arrange();
 
             builder.For(typeof(IEnumerable<>)).Use(typeof(List<>)).DefaultCtor();
         }

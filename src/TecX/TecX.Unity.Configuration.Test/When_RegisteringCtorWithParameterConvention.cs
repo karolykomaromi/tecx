@@ -11,16 +11,16 @@
     {
         private HasCtorWithParameterConvention sut;
 
-        protected override void Given()
+        protected override void Arrange()
         {
-            base.Given();
+            base.Arrange();
 
             this.builder.For<HasCtorWithParameterConvention>().Use<HasCtorWithParameterConvention>().Ctor(new ConstructorParameter(new Foo()));
         }
 
-        protected override void When()
+        protected override void Act()
         {
-            base.When();
+            base.Act();
 
             this.sut = this.container.Resolve<HasCtorWithParameterConvention>();
         }

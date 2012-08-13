@@ -34,6 +34,16 @@ namespace TecX.Unity.ContextualBinding
             return container;
         }
 
+        public static IUnityContainer RegisterType<TTo>(
+            this IUnityContainer container,
+            Predicate<IRequest> predicate,
+            params InjectionMember[] injectionMembers)
+        {
+            Guard.AssertNotNull(container, "container");
+
+            return RegisterType(container, null, typeof(TTo), null, predicate, injectionMembers);
+        }
+
         public static IUnityContainer RegisterType<TFrom, TTo>(
             this IUnityContainer container, 
             LifetimeManager lifetime, 

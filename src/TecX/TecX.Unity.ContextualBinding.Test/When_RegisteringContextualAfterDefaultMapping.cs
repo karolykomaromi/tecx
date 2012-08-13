@@ -8,7 +8,7 @@ namespace TecX.Unity.ContextualBinding.Test
     [TestClass]
     public class When_RegisteringContextualAfterDefaultMapping : Given_BuilderAndContainerWithContextualBindingExtension
     {
-        protected override void When()
+        protected override void Act()
         {
             container.RegisterType<IMyInterface, MyOtherClass>();
 
