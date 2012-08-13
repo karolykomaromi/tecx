@@ -5,13 +5,13 @@ namespace TecX.Unity.ContextualBinding.Test
     using TecX.TestTools;
     using TecX.Unity.Configuration;
 
-    public abstract class Given_BuilderAndContainerWithContextualBindingExtension : GivenWhenThen
+    public abstract class Given_BuilderAndContainerWithContextualBindingExtension : ArrangeActAssert
     {
         protected IUnityContainer container;
 
         protected ConfigurationBuilder builder;
 
-        protected override void Given()
+        protected override void Arrange()
         {
             this.container = new UnityContainer();
 
@@ -20,7 +20,7 @@ namespace TecX.Unity.ContextualBinding.Test
             this.builder = new ConfigurationBuilder();
         }
 
-        protected override void When()
+        protected override void Act()
         {
             this.container.AddExtension(this.builder);
         }

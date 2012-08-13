@@ -4,20 +4,20 @@ namespace TecX.Unity.Configuration.Test
 
     using TecX.TestTools;
 
-    public abstract class Given_ContainerAndBuilder : GivenWhenThen
+    public abstract class Given_ContainerAndBuilder : ArrangeActAssert
     {
         protected IUnityContainer container;
 
         protected ConfigurationBuilder builder;
 
-        protected override void Given()
+        protected override void Arrange()
         {
             this.container = new UnityContainer();
 
             this.builder = new ConfigurationBuilder();
         }
 
-        protected override void When()
+        protected override void Act()
         {
             this.container.AddExtension(this.builder);
         }

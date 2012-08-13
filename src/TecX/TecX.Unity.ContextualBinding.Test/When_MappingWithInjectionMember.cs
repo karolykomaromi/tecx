@@ -8,17 +8,15 @@ namespace TecX.Unity.ContextualBinding.Test
     [TestClass]
     public class When_MappingWithInjectionMember : Given_BuilderAndContainerWithContextualBindingExtension
     {
-        protected override void When()
+        protected override void Act()
         {
-            container.RegisterType<IMyInterface, MyClass>(request => true, new InjectionConstructor("c'tor with parameter"));
+            container.RegisterType<MyClass>(request => true, new InjectionConstructor("c'tor with parameter"));
         }
 
         [TestMethod]
         public void Then_ResolvesUsingSpecifiedInjectionMember()
         {
-            var myClass = container.Resolve<IMyInterface>() as MyClass;
-
-            Assert.IsNotNull(myClass);
+            var myClass = container.Resolve<MyClass>();
 
             Assert.AreEqual("c'tor with parameter", myClass.Str);
         }

@@ -13,16 +13,16 @@ namespace TecX.ServiceModel.Test
 
         private string response;
 
-        protected override void Given()
+        protected override void Arrange()
         {
-            base.Given();
+            base.Arrange();
 
             this.container.RegisterType<ISyncService>(new AutoDiscoveryProxyFactory());
 
             this.service = this.container.Resolve<ISyncService>();
         }
 
-        protected override void When()
+        protected override void Act()
         {
             this.response = this.service.DoWork("input");
         }

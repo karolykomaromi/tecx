@@ -10,7 +10,7 @@ namespace TecX.Unity.ContextualBinding.Test
     {
         private IMyInterface first, second;
 
-        protected override void When()
+        protected override void Act()
         {
             container.RegisterType<IMyInterface, MyParameterLessClass>(new ContainerControlledLifetimeManager(), request => true);
 

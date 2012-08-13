@@ -14,9 +14,9 @@ namespace TecX.Unity.Configuration.Test
         private List<IMyInterface> all;
         private List<IAnotherInterface> others;
 
-        protected override void Given()
+        protected override void Arrange()
         {
-            base.Given();
+            base.Arrange();
 
             builder.Scan(s =>
                 {

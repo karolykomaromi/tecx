@@ -9,7 +9,7 @@ namespace TecX.Unity.TypedFactory.Test
     {
         private IFoo[] resolved;
 
-        protected override void When()
+        protected override void Act()
         {
             this.resolved = this.Factory.CreateArray();
         }

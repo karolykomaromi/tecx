@@ -6,9 +6,9 @@ namespace TecX.Unity.ContextualBinding.Test
     {
         protected MyParameterLessClass instance;
 
-        protected override void Given()
+        protected override void Arrange()
         {
-            base.Given();
+            base.Arrange();
 
             instance = new MyParameterLessClass();
         }

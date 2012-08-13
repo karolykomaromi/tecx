@@ -1,18 +1,17 @@
-﻿using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using TecX.Unity.Configuration.Test.TestObjects;
-
-namespace TecX.Unity.Configuration.Test
+﻿namespace TecX.Unity.Configuration.Test
 {
+    using Microsoft.Practices.Unity;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     using TecX.Unity.Configuration.Conventions;
+    using TecX.Unity.Configuration.Test.TestObjects;
 
     [TestClass]
     public class When_ApplyingFindConfigBuildersConvention : Given_ContainerAndBuilder
     {
-        protected override void Given()
+        protected override void Arrange()
         {
-            base.Given();
+            base.Arrange();
 
             builder.Scan(
                 s =>

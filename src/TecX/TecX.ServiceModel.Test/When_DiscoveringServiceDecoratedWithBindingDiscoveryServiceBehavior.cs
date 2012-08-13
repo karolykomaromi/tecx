@@ -12,7 +12,7 @@ namespace TecX.ServiceModel.Test
     {
         private FindResponse response;
 
-        protected override void When()
+        protected override void Act()
         {
             DiscoveryClient client = new DiscoveryClient(new UdpDiscoveryEndpoint());
 

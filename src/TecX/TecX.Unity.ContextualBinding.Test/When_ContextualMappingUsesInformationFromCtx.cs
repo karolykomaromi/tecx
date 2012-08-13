@@ -11,7 +11,7 @@ namespace TecX.Unity.ContextualBinding.Test
     [TestClass]
     public class When_ContextualMappingUsesInformationFromCtx : Given_BuilderAndContainerWithContextualBindingExtension
     {
-        protected override void When()
+        protected override void Act()
         {
             Request.StaticRequestContext["someKey"] = 123;
 

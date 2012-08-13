@@ -4,13 +4,13 @@ namespace TecX.Common.Test
     using TecX.Common.Test.TestObjects;
     using TecX.TestTools;
 
-    public abstract class Given_SpecificationComposite : GivenWhenThen
+    public abstract class Given_SpecificationComposite : ArrangeActAssert
     {
         protected ISpecification<SearchTestEntity> composite;
 
         protected ISpecification<SearchTestEntity> s1;
 
-        protected override void Given()
+        protected override void Arrange()
         {
             this.s1 = new DummySpec1();
 

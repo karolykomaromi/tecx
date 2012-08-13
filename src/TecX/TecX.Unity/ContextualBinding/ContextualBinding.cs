@@ -21,9 +21,13 @@ namespace TecX.Unity.ContextualBinding
 
         public void RegisterType(Type @from, Type to, LifetimeManager lifetime, Predicate<IRequest> predicate, params InjectionMember[] injectionMembers)
         {
-            Guard.AssertNotNull(from, "from");
             Guard.AssertNotNull(to, "to");
             Guard.AssertNotNull(predicate, "predicate");
+
+            if (@from == null)
+            {
+                @from = to;
+            }
 
             // if no lifetime manager is registered we use the transient lifetime (new instance is created for
             // every resolve). this is identical to the unity default behavior

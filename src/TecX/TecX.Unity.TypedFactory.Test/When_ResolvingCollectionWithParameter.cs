@@ -13,16 +13,16 @@ namespace TecX.Unity.TypedFactory.Test
     {
         private ICollection<IFoo> resolved;
 
-        protected override void Given()
+        protected override void Arrange()
         {
-            base.Given();
+            base.Arrange();
 
             this.Container.RegisterType<IFoo, Bar>("Bar");
         }
 
-        protected override void When()
+        protected override void Act()
         {
-           this. resolved = this.Factory.CreateCollection("1");
+           this.resolved = this.Factory.CreateCollection("1");
         }
 
         [TestMethod]

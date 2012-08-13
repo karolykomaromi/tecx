@@ -1,11 +1,11 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 namespace TecX.Unity.TypedFactory.Test
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class When_UsingFactoryToCreateInstance : Given_ContainerWithFooRegistration
     {
-        protected override void When()
+        protected override void Act()
         {
             this.Foo = this.Factory.Create();
         }

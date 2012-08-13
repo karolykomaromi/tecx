@@ -8,9 +8,9 @@
     [TestClass]
     public class When_RegisteringConcreteType : Given_ContainerAndBuilder
     {
-        protected override void When()
+        protected override void Act()
         {
-            base.When();
+            base.Act();
 
             this.builder.ForConcreteType<Foo>();
         }

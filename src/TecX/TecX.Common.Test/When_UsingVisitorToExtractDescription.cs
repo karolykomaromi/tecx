@@ -12,7 +12,7 @@ namespace TecX.Common.Test
 
         private string descriptions;
 
-        protected override void When()
+        protected override void Act()
         {
             this.visitor = new DescriptionVisitor<SearchTestEntity>();
 

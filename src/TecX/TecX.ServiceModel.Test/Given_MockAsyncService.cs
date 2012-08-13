@@ -9,13 +9,13 @@ namespace TecX.ServiceModel.Test
     using TecX.ServiceModel.Test.TestClasses;
     using TecX.TestTools;
 
-    public abstract class Given_MockAsyncService : GivenWhenThen
+    public abstract class Given_MockAsyncService : ArrangeActAssert
     {
         protected const string Expected = "MockService called";
 
         protected IUnityContainer container;
 
-        protected override void Given()
+        protected override void Arrange()
         {
             IAsyncResult asyncResult = new Mock<IAsyncResult>().Object;
 
