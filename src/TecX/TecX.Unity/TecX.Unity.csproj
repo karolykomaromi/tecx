@@ -150,6 +150,7 @@
     <Compile Include="Literals\UnityContainerExtensions.cs" />
     <Compile Include="Mapping\DefaultMappingExtension.cs" />
     <Compile Include="Mapping\DefaultMappingStrategy.cs" />
+    <Compile Include="Mapping\Remember.cs" />
     <Compile Include="Notification\NotificationExtension.cs" />
     <Compile Include="Groups\IGroupedMappings.cs" />
     <Compile Include="Groups\IMappingGroupPolicy.cs" />
