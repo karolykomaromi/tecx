@@ -113,6 +113,9 @@
     <Compile Include="Enrichment\EnrichmentPolicy.cs" />
     <Compile Include="Enrichment\EnrichmentStrategy.cs" />
     <Compile Include="Enrichment\IEnrichmentPolicy.cs" />
+    <Compile Include="Enums\EnumExtension.cs" />
+    <Compile Include="Enums\EnumPolicy.cs" />
+    <Compile Include="Enums\EnumStrategy.cs" />
     <Compile Include="Factories\DefaultTypedFactoryComponentSelector.cs" />
     <Compile Include="Factories\DelegateFactory.cs" />
     <Compile Include="Factories\DelegateFactoryBuildPlanPolicy.cs" />
