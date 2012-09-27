@@ -161,3 +161,7 @@ src/TecX/TecX.Agile.Service/bin
 src/TecX/TecX.Data/bin
 src/TecX/TecX.Data/obj
 src/TecX/TestResults
+src/TecX/TecX.StringSimilarity/obj
+src/TecX/TecX.StringSimilarity/bin
+src/TecX/TecX.StringSimilarity.Test/obj
+src/TecX/TecX.StringSimilarity.Test/bin
