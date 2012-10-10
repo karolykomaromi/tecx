@@ -165,3 +165,5 @@ src/TecX/TecX.StringSimilarity/obj
 src/TecX/TecX.StringSimilarity/bin
 src/TecX/TecX.StringSimilarity.Test/obj
 src/TecX/TecX.StringSimilarity.Test/bin
+src/TecX/TecX.Measures/bin
+src/TecX/TecX.Measures.Test/bin

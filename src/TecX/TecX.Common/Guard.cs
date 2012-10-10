@@ -12,6 +12,10 @@
     using TecX.Common.Error;
     using TecX.Common.Extensions.Error;
 
+    using ArgumentException = TecX.Common.Error.ArgumentException;
+    using ArgumentNullException = TecX.Common.Error.ArgumentNullException;
+    using ArgumentOutOfRangeException = TecX.Common.Error.ArgumentOutOfRangeException;
+
     /// <summary>
     /// Helper class for common method paramter validation tasks.
     /// </summary>
@@ -45,7 +49,7 @@
 
             if (param == null)
             {
-                throw new GuardArgumentNullException(paramName);
+                throw new ArgumentNullException(paramName);
             }
         }
 
@@ -59,7 +63,7 @@
             if (value == null)
             {
                 string name = ((MemberExpression)selector.Body).Member.Name;
-                throw new GuardArgumentNullException(name);
+                throw new ArgumentNullException(name);
             }
         }
 
@@ -70,12 +74,12 @@
 
             if (param == null)
             {
-                throw new GuardArgumentNullException(paramName);
+                throw new ArgumentNullException(paramName);
             }
 
             if (string.IsNullOrEmpty(param))
             {
-                throw new GuardArgumentException(Constants.ParameterEmpty, paramName);
+                throw new ArgumentException(Constants.ParameterEmpty, paramName);
             }
         }
 
@@ -89,13 +93,13 @@
             if (value == null)
             {
                 string paramName = ((MemberExpression)selector.Body).Member.Name;
-                throw new GuardArgumentNullException(paramName);
+                throw new ArgumentNullException(paramName);
             }
 
             if (string.IsNullOrEmpty(value))
             {
                 string paramName = ((MemberExpression)selector.Body).Member.Name;
-                throw new GuardArgumentException("String must not be empty.", paramName);
+                throw new ArgumentException("String must not be empty.", paramName);
             }
         }
 
@@ -106,12 +110,12 @@
 
             if (param == null)
             {
-                throw new GuardArgumentNullException(paramName, Constants.ParameterNull);
+                throw new ArgumentNullException(paramName, Constants.ParameterNull);
             }
 
             if (param.Count == 0)
             {
-                throw new GuardArgumentException(paramName, Constants.ParameterEmpty).WithAdditionalInfo("param", param);
+                throw new ArgumentException(paramName, Constants.ParameterEmpty).WithAdditionalInfo("param", param);
             }
         }
 
@@ -123,7 +127,7 @@
 
             if (!condition)
             {
-                throw new GuardArgumentException(paramName, message)
+                throw new ArgumentException(paramName, message)
                     .WithAdditionalInfo("param", param);
             }
         }
@@ -157,7 +161,7 @@
 
             if (!TypeHelper.IsInRange(param, min, max))
             {
-                throw new GuardArgumentOutOfRangeException(
+                throw new ArgumentOutOfRangeException(
                     TypeHelper.ToNullSafeString(paramName, Constants.NoParameterName),
                     TypeHelper.ToNullSafeString(message)).WithAdditionalInfo("param", param);
             }
@@ -170,7 +174,7 @@
 
             if (!type.IsInterface)
             {
-                throw new GuardArgumentException(string.Format("Type '{0}' is not an interface.", type.FullName), paramName);
+                throw new ArgumentException(string.Format("Type '{0}' is not an interface.", type.FullName), paramName);
             }
         }
     }

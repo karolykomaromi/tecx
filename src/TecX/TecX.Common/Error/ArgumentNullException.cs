@@ -3,28 +3,28 @@ namespace TecX.Common.Error
     using System;
     using System.Runtime.Serialization;
 
-    public class GuardArgumentNullException : ArgumentNullException
+    public class ArgumentNullException : System.ArgumentNullException
     {
-        public GuardArgumentNullException()
+        public ArgumentNullException()
         {
         }
 
-        public GuardArgumentNullException(SerializationInfo info, StreamingContext context)
+        public ArgumentNullException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }
 
-        public GuardArgumentNullException(string message, Exception innerException)
+        public ArgumentNullException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
 
-        public GuardArgumentNullException(string paramName)
+        public ArgumentNullException(string paramName)
             : base(paramName)
         {
         }
 
-        public GuardArgumentNullException(string paramName, string message)
+        public ArgumentNullException(string paramName, string message)
             : base(paramName, message)
         {
         }

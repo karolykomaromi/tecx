@@ -52,10 +52,11 @@
     <Compile Include="Comparison\LambdaEqualityComparer.cs" />
     <Compile Include="CompositePredicate.cs" />
     <Compile Include="Convert.cs" />
+    <Compile Include="Enumeration.cs" />
     <Compile Include="Error\ExceptionCrawler.cs" />
-    <Compile Include="Error\GuardArgumentException.cs" />
-    <Compile Include="Error\GuardArgumentNullException.cs" />
-    <Compile Include="Error\GuardArgumentOutOfRangeException.cs" />
+    <Compile Include="Error\ArgumentException.cs" />
+    <Compile Include="Error\ArgumentNullException.cs" />
+    <Compile Include="Error\ArgumentOutOfRangeException.cs" />
     <Compile Include="Error\StackTraceCleaner.cs" />
     <Compile Include="Extensions\Collections\EnumerableExtensions.cs" />
     <Compile Include="Extensions\Primitives\LiteralExtensions.cs" />

@@ -3,33 +3,33 @@ namespace TecX.Common.Error
     using System;
     using System.Runtime.Serialization;
 
-    public class GuardArgumentOutOfRangeException : ArgumentOutOfRangeException
+    public class ArgumentOutOfRangeException : System.ArgumentOutOfRangeException
     {
-        public GuardArgumentOutOfRangeException()
+        public ArgumentOutOfRangeException()
         {
         }
 
-        public GuardArgumentOutOfRangeException(SerializationInfo info, StreamingContext context)
+        public ArgumentOutOfRangeException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }
 
-        public GuardArgumentOutOfRangeException(string message, Exception innerException)
+        public ArgumentOutOfRangeException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
 
-        public GuardArgumentOutOfRangeException(string paramName)
+        public ArgumentOutOfRangeException(string paramName)
             : base(paramName)
         {
         }
 
-        public GuardArgumentOutOfRangeException(string paramName, object actualValue, string message)
+        public ArgumentOutOfRangeException(string paramName, object actualValue, string message)
             : base(paramName, actualValue, message)
         {
         }
 
-        public GuardArgumentOutOfRangeException(string paramName, string message)
+        public ArgumentOutOfRangeException(string paramName, string message)
             : base(paramName, message)
         {
         }
