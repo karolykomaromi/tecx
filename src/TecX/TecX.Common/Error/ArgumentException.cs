@@ -3,33 +3,33 @@ namespace TecX.Common.Error
     using System;
     using System.Runtime.Serialization;
 
-    public class GuardArgumentException : ArgumentException
+    public class ArgumentException : System.ArgumentException
     {
-        public GuardArgumentException()
+        public ArgumentException()
         {
         }
 
-        public GuardArgumentException(SerializationInfo info, StreamingContext context)
+        public ArgumentException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }
 
-        public GuardArgumentException(string message)
+        public ArgumentException(string message)
             : base(message)
         {
         }
 
-        public GuardArgumentException(string message, Exception innerException)
+        public ArgumentException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
 
-        public GuardArgumentException(string message, string paramName)
+        public ArgumentException(string message, string paramName)
             : base(message, paramName)
         {
         }
 
-        public GuardArgumentException(string message, string paramName, Exception innerException)
+        public ArgumentException(string message, string paramName, Exception innerException)
             : base(message, paramName, innerException)
         {
         }

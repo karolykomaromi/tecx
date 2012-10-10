@@ -3,7 +3,6 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using TecX.Common.Error;
-    using TecX.Common.Test.TestObjects;
 
     [TestClass]
     public class GuardFixture
@@ -16,14 +15,14 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof (GuardArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CanAssertArgumentIsBelowRangeBound()
         {
             Guard.AssertIsInRange(0, "paramToCheck", 1, 2);
         }
 
         [TestMethod]
-        [ExpectedException(typeof (GuardArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CanAssertArgumentIsGreaterThanUpperRangeBound()
         {
             Guard.AssertIsInRange(3, "paramToCheck", 1, 2);
