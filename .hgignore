@@ -167,3 +167,7 @@ src/TecX/TecX.StringSimilarity.Test/obj
 src/TecX/TecX.StringSimilarity.Test/bin
 src/TecX/TecX.Measures/bin
 src/TecX/TecX.Measures.Test/bin
+src/TecX/TecX.EnumClasses/bin
+src/TecX/TecX.EnumClasses.Tests/obj
+src/TecX/TecX.EnumClasses/obj
+src/TecX/TecX.EnumClasses.Tests/bin
