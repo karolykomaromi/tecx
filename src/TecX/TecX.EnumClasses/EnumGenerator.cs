@@ -44,6 +44,12 @@ namespace TecX.EnumClasses
                 return false;
             }
 
+            while (enumerationClassType.BaseType != null && 
+                enumerationClassType.BaseType != typeof(Enumeration))
+            {
+                enumerationClassType = enumerationClassType.BaseType;
+            }
+
             string enumName = enumerationClassType.Name + EnumNamePostfix;
 
             if (this.enumTypes.TryGetValue(enumName, out enumType))

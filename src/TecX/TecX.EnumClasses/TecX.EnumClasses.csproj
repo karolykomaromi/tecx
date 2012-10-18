@@ -49,7 +49,10 @@
     </Compile>
     <Compile Include="Enumeration.cs" />
     <Compile Include="EnumerationClassesSurrogate.cs" />
+    <Compile Include="EnumerationParseException.cs" />
     <Compile Include="EnumGenerator.cs" />
+    <Compile Include="Flags.cs" />
+    <Compile Include="Or.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
