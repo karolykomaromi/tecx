@@ -6,8 +6,8 @@
     <ProjectGuid>{24AD3B30-9262-48D2-8E4F-DE617DC37A72}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TecX.EnumClasses.Tests</RootNamespace>
-    <AssemblyName>TecX.EnumClasses.Tests</AssemblyName>
+    <RootNamespace>TecX.EnumClasses.Test</RootNamespace>
+    <AssemblyName>TecX.EnumClasses.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -20,6 +20,8 @@
     <SccLocalPath>&lt;Local Binding Root of Project&gt;</SccLocalPath>
     <SccAuxPath>&lt;Source Control Database&gt;</SccAuxPath>
     <SccProvider>Mercurial Source Control Package</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,8 +41,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.10\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <Choose>
@@ -56,12 +62,24 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DataContractJsonSerializerFixture.cs" />
+    <Compile Include="TestObjects\EnumerationClassesJsonConverter.cs" />
+    <Compile Include="TestObjects\EnumWithFlags.cs" />
+    <Compile Include="TestObjects\ISortingService.cs" />
+    <Compile Include="TestObjects\ISortingServiceClient.cs" />
+    <Compile Include="TestObjects\Numbers.cs" />
+    <Compile Include="TestObjects\PutDataContractSurrogateBehavior.cs" />
     <Compile Include="TestObjects\SerializeMe.cs" />
     <Compile Include="TestObjects\SerializeMe2.cs" />
+    <Compile Include="TestObjects\SortingService.cs" />
     <Compile Include="TestObjects\SortOrder.cs" />
     <Compile Include="TestObjects\SortOrderEnum.cs" />
-    <Compile Include="SerializerFixture.cs" />
+    <Compile Include="DataContractSerializerFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="JsonSerializerFixture.cs" />
+    <Compile Include="ServiceFixture.cs" />
+    <Compile Include="FlagsFixture.cs" />
+    <Compile Include="TestObjects\WithFlags.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.EnumClasses\TecX.EnumClasses.csproj">
@@ -69,7 +87,9 @@
       <Name>TecX.EnumClasses</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
@@ -90,6 +110,7 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -171,3 +171,5 @@ src/TecX/TecX.EnumClasses/bin
 src/TecX/TecX.EnumClasses.Tests/obj
 src/TecX/TecX.EnumClasses/obj
 src/TecX/TecX.EnumClasses.Tests/bin
+src/TecX/TecX.EnumClasses.Test/obj
+src/TecX/TecX.EnumClasses.Test/bin

@@ -1,6 +1,5 @@
 ﻿namespace TecX.EnumClasses.Tests
 {
-    using System;
     using System.IO;
     using System.Runtime.Serialization;
 
@@ -9,10 +8,10 @@
     using TecX.EnumClasses.Tests.TestObjects;
 
     [TestClass]
-    public class SerializerFixture
+    public class DataContractSerializerFixture
     {
         [TestMethod]
-        public void Should_SerializeComplexObject_AsSimpleValue()
+        public void Should_SerializeComplexObject_AsSimpleXmlValue()
         {
             SerializeMe sm = new SerializeMe { SortOrder = SortOrder.Descending };
 
@@ -40,7 +39,7 @@
         }
 
         [TestMethod]
-        public void Should_DeserializeSimpleValue_AsComplexObject()
+        public void Should_DeserializeSimpleXmlValue_AsComplexObject()
         {
             SerializeMe2 sm = new SerializeMe2 { SortOrder = SortOrderEnum.Descending };
 
@@ -65,15 +64,6 @@
             SerializeMe deserialized = (SerializeMe)deserializer.ReadObject(stream);
 
             Assert.AreEqual(SortOrder.Descending, deserialized.SortOrder);
-        }
-
-        [TestMethod]
-        public void Should_GenerateEnum_From_EnumerationClass()
-        {
-            var generator = new EnumGenerator();
-
-            Type enumType;
-            Assert.IsTrue(generator.TryGetEnumByType(typeof(SortOrder), out enumType));
         }
     }
 }

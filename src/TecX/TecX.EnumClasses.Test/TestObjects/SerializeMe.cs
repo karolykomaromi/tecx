@@ -6,6 +6,9 @@ namespace TecX.EnumClasses.Tests.TestObjects
     public class SerializeMe
     {
         [DataMember]
+        public string Text { get; set; }
+
+        [DataMember]
         public SortOrder SortOrder { get; set; }
     }
 }
