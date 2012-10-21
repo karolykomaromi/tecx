@@ -1,4 +1,4 @@
-﻿namespace TecX.EnumClasses.Tests
+﻿namespace TecX.EnumClasses.Test
 {
     using System.IO;
     using System.Text;
@@ -7,7 +7,7 @@
 
     using Newtonsoft.Json;
 
-    using TecX.EnumClasses.Tests.TestObjects;
+    using TecX.EnumClasses.Test.TestObjects;
 
     [TestClass]
     public class JsonSerializerFixture

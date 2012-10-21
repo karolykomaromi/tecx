@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.EnumClasses", "TecX.En
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.EnumClasses.Test", "TecX.EnumClasses.Test\TecX.EnumClasses.Test.csproj", "{24AD3B30-9262-48D2-8E4F-DE617DC37A72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.EnumClasses.Test.Server", "TecX.EnumClasses.Test.Server\TecX.EnumClasses.Test.Server.csproj", "{C514ED6C-DC0F-49E1-85F7-8A1ED7A65A2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.EnumClasses.Test.Client", "TecX.EnumClasses.Test.Client\TecX.EnumClasses.Test.Client.csproj", "{740AC9D5-2487-4D8C-A803-D82DF079208A}"
+EndProject
 Global
 	GlobalSection(MercurialSourceControlSolutionProperties) = preSolution
 		SolutionIsControlled = True
@@ -23,6 +27,14 @@ Global
 		{24AD3B30-9262-48D2-8E4F-DE617DC37A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24AD3B30-9262-48D2-8E4F-DE617DC37A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24AD3B30-9262-48D2-8E4F-DE617DC37A72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C514ED6C-DC0F-49E1-85F7-8A1ED7A65A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C514ED6C-DC0F-49E1-85F7-8A1ED7A65A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C514ED6C-DC0F-49E1-85F7-8A1ED7A65A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C514ED6C-DC0F-49E1-85F7-8A1ED7A65A2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{740AC9D5-2487-4D8C-A803-D82DF079208A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{740AC9D5-2487-4D8C-A803-D82DF079208A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{740AC9D5-2487-4D8C-A803-D82DF079208A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{740AC9D5-2487-4D8C-A803-D82DF079208A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

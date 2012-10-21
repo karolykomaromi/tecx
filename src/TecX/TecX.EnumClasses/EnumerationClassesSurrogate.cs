@@ -61,27 +61,26 @@ namespace TecX.EnumClasses
 
         public object GetCustomDataToExport(MemberInfo memberInfo, Type dataContractType)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public object GetCustomDataToExport(Type clrType, Type dataContractType)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public void GetKnownCustomDataTypes(Collection<Type> customDataTypes)
         {
-            throw new NotImplementedException();
         }
 
         public Type GetReferencedTypeOnImport(string typeName, string typeNamespace, object customData)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public CodeTypeDeclaration ProcessImportedType(CodeTypeDeclaration typeDeclaration, CodeCompileUnit compileUnit)
         {
-            throw new NotImplementedException();
+            return typeDeclaration;
         }
     }
 }

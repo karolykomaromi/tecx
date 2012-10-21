@@ -1,9 +1,10 @@
-namespace TecX.EnumClasses.Tests.TestObjects
+namespace TecX.EnumClasses.Test.TestObjects
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.ServiceModel;
 
-    [PutDataContractSurrogateBehavior]
+    [HideEnumerationClassesBehavior, ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     public class SortingService : ISortingService
     {
         public IEnumerable<SerializeMe> Sort(IEnumerable<SerializeMe> itemsToSort, SortOrder sortOrder)

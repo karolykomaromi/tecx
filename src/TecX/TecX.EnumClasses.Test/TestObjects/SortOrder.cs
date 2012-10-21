@@ -1,8 +1,7 @@
-namespace TecX.EnumClasses.Tests.TestObjects
+namespace TecX.EnumClasses.Test.TestObjects
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
 
     [Serializable]
     public class SortOrder : Enumeration
@@ -32,16 +31,16 @@ namespace TecX.EnumClasses.Tests.TestObjects
 
         private class AscendingSortOrder : SortOrder
         {
-            public AscendingSortOrder([CallerMemberName]string name = null)
-                : base(0, "Sort ascending", name, StringComparer.OrdinalIgnoreCase)
+            public AscendingSortOrder()
+                : base(0, "Sort ascending", "Ascending", StringComparer.OrdinalIgnoreCase)
             {
             }
         }
 
         private class DescendingSortOrder : SortOrder
         {
-            public DescendingSortOrder([CallerMemberName]string name = null)
-                : base(1, "Sort descending", name, new InvertedComparer())
+            public DescendingSortOrder()
+                : base(1, "Sort descending", "Descending", new InvertedComparer())
             {
             }
 
