@@ -1,4 +1,4 @@
-﻿namespace TecX.EnumClasses.Tests
+﻿namespace TecX.EnumClasses.Test
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using TecX.EnumClasses.Tests.TestObjects;
+    using TecX.EnumClasses.Test.TestObjects;
 
     [TestClass]
     public class ServiceFixture

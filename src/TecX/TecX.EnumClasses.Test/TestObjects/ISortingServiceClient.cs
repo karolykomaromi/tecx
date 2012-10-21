@@ -1,4 +1,4 @@
-namespace TecX.EnumClasses.Tests.TestObjects
+namespace TecX.EnumClasses.Test.TestObjects
 {
     using System.Collections.Generic;
     using System.ServiceModel;

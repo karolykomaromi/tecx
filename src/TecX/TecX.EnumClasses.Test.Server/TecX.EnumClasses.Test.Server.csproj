@@ -4,20 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{023DAB60-B2AF-4770-8983-425592DDC567}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{C514ED6C-DC0F-49E1-85F7-8A1ED7A65A2B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TecX.EnumClasses</RootNamespace>
-    <AssemblyName>TecX.EnumClasses</AssemblyName>
+    <RootNamespace>TecX.EnumClasses.Test.Server</RootNamespace>
+    <AssemblyName>TecX.EnumClasses.Test.Server</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>&lt;Project Location In Database&gt;</SccProjectName>
-    <SccLocalPath>&lt;Local Binding Root of Project&gt;</SccLocalPath>
-    <SccAuxPath>&lt;Source Control Database&gt;</SccAuxPath>
-    <SccProvider>Mercurial Source Control Package</SccProvider>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -27,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -46,17 +44,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
-      <Link>Properties\GlobalAssemblyVersion.cs</Link>
-    </Compile>
-    <Compile Include="Enumeration.cs" />
-    <Compile Include="EnumerationClassesSurrogate.cs" />
-    <Compile Include="EnumerationParseException.cs" />
-    <Compile Include="EnumGenerator.cs" />
-    <Compile Include="Flags.cs" />
-    <Compile Include="HideEnumerationClassesBehavior.cs" />
-    <Compile Include="Or.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TecX.EnumClasses.Test\TecX.EnumClasses.Test.csproj">
+      <Project>{24AD3B30-9262-48D2-8E4F-DE617DC37A72}</Project>
+      <Name>TecX.EnumClasses.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.EnumClasses\TecX.EnumClasses.csproj">
+      <Project>{023DAB60-B2AF-4770-8983-425592DDC567}</Project>
+      <Name>TecX.EnumClasses</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
