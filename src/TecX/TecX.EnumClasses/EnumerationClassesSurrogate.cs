@@ -53,7 +53,7 @@ namespace TecX.EnumClasses
             {
                 string name = Enum.GetName(objType, obj);
 
-                return Enumeration.GetAll(targetType).OfType<Enumeration>().First(e => e.Name == name);
+                return Enumeration.FromName(targetType, name);
             }
 
             return obj;
