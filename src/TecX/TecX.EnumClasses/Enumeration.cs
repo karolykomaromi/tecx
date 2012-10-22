@@ -67,6 +67,13 @@
             return matchingItem;
         }
 
+        public static Enumeration FromName(Type enumerationType, string name)
+        {
+            var matchingItem = Parse(enumerationType, name, "name", e => e.Name == name);
+
+            return matchingItem;
+        }
+
         public static IEnumerable<T> GetAll<T>() where T : Enumeration
         {
             var type = typeof(T);

@@ -177,3 +177,5 @@ src/TecX/TecX.EnumClasses.Test.Client/bin
 src/TecX/TecX.EnumClasses.Test.Client/obj
 src/TecX/TecX.EnumClasses.Test.Server/bin
 src/TecX/TecX.EnumClasses.Test.Server/obj
+src/TecX/_ReSharper.TecX.EnumClasses
+src/TecX/TecX.EnumClasses.vsmdi

@@ -1,7 +1,6 @@
 ﻿namespace TecX.EnumClasses.Test.Server
 {
     using System;
-    using System.Runtime.Serialization;
     using System.ServiceModel;
     using System.ServiceModel.Description;
 
@@ -16,31 +15,6 @@
                 ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
                 smb.HttpGetEnabled = true;
                 smb.MetadataExporter.PolicyVersion = PolicyVersion.Policy15;
-
-                ////WsdlExporter exporter = smb.MetadataExporter as WsdlExporter;
-
-                ////if (exporter != null)
-                ////{
-                ////    object dataContractExporter;
-                ////    XsdDataContractExporter xsdInventoryExporter;
-                ////    if (!exporter.State.TryGetValue(typeof(XsdDataContractExporter), out dataContractExporter))
-                ////    {
-                ////        xsdInventoryExporter = new XsdDataContractExporter(exporter.GeneratedXmlSchemas);
-                ////    }
-                ////    else
-                ////    {
-                ////        xsdInventoryExporter = (XsdDataContractExporter)dataContractExporter;
-                ////    }
-
-                ////    exporter.State.Add(typeof(XsdDataContractExporter), xsdInventoryExporter);
-
-                ////    if (xsdInventoryExporter.Options == null)
-                ////    {
-                ////        xsdInventoryExporter.Options = new ExportOptions();
-                ////    }
-
-                ////    xsdInventoryExporter.Options.DataContractSurrogate = new EnumerationClassesSurrogate();
-                ////}
 
                 host.Description.Behaviors.Add(smb);
 
