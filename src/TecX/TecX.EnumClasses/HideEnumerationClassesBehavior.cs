@@ -8,6 +8,8 @@ namespace TecX.EnumClasses
     using System.ServiceModel.Description;
     using System.ServiceModel.Dispatcher;
 
+    using TecX.Common;
+
     public class HideEnumerationClassesBehavior : Attribute, IServiceBehavior, IContractBehavior, IWsdlExportExtension
     {
         private readonly EnumerationClassesSurrogate surrogate;
@@ -19,6 +21,10 @@ namespace TecX.EnumClasses
 
         void IServiceBehavior.ApplyDispatchBehavior(ServiceDescription serviceDescription, ServiceHostBase host)
         {
+            Guard.AssertNotNull(serviceDescription, "serviceDescription");
+            Guard.AssertNotNull(serviceDescription.Endpoints, "serviceDescription.Endpoints");
+            Guard.AssertNotNull(host, "host");
+
             foreach (ServiceEndpoint endpoint in serviceDescription.Endpoints)
             {
                 foreach (OperationDescription operation in endpoint.Contract.Operations)
@@ -43,8 +49,49 @@ namespace TecX.EnumClasses
 
         void IWsdlExportExtension.ExportContract(WsdlExporter exporter, WsdlContractConversionContext context)
         {
+            Guard.AssertNotNull(context, "context");
+
             this.ReplaceEnumerationClassParametersWithEnums(context);
         }
+
+        #region Not Implemented
+
+        void IServiceBehavior.Validate(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
+        {
+            /* intentionally not implemented */
+        }
+
+        void IServiceBehavior.AddBindingParameters(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase, Collection<ServiceEndpoint> endpoints, BindingParameterCollection bindingParameters)
+        {
+            /* intentionally not implemented */
+        }
+
+        void IContractBehavior.Validate(ContractDescription contractDescription, ServiceEndpoint endpoint)
+        {
+            /* ContractBehavior is only needed to hook up IWsdlExportExtension with WCF infrastructure */
+        }
+
+        void IContractBehavior.ApplyDispatchBehavior(ContractDescription contractDescription, ServiceEndpoint endpoint, DispatchRuntime dispatchRuntime)
+        {
+            /* ContractBehavior is only needed to hook up IWsdlExportExtension with WCF infrastructure */
+        }
+
+        void IContractBehavior.ApplyClientBehavior(ContractDescription contractDescription, ServiceEndpoint endpoint, ClientRuntime clientRuntime)
+        {
+            /* ContractBehavior is only needed to hook up IWsdlExportExtension with WCF infrastructure */
+        }
+
+        void IContractBehavior.AddBindingParameters(ContractDescription contractDescription, ServiceEndpoint endpoint, BindingParameterCollection bindingParameters)
+        {
+            /* ContractBehavior is only needed to hook up IWsdlExportExtension with WCF infrastructure */
+        }
+
+        void IWsdlExportExtension.ExportEndpoint(WsdlExporter exporter, WsdlEndpointConversionContext context)
+        {
+            /* intentionally not implemented */
+        }
+
+        #endregion Not Implemented
 
         private void ReplaceEnumerationClassParametersWithEnums(WsdlContractConversionContext context)
         {
@@ -88,7 +135,7 @@ namespace TecX.EnumClasses
             }
             else
             {
-                xsdInventoryExporter = (XsdDataContractExporter) dataContractExporter;
+                xsdInventoryExporter = (XsdDataContractExporter)dataContractExporter;
             }
 
             exporter.State.Add(typeof(XsdDataContractExporter), xsdInventoryExporter);
@@ -100,44 +147,5 @@ namespace TecX.EnumClasses
 
             xsdInventoryExporter.Options.DataContractSurrogate = this.surrogate;
         }
-
-        #region Not Implemented
-
-        void IServiceBehavior.Validate(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
-        {
-            /* intentionally not implemented */
-        }
-
-        void IServiceBehavior.AddBindingParameters(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase, Collection<ServiceEndpoint> endpoints, BindingParameterCollection bindingParameters)
-        {
-            /* intentionally not implemented */
-        }
-
-        void IContractBehavior.Validate(ContractDescription contractDescription, ServiceEndpoint endpoint)
-        {
-            /* ContractBehavior is only needed to hook up IWsdlExportExtension with WCF infrastructure */
-        }
-
-        void IContractBehavior.ApplyDispatchBehavior(ContractDescription contractDescription, ServiceEndpoint endpoint, DispatchRuntime dispatchRuntime)
-        {
-            /* ContractBehavior is only needed to hook up IWsdlExportExtension with WCF infrastructure */
-        }
-
-        void IContractBehavior.ApplyClientBehavior(ContractDescription contractDescription, ServiceEndpoint endpoint, ClientRuntime clientRuntime)
-        {
-            /* ContractBehavior is only needed to hook up IWsdlExportExtension with WCF infrastructure */
-        }
-
-        void IContractBehavior.AddBindingParameters(ContractDescription contractDescription, ServiceEndpoint endpoint, BindingParameterCollection bindingParameters)
-        {
-            /* ContractBehavior is only needed to hook up IWsdlExportExtension with WCF infrastructure */
-        }
-
-        void IWsdlExportExtension.ExportEndpoint(WsdlExporter exporter, WsdlEndpointConversionContext context)
-        {
-            /* intentionally not implemented */
-        }
-
-        #endregion Not Implemented
     }
 }

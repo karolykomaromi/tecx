@@ -30,7 +30,7 @@ namespace TecX.EnumClasses.Test.TestObjects
             private readonly Or<Numbers> flags;
 
             public OredNumbers(Numbers x, Numbers y)
-                : base(-1, string.Empty)
+                : base(int.MaxValue, "Or")
             {
                 this.flags = new Or<Numbers>(x, y);
             }

@@ -52,7 +52,6 @@
     <Compile Include="Comparison\LambdaEqualityComparer.cs" />
     <Compile Include="CompositePredicate.cs" />
     <Compile Include="Convert.cs" />
-    <Compile Include="Enumeration.cs" />
     <Compile Include="Error\ExceptionCrawler.cs" />
     <Compile Include="Error\ArgumentException.cs" />
     <Compile Include="Error\ArgumentNullException.cs" />

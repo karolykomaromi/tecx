@@ -17,7 +17,7 @@
     using ArgumentOutOfRangeException = TecX.Common.Error.ArgumentOutOfRangeException;
 
     /// <summary>
-    /// Helper class for common method paramter validation tasks.
+    /// Helper class for common method parameter validation tasks.
     /// </summary>
     public static class Guard
     {
@@ -28,7 +28,7 @@
             /// <summary>ParameterNull '{0}' should not be NULL!</summary>
             public const string ParameterNull = "ParameterNull '{0}' must not be NULL!";
 
-            /// <summary>paramument '{0}' should not be empty!</summary>
+            /// <summary>parameter '{0}' should not be empty!</summary>
             public const string ParameterEmpty = "ParameterNull '{0}' must not be empty!";
 
             /// <summary>Condition not met!</summary>

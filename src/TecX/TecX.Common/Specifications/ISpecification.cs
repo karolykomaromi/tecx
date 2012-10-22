@@ -18,7 +18,7 @@
         string Description { get; }
 
         /// <summary>
-        /// Determines whether a candidate object satifies the specification
+        /// Determines whether a candidate object satisfies the specification
         /// </summary>
         /// <param name="candidate">The candidate.</param>
         /// <param name="matchedSpecifications">List of specifications that were matched by the candidate</param>

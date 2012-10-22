@@ -80,7 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityPredicateExtensionsFixture.cs" />
-    <Compile Include="EnumerationFixture.cs" />
     <Compile Include="ExceptionExtensionsFixture.cs" />
     <Compile Include="Given_SpecificationComposite.cs" />
     <Compile Include="GuardFixture.cs" />
