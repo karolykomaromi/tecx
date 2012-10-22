@@ -16,12 +16,17 @@ namespace TecX.EnumClasses
             this.generator = new EnumGenerator();
         }
 
-        public Type GetDataContractType(Type type)
+	    public EnumGenerator Generator
+	    {
+		    get { return generator; }
+	    }
+
+	    public Type GetDataContractType(Type type)
         {
             if (typeof(Enumeration).IsAssignableFrom(type))
             {
                 Type enumType;
-                if (this.generator.TryGetEnumByType(type, out enumType))
+                if (this.Generator.TryGetEnumByType(type, out enumType))
                 {
                     return enumType;
                 }
@@ -36,7 +41,7 @@ namespace TecX.EnumClasses
             if (enumeration != null)
             {
                 Type enumType;
-                if (this.generator.TryGetEnumByType(obj.GetType(), out enumType) && Enum.IsDefined(enumType, enumeration.Name))
+                if (this.Generator.TryGetEnumByType(obj.GetType(), out enumType) && Enum.IsDefined(enumType, enumeration.Name))
                 {
                     return Enum.Parse(enumType, enumeration.Name);
                 }
@@ -49,7 +54,7 @@ namespace TecX.EnumClasses
         {
             Type objType = obj.GetType();
 
-            if (this.generator.IsGeneratedEnum(objType) && typeof(Enumeration).IsAssignableFrom(targetType))
+            if (this.Generator.IsGeneratedEnum(objType) && typeof(Enumeration).IsAssignableFrom(targetType))
             {
                 string name = Enum.GetName(objType, obj);
 
