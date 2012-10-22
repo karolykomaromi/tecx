@@ -4,12 +4,17 @@ namespace TecX.EnumClasses
     using System.Collections.Generic;
     using System.Linq;
 
+    using TecX.Common;
+
     public class Or<T> where T : Flags<T>
     {
         private readonly List<T> flags;
 
         public Or(T x, T y)
         {
+            Guard.AssertNotNull(x, "x");
+            Guard.AssertNotNull(y, "y");
+
             this.flags = new List<T>();
 
             this.flags.AddRange(x.ToArray());
@@ -21,7 +26,7 @@ namespace TecX.EnumClasses
             get
             {
                 string[] names = this.flags.OrderBy(f => f.Value).Select(f => f.Name).ToArray();
-                return String.Join(" ", names);
+                return string.Join(" ", names);
             }
         }
 
@@ -35,7 +40,7 @@ namespace TecX.EnumClasses
             get
             {
                 string[] names = this.flags.OrderBy(f => f.Value).Select(f => f.DisplayName).ToArray();
-                return String.Join(" ", names);
+                return string.Join(" ", names);
             }
         }
 

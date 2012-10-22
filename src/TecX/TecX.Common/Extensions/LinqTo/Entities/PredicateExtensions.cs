@@ -5,12 +5,12 @@
     using System.Linq.Expressions;
 
     /// <summary>
-    /// This class extends the generic type "Expression(Func(T, bool))" to easily concatenate 
+    /// This class extends the generic type <i>Expression(Func(T, bool))</i> to easily concatenate 
     /// multiple expressions of this type for a where statement
     /// </summary>
     /// <remarks>Performs parameter rebinding using the <see cref="ParameterRebinder"/> which
     /// in turns is derived from <see cref="ExpressionVisitor"/>. This class is extracted from
-    /// http://blogs.msdn.com/b/meek/archive/2008/05/02/linq-to-entities-combining-predicates.aspx
+    /// <see cref="http://blogs.msdn.com/b/meek/archive/2008/05/02/linq-to-entities-combining-predicates.aspx"/>
     /// </remarks>
     public static class PredicateExtensions
     {
@@ -18,7 +18,7 @@
         /// "always true" Expression for LinQ query building. This is a value you can start with to 
         /// build up a sequence of AND-concatenated expressions.
         /// </summary>
-        /// <typeparam name="T">pass here the type of the object you want to use inside the excpression</typeparam>
+        /// <typeparam name="T">pass here the type of the object you want to use inside the expression</typeparam>
         /// <returns>an expression that returns <c>true</c></returns>
         public static Expression<Func<T, bool>> True<T>()
         {
@@ -29,7 +29,7 @@
         /// "always false" Expression for LinQ query building. This is a value you can start with to 
         /// build up a sequence of OR-concatenated expressions.
         /// </summary>
-        /// <typeparam name="T">pass here the type of the object you want to use inside the excpression</typeparam>
+        /// <typeparam name="T">pass here the type of the object you want to use inside the expression</typeparam>
         /// <returns>an expression that returns <c>false</c></returns>
         public static Expression<Func<T, bool>> False<T>()
         {

@@ -8,6 +8,8 @@ namespace TecX.EnumClasses
     using System.Reflection.Emit;
     using System.Runtime.Serialization;
 
+    using TecX.Common;
+
     public class EnumGenerator
     {
         private const string EnumNamePostfix = "_Enum";
@@ -38,6 +40,8 @@ namespace TecX.EnumClasses
 
         public bool TryGetEnumByType(Type enumerationClassType, out Type enumType)
         {
+            Guard.AssertNotNull(enumerationClassType, "enumerationClassType");
+
             if (!typeof(Enumeration).IsAssignableFrom(enumerationClassType))
             {
                 enumType = null;
@@ -86,6 +90,8 @@ namespace TecX.EnumClasses
 
         public bool IsGeneratedEnum(Type type)
         {
+            Guard.AssertNotNull(type, "type");
+
             return type.IsEnum && type.Name.EndsWith(EnumNamePostfix);
         }
     }

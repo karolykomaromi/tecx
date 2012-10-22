@@ -13,7 +13,7 @@
         /// <summary>
         /// Zellers congruence calculates the day of a  week (e.g. Wednesday) given a specific date
         /// </summary>
-        /// <remarks>Why this when there is <see cref="DateTime.DayOfWeek"/>? Becaus EF does not support any of the advanced 
+        /// <remarks>Why this when there is <see cref="DateTime.DayOfWeek"/>? Because EF does not support any of the advanced 
         /// <see cref="DateTime"/> features and this algorithm came in pretty handy when I needed to group data by the day 
         /// of the week. You can just copy and paste this snippet and make the appropriate adjustments</remarks>
         /// <param name="dt">Date for which to calculate the <see cref="DayOfWeek"/></param>

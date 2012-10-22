@@ -16,7 +16,7 @@
         /// "always true" Expression for LinQ query building. This is a value you can start with to 
         /// build up a sequence of AND-concatenated expressions.
         /// </summary>
-        /// <typeparam name="T">pass here the type of the object you want to use inside the excpression</typeparam>
+        /// <typeparam name="T">pass here the type of the object you want to use inside the expression</typeparam>
         /// <returns>an expression that returns <c>true</c></returns>
         public static Expression<Func<T, bool>> True<T>()
         {
@@ -27,7 +27,7 @@
         /// "always false" Expression for LinQ query building. This is a value you can start with to 
         /// build up a sequence of OR-concatenated expressions.
         /// </summary>
-        /// <typeparam name="T">pass here the type of the object you want to use inside the excpression</typeparam>
+        /// <typeparam name="T">pass here the type of the object you want to use inside the expression</typeparam>
         /// <returns>an expression that returns <c>false</c></returns>
         public static Expression<Func<T, bool>> False<T>()
         {
@@ -40,7 +40,7 @@
         /// <typeparam name="T">the type of object you want to use inside the expression tree</typeparam>
         /// <param name="left">the "source" expression</param>
         /// <param name="right">the second expression to "add" to the first one using "OR"</param>
-        /// <returns>a comined expression using OR</returns>
+        /// <returns>a combined expression using OR</returns>
         public static Expression<Func<T, bool>> Or<T>(
             this Expression<Func<T, bool>> left,
             Expression<Func<T, bool>> right)
@@ -61,7 +61,7 @@
         /// <typeparam name="T">the type of object you want to use inside the expression tree</typeparam>
         /// <param name="left">the "source" expression</param>
         /// <param name="right">the second expression to "add" to the first one using "AND"</param>
-        /// <returns>a comined expression using AND</returns>
+        /// <returns>a combined expression using AND</returns>
         public static Expression<Func<T, bool>> And<T>(
             this Expression<Func<T, bool>> left,
             Expression<Func<T, bool>> right)

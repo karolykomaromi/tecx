@@ -27,10 +27,8 @@
                 parameterTypes.Length == 0)
             {
                 MethodInfo method = type
-                                        .GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                                        .Where(m => m.Name == methodName &&
-                                                    m.GetParameters().Length == 0)
-                                        .SingleOrDefault();
+                    .GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                    .SingleOrDefault(m => m.Name == methodName && m.GetParameters().Length == 0);
 
                 if (method == null)
                 {
@@ -80,7 +78,7 @@
         }
 
         /// <summary>
-        /// Extracted from http://www.codeproject.com/KB/dotnet/InvokeGenericMethods.aspx
+        /// Extracted from <see cref="http://www.codeproject.com/KB/dotnet/InvokeGenericMethods.aspx"/>
         /// </summary>
         public static DynamicMethodInvoker GetGenericMethodInvoker(Type type, string methodName, Type[] typeArguments)
         {
@@ -88,11 +86,11 @@
         }
 
         /// <summary>
-        /// Extracted from http://www.codeproject.com/KB/dotnet/InvokeGenericMethods.aspx
+        /// Extracted from <see cref="http://www.codeproject.com/KB/dotnet/InvokeGenericMethods.aspx"/>
         /// </summary>
         public static DynamicMethodInvoker GetGenericMethodInvoker(
-            Type type, 
-            string methodName, 
+            Type type,
+            string methodName,
             Type[] typeArguments,
             Type[] parameterTypes)
         {
@@ -205,8 +203,8 @@
 
             DynamicMethod setter = new DynamicMethod(
               string.Concat("_Set", propertyInfo.Name, "_"),
-              typeof(void), 
-              arguments, 
+              typeof(void),
+              arguments,
               propertyInfo.DeclaringType);
 
             ILGenerator generator = setter.GetILGenerator();
@@ -263,8 +261,8 @@
 
             DynamicMethod getter = new DynamicMethod(
               string.Concat("_Get", propertyInfo.Name, "_"),
-              typeof(object), 
-              arguments, 
+              typeof(object),
+              arguments,
               propertyInfo.DeclaringType);
 
             ILGenerator generator = getter.GetILGenerator();

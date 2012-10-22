@@ -1,37 +1,5 @@
-﻿namespace TecX.Common.Test
+namespace TecX.EnumClasses.Test.TestObjects
 {
-    using Xunit;
-
-    public class EnumerationFixture
-    {
-        [Fact]
-        public void Should_SetBonus_To_EmployeeType_BonusSize()
-        {
-            var employee = new Employee { Type = EmployeeType.Manager };
-
-            var svc = new BonusService();
-
-            svc.ProcessBonus(employee);
-
-            Assert.Equal(2000m, employee.Bonus);
-        }
-    }
-
-    public class BonusService
-    {
-        public void ProcessBonus(Employee employee)
-        {
-            employee.Bonus = employee.Type.BonusSize;
-        }
-    }
-
-    public class Employee
-    {
-        public EmployeeType Type { get; set; }
-        
-        public decimal Bonus { get; set; }
-    }
-
     public abstract class EmployeeType : Enumeration
     {
         public static readonly EmployeeType Manager = new ManagerType();
@@ -43,7 +11,7 @@
         }
 
         private EmployeeType(int value, string displayName) 
-            : base(value, displayName)
+            : base(value, displayName, displayName)
         {
         }
 

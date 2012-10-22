@@ -3,9 +3,10 @@ namespace TecX.EnumClasses
     using System;
     using System.CodeDom;
     using System.Collections.ObjectModel;
-    using System.Linq;
     using System.Reflection;
     using System.Runtime.Serialization;
+
+    using TecX.Common;
 
     public class EnumerationClassesSurrogate : IDataContractSurrogate
     {
@@ -16,13 +17,15 @@ namespace TecX.EnumClasses
             this.generator = new EnumGenerator();
         }
 
-	    public EnumGenerator Generator
-	    {
-		    get { return generator; }
-	    }
-
-	    public Type GetDataContractType(Type type)
+        public EnumGenerator Generator
         {
+            get { return this.generator; }
+        }
+
+        public Type GetDataContractType(Type type)
+        {
+            Guard.AssertNotNull(type, "type");
+
             if (typeof(Enumeration).IsAssignableFrom(type))
             {
                 Type enumType;
@@ -37,6 +40,8 @@ namespace TecX.EnumClasses
 
         public object GetObjectToSerialize(object obj, Type targetType)
         {
+            Guard.AssertNotNull(targetType, "targetType");
+
             Enumeration enumeration = obj as Enumeration;
             if (enumeration != null)
             {
@@ -52,6 +57,9 @@ namespace TecX.EnumClasses
 
         public object GetDeserializedObject(object obj, Type targetType)
         {
+            Guard.AssertNotNull(obj, "obj");
+            Guard.AssertNotNull(targetType, "targetType");
+
             Type objType = obj.GetType();
 
             if (this.Generator.IsGeneratedEnum(objType) && typeof(Enumeration).IsAssignableFrom(targetType))

@@ -9,7 +9,7 @@ namespace TecX.Common
     using TecX.Common.Reflection;
 
     /// <summary>
-    /// Helper classe for common operations on types
+    /// Helper class for common operations on types
     /// </summary>
     public static class TypeHelper
     {

@@ -2,20 +2,28 @@ namespace TecX.EnumClasses
 {
     using System.Linq;
 
+    using TecX.Common;
+
     public abstract class Flags<T> : Enumeration where T : Flags<T>
     {
-        public Flags(int value, string displayName, string name)
+        protected Flags(int value, string displayName, string name)
             : base(value, displayName, name)
         {
         }
 
         public static T operator |(Flags<T> x, Flags<T> y)
         {
+            Guard.AssertNotNull(x, "x");
+            Guard.AssertNotNull(y, "y");
+
             return x.Or(y.ToEnumeration());
         }
 
         public static T operator &(Flags<T> x, Flags<T> y)
         {
+            Guard.AssertNotNull(x, "x");
+            Guard.AssertNotNull(y, "y");
+
             var f1 = x.ToArray();
             var f2 = y.ToArray();
 

@@ -5,7 +5,7 @@
     using System.Text;
 
     /// <summary>
-    /// Performs conversions between differnt types
+    /// Performs conversions between different types
     /// </summary>
     public static class Convert
     {
@@ -16,7 +16,6 @@
         /// <returns>A hexadecimal string</returns>
         public static string ToHex(byte[] bytes)
         {
-            // input validation
             Guard.AssertNotNull(bytes, "bytes");
 
             StringBuilder sb = new StringBuilder();
