@@ -49,6 +49,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="EnumClassConverter.cs" />
     <Compile Include="Enumeration.cs" />
     <Compile Include="EnumerationClassesSurrogate.cs" />
     <Compile Include="EnumerationParseException.cs" />
