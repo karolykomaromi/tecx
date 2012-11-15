@@ -179,3 +179,7 @@ src/TecX/TecX.EnumClasses.Test.Server/bin
 src/TecX/TecX.EnumClasses.Test.Server/obj
 src/TecX/_ReSharper.TecX.EnumClasses
 src/TecX/TecX.EnumClasses.vsmdi
+src/TecX/TecX.Import.Test/bin
+src/TecX/TecX.Import.Test/obj
+src/TecX/TecX.Import/bin
+src/TecX/TecX.Import/obj
