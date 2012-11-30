@@ -1,23 +1,24 @@
-﻿using System.Collections.Generic;
-using TecX.Common.Specifications;
-
-namespace TecX.Common.Test.TestObjects
+﻿namespace TecX.Common.Test.TestObjects
 {
-    internal class NumberMatches : CompareToValueSpecification<SearchTestEntity, int>
+    using TecX.Common.Specifications;
+
+    internal class NumberMatches : Specification<SearchTestEntity>
     {
+        private readonly int i;
+
         public override string Description
         {
-            get { return "NumberMatches"; }
+            get { return "equals"; }
         }
 
-        public NumberMatches(int number)
+        public NumberMatches(int i)
         {
-            this.Value = number;
+            this.i = i;
         }
 
-        protected override bool IsMatchCore(SearchTestEntity candidate, ICollection<ISpecification<SearchTestEntity>> matchedSpecifications)
+        public override bool IsSatisfiedBy(SearchTestEntity candidate)
         {
-            return candidate.Number == this.Value;
+            return candidate.Number == this.i;
         }
     }
 }

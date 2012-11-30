@@ -1,17 +1,16 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TecX.Common.Extensions.LinqTo.Entities;
-using TecX.Common.Test.TestObjects;
-using TecX.Common.Time;
-
-namespace TecX.Common.Test
+namespace TecX.Common.Test.Extensions
 {
+    using System;
+    using System.Linq;
+    using System.Linq.Expressions;
+
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using TecX.Common.Extensions.LinqTo.Objects;
+    using TecX.Common.Test.TestObjects;
+
     [TestClass]
-    public class EntityPredicateExtensionsFixture
+    public class ObjectPredicateExtensionsFixture
     {
         [TestMethod]
         public void CanFindOrderInOneOfManyTimeSlots()
@@ -28,9 +27,9 @@ namespace TecX.Common.Test
             var matchTime = new Order { Id = 4, ShipDate = new DateTime(2010, 7, 16) };
 
             IQueryable<Order> orders = new[]
-                             {
-                                matchBoth, matchNone, matchId, matchTime
-                             }.AsQueryable();
+                                           {
+                                               matchBoth, matchNone, matchId, matchTime
+                                           }.AsQueryable();
 
             Expression<Func<Order, bool>> anchor = order => order.Id == 3;
 

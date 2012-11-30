@@ -1,27 +1,24 @@
-﻿using System.Collections.Generic;
-using TecX.Common.Specifications;
-
-namespace TecX.Common.Test.TestObjects
+﻿namespace TecX.Common.Test.TestObjects
 {
-    internal class StatusMatches : CompareToValueSpecification<SearchTestEntity, Status>
+    using TecX.Common.Specifications;
+
+    internal class StatusMatches : Specification<SearchTestEntity>
     {
+        private readonly Status status;
+
         public override string Description
         {
-            get { return "StatusMatches"; }
-        }
-
-        public StatusMatches()
-        {
+            get { return "status is"; }
         }
 
         public StatusMatches(Status status)
         {
-            this.Value = status;
+            this.status = status;
         }
 
-        protected override bool IsMatchCore(SearchTestEntity candidate, ICollection<ISpecification<SearchTestEntity>> matchedSpecifications)
+        public override bool IsSatisfiedBy(SearchTestEntity candidate)
         {
-            return this.Value == candidate.Status;
+            return this.status == candidate.Status;
         }
     }
 }

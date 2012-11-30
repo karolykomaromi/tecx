@@ -1,17 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using TecX.Common.Specifications;
-using TecX.Common.Test.TestObjects;
-
-namespace TecX.Common.Test
+﻿namespace TecX.Common.Test.Specifications
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using TecX.Common.Specifications;
+    using TecX.Common.Test.TestObjects;
+
     [TestClass]
     public class SpecificationFixture
     {
+        [TestMethod]
+        public void Should_Extract_Friendly_Description()
+        {
+            var composite = new DummySpec1().Or(new DummySpec2()).And(new DummySpec3());
+
+            var visitor = new PrettyPrinter<SearchTestEntity>();
+
+            composite.Accept(visitor);
+            
+            Assert.AreEqual("(dummy1 || (dummy2 && dummy3))", visitor.ToString());
+        }
+
         [TestMethod]
         public void CanSearch()
         {
