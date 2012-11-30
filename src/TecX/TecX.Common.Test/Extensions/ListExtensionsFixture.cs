@@ -1,12 +1,10 @@
-﻿using System;
-using System.Text;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace TecX.Common.Test
+namespace TecX.Common.Test.Extensions
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
+
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using TecX.Common.Extensions.Collections;
 

@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using TecX.Common.Specifications;
-
-namespace TecX.Common.Test.TestObjects
+﻿namespace TecX.Common.Test.TestObjects
 {
-    internal class HasSomeFlag : CompareToValueSpecification<SearchTestEntity, bool>
+    using TecX.Common.Specifications;
+
+    internal class HasSomeFlag : Specification<SearchTestEntity>
     {
         public override string Description
         {
-            get { return "HasSomeFlag"; }
+            get { return "has flag"; }
         }
-        protected override bool IsMatchCore(SearchTestEntity candidate, ICollection<ISpecification<SearchTestEntity>> matchedSpecifications)
+
+        public override bool IsSatisfiedBy(SearchTestEntity candidate)
         {
             return candidate.HasSomeFlag;
         }

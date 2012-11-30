@@ -1,23 +1,24 @@
-﻿using System;
-using System.Reflection;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using TecX.Common.Reflection;
-using TecX.Common.Test.TestObjects;
-
-namespace TecX.Common.Test
+﻿namespace TecX.Common.Test
 {
+    using System;
+    using System.Reflection;
+
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using TecX.Common.Reflection;
+    using TecX.Common.Test.TestObjects;
+
     [TestClass]
     public class ReflectionHelperFixture
     {
         [TestMethod]
         public void WhenLookingForParameterlessGenericMethod_CanFind()
         {
-            MethodInfo info = DynamicMethodInvocation.FindGenericMethod(typeof(ReflectionHelperTestClass), "TestMethod", new[] { typeof(object) },
-                                                          null);
+            MethodInfo info = DynamicMethodInvocation.FindGenericMethod(
+                typeof(ReflectionHelperTestClass), 
+                "TestMethod", 
+                new[] { typeof(object) },
+                null);
 
             Assert.IsNotNull(info);
 
