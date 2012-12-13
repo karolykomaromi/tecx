@@ -30,7 +30,7 @@ namespace TecX.TestTools.Test.Data
                                 });
                     }))
             {
-                
+                Assert.Null(result.Error);
             }
         }
     }

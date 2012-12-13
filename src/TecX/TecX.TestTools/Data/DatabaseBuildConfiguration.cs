@@ -17,7 +17,7 @@
             this.actions = new List<Action>();
         }
 
-        public ICollection<Action> Actions
+        private ICollection<Action> Actions
         {
             get
             {
@@ -25,9 +25,9 @@
             }
         }
 
-        public string ConnectionString { get; set; }
+        private string ConnectionString { get; set; }
 
-        public string Database { get; set; }
+        private string Database { get; set; }
 
         public void DontDropDatabaseOnDispose()
         {
@@ -54,6 +54,7 @@
 
             return result;
         }
+
         public void WithConnectionStringNamed(string connectionStringName)
         {
             Guard.AssertNotEmpty(connectionStringName, "connectionStringName");
@@ -67,11 +68,6 @@
                 };
 
             this.Actions.Add(action);
-        }
-
-        private Action GetDropDatabaseAction()
-        {
-            return () => { };
         }
 
         public void WithDatabaseName(string databaseName)
@@ -93,6 +89,65 @@
             var config = new DatabaseBuildSequenceConfiguration(this);
 
             action(config);
+        }
+
+        private Action GetDropDatabaseAction()
+        {
+            Action action = () =>
+            {
+                Console.WriteLine("Droping database '{0}'.", this.Database);
+            };
+
+            return action;
+        }
+
+        public class DatabaseBuildSequenceConfiguration
+        {
+            private readonly DatabaseBuildConfiguration config;
+
+            public DatabaseBuildSequenceConfiguration(DatabaseBuildConfiguration config)
+            {
+                Guard.AssertNotNull(config, "config");
+
+                this.config = config;
+            }
+
+            public void DropExistingDatabase()
+            {
+                Action action = this.config.GetDropDatabaseAction();
+
+                this.config.Actions.Add(action);
+            }
+
+            public void CreateEmptyDatabase()
+            {
+                Action action = () =>
+                {
+                    Console.WriteLine("Creating empty database '{0}'.", this.config.Database);
+                };
+
+                this.config.Actions.Add(action);
+            }
+
+            public void CreateTables()
+            {
+                Action action = () =>
+                {
+                    Console.WriteLine("Creating tables.");
+                };
+
+                this.config.Actions.Add(action);
+            }
+
+            public void CreateTestData()
+            {
+                Action action = () =>
+                {
+                    Console.WriteLine("Creating test data.");
+                };
+
+                this.config.Actions.Add(action);
+            }
         }
     }
 }
