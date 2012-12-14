@@ -8,16 +8,16 @@
 
     public class DatabaseBuildConfiguration
     {
-        private readonly List<Action> actions;
+        private readonly IAppendOnlyCollection<Action> actions;
 
         private bool dontDropDatabaseOnDispose;
 
         public DatabaseBuildConfiguration()
         {
-            this.actions = new List<Action>();
+            this.actions = new AppendOnlyCollection<Action>();
         }
 
-        private ICollection<Action> Actions
+        public IAppendOnlyCollection<Action> Actions
         {
             get
             {
@@ -25,9 +25,9 @@
             }
         }
 
-        private string ConnectionString { get; set; }
+        public string ConnectionString { get; private set; }
 
-        private string Database { get; set; }
+        public string Database { get; private set; }
 
         public void DontDropDatabaseOnDispose()
         {
@@ -91,7 +91,7 @@
             action(config);
         }
 
-        private Action GetDropDatabaseAction()
+        public Action GetDropDatabaseAction()
         {
             Action action = () =>
             {
@@ -99,55 +99,6 @@
             };
 
             return action;
-        }
-
-        public class DatabaseBuildSequenceConfiguration
-        {
-            private readonly DatabaseBuildConfiguration config;
-
-            public DatabaseBuildSequenceConfiguration(DatabaseBuildConfiguration config)
-            {
-                Guard.AssertNotNull(config, "config");
-
-                this.config = config;
-            }
-
-            public void DropExistingDatabase()
-            {
-                Action action = this.config.GetDropDatabaseAction();
-
-                this.config.Actions.Add(action);
-            }
-
-            public void CreateEmptyDatabase()
-            {
-                Action action = () =>
-                {
-                    Console.WriteLine("Creating empty database '{0}'.", this.config.Database);
-                };
-
-                this.config.Actions.Add(action);
-            }
-
-            public void CreateTables()
-            {
-                Action action = () =>
-                {
-                    Console.WriteLine("Creating tables.");
-                };
-
-                this.config.Actions.Add(action);
-            }
-
-            public void CreateTestData()
-            {
-                Action action = () =>
-                {
-                    Console.WriteLine("Creating test data.");
-                };
-
-                this.config.Actions.Add(action);
-            }
         }
     }
 }

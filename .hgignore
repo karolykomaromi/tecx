@@ -184,3 +184,4 @@ src/TecX/TecX.Import.Test/obj
 src/TecX/TecX.Import/bin
 src/TecX/TecX.Import/obj
 src/TecX/packages
+src/TecX/_ReSharper.TecX.TestTools

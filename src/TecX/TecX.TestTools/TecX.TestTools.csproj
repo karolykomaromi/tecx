@@ -77,9 +77,12 @@
     <Compile Include="ArrangeActAssert.cs" />
     <Compile Include="AutoFixture\HydratorAdapter.cs" />
     <Compile Include="AutoFixture\ObjectHydratorCustomization.cs" />
+    <Compile Include="Data\AppendOnlyCollection.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\DatabaseBuildConfiguration.cs" />
     <Compile Include="Data\DatabaseBuildResult.cs" />
+    <Compile Include="Data\DatabaseBuildSequenceConfiguration.cs" />
+    <Compile Include="Data\IAppendOnlyCollection.cs" />
     <Compile Include="Extensions\MockTimeProvider.cs" />
     <Compile Include="DispatcherUtil.cs" />
     <Compile Include="EventExpectation.cs" />
