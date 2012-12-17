@@ -1,12 +1,9 @@
-using System.Text;
-using System.Linq;
-using System.Collections.Generic;
-using System;
-
-using TecX.Common;
-
 namespace TecX.TestTools.Data
 {
+    using System;
+
+    using TecX.Common;
+
     public class DatabaseBuildSequenceConfiguration
     {
         private readonly DatabaseBuildConfiguration config;

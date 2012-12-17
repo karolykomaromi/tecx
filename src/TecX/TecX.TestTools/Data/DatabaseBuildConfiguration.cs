@@ -5,6 +5,7 @@
     using System.Configuration;
 
     using TecX.Common;
+    using TecX.Common.Collections;
 
     public class DatabaseBuildConfiguration
     {
