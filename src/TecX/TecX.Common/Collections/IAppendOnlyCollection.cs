@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-
-namespace TecX.TestTools.Data
+namespace TecX.Common.Collections
 {
+    using System.Collections.Generic;
+
     public interface IAppendOnlyCollection<T> : IEnumerable<T>
     {
         void Add(T item);

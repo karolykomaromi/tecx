@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-
-using TecX.Common;
-
-namespace TecX.TestTools.Data
+namespace TecX.Common.Collections
 {
+    using System.Collections;
+    using System.Collections.Generic;
+
     public class AppendOnlyCollection<T> : IAppendOnlyCollection<T>
     {
         private readonly ICollection<T> inner;
@@ -35,7 +33,7 @@ namespace TecX.TestTools.Data
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return this.GetEnumerator();
         }
     }
 }

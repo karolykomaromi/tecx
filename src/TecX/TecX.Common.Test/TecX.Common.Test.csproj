@@ -79,6 +79,9 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\AppendOnlyCollectionFixture.cs" />
+    <Compile Include="Collections\IndexedReadonlyCollectionFixture.cs" />
+    <Compile Include="Collections\KeyedReadOnlyCollectionFixture.cs" />
     <Compile Include="Extensions\EntityPredicateExtensionsFixture.cs" />
     <Compile Include="Extensions\ExceptionExtensionsFixture.cs" />
     <Compile Include="Extensions\ListExtensionsFixture.cs" />
