@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Common.Test", "TecX.Common.Test\TecX.Common.Test.csproj", "{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FB761D15-4518-4694-9D8C-B7BC9C7F5B44}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		TecX.Common.vsmdi = TecX.Common.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Common", "TecX.Common\TecX.Common.csproj", "{F749C03B-EC1A-460E-ACF8-05F70AD7512A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Katas.BankOcr", "TecX.Katas.BankOcr\TecX.Katas.BankOcr.csproj", "{B4EC49C3-481D-46A2-B58E-1D33E7B08FCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Katas.BankOcr.Test", "TecX.Katas.BankOcr.Test\TecX.Katas.BankOcr.Test.csproj", "{0D53B765-3B94-4A4F-A58F-31F07E8FAADB}"
+EndProject
+Global
+	GlobalSection(MercurialSourceControlSolutionProperties) = preSolution
+		SolutionIsControlled = True
+		SolutionBindings = <Solution Location In Database>
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = TecX.Common.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4EC49C3-481D-46A2-B58E-1D33E7B08FCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4EC49C3-481D-46A2-B58E-1D33E7B08FCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4EC49C3-481D-46A2-B58E-1D33E7B08FCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4EC49C3-481D-46A2-B58E-1D33E7B08FCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D53B765-3B94-4A4F-A58F-31F07E8FAADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D53B765-3B94-4A4F-A58F-31F07E8FAADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D53B765-3B94-4A4F-A58F-31F07E8FAADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D53B765-3B94-4A4F-A58F-31F07E8FAADB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35
+	EndGlobalSection
+EndGlobal
