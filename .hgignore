@@ -190,3 +190,6 @@ src/TecX/TecX.Build/bin
 src/TecX/TecX.Build/obj
 src/TecX/TecX.Build.Test/bin
 src/TecX/TecX.Build.Test/obj
+src/TecX/_UpgradeReport_Files
+src/TecX/UpgradeLog.htm
+src/TecX/UpgradeLog.XML

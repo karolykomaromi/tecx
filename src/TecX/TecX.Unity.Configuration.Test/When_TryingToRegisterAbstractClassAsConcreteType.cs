@@ -9,7 +9,7 @@ namespace TecX.Unity.Configuration.Test
     public class When_TryingToRegisterAbstractClassAsConcreteType : Given_ContainerAndBuilder
     {
         [TestMethod]
-        [ExpectedException(typeof(GuardArgumentException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void Then_Throws()
         {
             this.builder.ForConcreteType<AbstractClass>();
