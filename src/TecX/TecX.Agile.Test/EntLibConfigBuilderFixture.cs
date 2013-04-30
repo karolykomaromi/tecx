@@ -10,11 +10,11 @@
     using TecX.Agile.Registration;
     using TecX.TestTools;
 
-    public abstract class Given_Container : GivenWhenThen
+    public abstract class Given_Container : ArrangeActAssert
     {
         protected IUnityContainer container;
 
-        protected override void Given()
+        protected override void Arrange()
         {
             this.container = new UnityContainer();
         }
@@ -23,7 +23,7 @@
     [TestClass]
     public class When_AddingEntLibRegistry : Given_Container
     {
-        protected override void When()
+        protected override void Act()
         {
             container.AddNewExtension<EnterpriseLibraryConfigurationBuilder>();
         }

@@ -7,7 +7,6 @@
     using TecX.Unity.Collections;
     using TecX.Unity.Configuration;
     using TecX.Unity.Enrichment;
-    using TecX.Unity.TypedFactory;
 
     public class AppConfigurationBuilder : ConfigurationBuilder
     {

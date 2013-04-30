@@ -9,7 +9,7 @@ namespace TecX.Unity.Configuration.Test
     public class When_TryingToRegisterInterfaceAsConcreteType : Given_ContainerAndBuilder
     {
         [TestMethod]
-        [ExpectedException(typeof(GuardArgumentException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void Then_Throws()
         {
             this.builder.ForConcreteType<IFoo>();
