@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
+      <Link>Properties\GlobalAssemblyVersion.cs</Link>
+    </Compile>
     <Compile Include="ClientSideSerializeExpressionsBehavior.cs" />
     <Compile Include="ExpressionDataContractSurrogate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

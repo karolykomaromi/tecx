@@ -2,14 +2,11 @@
 {
     using System;
     using System.Collections;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
 
-    using TecX.Common.Error;
     using TecX.Common.Extensions.Error;
 
     using ArgumentException = TecX.Common.Error.ArgumentException;
@@ -26,10 +23,10 @@
         private static class Constants
         {
             /// <summary>ParameterNull '{0}' should not be NULL!</summary>
-            public const string ParameterNull = "ParameterNull '{0}' must not be NULL!";
+            public const string ParameterNull = "Parameter '{0}' must not be NULL!";
 
             /// <summary>parameter '{0}' should not be empty!</summary>
-            public const string ParameterEmpty = "ParameterNull '{0}' must not be empty!";
+            public const string ParameterEmpty = "Parameter '{0}' must not be empty!";
 
             /// <summary>Condition not met!</summary>
             public const string ConditionNotMet = "Condition not met!";

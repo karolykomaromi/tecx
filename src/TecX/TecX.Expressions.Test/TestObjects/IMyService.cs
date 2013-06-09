@@ -8,6 +8,6 @@ namespace TecX.Expressions.Test.TestObjects
     public interface IMyService
     {
         [OperationContract]
-        Customer[] Query(Expression<Func<Customer, bool>> query);
+        Customer[] QueryCustomers(Expression<Func<Customer, bool>> query);
     }
 }
