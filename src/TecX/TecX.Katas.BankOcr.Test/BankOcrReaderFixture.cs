@@ -1,9 +1,5 @@
-﻿namespace BankOcrKata
+﻿namespace TecX.Katas.BankOcr.Test
 {
-    using System;
-    using System.IO;
-    using System.Text;
-
     using TecX.Katas.BankOcr;
 
     using Xunit;
@@ -59,42 +55,6 @@
             BankOcrReader sut = new BankOcrReader();
 
             Assert.Equal(expected, sut.Parse(input));
-        }
-
-        [Fact]
-        public void StreamLines()
-        {
-            const int charactersPerLine = 27;
-
-            string s = new string('1', charactersPerLine) + Environment.NewLine + 
-                       new string('2', charactersPerLine) + Environment.NewLine + 
-                       new string('3', charactersPerLine) + Environment.NewLine + 
-                       new string('4', charactersPerLine) + Environment.NewLine + 
-                       new string('5', charactersPerLine) + Environment.NewLine + 
-                       new string('6', charactersPerLine) + Environment.NewLine + 
-                       new string('7', charactersPerLine) + Environment.NewLine + 
-                       new string('8', charactersPerLine);
-
-            MemoryStream stream = new MemoryStream();
-
-            StreamWriter writer = new StreamWriter(stream);
-
-            writer.Write(s);
-
-            writer.Flush();
-
-            stream.Position = 0;
-
-            StreamReader reader = new StreamReader(stream);
-
-            StringBuilder sb = new StringBuilder(100);
-
-            for (int i = 0; i < 3; i++)
-            {
-                sb.AppendLine(reader.ReadLine());
-            }
-
-            string emptyLine = reader.ReadLine();
         }
     }
 }

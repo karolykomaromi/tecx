@@ -193,3 +193,8 @@ src/TecX/TecX.Build.Test/obj
 src/TecX/_UpgradeReport_Files
 src/TecX/UpgradeLog.htm
 src/TecX/UpgradeLog.XML
+src/TecX/TecX.Katas.BankOcr.Test/bin
+src/TecX/TecX.Katas.BankOcr/bin
+src/TecX/TecX.Katas.BankOcr/obj
+src/TecX/TecX.Katas.BankOcr.Test/obj
+*.DotSettings

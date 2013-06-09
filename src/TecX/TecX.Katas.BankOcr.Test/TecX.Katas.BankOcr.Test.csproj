@@ -71,6 +71,7 @@
     <Compile Include="BankOcrReaderFixture.cs" />
     <Compile Include="DigitFixture.cs" />
     <Compile Include="NumeralStringTokenizerFixture.cs" />
+    <Compile Include="OcrParserFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
