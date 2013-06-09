@@ -62,5 +62,10 @@
                 throw new FormatException("Each line containing OCR data must be exactly 27 characters long and contain only pipes ('|'), underscores ('_') or blanks (' ').");
             }
         }
+
+        public bool GetNext()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
