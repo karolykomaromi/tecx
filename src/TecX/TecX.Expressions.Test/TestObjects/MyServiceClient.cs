@@ -13,9 +13,9 @@ namespace TecX.Expressions.Test.TestObjects
             this.Endpoint.Behaviors.Add(new ClientSideSerializeExpressionsBehavior());
         }
 
-        public Customer[] Query(Expression<Func<Customer, bool>> query)
+        public Customer[] QueryCustomers(Expression<Func<Customer, bool>> query)
         {
-            return this.Channel.Query(query);
+            return this.Channel.QueryCustomers(query);
         }
     }
 }

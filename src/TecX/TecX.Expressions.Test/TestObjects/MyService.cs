@@ -8,7 +8,7 @@ namespace TecX.Expressions.Test.TestObjects
     [SerializeExpressionsBehavior, ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     public class MyService : IMyService
     {
-        public Customer[] Query(Expression<Func<Customer, bool>> query)
+        public Customer[] QueryCustomers(Expression<Func<Customer, bool>> query)
         {
             var selector = query.Compile();
 

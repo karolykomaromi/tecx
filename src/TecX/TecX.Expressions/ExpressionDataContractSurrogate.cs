@@ -43,6 +43,8 @@
             return obj;
         }
 
+        #region Not Implemented
+
         public object GetCustomDataToExport(MemberInfo memberInfo, Type dataContractType)
         {
             return null;
@@ -66,5 +68,7 @@
         {
             return typeDeclaration;
         }
+
+        #endregion Not Implemented
     }
 }

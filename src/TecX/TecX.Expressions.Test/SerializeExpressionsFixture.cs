@@ -22,7 +22,7 @@
 
                 using (var proxy = new MyServiceClient(new BasicHttpBinding(), new EndpointAddress(ServiceAddress)))
                 {
-                    Customer[] actual = proxy.Query(c => c.Id > 3);
+                    Customer[] actual = proxy.QueryCustomers(c => c.Id > 3);
 
                     Customer[] expected = new[]
                     {
@@ -49,7 +49,7 @@
 
                 var proxy = factory.CreateChannel();
 
-                Customer[] actual = proxy.Query(c => c.Id > 3);
+                Customer[] actual = proxy.QueryCustomers(c => c.Id > 3);
 
                 Customer[] expected = new[]
                     {
