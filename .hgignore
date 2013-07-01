@@ -202,3 +202,7 @@ src/TecX/TecX.Expressions.Test/bin
 src/TecX/TecX.Expressions.Test/obj
 src/TecX/TecX.Expressions/bin
 src/TecX/TecX.Expressions/obj
+src/TecX/TecX.BehavioralTesting/bin
+src/TecX/TecX.Playground/bin
+src/TecX/TecX.Playground/obj
+src/TecX/TecX.BehavioralTesting/obj
