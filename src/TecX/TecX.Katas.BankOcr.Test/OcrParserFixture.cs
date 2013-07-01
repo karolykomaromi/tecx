@@ -127,6 +127,8 @@
                 }
             }
             while (tokenizer.GetNext());
+
+            throw new NotImplementedException();
         }
     }
 }
