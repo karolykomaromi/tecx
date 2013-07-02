@@ -6,7 +6,7 @@
 
     using Ploeh.AutoFixture.Kernel;
 
-    using TecX.Common;
+    using Common;
 
     public class ChildContainerSpecimenBuilder : ISpecimenBuilder
     {
