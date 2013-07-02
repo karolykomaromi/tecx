@@ -1,63 +1,59 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.Kernel;
-
-using TecX.TestTools.Test.TestObjects;
-
-namespace TecX.TestTools.Test
+﻿namespace TecX.TestTools.Test
 {
-    using System.Collections.Generic;
-    using System.Text;
+    using AutoFixture;
 
     using Newtonsoft.Json;
 
-    using TecX.TestTools.AutoFixture;
+    using Ploeh.AutoFixture;
+    using Ploeh.AutoFixture.Kernel;
 
-    [TestClass]
+    using TestObjects;
+
+    using Xunit;
+
     public class AutoFixtureExtensionsFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanGetReadonlyObjectFilled()
         {
-            var fixture = new Fixture();
+            Fixture fixture = new Fixture();
 
-            var parent = fixture.CreateAnonymous<ComplexParent>();
+            var parent = fixture.Create<ComplexParent>();
             new AutoPropertiesCommand().Execute(
                 parent.Child,
-                new SpecimenContext(fixture.Compose()));
+                new SpecimenContext(fixture));
 
-            Assert.IsFalse(string.IsNullOrEmpty(parent.Blub));
-            Assert.AreNotEqual(0, parent.Bla);
-            Assert.AreNotEqual(0, parent.Child.Bar);
-            Assert.IsFalse(string.IsNullOrEmpty(parent.Child.Foo));
-            Assert.AreNotEqual(0, parent.Child.Bar2);
+            Assert.False(string.IsNullOrEmpty(parent.Blub));
+            Assert.NotEqual(0, parent.Bla);
+            Assert.NotEqual(0, parent.Child.Bar);
+            Assert.False(string.IsNullOrEmpty(parent.Child.Foo));
+            Assert.NotEqual(0, parent.Child.Bar2);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanCustomizeFixtureToGetReadonlyObjectFilled()
         {
             var fixture = new Fixture();
 
             fixture.Customize<ComplexParent>(c =>
                 c.Do(x => new AutoPropertiesCommand()
-                    .Execute(x.Child, new SpecimenContext(fixture.Compose()))));
+                    .Execute(x.Child, new SpecimenContext(fixture))));
 
-            var parent = fixture.CreateAnonymous<ComplexParent>();
+            var parent = fixture.Create<ComplexParent>();
 
-            Assert.IsFalse(string.IsNullOrEmpty(parent.Blub));
-            Assert.AreNotEqual(0, parent.Bla);
-            Assert.AreNotEqual(0, parent.Child.Bar);
-            Assert.IsFalse(string.IsNullOrEmpty(parent.Child.Foo));
-            Assert.AreNotEqual(0, parent.Child.Bar2);
+            Assert.False(string.IsNullOrEmpty(parent.Blub));
+            Assert.NotEqual(0, parent.Bla);
+            Assert.NotEqual(0, parent.Child.Bar);
+            Assert.False(string.IsNullOrEmpty(parent.Child.Foo));
+            Assert.NotEqual(0, parent.Child.Bar2);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanCreateMoreRealisticValuesUsingObjectHydrator()
         {
             var fixture = new Fixture().Customize(new ObjectHydratorCustomization());
 
-            var customer = fixture.CreateAnonymous<Customer>();
+            var customer = fixture.Create<Customer>();
 
             string y = JsonConvert.SerializeObject(customer, Formatting.Indented);
         }

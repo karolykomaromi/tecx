@@ -1,15 +1,16 @@
 ﻿namespace TecX.TestTools.Test
 {
+    using Xunit;
+
     using Microsoft.Practices.Unity;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using TecX.TestTools.Test.TestObjects;
-    using TecX.TestTools.Unity;
+    using Unity;
 
-    [TestClass]
+    using TestObjects;
+
     public class AutoMockingExtensionFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanTurnOnAutoMocking()
         {
             var container = new UnityContainer();
@@ -18,10 +19,10 @@
 
             var foo = container.Resolve<IFoo>();
 
-            Assert.IsNotNull(foo);
+            Assert.NotNull(foo);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanConfigureMock()
         {
             var container = new UnityContainer();
@@ -32,7 +33,7 @@
 
             IFoo foo = container.Resolve<IFoo>();
 
-            Assert.AreEqual("1", foo.Bar);
+            Assert.Equal("1", foo.Bar);
         }
     }
 }

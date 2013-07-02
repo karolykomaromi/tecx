@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace TecX.TestTools.Test.Data
+﻿namespace TecX.TestTools.Test.Data
 {
-    using TecX.TestTools.Data;
+    using TestTools.Data;
 
     using Xunit;
 
     public class DatabaseFixture
     {
         [Fact]
-        public void Should()
+        public void Should_NotThrowExceptionOnCreation()
         {
             using (var result = Database.Build(
                 x =>
