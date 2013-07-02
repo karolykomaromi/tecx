@@ -1,10 +1,10 @@
 ﻿namespace TecX.BehavioralTesting
 {
+    using Common;
+
     using Microsoft.Practices.Unity;
 
     using Ploeh.AutoFixture;
-
-    using TecX.Common;
 
     public class ContainerCustomization : ICustomization
     {

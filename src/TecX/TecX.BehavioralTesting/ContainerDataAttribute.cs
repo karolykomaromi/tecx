@@ -5,9 +5,9 @@
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit;
 
-    public class ContainerTheoryAttribute : AutoDataAttribute
+    public class ContainerDataAttribute : AutoDataAttribute
     {
-        public ContainerTheoryAttribute()
+        public ContainerDataAttribute()
             : base(new Fixture().Customize(new ContainerCustomization(new UnityContainer().AddExtension(new ContainerConfiguration()))))
         {
         }
