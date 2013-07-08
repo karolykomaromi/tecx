@@ -72,10 +72,17 @@
   <ItemGroup>
     <Compile Include="FromPlainToGenericFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryAbstractionLayer\InterceptionFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
+      <Project>{f749c03b-ec1a-460e-acf8-05f70ad7512a}</Project>
+      <Name>TecX.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
