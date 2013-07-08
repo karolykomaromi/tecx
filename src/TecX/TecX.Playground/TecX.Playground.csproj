@@ -72,7 +72,18 @@
   <ItemGroup>
     <Compile Include="FromPlainToGenericFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryAbstractionLayer\ConcatFrameworkFilters.cs" />
+    <Compile Include="QueryAbstractionLayer\ExpressionExtensions.cs" />
+    <Compile Include="QueryAbstractionLayer\FindElementType.cs" />
+    <Compile Include="QueryAbstractionLayer\Foo.cs" />
     <Compile Include="QueryAbstractionLayer\InterceptionFixture.cs" />
+    <Compile Include="QueryAbstractionLayer\ParameterRebinder.cs" />
+    <Compile Include="QueryAbstractionLayer\PDOperator.cs" />
+    <Compile Include="QueryAbstractionLayer\PrincipalFilter.cs" />
+    <Compile Include="QueryAbstractionLayer\QueryInterceptor.cs" />
+    <Compile Include="QueryAbstractionLayer\QueryProviderInterceptor.cs" />
+    <Compile Include="QueryAbstractionLayer\PersistentObject.cs" />
+    <Compile Include="QueryAbstractionLayer\VisitorCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
