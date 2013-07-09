@@ -7,32 +7,18 @@
     /// </summary>
     public class ClientInfo : IClientInfo
     {
-        private static readonly ThreadLocal<IClientInfo> thread_clientInfo = new ThreadLocal<IClientInfo>(() => new ClientInfo());
-
-        private static int counter = 0;
+        private static readonly ThreadLocal<IClientInfo> thread_ci = new ThreadLocal<IClientInfo>(() => new ClientInfo());
 
         public ClientInfo()
         {
-            counter++;
-
-            this.Principal = new PDPrincipal { PDO_ID = GetPrincipalID() };
+            this.Principal = new PDPrincipal();
         }
 
         public PDPrincipal Principal { get; set; }
 
         public static IClientInfo GetClientInfo()
         {
-            return thread_clientInfo.Value;
-        }
-
-        private long GetPrincipalID()
-        {
-            if (counter % 2 == 0)
-            {
-                return 42;
-            }
-
-            return 1337;
+            return thread_ci.Value;
         }
     }
 }
