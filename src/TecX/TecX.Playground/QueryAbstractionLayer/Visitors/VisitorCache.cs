@@ -3,17 +3,21 @@ namespace TecX.Playground.QueryAbstractionLayer.Visitors
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
-    using System.Reflection;
 
     using TecX.Common;
     using TecX.Playground.QueryAbstractionLayer.PD;
 
     public class VisitorCache
     {
+        private readonly Func<Type, Func<PDIteratorOperator, IClientInfo, ExpressionVisitor>> onMissing;
+
         private readonly IDictionary<Type, Func<PDIteratorOperator, IClientInfo, ExpressionVisitor>> factories;
 
-        public VisitorCache()
+        public VisitorCache(Func<Type, Func<PDIteratorOperator, IClientInfo, ExpressionVisitor>> onMissing)
         {
+            Guard.AssertNotNull(onMissing, "onMissing");
+
+            this.onMissing = onMissing;
             this.factories = new Dictionary<Type, Func<PDIteratorOperator, IClientInfo, ExpressionVisitor>>();
         }
 
@@ -33,22 +37,7 @@ namespace TecX.Playground.QueryAbstractionLayer.Visitors
             Func<PDIteratorOperator, IClientInfo, ExpressionVisitor> factory;
             if (!this.factories.TryGetValue(type, out factory))
             {
-                // construct a factory method in the form of Func<PDOperator, ExpressionVisitor> and put it in the lookup
-                ParameterExpression p1 = Expression.Parameter(typeof(PDIteratorOperator), "op");
-
-                ParameterExpression p2 = Expression.Parameter(typeof(IClientInfo), "clientInfo");
-
-                Type concatFiltersType = typeof(AppendFrameworkFilters<>).MakeGenericType(type);
-
-                ConstructorInfo ctor = concatFiltersType.GetConstructor(new[] { typeof(PDIteratorOperator), typeof(IClientInfo) });
-
-                NewExpression @new = Expression.New(ctor, p1, p2);
-
-                Expression<Func<PDIteratorOperator, IClientInfo, ExpressionVisitor>> factoryExpression =
-                    Expression.Lambda<Func<PDIteratorOperator, IClientInfo, ExpressionVisitor>>(@new, p1, p2);
-
-                // after compiling this will run as fast as a standard delegate in the form of 'pdOperator => new ConcatFrameworkFilter(pdOperator)'
-                factory = factoryExpression.Compile();
+                factory = this.onMissing(type);
 
                 this.factories.Add(type, factory);
             }

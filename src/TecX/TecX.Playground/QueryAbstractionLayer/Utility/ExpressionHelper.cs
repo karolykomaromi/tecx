@@ -3,6 +3,7 @@ namespace TecX.Playground.QueryAbstractionLayer.Utility
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection;
 
     using TecX.Playground.QueryAbstractionLayer.PD;
     using TecX.Playground.QueryAbstractionLayer.Visitors;
@@ -46,12 +47,53 @@ namespace TecX.Playground.QueryAbstractionLayer.Utility
             {
                 node = node.And(filter);
             }
+
             return node;
         }
 
         public static MemberExpression Property<TElement, TProperty>(Expression<Func<TElement, TProperty>> selector)
         {
             return (MemberExpression) selector.Body;
+        }
+
+        public static Func<PDIteratorOperator, IClientInfo, ExpressionVisitor> CreateAppendFrameworkFiltersVisitor(Type type)
+        {
+            ParameterExpression p1 = Expression.Parameter(typeof(PDIteratorOperator), "op");
+
+            ParameterExpression p2 = Expression.Parameter(typeof(IClientInfo), "clientInfo");
+
+            Type visitorType = typeof(AppendFrameworkFilters<>).MakeGenericType(type);
+
+            ConstructorInfo ctor = visitorType.GetConstructor(new[] { typeof(PDIteratorOperator), typeof(IClientInfo) });
+
+            NewExpression @new = Expression.New(ctor, p1, p2);
+
+            Expression<Func<PDIteratorOperator, IClientInfo, ExpressionVisitor>> factoryExpression =
+                Expression.Lambda<Func<PDIteratorOperator, IClientInfo, ExpressionVisitor>>(@new, p1, p2);
+
+            Func<PDIteratorOperator, IClientInfo, ExpressionVisitor> factory = factoryExpression.Compile();
+
+            return factory;
+        }
+
+        public static Func<PDIteratorOperator, IClientInfo, ExpressionVisitor> CreatePrependWhereClauseVisitor(Type type)
+        {
+            ParameterExpression p1 = Expression.Parameter(typeof(PDIteratorOperator), "op");
+
+            ParameterExpression p2 = Expression.Parameter(typeof(IClientInfo), "clientInfo");
+
+            Type visitorType = typeof(PrependWhereClause<>).MakeGenericType(type);
+
+            ConstructorInfo ctor = visitorType.GetConstructor(new[] { typeof(PDIteratorOperator), typeof(IClientInfo) });
+
+            NewExpression @new = Expression.New(ctor, p1, p2);
+
+            Expression<Func<PDIteratorOperator, IClientInfo, ExpressionVisitor>> factoryExpression =
+                Expression.Lambda<Func<PDIteratorOperator, IClientInfo, ExpressionVisitor>>(@new, p1, p2);
+
+            Func<PDIteratorOperator, IClientInfo, ExpressionVisitor> factory = factoryExpression.Compile();
+
+            return factory;
         }
     }
 }

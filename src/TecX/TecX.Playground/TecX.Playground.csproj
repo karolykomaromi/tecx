@@ -96,6 +96,7 @@
     <Compile Include="QueryAbstractionLayer\Visitors\AppendFrameworkFilters.cs" />
     <Compile Include="QueryAbstractionLayer\Visitors\ElementTypeFinder.cs" />
     <Compile Include="QueryAbstractionLayer\Visitors\ParameterRebinder.cs" />
+    <Compile Include="QueryAbstractionLayer\Visitors\PrependWhereClause.cs" />
     <Compile Include="QueryAbstractionLayer\Visitors\VisitorCache.cs" />
   </ItemGroup>
   <ItemGroup>
