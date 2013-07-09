@@ -1,29 +1,35 @@
-﻿using TecX.Playground.QueryAbstractionLayer.Filters;
-using TecX.Playground.QueryAbstractionLayer.PD;
-
-using Xunit;
-
-namespace TecX.Playground.QueryAbstractionLayer
+﻿namespace TecX.Playground.QueryAbstractionLayer
 {
+    using TecX.Playground.QueryAbstractionLayer.Filters;
+    using TecX.Playground.QueryAbstractionLayer.PD;
+
+    using Xunit;
+
     public class PrincipalFilterFixture
     {
         [Fact]
         public void Disabled_Should_AlwaysBeTrue()
         {
-            Assert.True(PrincipalFilter.Disabled.Filter<Foo>().Compile()(new Foo()));
-            Assert.True(PrincipalFilter.Disabled.Filter<Foo>().Compile()(new Foo { PrincipalId = 1337 }));
+            IClientInfo clientInfo = new ClientInfo();
+
+            Assert.True(PrincipalFilter.Disabled.Filter<Foo>(clientInfo).Compile()(new Foo()));
+            Assert.True(PrincipalFilter.Disabled.Filter<Foo>(clientInfo).Compile()(new Foo { Principal = new PDPrincipal { PDO_ID = 1337 } }));
         }
 
         [Fact]
         public void Enabled_Should_BeTrueOnMatchingPrincipalId()
         {
-            Assert.True(PrincipalFilter.Enabled.Filter<Foo>().Compile()(new Foo { PrincipalId = 1337 }));
+            IClientInfo clientInfo = new ClientInfo { Principal = new PDPrincipal { PDO_ID = 1337 } };
+
+            Assert.True(PrincipalFilter.Enabled.Filter<Foo>(clientInfo).Compile()(new Foo { Principal = new PDPrincipal { PDO_ID = 1337 } }));
         }
 
         [Fact]
         public void Enabled_Should_BeFalse_OnMismatchingPrincipalId()
         {
-            Assert.False(PrincipalFilter.Enabled.Filter<Foo>().Compile()(new Foo { PrincipalId = 1 }));
+            IClientInfo clientInfo = new ClientInfo { Principal = new PDPrincipal { PDO_ID = 1337 } };
+
+            Assert.False(PrincipalFilter.Enabled.Filter<Foo>(clientInfo).Compile()(new Foo { Principal = new PDPrincipal { PDO_ID = 1 } }));
         }
     }
 }

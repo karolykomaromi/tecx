@@ -1,6 +1,4 @@
-﻿using TecX.Playground.QueryAbstractionLayer.PD;
-
-namespace TecX.Playground.QueryAbstractionLayer
+﻿namespace TecX.Playground.QueryAbstractionLayer
 {
     using System;
     using System.Collections;
@@ -9,6 +7,7 @@ namespace TecX.Playground.QueryAbstractionLayer
     using System.Linq.Expressions;
 
     using TecX.Common;
+    using TecX.Playground.QueryAbstractionLayer.PD;
 
     public class QueryInterceptor<TElement> : IQueryable<TElement>
     {
@@ -16,8 +15,8 @@ namespace TecX.Playground.QueryAbstractionLayer
 
         private readonly QueryProviderInterceptor provider;
 
-        public QueryInterceptor(IQueryable<TElement> inner, PDIteratorOperator pdOperator)
-            : this(inner, new QueryProviderInterceptor(inner.Provider, pdOperator))
+        public QueryInterceptor(IQueryable<TElement> inner, PDIteratorOperator pdOperator, IClientInfo clientInfo)
+            : this(inner, new QueryProviderInterceptor(inner.Provider, pdOperator, clientInfo))
         {
         }
 

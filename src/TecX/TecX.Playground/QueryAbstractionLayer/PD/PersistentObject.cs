@@ -1,10 +1,10 @@
 namespace TecX.Playground.QueryAbstractionLayer.PD
 {
+    using System;
+
     public class PersistentObject
     {
-        public long PrincipalId { get; set; }
-
-        public bool IsDeleted { get; set; }
+        public DateTime? PDO_DELETED { get; set; }
         public long PDO_ID { get; set; }
     }
 }

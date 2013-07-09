@@ -1,12 +1,12 @@
-using System;
-using System.Linq;
-using System.Linq.Expressions;
-
-using TecX.Playground.QueryAbstractionLayer.PD;
-using TecX.Playground.QueryAbstractionLayer.Visitors;
-
 namespace TecX.Playground.QueryAbstractionLayer.Utility
 {
+    using System;
+    using System.Linq;
+    using System.Linq.Expressions;
+
+    using TecX.Playground.QueryAbstractionLayer.PD;
+    using TecX.Playground.QueryAbstractionLayer.Visitors;
+
     public static class ExpressionHelper
     {
         public static Expression<Func<TElement, bool>> AlwaysTrue<TElement>()
@@ -30,10 +30,10 @@ namespace TecX.Playground.QueryAbstractionLayer.Utility
             return Expression.Lambda<T>(Expression.And(left.Body, secondBody), left.Parameters);
         }
 
-        public static Expression<T> AppendOperatorFilters<T, TElement>(Expression<T> node, PDIteratorOperator pdOperator)
+        public static Expression<T> AppendFiltersFromOperator<T, TElement>(Expression<T> node, PDIteratorOperator pdOperator, IClientInfo clientInfo)
             where TElement : PersistentObject
         {
-            Expression<T> filter = pdOperator.PrincipalFilter.Filter<TElement>() as Expression<T>;
+            Expression<T> filter = pdOperator.PrincipalFilter.Filter<TElement>(clientInfo) as Expression<T>;
 
             if (filter != null)
             {
@@ -47,6 +47,11 @@ namespace TecX.Playground.QueryAbstractionLayer.Utility
                 node = node.And(filter);
             }
             return node;
+        }
+
+        public static MemberExpression Property<TElement, TProperty>(Expression<Func<TElement, TProperty>> selector)
+        {
+            return (MemberExpression) selector.Body;
         }
     }
 }

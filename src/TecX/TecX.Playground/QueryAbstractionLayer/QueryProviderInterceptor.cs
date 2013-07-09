@@ -1,30 +1,32 @@
-﻿using TecX.Playground.QueryAbstractionLayer.Filters;
-using TecX.Playground.QueryAbstractionLayer.PD;
-using TecX.Playground.QueryAbstractionLayer.Visitors;
-
-namespace TecX.Playground.QueryAbstractionLayer
+﻿namespace TecX.Playground.QueryAbstractionLayer
 {
     using System;
     using System.Linq;
     using System.Linq.Expressions;
 
     using TecX.Common;
+    using TecX.Playground.QueryAbstractionLayer.PD;
+    using TecX.Playground.QueryAbstractionLayer.Visitors;
+
 
     public class QueryProviderInterceptor : IQueryProvider
     {
         private readonly IQueryProvider inner;
 
         private readonly PDIteratorOperator pdOperator;
+        private readonly IClientInfo clientInfo;
 
         private readonly VisitorCache visitorCache;
 
-        public QueryProviderInterceptor(IQueryProvider inner, PDIteratorOperator pdOperator)
+        public QueryProviderInterceptor(IQueryProvider inner, PDIteratorOperator pdOperator, IClientInfo clientInfo)
         {
             Guard.AssertNotNull(inner, "inner");
             Guard.AssertNotNull(pdOperator, "pdOperator");
+            Guard.AssertNotNull(clientInfo, "clientInfo");
 
             this.inner = inner;
             this.pdOperator = pdOperator;
+            this.clientInfo = clientInfo;
             this.visitorCache = new VisitorCache();
         }
 
@@ -49,7 +51,7 @@ namespace TecX.Playground.QueryAbstractionLayer
             Expression newExpression = expression;
 
             ExpressionVisitor visitor;
-            if (this.visitorCache.TryGetVisitor(finder.ElementType, this.pdOperator, out visitor))
+            if (this.visitorCache.TryGetVisitor(finder.ElementType, this.pdOperator, this.clientInfo, out visitor))
             {
                 newExpression = visitor.Visit(expression);
             }
