@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TecX.Playground</RootNamespace>
     <AssemblyName>TecX.Playground</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -40,11 +40,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ploeh.AutoFixture">
-      <HintPath>..\packages\AutoFixture.3.5.1\lib\net40\Ploeh.AutoFixture.dll</HintPath>
-    </Reference>
-    <Reference Include="Ploeh.AutoFixture.Xunit">
-      <HintPath>..\packages\AutoFixture.Xunit.3.5.1\lib\net40\Ploeh.AutoFixture.Xunit.dll</HintPath>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -72,18 +69,21 @@
   <ItemGroup>
     <Compile Include="FromPlainToGenericFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryAbstractionLayer\ConcatFrameworkFilters.cs" />
-    <Compile Include="QueryAbstractionLayer\ExpressionExtensions.cs" />
-    <Compile Include="QueryAbstractionLayer\FindElementType.cs" />
-    <Compile Include="QueryAbstractionLayer\Foo.cs" />
+    <Compile Include="QueryAbstractionLayer\DeletedItemsFilterFixture.cs" />
+    <Compile Include="QueryAbstractionLayer\Filters\DeletedItemsFilter.cs" />
+    <Compile Include="QueryAbstractionLayer\Filters\PrincipalFilter.cs" />
     <Compile Include="QueryAbstractionLayer\InterceptionFixture.cs" />
-    <Compile Include="QueryAbstractionLayer\ParameterRebinder.cs" />
-    <Compile Include="QueryAbstractionLayer\PDOperator.cs" />
-    <Compile Include="QueryAbstractionLayer\PrincipalFilter.cs" />
+    <Compile Include="QueryAbstractionLayer\PD\Foo.cs" />
+    <Compile Include="QueryAbstractionLayer\PD\PDIteratorOperator.cs" />
+    <Compile Include="QueryAbstractionLayer\PD\PersistentObject.cs" />
+    <Compile Include="QueryAbstractionLayer\PrincipalFilterFixture.cs" />
     <Compile Include="QueryAbstractionLayer\QueryInterceptor.cs" />
     <Compile Include="QueryAbstractionLayer\QueryProviderInterceptor.cs" />
-    <Compile Include="QueryAbstractionLayer\PersistentObject.cs" />
-    <Compile Include="QueryAbstractionLayer\VisitorCache.cs" />
+    <Compile Include="QueryAbstractionLayer\Utility\ExpressionHelper.cs" />
+    <Compile Include="QueryAbstractionLayer\Visitors\AppendFrameworkFilters.cs" />
+    <Compile Include="QueryAbstractionLayer\Visitors\ElementTypeFinder.cs" />
+    <Compile Include="QueryAbstractionLayer\Visitors\ParameterRebinder.cs" />
+    <Compile Include="QueryAbstractionLayer\Visitors\VisitorCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -95,6 +95,7 @@
       <Name>TecX.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

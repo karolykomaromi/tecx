@@ -1,4 +1,6 @@
-﻿namespace TecX.Playground
+﻿using Moq;
+
+namespace TecX.Playground
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -9,9 +11,27 @@
     public class FromPlainToGenericFixture
     {
         [Fact]
-        public void Should()
+        public void Should_Be_Able_To_Fake_Items_With_Generic_Interface()
         {
-            
+            var iterator = new Mock<IIterator<FrameworkBaseClass>>();
+
+            var items = new List<FrameworkBaseClass>
+                {
+                    new FrameworkBaseClass {Id = 1},
+                    new FrameworkBaseClass {Id = 2},
+                    new FrameworkBaseClass {Id = 3}
+                };
+
+            iterator.Setup(i => i.GetEnumerator()).Returns(items.GetEnumerator());
+
+            int count = 0;
+            foreach (FrameworkBaseClass item in iterator.Object)
+            {
+                count++;
+                Assert.Equal(count, item.Id);
+            }
+
+            Assert.Equal(3, count);
         }
     }
 

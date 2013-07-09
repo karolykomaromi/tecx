@@ -1,4 +1,4 @@
-﻿namespace TecX.Playground.QueryAbstractionLayer
+namespace TecX.Playground.QueryAbstractionLayer.PD
 {
     public class Foo : PersistentObject
     {

@@ -1,8 +1,8 @@
-﻿namespace TecX.Playground.QueryAbstractionLayer
-{
-    using System.Collections.Generic;
-    using System.Linq.Expressions;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
+namespace TecX.Playground.QueryAbstractionLayer.Visitors
+{
     public class ParameterRebinder : ExpressionVisitor
     {
         private readonly IDictionary<ParameterExpression, ParameterExpression> map;

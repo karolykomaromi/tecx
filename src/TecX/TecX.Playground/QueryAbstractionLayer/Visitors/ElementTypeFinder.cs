@@ -1,9 +1,11 @@
-﻿namespace TecX.Playground.QueryAbstractionLayer
-{
-    using System;
-    using System.Linq.Expressions;
+using System;
+using System.Linq.Expressions;
 
-    public class FindElementType : ExpressionVisitor
+using TecX.Playground.QueryAbstractionLayer.PD;
+
+namespace TecX.Playground.QueryAbstractionLayer.Visitors
+{
+    public class ElementTypeFinder : ExpressionVisitor
     {
         public Type ElementType { get; private set; }
 
