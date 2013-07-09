@@ -1,14 +1,13 @@
-﻿using TecX.Playground.QueryAbstractionLayer.Filters;
-using TecX.Playground.QueryAbstractionLayer.PD;
-using TecX.Playground.QueryAbstractionLayer.Visitors;
-
-namespace TecX.Playground.QueryAbstractionLayer
+﻿namespace TecX.Playground.QueryAbstractionLayer
 {
     using System;
     using System.Linq;
     using System.Linq.Expressions;
 
     using TecX.Common;
+    using TecX.Playground.QueryAbstractionLayer.PD;
+    using TecX.Playground.QueryAbstractionLayer.Utility;
+    using TecX.Playground.QueryAbstractionLayer.Visitors;
 
     public class QueryProviderInterceptor : IQueryProvider
     {
@@ -17,7 +16,8 @@ namespace TecX.Playground.QueryAbstractionLayer
         private readonly PDIteratorOperator pdOperator;
         private readonly IClientInfo clientInfo;
 
-        private readonly VisitorCache visitorCache;
+        private readonly VisitorCache appendFrameworkFiltersVisitors;
+        private readonly VisitorCache prependWhereClauseVisitors;
 
         public QueryProviderInterceptor(IQueryProvider inner, PDIteratorOperator pdOperator, IClientInfo clientInfo)
         {
@@ -28,7 +28,8 @@ namespace TecX.Playground.QueryAbstractionLayer
             this.inner = inner;
             this.pdOperator = pdOperator;
             this.clientInfo = clientInfo;
-            this.visitorCache = new VisitorCache();
+            this.appendFrameworkFiltersVisitors = new VisitorCache(ExpressionHelper.CreateAppendFrameworkFiltersVisitor);
+            this.prependWhereClauseVisitors = new VisitorCache(ExpressionHelper.CreatePrependWhereClauseVisitor);
         }
 
         public IQueryable<TElement> CreateQuery<TElement>(Expression expression)
@@ -46,20 +47,24 @@ namespace TecX.Playground.QueryAbstractionLayer
 
             if (finder.ElementType == null)
             {
-                // TODO weberse 2013-07-08 couldn't find a where clause to identify the element type
+                // TODO weberse 2013-07-08 couldn't identify the element type :(
+                throw new NotImplementedException("Could not identify type of elements in IQueryable.");
             }
 
             Expression newExpression = expression;
 
             ExpressionVisitor visitor;
-            if (this.visitorCache.TryGetVisitor(finder.ElementType, this.pdOperator, this.clientInfo, out visitor))
+            if (this.appendFrameworkFiltersVisitors.TryGetVisitor(finder.ElementType, this.pdOperator, this.clientInfo, out visitor))
             {
                 newExpression = visitor.Visit(expression);
             }
 
             if (newExpression == expression)
             {
-                // TODO weberse 2013-07-08 no lamdba in expression we could add to :(
+                if (this.prependWhereClauseVisitors.TryGetVisitor(finder.ElementType, this.pdOperator, this.clientInfo, out visitor))
+                {
+                    newExpression = visitor.Visit(expression);
+                }
             }
 
             return this.inner.Execute<TResult>(newExpression);
