@@ -65,55 +65,23 @@ namespace TecX.Playground.QueryAbstractionLayer
                     new Foo { Principal = new PDPrincipal { PDO_ID = 1337 } }
                 }.AsQueryable();
 
-            //MethodInfo countMethod = GetCountMethodInfo(typeof(Foo));
-
-            //ParameterExpression p = Expression.Parameter(typeof(IQueryable<Foo>), "p");
-
-            //MethodCallExpression callCount = Expression.Call(countMethod, p);
-
-            //Expression<Func<IQueryable<Foo>, int>> count = Expression.Lambda<Func<IQueryable<Foo>, int>>(callCount, p);
-
             Expression<Func<IQueryable<Foo>, int>> count = x => x.Count();
 
             Expression<Func<IQueryable<Foo>, IQueryable<Foo>>> filter = x => x.Where(foo => foo.Principal.PDO_ID < 3);
 
             MethodCallExpression callCount = count.Body as MethodCallExpression;
 
-            //Where(filter)
+            MethodCallExpression callWhere = filter.Body as MethodCallExpression;
 
-            //MethodInfo whereMethod = null;
+            ParameterExpression p = Expression.Parameter(typeof(IQueryable<Foo>), "items");
 
-            //ParameterExpression queryableParameter = count.Parameters[0];
+            MethodCallExpression callChain = Expression.Call(callCount.Method, Expression.Call(callWhere.Method, p, callWhere.Arguments[1]));
 
-            //Expression<Func<Foo, bool>> whereClause = foo => foo.Principal.PDO_ID < 3;
+            Expression<Func<IQueryable<Foo>, int>> all = Expression.Lambda<Func<IQueryable<Foo>, int>>(callChain, p);
 
-            //MethodCallExpression callWhere = Expression.Call(whereMethod, queryableParameter, whereClause);
+            var func = all.Compile();
 
-
-
-
-
-
-            //ConstantExpression maxID = Expression.Constant((long)3, typeof(long));
-
-            //ParameterExpression foo = Expression.Parameter(typeof (Foo), "foo");
-
-            //MemberExpression pdoID = Expression.Property(Expression.Property(foo, "Principal"), "PDO_ID");
-
-            //BinaryExpression lessThan = Expression.LessThan(pdoID, maxID);
-
-
-
-            //Expression<Func<Foo, bool>> filter = foo => foo.Principal.PDO_ID < 3;
-
-            //int c = count.Compile()(query);
-
-
-            //Expression<Func<Foo, bool>> filter = Expression.Lambda<Func<Foo, bool>>(lessThan, foo);
-
-            //Assert.Equal(2, query.Where(filter).Count());
-
-            //Assert.Equal(3, c);
+            Assert.Equal(2, func(items));
         }
 
         private static MethodInfo GetCountMethodInfo(Type type)
