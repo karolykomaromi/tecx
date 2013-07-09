@@ -1,6 +1,6 @@
 namespace TecX.Playground.QueryAbstractionLayer.PD
 {
-    public class Foo : PersistentObject
+    public class Foo : PDObject
     {
         public string Bar { get; set; }
     }

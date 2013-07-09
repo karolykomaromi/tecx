@@ -1,7 +1,7 @@
-using TecX.Playground.QueryAbstractionLayer.Filters;
-
 namespace TecX.Playground.QueryAbstractionLayer.PD
 {
+    using TecX.Playground.QueryAbstractionLayer.Filters;
+
     public class PDIteratorOperator
     {
         public PDIteratorOperator()

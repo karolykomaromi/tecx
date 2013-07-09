@@ -1,10 +1,10 @@
-using System;
-using System.Linq.Expressions;
-
-using TecX.Playground.QueryAbstractionLayer.PD;
-
 namespace TecX.Playground.QueryAbstractionLayer.Visitors
 {
+    using System;
+    using System.Linq.Expressions;
+
+    using TecX.Playground.QueryAbstractionLayer.PD;
+
     public class ElementTypeFinder : ExpressionVisitor
     {
         public Type ElementType { get; private set; }
