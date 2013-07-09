@@ -1,4 +1,8 @@
-﻿namespace TecX.Playground.QueryAbstractionLayer
+﻿using TecX.Playground.QueryAbstractionLayer.Filters;
+using TecX.Playground.QueryAbstractionLayer.PD;
+using TecX.Playground.QueryAbstractionLayer.Visitors;
+
+namespace TecX.Playground.QueryAbstractionLayer
 {
     using System;
     using System.Linq;
@@ -10,11 +14,11 @@
     {
         private readonly IQueryProvider inner;
 
-        private readonly PDOperator pdOperator;
+        private readonly PDIteratorOperator pdOperator;
 
         private readonly VisitorCache visitorCache;
 
-        public QueryProviderInterceptor(IQueryProvider inner, PDOperator pdOperator)
+        public QueryProviderInterceptor(IQueryProvider inner, PDIteratorOperator pdOperator)
         {
             Guard.AssertNotNull(inner, "inner");
             Guard.AssertNotNull(pdOperator, "pdOperator");
@@ -33,7 +37,7 @@
 
         public TResult Execute<TResult>(Expression expression)
         {
-            FindElementType finder = new FindElementType();
+            ElementTypeFinder finder = new ElementTypeFinder();
 
             finder.Visit(expression);
 

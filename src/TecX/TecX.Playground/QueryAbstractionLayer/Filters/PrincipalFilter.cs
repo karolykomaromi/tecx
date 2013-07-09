@@ -1,32 +1,29 @@
-﻿namespace TecX.Playground.QueryAbstractionLayer
-{
-    using System;
-    using System.Linq.Expressions;
+using System;
+using System.Linq.Expressions;
 
+using TecX.Playground.QueryAbstractionLayer.PD;
+using TecX.Playground.QueryAbstractionLayer.Utility;
+
+namespace TecX.Playground.QueryAbstractionLayer.Filters
+{
     public abstract class PrincipalFilter
     {
-        public static readonly PrincipalFilter Include = new IncludePrincipalFilter();
+        public static readonly PrincipalFilter Enabled = new EnablePrincipalFilter();
 
-        public static readonly PrincipalFilter Exclude = new ExcludePrincipalFilter();
+        public static readonly PrincipalFilter Disabled = new DisablePrincipalFilter();
 
         public abstract Expression<Func<TElement, bool>> Filter<TElement>()
             where TElement : PersistentObject;
 
-        private class ExcludePrincipalFilter : PrincipalFilter
+        private class DisablePrincipalFilter : PrincipalFilter
         {
             public override Expression<Func<TElement, bool>> Filter<TElement>()
             {
-                ConstantExpression @true = Expression.Constant(true, typeof(bool));
-
-                ParameterExpression p = Expression.Parameter(typeof(TElement), "p");
-
-                Expression<Func<TElement, bool>> filter = Expression.Lambda<Func<TElement, bool>>(@true, p);
-
-                return filter;
+                return ExpressionHelper.AlwaysTrue<TElement>();
             }
         }
 
-        private class IncludePrincipalFilter : PrincipalFilter
+        private class EnablePrincipalFilter : PrincipalFilter
         {
             public override Expression<Func<TElement, bool>> Filter<TElement>()
             {
@@ -34,6 +31,7 @@
 
                 MemberExpression id = Expression.Property(p, "PrincipalId");
 
+                // TODO weberse 2013-07-09 use current principal id instead of hardcoded value
                 long l = 1337;
 
                 ConstantExpression leet = Expression.Constant(l, typeof(long));
