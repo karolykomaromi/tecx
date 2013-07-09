@@ -1,13 +1,14 @@
-﻿namespace TecX.Playground.QueryAbstractionLayer
+﻿using TecX.Playground.QueryAbstractionLayer.Filters;
+using TecX.Playground.QueryAbstractionLayer.PD;
+using TecX.Playground.QueryAbstractionLayer.Visitors;
+
+namespace TecX.Playground.QueryAbstractionLayer
 {
     using System;
     using System.Linq;
     using System.Linq.Expressions;
 
     using TecX.Common;
-    using TecX.Playground.QueryAbstractionLayer.PD;
-    using TecX.Playground.QueryAbstractionLayer.Visitors;
-
 
     public class QueryProviderInterceptor : IQueryProvider
     {
@@ -45,7 +46,7 @@
 
             if (finder.ElementType == null)
             {
-                // TODO weberse 2013-07-08 no lamdba in expression ...
+                // TODO weberse 2013-07-08 couldn't find a where clause to identify the element type
             }
 
             Expression newExpression = expression;

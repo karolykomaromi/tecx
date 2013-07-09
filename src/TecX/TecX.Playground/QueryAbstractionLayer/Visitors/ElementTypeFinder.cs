@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace TecX.Playground.QueryAbstractionLayer.Visitors
 {
     using System;
@@ -8,6 +10,21 @@ namespace TecX.Playground.QueryAbstractionLayer.Visitors
     public class ElementTypeFinder : ExpressionVisitor
     {
         public Type ElementType { get; private set; }
+
+        protected override Expression VisitMethodCall(MethodCallExpression node)
+        {
+            if (node.Method.IsGenericMethod)
+            {
+                Type elementType = node.Method.GetGenericArguments().FirstOrDefault(type => typeof(PersistentObject).IsAssignableFrom(type));
+
+                if (elementType != null && this.ElementType == null)
+                {
+                    this.ElementType = elementType;
+                }
+            }
+
+            return base.VisitMethodCall(node);
+        }
 
         protected override Expression VisitLambda<T>(Expression<T> node)
         {
