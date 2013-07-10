@@ -1,7 +1,4 @@
-﻿using TecX.Playground.QueryAbstractionLayer.Utility;
-using TecX.Playground.QueryAbstractionLayer.Visitors;
-
-namespace TecX.Playground.QueryAbstractionLayer
+﻿namespace TecX.Playground.QueryAbstractionLayer
 {
     using System;
     using System.Collections;
@@ -11,6 +8,8 @@ namespace TecX.Playground.QueryAbstractionLayer
 
     using TecX.Common;
     using TecX.Playground.QueryAbstractionLayer.PD;
+    using TecX.Playground.QueryAbstractionLayer.Visitors;
+
 
     public class QueryInterceptor<TElement> : IQueryable<TElement>
     {
