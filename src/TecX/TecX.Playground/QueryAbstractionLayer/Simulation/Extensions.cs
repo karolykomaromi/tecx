@@ -1,12 +1,11 @@
-﻿using TecX.Playground.QueryAbstractionLayer.Utility;
-using TecX.Playground.QueryAbstractionLayer.Visitors;
-
-namespace TecX.Playground.QueryAbstractionLayer.Simulation
+﻿namespace TecX.Playground.QueryAbstractionLayer.Simulation
 {
     using System.Collections.Generic;
     using System.Linq;
 
     using TecX.Playground.QueryAbstractionLayer.PD;
+    using TecX.Playground.QueryAbstractionLayer.Utility;
+    using TecX.Playground.QueryAbstractionLayer.Visitors;
 
     public static class Extensions
     {
