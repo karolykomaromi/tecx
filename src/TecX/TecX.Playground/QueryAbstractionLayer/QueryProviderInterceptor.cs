@@ -6,7 +6,6 @@
 
     using TecX.Common;
     using TecX.Playground.QueryAbstractionLayer.PD;
-    using TecX.Playground.QueryAbstractionLayer.Utility;
     using TecX.Playground.QueryAbstractionLayer.Visitors;
 
     public class QueryProviderInterceptor : IQueryProvider
@@ -19,17 +18,24 @@
         private readonly VisitorCache appendFrameworkFiltersVisitors;
         private readonly VisitorCache prependWhereClauseVisitors;
 
-        public QueryProviderInterceptor(IQueryProvider inner, PDIteratorOperator pdOperator, IClientInfo clientInfo)
+        public QueryProviderInterceptor(
+            IQueryProvider inner, 
+            PDIteratorOperator pdOperator, 
+            IClientInfo clientInfo, 
+            VisitorCache frameworkFilter, 
+            VisitorCache whereClauses)
         {
             Guard.AssertNotNull(inner, "inner");
             Guard.AssertNotNull(pdOperator, "pdOperator");
             Guard.AssertNotNull(clientInfo, "clientInfo");
+            Guard.AssertNotNull(frameworkFilter, "frameworkFilter");
+            Guard.AssertNotNull(whereClauses, "whereClauses");
 
             this.inner = inner;
             this.pdOperator = pdOperator;
             this.clientInfo = clientInfo;
-            this.appendFrameworkFiltersVisitors = new VisitorCache(ExpressionHelper.CreateAppendFrameworkFiltersVisitor);
-            this.prependWhereClauseVisitors = new VisitorCache(ExpressionHelper.CreatePrependWhereClauseVisitor);
+            this.appendFrameworkFiltersVisitors = frameworkFilter;
+            this.prependWhereClauseVisitors = whereClauses;
         }
 
         public IQueryable<TElement> CreateQuery<TElement>(Expression expression)
@@ -66,6 +72,10 @@
                     newExpression = visitor.Visit(expression);
                 }
             }
+
+            ExpressionVisitor cleanup = new CleanupAlwaysTrueNodes();
+
+            newExpression = cleanup.Visit(newExpression);
 
             return this.inner.Execute<TResult>(newExpression);
         }

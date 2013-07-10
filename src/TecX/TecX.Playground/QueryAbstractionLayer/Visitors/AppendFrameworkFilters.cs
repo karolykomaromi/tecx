@@ -23,7 +23,6 @@ namespace TecX.Playground.QueryAbstractionLayer.Visitors
 
         protected override Expression VisitLambda<T>(Expression<T> node)
         {
-            // TODO weberse 2013-07-08 will never be called if there is no Where() condition in queryable
             node = ExpressionHelper.AppendFiltersFromOperator<T, TElement>(node, pdOperator, clientInfo);
 
             return base.VisitLambda<T>(node);

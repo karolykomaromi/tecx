@@ -1,4 +1,7 @@
-﻿namespace TecX.Playground.QueryAbstractionLayer
+﻿using TecX.Playground.QueryAbstractionLayer.Utility;
+using TecX.Playground.QueryAbstractionLayer.Visitors;
+
+namespace TecX.Playground.QueryAbstractionLayer
 {
     using System;
     using System.Collections;
@@ -15,8 +18,8 @@
 
         private readonly QueryProviderInterceptor provider;
 
-        public QueryInterceptor(IQueryable<TElement> inner, PDIteratorOperator pdOperator, IClientInfo clientInfo)
-            : this(inner, new QueryProviderInterceptor(inner.Provider, pdOperator, clientInfo))
+        public QueryInterceptor(IQueryable<TElement> inner, PDIteratorOperator pdOperator, IClientInfo clientInfo, VisitorCache frameworkFilters, VisitorCache whereClauses)
+            : this(inner, new QueryProviderInterceptor(inner.Provider, pdOperator, clientInfo, frameworkFilters, whereClauses))
         {
         }
 

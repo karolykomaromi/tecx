@@ -1,8 +1,7 @@
-using System.Linq;
-
 namespace TecX.Playground.QueryAbstractionLayer.Visitors
 {
     using System;
+    using System.Linq;
     using System.Linq.Expressions;
 
     using TecX.Playground.QueryAbstractionLayer.PD;
