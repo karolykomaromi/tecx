@@ -1,7 +1,9 @@
 namespace TecX.Playground.QueryAbstractionLayer.PD
 {
     using System;
+    using System.Diagnostics;
 
+    [DebuggerDisplay("PDO_ID={PDO_ID}, PDO_DELETED={PDO_DELETED}")]
     public class PersistentObject
     {
         public DateTime? PDO_DELETED { get; set; }

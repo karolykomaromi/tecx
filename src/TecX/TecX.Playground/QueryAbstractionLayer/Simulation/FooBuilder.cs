@@ -74,7 +74,7 @@
                 return this.principalId;
             }
 
-            if (this.principalId % 2 == 0)
+            if (this.id % 2 == 0)
             {
                 return 42;
             }

@@ -53,6 +53,16 @@
         }
 
         [Fact]
+        public void Should_NeverCallNonGenericExecuteMethodOnProvider()
+        {
+            IQueryable<Foo> rawQuery = new FooBuilder().Build(3).AsQueryable();
+
+            IQueryable intercepted = rawQuery.Intercept(clientInfo:new ClientInfo { Principal = new PDPrincipal { PDO_ID = 1337 }});
+
+            Assert.Equal(2, intercepted.OfType<Foo>().Count());
+        }
+
+        [Fact]
         public void Show_Usage()
         {
             ISession session = new SessionImpl();
