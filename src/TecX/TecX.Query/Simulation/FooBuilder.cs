@@ -33,7 +33,7 @@ namespace TecX.Query.Simulation
 
         public Foo Build()
         {
-            return new Foo { PDO_ID = this.id, Principal = new PDPrincipal { PDO_ID = this.GetPrincipalID() }, Bar = this.GetBar(), PDO_DELETED = this.GetDeleted() };
+            return new Foo { PDO_ID = this.id, Principal = new PDPrincipal { PDO_ID = this.GetPrincipalID() }, Description = this.GetBar(), PDO_DELETED = this.GetDeleted() };
         }
 
         public FooBuilder WithId(long id)

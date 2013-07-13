@@ -13,7 +13,7 @@ namespace TecX.Query.Test
         [Fact]
         public void Should_Remove_LeftSide_AlwaysTrueExpressions()
         {
-            Expression<Func<Foo, bool>> where = foo => (true && string.IsNullOrEmpty(foo.Bar));
+            Expression<Func<Foo, bool>> where = foo => (true && string.IsNullOrEmpty(foo.Description));
 
             Expression clean = new CleanupAlwaysTrueNodes().Visit(where);
 
@@ -27,7 +27,7 @@ namespace TecX.Query.Test
         [Fact]
         public void Should_Remove_RightSide_AlwaysTrueExpressions()
         {
-            Expression<Func<Foo, bool>> where = foo => (string.IsNullOrEmpty(foo.Bar) && true);
+            Expression<Func<Foo, bool>> where = foo => (string.IsNullOrEmpty(foo.Description) && true);
 
             Expression clean = new CleanupAlwaysTrueNodes().Visit(where);
 
@@ -41,7 +41,7 @@ namespace TecX.Query.Test
         [Fact]
         public void Should_Remove_BothSide_AlwaysTrueExpressions()
         {
-            Expression<Func<Foo, bool>> where = foo => (true && string.IsNullOrEmpty(foo.Bar) && true);
+            Expression<Func<Foo, bool>> where = foo => (true && string.IsNullOrEmpty(foo.Description) && true);
 
             Expression clean = new CleanupAlwaysTrueNodes().Visit(where);
 

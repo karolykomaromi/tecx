@@ -10,25 +10,6 @@ namespace TecX.Query.Simulation
 
     public static class Extensions
     {
-        public static IQueryable<T> Query<T>(
-            this ISession session, 
-            PDIteratorOperator pdOperator = null,
-            IClientInfo clientInfo = null, 
-            VisitorCache frameworkFilters = null,
-            VisitorCache whereClauses = null)
-            where T : PersistentObject
-        {
-            var builder = new FooBuilder();
-
-            IEnumerable<Foo> foos = builder.Build(10);
-
-            IQueryable<Foo> rawQuery = foos.AsQueryable();
-
-            IQueryable<Foo> interceptedQuery = rawQuery.Intercept(pdOperator, clientInfo, frameworkFilters, whereClauses);
-
-            return interceptedQuery as IQueryable<T>;
-        }
-
         public static IQueryable<T> Intercept<T>(
             this IQueryable<T> rawQuery, 
             PDIteratorOperator pdOperator = null,

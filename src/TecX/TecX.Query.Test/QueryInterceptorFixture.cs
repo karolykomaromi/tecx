@@ -26,7 +26,7 @@ namespace TecX.Query.Test
                     {
                         Principal = new PDPrincipal { PDO_ID = 1337 }
                     })
-                .Where(f => string.IsNullOrEmpty(f.Bar));
+                .Where(f => string.IsNullOrEmpty(f.Description));
 
             Assert.Equal(1, intercepted.Count());
         }
@@ -60,16 +60,6 @@ namespace TecX.Query.Test
             IQueryable intercepted = rawQuery.Intercept(clientInfo:new ClientInfo { Principal = new PDPrincipal { PDO_ID = 1337 }});
 
             Assert.Equal(2, intercepted.OfType<Foo>().Count());
-        }
-
-        [Fact]
-        public void Show_Usage()
-        {
-            ISession session = new SessionImpl();
-
-            IQueryable<Foo> query = session.Query<Foo>();
-
-            // ...
         }
     }
 }

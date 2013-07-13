@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Filters\DeletedItemsFilter.cs" />
     <Compile Include="Filters\PrincipalFilter.cs" />
+    <Compile Include="PD\Bar.cs" />
     <Compile Include="PD\ClientInfo.cs" />
     <Compile Include="PD\Foo.cs" />
     <Compile Include="PD\Historizable.cs" />
@@ -58,8 +59,6 @@
     <Compile Include="QueryProviderInterceptor.cs" />
     <Compile Include="Simulation\Extensions.cs" />
     <Compile Include="Simulation\FooBuilder.cs" />
-    <Compile Include="Simulation\ISession.cs" />
-    <Compile Include="Simulation\SessionImpl.cs" />
     <Compile Include="Strategies\ExpressionManipulationStrategy.cs" />
     <Compile Include="Strategies\Linq2ObjectStrategy.cs" />
     <Compile Include="Utility\ExpressionHelper.cs" />
