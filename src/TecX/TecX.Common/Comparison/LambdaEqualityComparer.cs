@@ -3,8 +3,6 @@ namespace TecX.Common.Comparison
     using System;
     using System.Collections.Generic;
 
-    using TecX.Common.Extensions.Primitives;
-
     /// <summary>
     /// An implementation of <see cref="IEqualityComparer{T}"/> that uses a lambda function to check for equality
     /// </summary>
@@ -19,7 +17,7 @@ namespace TecX.Common.Comparison
         /// </summary>
         /// <param name="equals">The lambda comparer.</param>
         public LambdaEqualityComparer(Func<T, T, bool> equals) :
-            this(equals, o => o.GetNullSafeHashCode())
+            this(equals, EqualityComparer<T>.Default.GetHashCode)
         {
         }
 
