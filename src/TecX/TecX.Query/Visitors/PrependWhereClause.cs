@@ -1,6 +1,7 @@
 namespace TecX.Query.Visitors
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
 
@@ -33,11 +34,19 @@ namespace TecX.Query.Visitors
                 MethodCallExpression callToWhere = (MethodCallExpression)this.whereClause.Body;
 
                 Expression<Func<TElement, bool>> systemFilters = ExpressionHelper.AppendFiltersFromOperator<Func<TElement, bool>, TElement>(
-                        ExpressionHelper.AlwaysTrue<TElement>(), 
-                        this.pdOperator, 
+                        ExpressionHelper.AlwaysTrue<TElement>(),
+                        this.pdOperator,
                         this.clientInfo);
 
-                node = Expression.Call(node.Method, Expression.Call(callToWhere.Method, node.Arguments[0], systemFilters));
+                MethodCallExpression resultOfCallToWhere = Expression.Call(callToWhere.Method, node.Arguments[0], systemFilters);
+
+                List<Expression> argumentsForCallToOriginalMethod = new List<Expression> { resultOfCallToWhere };
+
+                IEnumerable<Expression> additionalArguments = node.Arguments.Skip(1);
+
+                argumentsForCallToOriginalMethod.AddRange(additionalArguments);
+
+                node = Expression.Call(node.Method, argumentsForCallToOriginalMethod.ToArray());
             }
 
             return base.VisitMethodCall(node);

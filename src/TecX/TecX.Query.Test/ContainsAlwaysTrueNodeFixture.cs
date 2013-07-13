@@ -13,7 +13,7 @@ namespace TecX.Query.Test
         [Fact]
         public void Should_Find_AlwaysTrueNodes()
         {
-            Expression<Func<Foo, bool>> where = foo => (string.IsNullOrEmpty(foo.Bar) && true);
+            Expression<Func<Foo, bool>> where = foo => (string.IsNullOrEmpty(foo.Description) && true);
 
             var visitor = new ContainsAlwaysTrueNode();
 
@@ -25,7 +25,7 @@ namespace TecX.Query.Test
         [Fact]
         public void Should_Ignore_IfNoAlwaysTrueNodes()
         {
-            Expression<Func<Foo, bool>> where = foo => string.IsNullOrEmpty(foo.Bar);
+            Expression<Func<Foo, bool>> where = foo => string.IsNullOrEmpty(foo.Description);
 
             var visitor = new ContainsAlwaysTrueNode();
 

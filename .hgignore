@@ -206,3 +206,7 @@ src/TecX/TecX.BehavioralTesting/bin
 src/TecX/TecX.Playground/bin
 src/TecX/TecX.Playground/obj
 src/TecX/TecX.BehavioralTesting/obj
+src/TecX/TecX.Query.Test/bin
+src/TecX/TecX.Query/obj
+src/TecX/TecX.Query/bin
+src/TecX/TecX.Query.Test/obj

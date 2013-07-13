@@ -23,7 +23,12 @@ namespace TecX.Query.Visitors
 
         protected override Expression VisitLambda<T>(Expression<T> node)
         {
-            node = ExpressionHelper.AppendFiltersFromOperator<T, TElement>(node, this.pdOperator, this.clientInfo);
+            MemberExpression member = node.Body as MemberExpression;
+
+            if (member == null)
+            {
+                node = ExpressionHelper.AppendFiltersFromOperator<T, TElement>(node, this.pdOperator, this.clientInfo);
+            }
 
             return base.VisitLambda<T>(node);
         }

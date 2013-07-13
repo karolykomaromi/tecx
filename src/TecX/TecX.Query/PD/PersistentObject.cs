@@ -6,7 +6,7 @@ namespace TecX.Query.PD
     [DebuggerDisplay("PDO_ID={PDO_ID}, PDO_DELETED={PDO_DELETED}")]
     public class PersistentObject
     {
-        public DateTime? PDO_DELETED { get; set; }
-        public long PDO_ID { get; set; }
+        public virtual DateTime? PDO_DELETED { get; set; }
+        public virtual long PDO_ID { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace TecX.Query.Utility
 
             var secondBody = new ParameterRebinder(map).Visit(right.Body);
 
-            return Expression.Lambda<T>(Expression.And(left.Body, secondBody), left.Parameters);
+            return Expression.Lambda<T>(Expression.AndAlso(left.Body, secondBody), left.Parameters);
         }
 
         public static Expression<T> AppendFiltersFromOperator<T, TElement>(Expression<T> node, PDIteratorOperator pdOperator, IClientInfo clientInfo)
