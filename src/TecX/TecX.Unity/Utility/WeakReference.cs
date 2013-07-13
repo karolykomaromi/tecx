@@ -1,4 +1,4 @@
-namespace TecX.Common
+namespace TecX.Unity.Utility
 {
     using System;
 

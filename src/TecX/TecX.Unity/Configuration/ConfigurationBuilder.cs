@@ -71,8 +71,9 @@ namespace TecX.Unity.Configuration
         public RegistrationFamilyBuilder ForConcreteType(Type concreteType)
         {
             Guard.AssertNotNull(concreteType, "concreteType");
-            Guard.AssertCondition(!concreteType.IsInterface, concreteType, "concreteType", "concreteType must not be an interface.");
-            Guard.AssertCondition(!concreteType.IsAbstract, concreteType, "concreteType", "concreteType must not be abstract.");
+
+            //Guard.AssertCondition(!concreteType.IsInterface, concreteType, "concreteType", "concreteType must not be an interface.");
+            //Guard.AssertCondition(!concreteType.IsAbstract, concreteType, "concreteType", "concreteType must not be abstract.");
 
             var expression = new RegistrationFamilyBuilder(concreteType, this);
 

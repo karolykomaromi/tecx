@@ -1,8 +1,10 @@
-namespace TecX.Common
+namespace TecX.Unity.Utility
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
+    using TecX.Common;
 
     public class CompositePredicate<T>
     {

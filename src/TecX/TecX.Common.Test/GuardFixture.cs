@@ -10,22 +10,22 @@
         [TestMethod]
         public void CanAssertArgumentIsInRange()
         {
-            Guard.AssertIsInRange(1, "paramToCheck", 1, 2);
-            Guard.AssertIsInRange(2, "paramToCheck", 1, 2);
+            Guard.AssertInRange(1, "paramToCheck", 1, 2);
+            Guard.AssertInRange(2, "paramToCheck", 1, 2);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CanAssertArgumentIsBelowRangeBound()
         {
-            Guard.AssertIsInRange(0, "paramToCheck", 1, 2);
+            Guard.AssertInRange(0, "paramToCheck", 1, 2);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CanAssertArgumentIsGreaterThanUpperRangeBound()
         {
-            Guard.AssertIsInRange(3, "paramToCheck", 1, 2);
+            Guard.AssertInRange(3, "paramToCheck", 1, 2);
         }
     }
 }

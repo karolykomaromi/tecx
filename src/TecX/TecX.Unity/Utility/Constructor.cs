@@ -1,7 +1,9 @@
-namespace TecX.Common.Reflection
+namespace TecX.Unity.Utility
 {
     using System;
     using System.Reflection;
+
+    using TecX.Common;
 
     public static class Constructor
     {

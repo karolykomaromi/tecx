@@ -146,7 +146,11 @@ namespace TecX.Unity.Configuration.Builders
         public TypeRegistrationBuilder AsFactory(ITypedFactoryComponentSelector selector)
         {
             Guard.AssertNotNull(selector, "selector");
-            Guard.AssertIsInterface(this.From, "From");
+
+            if (!this.From.IsInterface)
+            {
+                throw new InvalidOperationException("From must be an interface.");
+            }
 
             TypeRegistrationBuilder builder = this.Use(this.from);
 

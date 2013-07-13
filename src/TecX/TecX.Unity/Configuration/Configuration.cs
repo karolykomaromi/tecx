@@ -7,9 +7,9 @@ namespace TecX.Unity.Configuration
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
-    using TecX.Common.Extensions.Collections;
     using TecX.Unity.Configuration.Conventions;
     using TecX.Unity.Configuration.Utilities;
+    using TecX.Unity.Utility;
 
     public class Configuration : IConfigure
     {
@@ -53,7 +53,11 @@ namespace TecX.Unity.Configuration
         public void ImportBuilder(Type type)
         {
             Guard.AssertNotNull(type, "type");
-            Guard.AssertCondition(typeof(ConfigurationBuilder).IsAssignableFrom(type), type, "type");
+
+            if (!typeof(ConfigurationBuilder).IsAssignableFrom(type))
+            {
+                throw new ArgumentException("Cannot use Types that don't derive from ConfigurationBuilder.", "type");
+            }
 
             if (this.Builders.Any(x => x.GetType() == type))
             {

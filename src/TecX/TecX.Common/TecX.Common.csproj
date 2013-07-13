@@ -45,43 +45,26 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Collections\IIndexedReadOnlyCollection.cs" />
-    <Compile Include="Collections\IKeyedReadOnlyCollections.cs" />
-    <Compile Include="Collections\IndexedReadOnlyCollection.cs" />
-    <Compile Include="Collections\KeyedReadOnlyCollection.cs" />
     <Compile Include="Comparison\EpsilonComparer.cs" />
     <Compile Include="Comparison\LambdaEqualityComparer.cs" />
-    <Compile Include="CompositePredicate.cs" />
-    <Compile Include="Convert.cs" />
     <Compile Include="Error\ExceptionCrawler.cs" />
     <Compile Include="Error\ArgumentException.cs" />
     <Compile Include="Error\ArgumentNullException.cs" />
     <Compile Include="Error\ArgumentOutOfRangeException.cs" />
     <Compile Include="Error\StackTraceCleaner.cs" />
-    <Compile Include="Extensions\Collections\EnumerableExtensions.cs" />
     <Compile Include="Extensions\Primitives\LiteralExtensions.cs" />
-    <Compile Include="Extensions\Primitives\StringExtensions.cs" />
     <Compile Include="Pipes\Filter.cs" />
     <Compile Include="Pipes\Pipe.cs" />
     <Compile Include="Pipes\PipelineExtensions.cs" />
-    <Compile Include="Predicate.cs" />
-    <Compile Include="Reflection\Constructor.cs" />
-    <Compile Include="Reflection\GenericsHelper.cs" />
-    <Compile Include="Reflection\MethodNotFoundException.cs" />
-    <Compile Include="Reflection\DynamicMethodInvocation.cs" />
     <Compile Include="Specifications\PrettyPrinter.cs" />
     <Compile Include="Specifications\SpecificationVisitor.cs" />
     <Compile Include="Time\DefaultTimeProvider.cs" />
-    <Compile Include="Extensions\Collections\ListExtensions.cs" />
     <Compile Include="Extensions\Error\ExceptionExtensions.cs" />
     <Compile Include="Extensions\LinqTo\Entities\ParameterRebinder.cs" />
     <Compile Include="Extensions\LinqTo\Entities\PredicateExtensions.cs" />
     <Compile Include="Extensions\LinqTo\Objects\PredicateExtensions.cs" />
-    <Compile Include="Extensions\Primitives\ObjectExtensions.cs" />
     <Compile Include="Extensions\Primitives\TypeExtensions.cs" />
     <Compile Include="Guard.cs" />
-    <Compile Include="IFluentInterface.cs" />
-    <Compile Include="Latch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specifications\And.cs" />
     <Compile Include="Specifications\CompositeSpecification.cs" />
@@ -91,9 +74,7 @@
     <Compile Include="Time\ILease.cs" />
     <Compile Include="Time\SlidingLease.cs" />
     <Compile Include="Time\TimeProvider.cs" />
-    <Compile Include="TypeHelper.cs" />
     <Compile Include="Time\ZellersCongruence.cs" />
-    <Compile Include="WeakReference.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

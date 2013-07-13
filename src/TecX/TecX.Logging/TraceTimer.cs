@@ -31,7 +31,7 @@
         {
             Guard.AssertNotEmpty(operationName, "operationName");
 
-            this.operationName = args == null ? operationName : TypeHelper.SafeFormat(operationName, args);
+            this.operationName = args == null ? operationName : string.Format(operationName, args);
 
             this.start = TimeProvider.Now;
 
@@ -48,7 +48,7 @@
             TimeSpan lifetime = TimeProvider.Now - this.start;
 
             Debug.WriteLine(
-                TypeHelper.SafeFormat(Constants.MessageFormatString, this.operationName, lifetime.TotalSeconds),
+                string.Format(Constants.MessageFormatString, this.operationName, lifetime.TotalSeconds),
                 Constants.TraceTimerCategory);
 
             Debug.Unindent();

@@ -4,6 +4,7 @@ namespace TecX.Unity.Configuration.Conventions
     using System.Linq;
 
     using TecX.Common;
+    using TecX.Unity.Utility;
 
     public class FindAllImplementationsOfOpenGenericInterfaceConvention : IRegistrationConvention
     {
@@ -14,8 +15,8 @@ namespace TecX.Unity.Configuration.Conventions
         public FindAllImplementationsOfOpenGenericInterfaceConvention(Type type)
         {
             Guard.AssertNotNull(type, "type");
-            Guard.AssertCondition(type.IsInterface, type, "type");
-            Guard.AssertCondition(type.IsGenericType, type, "type");
+            //Guard.AssertCondition(type.IsInterface, type, "type");
+            //Guard.AssertCondition(type.IsGenericType, type, "type");
 
             this.openGeneric = type.GetGenericTypeDefinition();
             this.getName = t => t.Name;
