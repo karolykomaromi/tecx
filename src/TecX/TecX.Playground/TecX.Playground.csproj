@@ -69,39 +69,6 @@
   <ItemGroup>
     <Compile Include="FromPlainToGenericFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryAbstractionLayer\CleanupAlwaysTrueNodesFixture.cs" />
-    <Compile Include="QueryAbstractionLayer\ContainsAlwaysTrueNodeFixture.cs" />
-    <Compile Include="QueryAbstractionLayer\DeletedItemsFilterFixture.cs" />
-    <Compile Include="QueryAbstractionLayer\Filters\DeletedItemsFilter.cs" />
-    <Compile Include="QueryAbstractionLayer\Filters\PrincipalFilter.cs" />
-    <Compile Include="QueryAbstractionLayer\PD\ClientInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="QueryAbstractionLayer\PD\Historizable.cs" />
-    <Compile Include="QueryAbstractionLayer\PD\IClientInfo.cs" />
-    <Compile Include="QueryAbstractionLayer\PD\PDObject.cs" />
-    <Compile Include="QueryAbstractionLayer\PD\PDPrincipal.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="QueryAbstractionLayer\QueryInterceptorFixture.cs" />
-    <Compile Include="QueryAbstractionLayer\PD\Foo.cs" />
-    <Compile Include="QueryAbstractionLayer\PD\PDIteratorOperator.cs" />
-    <Compile Include="QueryAbstractionLayer\PD\PersistentObject.cs" />
-    <Compile Include="QueryAbstractionLayer\PrincipalFilterFixture.cs" />
-    <Compile Include="QueryAbstractionLayer\QueryInterceptor.cs" />
-    <Compile Include="QueryAbstractionLayer\QueryProviderInterceptor.cs" />
-    <Compile Include="QueryAbstractionLayer\Simulation\Extensions.cs" />
-    <Compile Include="QueryAbstractionLayer\Simulation\FooBuilder.cs" />
-    <Compile Include="QueryAbstractionLayer\Simulation\ISession.cs" />
-    <Compile Include="QueryAbstractionLayer\Simulation\SessionImpl.cs" />
-    <Compile Include="QueryAbstractionLayer\Utility\ExpressionHelper.cs" />
-    <Compile Include="QueryAbstractionLayer\Visitors\AppendFrameworkFilters.cs" />
-    <Compile Include="QueryAbstractionLayer\Visitors\CleanupAlwaysTrueNodes.cs" />
-    <Compile Include="QueryAbstractionLayer\Visitors\ContainsAlwaysTrueNode.cs" />
-    <Compile Include="QueryAbstractionLayer\Visitors\ElementTypeFinder.cs" />
-    <Compile Include="QueryAbstractionLayer\Visitors\ParameterRebinder.cs" />
-    <Compile Include="QueryAbstractionLayer\Visitors\PrependWhereClause.cs" />
-    <Compile Include="QueryAbstractionLayer\Visitors\VisitorCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -113,7 +80,9 @@
       <Name>TecX.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="QueryAbstractionLayer\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

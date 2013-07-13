@@ -13,18 +13,11 @@
 
         private static TimeProvider current;
 
-        /// <summary>
-        /// Initializes static members of the <see cref="TimeProvider"/> class.
-        /// </summary>
         static TimeProvider()
         {
             current = new DefaultTimeProvider();
         }
 
-        /// <summary>
-        /// Gets or sets the current <see cref="TimeProvider"/>
-        /// </summary>
-        /// <value>The current provider.</value>
         public static TimeProvider Current
         {
             get
@@ -59,16 +52,15 @@
             }
         }
 
-        /// <summary>
-        /// Gets a <see cref="DateTime"/> object that is set to the current date and time 
-        /// on this computer, expressed as the Coordinated Universal Time (UTC).
-        /// </summary>
+        public static string ToString(DateTime dt)
+        {
+            return Current.GetString(dt);
+        }
+
+        protected abstract string GetString(DateTime dt);
+
         protected abstract DateTime GetUtcNow();
 
-        /// <summary>
-        /// Gets a <see cref="DateTime"/>  object that is set to the current date and time on this computer, 
-        /// expressed as the local time.
-        /// </summary>
         protected abstract DateTime GetNow();
     }
 }

@@ -26,6 +26,11 @@ namespace TecX.TestTools.Extensions
             return this.now;
         }
 
+        protected override string GetString(DateTime dt)
+        {
+            return dt.ToString("o");
+        }
+
         protected override DateTime GetUtcNow()
         {
             return this.utcNow;
