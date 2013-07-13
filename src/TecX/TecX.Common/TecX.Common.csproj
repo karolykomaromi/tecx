@@ -51,10 +51,7 @@
     <Compile Include="Collections\IKeyedReadOnlyCollections.cs" />
     <Compile Include="Collections\IndexedReadOnlyCollection.cs" />
     <Compile Include="Collections\KeyedReadOnlyCollection.cs" />
-    <Compile Include="Comparison\Compare.cs" />
-    <Compile Include="Comparison\DictionaryEqualityComparer.cs" />
     <Compile Include="Comparison\EpsilonComparer.cs" />
-    <Compile Include="Comparison\HashingHelper.cs" />
     <Compile Include="Comparison\LambdaEqualityComparer.cs" />
     <Compile Include="CompositePredicate.cs" />
     <Compile Include="Convert.cs" />
