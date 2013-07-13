@@ -1,7 +1,9 @@
-namespace TecX.Common.Collections
+namespace TecX.TestTools.Data
 {
     using System.Collections;
     using System.Collections.Generic;
+
+    using TecX.Common;
 
     public class AppendOnlyCollection<T> : IAppendOnlyCollection<T>
     {

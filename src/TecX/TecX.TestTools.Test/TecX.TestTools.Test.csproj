@@ -81,6 +81,7 @@
     <Compile Include="AutoFixtureExtensionsFixture.cs" />
     <Compile Include="AutoMockingExtensionFixture.cs" />
     <Compile Include="BehavioralTestingFixture.cs" />
+    <Compile Include="Data\AppendOnlyCollectionFixture.cs" />
     <Compile Include="Data\DatabaseFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestObjects\Address.cs" />

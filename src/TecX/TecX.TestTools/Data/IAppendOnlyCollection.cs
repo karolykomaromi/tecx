@@ -1,4 +1,4 @@
-namespace TecX.Common.Collections
+namespace TecX.TestTools.Data
 {
     using System.Collections.Generic;
 
