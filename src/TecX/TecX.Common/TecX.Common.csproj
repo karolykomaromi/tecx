@@ -45,8 +45,6 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Collections\AppendOnlyCollection.cs" />
-    <Compile Include="Collections\IAppendOnlyCollection.cs" />
     <Compile Include="Collections\IIndexedReadOnlyCollection.cs" />
     <Compile Include="Collections\IKeyedReadOnlyCollections.cs" />
     <Compile Include="Collections\IndexedReadOnlyCollection.cs" />

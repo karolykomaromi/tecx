@@ -1,9 +1,9 @@
-namespace TecX.Common.Test.Collections
+namespace TecX.TestTools.Test.Data
 {
     using System.Collections.Generic;
     using System.Linq;
 
-    using TecX.Common.Collections;
+    using TecX.TestTools.Data;
 
     using Xunit;
 
