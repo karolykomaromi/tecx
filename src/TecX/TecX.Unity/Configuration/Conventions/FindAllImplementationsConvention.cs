@@ -3,7 +3,7 @@ namespace TecX.Unity.Configuration.Conventions
     using System;
 
     using TecX.Common;
-    using TecX.Common.Reflection;
+    using TecX.Unity.Utility;
 
     public class FindAllImplementationsConvention : IRegistrationConvention
     {

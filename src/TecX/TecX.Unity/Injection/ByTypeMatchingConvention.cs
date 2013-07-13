@@ -7,6 +7,7 @@ namespace TecX.Unity.Injection
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
+    using TecX.Unity.Utility;
 
     public class ByTypeMatchingConvention : ParameterMatchingConvention
     {

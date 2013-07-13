@@ -7,6 +7,7 @@ namespace TecX.Unity.Factories
 
     using TecX.Common;
     using TecX.Common.Extensions.Primitives;
+    using TecX.Unity.Utility;
 
     public class DefaultTypedFactoryComponentSelector : ITypedFactoryComponentSelector
     {

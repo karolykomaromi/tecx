@@ -1,10 +1,10 @@
-namespace TecX.Common.Test.Extensions
+namespace TecX.Unity.Test
 {
     using System.Globalization;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using TecX.Common.Extensions.Primitives;
+    using TecX.Unity.Utility;
 
     [TestClass]
     public class StringExtensionsFixture

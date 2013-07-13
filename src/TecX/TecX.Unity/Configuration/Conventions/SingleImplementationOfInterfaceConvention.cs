@@ -7,6 +7,7 @@ namespace TecX.Unity.Configuration.Conventions
     using TecX.Common;
     using TecX.Unity.Configuration.Extensions;
     using TecX.Unity.Configuration.Utilities;
+    using TecX.Unity.Utility;
 
     public class SingleImplementationOfInterfaceConvention : IRegistrationConvention
     {

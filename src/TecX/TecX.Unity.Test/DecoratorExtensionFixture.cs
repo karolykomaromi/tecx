@@ -35,8 +35,8 @@
 
             var sut = container.Resolve<IContract>();
 
-            Assert.Equal("2", sut.To<ContractDecorator>().Bar);
-            Assert.Equal("1", sut.To<ContractDecorator>().Base.To<Contract>().Foo);
+            Assert.Equal("2", ((ContractDecorator)sut).Bar);
+            Assert.Equal("1", ((Contract)((ContractDecorator)sut).Base).Foo);
         }
 
         [Fact]

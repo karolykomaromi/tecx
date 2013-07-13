@@ -78,21 +78,15 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\IndexedReadonlyCollectionFixture.cs" />
-    <Compile Include="Collections\KeyedReadOnlyCollectionFixture.cs" />
     <Compile Include="Extensions\EntityPredicateExtensionsFixture.cs" />
     <Compile Include="Extensions\ExceptionExtensionsFixture.cs" />
-    <Compile Include="Extensions\ListExtensionsFixture.cs" />
     <Compile Include="Extensions\ObjectPredicateExtensionsFixture.cs" />
-    <Compile Include="Extensions\StringExtensionsFixture.cs" />
     <Compile Include="GuardFixture.cs" />
-    <Compile Include="LatchFixture.cs" />
     <Compile Include="Pipes\Numbers.cs" />
     <Compile Include="Pipes\PipesFixture.cs" />
     <Compile Include="Pipes\Printer.cs" />
     <Compile Include="Pipes\Square.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReflectionHelperFixture.cs" />
     <Compile Include="Specifications\AlwaysFalse.cs" />
     <Compile Include="Specifications\DummySpec2.cs" />
     <Compile Include="Specifications\DummySpec3.cs" />
@@ -110,7 +104,6 @@
     <Compile Include="TestObjects\StatusMatches.cs" />
     <Compile Include="TestObjects\TextMatches.cs" />
     <Compile Include="TestObjects\TimeSlot.cs" />
-    <Compile Include="TypeHelperFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

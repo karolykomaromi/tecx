@@ -4,6 +4,7 @@ namespace TecX.Unity.Injection
     using System.Reflection;
 
     using TecX.Common.Extensions.Primitives;
+    using TecX.Unity.Utility;
 
     public class FileNameMatchingConvention : ParameterMatchingConvention
     {

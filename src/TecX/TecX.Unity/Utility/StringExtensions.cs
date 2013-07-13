@@ -1,7 +1,9 @@
-namespace TecX.Common.Extensions.Primitives
+namespace TecX.Unity.Utility
 {
     using System;
     using System.Globalization;
+
+    using TecX.Common;
 
     public static class StringExtensions
     {
@@ -18,7 +20,7 @@ namespace TecX.Common.Extensions.Primitives
         public static string ToUpper(this string s, int startIndex, int length, CultureInfo culture)
         {
             Guard.AssertNotNull(culture, "culture");
-            Guard.AssertIsInRange(startIndex, "startIndex", 0, int.MaxValue, "startIndex must not be negative.");
+            Guard.AssertInRange(startIndex, "startIndex", 0, int.MaxValue);
 
             if (string.IsNullOrEmpty(s))
             {

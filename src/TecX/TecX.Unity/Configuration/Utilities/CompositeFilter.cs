@@ -1,6 +1,7 @@
 namespace TecX.Unity.Configuration.Utilities
 {
     using TecX.Common;
+    using TecX.Unity.Utility;
 
     public class CompositeFilter<T>
     {

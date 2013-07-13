@@ -4,6 +4,7 @@ namespace TecX.Unity.Configuration.Conventions
     using System.Linq;
 
     using TecX.Common;
+    using TecX.Unity.Utility;
 
     public class FirstInterfaceConvention : IRegistrationConvention
     {

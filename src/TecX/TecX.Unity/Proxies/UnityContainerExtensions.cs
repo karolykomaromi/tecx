@@ -72,7 +72,7 @@ namespace TecX.Unity.Proxies
         {
             Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(contract, "contract");
-            Guard.AssertIsInterface(contract, "contract");
+            //Guard.AssertIsInterface(contract, "contract");
 
             ProxyGenerator generator = GetOrAddProxyGenerator(container);
 

@@ -57,7 +57,7 @@
         public Type GenerateDummyImplementation(Type interfaceToProxy)
         {
             Guard.AssertNotNull(interfaceToProxy, "interfaceToProxy");
-            Guard.AssertIsInterface(interfaceToProxy, "interfaceToProxy");
+            //Guard.AssertIsInterface(interfaceToProxy, "interfaceToProxy");
 
             Type dummy;
             if (!this.dummies.TryGetValue(interfaceToProxy, out dummy))

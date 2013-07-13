@@ -9,7 +9,6 @@ namespace TecX.ServiceModel.Unity.AutoMagic
     using System.Xml.Linq;
 
     using TecX.Common;
-    using TecX.Common.Extensions.Collections;
 
     /// <summary>
     /// Adds information about the binding used to the discovery information of an endpoint and makes
@@ -84,7 +83,10 @@ namespace TecX.ServiceModel.Unity.AutoMagic
             EndpointDiscoveryBehavior endpointDiscoveryBehavior = new EndpointDiscoveryBehavior();
 
             // if any scopes were defined add them to the endpoint
-            endpointDiscoveryBehavior.Scopes.AddRange(this.Scopes);
+            foreach (Uri scope in this.Scopes)
+            {
+                endpointDiscoveryBehavior.Scopes.Add(scope);
+            }
 
             // add the behavior to the endpoint
             endpoint.Behaviors.Add(endpointDiscoveryBehavior);

@@ -9,6 +9,7 @@ namespace TecX.Unity.Configuration.Extensions
     using TecX.Common;
     using TecX.Common.Extensions.Error;
     using TecX.Common.Extensions.Primitives;
+    using TecX.Unity.Utility;
 
     public static class TypeExtensions
     {

@@ -6,6 +6,7 @@ namespace TecX.Unity.Configuration.Test.TestObjects
 
     using TecX.Common;
     using TecX.Unity.Configuration.Conventions;
+    using TecX.Unity.Utility;
 
     public class CommandHandlerConvention : IRegistrationConvention
     {

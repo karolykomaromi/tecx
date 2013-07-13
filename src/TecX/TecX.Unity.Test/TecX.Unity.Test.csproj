@@ -95,6 +95,7 @@
     <Compile Include="SmartConstructorFixture.cs" />
     <Compile Include="NotificationExtensionFixture.cs" />
     <Compile Include="MappingGroupFixture.cs" />
+    <Compile Include="StringExtensionsFixture.cs" />
     <Compile Include="TestObjects\AlwaysThrows.cs" />
     <Compile Include="TestObjects\Bar.cs" />
     <Compile Include="TestObjects\Bar2.cs" />

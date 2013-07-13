@@ -32,7 +32,7 @@ namespace TecX.Unity.Factories
         public override void AddPolicies(Type notNeeded, Type interfaceToProxy, string name, IPolicyList policies)
         {
             Guard.AssertNotNull(interfaceToProxy, "interfaceToProxy");
-            Guard.AssertIsInterface(interfaceToProxy, "interfaceToProxy");
+            //Guard.AssertIsInterface(interfaceToProxy, "interfaceToProxy");
 
             AssertNoMethodHasOutParams(interfaceToProxy);
 

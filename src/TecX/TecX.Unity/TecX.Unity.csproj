@@ -202,6 +202,13 @@
     <Compile Include="Tracking\SetupTrackerStrategy.cs" />
     <Compile Include="Tracking\Target.cs" />
     <Compile Include="UnityContainerProxy.cs" />
+    <Compile Include="Utility\CompositePredicate.cs" />
+    <Compile Include="Utility\Constructor.cs" />
+    <Compile Include="Utility\GenericsHelper.cs" />
+    <Compile Include="Utility\ListExtensions.cs" />
+    <Compile Include="Utility\StringExtensions.cs" />
+    <Compile Include="Utility\TypeHelper.cs" />
+    <Compile Include="Utility\WeakReference.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">

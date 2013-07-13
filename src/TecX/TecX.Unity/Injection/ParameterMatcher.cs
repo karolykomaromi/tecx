@@ -6,7 +6,7 @@
     using System.Reflection;
 
     using TecX.Common;
-    using TecX.Common.Extensions.Collections;
+    using TecX.Unity.Utility;
 
     public class ParameterMatcher
     {
@@ -71,7 +71,7 @@
 
             foreach (var argument in this.constructorArguments)
             {
-                if (parameters.None(p => this.conventions.Matches(argument, p)))
+                if (!parameters.Any(p => this.conventions.Matches(argument, p)))
                 {
                     return true;
                 }
@@ -94,7 +94,7 @@
             ParameterInfo[] parameters = ctor.GetParameters();
 
             // find parameters not satisfied by provided args
-            IEnumerable<ParameterInfo> parametersWithNoMatchingCtorArgument = parameters.Where(p => this.constructorArguments.None(a => this.conventions.Matches(a, p)));
+            IEnumerable<ParameterInfo> parametersWithNoMatchingCtorArgument = parameters.Where(p => !this.constructorArguments.Any(a => this.conventions.Matches(a, p)));
 
             foreach (ParameterInfo parameter in parametersWithNoMatchingCtorArgument)
             {
