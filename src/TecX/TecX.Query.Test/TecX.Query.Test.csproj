@@ -78,6 +78,7 @@
     <Compile Include="Hibernate\BarMap.cs" />
     <Compile Include="Hibernate\FooMap.cs" />
     <Compile Include="Hibernate\NHibernateStrategyFixture.cs" />
+    <Compile Include="Hibernate\DescriptionFilter.cs" />
     <Compile Include="Hibernate\PrincipalMap.cs" />
     <Compile Include="PrincipalFilterFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -13,6 +13,8 @@
             this.Map(x => x.PDO_DELETED);
 
             this.References(x => x.Principal);
+
+            this.ApplyFilter<DescriptionFilter>();
         }
     }
 }
