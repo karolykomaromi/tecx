@@ -1,20 +1,19 @@
 ﻿namespace TecX.Query.Test.Hibernate
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Text;
 
     using FluentNHibernate.Cfg;
     using FluentNHibernate.Cfg.Db;
 
     using NHibernate;
-    using NHibernate.Criterion;
+    using NHibernate.Cfg;
     using NHibernate.Linq;
     using NHibernate.Tool.hbm2ddl;
+
 
     using TecX.Query.PD;
     using TecX.Query.Simulation;
@@ -38,6 +37,9 @@
                                                     {
                                                         if (File.Exists(DbFile))
                                                             File.Delete(DbFile);
+
+                                                        // TODO weberse 2013-07-14 have a look at how Fetch and FetchMany are implemented and see wether there is a way to override them
+                                                        //config.LinqToHqlGeneratorsRegistry<MyLinqToHqlGeneratorsRegistry>();
 
                                                         new SchemaExport(config)
                                                           .Create(false, true);
@@ -85,6 +87,8 @@
 
                     transaction.Commit();
                 }
+
+                session.EnableFilter(typeof(DescriptionFilter).Name).SetParameter(DescriptionFilter.Description.ToLower(), "B1");
 
                 IQueryable<Foo> nhibQuery = session.Query<Foo>();
 
