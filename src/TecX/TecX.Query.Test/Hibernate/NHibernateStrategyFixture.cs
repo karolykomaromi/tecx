@@ -108,12 +108,13 @@
             using (ISession session = sessionFactory.OpenSession())
             {
                 //IFilter filter = session.EnableFilter(typeof(DescriptionFilter).Name).SetParameter(DescriptionFilter.Description, "B1");
-                //session.EnableFilter(typeof (PrincipalFilter).Name).SetParameter(PrincipalFilter.PrincipalId, muster.PDO_ID);
+                session.EnableFilter(typeof (PrincipalFilter).Name).SetParameter(BarMap.ForeignKeyColumns.Principal, muster.PDO_ID);
 
                 IQueryable<Foo> nhibQuery = session.Query<Foo>();
                 //IQueryable<Foo> nhibQuery = session.Query<Foo>().FetchMany(f => f.Bars).ThenFetch(bar => bar.Principal);
 
-                IQueryable<Foo> query = nhibQuery.Intercept(clientInfo: new ClientInfo { Principal = muster });
+                //IQueryable<Foo> query = nhibQuery.Intercept(clientInfo: new ClientInfo { Principal = muster });
+                IQueryable<Foo> query = nhibQuery;
 
                 query = query.FetchMany(f => f.Bars).ThenFetch(bar => bar.Principal);
 

@@ -29,16 +29,17 @@ namespace TecX.Query.Visitors
 
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
-            if (!string.Equals(node.Method.Name, "Where", StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(node.Method.Name, "Where", StringComparison.OrdinalIgnoreCase) &&
+                !node.Method.Name.StartsWith("ThenFetch", StringComparison.OrdinalIgnoreCase))
             {
                 MethodCallExpression callToWhere = (MethodCallExpression)this.whereClause.Body;
 
-                Expression<Func<TElement, bool>> systemFilters = ExpressionHelper.AppendFiltersFromOperator<Func<TElement, bool>, TElement>(
-                        ExpressionHelper.AlwaysTrue<TElement>(),
-                        this.pdOperator,
-                        this.clientInfo);
+                Expression<Func<TElement, bool>> systemFilters =
+                    ExpressionHelper.AppendFiltersFromOperator<Func<TElement, bool>, TElement>(
+                        ExpressionHelper.AlwaysTrue<TElement>(), this.pdOperator, this.clientInfo);
 
-                MethodCallExpression resultOfCallToWhere = Expression.Call(callToWhere.Method, node.Arguments[0], systemFilters);
+                MethodCallExpression resultOfCallToWhere = Expression.Call(
+                    callToWhere.Method, node.Arguments[0], systemFilters);
 
                 List<Expression> argumentsForCallToOriginalMethod = new List<Expression> { resultOfCallToWhere };
 

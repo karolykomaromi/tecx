@@ -19,16 +19,11 @@
 
     public class PrincipalFilter : FilterDefinition
     {
-        /// <summary>
-        /// PrincipalId
-        /// </summary>
-        public const string PrincipalId = "PrincipalId";
-
         public PrincipalFilter()
         {
             this.WithName(this.GetType().Name)
-                .AddParameter(PrincipalId, NHibernate.NHibernateUtil.Int64)
-                .WithCondition("Principal.PDO_ID == :" + PrincipalId);
+                .AddParameter(BarMap.ForeignKeyColumns.Principal, NHibernate.NHibernateUtil.Int64)
+                .WithCondition(BarMap.ForeignKeyColumns.Principal + " == :" + BarMap.ForeignKeyColumns.Principal);
         }
     }
 }
