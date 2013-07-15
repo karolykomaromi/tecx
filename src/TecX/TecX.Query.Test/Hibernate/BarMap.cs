@@ -14,7 +14,7 @@
 
             this.References(x => x.Principal);
 
-            this.ApplyFilter<DescriptionFilter>();
+            //this.ApplyFilter<DescriptionFilter>();
         }
     }
 }

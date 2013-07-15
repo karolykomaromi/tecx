@@ -13,7 +13,9 @@
             this.Map(x => x.PDO_DELETED);
 
             this.References(x => x.Principal);
-            this.HasMany(x => x.Bars).Inverse();
+            this.HasMany(x => x.Bars)
+                    .ApplyFilter<DescriptionFilter>()
+                    .ApplyFilter<PrincipalFilter>();
         }
     }
 }
