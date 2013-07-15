@@ -41,15 +41,23 @@
                                                         // TODO weberse 2013-07-14 have a look at how Fetch and FetchMany are implemented and see wether there is a way to override them
                                                         //config.LinqToHqlGeneratorsRegistry<MyLinqToHqlGeneratorsRegistry>();
 
+                                                        config.DataBaseIntegration(x =>
+                                                            {
+                                                                // very useful for debugging
+                                                                x.AutoCommentSql = true;
+                                                                x.LogFormattedSql = true;
+                                                                x.LogSqlInConsole = true;
+                                                            });
+
                                                         new SchemaExport(config)
                                                           .Create(false, true);
                                                     })
                                                 .BuildSessionFactory();
 
+            PDPrincipal muster = null;
+
             using (ISession session = sessionFactory.OpenSession())
             {
-                PDPrincipal muster = null;
-
                 using (ITransaction transaction = session.BeginTransaction())
                 {
                     //PDPrincipal muster = new PDPrincipal { PrincipalName = "Muster AG" };
@@ -79,6 +87,12 @@
                     session.SaveOrUpdate(muster);
                     session.SaveOrUpdate(kommerz);
 
+                    session.SaveOrUpdate(b1);
+                    session.SaveOrUpdate(b2);
+                    session.SaveOrUpdate(b3);
+                    session.SaveOrUpdate(b4);
+                    session.SaveOrUpdate(b5);
+
                     session.SaveOrUpdate(f1);
                     session.SaveOrUpdate(f2);
                     session.SaveOrUpdate(f3);
@@ -87,14 +101,21 @@
 
                     transaction.Commit();
                 }
+            }
 
-                session.EnableFilter(typeof(DescriptionFilter).Name).SetParameter(DescriptionFilter.Description.ToLower(), "B1");
+            // if you don't close the first session nhibernate will perform a Linq2Object in-memory query and that will never filter out the items in the
+            // sub-collections
+            using (ISession session = sessionFactory.OpenSession())
+            {
+                //IFilter filter = session.EnableFilter(typeof(DescriptionFilter).Name).SetParameter(DescriptionFilter.Description, "B1");
+                //session.EnableFilter(typeof (PrincipalFilter).Name).SetParameter(PrincipalFilter.PrincipalId, muster.PDO_ID);
 
                 IQueryable<Foo> nhibQuery = session.Query<Foo>();
+                //IQueryable<Foo> nhibQuery = session.Query<Foo>().FetchMany(f => f.Bars).ThenFetch(bar => bar.Principal);
 
                 IQueryable<Foo> query = nhibQuery.Intercept(clientInfo: new ClientInfo { Principal = muster });
 
-                query = query.FetchMany(f => f.Bars);
+                query = query.FetchMany(f => f.Bars).ThenFetch(bar => bar.Principal);
 
                 foreach (Foo foo in query)
                 {
