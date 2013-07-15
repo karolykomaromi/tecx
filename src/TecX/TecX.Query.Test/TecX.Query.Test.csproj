@@ -77,8 +77,11 @@
     <Compile Include="DeletedItemsFilterFixture.cs" />
     <Compile Include="Hibernate\BarMap.cs" />
     <Compile Include="Hibernate\FooMap.cs" />
+    <Compile Include="Hibernate\HistorizableMap.cs" />
     <Compile Include="Hibernate\NHibernateStrategyFixture.cs" />
     <Compile Include="Hibernate\DescriptionFilter.cs" />
+    <Compile Include="Hibernate\PDObjectMap.cs" />
+    <Compile Include="Hibernate\PersistentObjectMap.cs" />
     <Compile Include="Hibernate\PrincipalMap.cs" />
     <Compile Include="PrincipalFilterFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
