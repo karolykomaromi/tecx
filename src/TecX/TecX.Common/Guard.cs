@@ -1,4 +1,6 @@
-﻿namespace TecX.Common
+﻿using System.Collections.Generic;
+
+namespace TecX.Common
 {
     using System;
     using System.Collections;
@@ -99,6 +101,22 @@
 
         [DebuggerStepThrough]
         public static void AssertNotEmpty(ICollection param, string paramName)
+        {
+            paramName = string.IsNullOrWhiteSpace(paramName) ? Constants.NoParameterName : paramName;
+
+            if (param == null)
+            {
+                throw new ArgumentNullException(paramName, Constants.ParameterNull);
+            }
+
+            if (param.Count == 0)
+            {
+                throw new ArgumentException(paramName, Constants.ParameterEmpty).WithAdditionalInfo("param", param);
+            }
+        }
+
+        [DebuggerStepThrough]
+        public static void AssertNotEmpty<T>(ICollection<T> param, string paramName)
         {
             paramName = string.IsNullOrWhiteSpace(paramName) ? Constants.NoParameterName : paramName;
 
