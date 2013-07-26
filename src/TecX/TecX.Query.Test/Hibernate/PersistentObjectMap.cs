@@ -11,6 +11,8 @@
         {
             this.Id(x => x.PDO_ID);
             this.Map(x => x.PDO_DELETED);
+
+            this.ApplyFilter<DynamicFilter<T>>();
         }
     }
 }
