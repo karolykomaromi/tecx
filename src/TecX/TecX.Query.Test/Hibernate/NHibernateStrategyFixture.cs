@@ -1,4 +1,16 @@
-﻿namespace TecX.Query.Test.Hibernate
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Reflection;
+
+using FluentNHibernate.Mapping;
+
+using NHibernate.Hql.Ast;
+using NHibernate.Linq.Functions;
+using NHibernate.Linq.Visitors;
+using NHibernate.Type;
+
+namespace TecX.Query.Test.Hibernate
 {
     using System;
     using System.Diagnostics;
@@ -16,52 +28,53 @@
 
 
     using TecX.Query.PD;
-    using TecX.Query.Simulation;
     using TecX.Query.Strategies;
 
     using Xunit;
 
     using Expression = System.Linq.Expressions.Expression;
 
-    public class NHibernateStrategyFixture
+    public class NHibernateStrategyFixture : IDisposable
     {
         private const string DbFile = "my.db";
 
-        [Fact]
-        public void Should()
+        private readonly ISessionFactory sessionFactory;
+        private readonly PDPrincipal muster;
+
+        public NHibernateStrategyFixture()
         {
-            ISessionFactory sessionFactory = Fluently.Configure()
-                                                .Database(SQLiteConfiguration.Standard.UsingFile(DbFile))
-                                                .Mappings(map => map.FluentMappings.AddFromAssemblyOf<PrincipalMap>())
-                                                .ExposeConfiguration(config =>
-                                                    {
-                                                        if (File.Exists(DbFile))
-                                                            File.Delete(DbFile);
+            log4net.Config.XmlConfigurator.Configure();
 
-                                                        // TODO weberse 2013-07-14 have a look at how Fetch and FetchMany are implemented and see wether there is a way to override them
-                                                        //config.LinqToHqlGeneratorsRegistry<MyLinqToHqlGeneratorsRegistry>();
+            sessionFactory = Fluently.Configure()
+                                     .Database(SQLiteConfiguration.Standard.UsingFile(DbFile))
+                                     .Mappings(map => map.FluentMappings.AddFromAssemblyOf<PrincipalMap>())
+                                     .ExposeConfiguration(config =>
+                                         {
+                                             if (File.Exists(DbFile))
+                                                 File.Delete(DbFile);
 
-                                                        config.DataBaseIntegration(x =>
-                                                            {
-                                                                // very useful for debugging
-                                                                x.AutoCommentSql = true;
-                                                                x.LogFormattedSql = true;
-                                                                x.LogSqlInConsole = true;
-                                                            });
+                                             // TODO weberse 2013-07-14 have a look at how Fetch and FetchMany are implemented and see wether there is a way to override them
+                                             config.LinqToHqlGeneratorsRegistry<MyRegistry>();
 
-                                                        new SchemaExport(config)
-                                                          .Create(false, true);
-                                                    })
-                                                .BuildSessionFactory();
+                                             config.DataBaseIntegration(x =>
+                                                 {
+                                                     // very useful for debugging
+                                                     x.AutoCommentSql = true;
+                                                     x.LogFormattedSql = true;
+                                                     //x.LogSqlInConsole = true;
+                                                 });
 
-            PDPrincipal muster = null;
+                                             new SchemaExport(config)
+                                                 .Create(false, true);
+                                         })
+                                     .BuildSessionFactory();
 
             using (ISession session = sessionFactory.OpenSession())
             {
                 using (ITransaction transaction = session.BeginTransaction())
                 {
                     //PDPrincipal muster = new PDPrincipal { PrincipalName = "Muster AG" };
-                    muster = new PDPrincipal { PrincipalName = "Muster AG" };
+                    this.muster = new PDPrincipal { PrincipalName = "Muster AG" };
                     PDPrincipal kommerz = new PDPrincipal { PrincipalName = "Kommerz GmbH" };
 
                     Bar b1 = new Bar { Description = "B1", Principal = kommerz };
@@ -102,13 +115,17 @@
                     transaction.Commit();
                 }
             }
+        }
 
+        [Fact]
+        public void Should()
+        {
             // if you don't close the first session nhibernate will perform a Linq2Object in-memory query and that will never filter out the items in the
             // sub-collections
             using (ISession session = sessionFactory.OpenSession())
             {
                 //IFilter filter = session.EnableFilter(typeof(DescriptionFilter).Name).SetParameter(DescriptionFilter.Description, "B1");
-                session.EnableFilter(typeof (PrincipalFilter).Name).SetParameter(BarMap.ForeignKeyColumns.Principal, muster.PDO_ID);
+                session.EnableFilter(typeof(PrincipalFilter).Name).SetParameter(BarMap.ForeignKeyColumns.Principal, this.muster.PDO_ID);
 
                 IQueryable<Foo> nhibQuery = session.Query<Foo>();
                 //IQueryable<Foo> nhibQuery = session.Query<Foo>().FetchMany(f => f.Bars).ThenFetch(bar => bar.Principal);
@@ -116,7 +133,10 @@
                 //IQueryable<Foo> query = nhibQuery.Intercept(clientInfo: new ClientInfo { Principal = muster });
                 IQueryable<Foo> query = nhibQuery;
 
-                query = query.FetchMany(f => f.Bars).ThenFetch(bar => bar.Principal);
+                //query = query.FetchMany(f => f.Bars).ThenFetch(bar => bar.Principal);
+                query = query.FetchMany(f => f.Bars).Where(bar => bar.Description.StartsWith("B"));
+
+                //query = query.Where(f => f.Description.MyMethod("1"));
 
                 foreach (Foo foo in query)
                 {
@@ -128,6 +148,98 @@
                     }
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            this.sessionFactory.Dispose();
+        }
+    }
+
+    public class DynamicFilter<T> : FilterDefinition
+        where T : class
+    {
+        public DynamicFilter()
+        {
+            string name = typeof(T).FullName + "_DynamicFilter";
+
+            WithName(name);
+
+            var properties = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
+
+            foreach (PropertyInfo property in properties)
+            {
+                IType type = NHibernateUtil.GuessType(property.PropertyType);
+
+                AddParameter(property.Name, type);
+            }
+        }
+    }
+
+    public static class Extensions
+    {
+        public static INhFetchRequest<TQueried, TFetch> Where<TQueried, TFetch>(
+            this INhFetchRequest<TQueried, TFetch> query,
+            Expression<Func<TFetch, bool>> whereClause)
+        {
+            var methodInfo = ((MethodInfo)MethodBase.GetCurrentMethod()).MakeGenericMethod(typeof(TQueried), typeof(TFetch));
+
+            return CreateFluentFetchRequest<TQueried, TFetch>(methodInfo, query, whereClause);
+        }
+
+        private static INhFetchRequest<TOriginating, TRelated> CreateFluentFetchRequest<TOriginating, TRelated>(
+            MethodInfo currentFetchMethod,
+            IQueryable<TOriginating> query,
+            LambdaExpression relatedObjectSelector)
+        {
+            var queryProvider = query.Provider;
+            var callExpression = Expression.Call(currentFetchMethod, query.Expression, relatedObjectSelector);
+            return new NhFetchRequest<TOriginating, TRelated>(queryProvider, callExpression);
+        }
+    }
+
+    public class MyMethodGenerator : BaseHqlGeneratorForMethod
+    {
+        public override HqlTreeNode BuildHql(
+            MethodInfo method,
+            Expression targetObject,
+            ReadOnlyCollection<Expression> arguments,
+            HqlTreeBuilder treeBuilder,
+            IHqlExpressionVisitor visitor)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class MyGenerator : IRuntimeMethodHqlGenerator
+    {
+        public bool SupportsMethod(MethodInfo method)
+        {
+            if (method.Name.StartsWith("WithCondition", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            //if (string.Equals(method.Name, "MyMethod"))
+            //{
+            //    return true;
+            //}
+
+            return false;
+        }
+
+        public IHqlGeneratorForMethod GetMethodGenerator(MethodInfo method)
+        {
+            return new MyMethodGenerator();
+        }
+    }
+
+    public class MyRegistry : DefaultLinqToHqlGeneratorsRegistry
+    {
+        public MyRegistry()
+            : base()
+        {
+            this.RegisterGenerator(new MyGenerator());
         }
     }
 
