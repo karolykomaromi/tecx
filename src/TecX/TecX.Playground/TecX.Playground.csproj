@@ -67,7 +67,19 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CopierFixture.cs" />
+    <Compile Include="Copy\A.cs" />
+    <Compile Include="Copy\ACopyStrategy.cs" />
+    <Compile Include="Copy\B.cs" />
+    <Compile Include="Copy\BCopyStrategy.cs" />
+    <Compile Include="Copy\C.cs" />
+    <Compile Include="Copy\CCopyStrategy.cs" />
+    <Compile Include="Copy\Copier.cs" />
+    <Compile Include="Copy\CopierFixture.cs" />
+    <Compile Include="Copy\CopyContext.cs" />
+    <Compile Include="Copy\CopyStrategies.cs" />
+    <Compile Include="Copy\ICopyStrategy.cs" />
+    <Compile Include="Copy\IReadonlyCollection.cs" />
+    <Compile Include="Copy\ReadOnlyCollection.cs" />
     <Compile Include="FromPlainToGenericFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
