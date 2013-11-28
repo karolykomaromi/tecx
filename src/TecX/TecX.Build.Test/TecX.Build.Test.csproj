@@ -55,6 +55,9 @@
   <ItemGroup>
     <Compile Include="CodeQualityAnalyzerFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Resources\IncorrectRethrow.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\TooManyConstructorArguments.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -63,6 +66,10 @@
     <ProjectReference Include="..\TecX.Build\TecX.Build.csproj">
       <Project>{FA02C95E-385C-4640-A43A-B43081FB829D}</Project>
       <Name>TecX.Build</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
+      <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
+      <Name>TecX.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,34 +1,25 @@
 namespace TecX.Build.Rules
 {
-	using System.Collections.Generic;
-	using StyleCop.CSharp;
+    using System.Collections.Generic;
+    using System.Linq;
+    using StyleCop.CSharp;
 
-	using TecX.Common;
+    using TecX.Common;
 
-	public class CompositeVisitor : CodeVisitor
-	{
-		private readonly IEnumerable<CodeVisitor> visitors;
+    public class CompositeVisitor : CodeVisitor
+    {
+        private readonly IEnumerable<CodeVisitor> visitors;
 
-		public CompositeVisitor(IEnumerable<CodeVisitor> visitors)
-		{
-			Guard.AssertNotNull(visitors, "visitors");
+        public CompositeVisitor(IEnumerable<CodeVisitor> visitors)
+        {
+            Guard.AssertNotNull(visitors, "visitors");
 
-			this.visitors = visitors;
-		}
+            this.visitors = new List<CodeVisitor>(visitors);
+        }
 
-		public override bool Visit(CsElement element, CsElement parentelement, object context)
-		{
-			foreach (var visitor in visitors)
-			{
-				bool b = visitor.Visit(element, parentelement, context);
-
-				if (!b)
-				{
-					return false;
-				}
-			}
-
-			return true;
-		}
-	}
+        public override bool Visit(CsElement element, CsElement parentelement, object context)
+        {
+            return this.visitors.Select(visitor => visitor.Visit(element, parentelement, context)).All(b => b);
+        }
+    }
 }

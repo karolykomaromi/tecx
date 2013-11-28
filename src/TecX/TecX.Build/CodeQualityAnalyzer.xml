@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <SourceAnalyzer Name="CodeQualityAnalyzer">
-	<Description>Foo!</Description>
-	<Rules>
-		<RuleGroup Name="Custom Rules">
-			<Rule Name="TooManyConstructorArguments" CheckId="TX0001">
-				<Context>The Type '{0}' has a constructor that takes {1} arguments. More than 4 arguments are considered a code smell.</Context>
-			</Rule>
-		</RuleGroup>
-	</Rules>
+  <Description>Foo!</Description>
+  <Rules>
+    <RuleGroup Name="Custom Rules">
+      <Rule Name="TooManyConstructorArguments" CheckId="TX0001">
+        <Context>The Type '{0}' has a constructor that takes {1} arguments. More than 4 arguments are considered a code smell.</Context>
+      </Rule>
+      <Rule Name="IncorrectRethrow" CheckId="TX0002">
+        <Context>Incorrect rethrow of an exception in method '{0}'. </Context>
+      </Rule>
+    </RuleGroup>
+  </Rules>
 </SourceAnalyzer>
