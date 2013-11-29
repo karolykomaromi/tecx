@@ -27,8 +27,8 @@
 
             string[] addinPaths = new string[0];
             this.console = new StyleCopConsole(settings, false, null, addinPaths, true);
-            this.console.ViolationEncountered += (sender, args) => violations.Add(args.Violation);
-            this.console.OutputGenerated += (sender, args) => output.Add(args.Output);
+            this.console.ViolationEncountered += (s, e) => this.violations.Add(e.Violation);
+            this.console.OutputGenerated += (s, e) => this.output.Add(e.Output);
         }
 
         [TestInitialize]
@@ -69,17 +69,17 @@
             this.StartAnalysis();
             this.WriteViolationsToConsole();
             this.WriteOutputToConsole();
-            Assert.AreEqual(expectedViolations, violations.Count);
+            Assert.AreEqual(expectedViolations, this.violations.Count);
         }
 
         private void WriteOutputToConsole()
         {
-            Console.WriteLine(string.Join(Environment.NewLine, output.ToArray()));
+            Console.WriteLine(string.Join(Environment.NewLine, this.output.ToArray()));
         }
 
         private void WriteViolationsToConsole()
         {
-            foreach (var violation in violations)
+            foreach (var violation in this.violations)
             {
                 Console.WriteLine(violation.Message);
             }
@@ -87,21 +87,30 @@
 
         private void AddSourceCode(string fileName)
         {
-            fileName = Path.GetFullPath(fileName);
-            bool result = this.console.Core.Environment.AddSourceCode(codeProject, fileName, null);
-            if (result == false)
+            string sourceCodeFile = Path.GetFullPath(fileName);
+
+            if (!File.Exists(sourceCodeFile))
             {
-                throw new ArgumentException("Source file could not be loaded.", fileName);
+                throw new FileNotFoundException(string.Format("Source file '{0}' does not exist.", sourceCodeFile), sourceCodeFile);
+            }
+
+            bool sourceCodeSuccessfullyLoaded = this.console.Core.Environment.AddSourceCode(this.codeProject, sourceCodeFile, null);
+
+            if (sourceCodeSuccessfullyLoaded == false)
+            {
+                throw new InvalidOperationException(string.Format("Source file '{0}' could not be loaded.", sourceCodeFile));
             }
         }
 
         private void StartAnalysis()
         {
-            var projects = new[] { codeProject };
+            var projects = new[] { this.codeProject };
+
             bool result = this.console.Start(projects, true);
+
             if (result == false)
             {
-                throw new ArgumentException("StyleCopConsole.Start had a problem.");
+                throw new InvalidOperationException("StyleCopConsole.Start had a problem.");
             }
         }
     }
