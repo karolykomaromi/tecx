@@ -94,6 +94,7 @@
     <Compile Include="Data\DatabaseBuildResult.cs" />
     <Compile Include="Data\DatabaseBuildSequenceConfiguration.cs" />
     <Compile Include="Data\IAppendOnlyCollection.cs" />
+    <Compile Include="EmbeddedResourceExtractor.cs" />
     <Compile Include="Extensions\MockTimeProvider.cs" />
     <Compile Include="DispatcherUtil.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
