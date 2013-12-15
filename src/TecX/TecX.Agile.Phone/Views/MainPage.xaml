@@ -1,0 +1,70 @@
+﻿<phone:PhoneApplicationPage x:Class="TecX.Agile.Phone.Views.MainPage"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+                            mc:Ignorable="d" 
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                            xmlns:Triggers="clr-namespace:TecX.Agile.Phone.Triggers"
+                            xmlns:Views="clr-namespace:TecX.Agile.Phone.Views" d:DesignHeight="696" 
+                            d:DesignWidth="480"
+                            SupportedOrientations="Portrait"
+                            Orientation="Portrait"
+                            shell:SystemTray.IsVisible="True" >
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"
+		            Margin="24,24,0,12">
+            <TextBlock Text="TecX Phone Planner"
+			           Style="{StaticResource PhoneTextNormalStyle}" />
+            <TextBlock Text="Projects"
+			           Margin="-3,-8,0,0"
+			           Style="{StaticResource PhoneTextTitle1Style}" />
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button x:Name="GotoPageTwo"
+			        Content="Goto Page Two" />
+            <ListBox Grid.Row="1" 
+                     x:Name="Projects" 
+                     ItemsSource="{Binding Projects}"
+                     VirtualizingStackPanel.VirtualizationMode="Recycling">
+                <i:Interaction.Triggers>
+                    <Triggers:ScrollingTrigger>
+                        <cal:ActionMessage MethodName="LoadMoreProjects">
+                            <cal:Parameter Value="$eventArgs"/>
+                        </cal:ActionMessage>
+                    </Triggers:ScrollingTrigger>
+                    <Triggers:ScrollingStateChangedTrigger>
+                        
+                    </Triggers:ScrollingStateChangedTrigger>
+                </i:Interaction.Triggers>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Views:ProjectView />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True">
+            <shell:ApplicationBar.Buttons>
+                <cal:AppBarButton IconUri="/Resources/ApplicationIcon.png"
+				                  Text="Page Two"
+				                  Message="GotoPageTwo" />
+            </shell:ApplicationBar.Buttons>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+</phone:PhoneApplicationPage>

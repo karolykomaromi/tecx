@@ -1,0 +1,20 @@
+﻿<Window x:Class="TecX.Agile.Planner.Shell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:cal="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism" 
+        xmlns:inf="clr-namespace:TecX.Agile.Infrastructure;assembly=TecX.Agile.Infrastructure" 
+        xmlns:view="clr-namespace:TecX.Agile.View;assembly=TecX.Agile.View" 
+        Title="Agile Project Planning" 
+        x:Name="MainWindow"
+        Width="800" 
+        Height="600">
+    <Grid
+        cal:RegionManager.RegionName="{x:Static inf:Regions.Main}">
+        <Canvas 
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch">
+            <view:StoryCard 
+                    x:Name="storyCard" />
+        </Canvas>
+    </Grid>
+</Window>

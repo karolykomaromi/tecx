@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="TecX.Agile.Silverlight.Service.SilverlightPlanningService" CodeBehind="SilverlightPlanningService.svc.cs" %>

@@ -1,0 +1,84 @@
+<Window x:Class="TecX.Agile.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:Behaviors="clr-namespace:TecX.Agile.Behaviors" 
+        xmlns:Utilities="clr-namespace:TecX.Agile.Utilities"
+        Title="Shell" 
+        Height="350" 
+        Width="525"
+        Icon="pack://application:,,,/Resources/buildingblocks16x16.png">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="18*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="18*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <ItemsControl
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="3"
+            ItemsSource="{Binding Overlays}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <ItemsControl 
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="3"
+            ItemsSource="{Binding Items}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas 
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch">
+                        <i:Interaction.Behaviors>
+                            <Behaviors:SurfaceBehavior/>
+                        </i:Interaction.Behaviors>
+                    </Canvas>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplateSelector>
+                <Utilities:SurfaceDataTemplateSelector/>
+            </ItemsControl.ItemTemplateSelector>
+        </ItemsControl>
+        <!--<Button x:Name="AddItem" Grid.Column="1">Add</Button>-->
+        <TextBlock
+            Grid.Row="1" 
+            TextAlignment="Center"
+            Text="{Binding InfoText}">
+            <TextBlock.LayoutTransform>
+                <RotateTransform Angle="90"/>
+            </TextBlock.LayoutTransform>
+        </TextBlock>
+        <TextBlock
+            Grid.Column="1" 
+            TextAlignment="Center"
+            Text="{Binding InfoText}">
+            <TextBlock.LayoutTransform>
+                <RotateTransform Angle="180"/>
+            </TextBlock.LayoutTransform>
+        </TextBlock>
+        <TextBlock
+            Grid.Column="2"
+            Grid.Row="1"
+            TextAlignment="Center"
+            Text="{Binding InfoText}">
+            <TextBlock.LayoutTransform>
+                <RotateTransform Angle="270"/>
+            </TextBlock.LayoutTransform>
+        </TextBlock>
+        <TextBlock
+            Grid.Column="1"
+            Grid.Row="2"
+            TextAlignment="Center"
+            Text="{Binding InfoText}">
+        </TextBlock>
+    </Grid>
+</Window>
