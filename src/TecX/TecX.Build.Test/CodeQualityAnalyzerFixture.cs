@@ -1,108 +1,117 @@
 ﻿namespace TecX.Build.Test
 {
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
 
-	using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-	using StyleCop;
+    using StyleCop;
 
-	[TestClass]
-	[DeploymentItem(@"Resources\Settings.StyleCop")]
-	public class CodeQualityAnalyzerFixture
-	{
-		private readonly StyleCopConsole console;
+    [TestClass]
+    [DeploymentItem(@"Resources\Settings.StyleCop")]
+    public class CodeQualityAnalyzerFixture
+    {
+        private readonly StyleCopConsole console;
 
-		private CodeProject codeProject;
+        private CodeProject codeProject;
 
-		private ICollection<string> output;
+        private ICollection<string> output;
 
-		private ICollection<Violation> violations;
+        private ICollection<Violation> violations;
 
-		public CodeQualityAnalyzerFixture()
-		{
-			string settings = Path.GetFullPath("Settings.StyleCop");
+        public CodeQualityAnalyzerFixture()
+        {
+            string settings = Path.GetFullPath("Settings.StyleCop");
 
-			string[] addinPaths = new string[0];
-			this.console = new StyleCopConsole(settings, false, null, addinPaths, true);
-			this.console.ViolationEncountered += (sender, args) => violations.Add(args.Violation);
-			this.console.OutputGenerated += (sender, args) => output.Add(args.Output);
-		}
+            string[] addinPaths = new string[0];
+            this.console = new StyleCopConsole(settings, false, null, addinPaths, true);
+            this.console.ViolationEncountered += (s, e) => this.violations.Add(e.Violation);
+            this.console.OutputGenerated += (s, e) => this.output.Add(e.Output);
+        }
 
-		[TestInitialize]
-		public void Setup()
-		{
-			this.violations = new List<Violation>();
+        [TestInitialize]
+        public void Setup()
+        {
+            this.violations = new List<Violation>();
 
-			this.output = new List<string>();
+            this.output = new List<string>();
 
-			Configuration configuration = new Configuration(new string[0]);
+            Configuration configuration = new Configuration(new string[0]);
 
-			this.codeProject = new CodeProject(Guid.NewGuid().GetHashCode(), null, configuration);
-		}
+            this.codeProject = new CodeProject(Guid.NewGuid().GetHashCode(), null, configuration);
+        }
 
-		[TestCleanup]
-		public void TearDown()
-		{
-			codeProject = null;
-		}
+        [TestCleanup]
+        public void TearDown()
+        {
+            this.codeProject = null;
+        }
 
-		[TestMethod]
-		[DeploymentItem(@"Resources\TooManyConstructorArguments.cs")]
-		public void Should_Flag_TooManyCtorParameters()
-		{
-			AnalyzeCodeWithOneAssertion("TooManyConstructorArguments.cs");
-		}
+        [TestMethod]
+        [DeploymentItem(@"Resources\TooManyConstructorArguments.cs")]
+        public void Should_Flag_TooManyCtorParameters()
+        {
+            this.AnalyzeCodeWithAssertion("TooManyConstructorArguments.cs", 1);
+        }
 
+        [TestMethod]
+        [DeploymentItem(@"Resources\IncorrectRethrow.cs")]
+        public void Should_Flag_IncorrectRethrow()
+        {
+            this.AnalyzeCodeWithAssertion("IncorrectRethrow.cs", 1);
+        }
 
-		private void AnalyzeCodeWithOneAssertion(string codeFileName)
-		{
-			this.AnalyzeCodeWithAssertion(codeFileName, 1);
-		}
+        private void AnalyzeCodeWithAssertion(string codeFileName, int expectedViolations)
+        {
+            this.AddSourceCode(codeFileName);
+            this.StartAnalysis();
+            this.WriteViolationsToConsole();
+            this.WriteOutputToConsole();
+            Assert.AreEqual(expectedViolations, this.violations.Count);
+        }
 
-		private void AnalyzeCodeWithAssertion(string codeFileName, int expectedViolations)
-		{
-			AddSourceCode(codeFileName);
-			StartAnalysis();
-			WriteViolationsToConsole();
-			WriteOutputToConsole();
-			Assert.AreEqual(expectedViolations, violations.Count);
-		}
+        private void WriteOutputToConsole()
+        {
+            Console.WriteLine(string.Join(Environment.NewLine, this.output.ToArray()));
+        }
 
-		private void WriteOutputToConsole()
-		{
-			Console.WriteLine(string.Join(Environment.NewLine, output.ToArray()));
-		}
+        private void WriteViolationsToConsole()
+        {
+            foreach (var violation in this.violations)
+            {
+                Console.WriteLine(violation.Message);
+            }
+        }
 
-		private void WriteViolationsToConsole()
-		{
-			foreach (var violation in violations)
-			{
-				Console.WriteLine(violation.Message);
-			}
-		}
+        private void AddSourceCode(string fileName)
+        {
+            string sourceCodeFile = Path.GetFullPath(fileName);
 
-		private void AddSourceCode(string fileName)
-		{
-			fileName = Path.GetFullPath(fileName);
-			bool result = this.console.Core.Environment.AddSourceCode(codeProject, fileName, null);
-			if (result == false)
-			{
-				throw new ArgumentException("Source file could not be loaded.", fileName);
-			}
+            if (!File.Exists(sourceCodeFile))
+            {
+                throw new FileNotFoundException(string.Format("Source file '{0}' does not exist.", sourceCodeFile), sourceCodeFile);
+            }
 
-		}
+            bool sourceCodeSuccessfullyLoaded = this.console.Core.Environment.AddSourceCode(this.codeProject, sourceCodeFile, null);
 
-		private void StartAnalysis()
-		{
-			var projects = new[] { codeProject };
-			bool result = this.console.Start(projects, true);
-			if (result == false)
-			{
-				throw new ArgumentException("StyleCopConsole.Start had a problem.");
-			}
-		}
-	}
+            if (sourceCodeSuccessfullyLoaded == false)
+            {
+                throw new InvalidOperationException(string.Format("Source file '{0}' could not be loaded.", sourceCodeFile));
+            }
+        }
+
+        private void StartAnalysis()
+        {
+            var projects = new[] { this.codeProject };
+
+            bool result = this.console.Start(projects, true);
+
+            if (result == false)
+            {
+                throw new InvalidOperationException("StyleCopConsole.Start had a problem.");
+            }
+        }
+    }
 }
