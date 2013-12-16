@@ -51,6 +51,7 @@
     <Compile Include="Rules\CodeVisitor.cs" />
     <Compile Include="Rules\CompositeVisitor.cs" />
     <Compile Include="Rules\ConstructorMustNotHaveMoreThanFourParameters.cs" />
+    <Compile Include="Rules\IncorrectRethrow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
