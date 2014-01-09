@@ -2,65 +2,63 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using StyleCop;
+    using StyleCop.CSharp;
 
     [TestClass]
-    [DeploymentItem(@"Resources\Settings.StyleCop")]
     public class CodeQualityAnalyzerFixture
     {
-        private readonly StyleCopConsole console;
+        private readonly StyleCopObjectConsole console;
+        private readonly ICollection<string> output;
+        private readonly ICollection<Violation> violations;
 
         private CodeProject codeProject;
 
-        private ICollection<string> output;
-
-        private ICollection<Violation> violations;
-
         public CodeQualityAnalyzerFixture()
         {
-            string settings = Path.GetFullPath("Settings.StyleCop");
+            this.violations = new List<Violation>();
+            this.output = new List<string>();
 
-            string[] addinPaths = new string[0];
-            this.console = new StyleCopConsole(settings, false, null, addinPaths, true);
-            this.console.ViolationEncountered += (s, e) => this.violations.Add(e.Violation);
-            this.console.OutputGenerated += (s, e) => this.output.Add(e.Output);
+            ICollection<string> addinPaths = new[] { "." };
+
+            ObjectBasedEnvironment environment = new ObjectBasedEnvironment(ResourceBasedSourceCode.Create, GetSettings);
+
+            this.console = new StyleCopObjectConsole(environment, null, addinPaths, true);
+
+            CsParser parser = new CsParser();
+            parser.FileTypes.Add("CS");
+
+            this.console.Core.Environment.AddParser(parser);
+            this.console.Core.ViolationEncountered += (s, e) => this.violations.Add(e.Violation);
+            this.console.Core.OutputGenerated += (s, e) => this.output.Add(e.Output);
         }
 
         [TestInitialize]
         public void Setup()
         {
-            this.violations = new List<Violation>();
+            this.output.Clear();
+            this.violations.Clear();
 
-            this.output = new List<string>();
-
-            Configuration configuration = new Configuration(new string[0]);
-
-            this.codeProject = new CodeProject(Guid.NewGuid().GetHashCode(), null, configuration);
-        }
-
-        [TestCleanup]
-        public void TearDown()
-        {
-            this.codeProject = null;
+            this.codeProject = new CodeProject(0, null, new Configuration(null));
         }
 
         [TestMethod]
-        [DeploymentItem(@"Resources\TooManyConstructorArguments.cs")]
         public void Should_Flag_TooManyCtorParameters()
         {
             this.AnalyzeCodeWithAssertion("TooManyConstructorArguments.cs", 1);
         }
 
         [TestMethod]
-        [DeploymentItem(@"Resources\IncorrectRethrow.cs")]
         public void Should_Flag_IncorrectRethrow()
         {
             this.AnalyzeCodeWithAssertion("IncorrectRethrow.cs", 1);
+        }
+        
+        private Settings GetSettings(string path, bool readOnly)
+        {
+            return null;
         }
 
         private void AnalyzeCodeWithAssertion(string codeFileName, int expectedViolations)
@@ -69,12 +67,16 @@
             this.StartAnalysis();
             this.WriteViolationsToConsole();
             this.WriteOutputToConsole();
+
             Assert.AreEqual(expectedViolations, this.violations.Count);
         }
 
         private void WriteOutputToConsole()
         {
-            Console.WriteLine(string.Join(Environment.NewLine, this.output.ToArray()));
+            foreach (var o in this.output)
+            {
+                Console.WriteLine(o);
+            }
         }
 
         private void WriteViolationsToConsole()
@@ -87,31 +89,19 @@
 
         private void AddSourceCode(string fileName)
         {
-            string sourceCodeFile = Path.GetFullPath(fileName);
-
-            if (!File.Exists(sourceCodeFile))
-            {
-                throw new FileNotFoundException(string.Format("Source file '{0}' does not exist.", sourceCodeFile), sourceCodeFile);
-            }
-
-            bool sourceCodeSuccessfullyLoaded = this.console.Core.Environment.AddSourceCode(this.codeProject, sourceCodeFile, null);
+            bool sourceCodeSuccessfullyLoaded = this.console.Core.Environment.AddSourceCode(this.codeProject, fileName, null);
 
             if (sourceCodeSuccessfullyLoaded == false)
             {
-                throw new InvalidOperationException(string.Format("Source file '{0}' could not be loaded.", sourceCodeFile));
+                throw new InvalidOperationException(string.Format("Source file '{0}' could not be added.", fileName));
             }
         }
 
         private void StartAnalysis()
         {
-            var projects = new[] { this.codeProject };
+            IList<CodeProject> projects = new[] { this.codeProject };
 
-            bool result = this.console.Start(projects, true);
-
-            if (result == false)
-            {
-                throw new InvalidOperationException("StyleCopConsole.Start had a problem.");
-            }
+            this.console.Start(projects);
         }
     }
 }
