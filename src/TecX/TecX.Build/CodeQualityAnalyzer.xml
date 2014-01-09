@@ -7,7 +7,7 @@
         <Context>The Type '{0}' has a constructor that takes {1} arguments. More than 4 arguments are considered a code smell.</Context>
       </Rule>
       <Rule Name="IncorrectRethrow" CheckId="TX0002">
-        <Context>Incorrect rethrow of an exception in method '{0}'. </Context>
+        <Context>Incorrect re-throw of an exception in method '{0}'. </Context>
       </Rule>
     </RuleGroup>
   </Rules>
