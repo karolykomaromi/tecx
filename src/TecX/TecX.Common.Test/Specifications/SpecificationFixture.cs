@@ -14,7 +14,7 @@
         [TestMethod]
         public void Should_Extract_Friendly_Description()
         {
-            var composite = new DummySpec1().Or(new DummySpec2()).And(new DummySpec3());
+            var composite = new DummySpec1().Or(new DummySpec2().And(new DummySpec3()));
 
             var visitor = new PrettyPrinter<SearchTestEntity>();
 

@@ -2,12 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using StyleCop;
     using StyleCop.CSharp;
 
-    [TestClass]
+    using Xunit;
+
     public class CodeQualityAnalyzerFixture
     {
         private readonly StyleCopObjectConsole console;
@@ -23,7 +23,7 @@
 
             ICollection<string> addinPaths = new[] { "." };
 
-            ObjectBasedEnvironment environment = new ObjectBasedEnvironment(ResourceBasedSourceCode.Create, GetSettings);
+            ObjectBasedEnvironment environment = new ObjectBasedEnvironment(ResourceBasedSourceCode.Create, GetProjectSettings);
 
             this.console = new StyleCopObjectConsole(environment, null, addinPaths, true);
 
@@ -33,30 +33,23 @@
             this.console.Core.Environment.AddParser(parser);
             this.console.Core.ViolationEncountered += (s, e) => this.violations.Add(e.Violation);
             this.console.Core.OutputGenerated += (s, e) => this.output.Add(e.Output);
-        }
-
-        [TestInitialize]
-        public void Setup()
-        {
-            this.output.Clear();
-            this.violations.Clear();
 
             this.codeProject = new CodeProject(0, null, new Configuration(null));
         }
 
-        [TestMethod]
+        [Fact]
         public void Should_Flag_TooManyCtorParameters()
         {
             this.AnalyzeCodeWithAssertion("TooManyConstructorArguments.cs", 1);
         }
 
-        [TestMethod]
+        [Fact]
         public void Should_Flag_IncorrectRethrow()
         {
             this.AnalyzeCodeWithAssertion("IncorrectRethrow.cs", 1);
         }
         
-        private Settings GetSettings(string path, bool readOnly)
+        private Settings GetProjectSettings(string path, bool readOnly)
         {
             return null;
         }
@@ -68,7 +61,7 @@
             this.WriteViolationsToConsole();
             this.WriteOutputToConsole();
 
-            Assert.AreEqual(expectedViolations, this.violations.Count);
+            Assert.Equal(expectedViolations, this.violations.Count);
         }
 
         private void WriteOutputToConsole()
@@ -87,13 +80,13 @@
             }
         }
 
-        private void AddSourceCode(string fileName)
+        private void AddSourceCode(string resourceFileName)
         {
-            bool sourceCodeSuccessfullyLoaded = this.console.Core.Environment.AddSourceCode(this.codeProject, fileName, null);
+            bool sourceCodeSuccessfullyLoaded = this.console.Core.Environment.AddSourceCode(this.codeProject, resourceFileName, null);
 
             if (sourceCodeSuccessfullyLoaded == false)
             {
-                throw new InvalidOperationException(string.Format("Source file '{0}' could not be added.", fileName));
+                throw new InvalidOperationException(string.Format("Source file '{0}' could not be added.", resourceFileName));
             }
         }
 
