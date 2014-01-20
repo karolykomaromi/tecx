@@ -1,17 +1,19 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics.Contracts;
-using System.Windows.Input;
-using Infrastructure;
-using Search.Service;
-
-namespace Search
+﻿namespace Search
 {
+    using System.Collections.ObjectModel;
+    using System.Diagnostics.Contracts;
+    using System.Windows.Input;
+    using Infrastructure;
+    using Search.Service;
+
     public class SearchViewModel : ViewModel
     {
         private readonly ICommand searchCommand;
         private readonly ICommand searchSuggestionCommand;
         private readonly ObservableCollection<string> suggestions;
         private readonly ObservableCollection<SearchResult> results;
+
+        private string searchTerm;
 
         public SearchViewModel(ICommand searchCommand, ICommand searchSuggestionCommand)
         {
@@ -45,10 +47,12 @@ namespace Search
             get { return this.suggestions; }
         }
 
-        private string searchTerm;
         public string SearchTerm
         {
-            get { return this.searchTerm; }
+            get
+            {
+                return this.searchTerm;
+            }
 
             set
             {

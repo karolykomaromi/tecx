@@ -1,11 +1,11 @@
-﻿using System;
-using System.Diagnostics.Contracts;
-using System.Windows.Input;
-using System.Windows.Threading;
-using Search.Service;
-
-namespace Search
+﻿namespace Search
 {
+    using System;
+    using System.Diagnostics.Contracts;
+    using System.Windows.Input;
+    using System.Windows.Threading;
+    using Search.Service;
+
     public class SearchSuggestionCommand : ICommand
     {
         private readonly ISearchService searchService;
@@ -20,6 +20,8 @@ namespace Search
             this.dispatcher = dispatcher;
         }
 
+        public event EventHandler CanExecuteChanged = delegate { };
+
         public bool CanExecute(object parameter)
         {
             Contract.Requires(parameter != null);
@@ -28,8 +30,6 @@ namespace Search
 
             return vm != null && !string.IsNullOrEmpty(vm.SearchTerm) && vm.SearchTerm.Length >= 3;
         }
-
-        public event EventHandler CanExecuteChanged = delegate { };
 
         public void Execute(object parameter)
         {

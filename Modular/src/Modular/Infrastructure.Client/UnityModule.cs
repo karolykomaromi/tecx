@@ -1,14 +1,13 @@
-﻿using System;
-using System.Diagnostics.Contracts;
-using System.Windows;
-using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
-
+    using System;
+    using System.Diagnostics.Contracts;
+    using System.Windows;
+    using Microsoft.Practices.Prism.Logging;
+    using Microsoft.Practices.Prism.Modularity;
+    using Microsoft.Practices.Prism.Regions;
+    using Microsoft.Practices.Unity;
+    
     public abstract class UnityModule : IModule
     {
         private readonly IUnityContainer container;
@@ -86,7 +85,7 @@ namespace Infrastructure
                 catch (ResolutionFailedException ex)
                 {
                     message = string.Format("Could not resolve view of Type '{0}'.\r\n{1}", viewTypeName, ex);
-                    Logger.Log(message, Category.Exception, Priority.High);
+                    this.Logger.Log(message, Category.Exception, Priority.High);
 
                     view = null;
                     return false;
@@ -103,7 +102,7 @@ namespace Infrastructure
                     catch (ResolutionFailedException ex)
                     {
                         message = string.Format("Could not resolve view model of Type '{0}'.\r\n{1}", typeof(TViewModel).AssemblyQualifiedName, ex);
-                        Logger.Log(message, Category.Exception, Priority.High);
+                        this.Logger.Log(message, Category.Exception, Priority.High);
                         view = null;
                         return false;
                     }
@@ -114,7 +113,7 @@ namespace Infrastructure
             }
 
             message = string.Format("Could not resolve view (Type='{0}') for view model (Type='{1}').", viewTypeName, typeof(TViewModel).AssemblyQualifiedName);
-            Logger.Log(message, Category.Warn, Priority.High);
+            this.Logger.Log(message, Category.Warn, Priority.High);
             view = null;
             return false;
         }

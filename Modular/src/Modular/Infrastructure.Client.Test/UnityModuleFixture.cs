@@ -1,13 +1,13 @@
-﻿using System;
-using System.Windows;
-using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-
-namespace Infrastructure.Client.Test
+﻿namespace Infrastructure.Client.Test
 {
+    using Infrastructure.Client.Test.TestObjects;
+
+    using Microsoft.Practices.Prism.Logging;
+    using Microsoft.Practices.Prism.Regions;
+    using Microsoft.Practices.Unity;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Moq;
+
     [TestClass]
     public class UnityModuleFixture
     {
@@ -52,74 +52,5 @@ namespace Infrastructure.Client.Test
 
             logger.Verify(l => l.Log(It.IsAny<string>(), Category.Warn, Priority.High));
         }
-    }
-
-    public class ViewResolutionFailsModule : UnityModule
-    {
-        public ViewResolutionFailsModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger)
-            : base(container, regionManager, logger)
-        {
-        }
-
-        protected override void ConfigureRegions(IRegionManager regionManager)
-        {
-            FrameworkElement view;
-            TryGetViewFor<ViewModel2>(out view);
-        }
-    }
-
-    public class NoViewModule : UnityModule
-    {
-        public NoViewModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger)
-            : base(container, regionManager, logger)
-        {
-        }
-
-        protected override void ConfigureRegions(IRegionManager regionManager)
-        {
-            FrameworkElement view;
-            TryGetViewFor<NoView>(out view);
-        }
-    }
-
-    public class NoView : ViewModel
-    {
-
-    }
-
-    public class ViewModelResolutionFailsModule : UnityModule
-    {
-        public ViewModelResolutionFailsModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger)
-            : base(container, regionManager, logger)
-        {
-        }
-
-        protected override void ConfigureRegions(IRegionManager regionManager)
-        {
-            FrameworkElement view;
-            TryGetViewFor<ViewModel1>(out view);
-        }
-    }
-
-    public class ViewModel2 : ViewModel
-    {
-    }
-
-    public class View2 : FrameworkElement
-    {
-        public View2(IDisposable _)
-        {
-        }
-    }
-
-    public class ViewModel1 : ViewModel
-    {
-        public ViewModel1(IDisposable _)
-        {
-        }
-    }
-
-    public class View1 : FrameworkElement
-    {
     }
 }

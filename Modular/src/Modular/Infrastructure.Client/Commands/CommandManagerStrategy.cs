@@ -1,7 +1,7 @@
-using Microsoft.Practices.ObjectBuilder2;
-
 namespace Infrastructure.Commands
 {
+    using Microsoft.Practices.ObjectBuilder2;
+
     public class CommandManagerStrategy : BuilderStrategy
     {
         public override void PostBuildUp(IBuilderContext context)

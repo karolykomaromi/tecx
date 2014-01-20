@@ -1,9 +1,9 @@
-﻿using System.Diagnostics.Contracts;
-using System.ServiceModel;
-using Search.Entities;
-
-namespace Search
+﻿namespace Search
 {
+    using System.Diagnostics.Contracts;
+    using System.ServiceModel;
+    using Search.Entities;
+
     [ServiceContract]
     [ServiceKnownType("AllEntities", typeof(KnownTypes))]
     [ContractClass(typeof(SearchServiceContract))]
@@ -17,7 +17,7 @@ namespace Search
     }
 
     [ContractClassFor(typeof(ISearchService))]
-    abstract class SearchServiceContract : ISearchService
+    public abstract class SearchServiceContract : ISearchService
     {
         public string[] SearchSuggestions(string searchTerm)
         {

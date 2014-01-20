@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using Microsoft.Practices.ObjectBuilder2;
-
-namespace Infrastructure.Events
+﻿namespace Infrastructure.Events
 {
+    using System;
+    using System.Linq;
+    using Microsoft.Practices.ObjectBuilder2;
+
     public class EventAggregatorStrategy : BuilderStrategy
     {
         public override void PostBuildUp(IBuilderContext context)
@@ -16,7 +16,7 @@ namespace Infrastructure.Events
 
                 var interfaces = type.GetInterfaces();
 
-                if(interfaces.Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ISubscribeTo<>)))
+                if (interfaces.Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ISubscribeTo<>)))
                 {
                     IEventAggregator ea = context.NewBuildUp<IEventAggregator>();
 

@@ -1,13 +1,13 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics.Contracts;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
-using System.ServiceModel.Dispatcher;
-using Microsoft.Practices.Unity;
-
-namespace Modular.Web.Hosting
+﻿namespace Modular.Web.Hosting
 {
+    using System.Collections.ObjectModel;
+    using System.Diagnostics.Contracts;
+    using System.ServiceModel;
+    using System.ServiceModel.Channels;
+    using System.ServiceModel.Description;
+    using System.ServiceModel.Dispatcher;
+    using Microsoft.Practices.Unity;
+
     public class UnityServiceBehavior : IServiceBehavior
     {
         private readonly IUnityContainer container;

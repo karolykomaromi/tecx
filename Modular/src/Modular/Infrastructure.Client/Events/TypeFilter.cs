@@ -1,9 +1,6 @@
-﻿using System;
-
-namespace Infrastructure.Events
+﻿namespace Infrastructure.Events
 {
-    /// <summary>
-    /// Extracted from mscorlib using .NET Reflector
-    /// </summary>
+    using System;
+
     public delegate bool TypeFilter(Type m, object filterCriteria);
 }

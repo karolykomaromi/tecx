@@ -1,12 +1,12 @@
-﻿using System;
-using System.Diagnostics.Contracts;
-using System.Windows.Input;
-using System.Windows.Threading;
-using Infrastructure.Commands;
-using Search.Service;
-
-namespace Search
+﻿namespace Search
 {
+    using System;
+    using System.Diagnostics.Contracts;
+    using System.Windows.Input;
+    using System.Windows.Threading;
+    using Infrastructure.Commands;
+    using Search.Service;
+
     public class SearchCommand : ICommand
     {
         private readonly ISearchService searchService;
@@ -24,6 +24,12 @@ namespace Search
             this.dispatcher = dispatcher;
         }
 
+        public event EventHandler CanExecuteChanged
+        {
+            add { this.commandManager.RequerySuggested += value; }
+            remove { this.commandManager.RequerySuggested -= value; }
+        }
+
         public bool CanExecute(object parameter)
         {
             Contract.Requires(parameter != null);
@@ -31,12 +37,6 @@ namespace Search
             SearchViewModel vm = parameter as SearchViewModel;
 
             return vm != null && !string.IsNullOrEmpty(vm.SearchTerm) && vm.SearchTerm.Length >= 3;
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { this.commandManager.RequerySuggested += value; }
-            remove { this.commandManager.RequerySuggested -= value; }
         }
 
         public void Execute(object parameter)

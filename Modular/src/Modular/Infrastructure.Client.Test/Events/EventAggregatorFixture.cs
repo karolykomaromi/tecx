@@ -1,13 +1,15 @@
-﻿using System;
-using System.Threading;
-using System.Windows;
-using System.Windows.Threading;
-using Infrastructure.Events;
-using Microsoft.Silverlight.Testing;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace Infrastructure.Client.Test.Events
+﻿namespace Infrastructure.Client.Test.Events
 {
+    using System;
+    using System.Threading;
+    using System.Windows;
+    using System.Windows.Threading;
+
+    using Infrastructure.Client.Test.TestObjects;
+    using Infrastructure.Events;
+    using Microsoft.Silverlight.Testing;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class EventAggregatorFixture : SilverlightTest
     {
@@ -26,9 +28,9 @@ namespace Infrastructure.Client.Test.Events
             eventAggregator.Subscribe(subscriber);
             eventAggregator.Publish(new Message());
 
-            EnqueueConditional(() => done);
-            EnqueueCallback(() => Assert.AreEqual(1, subscriber.MessageCounter));
-            EnqueueTestComplete();
+            this.EnqueueConditional(() => done);
+            this.EnqueueCallback(() => Assert.AreEqual(1, subscriber.MessageCounter));
+            this.EnqueueTestComplete();
         }
 
         [TestMethod]
@@ -54,9 +56,9 @@ namespace Infrastructure.Client.Test.Events
             Thread thread = new Thread(start);
             thread.Start(eventAggregator);
 
-            EnqueueConditional(() => done);
-            EnqueueCallback(() => Assert.AreEqual(1, subscriber.MessageCounter));
-            EnqueueTestComplete();
+            this.EnqueueConditional(() => done);
+            this.EnqueueCallback(() => Assert.AreEqual(1, subscriber.MessageCounter));
+            this.EnqueueTestComplete();
         }
 
         [TestMethod]
@@ -76,9 +78,9 @@ namespace Infrastructure.Client.Test.Events
 
             eventAggregator.Publish(new Message());
 
-            EnqueueConditional(() => done);
-            EnqueueCallback(() => Assert.AreEqual(1, subscriber.MessageCounter));
-            EnqueueTestComplete();
+            this.EnqueueConditional(() => done);
+            this.EnqueueCallback(() => Assert.AreEqual(1, subscriber.MessageCounter));
+            this.EnqueueTestComplete();
         }
 
         [TestMethod]
@@ -97,9 +99,9 @@ namespace Infrastructure.Client.Test.Events
 
             CancelMessage token = eventAggregator.Publish(new CancelMessage());
 
-            EnqueueConditional(() => done);
-            EnqueueCallback(() => Assert.IsTrue(token.Cancel));
-            EnqueueTestComplete();
+            this.EnqueueConditional(() => done);
+            this.EnqueueCallback(() => Assert.IsTrue(token.Cancel));
+            this.EnqueueTestComplete();
         }
 
         [TestMethod]
@@ -117,9 +119,9 @@ namespace Infrastructure.Client.Test.Events
 
             eventAggregator.Publish(new Message());
 
-            EnqueueDelay(TimeSpan.FromSeconds(2));
-            EnqueueCallback(() => Assert.AreEqual(0, subscriber.MessageCounter));
-            EnqueueTestComplete();
+            this.EnqueueDelay(TimeSpan.FromSeconds(2));
+            this.EnqueueCallback(() => Assert.AreEqual(0, subscriber.MessageCounter));
+            this.EnqueueTestComplete();
         }
 
         [TestMethod]
@@ -132,49 +134,5 @@ namespace Infrastructure.Client.Test.Events
 
             eventAggregator.Subscribe(new object());
         }
-    }
-
-    public class CountingSubscriber : ISubscribeTo<Message>
-    {
-        public int MessageCounter = 0;
-
-        private readonly Action action;
-
-        public CountingSubscriber(Action action)
-        {
-            this.action = action;
-        }
-
-        public void Handle(Message message)
-        {
-            Interlocked.Increment(ref MessageCounter);
-
-            action();
-        }
-    }
-
-    public class Message
-    {
-    }
-
-    public class CancelingSubscriber : ISubscribeTo<CancelMessage>
-    {
-        private readonly Action action;
-
-        public CancelingSubscriber(Action action)
-        {
-            this.action = action;
-        }
-
-        public void Handle(CancelMessage message)
-        {
-            message.Cancel = true;
-            action();
-        }
-    }
-
-    public class CancelMessage
-    {
-        public bool Cancel { get; set; }
     }
 }

@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Windows.Threading;
-
 namespace Infrastructure.Commands
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Windows.Threading;
+
     public class CommandManager : ICommandManager
     {
         private readonly List<WeakReference> eventHandlers;
@@ -22,9 +22,26 @@ namespace Infrastructure.Commands
 
         public event EventHandler RequerySuggested
         {
-            add { AddWeakReferenceHandler(value); }
+            add { this.AddWeakReferenceHandler(value); }
 
-            remove { RemoveWeakReferenceHandler(value); }
+            remove { this.RemoveWeakReferenceHandler(value); }
+        }
+
+        public void InvalidateRequerySuggested()
+        {
+            if (this.hasCanExecuteQueued)
+            {
+                return;
+            }
+
+            this.hasCanExecuteQueued = true;
+
+            this.dispatcher.BeginInvoke(
+                () =>
+                {
+                    this.CallWeakReferenceHandlers();
+                    this.hasCanExecuteQueued = false;
+                });
         }
 
         private void RemoveWeakReferenceHandler(EventHandler handler)
@@ -36,7 +53,7 @@ namespace Infrastructure.Commands
                 if (target == null || 
                     target == handler)
                 {
-                    eventHandlers.RemoveAt(i);
+                    this.eventHandlers.RemoveAt(i);
                 }
             }
         }
@@ -70,23 +87,6 @@ namespace Infrastructure.Commands
                 EventHandler handler2 = handlerArray[j];
                 handler2(this, EventArgs.Empty);
             }
-        }
-
-        public void InvalidateRequerySuggested()
-        {
-            if (this.hasCanExecuteQueued)
-            {
-                return;
-            }
-
-            this.hasCanExecuteQueued = true;
-
-            this.dispatcher.BeginInvoke(
-                () =>
-                {
-                    this.CallWeakReferenceHandlers();
-                    this.hasCanExecuteQueued = false;
-                });
         }
     }
 }
