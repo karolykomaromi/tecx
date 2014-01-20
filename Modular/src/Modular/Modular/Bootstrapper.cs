@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Infrastructure.Client;
+using Infrastructure;
+using Infrastructure.Commands;
+using Infrastructure.Events;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
@@ -37,6 +39,10 @@ namespace Modular
             base.ConfigureContainer();
 
             this.Container.RegisterInstance(Deployment.Current.Dispatcher);
+            this.Container.AddNewExtension<CommandManagerExtension>();
+            this.Container.RegisterType<ICommandManager, CommandManager>(new ContainerControlledLifetimeManager());
+            this.Container.AddNewExtension<EventAggregatorExtension>();
+            this.Container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
         }
 
         protected override void ConfigureModuleCatalog()

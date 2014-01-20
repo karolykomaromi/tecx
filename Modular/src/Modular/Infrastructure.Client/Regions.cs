@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Client
+﻿namespace Infrastructure
 {
     public static class Regions
     {

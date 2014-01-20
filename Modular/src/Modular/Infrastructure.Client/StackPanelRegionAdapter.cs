@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Practices.Prism.Regions;
 
-namespace Infrastructure.Client
+namespace Infrastructure
 {
     public class StackPanelRegionAdapter : RegionAdapterBase<StackPanel>
     {

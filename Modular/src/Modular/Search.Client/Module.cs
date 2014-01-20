@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Windows;
 using System.Windows.Input;
-using Infrastructure.Client;
+using Infrastructure;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;

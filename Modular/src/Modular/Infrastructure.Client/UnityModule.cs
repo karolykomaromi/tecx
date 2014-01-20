@@ -6,7 +6,7 @@ using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 
-namespace Infrastructure.Client
+namespace Infrastructure
 {
 
     public abstract class UnityModule : IModule
@@ -72,21 +72,49 @@ namespace Infrastructure.Client
         protected virtual bool TryGetViewFor<TViewModel>(out FrameworkElement view)
             where TViewModel : ViewModel
         {
-            string viewModelName = typeof(TViewModel).AssemblyQualifiedName;
+            string viewTypeName = typeof(TViewModel).AssemblyQualifiedName.Replace("ViewModel", "View");
 
-            string viewName = viewModelName.Replace("ViewModel", "View");
+            Type viewType = Type.GetType(viewTypeName, false);
 
-            Type viewType = Type.GetType(viewName, false);
-
+            string message;
             if (viewType != null)
             {
-                TViewModel viewModel = this.Container.Resolve<TViewModel>();
-                view = this.Container.Resolve(viewType) as FrameworkElement;
-                view.DataContext = viewModel;
+                try
+                {
+                    view = this.Container.Resolve(viewType) as FrameworkElement;
+                }
+                catch (ResolutionFailedException ex)
+                {
+                    message = string.Format("Could not resolve view of Type '{0}'.\r\n{1}", viewTypeName, ex);
+                    Logger.Log(message, Category.Exception, Priority.High);
 
-                return true;
+                    view = null;
+                    return false;
+                }
+
+                if (view != null)
+                {
+                    ViewModel vm;
+
+                    try
+                    {
+                        vm = this.Container.Resolve<TViewModel>();
+                    }
+                    catch (ResolutionFailedException ex)
+                    {
+                        message = string.Format("Could not resolve view model of Type '{0}'.\r\n{1}", typeof(TViewModel).AssemblyQualifiedName, ex);
+                        Logger.Log(message, Category.Exception, Priority.High);
+                        view = null;
+                        return false;
+                    }
+
+                    view.DataContext = vm;
+                    return true;
+                }
             }
 
+            message = string.Format("Could not resolve view (Type='{0}') for view model (Type='{1}').", viewTypeName, typeof(TViewModel).AssemblyQualifiedName);
+            Logger.Log(message, Category.Warn, Priority.High);
             view = null;
             return false;
         }
