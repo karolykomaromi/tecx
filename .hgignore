@@ -210,3 +210,17 @@ src/TecX/TecX.Query.Test/bin
 src/TecX/TecX.Query/obj
 src/TecX/TecX.Query/bin
 src/TecX/TecX.Query.Test/obj
+Modular/src/Modular/Infrastructure.Client/Bin
+Modular/src/Modular/Infrastructure.Server/obj
+Modular/src/Modular/Infrastructure.Server/bin
+Modular/src/Modular/Modular.Web/bin
+Modular/src/Modular/Modular.Web/obj
+Modular/src/Modular/Modular/Bin
+Modular/src/Modular/Modular/obj
+Modular/src/Modular/Search.Client/Bin
+Modular/src/Modular/Search.Client/obj
+Modular/src/Modular/Search.Server/obj
+Modular/src/Modular/Search.Server/bin
+Modular/src/Modular/packages
+Modular/src/Modular/Infrastructure.Client/obj
+Modular/src/Modular/Modular.Web/ClientBin/Modular.xap
