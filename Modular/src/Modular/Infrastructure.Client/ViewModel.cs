@@ -2,12 +2,29 @@
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Linq.Expressions;
+using Infrastructure.Commands;
 
-namespace Infrastructure.Client
+namespace Infrastructure
 {
-
     public abstract class ViewModel : INotifyPropertyChanged, INotifyPropertyChanging
     {
+        private ICommandManager commandManager;
+
+        protected ViewModel()
+        {
+            this.commandManager = new NullCommandManager();
+        }
+
+        public ICommandManager CommandManager
+        {
+            get { return commandManager; }
+            set
+            {
+                Contract.Requires(value != null);
+
+                commandManager = value;
+            }
+        }
 
         #region Implementation of INotifyPropertyChanged
 
@@ -18,6 +35,7 @@ namespace Infrastructure.Client
             Contract.Requires(!string.IsNullOrEmpty(propertyName));
 
             this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            this.CommandManager.InvalidateRequerySuggested();
         }
 
         protected virtual void OnPropertyChanged<T>(Expression<Func<T>> propertySelector)

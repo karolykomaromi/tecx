@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.Windows.Input;
-using Infrastructure.Client;
+using Infrastructure;
 using Search.Service;
 
 namespace Search
