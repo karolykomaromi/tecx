@@ -1,12 +1,9 @@
-﻿using System;
-
-namespace Infrastructure.Events
+﻿namespace Infrastructure.Events
 {
+    using System;
+
     internal static class TypeExtensions
     {
-        /// <summary>
-        /// Extracted from mscorlib using .NET Reflector
-        /// </summary>
         public static Type[] FindInterfaces(this Type type, TypeFilter filter, object filterCriteria)
         {
             Type[] interfaces = type.GetInterfaces();

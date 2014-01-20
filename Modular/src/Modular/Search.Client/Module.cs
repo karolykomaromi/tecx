@@ -1,14 +1,14 @@
-﻿using System.Diagnostics.Contracts;
-using System.Windows;
-using System.Windows.Input;
-using Infrastructure;
-using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
-using Search.Service;
-
-namespace Search
+﻿namespace Search
 {
+    using System.Diagnostics.Contracts;
+    using System.Windows;
+    using System.Windows.Input;
+    using Infrastructure;
+    using Microsoft.Practices.Prism.Logging;
+    using Microsoft.Practices.Prism.Regions;
+    using Microsoft.Practices.Unity;
+    using Search.Service;
+
     public class Module : UnityModule
     {
         public Module(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger)

@@ -1,11 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics.Contracts;
-using System.Linq.Expressions;
-using Infrastructure.Commands;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
+    using System;
+    using System.ComponentModel;
+    using System.Diagnostics.Contracts;
+    using System.Linq.Expressions;
+    using Infrastructure.Commands;
+
     public abstract class ViewModel : INotifyPropertyChanged, INotifyPropertyChanging
     {
         private ICommandManager commandManager;
@@ -15,20 +15,24 @@ namespace Infrastructure
             this.commandManager = new NullCommandManager();
         }
 
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
+        public event PropertyChangingEventHandler PropertyChanging = delegate { };
+
         public ICommandManager CommandManager
         {
-            get { return commandManager; }
+            get
+            {
+                return this.commandManager;
+            }
+
             set
             {
                 Contract.Requires(value != null);
 
-                commandManager = value;
+                this.commandManager = value;
             }
         }
-
-        #region Implementation of INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -47,15 +51,9 @@ namespace Infrastructure
             if (property != null)
             {
                 string propertyName = property.Member.Name;
-                OnPropertyChanged(propertyName);
+                this.OnPropertyChanged(propertyName);
             }
         }
-
-        #endregion Implementation of INotifyPropertyChanged
-
-        #region Implementation of INotifyPropertyChanging
-
-        public event PropertyChangingEventHandler PropertyChanging = delegate { };
 
         protected virtual void OnPropertyChanging(string propertyName)
         {
@@ -73,10 +71,8 @@ namespace Infrastructure
             if (property != null)
             {
                 string propertyName = property.Member.Name;
-                OnPropertyChanging(propertyName);
+                this.OnPropertyChanging(propertyName);
             }
         }
-
-        #endregion Implementation of INotifyPropertyChanging
     }
 }

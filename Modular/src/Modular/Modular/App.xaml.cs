@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows;
-
-namespace Modular
+﻿namespace Modular
 {
+    using System;
+    using System.Windows;
+
     public partial class App : Application
     {
         public App()
@@ -11,7 +11,7 @@ namespace Modular
             this.Exit += this.Application_Exit;
             this.UnhandledException += this.Application_UnhandledException;
 
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
@@ -23,7 +23,6 @@ namespace Modular
 
         private void Application_Exit(object sender, EventArgs e)
         {
-
         }
 
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
@@ -33,13 +32,12 @@ namespace Modular
             // icon in the status bar and Firefox will display a script error.
             if (!System.Diagnostics.Debugger.IsAttached)
             {
-
                 // NOTE: This will allow the application to continue running after an exception has been thrown
                 // but not handled. 
                 // For production applications this error handling should be replaced with something that will 
                 // report the error to the website and stop the application.
                 e.Handled = true;
-                Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(e); });
+                Deployment.Current.Dispatcher.BeginInvoke(delegate { this.ReportErrorToDOM(e); });
             }
         }
 

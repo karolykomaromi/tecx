@@ -1,8 +1,8 @@
-﻿using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.ObjectBuilder;
-
-namespace Infrastructure.Events
+﻿namespace Infrastructure.Events
 {
+    using Microsoft.Practices.Unity;
+    using Microsoft.Practices.Unity.ObjectBuilder;
+
     public class EventAggregatorExtension : UnityContainerExtension
     {
         protected override void Initialize()

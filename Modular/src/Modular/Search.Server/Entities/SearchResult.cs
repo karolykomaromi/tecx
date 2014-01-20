@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-namespace Search.Entities
+﻿namespace Search.Entities
 {
+    using System;
+    using System.Runtime.Serialization;
+
     [DataContract]
     public class SearchResult
     {

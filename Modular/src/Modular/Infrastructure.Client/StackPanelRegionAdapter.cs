@@ -1,10 +1,10 @@
-﻿using System.Collections.Specialized;
-using System.Windows;
-using System.Windows.Controls;
-using Microsoft.Practices.Prism.Regions;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
+    using System.Collections.Specialized;
+    using System.Windows;
+    using System.Windows.Controls;
+    using Microsoft.Practices.Prism.Regions;
+
     public class StackPanelRegionAdapter : RegionAdapterBase<StackPanel>
     {
         public StackPanelRegionAdapter(IRegionBehaviorFactory regionBehaviorFactory)
@@ -23,12 +23,14 @@ namespace Infrastructure
                         {
                             regionTarget.Children.Add(element);
                         }
+
                         break;
                     case NotifyCollectionChangedAction.Remove:
                         foreach (FrameworkElement element in e.OldItems)
                         {
                             regionTarget.Children.Remove(element);
                         }
+
                         break;
                 }
             };

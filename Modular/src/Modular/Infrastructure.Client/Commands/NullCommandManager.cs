@@ -1,7 +1,7 @@
-using System;
-
 namespace Infrastructure.Commands
 {
+    using System;
+
     public class NullCommandManager : ICommandManager
     {
         public event EventHandler RequerySuggested

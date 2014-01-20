@@ -1,7 +1,7 @@
-﻿using Search.Entities;
-
-namespace Search
+﻿namespace Search
 {
+    using Search.Entities;
+
     public class SearchService : ISearchService
     {
         public string[] SearchSuggestions(string searchTerm)
@@ -13,9 +13,9 @@ namespace Search
         {
             return new[]
                 { 
-                    new SearchResult{Name = "Foo"},
-                    new SearchResult{Name ="Bar"},
-                    new SearchResult{Name = "Baz"}
+                    new SearchResult { Name = "Foo" },
+                    new SearchResult { Name = "Bar" },
+                    new SearchResult { Name = "Baz" }
                 };
         }
     }

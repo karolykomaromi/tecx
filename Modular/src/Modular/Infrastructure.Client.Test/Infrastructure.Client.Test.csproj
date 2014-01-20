@@ -125,8 +125,21 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Events\EventAggregatorExtensionFixtures.cs" />
     <Compile Include="Events\EventAggregatorFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestObjects\CancelingSubscriber.cs" />
+    <Compile Include="TestObjects\CancelMessage.cs" />
+    <Compile Include="TestObjects\CountingSubscriber.cs" />
+    <Compile Include="TestObjects\Message.cs" />
+    <Compile Include="TestObjects\NoView.cs" />
+    <Compile Include="TestObjects\NoViewModule.cs" />
+    <Compile Include="TestObjects\View1.cs" />
+    <Compile Include="TestObjects\View2.cs" />
+    <Compile Include="TestObjects\ViewModel1.cs" />
+    <Compile Include="TestObjects\ViewModel2.cs" />
+    <Compile Include="TestObjects\ViewModelResolutionFailsModule.cs" />
+    <Compile Include="TestObjects\ViewResolutionFailsModule.cs" />
     <Compile Include="Tests.cs" />
     <Compile Include="UnityModuleFixture.cs" />
   </ItemGroup>
@@ -158,4 +171,5 @@
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="$(ProgramFiles)\MSBuild\StyleCop\v4.7\StyleCop.Targets" />
 </Project>

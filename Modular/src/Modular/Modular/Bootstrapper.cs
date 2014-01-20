@@ -1,15 +1,15 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using Infrastructure;
-using Infrastructure.Commands;
-using Infrastructure.Events;
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Prism.UnityExtensions;
-using Microsoft.Practices.Unity;
-
-namespace Modular
+﻿namespace Modular
 {
+    using System.Windows;
+    using System.Windows.Controls;
+    using Infrastructure;
+    using Infrastructure.Commands;
+    using Infrastructure.Events;
+    using Microsoft.Practices.Prism.Modularity;
+    using Microsoft.Practices.Prism.Regions;
+    using Microsoft.Practices.Prism.UnityExtensions;
+    using Microsoft.Practices.Unity;
+
     public class Bootstrapper : UnityBootstrapper
     {
         protected override DependencyObject CreateShell()

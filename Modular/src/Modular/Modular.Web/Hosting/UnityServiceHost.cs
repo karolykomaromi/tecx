@@ -1,10 +1,10 @@
-﻿using System;
-using System.Diagnostics.Contracts;
-using System.ServiceModel;
-using Microsoft.Practices.Unity;
-
-namespace Modular.Web.Hosting
+﻿namespace Modular.Web.Hosting
 {
+    using System;
+    using System.Diagnostics.Contracts;
+    using System.ServiceModel;
+    using Microsoft.Practices.Unity;
+
     public class UnityServiceHost : ServiceHost
     {
         private readonly IUnityContainer container;
