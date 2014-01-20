@@ -224,3 +224,8 @@ Modular/src/Modular/Search.Server/bin
 Modular/src/Modular/packages
 Modular/src/Modular/Infrastructure.Client/obj
 Modular/src/Modular/Modular.Web/ClientBin/Modular.xap
+Modular/src/Modular/Infrastructure.Client.Test/Bin
+Modular/src/Modular/Infrastructure.Client.Test/obj
+Modular/src/Modular/Modular.Silverlight.Test.Web/ClientBin/Infrastructure.Client.Test.xap
+Modular/src/Modular/Modular.Silverlight.Test.Web/bin
+Modular/src/Modular/Modular.Silverlight.Test.Web/obj
