@@ -134,6 +134,7 @@
     <Compile Include="TestObjects\Message.cs" />
     <Compile Include="TestObjects\NoView.cs" />
     <Compile Include="TestObjects\NoViewModule.cs" />
+    <Compile Include="TestObjects\Subscriber.cs" />
     <Compile Include="TestObjects\View1.cs" />
     <Compile Include="TestObjects\View2.cs" />
     <Compile Include="TestObjects\ViewModel1.cs" />

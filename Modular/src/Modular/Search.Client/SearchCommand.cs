@@ -1,8 +1,11 @@
 ﻿namespace Search
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Windows.Input;
+
+    using Infrastructure;
     using Infrastructure.Commands;
     using Search.Service;
 
@@ -10,9 +13,9 @@
     {
         private readonly ISearchService searchService;
         private readonly ICommandManager commandManager;
-        private readonly IShowSearchResults showResults;
+        private readonly IShowThings<IEnumerable<SearchResult>> showResults;
 
-        public SearchCommand(ISearchService searchService, ICommandManager commandManager, IShowSearchResults showResults)
+        public SearchCommand(ISearchService searchService, ICommandManager commandManager, IShowThings<IEnumerable<SearchResult>> showResults)
         {
             Contract.Requires(searchService != null);
             Contract.Requires(commandManager != null);
@@ -48,7 +51,7 @@
                 !string.IsNullOrEmpty(vm.SearchTerm) &&
                 vm.SearchTerm.Length >= 3)
             {
-                this.searchService.BeginSearch(vm.SearchTerm, this.OnAfterSearch, this.showResults);
+                this.searchService.BeginSearch(vm.SearchTerm, this.OnAfterSearch, null);
             }
         }
 
@@ -56,7 +59,7 @@
         {
             var results = this.searchService.EndSearch(ar);
 
-            this.showResults.ShowSearchResults(results);
+            this.showResults.Show(results);
         }
     }
 }
