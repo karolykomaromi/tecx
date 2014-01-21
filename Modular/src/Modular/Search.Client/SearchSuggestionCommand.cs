@@ -1,23 +1,27 @@
 ﻿namespace Search
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Windows.Input;
-    using System.Windows.Threading;
+
+    using Infrastructure;
+
     using Search.Service;
 
     public class SearchSuggestionCommand : ICommand
     {
         private readonly ISearchService searchService;
-        private readonly Dispatcher dispatcher;
 
-        public SearchSuggestionCommand(ISearchService searchService, Dispatcher dispatcher)
+        private readonly IShowThings<IEnumerable<string>> showSuggestions;
+
+        public SearchSuggestionCommand(ISearchService searchService, IShowThings<IEnumerable<string>> showSuggestions)
         {
             Contract.Requires(searchService != null);
-            Contract.Requires(dispatcher != null);
+            Contract.Requires(showSuggestions != null);
 
             this.searchService = searchService;
-            this.dispatcher = dispatcher;
+            this.showSuggestions = showSuggestions;
         }
 
         public event EventHandler CanExecuteChanged = delegate { };
@@ -41,7 +45,7 @@
                 !string.IsNullOrEmpty(vm.SearchTerm) &&
                 vm.SearchTerm.Length >= 3)
             {
-                this.searchService.BeginSearchSuggestions(vm.SearchTerm, this.OnAfterSearchSuggestions, vm);
+                this.searchService.BeginSearchSuggestions(vm.SearchTerm, this.OnAfterSearchSuggestions, null);
             }
         }
 
@@ -49,17 +53,7 @@
         {
             var suggestions = this.searchService.EndSearchSuggestions(result);
 
-            SearchViewModel vm = (SearchViewModel)result.AsyncState;
-
-            this.dispatcher.BeginInvoke(() =>
-                {
-                    vm.Suggestions.Clear();
-
-                    foreach (string suggestion in suggestions)
-                    {
-                        vm.Suggestions.Add(suggestion);
-                    }
-                });
+            this.showSuggestions.Show(suggestions);
         }
     }
 }

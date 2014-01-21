@@ -6,7 +6,7 @@
     using Infrastructure;
     using Search.Service;
 
-    public class SearchResultsViewModel : ViewModel, IShowSearchResults
+    public class SearchResultsViewModel : ViewModel, IShowThings<IEnumerable<SearchResult>>
     {
         private readonly ObservableCollection<SearchResult> results;
 
@@ -22,7 +22,7 @@
             get { return this.results; }
         }
 
-        public void ShowSearchResults(IEnumerable<SearchResult> searchResults)
+        public void Show(IEnumerable<SearchResult> searchResults)
         {
             Contract.Requires(searchResults != null);
 

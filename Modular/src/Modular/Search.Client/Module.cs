@@ -1,6 +1,7 @@
 ﻿namespace Search
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Windows;
     using System.Windows.Input;
@@ -24,12 +25,16 @@
         protected override void ConfigureContainer(IUnityContainer container)
         {
             container.RegisterType<SearchResultsViewModel>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IShowSearchResults, SearchResultsViewModel>();
-            container.RegisterType<IShowSearchResults, DispatchingShowSearchResults>("dispatch");
+            container.RegisterType<IShowThings<IEnumerable<SearchResult>>, SearchResultsViewModel>();
+            container.RegisterType<IShowThings<IEnumerable<SearchResult>>, DispatchingShowThings<IEnumerable<SearchResult>>>("dispatch");
+
+            container.RegisterType<SearchViewModel>(new ContainerControlledLifetimeManager(), new InjectionConstructor(new ResolvedParameter<ICommand>("search"), new ResolvedParameter<ICommand>("suggestions")));
+            container.RegisterType<IShowThings<IEnumerable<string>>, SearchViewModel>();
+            container.RegisterType<IShowThings<IEnumerable<string>>, DispatchingShowThings<IEnumerable<string>>>("dispatch");
+
             container.RegisterType<ISearchService, SearchServiceClient>(new InjectionConstructor());
-            container.RegisterType<ICommand, SearchCommand>("search", new InjectionConstructor(typeof(ISearchService), typeof(ICommandManager), new ResolvedParameter<IShowSearchResults>("dispatch")));
-            container.RegisterType<ICommand, SearchSuggestionCommand>("suggestions");
-            container.RegisterType<SearchViewModel>(new InjectionConstructor(new ResolvedParameter<ICommand>("search"), new ResolvedParameter<ICommand>("suggestions")));
+            container.RegisterType<ICommand, SearchCommand>("search", new InjectionConstructor(typeof(ISearchService), typeof(ICommandManager), new ResolvedParameter<IShowThings<IEnumerable<SearchResult>>>("dispatch")));
+            container.RegisterType<ICommand, SearchSuggestionCommand>("suggestions", new InjectionConstructor(typeof(ISearchService), new ResolvedParameter<IShowThings<IEnumerable<string>>>("dispatch")));
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)

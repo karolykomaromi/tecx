@@ -1,11 +1,12 @@
 ﻿namespace Search
 {
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics.Contracts;
     using System.Windows.Input;
     using Infrastructure;
 
-    public class SearchViewModel : ViewModel
+    public class SearchViewModel : ViewModel, IShowThings<IEnumerable<string>>
     {
         private readonly ICommand searchCommand;
         private readonly ICommand searchSuggestionCommand;
@@ -54,6 +55,16 @@
                     this.searchTerm = value;
                     this.OnPropertyChanged(() => this.SearchTerm);
                 }
+            }
+        }
+
+        public void Show(IEnumerable<string> suggestions)
+        {
+            this.Suggestions.Clear();
+
+            foreach (string suggestion in suggestions)
+            {
+                this.Suggestions.Add(suggestion);
             }
         }
     }
