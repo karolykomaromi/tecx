@@ -1,9 +1,11 @@
 ﻿namespace Search
 {
+    using System;
     using System.Diagnostics.Contracts;
     using System.Windows;
     using System.Windows.Input;
     using Infrastructure;
+    using Infrastructure.Commands;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
@@ -21,19 +23,37 @@
 
         protected override void ConfigureContainer(IUnityContainer container)
         {
+            container.RegisterType<SearchResultsViewModel>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IShowSearchResults, SearchResultsViewModel>();
+            container.RegisterType<IShowSearchResults, DispatchingShowSearchResults>("dispatch");
             container.RegisterType<ISearchService, SearchServiceClient>(new InjectionConstructor());
-            container.RegisterType<ICommand, SearchCommand>("search");
+            container.RegisterType<ICommand, SearchCommand>("search", new InjectionConstructor(typeof(ISearchService), typeof(ICommandManager), new ResolvedParameter<IShowSearchResults>("dispatch")));
             container.RegisterType<ICommand, SearchSuggestionCommand>("suggestions");
             container.RegisterType<SearchViewModel>(new InjectionConstructor(new ResolvedParameter<ICommand>("search"), new ResolvedParameter<ICommand>("suggestions")));
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)
         {
-            FrameworkElement view;
-            if (this.TryGetViewFor<SearchViewModel>(out view))
+            FrameworkElement searchView;
+            if (this.TryGetViewFor<SearchViewModel>(out searchView))
             {
-                regionManager.AddToRegion(Regions.Shell.TopLeft, view);
+                regionManager.AddToRegion(Regions.Shell.TopLeft, searchView);
             }
+
+            FrameworkElement searchResultView;
+            if (this.TryGetViewFor<SearchResultsViewModel>(out searchResultView))
+            {
+                regionManager.AddToRegion(Regions.Shell.Content, searchResultView);
+            }
+        }
+
+        protected override ResourceDictionary CreateModuleResources()
+        {
+            Uri source = new Uri("/Search.Client;component/Resources.xaml", UriKind.Relative);
+
+            ResourceDictionary resources = new ResourceDictionary { Source = source };
+
+            return resources;
         }
     }
 }

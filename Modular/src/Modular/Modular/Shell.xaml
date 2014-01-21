@@ -9,12 +9,12 @@
     d:DesignHeight="300" d:DesignWidth="400">
     <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="37*"/>
-            <RowDefinition Height="113*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="99*"/>
-            <ColumnDefinition Width="301*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Border BorderBrush="Black" BorderThickness="1" Background="Yellow">
             <ItemsControl regions:RegionManager.RegionName="TopLeft" />
@@ -26,7 +26,13 @@
             <ItemsControl regions:RegionManager.RegionName="Navigation" />
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="1" Background="Aquamarine" >
-            <sdk:TabControl regions:RegionManager.RegionName="Content" />
+            <ItemsControl regions:RegionManager.RegionName="Content">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
         </Border>
     </Grid>
 </UserControl>

@@ -3,7 +3,6 @@
     using System;
     using System.Diagnostics.Contracts;
     using System.Windows.Input;
-    using System.Windows.Threading;
     using Infrastructure.Commands;
     using Search.Service;
 
@@ -11,17 +10,17 @@
     {
         private readonly ISearchService searchService;
         private readonly ICommandManager commandManager;
-        private readonly Dispatcher dispatcher;
+        private readonly IShowSearchResults showResults;
 
-        public SearchCommand(ISearchService searchService, ICommandManager commandManager, Dispatcher dispatcher)
+        public SearchCommand(ISearchService searchService, ICommandManager commandManager, IShowSearchResults showResults)
         {
             Contract.Requires(searchService != null);
             Contract.Requires(commandManager != null);
-            Contract.Requires(dispatcher != null);
+            Contract.Requires(showResults != null);
 
             this.searchService = searchService;
             this.commandManager = commandManager;
-            this.dispatcher = dispatcher;
+            this.showResults = showResults;
         }
 
         public event EventHandler CanExecuteChanged
@@ -49,7 +48,7 @@
                 !string.IsNullOrEmpty(vm.SearchTerm) &&
                 vm.SearchTerm.Length >= 3)
             {
-                this.searchService.BeginSearch(vm.SearchTerm, this.OnAfterSearch, vm);
+                this.searchService.BeginSearch(vm.SearchTerm, this.OnAfterSearch, this.showResults);
             }
         }
 
@@ -57,17 +56,7 @@
         {
             var results = this.searchService.EndSearch(ar);
 
-            SearchViewModel vm = (SearchViewModel)ar.AsyncState;
-
-            this.dispatcher.BeginInvoke(() =>
-                {
-                    vm.Results.Clear();
-
-                    foreach (SearchResult result in results)
-                    {
-                        vm.Results.Add(result);
-                    }
-                });
+            this.showResults.ShowSearchResults(results);
         }
     }
 }
