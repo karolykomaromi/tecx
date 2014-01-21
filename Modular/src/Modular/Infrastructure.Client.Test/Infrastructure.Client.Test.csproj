@@ -140,7 +140,6 @@
     <Compile Include="TestObjects\ViewModel2.cs" />
     <Compile Include="TestObjects\ViewModelResolutionFailsModule.cs" />
     <Compile Include="TestObjects\ViewResolutionFailsModule.cs" />
-    <Compile Include="Tests.cs" />
     <Compile Include="UnityModuleFixture.cs" />
   </ItemGroup>
   <ItemGroup>
