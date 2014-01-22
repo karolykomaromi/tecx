@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Details.DetailsView"
+﻿<UserControl x:Class="Details.ProductDetailsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,8 +6,8 @@
     xmlns:details="clr-namespace:Details"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance d:Type=details:DetailsViewModel}">
+    d:DataContext="{d:DesignInstance d:Type=details:ProductDetailsViewModel}">
     <Grid>
-        <ContentControl Content="{Binding Item}"/>
+        <ContentControl Content="{Binding Item}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
     </Grid>
 </UserControl>

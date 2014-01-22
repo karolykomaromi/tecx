@@ -4,7 +4,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:regions="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
-    xmlns:sdk="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
     <Grid Background="White">
@@ -26,13 +25,7 @@
             <ItemsControl regions:RegionManager.RegionName="Navigation" />
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="1" Background="Aquamarine" >
-            <ItemsControl regions:RegionManager.RegionName="Content">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Grid />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+            <ContentControl regions:RegionManager.RegionName="Content" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
         </Border>
     </Grid>
 </UserControl>

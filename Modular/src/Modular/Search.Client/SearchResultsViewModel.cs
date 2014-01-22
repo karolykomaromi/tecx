@@ -4,24 +4,22 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics.Contracts;
+    using System.Windows.Input;
     using Infrastructure;
-    using Infrastructure.Commands;
-    using Microsoft.Practices.Prism;
     using Search.Service;
 
     public class SearchResultsViewModel : ViewModel, IShowThings<IEnumerable<SearchResult>>
     {
+        private readonly ICommand navigateContentCommand;
         private readonly ObservableCollection<SearchResultItemViewModel> results;
 
-        public SearchResultsViewModel()
+        public SearchResultsViewModel(ICommand navigateContentCommand)
         {
+            Contract.Requires(navigateContentCommand != null);
+
+            this.navigateContentCommand = navigateContentCommand;
+
             this.results = new ObservableCollection<SearchResultItemViewModel>();
-
-            UriQuery query = new UriQuery { { "id", "4711" }, { "type", "Product" } };
-
-            Uri uri = new Uri("DetailsView" + query, UriKind.Relative);
-
-            this.results.Add(new SearchResultItemViewModel(new NullCommand()) { Name = "FooBarBaz", FoundSearchTermIn = "Lorem ipsum...", Uri = uri });
         }
 
         public ObservableCollection<SearchResultItemViewModel> Results
@@ -37,7 +35,7 @@
 
             foreach (SearchResult result in searchResults)
             {
-                var item = new SearchResultItemViewModel(new NullCommand())
+                var item = new SearchResultItemViewModel(this.navigateContentCommand)
                     {
                         FoundSearchTermIn = result.FoundSearchTermIn,
                         Name = result.Name,
@@ -45,6 +43,13 @@
                     };
 
                 this.Results.Add(item);
+            }
+
+            Uri destination = new Uri("SearchResultsView", UriKind.Relative);
+
+            if (this.navigateContentCommand.CanExecute(destination))
+            {
+                this.navigateContentCommand.Execute(destination);
             }
         }
     }

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Diagnostics.Contracts;
-using System.Windows.Input;
-using Microsoft.Practices.Prism.Regions;
-
-namespace Infrastructure.Commands
+﻿namespace Infrastructure.Commands
 {
+    using System;
+    using System.Diagnostics.Contracts;
+    using System.Windows.Input;
+    using Microsoft.Practices.Prism.Regions;
+
     public class NavigateCommand : ICommand
     {
         private readonly INavigateAsync navigate;
