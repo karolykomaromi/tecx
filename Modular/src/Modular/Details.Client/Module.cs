@@ -6,6 +6,7 @@
     using Details.ViewModels;
     using Infrastructure;
     using Infrastructure.Commands;
+    using Infrastructure.I18n;
     using Infrastructure.ViewModels;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
@@ -13,6 +14,11 @@
 
     public class Module : UnityModule
     {
+        /// <summary>
+        /// Details
+        /// </summary>
+        public static readonly string Name = "Details";
+
         public Module(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger)
             : base(container, regionManager, logger)
         {
@@ -31,8 +37,13 @@
                                           new NavigationCommand(regionManager.Regions[Regions.Shell.Content]))
                                       {
                                           Destination = new Uri("ProductDetailsView", UriKind.Relative),
-                                          Name = Labels.Label_NavigationMenuEntry
+                                          Name = this.ResourceManager["Label_NavigationMenuEntry"]
                                       });
+        }
+
+        protected override IResourceManager CreateResourceManager()
+        {
+            return new ResxFilesResourceManager(typeof(Labels));
         }
 
         protected override ResourceDictionary CreateModuleResources()
