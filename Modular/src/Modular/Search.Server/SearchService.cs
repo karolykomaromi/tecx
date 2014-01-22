@@ -1,5 +1,6 @@
 ﻿namespace Search
 {
+    using System;
     using Search.Entities;
 
     public class SearchService : ISearchService
@@ -13,9 +14,9 @@
         {
             return new[]
                 { 
-                    new SearchResult { Name = "Foo" },
-                    new SearchResult { Name = "Bar" },
-                    new SearchResult { Name = "Baz" }
+                    new SearchResult { Name = "Foo", FoundSearchTermIn = "Lorem ipsum...", Uri = new Uri("DetailsView?type=Product&id=1", UriKind.Relative) },
+                    new SearchResult { Name = "Bar", FoundSearchTermIn = "Lorem ipsum...", Uri = new Uri("DetailsView?type=Product&id=2", UriKind.Relative) },
+                    new SearchResult { Name = "Baz", FoundSearchTermIn = "Lorem ipsum...", Uri = new Uri("DetailsView?type=Product&id=3", UriKind.Relative) }
                 };
         }
     }

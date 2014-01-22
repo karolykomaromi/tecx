@@ -233,3 +233,5 @@ Modular/src/Modular/Backup
 Modular/src/Modular/UpgradeLog.htm
 Modular/src/Modular/Details.Client/obj
 Modular/src/Modular/Details.Server/obj
+Modular/src/Modular/Details.Client/Bin
+Modular/src/Modular/Details.Server/bin

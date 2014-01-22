@@ -90,8 +90,11 @@
     <Compile Include="Commands\CommandManagerExtension.cs" />
     <Compile Include="Commands\CommandManagerStrategy.cs" />
     <Compile Include="Commands\ICommandManager.cs" />
+    <Compile Include="Commands\NavigateCommand.cs" />
+    <Compile Include="Commands\NullCommand.cs" />
     <Compile Include="Commands\NullCommandManager.cs" />
     <Compile Include="DispatchingShowThings.cs" />
+    <Compile Include="DoubleClickTrigger.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\EventAggregatorExtension.cs" />
     <Compile Include="Events\EventAggregatorStrategy.cs" />
