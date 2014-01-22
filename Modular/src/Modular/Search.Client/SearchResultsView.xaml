@@ -8,7 +8,7 @@
     d:DesignHeight="300" d:DesignWidth="400"
     d:DataContext="{d:DesignInstance d:Type=search:SearchResultsViewModel}">
     <Grid>
-        <ListBox ItemsSource="{Binding Results}" HorizontalContentAlignment="Stretch">
+        <ListBox ItemsSource="{Binding Results}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

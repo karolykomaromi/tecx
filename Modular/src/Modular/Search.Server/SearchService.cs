@@ -14,9 +14,9 @@
         {
             return new[]
                 { 
-                    new SearchResult { Name = "Foo", FoundSearchTermIn = "Lorem ipsum...", Uri = new Uri("DetailsView?type=Product&id=1", UriKind.Relative) },
-                    new SearchResult { Name = "Bar", FoundSearchTermIn = "Lorem ipsum...", Uri = new Uri("DetailsView?type=Product&id=2", UriKind.Relative) },
-                    new SearchResult { Name = "Baz", FoundSearchTermIn = "Lorem ipsum...", Uri = new Uri("DetailsView?type=Product&id=3", UriKind.Relative) }
+                    new SearchResult { Name = "Foo", FoundSearchTermIn = "Lorem ipsum...", Uri = new Uri("ProductDetailsView?id=1", UriKind.Relative) },
+                    new SearchResult { Name = "Bar", FoundSearchTermIn = "Lorem ipsum...", Uri = new Uri("ProductDetailsView?id=2", UriKind.Relative) },
+                    new SearchResult { Name = "Baz", FoundSearchTermIn = "Lorem ipsum...", Uri = new Uri("ProductDetailsView?id=3", UriKind.Relative) }
                 };
         }
     }

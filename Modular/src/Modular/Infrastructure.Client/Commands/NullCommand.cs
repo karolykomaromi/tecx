@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows.Input;
-
-namespace Infrastructure.Commands
+﻿namespace Infrastructure.Commands
 {
+    using System;
+    using System.Windows.Input;
+
     public class NullCommand : ICommand
     {
         public bool CanExecute(object parameter)

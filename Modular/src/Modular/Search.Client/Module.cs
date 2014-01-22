@@ -25,7 +25,8 @@
 
         protected override void ConfigureContainer(IUnityContainer container)
         {
-            container.RegisterType<SearchResultsViewModel>(new ContainerControlledLifetimeManager());
+            container.RegisterType<SearchResultsViewModel>(new ContainerControlledLifetimeManager(), 
+                new InjectionConstructor(new ResolvedParameter<ICommand>(Regions.Shell.Content)));
             container.RegisterType<IShowThings<IEnumerable<SearchResult>>, SearchResultsViewModel>();
             container.RegisterType<IShowThings<IEnumerable<SearchResult>>, DispatchingShowThings<IEnumerable<SearchResult>>>("dispatch");
 
@@ -46,7 +47,9 @@
 
             container.RegisterType<ISearchService, SearchServiceClient>(new InjectionConstructor());
 
-            
+            container.RegisterInstance<INavigateAsync>(Regions.Shell.Content, this.RegionManager.Regions[Regions.Shell.Content]);
+            container.RegisterType<ICommand, NavigateCommand>(Regions.Shell.Content, 
+                new InjectionConstructor(new ResolvedParameter<INavigateAsync>(Regions.Shell.Content)));
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)
