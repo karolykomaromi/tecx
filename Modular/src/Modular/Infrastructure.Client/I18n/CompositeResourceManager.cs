@@ -1,14 +1,16 @@
 ﻿namespace Infrastructure.I18n
 {
     using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
 
     public class CompositeResourceManager : IResourceManager
     {
-        private readonly IResourceManager[] resourceManagers;
+        private readonly List<IResourceManager> resourceManagers;
 
         public CompositeResourceManager(params IResourceManager[] resourceManagers)
         {
-            this.resourceManagers = resourceManagers ?? new IResourceManager[0];
+            this.resourceManagers = new List<IResourceManager>(resourceManagers ?? new IResourceManager[0]);
         }
 
         public string this[string key]
@@ -27,6 +29,13 @@
 
                 return key;
             }
+        }
+
+        public void Add(IResourceManager resourceManager)
+        {
+            Contract.Requires(resourceManager != null);
+
+            this.resourceManagers.Add(resourceManager);
         }
     }
 }

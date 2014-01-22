@@ -1,25 +1,27 @@
-using System.Globalization;
-using Infrastructure;
-using Infrastructure.ViewModels;
-using Microsoft.Practices.Prism.Regions;
-
 namespace Details.ViewModels
 {
+    using System.Globalization;
+    using Infrastructure.ViewModels;
+    using Microsoft.Practices.Prism.Regions;
+
     public class ProductDetailsViewModel : ViewModel, INavigationAware
     {
         private ProductViewModel item;
 
         public ProductViewModel Item
         {
-            get { return this.item; }
+            get
+            {
+                return this.item;
+            }
 
             set
             {
                 if (this.item != value)
                 {
-                    OnPropertyChanging(() => this.Item);
+                    this.OnPropertyChanging(() => this.Item);
                     this.item = value;
-                    OnPropertyChanged(() => this.Item);
+                    this.OnPropertyChanged(() => this.Item);
                 }
             }
         }

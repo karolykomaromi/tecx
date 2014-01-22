@@ -17,8 +17,9 @@
             IUnityContainer container = new UnityContainer();
             var regionManager = new Mock<IRegionManager>();
             var logger = new Mock<ILoggerFacade>();
+            var resources = new Mock<IApplicationResources>();
 
-            var vm = new ViewModelResolutionFailsModule(container, regionManager.Object, logger.Object);
+            var vm = new ViewModelResolutionFailsModule(container, regionManager.Object, logger.Object, resources.Object);
 
             vm.Initialize();
 
@@ -31,8 +32,9 @@
             IUnityContainer container = new UnityContainer();
             var regionManager = new Mock<IRegionManager>();
             var logger = new Mock<ILoggerFacade>();
+            var resources = new Mock<IApplicationResources>();
 
-            var vm = new ViewResolutionFailsModule(container, regionManager.Object, logger.Object);
+            var vm = new ViewResolutionFailsModule(container, regionManager.Object, logger.Object, resources.Object);
 
             vm.Initialize();
 
@@ -45,8 +47,9 @@
             IUnityContainer container = new UnityContainer();
             var regionManager = new Mock<IRegionManager>();
             var logger = new Mock<ILoggerFacade>();
+            var resources = new Mock<IApplicationResources>();
 
-            var vm = new NoViewModule(container, regionManager.Object, logger.Object);
+            var vm = new NoViewModule(container, regionManager.Object, logger.Object, resources.Object);
 
             vm.Initialize();
 

@@ -8,8 +8,8 @@ namespace Infrastructure.Client.Test.TestObjects
 
     public class NoViewModule : UnityModule
     {
-        public NoViewModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger)
-            : base(container, regionManager, logger)
+        public NoViewModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger, IApplicationResources applicationResources)
+            : base(container, regionManager, logger, applicationResources)
         {
         }
 

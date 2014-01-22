@@ -1,11 +1,10 @@
-﻿using Infrastructure.I18n;
-using Infrastructure.ViewModels;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
     using System;
     using System.Diagnostics.Contracts;
     using System.Windows;
+    using Infrastructure.I18n;
+    using Infrastructure.ViewModels;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Modularity;
     using Microsoft.Practices.Prism.Regions;
@@ -16,17 +15,19 @@ namespace Infrastructure
         private readonly IUnityContainer container;
         private readonly IRegionManager regionManager;
         private readonly ILoggerFacade logger;
-        private IResourceManager resourceManager;
+        private readonly IApplicationResources applicationResources;
 
-        protected UnityModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger)
+        protected UnityModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger, IApplicationResources applicationResources)
         {
             Contract.Requires(container != null);
             Contract.Requires(regionManager != null);
             Contract.Requires(logger != null);
+            Contract.Requires(applicationResources != null);
 
             this.container = container;
             this.regionManager = regionManager;
             this.logger = logger;
+            this.applicationResources = applicationResources;
         }
 
         protected IUnityContainer Container
@@ -44,20 +45,23 @@ namespace Infrastructure
             get { return this.logger; }
         }
 
-        protected IResourceManager ResourceManager
+        protected IApplicationResources ApplicationResources
         {
-            get { return this.resourceManager; }
+            get
+            {
+                return this.applicationResources;
+            }
         }
 
         public virtual void Initialize()
         {
             this.ConfigureContainer(this.container);
 
-            this.resourceManager = this.CreateResourceManager();
+            IResourceManager resourceManager = this.CreateResourceManager();
+            this.ApplicationResources.Add(resourceManager);
 
             ResourceDictionary moduleResources = this.CreateModuleResources();
-
-            Application.Current.Resources.MergedDictionaries.Add(moduleResources);
+            this.ApplicationResources.Add(moduleResources);
 
             this.ConfigureRegions(this.RegionManager);
         }

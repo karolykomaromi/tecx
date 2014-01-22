@@ -9,17 +9,17 @@
     {
         protected override void OnAttached()
         {
-            if (AssociatedObject != null && !DesignerProperties.GetIsInDesignMode(AssociatedObject))
+            if (this.AssociatedObject != null && !DesignerProperties.GetIsInDesignMode(this.AssociatedObject))
             {
-                AssociatedObject.MouseLeftButtonDown += OnMouseLeftButtonDown;
+                this.AssociatedObject.MouseLeftButtonDown += this.OnMouseLeftButtonDown;
             }
         }
 
         protected override void OnDetaching()
         {
-            if (AssociatedObject != null && !DesignerProperties.GetIsInDesignMode(AssociatedObject))
+            if (this.AssociatedObject != null && !DesignerProperties.GetIsInDesignMode(this.AssociatedObject))
             {
-                AssociatedObject.MouseLeftButtonDown -= OnMouseLeftButtonDown;
+                this.AssociatedObject.MouseLeftButtonDown -= this.OnMouseLeftButtonDown;
             }
         }
 
@@ -27,7 +27,7 @@
         {
             if (e.ClickCount >= 2)
             {
-                InvokeActions(null);
+                this.InvokeActions(null);
             }
         }
     }

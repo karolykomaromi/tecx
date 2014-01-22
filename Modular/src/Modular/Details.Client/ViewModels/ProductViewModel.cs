@@ -1,23 +1,25 @@
-using Infrastructure;
-using Infrastructure.ViewModels;
-
 namespace Details.ViewModels
 {
+    using Infrastructure.ViewModels;
+
     public class ProductViewModel : ViewModel
     {
         private int id;
 
         public int Id
         {
-            get { return this.id; }
+            get
+            {
+                return this.id;
+            }
 
             set
             {
                 if (this.id != value)
                 {
-                    OnPropertyChanging(() => this.Id);
+                    this.OnPropertyChanging(() => this.Id);
                     this.id = value;
-                    OnPropertyChanged(() => this.Id);
+                    this.OnPropertyChanged(() => this.Id);
                 }
             }
         }

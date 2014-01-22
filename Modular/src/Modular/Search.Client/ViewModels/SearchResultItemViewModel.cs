@@ -1,11 +1,10 @@
-using System;
-using System.Diagnostics.Contracts;
-using System.Windows.Input;
-using Infrastructure;
-using Infrastructure.ViewModels;
-
 namespace Search.ViewModels
 {
+    using System;
+    using System.Diagnostics.Contracts;
+    using System.Windows.Input;
+    using Infrastructure.ViewModels;
+
     public class SearchResultItemViewModel : ViewModel
     {
         private readonly ICommand openDetailsCommand;
@@ -25,15 +24,18 @@ namespace Search.ViewModels
 
         public string Name
         {
-            get { return this.name; }
+            get
+            {
+                return this.name;
+            }
 
             set
             {
                 if (this.name != value)
                 {
-                    OnPropertyChanging(() => this.Name);
+                    this.OnPropertyChanging(() => this.Name);
                     this.name = value;
-                    OnPropertyChanged(() => this.Name);
+                    this.OnPropertyChanged(() => this.Name);
                 }
             }
         }
@@ -67,9 +69,9 @@ namespace Search.ViewModels
             {
                 if (this.uri != value)
                 {
-                    OnPropertyChanging(() => this.Uri);
+                    this.OnPropertyChanging(() => this.Uri);
                     this.uri = value;
-                    OnPropertyChanged(() => this.Uri);
+                    this.OnPropertyChanged(() => this.Uri);
                 }
             }
         }

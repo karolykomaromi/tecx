@@ -8,8 +8,8 @@ namespace Infrastructure.Client.Test.TestObjects
 
     public class ViewModelResolutionFailsModule : UnityModule
     {
-        public ViewModelResolutionFailsModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger)
-            : base(container, regionManager, logger)
+        public ViewModelResolutionFailsModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger, IApplicationResources applicationResources)
+            : base(container, regionManager, logger, applicationResources)
         {
         }
 

@@ -1,11 +1,11 @@
-using System;
-using System.ComponentModel;
-using System.Diagnostics.Contracts;
-using System.Linq.Expressions;
-using Infrastructure.Commands;
-
 namespace Infrastructure.ViewModels
 {
+    using System;
+    using System.ComponentModel;
+    using System.Diagnostics.Contracts;
+    using System.Linq.Expressions;
+    using Infrastructure.Commands;
+
     public abstract class ViewModel : INotifyPropertyChanged, INotifyPropertyChanging
     {
         private ICommandManager commandManager;
