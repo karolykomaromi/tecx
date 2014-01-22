@@ -90,6 +90,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
+      <Link>GlobalAssemblyVersion.cs</Link>
+    </Compile>
     <Compile Include="Hosting\UnityInstanceProvider.cs" />
     <Compile Include="Hosting\UnityServiceBehavior.cs" />
     <Compile Include="Hosting\UnityServiceHost.cs" />

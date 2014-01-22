@@ -5,24 +5,24 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{13CEE176-151F-4B3A-BC0A-9066E8E84B7B}</ProjectGuid>
+    <ProjectGuid>{6BCDC2B2-AAF0-41E7-BB0E-DA257C6ACACD}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Infrastructure</RootNamespace>
-    <AssemblyName>Infrastructure.Client</AssemblyName>
+    <RootNamespace>Details</RootNamespace>
+    <AssemblyName>Details.Client</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
     <SccProjectName>&lt;Project Location In Database&gt;</SccProjectName>
     <SccLocalPath>&lt;Local Binding Root of Project&gt;</SccLocalPath>
     <SccAuxPath>&lt;Source Control Database&gt;</SccAuxPath>
     <SccProvider>Mercurial Source Control Package</SccProvider>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -86,31 +86,18 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Commands\CommandManager.cs" />
-    <Compile Include="Commands\CommandManagerExtension.cs" />
-    <Compile Include="Commands\CommandManagerStrategy.cs" />
-    <Compile Include="Commands\ICommandManager.cs" />
-    <Compile Include="Commands\NullCommandManager.cs" />
-    <Compile Include="DispatchingShowThings.cs" />
-    <Compile Include="Events\EventAggregator.cs" />
-    <Compile Include="Events\EventAggregatorExtension.cs" />
-    <Compile Include="Events\EventAggregatorStrategy.cs" />
-    <Compile Include="Events\IEventAggregator.cs" />
-    <Compile Include="Events\ISubscribeTo.cs" />
-    <Compile Include="Events\TypeExtensions.cs" />
-    <Compile Include="Events\TypeFilter.cs" />
-    <Compile Include="IShowThings.cs" />
-    <Compile Include="LazyShowThings.cs" />
+    <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Regions.cs" />
-    <Compile Include="StackPanelRegionAdapter.cs" />
-    <Compile Include="UnityModule.cs" />
-    <Compile Include="ViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure.Client\Infrastructure.Client.csproj">
+      <Project>{13CEE176-151F-4B3A-BC0A-9066E8E84B7B}</Project>
+      <Name>Infrastructure.Client</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

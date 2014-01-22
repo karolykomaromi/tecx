@@ -1,4 +1,4 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyTitle("Modular.Web")]
+[assembly: AssemblyTitle("Details.Server")]
 [assembly: AssemblyDescription("")]

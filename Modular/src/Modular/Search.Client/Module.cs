@@ -5,6 +5,7 @@
     using System.Diagnostics.Contracts;
     using System.Windows;
     using System.Windows.Input;
+    using System.Windows.Threading;
     using Infrastructure;
     using Infrastructure.Commands;
     using Microsoft.Practices.Prism.Logging;
@@ -28,13 +29,24 @@
             container.RegisterType<IShowThings<IEnumerable<SearchResult>>, SearchResultsViewModel>();
             container.RegisterType<IShowThings<IEnumerable<SearchResult>>, DispatchingShowThings<IEnumerable<SearchResult>>>("dispatch");
 
-            container.RegisterType<SearchViewModel>(new ContainerControlledLifetimeManager(), new InjectionConstructor(new ResolvedParameter<ICommand>("search"), new ResolvedParameter<ICommand>("suggestions")));
+            container.RegisterType<SearchViewModel>(new ContainerControlledLifetimeManager(), 
+                new InjectionConstructor(new ResolvedParameter<ICommand>("search"), new ResolvedParameter<ICommand>("suggestions")));
+
+            container.RegisterType<ICommand, SearchCommand>("search", 
+                new InjectionConstructor(typeof(ISearchService), typeof(ICommandManager), new ResolvedParameter<IShowThings<IEnumerable<SearchResult>>>("dispatch")));
+
+            // would result in a cyclic dependency viewmodel needs command need viewmodel, thus we break the circle by introducing a lazy step in between
+            container.RegisterType<ICommand, SuggestionsCommand>("suggestions", 
+                new InjectionConstructor(typeof(ISearchService), new ResolvedParameter<IShowThings<IEnumerable<string>>>("dispatch")));
+
             container.RegisterType<IShowThings<IEnumerable<string>>, SearchViewModel>();
-            container.RegisterType<IShowThings<IEnumerable<string>>, DispatchingShowThings<IEnumerable<string>>>("dispatch");
+            container.RegisterType<IShowThings<IEnumerable<string>>, LazyShowThings<IEnumerable<string>>>("lazy");
+            container.RegisterType<IShowThings<IEnumerable<string>>, DispatchingShowThings<IEnumerable<string>>>("dispatch", 
+                new InjectionConstructor(new ResolvedParameter<IShowThings<IEnumerable<string>>>("lazy"), typeof(Dispatcher)));
 
             container.RegisterType<ISearchService, SearchServiceClient>(new InjectionConstructor());
-            container.RegisterType<ICommand, SearchCommand>("search", new InjectionConstructor(typeof(ISearchService), typeof(ICommandManager), new ResolvedParameter<IShowThings<IEnumerable<SearchResult>>>("dispatch")));
-            container.RegisterType<ICommand, SearchSuggestionCommand>("suggestions", new InjectionConstructor(typeof(ISearchService), new ResolvedParameter<IShowThings<IEnumerable<string>>>("dispatch")));
+
+            
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)

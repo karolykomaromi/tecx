@@ -9,13 +9,13 @@
 
     using Search.Service;
 
-    public class SearchSuggestionCommand : ICommand
+    public class SuggestionsCommand : ICommand
     {
         private readonly ISearchService searchService;
 
         private readonly IShowThings<IEnumerable<string>> showSuggestions;
 
-        public SearchSuggestionCommand(ISearchService searchService, IShowThings<IEnumerable<string>> showSuggestions)
+        public SuggestionsCommand(ISearchService searchService, IShowThings<IEnumerable<string>> showSuggestions)
         {
             Contract.Requires(searchService != null);
             Contract.Requires(showSuggestions != null);
