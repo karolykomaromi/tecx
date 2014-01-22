@@ -5,11 +5,11 @@
     using System.Windows.Input;
     using Microsoft.Practices.Prism.Regions;
 
-    public class NavigateCommand : ICommand
+    public class NavigationCommand : ICommand
     {
         private readonly INavigateAsync navigate;
 
-        public NavigateCommand(INavigateAsync navigate)
+        public NavigationCommand(INavigateAsync navigate)
         {
             Contract.Requires(navigate != null);
 

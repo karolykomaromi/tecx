@@ -1,8 +1,10 @@
 ﻿<Application xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-             x:Class="Modular.App"
-             >
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:infrastructure="clr-namespace:Infrastructure;assembly=Infrastructure.Client"
+             x:Class="Modular.App">
     <Application.Resources>
-        
+        <DataTemplate DataType="infrastructure:NavigationViewModel">
+            <infrastructure:NavigationView />
+        </DataTemplate>
     </Application.Resources>
 </Application>
