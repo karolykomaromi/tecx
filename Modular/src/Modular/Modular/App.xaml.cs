@@ -1,4 +1,7 @@
-﻿namespace Modular
+﻿using System.Globalization;
+using System.Threading;
+
+namespace Modular
 {
     using System;
     using System.Windows;
@@ -16,6 +19,11 @@
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            CultureInfo culture = new CultureInfo("de-DE");
+
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+
             Bootstrapper bootstrapper = new Bootstrapper();
 
             bootstrapper.Run();

@@ -1,12 +1,12 @@
-﻿using Details.ViewModels;
-using Infrastructure.Commands;
-using Infrastructure.ViewModels;
-
-namespace Details
+﻿namespace Details
 {
     using System;
     using System.Windows;
+    using Details.Assets.Resources;
+    using Details.ViewModels;
     using Infrastructure;
+    using Infrastructure.Commands;
+    using Infrastructure.ViewModels;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
@@ -31,7 +31,7 @@ namespace Details
                                           new NavigationCommand(regionManager.Regions[Regions.Shell.Content]))
                                       {
                                           Destination = new Uri("ProductDetailsView", UriKind.Relative),
-                                          Name = "Product Details"
+                                          Name = Labels.Label_NavigationMenuEntry
                                       });
         }
 
