@@ -1,8 +1,4 @@
-﻿using Infrastructure.ViewModels;
-using Search.Commands;
-using Search.ViewModels;
-
-namespace Search
+﻿namespace Search
 {
     using System;
     using System.Collections.Generic;
@@ -12,13 +8,21 @@ namespace Search
     using System.Windows.Threading;
     using Infrastructure;
     using Infrastructure.Commands;
+    using Infrastructure.ViewModels;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
+    using Search.Commands;
     using Search.Service;
+    using Search.ViewModels;
 
     public class Module : UnityModule
     {
+        /// <summary>
+        /// Search
+        /// </summary>
+        public static readonly string Name = "Search";
+
         public Module(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger)
             : base(container, regionManager, logger)
         {

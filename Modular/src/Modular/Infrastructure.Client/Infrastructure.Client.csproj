@@ -119,7 +119,12 @@
     <Compile Include="Events\ISubscribeTo.cs" />
     <Compile Include="Events\TypeExtensions.cs" />
     <Compile Include="Events\TypeFilter.cs" />
+    <Compile Include="I18n\CachingResourceManager.cs" />
+    <Compile Include="I18n\CompositeResourceManager.cs" />
+    <Compile Include="I18n\EchoResourceManager.cs" />
     <Compile Include="I18n\IResourceManager.cs" />
+    <Compile Include="I18n\ResxFilesResourceManager.cs" />
+    <Compile Include="I18n\WebSvcResourceManager.cs" />
     <Compile Include="IShowThings.cs" />
     <Compile Include="LazyShowThings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

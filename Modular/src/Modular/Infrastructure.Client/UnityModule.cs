@@ -1,4 +1,5 @@
-﻿using Infrastructure.ViewModels;
+﻿using Infrastructure.I18n;
+using Infrastructure.ViewModels;
 
 namespace Infrastructure
 {
@@ -15,6 +16,7 @@ namespace Infrastructure
         private readonly IUnityContainer container;
         private readonly IRegionManager regionManager;
         private readonly ILoggerFacade logger;
+        private IResourceManager resourceManager;
 
         protected UnityModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger)
         {
@@ -42,15 +44,29 @@ namespace Infrastructure
             get { return this.logger; }
         }
 
+        protected IResourceManager ResourceManager
+        {
+            get { return this.resourceManager; }
+        }
+
         public virtual void Initialize()
         {
             this.ConfigureContainer(this.container);
+
+            this.resourceManager = this.CreateResourceManager();
 
             ResourceDictionary moduleResources = this.CreateModuleResources();
 
             Application.Current.Resources.MergedDictionaries.Add(moduleResources);
 
             this.ConfigureRegions(this.RegionManager);
+        }
+
+        protected virtual IResourceManager CreateResourceManager()
+        {
+            Contract.Ensures(Contract.Result<IResourceManager>() != null);
+
+            return new EchoResourceManager();
         }
 
         protected virtual void ConfigureContainer(IUnityContainer container)

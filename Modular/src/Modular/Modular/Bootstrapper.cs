@@ -47,8 +47,8 @@
 
         protected override void ConfigureModuleCatalog()
         {
-            this.ModuleCatalog.AddModule(new ModuleInfo("Search", typeof(Search.Module).AssemblyQualifiedName));
-            this.ModuleCatalog.AddModule(new ModuleInfo("Details", typeof(Details.Module).AssemblyQualifiedName));
+            this.ModuleCatalog.AddModule(new ModuleInfo(Search.Module.Name, typeof(Search.Module).AssemblyQualifiedName));
+            this.ModuleCatalog.AddModule(new ModuleInfo(Details.Module.Name, typeof(Details.Module).AssemblyQualifiedName));
         }
     }
 }
