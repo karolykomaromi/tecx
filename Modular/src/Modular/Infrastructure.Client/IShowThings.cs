@@ -4,7 +4,7 @@
 
     [ContractClass(typeof(ShowThingsContract<>))]
     public interface IShowThings<in T>
-        where T : class 
+        where T : class
     {
         void Show(T thing);
     }

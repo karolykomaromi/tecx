@@ -21,7 +21,7 @@
         <sdk:AutoCompleteBox Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Suggestions}" FilterMode="None">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="TextChanged">
-                    <mvvvm:EventToCommand Command="{Binding SearchSuggestionCommand}" CommandParameter="{Binding}"/>
+                    <mvvvm:EventToCommand Command="{Binding SuggestionsCommand}" CommandParameter="{Binding}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </sdk:AutoCompleteBox>

@@ -231,3 +231,5 @@ Modular/src/Modular/Modular.Silverlight.Test.Web/bin
 Modular/src/Modular/Modular.Silverlight.Test.Web/obj
 Modular/src/Modular/Backup
 Modular/src/Modular/UpgradeLog.htm
+Modular/src/Modular/Details.Client/obj
+Modular/src/Modular/Details.Server/obj

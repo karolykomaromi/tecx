@@ -9,18 +9,18 @@
     public class SearchViewModel : ViewModel, IShowThings<IEnumerable<string>>
     {
         private readonly ICommand searchCommand;
-        private readonly ICommand searchSuggestionCommand;
+        private readonly ICommand suggestionsCommand;
         private readonly ObservableCollection<string> suggestions;
 
         private string searchTerm;
 
-        public SearchViewModel(ICommand searchCommand, ICommand searchSuggestionCommand)
+        public SearchViewModel(ICommand searchCommand, ICommand suggestionsCommand)
         {
             Contract.Requires(searchCommand != null);
-            Contract.Requires(searchSuggestionCommand != null);
+            Contract.Requires(suggestionsCommand != null);
 
             this.searchCommand = searchCommand;
-            this.searchSuggestionCommand = searchSuggestionCommand;
+            this.suggestionsCommand = suggestionsCommand;
 
             this.suggestions = new ObservableCollection<string>();
         }
@@ -30,9 +30,9 @@
             get { return this.searchCommand; }
         }
 
-        public ICommand SearchSuggestionCommand
+        public ICommand SuggestionsCommand
         {
-            get { return this.searchSuggestionCommand; }
+            get { return this.suggestionsCommand; }
         }
 
         public ObservableCollection<string> Suggestions
