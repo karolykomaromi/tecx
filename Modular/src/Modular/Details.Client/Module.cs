@@ -19,9 +19,20 @@
         /// </summary>
         public static readonly string Name = "Details";
 
-        public Module(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger)
-            : base(container, regionManager, logger)
+        private readonly IResourceManager resourceManager;
+
+        public Module(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger, IApplicationResources applicationResources, IResourceManager resourceManager)
+            : base(container, regionManager, logger, applicationResources)
         {
+            this.resourceManager = resourceManager;
+        }
+
+        protected IResourceManager ResourceManager
+        {
+            get
+            {
+                return this.resourceManager;
+            }
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)
@@ -32,13 +43,14 @@
                 this.RegionManager.AddToRegion(Regions.Shell.Content, detailsView);
             }
 
-            regionManager.AddToRegion(Regions.Shell.Navigation,
-                                      new NavigationViewModel(
-                                          new NavigationCommand(regionManager.Regions[Regions.Shell.Content]))
-                                      {
-                                          Destination = new Uri("ProductDetailsView", UriKind.Relative),
-                                          Name = this.ResourceManager["Label_NavigationMenuEntry"]
-                                      });
+            regionManager.AddToRegion(
+                Regions.Shell.Navigation,
+                new NavigationViewModel(
+                    new NavigationCommand(regionManager.Regions[Regions.Shell.Content]))
+                        {
+                            Destination = new Uri("ProductDetailsView", UriKind.Relative),
+                            Name = this.ResourceManager["Details.Label_NavigationMenuEntry"]
+                        });
         }
 
         protected override IResourceManager CreateResourceManager()

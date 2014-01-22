@@ -1,9 +1,9 @@
-using System;
-using System.Diagnostics.Contracts;
-using System.Windows.Input;
-
 namespace Infrastructure.ViewModels
 {
+    using System;
+    using System.Diagnostics.Contracts;
+    using System.Windows.Input;
+
     public class NavigationViewModel : ViewModel
     {
         private readonly ICommand navigationCommand;
@@ -19,37 +19,43 @@ namespace Infrastructure.ViewModels
 
         public Uri Destination
         {
-            get { return this.destination; }
+            get
+            {
+                return this.destination;
+            }
 
             set
             {
                 if (this.destination != value)
                 {
-                    OnPropertyChanging(() => this.Destination);
+                    this.OnPropertyChanging(() => this.Destination);
                     this.destination = value;
-                    OnPropertyChanged(() => this.Destination);
+                    this.OnPropertyChanged(() => this.Destination);
                 }
             }
         }
 
         public string Name
         {
-            get { return this.name; }
+            get
+            {
+                return this.name;
+            }
 
             set
             {
                 if (this.name != value)
                 {
-                    OnPropertyChanging(() => this.Name);
+                    this.OnPropertyChanging(() => this.Name);
                     this.name = value;
-                    OnPropertyChanged(() => this.Name);
+                    this.OnPropertyChanged(() => this.Name);
                 }
             }
         }
 
         public ICommand NavigationCommand
         {
-            get { return navigationCommand; }
+            get { return this.navigationCommand; }
         }
     }
 }

@@ -19,21 +19,32 @@
         {
             get
             {
-                PropertyInfo property = this.resxType.GetProperty(key, BindingFlags.Static | BindingFlags.Public);
+                int lastIndexOfDot = Math.Max(0, key.LastIndexOf('.'));
 
-                if (property != null)
+                if (!this.resxType.FullName.StartsWith(key.Substring(0, lastIndexOfDot), StringComparison.OrdinalIgnoreCase))
                 {
-                    MethodInfo getter = property.GetGetMethod();
+                    return key;
+                }
 
-                    if (getter != null)
-                    {
-                        string value = getter.Invoke(null, null) as string;
+                PropertyInfo property = this.resxType.GetProperty(key.Substring(lastIndexOfDot + 1), BindingFlags.Static | BindingFlags.Public | BindingFlags.IgnoreCase);
 
-                        if (value != null)
-                        {
-                            return value;
-                        }
-                    }
+                if (property == null)
+                {
+                    return key;
+                }
+
+                MethodInfo getter = property.GetGetMethod();
+
+                if (getter == null)
+                {
+                    return key;
+                }
+
+                string value = getter.Invoke(null, null) as string;
+
+                if (value != null)
+                {
+                    return value;
                 }
 
                 return key;

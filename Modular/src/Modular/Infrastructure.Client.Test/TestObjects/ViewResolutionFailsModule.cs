@@ -8,8 +8,8 @@
 
     public class ViewResolutionFailsModule : UnityModule
     {
-        public ViewResolutionFailsModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger)
-            : base(container, regionManager, logger)
+        public ViewResolutionFailsModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger, IApplicationResources applicationResources)
+            : base(container, regionManager, logger, applicationResources)
         {
         }
 

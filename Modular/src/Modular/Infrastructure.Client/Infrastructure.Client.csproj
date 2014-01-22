@@ -103,6 +103,7 @@
     <Compile Include="..\Infrastructure.Server\TimeProvider.cs">
       <Link>TimeProvider.cs</Link>
     </Compile>
+    <Compile Include="ApplicationResources.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandManagerExtension.cs" />
     <Compile Include="Commands\CommandManagerStrategy.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="I18n\IResourceManager.cs" />
     <Compile Include="I18n\ResxFilesResourceManager.cs" />
     <Compile Include="I18n\WebSvcResourceManager.cs" />
+    <Compile Include="IApplicationResources.cs" />
     <Compile Include="IShowThings.cs" />
     <Compile Include="LazyShowThings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

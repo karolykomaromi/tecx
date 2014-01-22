@@ -5,6 +5,8 @@
     using Infrastructure;
     using Infrastructure.Commands;
     using Infrastructure.Events;
+    using Infrastructure.I18n;
+
     using Microsoft.Practices.Prism.Modularity;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Prism.UnityExtensions;
@@ -43,6 +45,13 @@
             this.Container.RegisterType<ICommandManager, CommandManager>(new ContainerControlledLifetimeManager());
             this.Container.AddNewExtension<EventAggregatorExtension>();
             this.Container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
+
+            CompositeResourceManager resourceManager = new CompositeResourceManager();
+
+            IApplicationResources ar = new ApplicationResources(Application.Current.Resources, resourceManager);
+
+            this.Container.RegisterInstance<IResourceManager>(resourceManager);
+            this.Container.RegisterInstance<IApplicationResources>(ar);
         }
 
         protected override void ConfigureModuleCatalog()

@@ -1,8 +1,7 @@
-using Infrastructure.ViewModels;
-
 namespace Infrastructure.Client.Test.TestObjects
 {
     using System;
+    using Infrastructure.ViewModels;
 
     public class ViewModel1 : ViewModel
     {

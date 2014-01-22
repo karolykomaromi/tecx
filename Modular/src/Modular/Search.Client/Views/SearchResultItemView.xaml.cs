@@ -1,12 +1,12 @@
-using System.Windows.Controls;
-
 namespace Search.Views
 {
+    using System.Windows.Controls;
+
     public partial class SearchResultItemView : UserControl
     {
         public SearchResultItemView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

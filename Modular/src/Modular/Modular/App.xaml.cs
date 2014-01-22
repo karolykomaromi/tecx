@@ -1,9 +1,8 @@
-﻿using System.Globalization;
-using System.Threading;
-
-namespace Modular
+﻿namespace Modular
 {
     using System;
+    using System.Globalization;
+    using System.Threading;
     using System.Windows;
 
     public partial class App : Application

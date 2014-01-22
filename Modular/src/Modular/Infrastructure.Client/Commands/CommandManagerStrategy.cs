@@ -1,7 +1,6 @@
-using Infrastructure.ViewModels;
-
 namespace Infrastructure.Commands
 {
+    using Infrastructure.ViewModels;
     using Microsoft.Practices.ObjectBuilder2;
 
     public class CommandManagerStrategy : BuilderStrategy

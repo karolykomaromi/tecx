@@ -8,7 +8,10 @@
 
         public static TimeProvider Current
         {
-            get { return current; }
+            get
+            {
+                return current;
+            }
 
             set
             {
