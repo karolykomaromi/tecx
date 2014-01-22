@@ -48,7 +48,7 @@
             container.RegisterType<ISearchService, SearchServiceClient>(new InjectionConstructor());
 
             container.RegisterInstance<INavigateAsync>(Regions.Shell.Content, this.RegionManager.Regions[Regions.Shell.Content]);
-            container.RegisterType<ICommand, NavigateCommand>(Regions.Shell.Content, 
+            container.RegisterType<ICommand, NavigationCommand>(Regions.Shell.Content, 
                 new InjectionConstructor(new ResolvedParameter<INavigateAsync>(Regions.Shell.Content)));
         }
 
@@ -65,6 +65,14 @@
             {
                 regionManager.AddToRegion(Regions.Shell.Content, searchResultView);
             }
+
+            regionManager.AddToRegion(Regions.Shell.Navigation,
+                                      new NavigationViewModel(
+                                          new NavigationCommand(regionManager.Regions[Regions.Shell.Content]))
+                                          {
+                                              Destination = new Uri("SearchResultsView", UriKind.Relative),
+                                              Name = "Search Results"
+                                          });
         }
 
         protected override ResourceDictionary CreateModuleResources()

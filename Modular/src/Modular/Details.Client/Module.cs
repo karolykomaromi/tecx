@@ -1,4 +1,6 @@
-﻿namespace Details
+﻿using Infrastructure.Commands;
+
+namespace Details
 {
     using System;
     using System.Windows;
@@ -21,6 +23,14 @@
             {
                 this.RegionManager.AddToRegion(Regions.Shell.Content, detailsView);
             }
+
+            regionManager.AddToRegion(Regions.Shell.Navigation,
+                                      new NavigationViewModel(
+                                          new NavigationCommand(regionManager.Regions[Regions.Shell.Content]))
+                                      {
+                                          Destination = new Uri("ProductDetailsView", UriKind.Relative),
+                                          Name = "Product Details"
+                                      });
         }
 
         protected override ResourceDictionary CreateModuleResources()
