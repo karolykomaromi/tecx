@@ -1,8 +1,9 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:service="clr-namespace:Search.Service"
-    xmlns:search="clr-namespace:Search">
-    <DataTemplate DataType="search:SearchResultItemViewModel">
-        <search:SearchResultItemView />
+    xmlns:search="clr-namespace:Search" xmlns:views="clr-namespace:Search.Views"
+    xmlns:viewModels="clr-namespace:Search.ViewModels">
+    <DataTemplate DataType="viewModels:SearchResultItemViewModel">
+        <views:SearchResultItemView />
     </DataTemplate>
 </ResourceDictionary>

@@ -1,7 +1,7 @@
-namespace Infrastructure
-{
-    using System.Windows.Controls;
+using System.Windows.Controls;
 
+namespace Infrastructure.Views
+{
     public partial class NavigationView : UserControl
     {
         public NavigationView()

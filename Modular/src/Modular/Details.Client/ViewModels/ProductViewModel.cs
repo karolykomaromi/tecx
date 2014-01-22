@@ -1,7 +1,8 @@
-﻿namespace Details
-{
-    using Infrastructure;
+using Infrastructure;
+using Infrastructure.ViewModels;
 
+namespace Details.ViewModels
+{
     public class ProductViewModel : ViewModel
     {
         private int id;

@@ -1,4 +1,6 @@
-﻿using Infrastructure.Commands;
+﻿using Details.ViewModels;
+using Infrastructure.Commands;
+using Infrastructure.ViewModels;
 
 namespace Details
 {

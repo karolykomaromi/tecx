@@ -1,11 +1,12 @@
-﻿namespace Search
-{
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Diagnostics.Contracts;
-    using System.Windows.Input;
-    using Infrastructure;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
+using System.Windows.Input;
+using Infrastructure;
+using Infrastructure.ViewModels;
 
+namespace Search.ViewModels
+{
     public class SearchViewModel : ViewModel, IShowThings<IEnumerable<string>>
     {
         private readonly ICommand searchCommand;

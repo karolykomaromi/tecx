@@ -1,4 +1,8 @@
-﻿namespace Search
+﻿using Infrastructure.ViewModels;
+using Search.Commands;
+using Search.ViewModels;
+
+namespace Search
 {
     using System;
     using System.Collections.Generic;

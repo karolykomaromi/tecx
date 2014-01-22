@@ -1,4 +1,6 @@
-﻿namespace Infrastructure
+﻿using Infrastructure.ViewModels;
+
+namespace Infrastructure
 {
     using System;
     using System.Diagnostics.Contracts;
