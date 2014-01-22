@@ -1,11 +1,11 @@
-﻿namespace Infrastructure
-{
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics.Contracts;
-    using System.Linq.Expressions;
-    using Infrastructure.Commands;
+using System;
+using System.ComponentModel;
+using System.Diagnostics.Contracts;
+using System.Linq.Expressions;
+using Infrastructure.Commands;
 
+namespace Infrastructure.ViewModels
+{
     public abstract class ViewModel : INotifyPropertyChanged, INotifyPropertyChanging
     {
         private ICommandManager commandManager;

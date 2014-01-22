@@ -1,9 +1,10 @@
-﻿namespace Details
-{
-    using System.Globalization;
-    using Infrastructure;
-    using Microsoft.Practices.Prism.Regions;
+using System.Globalization;
+using Infrastructure;
+using Infrastructure.ViewModels;
+using Microsoft.Practices.Prism.Regions;
 
+namespace Details.ViewModels
+{
     public class ProductDetailsViewModel : ViewModel, INavigationAware
     {
         private ProductViewModel item;

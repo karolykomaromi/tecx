@@ -1,14 +1,13 @@
-﻿namespace Search
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Windows.Input;
+using Infrastructure;
+using Search.Service;
+using Search.ViewModels;
+
+namespace Search.Commands
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
-    using System.Windows.Input;
-
-    using Infrastructure;
-
-    using Search.Service;
-
     public class SuggestionsCommand : ICommand
     {
         private readonly ISearchService searchService;

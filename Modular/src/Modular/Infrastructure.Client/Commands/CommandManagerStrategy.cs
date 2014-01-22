@@ -1,3 +1,5 @@
+using Infrastructure.ViewModels;
+
 namespace Infrastructure.Commands
 {
     using Microsoft.Practices.ObjectBuilder2;

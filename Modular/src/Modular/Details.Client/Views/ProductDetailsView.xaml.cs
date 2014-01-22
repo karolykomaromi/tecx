@@ -1,7 +1,7 @@
-﻿namespace Details
-{
-    using System.Windows.Controls;
+using System.Windows.Controls;
 
+namespace Details.Views
+{
     public partial class ProductDetailsView : UserControl
     {
         public ProductDetailsView()

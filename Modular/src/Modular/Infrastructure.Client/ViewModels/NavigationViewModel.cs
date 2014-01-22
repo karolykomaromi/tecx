@@ -1,9 +1,9 @@
-namespace Infrastructure
-{
-    using System;
-    using System.Diagnostics.Contracts;
-    using System.Windows.Input;
+using System;
+using System.Diagnostics.Contracts;
+using System.Windows.Input;
 
+namespace Infrastructure.ViewModels
+{
     public class NavigationViewModel : ViewModel
     {
         private readonly ICommand navigationCommand;

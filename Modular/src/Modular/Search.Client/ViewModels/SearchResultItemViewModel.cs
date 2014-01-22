@@ -1,10 +1,11 @@
-﻿namespace Search
-{
-    using System;
-    using System.Diagnostics.Contracts;
-    using System.Windows.Input;
-    using Infrastructure;
+using System;
+using System.Diagnostics.Contracts;
+using System.Windows.Input;
+using Infrastructure;
+using Infrastructure.ViewModels;
 
+namespace Search.ViewModels
+{
     public class SearchResultItemViewModel : ViewModel
     {
         private readonly ICommand openDetailsCommand;
