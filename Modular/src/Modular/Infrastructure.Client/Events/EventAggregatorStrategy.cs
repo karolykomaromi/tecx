@@ -6,7 +6,7 @@
 
     public class EventAggregatorStrategy : BuilderStrategy
     {
-        public override void PostBuildUp(IBuilderContext context)
+        public override void PreBuildUp(IBuilderContext context)
         {
             object existing = context.Existing;
 

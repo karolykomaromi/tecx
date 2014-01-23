@@ -67,6 +67,7 @@
             DictionaryConfigurationSource configSource = DictionaryConfigurationSource.FromDictionary(configDictionary);
             EnterpriseLibraryContainer.ConfigureContainer(new UnityContainerConfigurator(this.Container), configSource);
 
+            this.Container.AddNewExtension<ResourceManagerExtension>();
             this.Container.RegisterType<IResourceManager, CompositeResourceManager>("appWideResources", new ContainerControlledLifetimeManager(), new InjectionConstructor());
             this.Container.RegisterType<IResourceManager, CachingResourceManager>(
                 new ContainerControlledLifetimeManager(),

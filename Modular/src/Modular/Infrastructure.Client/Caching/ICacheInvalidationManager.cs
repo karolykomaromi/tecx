@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Infrastructure.Caching
+﻿namespace Infrastructure.Caching
 {
+    using System;
+
     public interface ICacheInvalidationManager
     {
         event EventHandler Invalidated;

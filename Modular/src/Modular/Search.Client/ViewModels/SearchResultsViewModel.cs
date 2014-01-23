@@ -7,7 +7,7 @@ namespace Search.ViewModels
     using System.Windows.Input;
     using Infrastructure;
     using Infrastructure.ViewModels;
-    using Search.Service;
+    using Search.Entities;
 
     public class SearchResultsViewModel : ViewModel, IShowThings<IEnumerable<SearchResult>>
     {

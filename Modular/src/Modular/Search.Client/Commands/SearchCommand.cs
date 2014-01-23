@@ -6,7 +6,7 @@ namespace Search.Commands
     using System.Windows.Input;
     using Infrastructure;
     using Infrastructure.Commands;
-    using Search.Service;
+    using Search.Entities;
     using Search.ViewModels;
 
     public class SearchCommand : ICommand

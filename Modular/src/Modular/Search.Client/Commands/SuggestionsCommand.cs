@@ -5,7 +5,6 @@ namespace Search.Commands
     using System.Diagnostics.Contracts;
     using System.Windows.Input;
     using Infrastructure;
-    using Search.Service;
     using Search.ViewModels;
 
     public class SuggestionsCommand : ICommand

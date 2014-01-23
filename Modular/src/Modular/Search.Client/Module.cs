@@ -13,7 +13,7 @@
     using Microsoft.Practices.Unity;
     using Search.Assets.Resources;
     using Search.Commands;
-    using Search.Service;
+    using Search.Entities;
     using Search.ViewModels;
 
     public class Module : UnityModule
