@@ -1,9 +1,9 @@
-namespace Infrastructure.Commands
+﻿namespace Infrastructure.I18n
 {
     using Infrastructure.ViewModels;
     using Microsoft.Practices.ObjectBuilder2;
 
-    public class CommandManagerStrategy : BuilderStrategy
+    public class ResourceManagerStrategy : BuilderStrategy
     {
         public override void PreBuildUp(IBuilderContext context)
         {
@@ -11,7 +11,7 @@ namespace Infrastructure.Commands
 
             if (vm != null)
             {
-                vm.CommandManager = context.NewBuildUp<ICommandManager>();
+                vm.ResourceManager = context.NewBuildUp<IResourceManager>();
             }
         }
     }

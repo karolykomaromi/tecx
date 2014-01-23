@@ -31,27 +31,27 @@
 
         public IUnityContainer Container
         {
-            get { return container; }
+            get { return this.container; }
         }
 
         public IRegionManager RegionManager
         {
-            get { return regionManager; }
+            get { return this.regionManager; }
         }
 
         public ILoggerFacade Logger
         {
-            get { return logger; }
+            get { return this.logger; }
         }
 
         public IAppResourceAppender ResourceAppender
         {
-            get { return resourceAppender; }
+            get { return this.resourceAppender; }
         }
 
         public IResourceManager ResourceManager
         {
-            get { return resourceManager; }
+            get { return this.resourceManager; }
         }
     }
 }

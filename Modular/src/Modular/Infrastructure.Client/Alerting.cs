@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Windows.Threading;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Windows.Threading;
+
     public abstract class Alerting
     {
         private readonly List<WeakReference> eventHandlers;

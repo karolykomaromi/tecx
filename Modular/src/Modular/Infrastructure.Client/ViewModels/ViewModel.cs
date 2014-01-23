@@ -1,3 +1,5 @@
+using Infrastructure.I18n;
+
 namespace Infrastructure.ViewModels
 {
     using System;
@@ -9,10 +11,12 @@ namespace Infrastructure.ViewModels
     public abstract class ViewModel : INotifyPropertyChanged, INotifyPropertyChanging
     {
         private ICommandManager commandManager;
+        private IResourceManager resourceManager;
 
         protected ViewModel()
         {
             this.commandManager = new NullCommandManager();
+            this.resourceManager = new EchoResourceManager();
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
@@ -31,6 +35,21 @@ namespace Infrastructure.ViewModels
                 Contract.Requires(value != null);
 
                 this.commandManager = value;
+            }
+        }
+
+        public IResourceManager ResourceManager
+        {
+            get
+            {
+                return this.resourceManager;
+            }
+
+            set
+            {
+                Contract.Requires(value != null);
+
+                this.resourceManager = value;
             }
         }
 
@@ -73,6 +92,20 @@ namespace Infrastructure.ViewModels
                 string propertyName = property.Member.Name;
                 this.OnPropertyChanging(propertyName);
             }
+        }
+
+        protected virtual string Translate<T>(Expression<Func<T>> propertySelector)
+        {
+            Contract.Requires(propertySelector != null);
+
+            MemberExpression property = (MemberExpression)propertySelector.Body;
+
+            string propertyName = property.Member.Name;
+            string typeName = this.GetType().FullName;
+
+            string key = typeName + "." + propertyName;
+
+            return this.ResourceManager[key];
         }
     }
 }

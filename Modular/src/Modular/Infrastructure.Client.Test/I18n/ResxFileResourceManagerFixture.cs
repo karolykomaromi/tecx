@@ -30,10 +30,10 @@
         [TestMethod]
         public void Should_Return_Matching_String()
         {
-            CultureInfo usEnglish = new CultureInfo("en-US");
+            CultureInfo englishUs = new CultureInfo("en-US");
 
-            Thread.CurrentThread.CurrentCulture = usEnglish;
-            Thread.CurrentThread.CurrentUICulture = usEnglish;
+            Thread.CurrentThread.CurrentCulture = englishUs;
+            Thread.CurrentThread.CurrentUICulture = englishUs;
 
             IResourceManager resourceManager = new ResxFilesResourceManager(typeof(Labels));
 

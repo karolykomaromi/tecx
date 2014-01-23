@@ -129,6 +129,8 @@
     <Compile Include="I18n\CompositeResourceManager.cs" />
     <Compile Include="I18n\EchoResourceManager.cs" />
     <Compile Include="I18n\IResourceManager.cs" />
+    <Compile Include="I18n\ResourceManagerExtension.cs" />
+    <Compile Include="I18n\ResourceManagerStrategy.cs" />
     <Compile Include="I18n\ResxFilesResourceManager.cs" />
     <Compile Include="I18n\WebSvcResourceManager.cs" />
     <Compile Include="IAppResourceAppender.cs" />

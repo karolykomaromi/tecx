@@ -11,7 +11,7 @@
     <client>
       <endpoint address="http://localhost:18448/SearchService.svc"
           binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ISearchService"
-          contract="Service.ISearchService" name="BasicHttpBinding_ISearchService" />
+          contract="Search.ISearchService" name="BasicHttpBinding_ISearchService" />
     </client>
   </system.serviceModel>
 </configuration>
