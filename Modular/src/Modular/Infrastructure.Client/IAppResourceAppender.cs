@@ -4,16 +4,16 @@
     using System.Windows;
     using Infrastructure.I18n;
 
-    [ContractClass(typeof(ApplicationResourcesContract))]
-    public interface IApplicationResources
+    [ContractClass(typeof(AppResourceAppenderContract))]
+    public interface IAppResourceAppender
     {
         void Add(ResourceDictionary resourceDictionary);
 
         void Add(IResourceManager resourceManager);
     }
 
-    [ContractClassFor(typeof(IApplicationResources))]
-    public abstract class ApplicationResourcesContract : IApplicationResources
+    [ContractClassFor(typeof(IAppResourceAppender))]
+    public abstract class AppResourceAppenderContract : IAppResourceAppender
     {
         public void Add(ResourceDictionary resourceDictionary)
         {

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<el:ConfigurationDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:el="http://schemas.microsoft.com/practices/2011/entlib">
+    <el:CachingSettings DefaultCache="mem" x:Key="cachingSilverlightConfiguration">
+        <el:CachingSettings.Caches>
+            <el:InMemoryCacheData ExpirationPollingInterval="00:02:00" Name="mem" />
+            <!--<el:IsolatedStorageCacheData 
+                MaxSizeInKilobytes="5120" 
+                PercentOfQuotaUsedBeforeScavenging="50" 
+                PercentOfQuotaUsedAfterScavenging="20" 
+                ExpirationPollingInterval="00:01:00" 
+                Name="iso" />-->
+        </el:CachingSettings.Caches>
+    </el:CachingSettings>
+</el:ConfigurationDictionary>

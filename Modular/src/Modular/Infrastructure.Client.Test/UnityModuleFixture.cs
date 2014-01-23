@@ -1,8 +1,9 @@
 ﻿namespace Infrastructure.Client.Test
 {
     using Infrastructure.Client.Test.TestObjects;
-
+    using Infrastructure.I18n;
     using Microsoft.Practices.Prism.Logging;
+    using Microsoft.Practices.Prism.Modularity;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -17,11 +18,12 @@
             IUnityContainer container = new UnityContainer();
             var regionManager = new Mock<IRegionManager>();
             var logger = new Mock<ILoggerFacade>();
-            var resources = new Mock<IApplicationResources>();
+            var resources = new Mock<IAppResourceAppender>();
+            var resourceManager = new Mock<IResourceManager>();
 
-            var vm = new ViewModelResolutionFailsModule(container, regionManager.Object, logger.Object, resources.Object);
+            IModule module = new ViewModelResolutionFailsModule(container, regionManager.Object, logger.Object, resources.Object, resourceManager.Object);
 
-            vm.Initialize();
+            module.Initialize();
 
             logger.Verify(l => l.Log(It.IsAny<string>(), Category.Exception, Priority.High));
         }
@@ -32,11 +34,12 @@
             IUnityContainer container = new UnityContainer();
             var regionManager = new Mock<IRegionManager>();
             var logger = new Mock<ILoggerFacade>();
-            var resources = new Mock<IApplicationResources>();
+            var resources = new Mock<IAppResourceAppender>();
+            var resourceManager = new Mock<IResourceManager>();
 
-            var vm = new ViewResolutionFailsModule(container, regionManager.Object, logger.Object, resources.Object);
+            IModule module = new ViewResolutionFailsModule(container, regionManager.Object, logger.Object, resources.Object, resourceManager.Object);
 
-            vm.Initialize();
+            module.Initialize();
 
             logger.Verify(l => l.Log(It.IsAny<string>(), Category.Exception, Priority.High));
         }
@@ -47,11 +50,12 @@
             IUnityContainer container = new UnityContainer();
             var regionManager = new Mock<IRegionManager>();
             var logger = new Mock<ILoggerFacade>();
-            var resources = new Mock<IApplicationResources>();
+            var resources = new Mock<IAppResourceAppender>();
+            var resourceManager = new Mock<IResourceManager>();
 
-            var vm = new NoViewModule(container, regionManager.Object, logger.Object, resources.Object);
+            IModule module = new NoViewModule(container, regionManager.Object, logger.Object, resources.Object, resourceManager.Object);
 
-            vm.Initialize();
+            module.Initialize();
 
             logger.Verify(l => l.Log(It.IsAny<string>(), Category.Warn, Priority.High));
         }

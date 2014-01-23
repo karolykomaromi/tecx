@@ -1,4 +1,15 @@
-﻿namespace Modular
+﻿using System;
+using System.Collections;
+using System.IO;
+using System.Windows.Markup;
+using System.Windows.Threading;
+using Infrastructure.Caching;
+using Microsoft.Practices.EnterpriseLibrary.Caching;
+using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
+using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+using Microsoft.Practices.EnterpriseLibrary.Common.Configuration.ContainerModel.Unity;
+
+namespace Modular
 {
     using System.Windows;
     using System.Windows.Controls;
@@ -46,12 +57,29 @@
             this.Container.AddNewExtension<EventAggregatorExtension>();
             this.Container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
 
-            CompositeResourceManager resourceManager = new CompositeResourceManager();
+            this.Container.RegisterType<ICacheInvalidationManager, CacheInvalidationManager>(new ContainerControlledLifetimeManager());
 
-            IApplicationResources ar = new ApplicationResources(Application.Current.Resources, resourceManager);
+            string xaml;
+            using (Stream s = this.GetType().Assembly.GetManifestResourceStream("Modular.CacheConfig.xaml"))
+            {
+                using (StreamReader sr = new StreamReader(s))
+                {
+                    xaml = sr.ReadToEnd();
+                }
+            }
 
-            this.Container.RegisterInstance<IResourceManager>(resourceManager);
-            this.Container.RegisterInstance<IApplicationResources>(ar);
+            IDictionary configDictionary = (IDictionary)XamlReader.Load(xaml);
+            DictionaryConfigurationSource configSource = DictionaryConfigurationSource.FromDictionary(configDictionary);
+            EnterpriseLibraryContainer.ConfigureContainer(new UnityContainerConfigurator(this.Container), configSource);
+
+            this.Container.RegisterType<IResourceManager, CompositeResourceManager>("appWideResources", new ContainerControlledLifetimeManager(), new InjectionConstructor());
+            this.Container.RegisterType<IResourceManager, CachingResourceManager>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(new ResolvedParameter<IResourceManager>("appWideResources"), typeof(ICacheInvalidationManager), typeof(ObjectCache)));
+
+            this.Container.RegisterType<IAppResourceAppender, AppResourceAppender>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(Application.Current.Resources, new ResolvedParameter<CompositeResourceManager>("appWideResources")));
         }
 
         protected override void ConfigureModuleCatalog()

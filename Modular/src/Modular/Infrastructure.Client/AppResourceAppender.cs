@@ -5,13 +5,13 @@
 
     using Infrastructure.I18n;
 
-    public class ApplicationResources : IApplicationResources
+    public class AppResourceAppender : IAppResourceAppender
     {
         private readonly ResourceDictionary appResourceDictionary;
 
         private readonly CompositeResourceManager appResourceManager;
 
-        public ApplicationResources(ResourceDictionary appResourceDictionary, CompositeResourceManager appResourceManager)
+        public AppResourceAppender(ResourceDictionary appResourceDictionary, CompositeResourceManager appResourceManager)
         {
             Contract.Requires(appResourceDictionary != null);
             Contract.Requires(appResourceManager != null);

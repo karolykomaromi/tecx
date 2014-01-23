@@ -1,23 +1,23 @@
-namespace Infrastructure.Commands
+﻿namespace Infrastructure.Caching
 {
     using System;
     using System.Windows.Threading;
 
-    public class CommandManager : Alerting, ICommandManager
+    public class CacheInvalidationManager : Alerting, ICacheInvalidationManager
     {
-        public CommandManager(Dispatcher dispatcher)
+        public CacheInvalidationManager(Dispatcher dispatcher)
             : base(dispatcher)
         {
         }
 
-        public event EventHandler RequerySuggested
+        public event EventHandler Invalidated
         {
             add { this.AddWeakReferenceHandler(value); }
 
             remove { this.RemoveWeakReferenceHandler(value); }
         }
 
-        public void InvalidateRequerySuggested()
+        public void RequestInvalidate()
         {
             this.RaiseEvent();
         }
