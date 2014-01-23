@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections;
-using System.IO;
-using System.Windows.Markup;
-using System.Windows.Threading;
-using Infrastructure.Caching;
-using Microsoft.Practices.EnterpriseLibrary.Caching;
-using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
-using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
-using Microsoft.Practices.EnterpriseLibrary.Common.Configuration.ContainerModel.Unity;
-
-namespace Modular
+﻿namespace Modular
 {
+    using System.Collections;
+    using System.IO;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Markup;
     using Infrastructure;
+    using Infrastructure.Caching;
     using Infrastructure.Commands;
     using Infrastructure.Events;
     using Infrastructure.I18n;
-
+    using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
+    using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+    using Microsoft.Practices.EnterpriseLibrary.Common.Configuration.ContainerModel.Unity;
     using Microsoft.Practices.Prism.Modularity;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Prism.UnityExtensions;
@@ -80,6 +75,8 @@ namespace Modular
             this.Container.RegisterType<IAppResourceAppender, AppResourceAppender>(
                 new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(Application.Current.Resources, new ResolvedParameter<CompositeResourceManager>("appWideResources")));
+
+            this.Container.RegisterType<IEntryPointInfo, EntryPointInfo>();
         }
 
         protected override void ConfigureModuleCatalog()

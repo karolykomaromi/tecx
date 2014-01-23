@@ -21,7 +21,9 @@
             var resources = new Mock<IAppResourceAppender>();
             var resourceManager = new Mock<IResourceManager>();
 
-            IModule module = new ViewModelResolutionFailsModule(container, regionManager.Object, logger.Object, resources.Object, resourceManager.Object);
+            IEntryPointInfo entryPointInfo = new EntryPointInfo(container, regionManager.Object, logger.Object, resources.Object, resourceManager.Object);
+
+            IModule module = new ViewModelResolutionFailsModule(entryPointInfo);
 
             module.Initialize();
 
@@ -37,7 +39,9 @@
             var resources = new Mock<IAppResourceAppender>();
             var resourceManager = new Mock<IResourceManager>();
 
-            IModule module = new ViewResolutionFailsModule(container, regionManager.Object, logger.Object, resources.Object, resourceManager.Object);
+            IEntryPointInfo entryPointInfo = new EntryPointInfo(container, regionManager.Object, logger.Object, resources.Object, resourceManager.Object);
+
+            IModule module = new ViewResolutionFailsModule(entryPointInfo);
 
             module.Initialize();
 
@@ -53,7 +57,9 @@
             var resources = new Mock<IAppResourceAppender>();
             var resourceManager = new Mock<IResourceManager>();
 
-            IModule module = new NoViewModule(container, regionManager.Object, logger.Object, resources.Object, resourceManager.Object);
+            IEntryPointInfo entryPointInfo = new EntryPointInfo(container, regionManager.Object, logger.Object, resources.Object, resourceManager.Object);
+
+            IModule module = new NoViewModule(entryPointInfo);
 
             module.Initialize();
 

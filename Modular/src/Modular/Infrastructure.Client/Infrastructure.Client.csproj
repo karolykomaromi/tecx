@@ -117,6 +117,7 @@
     <Compile Include="Commands\NullCommandManager.cs" />
     <Compile Include="DispatchingShowThings.cs" />
     <Compile Include="DoubleClickTrigger.cs" />
+    <Compile Include="EntryPointInfo.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\EventAggregatorExtension.cs" />
     <Compile Include="Events\EventAggregatorStrategy.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="I18n\ResxFilesResourceManager.cs" />
     <Compile Include="I18n\WebSvcResourceManager.cs" />
     <Compile Include="IAppResourceAppender.cs" />
+    <Compile Include="IEntryPointInfo.cs" />
     <Compile Include="IShowThings.cs" />
     <Compile Include="LazyShowThings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

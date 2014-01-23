@@ -15,22 +15,23 @@
         private readonly IUnityContainer container;
         private readonly IRegionManager regionManager;
         private readonly ILoggerFacade logger;
-        private readonly IAppResourceAppender appResourceAppender;
+        private readonly IAppResourceAppender resourceAppender;
         private readonly IResourceManager resourceManager;
 
-        protected UnityModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger, IAppResourceAppender appResourceAppender, IResourceManager resourceManager)
+        protected UnityModule(IEntryPointInfo entryPointInfo)
         {
-            Contract.Requires(container != null);
-            Contract.Requires(regionManager != null);
-            Contract.Requires(logger != null);
-            Contract.Requires(appResourceAppender != null);
-            Contract.Requires(resourceManager != null);
+            Contract.Requires(entryPointInfo != null);
+            Contract.Requires(entryPointInfo.Container != null);
+            Contract.Requires(entryPointInfo.RegionManager != null);
+            Contract.Requires(entryPointInfo.Logger != null);
+            Contract.Requires(entryPointInfo.ResourceAppender != null);
+            Contract.Requires(entryPointInfo.ResourceManager != null);
 
-            this.container = container;
-            this.regionManager = regionManager;
-            this.logger = logger;
-            this.appResourceAppender = appResourceAppender;
-            this.resourceManager = resourceManager;
+            this.container = entryPointInfo.Container;
+            this.regionManager = entryPointInfo.RegionManager;
+            this.logger = entryPointInfo.Logger;
+            this.resourceAppender = entryPointInfo.ResourceAppender;
+            this.resourceManager = entryPointInfo.ResourceManager;
         }
 
         protected IUnityContainer Container
@@ -48,9 +49,9 @@
             get { return this.logger; }
         }
 
-        protected IAppResourceAppender AppResourceAppender
+        protected IAppResourceAppender ResourceAppender
         {
-            get { return this.appResourceAppender; }
+            get { return this.resourceAppender; }
         }
 
         protected IResourceManager ResourceManager
@@ -63,10 +64,10 @@
             this.ConfigureContainer(this.container);
 
             IResourceManager resourceManager = this.CreateResourceManager();
-            this.AppResourceAppender.Add(resourceManager);
+            this.ResourceAppender.Add(resourceManager);
 
             ResourceDictionary moduleResources = this.CreateModuleResources();
-            this.AppResourceAppender.Add(moduleResources);
+            this.ResourceAppender.Add(moduleResources);
 
             this.ConfigureRegions(this.RegionManager);
         }
