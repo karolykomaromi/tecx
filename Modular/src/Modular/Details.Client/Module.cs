@@ -8,9 +8,7 @@
     using Infrastructure.Commands;
     using Infrastructure.I18n;
     using Infrastructure.ViewModels;
-    using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
-    using Microsoft.Practices.Unity;
 
     public class Module : UnityModule
     {
@@ -19,8 +17,8 @@
         /// </summary>
         public static readonly string Name = "Details";
 
-        public Module(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger, IAppResourceAppender appResourceAppender, IResourceManager resourceManager)
-            : base(container, regionManager, logger, appResourceAppender, resourceManager)
+        public Module(IEntryPointInfo entryPointInfo)
+            : base(entryPointInfo)
         {
         }
 

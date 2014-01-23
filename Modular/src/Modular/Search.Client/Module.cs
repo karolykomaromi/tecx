@@ -1,6 +1,4 @@
-﻿using Search.Assets.Resources;
-
-namespace Search
+﻿namespace Search
 {
     using System;
     using System.Collections.Generic;
@@ -11,9 +9,9 @@ namespace Search
     using Infrastructure.Commands;
     using Infrastructure.I18n;
     using Infrastructure.ViewModels;
-    using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
+    using Search.Assets.Resources;
     using Search.Commands;
     using Search.Service;
     using Search.ViewModels;
@@ -25,8 +23,8 @@ namespace Search
         /// </summary>
         public static readonly string Name = "Search";
 
-        public Module(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger, IAppResourceAppender appResourceAppender, IResourceManager resourceManager)
-            : base(container, regionManager, logger, appResourceAppender, resourceManager)
+        public Module(IEntryPointInfo entryPointInfo)
+            : base(entryPointInfo)
         {
         }
 
