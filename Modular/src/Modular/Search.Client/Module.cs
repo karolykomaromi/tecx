@@ -1,13 +1,15 @@
-﻿namespace Search
+﻿using Search.Assets.Resources;
+
+namespace Search
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Threading;
     using Infrastructure;
     using Infrastructure.Commands;
+    using Infrastructure.I18n;
     using Infrastructure.ViewModels;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
@@ -23,12 +25,9 @@
         /// </summary>
         public static readonly string Name = "Search";
 
-        public Module(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger, IApplicationResources applicationResources)
-            : base(container, regionManager, logger, applicationResources)
+        public Module(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger, IAppResourceAppender appResourceAppender, IResourceManager resourceManager)
+            : base(container, regionManager, logger, appResourceAppender, resourceManager)
         {
-            Contract.Requires(container != null);
-            Contract.Requires(regionManager != null);
-            Contract.Requires(logger != null);
         }
 
         protected override void ConfigureContainer(IUnityContainer container)
@@ -86,8 +85,15 @@
                     new NavigationCommand(regionManager.Regions[Regions.Shell.Content]))
                     {
                         Destination = new Uri("SearchResultsView", UriKind.Relative),
-                        Name = "Search Results"
+                        Name = this.ResourceManager["Search.Label_NavigationMenuEntry"]
                     });
+        }
+
+        protected override IResourceManager CreateResourceManager()
+        {
+            IResourceManager rm = new ResxFilesResourceManager(typeof(Labels));
+
+            return rm;
         }
 
         protected override ResourceDictionary CreateModuleResources()

@@ -15,19 +15,22 @@
         private readonly IUnityContainer container;
         private readonly IRegionManager regionManager;
         private readonly ILoggerFacade logger;
-        private readonly IApplicationResources applicationResources;
+        private readonly IAppResourceAppender appResourceAppender;
+        private readonly IResourceManager resourceManager;
 
-        protected UnityModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger, IApplicationResources applicationResources)
+        protected UnityModule(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger, IAppResourceAppender appResourceAppender, IResourceManager resourceManager)
         {
             Contract.Requires(container != null);
             Contract.Requires(regionManager != null);
             Contract.Requires(logger != null);
-            Contract.Requires(applicationResources != null);
+            Contract.Requires(appResourceAppender != null);
+            Contract.Requires(resourceManager != null);
 
             this.container = container;
             this.regionManager = regionManager;
             this.logger = logger;
-            this.applicationResources = applicationResources;
+            this.appResourceAppender = appResourceAppender;
+            this.resourceManager = resourceManager;
         }
 
         protected IUnityContainer Container
@@ -45,12 +48,14 @@
             get { return this.logger; }
         }
 
-        protected IApplicationResources ApplicationResources
+        protected IAppResourceAppender AppResourceAppender
         {
-            get
-            {
-                return this.applicationResources;
-            }
+            get { return this.appResourceAppender; }
+        }
+
+        protected IResourceManager ResourceManager
+        {
+            get { return this.resourceManager; }
         }
 
         public virtual void Initialize()
@@ -58,10 +63,10 @@
             this.ConfigureContainer(this.container);
 
             IResourceManager resourceManager = this.CreateResourceManager();
-            this.ApplicationResources.Add(resourceManager);
+            this.AppResourceAppender.Add(resourceManager);
 
             ResourceDictionary moduleResources = this.CreateModuleResources();
-            this.ApplicationResources.Add(moduleResources);
+            this.AppResourceAppender.Add(moduleResources);
 
             this.ConfigureRegions(this.RegionManager);
         }

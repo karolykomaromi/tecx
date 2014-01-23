@@ -8,6 +8,11 @@
     {
         private readonly List<IResourceManager> resourceManagers;
 
+        public CompositeResourceManager()
+            : this(new IResourceManager[0])
+        {
+        }
+
         public CompositeResourceManager(params IResourceManager[] resourceManagers)
         {
             this.resourceManagers = new List<IResourceManager>(resourceManagers ?? new IResourceManager[0]);

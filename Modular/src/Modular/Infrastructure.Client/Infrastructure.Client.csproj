@@ -103,7 +103,11 @@
     <Compile Include="..\Infrastructure.Server\TimeProvider.cs">
       <Link>TimeProvider.cs</Link>
     </Compile>
-    <Compile Include="ApplicationResources.cs" />
+    <Compile Include="Alerting.cs" />
+    <Compile Include="AppResourceAppender.cs" />
+    <Compile Include="Caching\CacheInvalidationManager.cs" />
+    <Compile Include="Caching\ExternalInvalidationPolicy.cs" />
+    <Compile Include="Caching\ICacheInvalidationManager.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandManagerExtension.cs" />
     <Compile Include="Commands\CommandManagerStrategy.cs" />
@@ -126,7 +130,7 @@
     <Compile Include="I18n\IResourceManager.cs" />
     <Compile Include="I18n\ResxFilesResourceManager.cs" />
     <Compile Include="I18n\WebSvcResourceManager.cs" />
-    <Compile Include="IApplicationResources.cs" />
+    <Compile Include="IAppResourceAppender.cs" />
     <Compile Include="IShowThings.cs" />
     <Compile Include="LazyShowThings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -140,7 +144,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\NavigationView.xaml">

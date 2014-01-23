@@ -19,20 +19,9 @@
         /// </summary>
         public static readonly string Name = "Details";
 
-        private readonly IResourceManager resourceManager;
-
-        public Module(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger, IApplicationResources applicationResources, IResourceManager resourceManager)
-            : base(container, regionManager, logger, applicationResources)
+        public Module(IUnityContainer container, IRegionManager regionManager, ILoggerFacade logger, IAppResourceAppender appResourceAppender, IResourceManager resourceManager)
+            : base(container, regionManager, logger, appResourceAppender, resourceManager)
         {
-            this.resourceManager = resourceManager;
-        }
-
-        protected IResourceManager ResourceManager
-        {
-            get
-            {
-                return this.resourceManager;
-            }
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)
