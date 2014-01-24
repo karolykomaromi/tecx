@@ -23,6 +23,11 @@
             /// Menu
             /// </summary>
             public const string Menu = "Menu";
+
+            /// <summary>
+            /// Language
+            /// </summary>
+            public const string Language = "Language";
         }
     }
 }

@@ -4,6 +4,7 @@ namespace Infrastructure.ViewModels
     using System.ComponentModel;
     using System.Diagnostics.Contracts;
     using System.Linq.Expressions;
+    using System.Text;
     using Infrastructure.Commands;
     using Infrastructure.I18n;
 
@@ -99,10 +100,11 @@ namespace Infrastructure.ViewModels
 
             MemberExpression property = (MemberExpression)propertySelector.Body;
 
-            string propertyName = property.Member.Name;
-            string typeName = this.GetType().FullName;
+            string propertyName = new StringBuilder(property.Member.Name).Replace("Label", "Label_").ToString();
 
-            string key = typeName + "." + propertyName;
+            string typeName = new StringBuilder(this.GetType().FullName).Replace(".ViewModels", string.Empty).Replace("ViewModel", string.Empty).ToString();
+
+            string key = (typeName + "." + propertyName).ToUpperInvariant();
 
             return this.ResourceManager[key];
         }
