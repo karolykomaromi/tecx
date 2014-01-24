@@ -1,5 +1,6 @@
-﻿namespace Infrastructure.I18n
+namespace Infrastructure.UnityExtensions
 {
+    using Infrastructure.I18n;
     using Infrastructure.ViewModels;
     using Microsoft.Practices.ObjectBuilder2;
 

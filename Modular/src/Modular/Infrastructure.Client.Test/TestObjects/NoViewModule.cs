@@ -1,12 +1,15 @@
 namespace Infrastructure.Client.Test.TestObjects
 {
     using System.Windows;
+    using Infrastructure.Modularity;
+    using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
+    using Microsoft.Practices.Unity;
 
     public class NoViewModule : UnityModule
     {
-        public NoViewModule(IEntryPointInfo entryPointInfo)
-            : base(entryPointInfo)
+        public NoViewModule(IUnityContainer container, ILoggerFacade logger, IModuleInitializer initializer)
+            : base(container, logger, initializer)
         {
         }
 

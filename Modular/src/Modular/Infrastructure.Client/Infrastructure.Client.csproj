@@ -52,6 +52,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\sl5\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.SL5">
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\sl5\AutoMapper.SL5.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras.SL5">
       <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\SL5\GalaSoft.MvvmLight.Extras.SL5.dll</HintPath>
     </Reference>
@@ -104,23 +110,17 @@
       <Link>TimeProvider.cs</Link>
     </Compile>
     <Compile Include="Alerting.cs" />
-    <Compile Include="AppResourceAppender.cs" />
     <Compile Include="Caching\CacheInvalidationManager.cs" />
     <Compile Include="Caching\ExternalInvalidationPolicy.cs" />
     <Compile Include="Caching\ICacheInvalidationManager.cs" />
     <Compile Include="Commands\CommandManager.cs" />
-    <Compile Include="Commands\CommandManagerExtension.cs" />
-    <Compile Include="Commands\CommandManagerStrategy.cs" />
     <Compile Include="Commands\ICommandManager.cs" />
     <Compile Include="Commands\NavigationCommand.cs" />
     <Compile Include="Commands\NullCommand.cs" />
     <Compile Include="Commands\NullCommandManager.cs" />
     <Compile Include="DispatchingShowThings.cs" />
     <Compile Include="DoubleClickTrigger.cs" />
-    <Compile Include="EntryPointInfo.cs" />
     <Compile Include="Events\EventAggregator.cs" />
-    <Compile Include="Events\EventAggregatorExtension.cs" />
-    <Compile Include="Events\EventAggregatorStrategy.cs" />
     <Compile Include="Events\IEventAggregator.cs" />
     <Compile Include="Events\ISubscribeTo.cs" />
     <Compile Include="Events\TypeExtensions.cs" />
@@ -129,18 +129,30 @@
     <Compile Include="I18n\CompositeResourceManager.cs" />
     <Compile Include="I18n\EchoResourceManager.cs" />
     <Compile Include="I18n\IResourceManager.cs" />
-    <Compile Include="I18n\ResourceManagerExtension.cs" />
-    <Compile Include="I18n\ResourceManagerStrategy.cs" />
     <Compile Include="I18n\ResxFilesResourceManager.cs" />
     <Compile Include="I18n\WebSvcResourceManager.cs" />
-    <Compile Include="IAppResourceAppender.cs" />
-    <Compile Include="IEntryPointInfo.cs" />
     <Compile Include="IShowThings.cs" />
     <Compile Include="LazyShowThings.cs" />
+    <Compile Include="Modularity\AutoMapperInitializer.cs" />
+    <Compile Include="Modularity\CompositeInitializer.cs" />
+    <Compile Include="Modularity\ContainerInitializer.cs" />
+    <Compile Include="Modularity\DefaultInitializer.cs" />
+    <Compile Include="Modularity\IModuleInitializer.cs" />
+    <Compile Include="Modularity\ModuleResourcesInitializer.cs" />
+    <Compile Include="Modularity\RegionInitializer.cs" />
+    <Compile Include="Modularity\ResourceManagerInitializer.cs" />
+    <Compile Include="Modularity\UnityModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Regions.cs" />
     <Compile Include="StackPanelRegionAdapter.cs" />
-    <Compile Include="UnityModule.cs" />
+    <Compile Include="UnityExtensions\CommandManagerExtension.cs" />
+    <Compile Include="UnityExtensions\CommandManagerStrategy.cs" />
+    <Compile Include="UnityExtensions\EventAggregatorExtension.cs" />
+    <Compile Include="UnityExtensions\EventAggregatorStrategy.cs" />
+    <Compile Include="UnityExtensions\RegionExtension.cs" />
+    <Compile Include="UnityExtensions\RegionStrategy.cs" />
+    <Compile Include="UnityExtensions\ResourceManagerExtension.cs" />
+    <Compile Include="UnityExtensions\ResourceManagerStrategy.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\NavigationView.xaml.cs">
@@ -158,7 +170,6 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

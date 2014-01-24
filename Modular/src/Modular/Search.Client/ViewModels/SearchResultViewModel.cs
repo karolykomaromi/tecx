@@ -5,14 +5,14 @@ namespace Search.ViewModels
     using System.Windows.Input;
     using Infrastructure.ViewModels;
 
-    public class SearchResultItemViewModel : ViewModel
+    public class SearchResultViewModel : ViewModel
     {
         private readonly ICommand openDetailsCommand;
         private string foundSearchTermIn;
         private Uri uri;
         private string name;
 
-        public SearchResultItemViewModel(ICommand openDetailsCommand)
+        public SearchResultViewModel(ICommand openDetailsCommand)
         {
             Contract.Requires(openDetailsCommand != null);
 

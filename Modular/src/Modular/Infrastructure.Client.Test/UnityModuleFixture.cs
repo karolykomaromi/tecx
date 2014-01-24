@@ -1,13 +1,12 @@
 ﻿namespace Infrastructure.Client.Test
 {
     using Infrastructure.Client.Test.TestObjects;
-    using Infrastructure.I18n;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Modularity;
-    using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
+    using IModuleInitializer = Infrastructure.Modularity.IModuleInitializer;
 
     [TestClass]
     public class UnityModuleFixture
@@ -16,14 +15,10 @@
         public void Should_Log_Error_On_Failed_Resolution_Of_ViewModel()
         {
             IUnityContainer container = new UnityContainer();
-            var regionManager = new Mock<IRegionManager>();
             var logger = new Mock<ILoggerFacade>();
-            var resources = new Mock<IAppResourceAppender>();
-            var resourceManager = new Mock<IResourceManager>();
+            var initializer = new Mock<IModuleInitializer>();
 
-            IEntryPointInfo entryPointInfo = new EntryPointInfo(container, regionManager.Object, logger.Object, resources.Object, resourceManager.Object);
-
-            IModule module = new ViewModelResolutionFailsModule(entryPointInfo);
+            IModule module = new ViewModelResolutionFailsModule(container, logger.Object, initializer.Object);
 
             module.Initialize();
 
@@ -34,14 +29,10 @@
         public void Should_Log_Error_On_Failed_Resolution_Of_View()
         {
             IUnityContainer container = new UnityContainer();
-            var regionManager = new Mock<IRegionManager>();
             var logger = new Mock<ILoggerFacade>();
-            var resources = new Mock<IAppResourceAppender>();
-            var resourceManager = new Mock<IResourceManager>();
+            var initializer = new Mock<IModuleInitializer>();
 
-            IEntryPointInfo entryPointInfo = new EntryPointInfo(container, regionManager.Object, logger.Object, resources.Object, resourceManager.Object);
-
-            IModule module = new ViewResolutionFailsModule(entryPointInfo);
+            IModule module = new ViewResolutionFailsModule(container, logger.Object, initializer.Object);
 
             module.Initialize();
 
@@ -52,14 +43,10 @@
         public void Should_Log_Warning_On_View_Type_Not_Found()
         {
             IUnityContainer container = new UnityContainer();
-            var regionManager = new Mock<IRegionManager>();
             var logger = new Mock<ILoggerFacade>();
-            var resources = new Mock<IAppResourceAppender>();
-            var resourceManager = new Mock<IResourceManager>();
+            var initializer = new Mock<IModuleInitializer>();
 
-            IEntryPointInfo entryPointInfo = new EntryPointInfo(container, regionManager.Object, logger.Object, resources.Object, resourceManager.Object);
-
-            IModule module = new NoViewModule(entryPointInfo);
+            IModule module = new NoViewModule(container, logger.Object, initializer.Object);
 
             module.Initialize();
 

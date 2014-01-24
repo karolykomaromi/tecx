@@ -5,6 +5,7 @@ namespace Search.ViewModels
     using System.Collections.ObjectModel;
     using System.Diagnostics.Contracts;
     using System.Windows.Input;
+    using AutoMapper;
     using Infrastructure;
     using Infrastructure.ViewModels;
     using Search.Entities;
@@ -12,18 +13,21 @@ namespace Search.ViewModels
     public class SearchResultsViewModel : ViewModel, IShowThings<IEnumerable<SearchResult>>
     {
         private readonly ICommand navigateContentCommand;
-        private readonly ObservableCollection<SearchResultItemViewModel> results;
+        private readonly IMappingEngine mappingEngine;
+        private readonly ObservableCollection<SearchResultViewModel> results;
 
-        public SearchResultsViewModel(ICommand navigateContentCommand)
+        public SearchResultsViewModel(ICommand navigateContentCommand, IMappingEngine mappingEngine)
         {
             Contract.Requires(navigateContentCommand != null);
+            Contract.Requires(mappingEngine != null);
 
             this.navigateContentCommand = navigateContentCommand;
+            this.mappingEngine = mappingEngine;
 
-            this.results = new ObservableCollection<SearchResultItemViewModel>();
+            this.results = new ObservableCollection<SearchResultViewModel>();
         }
 
-        public ObservableCollection<SearchResultItemViewModel> Results
+        public ObservableCollection<SearchResultViewModel> Results
         {
             get { return this.results; }
         }
@@ -36,12 +40,9 @@ namespace Search.ViewModels
 
             foreach (SearchResult result in searchResults)
             {
-                var item = new SearchResultItemViewModel(this.navigateContentCommand)
-                    {
-                        FoundSearchTermIn = result.FoundSearchTermIn,
-                        Name = result.Name,
-                        Uri = result.Uri
-                    };
+                var item = new SearchResultViewModel(this.navigateContentCommand);
+
+                this.mappingEngine.Map(result, item);
 
                 this.Results.Add(item);
             }

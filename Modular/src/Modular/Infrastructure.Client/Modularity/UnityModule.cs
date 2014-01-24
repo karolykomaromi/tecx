@@ -1,47 +1,34 @@
-﻿namespace Infrastructure
+namespace Infrastructure.Modularity
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
+    using System.Linq;
+    using System.Reflection;
     using System.Windows;
+    using AutoMapper;
     using Infrastructure.I18n;
     using Infrastructure.ViewModels;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Modularity;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
-    
+
     public abstract class UnityModule : IModule
     {
         private readonly IUnityContainer container;
-        private readonly IRegionManager regionManager;
         private readonly ILoggerFacade logger;
-        private readonly IAppResourceAppender resourceAppender;
-        private readonly IResourceManager resourceManager;
+        private readonly IModuleInitializer initializer;
 
-        protected UnityModule(IEntryPointInfo entryPointInfo)
+        protected UnityModule(IUnityContainer container, ILoggerFacade logger, IModuleInitializer initializer)
         {
-            Contract.Requires(entryPointInfo != null);
-            Contract.Requires(entryPointInfo.Container != null);
-            Contract.Requires(entryPointInfo.RegionManager != null);
-            Contract.Requires(entryPointInfo.Logger != null);
-            Contract.Requires(entryPointInfo.ResourceAppender != null);
-            Contract.Requires(entryPointInfo.ResourceManager != null);
+            Contract.Requires(container != null);
+            Contract.Requires(logger != null);
+            Contract.Requires(initializer != null);
 
-            this.container = entryPointInfo.Container;
-            this.regionManager = entryPointInfo.RegionManager;
-            this.logger = entryPointInfo.Logger;
-            this.resourceAppender = entryPointInfo.ResourceAppender;
-            this.resourceManager = entryPointInfo.ResourceManager;
-        }
-
-        protected IUnityContainer Container
-        {
-            get { return this.container; }
-        }
-
-        protected IRegionManager RegionManager
-        {
-            get { return this.regionManager; }
+            this.container = container;
+            this.logger = logger;
+            this.initializer = initializer;
         }
 
         protected ILoggerFacade Logger
@@ -49,47 +36,55 @@
             get { return this.logger; }
         }
 
-        protected IAppResourceAppender ResourceAppender
-        {
-            get { return this.resourceAppender; }
-        }
-
-        protected IResourceManager ResourceManager
-        {
-            get { return this.resourceManager; }
-        }
-
         public virtual void Initialize()
         {
-            this.ConfigureContainer(this.container);
-
-            IResourceManager resourceManager = this.CreateResourceManager();
-            this.ResourceAppender.Add(resourceManager);
-
-            ResourceDictionary moduleResources = this.CreateModuleResources();
-            this.ResourceAppender.Add(moduleResources);
-
-            this.ConfigureRegions(this.RegionManager);
+            this.initializer.Initialize(this);
         }
 
-        protected virtual IResourceManager CreateResourceManager()
+        protected internal virtual IResourceManager CreateResourceManager()
         {
             Contract.Ensures(Contract.Result<IResourceManager>() != null);
 
             return new EchoResourceManager();
         }
 
-        protected virtual void ConfigureContainer(IUnityContainer container)
+        protected internal virtual void ConfigureContainer(IUnityContainer container)
         {
             Contract.Requires(container != null);
         }
 
-        protected virtual void ConfigureRegions(IRegionManager regionManager)
+        protected internal virtual void ConfigureRegions(IRegionManager regionManager)
         {
             Contract.Requires(regionManager != null);
         }
 
-        protected virtual ResourceDictionary CreateModuleResources()
+        protected internal virtual void ConfigureMapping(IMappingEngine mappingEngine)
+        {
+            Contract.Requires(mappingEngine != null);
+
+            Assembly assembly = this.GetType().Assembly;
+
+            IDictionary<string, Type> viewModels =
+                assembly.GetExportedTypes()
+                        .Where(type => type.Name.EndsWith("ViewModel", StringComparison.Ordinal))
+                        .ToDictionary(type => type.Name.Replace("ViewModel", string.Empty).ToUpperInvariant());
+
+            IDictionary<string, Type> entities =
+                assembly.GetExportedTypes()
+                        .Where(type => type.FullName.IndexOf("Entities", StringComparison.OrdinalIgnoreCase) > -1)
+                        .ToDictionary(type => type.Name.ToUpperInvariant());
+
+            foreach (var entity in entities)
+            {
+                Type viewModelType;
+                if (viewModels.TryGetValue(entity.Key, out viewModelType))
+                {
+                    mappingEngine.ConfigurationProvider.CreateTypeMap(entity.Value, viewModelType);
+                }
+            }
+        }
+
+        protected internal virtual ResourceDictionary CreateModuleResources()
         {
             Contract.Ensures(Contract.Result<ResourceDictionary>() != null);
 
@@ -108,7 +103,7 @@
             {
                 try
                 {
-                    view = this.Container.Resolve(viewType) as FrameworkElement;
+                    view = this.container.Resolve(viewType) as FrameworkElement;
                 }
                 catch (ResolutionFailedException ex)
                 {
@@ -125,7 +120,7 @@
 
                     try
                     {
-                        vm = this.Container.Resolve<TViewModel>();
+                        vm = this.container.Resolve<TViewModel>();
                     }
                     catch (ResolutionFailedException ex)
                     {
@@ -135,6 +130,8 @@
                         return false;
                     }
 
+                    message = string.Format("Successfully created view (Type='{0}') and view model (Type='{1}').", typeof(TViewModel).AssemblyQualifiedName, viewTypeName);
+                    this.Logger.Log(message, Category.Info, Priority.Low);
                     view.DataContext = vm;
                     return true;
                 }
