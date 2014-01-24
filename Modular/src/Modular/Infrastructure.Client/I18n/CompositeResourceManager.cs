@@ -18,7 +18,7 @@
             this.resourceManagers = new List<IResourceManager>(resourceManagers ?? new IResourceManager[0]);
         }
 
-        public string this[string key]
+        public string this[ResxKey key]
         {
             get
             {
@@ -26,13 +26,13 @@
                 {
                     string value = resourceManager[key];
 
-                    if (!string.Equals(key, value, StringComparison.Ordinal))
+                    if (!string.Equals(key.ToString(), value, StringComparison.Ordinal))
                     {
                         return value;
                     }
                 }
 
-                return key;
+                return key.ToString();
             }
         }
 

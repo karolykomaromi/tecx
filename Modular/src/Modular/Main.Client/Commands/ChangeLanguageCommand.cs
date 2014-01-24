@@ -5,6 +5,8 @@ namespace Main.Commands
     using System.Threading;
     using System.Windows.Input;
 
+    using Infrastructure.I18n;
+
     public class ChangeLanguageCommand : ICommand
     {
         public event EventHandler CanExecuteChanged = delegate { };
@@ -22,6 +24,8 @@ namespace Main.Commands
             {
                 Thread.CurrentThread.CurrentCulture = culture;
                 Thread.CurrentThread.CurrentUICulture = culture;
+
+                LanguageManager.NotifyApplicationLanguageChanged();
             }
         }
     }

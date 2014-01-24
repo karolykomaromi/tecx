@@ -5,17 +5,16 @@
     [ContractClass(typeof(ResourceManagerContract))]
     public interface IResourceManager
     {
-        string this[string key] { get; }
+        string this[ResxKey key] { get; }
     }
 
     [ContractClassFor(typeof(IResourceManager))]
     public abstract class ResourceManagerContract : IResourceManager
     {
-        public string this[string key]
+        public string this[ResxKey key]
         {
             get
             {
-                Contract.Requires(!string.IsNullOrEmpty(key));
                 Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 
                 return " ";

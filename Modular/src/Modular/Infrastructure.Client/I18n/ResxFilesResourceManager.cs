@@ -15,29 +15,31 @@
             this.resxType = resxType;
         }
 
-        public string this[string key]
+        public string this[ResxKey key]
         {
             get
             {
-                int lastIndexOfDot = Math.Max(0, key.LastIndexOf('.'));
+                string rxk = key.ToString();
 
-                if (!this.resxType.FullName.StartsWith(key.Substring(0, lastIndexOfDot), StringComparison.OrdinalIgnoreCase))
+                int lastIndexOfDot = Math.Max(0, rxk.LastIndexOf('.'));
+
+                if (!this.resxType.FullName.StartsWith(rxk.Substring(0, lastIndexOfDot), StringComparison.OrdinalIgnoreCase))
                 {
-                    return key;
+                    return rxk;
                 }
 
-                PropertyInfo property = this.resxType.GetProperty(key.Substring(lastIndexOfDot + 1), BindingFlags.Static | BindingFlags.Public | BindingFlags.IgnoreCase);
+                PropertyInfo property = this.resxType.GetProperty(rxk.Substring(lastIndexOfDot + 1), BindingFlags.Static | BindingFlags.Public | BindingFlags.IgnoreCase);
 
                 if (property == null)
                 {
-                    return key;
+                    return rxk;
                 }
 
                 MethodInfo getter = property.GetGetMethod();
 
                 if (getter == null)
                 {
-                    return key;
+                    return rxk;
                 }
 
                 string value = getter.Invoke(null, null) as string;
@@ -47,7 +49,7 @@
                     return value;
                 }
 
-                return key;
+                return rxk;
             }
         }
     }

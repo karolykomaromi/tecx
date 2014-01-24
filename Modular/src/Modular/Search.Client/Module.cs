@@ -91,7 +91,7 @@
                     new NavigationCommand(regionManager.Regions[Regions.Shell.Content]))
                     {
                         Destination = new Uri("SearchResultsView", UriKind.Relative),
-                        Name = this.resourceManager["Search.Label_NavigationMenuEntry"]
+                        Name = this.resourceManager[new ResxKey("Search.Label_NavigationMenuEntry")]
                     });
         }
 
