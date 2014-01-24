@@ -65,6 +65,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\sl5\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.SL5">
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\sl5\AutoMapper.SL5.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras.SL5">
       <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\SL5\GalaSoft.MvvmLight.Extras.SL5.dll</HintPath>
     </Reference>

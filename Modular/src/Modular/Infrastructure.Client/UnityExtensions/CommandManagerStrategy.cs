@@ -1,5 +1,6 @@
-namespace Infrastructure.Commands
+namespace Infrastructure.UnityExtensions
 {
+    using Infrastructure.Commands;
     using Infrastructure.ViewModels;
     using Microsoft.Practices.ObjectBuilder2;
 

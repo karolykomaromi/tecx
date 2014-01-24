@@ -1,14 +1,19 @@
-﻿namespace Search
+﻿using AutoMapper;
+
+namespace Search
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Threading;
     using Infrastructure;
     using Infrastructure.Commands;
     using Infrastructure.I18n;
+    using Infrastructure.Modularity;
     using Infrastructure.ViewModels;
+    using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
     using Search.Assets.Resources;
@@ -23,16 +28,21 @@
         /// </summary>
         public static readonly string Name = "Search";
 
-        public Module(IEntryPointInfo entryPointInfo)
-            : base(entryPointInfo)
+        private readonly IResourceManager resourceManager;
+
+        public Module(IUnityContainer container, ILoggerFacade logger, IModuleInitializer initializer, IResourceManager resourceManager)
+            : base(container, logger, initializer)
         {
+            Contract.Requires(resourceManager != null);
+
+            this.resourceManager = resourceManager;
         }
 
         protected override void ConfigureContainer(IUnityContainer container)
         {
             container.RegisterType<SearchResultsViewModel>(
                 new ContainerControlledLifetimeManager(), 
-                new InjectionConstructor(new ResolvedParameter<ICommand>(Regions.Shell.Content)));
+                new InjectionConstructor(new ResolvedParameter<ICommand>(Regions.Shell.Content), typeof(IMappingEngine)));
             container.RegisterType<IShowThings<IEnumerable<SearchResult>>, SearchResultsViewModel>();
             container.RegisterType<IShowThings<IEnumerable<SearchResult>>, DispatchingShowThings<IEnumerable<SearchResult>>>("dispatch");
 
@@ -57,7 +67,6 @@
 
             container.RegisterType<ISearchService, SearchServiceClient>(new InjectionConstructor());
 
-            container.RegisterInstance<INavigateAsync>(Regions.Shell.Content, this.RegionManager.Regions[Regions.Shell.Content]);
             container.RegisterType<ICommand, NavigationCommand>(
                 Regions.Shell.Content, 
                 new InjectionConstructor(new ResolvedParameter<INavigateAsync>(Regions.Shell.Content)));
@@ -83,7 +92,7 @@
                     new NavigationCommand(regionManager.Regions[Regions.Shell.Content]))
                     {
                         Destination = new Uri("SearchResultsView", UriKind.Relative),
-                        Name = this.ResourceManager["Search.Label_NavigationMenuEntry"]
+                        Name = this.resourceManager["Search.Label_NavigationMenuEntry"]
                     });
         }
 

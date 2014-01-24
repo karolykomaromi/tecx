@@ -2,9 +2,9 @@ namespace Search.Views
 {
     using System.Windows.Controls;
 
-    public partial class SearchResultItemView : UserControl
+    public partial class SearchResultView : UserControl
     {
-        public SearchResultItemView()
+        public SearchResultView()
         {
             this.InitializeComponent();
         }

@@ -1,5 +1,3 @@
-using Infrastructure.I18n;
-
 namespace Infrastructure.ViewModels
 {
     using System;
@@ -7,6 +5,7 @@ namespace Infrastructure.ViewModels
     using System.Diagnostics.Contracts;
     using System.Linq.Expressions;
     using Infrastructure.Commands;
+    using Infrastructure.I18n;
 
     public abstract class ViewModel : INotifyPropertyChanged, INotifyPropertyChanging
     {

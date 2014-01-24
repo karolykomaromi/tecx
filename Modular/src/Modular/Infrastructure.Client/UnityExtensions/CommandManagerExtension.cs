@@ -1,4 +1,4 @@
-namespace Infrastructure.Commands
+namespace Infrastructure.UnityExtensions
 {
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.ObjectBuilder;

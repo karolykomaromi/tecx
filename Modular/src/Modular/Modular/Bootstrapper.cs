@@ -5,11 +5,14 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Markup;
+    using AutoMapper;
     using Infrastructure;
     using Infrastructure.Caching;
     using Infrastructure.Commands;
     using Infrastructure.Events;
     using Infrastructure.I18n;
+    using Infrastructure.Modularity;
+    using Infrastructure.UnityExtensions;
     using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration.ContainerModel.Unity;
@@ -46,6 +49,8 @@
         {
             base.ConfigureContainer();
 
+            this.Container.AddNewExtension<RegionExtension>();
+
             this.Container.RegisterInstance(Deployment.Current.Dispatcher);
             this.Container.AddNewExtension<CommandManagerExtension>();
             this.Container.RegisterType<ICommandManager, CommandManager>(new ContainerControlledLifetimeManager());
@@ -68,22 +73,30 @@
             EnterpriseLibraryContainer.ConfigureContainer(new UnityContainerConfigurator(this.Container), configSource);
 
             this.Container.AddNewExtension<ResourceManagerExtension>();
-            this.Container.RegisterType<IResourceManager, CompositeResourceManager>("appWideResources", new ContainerControlledLifetimeManager(), new InjectionConstructor());
+            this.Container.RegisterType<IResourceManager, CompositeResourceManager>(Constants.AppWideResources, new ContainerControlledLifetimeManager(), new InjectionConstructor());
             this.Container.RegisterType<IResourceManager, CachingResourceManager>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new ResolvedParameter<IResourceManager>("appWideResources"), typeof(ICacheInvalidationManager), typeof(ObjectCache)));
+                new InjectionConstructor(new ResolvedParameter<IResourceManager>(Constants.AppWideResources), typeof(ICacheInvalidationManager), typeof(ObjectCache)));
+            
+            this.Container.RegisterType<ModuleResourcesInitializer>(new InjectionConstructor(Application.Current.Resources));
+            this.Container.RegisterType<ResourceManagerInitializer>(new InjectionConstructor(new ResolvedParameter<CompositeResourceManager>(Constants.AppWideResources)));
+            this.Container.RegisterType<Infrastructure.Modularity.IModuleInitializer, DefaultInitializer>();
 
-            this.Container.RegisterType<IAppResourceAppender, AppResourceAppender>(
-                new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(Application.Current.Resources, new ResolvedParameter<CompositeResourceManager>("appWideResources")));
-
-            this.Container.RegisterType<IEntryPointInfo, EntryPointInfo>();
+            this.Container.RegisterInstance<IMappingEngine>(Mapper.Engine);
         }
 
         protected override void ConfigureModuleCatalog()
         {
             this.ModuleCatalog.AddModule(new ModuleInfo(Search.Module.Name, typeof(Search.Module).AssemblyQualifiedName));
             this.ModuleCatalog.AddModule(new ModuleInfo(Details.Module.Name, typeof(Details.Module).AssemblyQualifiedName));
+        }
+
+        private static class Constants
+        {
+            /// <summary>
+            /// appWideResources
+            /// </summary>
+            public const string AppWideResources = "appWideResources";
         }
     }
 }

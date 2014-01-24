@@ -1,7 +1,8 @@
-﻿namespace Infrastructure.Events
+namespace Infrastructure.UnityExtensions
 {
     using System;
     using System.Linq;
+    using Infrastructure.Events;
     using Microsoft.Practices.ObjectBuilder2;
 
     public class EventAggregatorStrategy : BuilderStrategy

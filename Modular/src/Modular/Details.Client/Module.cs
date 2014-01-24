@@ -7,8 +7,11 @@
     using Infrastructure;
     using Infrastructure.Commands;
     using Infrastructure.I18n;
+    using Infrastructure.Modularity;
     using Infrastructure.ViewModels;
+    using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
+    using Microsoft.Practices.Unity;
 
     public class Module : UnityModule
     {
@@ -17,9 +20,12 @@
         /// </summary>
         public static readonly string Name = "Details";
 
-        public Module(IEntryPointInfo entryPointInfo)
-            : base(entryPointInfo)
+        private readonly IResourceManager resourceManager;
+
+        public Module(IUnityContainer container, ILoggerFacade logger, IModuleInitializer initializer, IResourceManager resourceManager)
+            : base(container, logger, initializer)
         {
+            this.resourceManager = resourceManager;
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)
@@ -27,7 +33,7 @@
             FrameworkElement detailsView;
             if (this.TryGetViewFor<ProductDetailsViewModel>(out detailsView))
             {
-                this.RegionManager.AddToRegion(Regions.Shell.Content, detailsView);
+                regionManager.AddToRegion(Regions.Shell.Content, detailsView);
             }
 
             regionManager.AddToRegion(
@@ -36,7 +42,7 @@
                     new NavigationCommand(regionManager.Regions[Regions.Shell.Content]))
                         {
                             Destination = new Uri("ProductDetailsView", UriKind.Relative),
-                            Name = this.ResourceManager["Details.Label_NavigationMenuEntry"]
+                            Name = this.resourceManager["Details.Label_NavigationMenuEntry"]
                         });
         }
 
