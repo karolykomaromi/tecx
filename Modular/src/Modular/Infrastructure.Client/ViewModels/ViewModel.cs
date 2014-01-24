@@ -98,15 +98,17 @@ namespace Infrastructure.ViewModels
         {
             Contract.Requires(propertySelector != null);
 
-            MemberExpression property = (MemberExpression)propertySelector.Body;
+            string propertyName = ReflectionHelper.GetPropertyName(propertySelector);
 
-            string propertyName = new StringBuilder(property.Member.Name).Replace("Label", "Label_").ToString();
+            string key = new StringBuilder(this.GetType().FullName)
+                .Append(".")
+                .Append(propertyName)
+                .Replace(".ViewModels", string.Empty)
+                .Replace("ViewModel", string.Empty)
+                .Replace("Label", "Label_")
+                .ToString();
 
-            string typeName = new StringBuilder(this.GetType().FullName).Replace(".ViewModels", string.Empty).Replace("ViewModel", string.Empty).ToString();
-
-            string key = (typeName + "." + propertyName).ToUpperInvariant();
-
-            return this.ResourceManager[key];
+            return this.ResourceManager[new ResxKey(key)];
         }
     }
 }

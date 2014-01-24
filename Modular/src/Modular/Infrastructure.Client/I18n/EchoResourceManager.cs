@@ -2,9 +2,9 @@
 {
     public class EchoResourceManager : IResourceManager
     {
-        public string this[string key]
+        public string this[ResxKey key]
         {
-            get { return key; }
+            get { return key.ToString(); }
         }
     }
 }

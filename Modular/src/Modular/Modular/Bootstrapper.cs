@@ -83,6 +83,7 @@
             this.Container.RegisterType<Infrastructure.Modularity.IModuleInitializer, DefaultInitializer>();
 
             this.Container.RegisterInstance<IMappingEngine>(Mapper.Engine);
+            this.Container.RegisterType<ILanguageManager, LanguageManager>(new ContainerControlledLifetimeManager());
         }
 
         protected override void ConfigureModuleCatalog()

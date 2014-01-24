@@ -22,11 +22,11 @@
             this.cache = cache;
         }
 
-        public string this[string key]
+        public string this[ResxKey key]
         {
             get
             {
-                string cached = this.cache[key] as string;
+                string cached = this.cache[key.ToString()] as string;
 
                 if (cached != null)
                 {
@@ -35,18 +35,18 @@
 
                 string value = this.inner[key];
 
-                if (!string.Equals(key, value, StringComparison.Ordinal))
+                if (!string.Equals(key.ToString(), value, StringComparison.Ordinal))
                 {
                     ExternalInvalidationPolicy policy = new ExternalInvalidationPolicy { SlidingExpiration = TimeSpan.FromMinutes(10) };
 
                     this.cacheInvalidationManager.Invalidated += policy.OnInvalidated;
 
-                    this.cache.Add(key, value, policy);
+                    this.cache.Add(key.ToString(), value, policy);
 
                     return value;
                 }
 
-                return key;
+                return key.ToString();
             }
         }
     }

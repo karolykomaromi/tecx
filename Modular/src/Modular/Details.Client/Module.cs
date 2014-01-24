@@ -42,7 +42,7 @@
                     new NavigationCommand(regionManager.Regions[Regions.Shell.Content]))
                         {
                             Destination = new Uri("ProductDetailsView", UriKind.Relative),
-                            Name = this.resourceManager["Details.Label_NavigationMenuEntry"]
+                            Name = this.resourceManager[new ResxKey("Details.Label_NavigationMenuEntry")]
                         });
         }
 

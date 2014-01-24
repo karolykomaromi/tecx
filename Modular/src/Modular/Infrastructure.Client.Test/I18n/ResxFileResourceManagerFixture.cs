@@ -4,7 +4,6 @@
     using System.Threading;
     using Infrastructure.Client.Test.Assets.Resources;
     using Infrastructure.I18n;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -37,9 +36,7 @@
 
             IResourceManager resourceManager = new ResxFilesResourceManager(typeof(Labels));
 
-            string key = "INFRASTRUCTURE.TRANSLATEME";
-
-            string actual = resourceManager[key];
+            string actual = resourceManager[new ResxKey("INFRASTRUCTURE.TRANSLATEME")];
 
             Assert.AreEqual("english", actual);
         }
@@ -54,9 +51,7 @@
 
             IResourceManager resourceManager = new ResxFilesResourceManager(typeof(Labels));
 
-            string key = "INFRASTRUCTURE.TRANSLATEME";
-
-            string actual = resourceManager[key];
+            string actual = resourceManager[new ResxKey("INFRASTRUCTURE.TRANSLATEME")];
 
             Assert.AreEqual("deutsch", actual);
         }
