@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-
-namespace Search
+﻿namespace Search
 {
     using System;
     using System.Collections.Generic;
@@ -8,6 +6,7 @@ namespace Search
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Threading;
+    using AutoMapper;
     using Infrastructure;
     using Infrastructure.Commands;
     using Infrastructure.I18n;

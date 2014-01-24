@@ -158,6 +158,10 @@
       <Project>{13CEE176-151F-4B3A-BC0A-9066E8E84B7B}</Project>
       <Name>Infrastructure.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Main.Client\Main.Client.csproj">
+      <Project>{AC8B5172-A2ED-4E4B-B7CA-63346627AA80}</Project>
+      <Name>Main.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Search.Client\Search.Client.csproj">
       <Project>{D1E90FA8-5C6B-4ABB-829E-AB5CBE36B605}</Project>
       <Name>Search.Client</Name>

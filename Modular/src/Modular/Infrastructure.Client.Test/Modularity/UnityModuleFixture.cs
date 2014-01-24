@@ -1,12 +1,13 @@
-﻿namespace Infrastructure.Client.Test
+namespace Infrastructure.Client.Test.Modularity
 {
     using Infrastructure.Client.Test.TestObjects;
+    using Infrastructure.Modularity;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Modularity;
+    using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
-    using IModuleInitializer = Infrastructure.Modularity.IModuleInitializer;
 
     [TestClass]
     public class UnityModuleFixture
@@ -16,9 +17,10 @@
         {
             IUnityContainer container = new UnityContainer();
             var logger = new Mock<ILoggerFacade>();
-            var initializer = new Mock<IModuleInitializer>();
+            var regionManager = new Mock<IRegionManager>();
+            var initializer = new RegionInitializer(regionManager.Object);
 
-            IModule module = new ViewModelResolutionFailsModule(container, logger.Object, initializer.Object);
+            IModule module = new ViewModelResolutionFailsModule(container, logger.Object, initializer);
 
             module.Initialize();
 
@@ -30,9 +32,10 @@
         {
             IUnityContainer container = new UnityContainer();
             var logger = new Mock<ILoggerFacade>();
-            var initializer = new Mock<IModuleInitializer>();
+            var regionManager = new Mock<IRegionManager>();
+            var initializer = new RegionInitializer(regionManager.Object);
 
-            IModule module = new ViewResolutionFailsModule(container, logger.Object, initializer.Object);
+            IModule module = new ViewResolutionFailsModule(container, logger.Object, initializer);
 
             module.Initialize();
 
@@ -44,9 +47,10 @@
         {
             IUnityContainer container = new UnityContainer();
             var logger = new Mock<ILoggerFacade>();
-            var initializer = new Mock<IModuleInitializer>();
+            var regionManager = new Mock<IRegionManager>();
+            var initializer = new RegionInitializer(regionManager.Object);
 
-            IModule module = new NoViewModule(container, logger.Object, initializer.Object);
+            IModule module = new NoViewModule(container, logger.Object, initializer);
 
             module.Initialize();
 

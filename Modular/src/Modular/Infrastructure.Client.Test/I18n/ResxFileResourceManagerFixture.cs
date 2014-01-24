@@ -28,7 +28,7 @@
         }
 
         [TestMethod]
-        public void Should_Return_Matching_String()
+        public void Should_Return_String_For_en_US()
         {
             CultureInfo englishUs = new CultureInfo("en-US");
 
@@ -42,6 +42,23 @@
             string actual = resourceManager[key];
 
             Assert.AreEqual("english", actual);
+        }
+
+        [TestMethod]
+        public void Should_Return_String_For_de_DE()
+        {
+            CultureInfo englishUs = new CultureInfo("de-DE");
+
+            Thread.CurrentThread.CurrentCulture = englishUs;
+            Thread.CurrentThread.CurrentUICulture = englishUs;
+
+            IResourceManager resourceManager = new ResxFilesResourceManager(typeof(Labels));
+
+            string key = "INFRASTRUCTURE.TRANSLATEME";
+
+            string actual = resourceManager[key];
+
+            Assert.AreEqual("deutsch", actual);
         }
     }
 }
