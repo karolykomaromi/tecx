@@ -37,9 +37,9 @@
 
                 if (!string.Equals(key.ToString(), value, StringComparison.Ordinal))
                 {
-                    ExternalInvalidationPolicy policy = new ExternalInvalidationPolicy { SlidingExpiration = 10.Minutes() };
+                    ExternalInvalidationPolicy policy = new ExternalInvalidationPolicy(CacheRegions.Resources);
 
-                    this.cacheInvalidationManager.Invalidated += policy.OnInvalidated;
+                    this.cacheInvalidationManager.CacheInvalidated += policy.OnCacheInvalidated;
 
                     this.cache.Add(key.ToString(), value, policy);
 

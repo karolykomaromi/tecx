@@ -1,9 +1,11 @@
 namespace Infrastructure.I18n
 {
     using System;
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.Linq.Expressions;
 
+    [DebuggerDisplay("key")]
     public struct ResxKey
     {
         public static readonly ResxKey Empty = new ResxKey("EMPTY_RESX_KEY");
@@ -17,7 +19,17 @@ namespace Infrastructure.I18n
             this.key = string.Intern(key.ToUpperInvariant());
         }
 
-        public ResxKey Create<T>(Expression<Func<T, string>> propertySelector)
+        public static bool operator ==(ResxKey x, ResxKey y)
+        {
+            return x.Equals(y);
+        }
+
+        public static bool operator !=(ResxKey x, ResxKey y)
+        {
+            return !x.Equals(y);
+        }
+
+        public static ResxKey Create<T>(Expression<Func<T, string>> propertySelector)
         {
             return new ResxKey(ReflectionHelper.GetPropertyName(propertySelector));
         }

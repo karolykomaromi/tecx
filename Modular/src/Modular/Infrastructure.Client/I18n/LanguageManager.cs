@@ -2,7 +2,7 @@
 {
     using System;
     using System.Windows.Threading;
-
+    using Infrastructure.Events;
     using Microsoft.Practices.ServiceLocation;
 
     public class LanguageManager : Alerting, ILanguageManager
@@ -31,12 +31,12 @@
         {
             add
             {
-                this.AddWeakReferenceHandler(value);
+                this.AddHandler(value);
             }
 
             remove
             {
-                this.RemoveWeakReferenceHandler(value);
+                this.RemoveHandler(value);
             }
         }
 

@@ -1,13 +1,22 @@
 ﻿namespace Infrastructure.Caching
 {
-    using System;
     using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
 
     public class ExternalInvalidationPolicy : CacheItemPolicy
     {
-        public void OnInvalidated(object sender, EventArgs args)
+        private readonly CacheRegionName cacheRegionName;
+
+        public ExternalInvalidationPolicy(CacheRegionName cacheRegionName)
         {
-            this.AbsoluteExpiration = TimeProvider.Now - 1.Days();
+            this.cacheRegionName = cacheRegionName;
+        }
+
+        public void OnCacheInvalidated(object sender, CacheInvalidationEventArgs args)
+        {
+            if (args.CacheRegion == this.cacheRegionName || args.CacheRegion == CacheRegions.All)
+            {
+                this.AbsoluteExpiration = TimeProvider.Now - 1.Days();
+            }
         }
     }
 }

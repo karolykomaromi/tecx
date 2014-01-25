@@ -2,6 +2,7 @@ namespace Infrastructure.Commands
 {
     using System;
     using System.Windows.Threading;
+    using Infrastructure.Events;
 
     public class CommandManager : Alerting, ICommandManager
     {
@@ -12,9 +13,9 @@ namespace Infrastructure.Commands
 
         public event EventHandler RequerySuggested
         {
-            add { this.AddWeakReferenceHandler(value); }
+            add { this.AddHandler(value); }
 
-            remove { this.RemoveWeakReferenceHandler(value); }
+            remove { this.RemoveHandler(value); }
         }
 
         public void InvalidateRequerySuggested()
