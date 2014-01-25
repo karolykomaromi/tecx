@@ -1,7 +1,7 @@
-﻿using Infrastructure.ViewModels;
-
-namespace Infrastructure.Client.Test.TestObjects
+﻿namespace Infrastructure.Client.Test.TestObjects
 {
+    using Infrastructure.ViewModels;
+
     public class MultiLanguageViewModel : ViewModel
     {
         public string Foo

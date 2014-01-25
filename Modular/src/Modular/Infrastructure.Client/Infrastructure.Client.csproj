@@ -106,6 +106,9 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="..\Infrastructure.Server\TimeExtensions.cs">
+      <Link>TimeExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Infrastructure.Server\TimeProvider.cs">
       <Link>TimeProvider.cs</Link>
     </Compile>
@@ -158,6 +161,7 @@
     <Compile Include="UnityExtensions\RegionStrategy.cs" />
     <Compile Include="UnityExtensions\ResourceManagerExtension.cs" />
     <Compile Include="UnityExtensions\ResourceManagerStrategy.cs" />
+    <Compile Include="ViewModels\Navigate.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\NavigationView.xaml.cs">

@@ -7,7 +7,7 @@
     {
         public void OnInvalidated(object sender, EventArgs args)
         {
-            this.AbsoluteExpiration = TimeProvider.Now;
+            this.AbsoluteExpiration = TimeProvider.Now - 1.Days();
         }
     }
 }

@@ -18,7 +18,7 @@
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            //CultureInfo culture = new CultureInfo("de-DE");
+            // CultureInfo culture = new CultureInfo("de-DE");
             CultureInfo culture = new CultureInfo("en-US");
 
             Thread.CurrentThread.CurrentCulture = culture;
