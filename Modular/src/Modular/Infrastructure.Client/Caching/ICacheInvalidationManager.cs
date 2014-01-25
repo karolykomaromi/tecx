@@ -4,8 +4,8 @@
 
     public interface ICacheInvalidationManager
     {
-        event EventHandler Invalidated;
+        event EventHandler<CacheInvalidationEventArgs> CacheInvalidated;
 
-        void RequestInvalidate();
+        void RequestInvalidate(CacheRegionName cacheRegion);
     }
 }

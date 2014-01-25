@@ -112,8 +112,10 @@
     <Compile Include="..\Infrastructure.Server\TimeProvider.cs">
       <Link>TimeProvider.cs</Link>
     </Compile>
-    <Compile Include="Alerting.cs" />
+    <Compile Include="Caching\CacheInvalidationEventArgs.cs" />
     <Compile Include="Caching\CacheInvalidationManager.cs" />
+    <Compile Include="Caching\CacheRegionName.cs" />
+    <Compile Include="Caching\CacheRegions.cs" />
     <Compile Include="Caching\ExternalInvalidationPolicy.cs" />
     <Compile Include="Caching\ICacheInvalidationManager.cs" />
     <Compile Include="Commands\CommandManager.cs" />
@@ -123,7 +125,9 @@
     <Compile Include="Commands\NullCommandManager.cs" />
     <Compile Include="DispatchingShowThings.cs" />
     <Compile Include="DoubleClickTrigger.cs" />
+    <Compile Include="Events\Alerting.cs" />
     <Compile Include="Events\EventAggregator.cs" />
+    <Compile Include="Events\EventHandlerList.cs" />
     <Compile Include="Events\IEventAggregator.cs" />
     <Compile Include="Events\ISubscribeTo.cs" />
     <Compile Include="Events\TypeExtensions.cs" />

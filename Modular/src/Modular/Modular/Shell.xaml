@@ -24,10 +24,10 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Border BorderBrush="Black" BorderThickness="1" Background="Aqua">
-                <ItemsControl regions:RegionManager.RegionName="Menu" />
+                <ItemsControl regions:RegionManager.RegionName="MenuLeft" />
             </Border>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Background="BlueViolet">
-                <ContentControl regions:RegionManager.RegionName="Language" HorizontalContentAlignment="Stretch" />
+                <ContentControl regions:RegionManager.RegionName="MenuRight" HorizontalContentAlignment="Stretch" />
             </Border>
         </Grid>
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Background="Khaki" >

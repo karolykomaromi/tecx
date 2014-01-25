@@ -2,24 +2,25 @@
 {
     using System;
     using System.Windows.Threading;
+    using Infrastructure.Events;
 
-    public class CacheInvalidationManager : Alerting, ICacheInvalidationManager
+    public class CacheInvalidationManager : Alerting<CacheInvalidationEventArgs>, ICacheInvalidationManager
     {
         public CacheInvalidationManager(Dispatcher dispatcher)
             : base(dispatcher)
         {
         }
 
-        public event EventHandler Invalidated
+        public event EventHandler<CacheInvalidationEventArgs> CacheInvalidated
         {
-            add { this.AddWeakReferenceHandler(value); }
+            add { this.AddHandler(value); }
 
-            remove { this.RemoveWeakReferenceHandler(value); }
+            remove { this.RemoveHandler(value); }
         }
 
-        public void RequestInvalidate()
+        public void RequestInvalidate(CacheRegionName cacheRegion)
         {
-            this.RaiseEvent();
+            this.RaiseEvent(new CacheInvalidationEventArgs(cacheRegion));
         }
     }
 }

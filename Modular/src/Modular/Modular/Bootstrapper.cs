@@ -98,7 +98,7 @@
             /// <summary>
             /// appWideResources
             /// </summary>
-            public const string AppWideResources = "appWideResources";
+            public static readonly string AppWideResources = "appWideResources";
         }
     }
 }

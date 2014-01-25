@@ -41,7 +41,7 @@ namespace Main.Commands
                 Thread.CurrentThread.CurrentUICulture = culture;
 
                 // must invalidate cache before triggering reload of localized resources
-                this.cacheInvalidationManager.RequestInvalidate();
+                this.cacheInvalidationManager.RequestInvalidate(CacheRegions.Resources);
                 this.languageManager.NotifyApplicationLanguageChanged();
             }
         }

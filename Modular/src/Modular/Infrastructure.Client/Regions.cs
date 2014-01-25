@@ -7,27 +7,27 @@
             /// <summary>
             /// TopLeft
             /// </summary>
-            public const string TopLeft = "TopLeft";
+            public static readonly string TopLeft = "TopLeft";
 
             /// <summary>
             /// Content
             /// </summary>
-            public const string Content = "Content";
+            public static readonly string Content = "Content";
 
             /// <summary>
             /// Navigation
             /// </summary>
-            public const string Navigation = "Navigation";
+            public static readonly string Navigation = "Navigation";
 
             /// <summary>
-            /// Menu
+            /// MenuLeft
             /// </summary>
-            public const string Menu = "Menu";
+            public static readonly string MenuLeft = "MenuLeft";
 
             /// <summary>
-            /// Language
+            /// MenuRight
             /// </summary>
-            public const string Language = "Language";
+            public static readonly string MenuRight = "MenuRight";
         }
     }
 }
