@@ -9,14 +9,6 @@
     {
         private static readonly Lazy<ILanguageManager> Lazy = new Lazy<ILanguageManager>(() => ServiceLocator.Current.GetInstance<ILanguageManager>());
 
-        public static ILanguageManager Current
-        {
-            get
-            {
-                return Lazy.Value;
-            }
-        }
-
         public LanguageManager(Dispatcher dispatcher)
             : base(dispatcher)
         {
@@ -45,6 +37,14 @@
             remove
             {
                 this.RemoveWeakReferenceHandler(value);
+            }
+        }
+
+        public static ILanguageManager Current
+        {
+            get
+            {
+                return Lazy.Value;
             }
         }
 

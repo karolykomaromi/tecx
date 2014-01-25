@@ -2,13 +2,14 @@
 {
     using System;
     using System.Windows;
+
     using Details.Assets.Resources;
     using Details.ViewModels;
     using Infrastructure;
-    using Infrastructure.Commands;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
     using Infrastructure.ViewModels;
+
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
@@ -36,14 +37,12 @@
                 regionManager.AddToRegion(Regions.Shell.Content, detailsView);
             }
 
-            regionManager.AddToRegion(
-                Regions.Shell.Navigation,
-                new NavigationViewModel(
-                    new NavigationCommand(regionManager.Regions[Regions.Shell.Content]))
-                        {
-                            Destination = new Uri("ProductDetailsView", UriKind.Relative),
-                            Name = this.resourceManager[new ResxKey("Details.Label_NavigationMenuEntry")]
-                        });
+            NavigationViewModel navigationViewModel = new Navigate()
+                                                        .ToView(detailsView)
+                                                        .InRegion(regionManager.Regions[Regions.Shell.Content])
+                                                        .WithLabel(new ResxKey("DETAILS.LABEL_NAVIGATIONMENUENTRY"));
+
+            regionManager.AddToRegion(Regions.Shell.Navigation, navigationViewModel);
         }
 
         protected override IResourceManager CreateResourceManager()

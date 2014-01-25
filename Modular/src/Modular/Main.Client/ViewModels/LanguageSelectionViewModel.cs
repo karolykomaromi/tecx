@@ -32,11 +32,14 @@
 
         public CultureInfo SelectedLanguage
         {
-            get { return this.selectedLanguage; }
+            get
+            {
+                return this.selectedLanguage;
+            }
 
             set
             {
-                if (this.selectedLanguage != value)
+                if (!object.Equals(this.selectedLanguage, value))
                 {
                     this.OnPropertyChanging(() => this.SelectedLanguage);
                     this.selectedLanguage = value;

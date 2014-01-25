@@ -4,17 +4,21 @@ namespace Infrastructure.ViewModels
     using System.Diagnostics.Contracts;
     using System.Windows.Input;
 
+    using Infrastructure.I18n;
+
     public class NavigationViewModel : ViewModel
     {
         private readonly ICommand navigationCommand;
+        private readonly LocalizedString name;
         private Uri destination;
-        private string name;
 
-        public NavigationViewModel(ICommand navigationCommand)
+        public NavigationViewModel(ICommand navigationCommand, ResxKey resourceKey)
         {
             Contract.Requires(navigationCommand != null);
 
             this.navigationCommand = navigationCommand;
+
+            this.name = new LocalizedString(this, ReflectionHelper.GetPropertyName(() => this.Name), resourceKey, this.OnPropertyChanged);
         }
 
         public Uri Destination
@@ -39,17 +43,7 @@ namespace Infrastructure.ViewModels
         {
             get
             {
-                return this.name;
-            }
-
-            set
-            {
-                if (this.name != value)
-                {
-                    this.OnPropertyChanging(() => this.Name);
-                    this.name = value;
-                    this.OnPropertyChanged(() => this.Name);
-                }
+                return this.name.Value;
             }
         }
 

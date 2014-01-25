@@ -19,27 +19,27 @@
         {
             get
             {
-                string rxk = key.ToString();
+                string rsk = key.ToString();
 
-                int lastIndexOfDot = Math.Max(0, rxk.LastIndexOf('.'));
+                int lastIndexOfDot = Math.Max(0, rsk.LastIndexOf('.'));
 
-                if (!this.resxType.FullName.StartsWith(rxk.Substring(0, lastIndexOfDot), StringComparison.OrdinalIgnoreCase))
+                if (!this.resxType.FullName.StartsWith(rsk.Substring(0, lastIndexOfDot), StringComparison.OrdinalIgnoreCase))
                 {
-                    return rxk;
+                    return rsk;
                 }
 
-                PropertyInfo property = this.resxType.GetProperty(rxk.Substring(lastIndexOfDot + 1), BindingFlags.Static | BindingFlags.Public | BindingFlags.IgnoreCase);
+                PropertyInfo property = this.resxType.GetProperty(rsk.Substring(lastIndexOfDot + 1), BindingFlags.Static | BindingFlags.Public | BindingFlags.IgnoreCase);
 
                 if (property == null)
                 {
-                    return rxk;
+                    return rsk;
                 }
 
                 MethodInfo getter = property.GetGetMethod();
 
                 if (getter == null)
                 {
-                    return rxk;
+                    return rsk;
                 }
 
                 string value = getter.Invoke(null, null) as string;
@@ -49,7 +49,7 @@
                     return value;
                 }
 
-                return rxk;
+                return rsk;
             }
         }
     }

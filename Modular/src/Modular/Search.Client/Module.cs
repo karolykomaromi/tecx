@@ -85,14 +85,12 @@
                 regionManager.AddToRegion(Regions.Shell.Content, searchResultView);
             }
 
-            regionManager.AddToRegion(
-                Regions.Shell.Navigation,
-                new NavigationViewModel(
-                    new NavigationCommand(regionManager.Regions[Regions.Shell.Content]))
-                    {
-                        Destination = new Uri("SearchResultsView", UriKind.Relative),
-                        Name = this.resourceManager[new ResxKey("Search.Label_NavigationMenuEntry")]
-                    });
+            NavigationViewModel navigationViewModel = new Navigate()
+                                                        .ToView(searchResultView)
+                                                        .InRegion(regionManager.Regions[Regions.Shell.Content])
+                                                        .WithLabel(new ResxKey("SEARCH.LABEL_NAVIGATIONMENUENTRY"));
+
+            regionManager.AddToRegion(Regions.Shell.Navigation, navigationViewModel);
         }
 
         protected override IResourceManager CreateResourceManager()

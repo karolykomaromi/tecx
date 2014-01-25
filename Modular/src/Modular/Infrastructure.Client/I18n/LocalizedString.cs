@@ -56,9 +56,7 @@
             Contract.Requires(notifyPropertyChanged != null);
             Contract.Requires(languageManager != null);
 
-            MemberExpression property = (MemberExpression)propertySelector.Body;
-
-            string propertyName = property.Member.Name;
+            string propertyName = ReflectionHelper.GetPropertyName(propertySelector);
 
             string rk = new StringBuilder(viewModel.GetType().FullName)
                         .Append(".")
