@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure
 {
-    public static class Regions
+    public static class RegionNames
     {
         public static class Shell
         {

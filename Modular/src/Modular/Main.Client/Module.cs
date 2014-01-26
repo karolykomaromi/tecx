@@ -29,7 +29,7 @@
             FrameworkElement view;
             if (this.TryGetViewFor<LanguageSelectionViewModel>(out view))
             {
-                regionManager.AddToRegion(Regions.Shell.MenuRight, view);
+                regionManager.AddToRegion(RegionNames.Shell.MenuRight, view);
             }
         }
 

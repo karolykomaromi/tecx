@@ -10,12 +10,6 @@
             RegionInitializer regionInitializer)
             : base(containerInitializer, resourceManagerInitializer, moduleResourcesInitializer, autoMapperInitializer, regionInitializer)
         {
-            ////this.ConfigureContainer(this.container);
-            ////IResourceManager resourceManager = this.CreateResourceManager();
-            ////this.ResourceAppender.Add(resourceManager);
-            ////ResourceDictionary moduleResources = this.CreateModuleResources();
-            ////this.ResourceAppender.Add(moduleResources);
-            ////this.ConfigureRegions(this.RegionManager);
         }
     }
 }

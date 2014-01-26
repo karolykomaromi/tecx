@@ -27,21 +27,16 @@
         /// </summary>
         public static readonly string Name = "Search";
 
-        private readonly IResourceManager resourceManager;
-
-        public Module(IUnityContainer container, ILoggerFacade logger, IModuleInitializer initializer, IResourceManager resourceManager)
+        public Module(IUnityContainer container, ILoggerFacade logger, IModuleInitializer initializer)
             : base(container, logger, initializer)
         {
-            Contract.Requires(resourceManager != null);
-
-            this.resourceManager = resourceManager;
         }
 
         protected override void ConfigureContainer(IUnityContainer container)
         {
             container.RegisterType<SearchResultsViewModel>(
                 new ContainerControlledLifetimeManager(), 
-                new InjectionConstructor(new ResolvedParameter<ICommand>(Regions.Shell.Content), typeof(IMappingEngine)));
+                new InjectionConstructor(new ResolvedParameter<ICommand>(RegionNames.Shell.Content), typeof(IMappingEngine)));
             container.RegisterType<IShowThings<IEnumerable<SearchResult>>, SearchResultsViewModel>();
             container.RegisterType<IShowThings<IEnumerable<SearchResult>>, DispatchingShowThings<IEnumerable<SearchResult>>>("dispatch");
 
@@ -64,11 +59,13 @@
                 "dispatch", 
                 new InjectionConstructor(new ResolvedParameter<IShowThings<IEnumerable<string>>>("lazy"), typeof(Dispatcher)));
 
-            container.RegisterType<ISearchService, SearchServiceClient>(new InjectionConstructor());
+            this.Container.RegisterType<ISearchService, SearchServiceClient>("client", new InjectionConstructor());
+            this.Container.RegisterType<ISearchService, DispatchingSearchServiceClient>(
+                new InjectionConstructor(new ResolvedParameter<ISearchService>("client"), typeof(Dispatcher)));
 
             container.RegisterType<ICommand, NavigationCommand>(
-                Regions.Shell.Content, 
-                new InjectionConstructor(new ResolvedParameter<INavigateAsync>(Regions.Shell.Content)));
+                RegionNames.Shell.Content, 
+                new InjectionConstructor(new ResolvedParameter<INavigateAsync>(RegionNames.Shell.Content)));
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)
@@ -76,21 +73,21 @@
             FrameworkElement searchView;
             if (this.TryGetViewFor<SearchViewModel>(out searchView))
             {
-                regionManager.AddToRegion(Regions.Shell.TopLeft, searchView);
+                regionManager.AddToRegion(RegionNames.Shell.TopLeft, searchView);
             }
 
             FrameworkElement searchResultView;
             if (this.TryGetViewFor<SearchResultsViewModel>(out searchResultView))
             {
-                regionManager.AddToRegion(Regions.Shell.Content, searchResultView);
+                regionManager.AddToRegion(RegionNames.Shell.Content, searchResultView);
             }
 
-            NavigationViewModel navigationViewModel = new Navigate()
+            NavigationViewModel navigationViewModel = new NavigationBuilder()
                                                         .ToView(searchResultView)
-                                                        .InRegion(regionManager.Regions[Regions.Shell.Content])
+                                                        .InRegion(regionManager.Regions[RegionNames.Shell.Content])
                                                         .WithLabel(new ResxKey("SEARCH.LABEL_NAVIGATIONMENUENTRY"));
 
-            regionManager.AddToRegion(Regions.Shell.Navigation, navigationViewModel);
+            regionManager.AddToRegion(RegionNames.Shell.Navigation, navigationViewModel);
         }
 
         protected override IResourceManager CreateResourceManager()

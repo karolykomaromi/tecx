@@ -4,7 +4,7 @@
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
-    [DebuggerDisplay("regionName")]
+    [DebuggerDisplay("{regionName}")]
     public struct CacheRegionName
     {
         private readonly string regionName;

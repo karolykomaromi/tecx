@@ -9,7 +9,7 @@
     }
 
     [ContractClassFor(typeof(IResourceManager))]
-    public abstract class ResourceManagerContract : IResourceManager
+    internal abstract class ResourceManagerContract : IResourceManager
     {
         public string this[ResxKey key]
         {

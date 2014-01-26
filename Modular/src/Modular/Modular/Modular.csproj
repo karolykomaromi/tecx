@@ -105,6 +105,7 @@
       <HintPath>..\packages\Unity.2.1.505.2\lib\SL30\Microsoft.Practices.Unity.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />

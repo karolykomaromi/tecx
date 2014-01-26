@@ -10,7 +10,7 @@
     }
 
     [ContractClassFor(typeof(IShowThings<>))]
-    public abstract class ShowThingsContract<T> : IShowThings<T>
+    internal abstract class ShowThingsContract<T> : IShowThings<T>
         where T : class
     {
         public void Show(T thing)
