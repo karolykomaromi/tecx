@@ -17,7 +17,7 @@
     }
 
     [ContractClassFor(typeof(ISearchService))]
-    public abstract class SearchServiceContract : ISearchService
+    internal abstract class SearchServiceContract : ISearchService
     {
         public string[] SearchSuggestions(string searchTerm)
         {

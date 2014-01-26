@@ -7,7 +7,12 @@
     {
         public string[] SearchSuggestions(string searchTerm)
         {
-            return new[] { "abc123", "def456", "ghi789" };
+            return new[]
+                   {
+                       searchTerm + "123", 
+                       "FOO" + searchTerm + "BAR", 
+                       searchTerm + searchTerm + searchTerm
+                   };
         }
 
         public SearchResult[] Search(string searchTerm)

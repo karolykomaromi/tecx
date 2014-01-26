@@ -11,6 +11,5 @@
         /// ALL_REGIONS
         /// </summary>
         public static readonly CacheRegionName All = new CacheRegionName("ALL_REGIONS");
-
     }
 }

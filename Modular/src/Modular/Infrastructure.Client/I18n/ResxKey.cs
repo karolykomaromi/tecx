@@ -5,7 +5,7 @@ namespace Infrastructure.I18n
     using System.Diagnostics.Contracts;
     using System.Linq.Expressions;
 
-    [DebuggerDisplay("key")]
+    [DebuggerDisplay("{key}")]
     public struct ResxKey
     {
         public static readonly ResxKey Empty = new ResxKey("EMPTY_RESX_KEY");

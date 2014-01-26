@@ -9,7 +9,7 @@
     }
 
     [ContractClassFor(typeof(IModuleInitializer))]
-    public abstract class ModuleInitializerContract : IModuleInitializer
+    internal abstract class ModuleInitializerContract : IModuleInitializer
     {
         public void Initialize(UnityModule module)
         {

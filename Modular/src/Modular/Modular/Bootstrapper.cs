@@ -5,12 +5,14 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Markup;
+    using System.Windows.Threading;
     using AutoMapper;
     using Infrastructure;
     using Infrastructure.Caching;
     using Infrastructure.Commands;
     using Infrastructure.Events;
     using Infrastructure.I18n;
+    using Infrastructure.ListViews;
     using Infrastructure.Modularity;
     using Infrastructure.UnityExtensions;
     using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
@@ -20,6 +22,7 @@
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Prism.UnityExtensions;
     using Microsoft.Practices.Unity;
+    using Search;
 
     public class Bootstrapper : UnityBootstrapper
     {
@@ -84,6 +87,10 @@
 
             this.Container.RegisterInstance<IMappingEngine>(Mapper.Engine);
             this.Container.RegisterType<ILanguageManager, LanguageManager>(new ContainerControlledLifetimeManager());
+
+            this.Container.RegisterType<IListViewService, ListViewServiceClient>("client", new InjectionConstructor());
+            this.Container.RegisterType<IListViewService, DispatchingListViewServiceClient>(
+                new InjectionConstructor(new ResolvedParameter<IListViewService>("client"), typeof(Dispatcher)));
         }
 
         protected override void ConfigureModuleCatalog()

@@ -1,15 +1,15 @@
 ﻿namespace Details
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Windows;
-
+    using System.Windows.Threading;
     using Details.Assets.Resources;
     using Details.ViewModels;
     using Infrastructure;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
     using Infrastructure.ViewModels;
-
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
@@ -21,12 +21,9 @@
         /// </summary>
         public static readonly string Name = "Details";
 
-        private readonly IResourceManager resourceManager;
-
-        public Module(IUnityContainer container, ILoggerFacade logger, IModuleInitializer initializer, IResourceManager resourceManager)
+        public Module(IUnityContainer container, ILoggerFacade logger, IModuleInitializer initializer)
             : base(container, logger, initializer)
         {
-            this.resourceManager = resourceManager;
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)
@@ -34,15 +31,15 @@
             FrameworkElement detailsView;
             if (this.TryGetViewFor<ProductDetailsViewModel>(out detailsView))
             {
-                regionManager.AddToRegion(Regions.Shell.Content, detailsView);
+                regionManager.AddToRegion(RegionNames.Shell.Content, detailsView);
             }
 
-            NavigationViewModel navigationViewModel = new Navigate()
+            NavigationViewModel navigationViewModel = new NavigationBuilder()
                                                         .ToView(detailsView)
-                                                        .InRegion(regionManager.Regions[Regions.Shell.Content])
+                                                        .InRegion(regionManager.Regions[RegionNames.Shell.Content])
                                                         .WithLabel(new ResxKey("DETAILS.LABEL_NAVIGATIONMENUENTRY"));
 
-            regionManager.AddToRegion(Regions.Shell.Navigation, navigationViewModel);
+            regionManager.AddToRegion(RegionNames.Shell.Navigation, navigationViewModel);
         }
 
         protected override IResourceManager CreateResourceManager()

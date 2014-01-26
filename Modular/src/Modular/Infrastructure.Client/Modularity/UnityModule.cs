@@ -8,7 +8,9 @@ namespace Infrastructure.Modularity
     using System.Windows;
     using AutoMapper;
     using Infrastructure.I18n;
+    using Infrastructure.ListViews;
     using Infrastructure.ViewModels;
+    using Infrastructure.Views;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Modularity;
     using Microsoft.Practices.Prism.Regions;
@@ -34,6 +36,11 @@ namespace Infrastructure.Modularity
         protected ILoggerFacade Logger
         {
             get { return this.logger; }
+        }
+
+        protected IUnityContainer Container
+        {
+            get { return this.container; }
         }
 
         public virtual void Initialize()
@@ -91,7 +98,7 @@ namespace Infrastructure.Modularity
             return new ResourceDictionary();
         }
 
-        protected virtual bool TryGetViewFor<TViewModel>(out FrameworkElement view)
+        protected virtual bool TryGetViewFor<TViewModel>(out FrameworkElement view, params Parameter[] parameters)
             where TViewModel : ViewModel
         {
             string viewTypeName = typeof(TViewModel).AssemblyQualifiedName.Replace("ViewModel", "View");
@@ -103,7 +110,7 @@ namespace Infrastructure.Modularity
             {
                 try
                 {
-                    view = this.container.Resolve(viewType) as FrameworkElement;
+                    view = this.Container.Resolve(viewType) as FrameworkElement;
                 }
                 catch (ResolutionFailedException ex)
                 {
@@ -120,7 +127,23 @@ namespace Infrastructure.Modularity
 
                     try
                     {
-                        vm = this.container.Resolve<TViewModel>();
+                        if (parameters != null && parameters.Length > 0)
+                        {
+                            ResolverOverride[] overrides = new ResolverOverride[parameters.Length];
+
+                            for (int i = 0; i < parameters.Length - 1; i++)
+                            {
+                                Parameter parameter = parameters[i];
+
+                                overrides[i] = new ParameterOverride(parameter.ParameterName, parameter.ParameterValue);
+                            }
+
+                            vm = this.Container.Resolve<TViewModel>(overrides);
+                        }
+                        else
+                        {
+                            vm = this.Container.Resolve<TViewModel>();
+                        }
                     }
                     catch (ResolutionFailedException ex)
                     {
@@ -141,6 +164,37 @@ namespace Infrastructure.Modularity
             this.Logger.Log(message, Category.Warn, Priority.High);
             view = null;
             return false;
+        }
+
+        protected virtual bool TryGetListView(ListViewName listViewName, out DynamicListView view)
+        {
+            view = null;
+            return false;
+        }
+
+        protected class Parameter
+        {
+            private readonly string parameterName;
+
+            private readonly object parameterValue;
+
+            public Parameter(string parameterName, object parameterValue)
+            {
+                Contract.Requires(!string.IsNullOrEmpty(parameterName));
+
+                this.parameterName = parameterName;
+                this.parameterValue = parameterValue;
+            }
+
+            public string ParameterName
+            {
+                get { return this.parameterName; }
+            }
+
+            public object ParameterValue
+            {
+                get { return this.parameterValue; }
+            }
         }
     }
 }

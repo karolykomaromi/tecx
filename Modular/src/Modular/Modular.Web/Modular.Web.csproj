@@ -27,6 +27,11 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -77,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientBin\Modular.xap" />
+    <Content Include="ListViewService.svc" />
     <Content Include="Modular.aspx" />
     <Content Include="Modular.html" />
     <Content Include="SearchService.svc" />
