@@ -1,5 +1,3 @@
-using Infrastructure.Meta;
-
 namespace Infrastructure.ListViews
 {
     using System;
@@ -7,6 +5,7 @@ namespace Infrastructure.ListViews
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
+    using Infrastructure.Meta;
 
     /// <summary>
     /// A custom System.Type implementation that can provide different Properties at runtime.  All operations except those related to

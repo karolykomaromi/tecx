@@ -1,4 +1,4 @@
-﻿namespace Infrastructure
+namespace Infrastructure.Triggers
 {
     using System.ComponentModel;
     using System.Windows;

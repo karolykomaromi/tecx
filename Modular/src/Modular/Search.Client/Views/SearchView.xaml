@@ -7,18 +7,25 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:mvvvm="http://www.galasoft.ch/mvvmlight"
     xmlns:viewModels="clr-namespace:Search.ViewModels"
-    mc:Ignorable="d"
+             xmlns:triggers="clr-namespace:Infrastructure.Triggers;assembly=Infrastructure.Client"
+             mc:Ignorable="d"
     d:DesignHeight="50" d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance d:Type=viewModels:SearchViewModel}" xmlns:my="clr-namespace:Modular;assembly=Modular">
+    d:DataContext="{d:DesignInstance d:Type=viewModels:SearchViewModel}">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <sdk:AutoCompleteBox Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Suggestions}" FilterMode="None">
+        <sdk:AutoCompleteBox Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Suggestions}" FilterMode="None" MinimumPrefixLength="3">
             <i:Interaction.Triggers>
-                <i:EventTrigger EventName="TextChanged">
-                    <mvvvm:EventToCommand Command="{Binding SuggestionsCommand}" CommandParameter="{Binding}"/>
+                <i:EventTrigger EventName="Populating">
+                    <!--<mvvvm:EventToCommand Command="{Binding SuggestionsCommand}" CommandParameter="{Binding}" PassEventArgsToCommand="True" />-->
+                    <triggers:AutoCompleteToCommand Command="{Binding SuggestionsCommand}" CommandParameter="{Binding}" />
+                    <!--<mvvvm:EventToCommand Command="{Binding SuggestionsCommand}" PassEventArgsToCommand="True">
+                        <mvvvm:EventToCommand.CommandParameter>
+                            <Binding></Binding>
+                        </mvvvm:EventToCommand.CommandParameter>
+                    </mvvvm:EventToCommand>-->
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </sdk:AutoCompleteBox>

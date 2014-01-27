@@ -81,9 +81,9 @@ namespace Search.ViewModels
             this.searchService.BeginSearch(this.SearchTerm, this.OnSearchCompleted, null);
         }
 
-        public void SearchSuggestions()
+        public void SearchSuggestions(Action completed)
         {
-            this.searchService.BeginSearchSuggestions(this.SearchTerm, this.OnSearchSuggestionsCompleted, null);
+            this.searchService.BeginSearchSuggestions(this.SearchTerm, this.OnSearchSuggestionsCompleted, completed);
         }
 
         private void OnSearchCompleted(IAsyncResult ar)
@@ -96,13 +96,17 @@ namespace Search.ViewModels
         private void OnSearchSuggestionsCompleted(IAsyncResult ar)
         {
             string[] searchSuggestions = this.searchService.EndSearchSuggestions(ar);
-            
+
             this.Suggestions.Clear();
 
-            foreach (string suggestion in this.suggestions)
+            foreach (string suggestion in searchSuggestions)
             {
                 this.Suggestions.Add(suggestion);
             }
+
+            Action completed = (Action)ar.AsyncState;
+
+            completed();
         }
     }
 }

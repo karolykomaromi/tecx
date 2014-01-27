@@ -99,6 +99,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Interactivity, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\SL5\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -141,7 +142,6 @@
     <Compile Include="Commands\NullCommandManager.cs" />
     <Compile Include="DispatchingListViewServiceClient.cs" />
     <Compile Include="DispatchingShowThings.cs" />
-    <Compile Include="DoubleClickTrigger.cs" />
     <Compile Include="Events\Alerting.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\EventHandlerList.cs" />
@@ -186,6 +186,9 @@
     <Compile Include="ReflectionHelper.cs" />
     <Compile Include="RegionNames.cs" />
     <Compile Include="StackPanelRegionAdapter.cs" />
+    <Compile Include="Triggers\AutoCompleteParameter.cs" />
+    <Compile Include="Triggers\AutoCompleteToCommand.cs" />
+    <Compile Include="Triggers\DoubleClickTrigger.cs" />
     <Compile Include="UnityExtensions\CommandManagerExtension.cs" />
     <Compile Include="UnityExtensions\CommandManagerStrategy.cs" />
     <Compile Include="UnityExtensions\EventAggregatorExtension.cs" />
