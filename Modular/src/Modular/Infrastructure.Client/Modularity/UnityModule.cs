@@ -99,7 +99,7 @@ namespace Infrastructure.Modularity
             return new ResourceDictionary();
         }
 
-        protected virtual bool TryGetViewFor<TViewModel>(out FrameworkElement view, params Parameter[] parameters)
+        protected virtual bool TryGetViewFor<TViewModel>(out FrameworkElement view, params Param[] parameters)
             where TViewModel : ViewModel
         {
             string viewTypeName = typeof(TViewModel).AssemblyQualifiedName.Replace("ViewModel", "View");
@@ -134,7 +134,7 @@ namespace Infrastructure.Modularity
 
                             for (int i = 0; i < parameters.Length; i++)
                             {
-                                Parameter parameter = parameters[i];
+                                Param parameter = parameters[i];
 
                                 overrides[i] = new ParameterOverride(parameter.ParameterName, parameter.ParameterValue);
                             }
@@ -174,13 +174,13 @@ namespace Infrastructure.Modularity
         }
 
         [DebuggerDisplay("Name='{parameterName}' Value='{parameterValue}'")]
-        protected class Parameter
+        protected class Param
         {
             private readonly string parameterName;
 
             private readonly object parameterValue;
 
-            public Parameter(string parameterName, object parameterValue)
+            public Param(string parameterName, object parameterValue)
             {
                 Contract.Requires(!string.IsNullOrEmpty(parameterName));
 

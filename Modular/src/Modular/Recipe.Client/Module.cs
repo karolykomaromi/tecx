@@ -9,6 +9,7 @@
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
+    using Recipe.Assets.Resources;
 
     public class Module : UnityModule
     {
@@ -26,21 +27,42 @@
         {
             FrameworkElement view;
 
-            ResxKey titleKey = new ResxKey("DUMMY");
-            ListViewName listViewName = new ListViewName("DUMMY");
+            ResxKey recipesTitle = new ResxKey("Recipe.Label_Recipes");
+            ListViewName recipesList = new ListViewName("Recipes");
 
-            if (this.TryGetViewFor<DynamicListViewModel>(out view, new Parameter("listViewName", listViewName), new Parameter("listViewTitleKey", titleKey)))
+            if (this.TryGetViewFor<DynamicListViewModel>(out view, new Param("listViewName", recipesList), new Param("listViewTitleKey", recipesTitle)))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, view);
 
                 NavigationViewModel navigation = new NavigationBuilder()
                                                     .ToView(view)
-                                                    .WithParameter("name", listViewName.ToString())
+                                                    .WithParameter("name", recipesList.ToString())
                                                     .InRegion(regionManager.Regions[RegionNames.Shell.Content])
-                                                    .WithLabel(titleKey);
+                                                    .WithLabel(recipesTitle);
 
                 regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
             }
+
+            ResxKey ingredientsTitle = new ResxKey("Recipe.Label_Ingredients");
+            ListViewName ingredientsList = new ListViewName("Ingredients");
+
+            if (this.TryGetViewFor<DynamicListViewModel>(out view, new Param("listViewName", ingredientsList), new Param("listViewTitleKey", ingredientsTitle)))
+            {
+                regionManager.AddToRegion(RegionNames.Shell.Content, view);
+
+                NavigationViewModel navigation = new NavigationBuilder()
+                                                    .ToView(view)
+                                                    .WithParameter("name", ingredientsList.ToString())
+                                                    .InRegion(regionManager.Regions[RegionNames.Shell.Content])
+                                                    .WithLabel(ingredientsTitle);
+
+                regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
+            }
+        }
+
+        protected override IResourceManager CreateResourceManager()
+        {
+            return new ResxFilesResourceManager(typeof(Labels));
         }
     }
 }
