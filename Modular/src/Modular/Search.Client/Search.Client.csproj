@@ -67,6 +67,8 @@
     <Reference Include="Microsoft.Expression.Interactions">
       <HintPath>..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching.Silverlight, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common.Silverlight, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
@@ -82,7 +84,11 @@
     <Reference Include="Microsoft.Practices.Unity.Silverlight">
       <HintPath>..\packages\Unity.2.1.505.2\lib\SL30\Microsoft.Practices.Unity.Silverlight.dll</HintPath>
     </Reference>
+    <Reference Include="Modular">
+      <HintPath>..\Modular\Bin\Debug\Modular.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="Search.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows" />
@@ -111,6 +117,7 @@
     <Compile Include="Commands\SearchCommand.cs" />
     <Compile Include="Commands\SuggestionsCommand.cs" />
     <Compile Include="DispatchingSearchServiceClient.cs" />
+    <Compile Include="Events\DisplaySearchResults.cs" />
     <Compile Include="ISearchService.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

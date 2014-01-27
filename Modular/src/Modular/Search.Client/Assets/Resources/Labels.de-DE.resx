@@ -120,4 +120,7 @@
   <data name="Label_NavigationMenuEntry" xml:space="preserve">
     <value>Suchergebnisse</value>
   </data>
+  <data name="Label_Search" xml:space="preserve">
+    <value>Suche</value>
+  </data>
 </root>
