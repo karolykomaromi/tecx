@@ -9,19 +9,6 @@ namespace Search.Commands
 
     public class SuggestionsCommand : ICommand
     {
-        private readonly ISearchService searchService;
-
-        private readonly IShowThings<IEnumerable<string>> showSuggestions;
-
-        public SuggestionsCommand(ISearchService searchService, IShowThings<IEnumerable<string>> showSuggestions)
-        {
-            Contract.Requires(searchService != null);
-            Contract.Requires(showSuggestions != null);
-
-            this.searchService = searchService;
-            this.showSuggestions = showSuggestions;
-        }
-
         public event EventHandler CanExecuteChanged = delegate { };
 
         public bool CanExecute(object parameter)
@@ -43,15 +30,8 @@ namespace Search.Commands
                 !string.IsNullOrEmpty(vm.SearchTerm) &&
                 vm.SearchTerm.Length >= 3)
             {
-                this.searchService.BeginSearchSuggestions(vm.SearchTerm, this.OnAfterSearchSuggestions, null);
+                vm.SearchSuggestions();
             }
-        }
-
-        private void OnAfterSearchSuggestions(IAsyncResult result)
-        {
-            var suggestions = this.searchService.EndSearchSuggestions(result);
-
-            this.showSuggestions.Show(suggestions);
         }
     }
 }

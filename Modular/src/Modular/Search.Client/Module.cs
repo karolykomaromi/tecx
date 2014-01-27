@@ -1,14 +1,13 @@
 ﻿namespace Search
 {
     using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Threading;
     using AutoMapper;
     using Infrastructure;
     using Infrastructure.Commands;
+    using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
     using Infrastructure.ViewModels;
@@ -17,7 +16,6 @@
     using Microsoft.Practices.Unity;
     using Search.Assets.Resources;
     using Search.Commands;
-    using Search.Entities;
     using Search.ViewModels;
 
     public class Module : UnityModule
@@ -37,27 +35,17 @@
             container.RegisterType<SearchResultsViewModel>(
                 new ContainerControlledLifetimeManager(), 
                 new InjectionConstructor(new ResolvedParameter<ICommand>(RegionNames.Shell.Content), typeof(IMappingEngine)));
-            container.RegisterType<IShowThings<IEnumerable<SearchResult>>, SearchResultsViewModel>();
-            container.RegisterType<IShowThings<IEnumerable<SearchResult>>, DispatchingShowThings<IEnumerable<SearchResult>>>("dispatch");
 
             container.RegisterType<SearchViewModel>(
                 new ContainerControlledLifetimeManager(), 
-                new InjectionConstructor(new ResolvedParameter<ICommand>("search"), new ResolvedParameter<ICommand>("suggestions")));
+                new InjectionConstructor(
+                    new ResolvedParameter<ICommand>("search"), 
+                    new ResolvedParameter<ICommand>("suggestions"), 
+                    typeof(ISearchService), 
+                    typeof(IEventAggregator)));
 
-            container.RegisterType<ICommand, SearchCommand>(
-                "search", 
-                new InjectionConstructor(typeof(ISearchService), typeof(ICommandManager), new ResolvedParameter<IShowThings<IEnumerable<SearchResult>>>("dispatch")));
-
-            // would result in a cyclic dependency viewmodel needs command need viewmodel, thus we break the circle by introducing a lazy step in between
-            container.RegisterType<ICommand, SuggestionsCommand>(
-                "suggestions", 
-                new InjectionConstructor(typeof(ISearchService), new ResolvedParameter<IShowThings<IEnumerable<string>>>("dispatch")));
-
-            container.RegisterType<IShowThings<IEnumerable<string>>, SearchViewModel>();
-            container.RegisterType<IShowThings<IEnumerable<string>>, LazyShowThings<IEnumerable<string>>>("lazy");
-            container.RegisterType<IShowThings<IEnumerable<string>>, DispatchingShowThings<IEnumerable<string>>>(
-                "dispatch", 
-                new InjectionConstructor(new ResolvedParameter<IShowThings<IEnumerable<string>>>("lazy"), typeof(Dispatcher)));
+            container.RegisterType<ICommand, SearchCommand>("search");
+            container.RegisterType<ICommand, SuggestionsCommand>("suggestions");
 
             this.Container.RegisterType<ISearchService, SearchServiceClient>("client", new InjectionConstructor());
             this.Container.RegisterType<ISearchService, DispatchingSearchServiceClient>(

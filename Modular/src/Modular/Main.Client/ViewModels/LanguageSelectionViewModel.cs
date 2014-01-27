@@ -3,6 +3,7 @@
     using System.Collections.ObjectModel;
     using System.Diagnostics.Contracts;
     using System.Globalization;
+    using System.Threading;
     using System.Windows.Input;
     using Infrastructure.ViewModels;
 
@@ -23,6 +24,8 @@
                     new CultureInfo("en-US"),
                     new CultureInfo("de-DE")
                 };
+
+            this.SelectedLanguage = Thread.CurrentThread.CurrentUICulture;
         }
 
         public ObservableCollection<CultureInfo> AvailableLanguages

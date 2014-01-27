@@ -9,11 +9,8 @@
     xmlns:viewModels="clr-namespace:Search.ViewModels"
     mc:Ignorable="d"
     d:DesignHeight="50" d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance d:Type=viewModels:SearchViewModel}">
-    <Grid Background="White" Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="7*"/>
-        </Grid.RowDefinitions>
+    d:DataContext="{d:DesignInstance d:Type=viewModels:SearchViewModel}" xmlns:my="clr-namespace:Modular;assembly=Modular">
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
             <ColumnDefinition/>
@@ -25,7 +22,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </sdk:AutoCompleteBox>
-        <Button Command="{Binding SearchCommand}" CommandParameter="{Binding}" Grid.Column="1">Search</Button>
+        <Button Command="{Binding SearchCommand}" CommandParameter="{Binding}" Grid.Column="1" Content="{Binding LabelSearch}" Margin="10,0,0,0"/>
     </Grid>
 </UserControl>
 

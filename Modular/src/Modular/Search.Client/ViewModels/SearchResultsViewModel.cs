@@ -1,16 +1,16 @@
 namespace Search.ViewModels
 {
     using System;
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics.Contracts;
     using System.Windows.Input;
     using AutoMapper;
-    using Infrastructure;
+    using Infrastructure.Events;
     using Infrastructure.ViewModels;
     using Search.Entities;
+    using Search.Events;
 
-    public class SearchResultsViewModel : ViewModel, IShowThings<IEnumerable<SearchResult>>
+    public class SearchResultsViewModel : ViewModel, ISubscribeTo<DisplaySearchResults>
     {
         private readonly ICommand navigateContentCommand;
         private readonly IMappingEngine mappingEngine;
@@ -32,13 +32,14 @@ namespace Search.ViewModels
             get { return this.results; }
         }
 
-        public void Show(IEnumerable<SearchResult> searchResults)
+        public void Handle(DisplaySearchResults message)
         {
-            Contract.Requires(searchResults != null);
+            Contract.Requires(message != null);
+            Contract.Requires(message.SearchResults != null);
 
             this.Results.Clear();
 
-            foreach (SearchResult result in searchResults)
+            foreach (SearchResult result in message.SearchResults)
             {
                 var item = new SearchResultViewModel(this.navigateContentCommand);
 
