@@ -3,6 +3,7 @@ namespace Infrastructure.ListViews
     using System;
     using System.Collections.Generic;
     using System.Reflection;
+    using Infrastructure.Meta;
     using Infrastructure.ViewModels;
 
     public class FacetedViewModel : ViewModel, ICustomTypeProvider
@@ -16,6 +17,7 @@ namespace Infrastructure.ListViews
             this.currentFacets = new List<Facet>();
         }
 
+        [PropertyMeta(IsListViewRelevant = false)]
         public object this[string key]
         {
             get

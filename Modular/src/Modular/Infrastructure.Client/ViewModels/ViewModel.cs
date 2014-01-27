@@ -7,6 +7,7 @@ namespace Infrastructure.ViewModels
     using System.Text;
     using Infrastructure.Commands;
     using Infrastructure.I18n;
+    using Infrastructure.Meta;
 
     public abstract class ViewModel : INotifyPropertyChanged, INotifyPropertyChanging
     {
@@ -23,6 +24,7 @@ namespace Infrastructure.ViewModels
 
         public event PropertyChangingEventHandler PropertyChanging = delegate { };
 
+        [PropertyMeta(IsListViewRelevant = false)]
         public ICommandManager CommandManager
         {
             get
@@ -38,6 +40,7 @@ namespace Infrastructure.ViewModels
             }
         }
 
+        [PropertyMeta(IsListViewRelevant = false)]
         public IResourceManager ResourceManager
         {
             get
