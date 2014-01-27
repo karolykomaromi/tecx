@@ -169,6 +169,7 @@
     <Compile Include="ListViews\FacetedViewModel.cs" />
     <Compile Include="ListViews\ListViewName.cs" />
     <Compile Include="ListViews\ListViewRegistry.cs" />
+    <Compile Include="Meta\PropertyMetaAttribute.cs" />
     <Compile Include="Modularity\AutoMapperInitializer.cs" />
     <Compile Include="Modularity\CompositeInitializer.cs" />
     <Compile Include="Modularity\ContainerInitializer.cs" />

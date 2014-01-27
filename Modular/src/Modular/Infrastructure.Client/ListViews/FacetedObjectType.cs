@@ -1,3 +1,5 @@
+using Infrastructure.Meta;
+
 namespace Infrastructure.ListViews
 {
     using System;
@@ -275,19 +277,11 @@ namespace Infrastructure.ListViews
 
         private bool ShouldShowInDynamicListView(PropertyInfo property)
         {
-            if (string.Equals(property.Name, "CommandManager", StringComparison.Ordinal))
-            {
-                return false;
-            }
+            PropertyMetaAttribute attribute = property.GetCustomAttributes(typeof(PropertyMetaAttribute), true).OfType<PropertyMetaAttribute>().SingleOrDefault();
 
-            if (string.Equals(property.Name, "Item", StringComparison.Ordinal))
+            if (attribute != null)
             {
-                return false;
-            }
-
-            if (string.Equals(property.Name, "ResourceManager", StringComparison.Ordinal))
-            {
-                return false;
+                return attribute.IsListViewRelevant;
             }
 
             return true;
