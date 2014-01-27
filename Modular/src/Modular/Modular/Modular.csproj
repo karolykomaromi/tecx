@@ -111,6 +111,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Interactivity, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\SL5\System.Windows.Interactivity.dll</HintPath>
@@ -162,6 +163,10 @@
     <ProjectReference Include="..\Main.Client\Main.Client.csproj">
       <Project>{AC8B5172-A2ED-4E4B-B7CA-63346627AA80}</Project>
       <Name>Main.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recipe.Client\Recipe.Client.csproj">
+      <Project>{5BCFAEAB-ED2D-452A-91EA-8C858A6594F2}</Project>
+      <Name>Recipe.Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\Search.Client\Search.Client.csproj">
       <Project>{D1E90FA8-5C6B-4ABB-829E-AB5CBE36B605}</Project>

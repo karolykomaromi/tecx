@@ -15,7 +15,6 @@
         private readonly ListViewName listViewName;
         private readonly LocalizedString title;
         private readonly IListViewService listViewService;
-
         private readonly ObservableCollection<FacetedViewModel> items;
 
         public DynamicListViewModel(ListViewName listViewName, ResxKey listViewTitleKey, IListViewService listViewService)
@@ -31,18 +30,12 @@
 
         public string Title
         {
-            get
-            {
-                return this.title.Value;
-            }
+            get { return this.title.Value; }
         }
 
         public ObservableCollection<FacetedViewModel> Items
         {
-            get
-            {
-                return this.items;
-            }
+            get { return this.items; }
         }
 
         void ISubscribeTo<OptionsChanged>.Handle(OptionsChanged message)
@@ -56,7 +49,7 @@
 
         bool INavigationAware.IsNavigationTarget(NavigationContext navigationContext)
         {
-            ListViewName target = new ListViewName(navigationContext.Uri.ToString());
+            ListViewName target = new ListViewName(navigationContext.Parameters["name"]);
 
             return this.listViewName == target;
         }
@@ -67,9 +60,26 @@
 
         private void OnGetListViewCompleted(IAsyncResult result)
         {
+            this.Items.Clear();
+
             ListView listView = this.listViewService.EndGetListView(result);
 
-            // can be done here because service marshalls callback to ui thread
+            foreach (ListViewRow row in listView.Rows)
+            {
+                FacetedViewModel vm = new FacetedViewModel();
+
+                foreach (Property property in listView.Properties)
+                {
+                    vm.AddFacet(new Facet { PropertyName = property.PropertyName, PropertyType = Type.GetType(property.PropertyType) });
+                }
+
+                foreach (ListViewCell cell in row.Cells)
+                {
+                    vm[cell.PropertyName] = cell.Value;
+                }
+
+                this.Items.Add(vm);
+            }
         }
     }
 }

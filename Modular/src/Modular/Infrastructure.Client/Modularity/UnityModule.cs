@@ -2,6 +2,7 @@ namespace Infrastructure.Modularity
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
@@ -131,7 +132,7 @@ namespace Infrastructure.Modularity
                         {
                             ResolverOverride[] overrides = new ResolverOverride[parameters.Length];
 
-                            for (int i = 0; i < parameters.Length - 1; i++)
+                            for (int i = 0; i < parameters.Length; i++)
                             {
                                 Parameter parameter = parameters[i];
 
@@ -172,6 +173,7 @@ namespace Infrastructure.Modularity
             return false;
         }
 
+        [DebuggerDisplay("Name='{parameterName}' Value='{parameterValue}'")]
         protected class Parameter
         {
             private readonly string parameterName;
