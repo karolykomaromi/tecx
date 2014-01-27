@@ -147,7 +147,7 @@ namespace Infrastructure.ListViews
 
         public override PropertyInfo[] GetProperties(BindingFlags bindingAttr)
         {
-            var properties = this.ProxyTargetType.GetProperties(bindingAttr);
+            var properties = this.ProxyTargetType.GetProperties(bindingAttr).Where(this.ShouldShowInDynamicListView).ToArray();
 
             if (BindingFlags.Instance == (bindingAttr & BindingFlags.Instance) && BindingFlags.Public == (bindingAttr & BindingFlags.Public))
             {
@@ -271,6 +271,26 @@ namespace Infrastructure.ListViews
                     this.dynamicPropertyInfos[facet.PropertyName] = dynamicPropInfo;
                 }
             }
+        }
+
+        private bool ShouldShowInDynamicListView(PropertyInfo property)
+        {
+            if (string.Equals(property.Name, "CommandManager", StringComparison.Ordinal))
+            {
+                return false;
+            }
+
+            if (string.Equals(property.Name, "Item", StringComparison.Ordinal))
+            {
+                return false;
+            }
+
+            if (string.Equals(property.Name, "ResourceManager", StringComparison.Ordinal))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

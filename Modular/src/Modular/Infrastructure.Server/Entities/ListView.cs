@@ -6,6 +6,9 @@ namespace Infrastructure.Entities
     public class ListView
     {
         [DataMember]
+        public Property[] Properties { get; set; }
+
+        [DataMember]
         public string Name { get; set; }
 
         [DataMember]

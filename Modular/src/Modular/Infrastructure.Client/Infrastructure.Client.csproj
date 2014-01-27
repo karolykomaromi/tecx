@@ -119,6 +119,9 @@
     <Compile Include="..\Infrastructure.Server\Entities\ListViewRow.cs">
       <Link>Entities\ListViewRow.cs</Link>
     </Compile>
+    <Compile Include="..\Infrastructure.Server\Entities\Property.cs">
+      <Link>Entities\Property.cs</Link>
+    </Compile>
     <Compile Include="..\Infrastructure.Server\TimeExtensions.cs">
       <Link>TimeExtensions.cs</Link>
     </Compile>

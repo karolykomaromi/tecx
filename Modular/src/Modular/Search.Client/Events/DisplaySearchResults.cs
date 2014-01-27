@@ -1,9 +1,9 @@
-using System.Collections.ObjectModel;
-using System.Diagnostics.Contracts;
-using Search.Entities;
-
 namespace Search.Events
 {
+    using System.Collections.ObjectModel;
+    using System.Diagnostics.Contracts;
+    using Search.Entities;
+
     public class DisplaySearchResults
     {
         private readonly ReadOnlyCollection<SearchResult> searchResults;

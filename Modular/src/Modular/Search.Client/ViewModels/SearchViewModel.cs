@@ -99,7 +99,7 @@ namespace Search.ViewModels
             
             this.Suggestions.Clear();
 
-            foreach (string suggestion in suggestions)
+            foreach (string suggestion in this.suggestions)
             {
                 this.Suggestions.Add(suggestion);
             }

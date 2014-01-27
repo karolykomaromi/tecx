@@ -237,3 +237,7 @@ Modular/src/Modular/Details.Client/Bin
 Modular/src/Modular/Details.Server/bin
 Modular/src/Modular/Main.Client/Bin
 Modular/src/Modular/Main.Client/obj
+Modular/src/Modular/Recipe.Client/Bin
+Modular/src/Modular/Recipe.Client/obj
+Modular/src/Modular/Recipe.Server/obj
+Modular/src/Modular/Recipe.Server/bin

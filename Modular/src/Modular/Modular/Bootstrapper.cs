@@ -12,7 +12,6 @@
     using Infrastructure.Commands;
     using Infrastructure.Events;
     using Infrastructure.I18n;
-    using Infrastructure.ListViews;
     using Infrastructure.Modularity;
     using Infrastructure.UnityExtensions;
     using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
@@ -22,7 +21,6 @@
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Prism.UnityExtensions;
     using Microsoft.Practices.Unity;
-    using Search;
 
     public class Bootstrapper : UnityBootstrapper
     {
@@ -98,6 +96,7 @@
             this.ModuleCatalog.AddModule(new ModuleInfo(Main.Module.Name, typeof(Main.Module).AssemblyQualifiedName));
             this.ModuleCatalog.AddModule(new ModuleInfo(Search.Module.Name, typeof(Search.Module).AssemblyQualifiedName));
             this.ModuleCatalog.AddModule(new ModuleInfo(Details.Module.Name, typeof(Details.Module).AssemblyQualifiedName));
+            this.ModuleCatalog.AddModule(new ModuleInfo(Recipe.Module.Name, typeof(Recipe.Module).AssemblyQualifiedName));
         }
 
         private static class Constants
