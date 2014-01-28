@@ -6,19 +6,17 @@ namespace Infrastructure.ViewModels
 
     using Infrastructure.I18n;
 
-    public class NavigationViewModel : ViewModel
+    public class NavigationViewModel : TitledViewModel
     {
         private readonly ICommand navigationCommand;
-        private readonly LocalizedString name;
         private Uri destination;
 
         public NavigationViewModel(ICommand navigationCommand, ResxKey resourceKey)
+            : base(resourceKey)
         {
             Contract.Requires(navigationCommand != null);
 
             this.navigationCommand = navigationCommand;
-
-            this.name = new LocalizedString(this, ReflectionHelper.GetPropertyName(() => this.Name), resourceKey, this.OnPropertyChanged);
         }
 
         public Uri Destination
@@ -36,14 +34,6 @@ namespace Infrastructure.ViewModels
                     this.destination = value;
                     this.OnPropertyChanged(() => this.Destination);
                 }
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return this.name.Value;
             }
         }
 

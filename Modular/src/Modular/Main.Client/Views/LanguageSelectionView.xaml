@@ -9,6 +9,13 @@
     mc:Ignorable="d"
     d:DesignHeight="50" d:DesignWidth="100"
     d:DataContext="{d:DesignInstance d:Type=viewModels:LanguageSelectionViewModel}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Infrastructure.Client;component/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid Background="White" Margin="10">
         <ComboBox ItemsSource="{Binding AvailableLanguages}" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}">
             <i:Interaction.Triggers>

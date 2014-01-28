@@ -6,17 +6,19 @@ namespace Search.ViewModels
     using System.Windows.Input;
     using AutoMapper;
     using Infrastructure.Events;
+    using Infrastructure.I18n;
     using Infrastructure.ViewModels;
     using Search.Entities;
     using Search.Events;
 
-    public class SearchResultsViewModel : ViewModel, ISubscribeTo<DisplaySearchResults>
+    public class SearchResultsViewModel : TitledViewModel, ISubscribeTo<DisplaySearchResults>
     {
         private readonly ICommand navigateContentCommand;
         private readonly IMappingEngine mappingEngine;
         private readonly ObservableCollection<SearchResultViewModel> results;
 
-        public SearchResultsViewModel(ICommand navigateContentCommand, IMappingEngine mappingEngine)
+        public SearchResultsViewModel(ICommand navigateContentCommand, IMappingEngine mappingEngine, ResxKey titleKey)
+            : base(titleKey)
         {
             Contract.Requires(navigateContentCommand != null);
             Contract.Requires(mappingEngine != null);
