@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Label_NavigationMenuEntry" xml:space="preserve">
-    <value>Search Results</value>
-  </data>
   <data name="Label_Search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="Label_SearchResults" xml:space="preserve">
+    <value>Search Results</value>
   </data>
 </root>

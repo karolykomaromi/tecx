@@ -5,8 +5,5 @@
              xmlns:viewModels="clr-namespace:Infrastructure.ViewModels;assembly=Infrastructure.Client"
              x:Class="Modular.App">
     <Application.Resources>
-        <DataTemplate DataType="viewModels:NavigationViewModel">
-            <views:NavigationView />
-        </DataTemplate>
     </Application.Resources>
 </Application>

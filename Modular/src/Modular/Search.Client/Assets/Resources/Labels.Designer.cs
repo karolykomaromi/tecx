@@ -61,20 +61,20 @@ namespace Search.Assets.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search Results.
-        /// </summary>
-        public static string Label_NavigationMenuEntry {
-            get {
-                return ResourceManager.GetString("Label_NavigationMenuEntry", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string Label_Search {
             get {
                 return ResourceManager.GetString("Label_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Results.
+        /// </summary>
+        public static string Label_SearchResults {
+            get {
+                return ResourceManager.GetString("Label_SearchResults", resourceCulture);
             }
         }
     }

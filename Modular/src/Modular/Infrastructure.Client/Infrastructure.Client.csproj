@@ -141,7 +141,6 @@
     <Compile Include="Commands\NullCommand.cs" />
     <Compile Include="Commands\NullCommandManager.cs" />
     <Compile Include="DispatchingListViewServiceClient.cs" />
-    <Compile Include="DispatchingShowThings.cs" />
     <Compile Include="Events\Alerting.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\EventHandlerList.cs" />
@@ -160,8 +159,6 @@
     <Compile Include="I18n\ResxKey.cs" />
     <Compile Include="I18n\WebSvcResourceManager.cs" />
     <Compile Include="IListViewService.cs" />
-    <Compile Include="IShowThings.cs" />
-    <Compile Include="LazyShowThings.cs" />
     <Compile Include="ListViewServiceClient.cs" />
     <Compile Include="ListViews\DynamicPropertyInfo.cs" />
     <Compile Include="ListViews\Facet.cs" />
@@ -201,6 +198,7 @@
     <Compile Include="ViewModels\DynamicListViewModel.cs" />
     <Compile Include="ViewModels\NavigationBuilder.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
+    <Compile Include="ViewModels\TitledViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\DynamicListView.xaml.cs">
       <DependentUpon>DynamicListView.xaml</DependentUpon>
@@ -215,6 +213,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Resources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DynamicListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -34,7 +34,7 @@
         {
             container.RegisterType<SearchResultsViewModel>(
                 new ContainerControlledLifetimeManager(), 
-                new InjectionConstructor(new ResolvedParameter<ICommand>(RegionNames.Shell.Content), typeof(IMappingEngine)));
+                new InjectionConstructor(new ResolvedParameter<ICommand>(RegionNames.Shell.Content), typeof(IMappingEngine), typeof(ResxKey)));
 
             container.RegisterType<SearchViewModel>(
                 new ContainerControlledLifetimeManager(), 
@@ -65,7 +65,7 @@
             }
 
             FrameworkElement searchResultView;
-            if (this.TryGetViewFor<SearchResultsViewModel>(out searchResultView))
+            if (this.TryGetViewFor<SearchResultsViewModel>(out searchResultView, new Param("titleKey", new ResxKey("Search.Label_SearchResults"))))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, searchResultView);
             }
@@ -73,7 +73,7 @@
             NavigationViewModel navigationViewModel = new NavigationBuilder()
                                                         .ToView(searchResultView)
                                                         .InRegion(regionManager.Regions[RegionNames.Shell.Content])
-                                                        .WithLabel(new ResxKey("SEARCH.LABEL_NAVIGATIONMENUENTRY"));
+                                                        .WithLabel(new ResxKey("SEARCH.LABEL_SEARCHRESULTS"));
 
             regionManager.AddToRegion(RegionNames.Shell.Navigation, navigationViewModel);
         }

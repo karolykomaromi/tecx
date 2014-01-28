@@ -10,27 +10,20 @@
     using Infrastructure.Options;
     using Microsoft.Practices.Prism.Regions;
 
-    public class DynamicListViewModel : ViewModel, ISubscribeTo<OptionsChanged>, INavigationAware
+    public class DynamicListViewModel : TitledViewModel, ISubscribeTo<OptionsChanged>, INavigationAware
     {
         private readonly ListViewName listViewName;
-        private readonly LocalizedString title;
         private readonly IListViewService listViewService;
         private readonly ObservableCollection<FacetedViewModel> items;
 
         public DynamicListViewModel(ListViewName listViewName, ResxKey listViewTitleKey, IListViewService listViewService)
+            : base(listViewTitleKey)
         {
-            Contract.Requires(listViewTitleKey != ResxKey.Empty);
             Contract.Requires(listViewService != null);
 
             this.listViewName = listViewName;
             this.listViewService = listViewService;
-            this.title = new LocalizedString(this, "Title", listViewTitleKey, this.OnPropertyChanged);
             this.items = new ObservableCollection<FacetedViewModel>();
-        }
-
-        public string Title
-        {
-            get { return this.title.Value; }
         }
 
         public ObservableCollection<FacetedViewModel> Items

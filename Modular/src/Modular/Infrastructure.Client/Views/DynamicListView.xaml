@@ -8,13 +8,20 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
     d:DataContext="{d:DesignInstance d:Type=viewModels:DynamicListViewModel}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Infrastructure.Client;component/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border BorderBrush="Black" CornerRadius="5" Margin="10" BorderThickness="1" Background="GreenYellow">
-            <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" Margin="5" TextAlignment="Center" />
+        <Border Style="{StaticResource TitleBorder}">
+            <TextBlock Text="{Binding Title}" Style="{StaticResource TitleText}" />
         </Border>
         <sdk:DataGrid Grid.Row="1" ItemsSource="{Binding Items}" Margin="10"/>
     </Grid>

@@ -9,12 +9,19 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
     d:DataContext="{d:DesignInstance d:Type=viewModels:NavigationViewModel}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Infrastructure.Client;component/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseLeftButtonDown">
             <mvvm:EventToCommand Command="{Binding NavigationCommand}" CommandParameter="{Binding Destination}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Border Background="White" CornerRadius="20" BorderBrush="Black" BorderThickness="1" Margin="5">
-        <TextBlock Text="{Binding Name}" FontSize="24" FontWeight="Bold" Margin="10" TextAlignment="Center" />
+        <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" Margin="10" TextAlignment="Center" />
     </Border>
 </UserControl>

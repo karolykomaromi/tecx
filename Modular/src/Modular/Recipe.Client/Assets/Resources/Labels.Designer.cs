@@ -61,11 +61,29 @@ namespace Recipe.Assets.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ingredient.
+        /// </summary>
+        public static string Label_Ingredient {
+            get {
+                return ResourceManager.GetString("Label_Ingredient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ingredients.
         /// </summary>
         public static string Label_Ingredients {
             get {
                 return ResourceManager.GetString("Label_Ingredients", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipe.
+        /// </summary>
+        public static string Label_Recipe {
+            get {
+                return ResourceManager.GetString("Label_Recipe", resourceCulture);
             }
         }
         
