@@ -3,7 +3,7 @@ namespace Search.Commands
     using System;
     using System.Diagnostics.Contracts;
     using System.Windows.Input;
-    using Infrastructure.Triggers;
+    using Infrastructure;
     using Search.ViewModels;
 
     public class SuggestionsCommand : ICommand
@@ -14,14 +14,14 @@ namespace Search.Commands
         {
             Contract.Requires(parameter != null);
 
-            var acp = parameter as AutoCompleteParameter;
+            var token = parameter as Token;
 
-            if (acp == null)
+            if (token == null)
             {
                 return false;
             }
 
-            SearchViewModel vm = acp.CommandParameter as SearchViewModel;
+            SearchViewModel vm = token.Parameter as SearchViewModel;
 
             return vm != null && !string.IsNullOrEmpty(vm.SearchTerm) && vm.SearchTerm.Length >= 3;
         }
@@ -30,22 +30,20 @@ namespace Search.Commands
         {
             Contract.Requires(parameter != null);
 
-            var acp = parameter as AutoCompleteParameter;
+            var token = parameter as Token;
 
-            if (acp == null)
+            if (token == null)
             {
                 return;
             }
 
-            acp.CancelPopulating();
-
-            SearchViewModel vm = acp.CommandParameter as SearchViewModel;
+            SearchViewModel vm = token.Parameter as SearchViewModel;
 
             if (vm != null &&
                 !string.IsNullOrEmpty(vm.SearchTerm) &&
                 vm.SearchTerm.Length >= 3)
             {
-                vm.SearchSuggestions(acp.PopulateComplete);
+                vm.SearchSuggestions(token);
             }
         }
     }

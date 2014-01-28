@@ -186,7 +186,8 @@
     <Compile Include="ReflectionHelper.cs" />
     <Compile Include="RegionNames.cs" />
     <Compile Include="StackPanelRegionAdapter.cs" />
-    <Compile Include="Triggers\AutoCompleteParameter.cs" />
+    <Compile Include="Token.cs" />
+    <Compile Include="Triggers\PopulatingCompletedToken.cs" />
     <Compile Include="Triggers\AutoCompleteToCommand.cs" />
     <Compile Include="Triggers\DoubleClickTrigger.cs" />
     <Compile Include="UnityExtensions\CommandManagerExtension.cs" />
