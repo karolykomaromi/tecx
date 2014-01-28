@@ -183,6 +183,11 @@
     <Compile Include="ReflectionHelper.cs" />
     <Compile Include="RegionNames.cs" />
     <Compile Include="StackPanelRegionAdapter.cs" />
+    <Compile Include="Theming\IThemingManager.cs" />
+    <Compile Include="Theming\ResourceDictionaryAdapter.cs" />
+    <Compile Include="Theming\ThemeChangedEventArgs.cs" />
+    <Compile Include="Theming\Themes.cs" />
+    <Compile Include="Theming\ThemingManager.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="Triggers\PopulatingCompletedToken.cs" />
     <Compile Include="Triggers\AutoCompleteToCommand.cs" />
@@ -213,6 +218,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Assets\Themes\DefaultTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
