@@ -1,4 +1,6 @@
-﻿namespace Modular
+﻿using Infrastructure.Theming;
+
+namespace Modular
 {
     using System.Collections;
     using System.IO;
@@ -89,6 +91,8 @@
             this.Container.RegisterType<IListViewService, ListViewServiceClient>("client", new InjectionConstructor());
             this.Container.RegisterType<IListViewService, DispatchingListViewServiceClient>(
                 new InjectionConstructor(new ResolvedParameter<IListViewService>("client"), typeof(Dispatcher)));
+
+            this.Container.RegisterType<IThemingManager, ThemingManager>(new ContainerControlledLifetimeManager());
         }
 
         protected override void ConfigureModuleCatalog()
