@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections;
-    using System.Linq;
-    using System.Windows.Controls;
     using System.Diagnostics.Contracts;
+    using System.Linq;
     using System.Windows;
+    using System.Windows.Controls;
 
     public class ThemeStyleAdapter
     {
@@ -38,6 +38,29 @@
             {
                 this.element.Style = newStyle;
             }
+        }
+
+        private static object GetStyleKey(ResourceDictionary dictionary, Style style)
+        {
+            foreach (DictionaryEntry resource in dictionary)
+            {
+                if (resource.Value == style)
+                {
+                    return resource.Key;
+                }
+            }
+
+            foreach (ResourceDictionary mergedDictionary in dictionary.MergedDictionaries)
+            {
+                object key = GetStyleKey(mergedDictionary, style);
+
+                if (key != null)
+                {
+                    return key;
+                }
+            }
+
+            return null;
         }
 
         private void OnLayoutUpdated(object sender, EventArgs e)
@@ -74,29 +97,6 @@
                 };
 
             this.style = null;
-        }
-
-        private static object GetStyleKey(ResourceDictionary dictionary, Style style)
-        {
-            foreach (DictionaryEntry resource in dictionary)
-            {
-                if (resource.Value == style)
-                {
-                    return resource.Key;
-                }
-            }
-
-            foreach (ResourceDictionary mergedDictionary in dictionary.MergedDictionaries)
-            {
-                object key = GetStyleKey(mergedDictionary, style);
-
-                if (key != null)
-                {
-                    return key;
-                }
-            }
-
-            return null;
         }
     }
 }

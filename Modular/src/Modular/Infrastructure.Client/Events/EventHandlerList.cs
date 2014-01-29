@@ -3,8 +3,10 @@ namespace Infrastructure.Events
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
 
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Generic and non-generic version of same class.")]
     public class EventHandlerList : IEnumerable<EventHandler>
     {
         private readonly List<WeakReference> eventHandlers;
@@ -63,8 +65,8 @@ namespace Infrastructure.Events
         }
     }
 
-    public class EventHandlerList<T> : IEnumerable<EventHandler<T>>
-        where T : EventArgs
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Generic and non-generic version of same class.")]
+    public class EventHandlerList<T> : IEnumerable<EventHandler<T>> where T : EventArgs
     {
         private readonly List<WeakReference> eventHandlers;
 

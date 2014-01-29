@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Media;
-
-namespace Infrastructure.Theming
+﻿namespace Infrastructure.Theming
 {
+    using System.Windows;
+    using System.Windows.Media;
+
     public static class VisualTree
     {
         public static T FindAncestor<T>(DependencyObject obj)
