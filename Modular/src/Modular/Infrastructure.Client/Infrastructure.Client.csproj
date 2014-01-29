@@ -188,6 +188,7 @@
     <Compile Include="Theming\ThemeChangedEventArgs.cs" />
     <Compile Include="Theming\Theming.cs" />
     <Compile Include="Theming\ThemingManager.cs" />
+    <Compile Include="Theming\VisualTree.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="Triggers\PopulatingCompletedToken.cs" />
     <Compile Include="Triggers\AutoCompleteToCommand.cs" />
