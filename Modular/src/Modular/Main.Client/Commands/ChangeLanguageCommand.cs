@@ -3,7 +3,6 @@ namespace Main.Commands
     using System;
     using System.Diagnostics.Contracts;
     using System.Globalization;
-    using System.Threading;
     using System.Windows.Input;
 
     using Infrastructure.Caching;
@@ -37,12 +36,9 @@ namespace Main.Commands
 
             if (culture != null)
             {
-                Thread.CurrentThread.CurrentCulture = culture;
-                Thread.CurrentThread.CurrentUICulture = culture;
-
                 // must invalidate cache before triggering reload of localized resources
                 this.cacheInvalidationManager.RequestInvalidate(CacheRegions.Resources);
-                this.languageManager.NotifyApplicationLanguageChanged();
+                this.languageManager.ChangeLanguage(culture);
             }
         }
     }

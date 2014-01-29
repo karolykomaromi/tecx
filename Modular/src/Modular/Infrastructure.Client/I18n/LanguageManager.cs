@@ -1,6 +1,8 @@
 ﻿namespace Infrastructure.I18n
 {
     using System;
+    using System.Globalization;
+    using System.Threading;
     using System.Windows.Threading;
     using Infrastructure.Events;
     using Microsoft.Practices.ServiceLocation;
@@ -47,14 +49,27 @@
                 return Lazy.Value;
             }
         }
-
-        public static void NotifyApplicationLanguageChanged()
+        
+        public static CultureInfo CurrentCulture
         {
-            Current.NotifyApplicationLanguageChanged();
+            get { return Current.CurrentCulture; }
         }
 
-        void ILanguageManager.NotifyApplicationLanguageChanged()
+        CultureInfo ILanguageManager.CurrentCulture
         {
+            get { return Thread.CurrentThread.CurrentUICulture; }
+        }
+
+        public static void ChangeLanguage(CultureInfo newCulture)
+        {
+            Current.ChangeLanguage(newCulture);
+        }
+
+        void ILanguageManager.ChangeLanguage(CultureInfo newCulture)
+        {
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+
             this.RaiseEvent();
         }
     }
