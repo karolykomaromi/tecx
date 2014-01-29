@@ -134,12 +134,14 @@
     <Compile Include="Events\EventAggregatorFixture.cs" />
     <Compile Include="I18n\ResxFileResourceManagerFixture.cs" />
     <Compile Include="Modularity\UnityModuleFixture.cs" />
+    <Compile Include="Options\OptionsFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestObjects\CancelingSubscriber.cs" />
     <Compile Include="TestObjects\CancelMessage.cs" />
     <Compile Include="TestObjects\CountingSubscriber.cs" />
     <Compile Include="TestObjects\Message.cs" />
     <Compile Include="TestObjects\MultiLanguageViewModel.cs" />
+    <Compile Include="TestObjects\MyOptions.cs" />
     <Compile Include="TestObjects\NoView.cs" />
     <Compile Include="TestObjects\NoViewModule.cs" />
     <Compile Include="TestObjects\Subscriber.cs" />

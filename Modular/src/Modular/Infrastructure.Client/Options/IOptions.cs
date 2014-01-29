@@ -2,6 +2,6 @@ namespace Infrastructure.Options
 {
     public interface IOptions
     {
-        object this[OptionName optionName] { get; }
+        object this[OptionName optionName] { get; set; }
     }
 }
