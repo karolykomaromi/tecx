@@ -152,10 +152,6 @@
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Details.Client\Details.Client.csproj">
-      <Project>{6BCDC2B2-AAF0-41E7-BB0E-DA257C6ACACD}</Project>
-      <Name>Details.Client</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Infrastructure.Client\Infrastructure.Client.csproj">
       <Project>{13CEE176-151F-4B3A-BC0A-9066E8E84B7B}</Project>
       <Name>Infrastructure.Client</Name>
