@@ -16,7 +16,7 @@
 
             MyOptions options = new MyOptions(ea.Object);
 
-            options[new OptionName("Foo")] = "Bar";
+            options[Option.Create(options, o => o.Foo)] = "Bar";
 
             Assert.AreEqual("Bar", options.Foo);
         }
@@ -28,7 +28,7 @@
 
             MyOptions options = new MyOptions(ea.Object) { Foo = "Bar" };
 
-            object actual = options[new OptionName("Foo")];
+            object actual = options[Option.Create(options, o => o.Foo)];
 
             Assert.AreEqual("Bar", actual);
         }
@@ -40,10 +40,36 @@
 
             MyOptions options = new MyOptions(ea.Object);
 
-            OptionName optionName = new OptionName("Foo");
-            options[optionName] = "Bar";
+            Option option = Option.Create(options, o => o.Foo);
+            options[option] = "Bar";
 
-            ea.Verify(e => e.Publish(It.Is<OptionsChanged>(msg => msg.OptionName == optionName && ReferenceEquals(options, msg.Options))));
+            ea.Verify(e => e.Publish(It.Is<OptionsChanged>(msg => msg.OptionName == option && ReferenceEquals(options, msg.Options))));
+        }
+
+        [TestMethod]
+        public void Should_Not_Know_About_Foreign_Options()
+        {
+            var ea = new Mock<IEventAggregator>();
+
+            YourOptions yours = new YourOptions(ea.Object);
+
+            MyOptions mine = new MyOptions(ea.Object);
+
+            Option option = Option.Create(yours, y => y.Bar);
+
+            Assert.IsFalse(mine.KnowsAbout(option));
+        }
+
+        [TestMethod]
+        public void Should_Know_About_OWn_Options()
+        {
+            var ea = new Mock<IEventAggregator>();
+
+            MyOptions mine = new MyOptions(ea.Object);
+
+            Option option = Option.Create(mine, m => m.Foo);
+
+            Assert.IsTrue(mine.KnowsAbout(option));
         }
     }
 }
