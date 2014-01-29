@@ -5,24 +5,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:Infrastructure.ViewModels"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-    xmlns:theming="clr-namespace:Infrastructure.Theming"
+    xmlns:t="clr-namespace:Infrastructure.Theming"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
     d:DataContext="{d:DesignInstance d:Type=viewModels:DynamicListViewModel}">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Infrastructure.Client;component/Resources.xaml" theming:Themes.Enlist="true" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border Style="{StaticResource TitleBorder}">
-            <TextBlock Text="{Binding Title}" Style="{StaticResource TitleText}" />
+        <Border t:Theming.Style="{StaticResource TitleBorder}">
+            <TextBlock Text="{Binding Title}" t:Theming.Style="{StaticResource TitleText}" />
         </Border>
         <sdk:DataGrid Grid.Row="1" ItemsSource="{Binding Items}" Margin="10"/>
     </Grid>

@@ -6,17 +6,9 @@
     xmlns:viewModels="clr-namespace:Main.ViewModels"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:mvvm="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.SL5"
-    xmlns:theming="clr-namespace:Infrastructure.Theming;assembly=Infrastructure.Client"
     mc:Ignorable="d"
     d:DesignHeight="50" d:DesignWidth="100"
     d:DataContext="{d:DesignInstance d:Type=viewModels:LanguageSelectionViewModel}">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Infrastructure.Client;component/Resources.xaml" theming:Themes.Enlist="true" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid Background="White" Margin="10">
         <ComboBox ItemsSource="{Binding AvailableLanguages}" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}">
             <i:Interaction.Triggers>

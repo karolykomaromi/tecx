@@ -5,6 +5,7 @@
     using Infrastructure;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
+    using Infrastructure.Theming;
     using Main.Assets.Resources;
     using Main.Commands;
     using Main.ViewModels;
@@ -26,10 +27,16 @@
 
         protected override void ConfigureRegions(IRegionManager regionManager)
         {
-            FrameworkElement view;
-            if (this.TryGetViewFor<LanguageSelectionViewModel>(out view))
+            FrameworkElement language;
+            if (this.TryGetViewFor<LanguageSelectionViewModel>(out language))
             {
-                regionManager.AddToRegion(RegionNames.Shell.MenuRight, view);
+                regionManager.AddToRegion(RegionNames.Shell.MenuRight, language);
+            }
+
+            FrameworkElement theme;
+            if (this.TryGetViewFor<ThemeSelectionViewModel>(out theme))
+            {
+                regionManager.AddToRegion(RegionNames.Shell.MenuLeft, theme);
             }
         }
 
@@ -43,7 +50,12 @@
             container.RegisterType<ICommand, ChangeLanguageCommand>("language");
             container.RegisterType<LanguageSelectionViewModel>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new ResolvedParameter<ICommand>("language")));
+                new InjectionConstructor(new ResolvedParameter<ICommand>("language"), typeof(ILanguageManager)));
+
+            container.RegisterType<ICommand, ChangeThemeCommand>("theme");
+            container.RegisterType<ThemeSelectionViewModel>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(new ResolvedParameter<ICommand>("theme"), typeof(IThemingManager)));
         }
     }
 }

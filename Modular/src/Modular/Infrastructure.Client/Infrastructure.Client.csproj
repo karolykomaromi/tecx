@@ -184,9 +184,9 @@
     <Compile Include="RegionNames.cs" />
     <Compile Include="StackPanelRegionAdapter.cs" />
     <Compile Include="Theming\IThemingManager.cs" />
-    <Compile Include="Theming\ResourceDictionaryAdapter.cs" />
+    <Compile Include="Theming\ThemeStyleAdapter.cs" />
     <Compile Include="Theming\ThemeChangedEventArgs.cs" />
-    <Compile Include="Theming\Themes.cs" />
+    <Compile Include="Theming\Theming.cs" />
     <Compile Include="Theming\ThemingManager.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="Triggers\PopulatingCompletedToken.cs" />
@@ -218,11 +218,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Assets\Themes\DefaultTheme.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Assets\Themes\BlueTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources.xaml">
+    <Page Include="Assets\Themes\DefaultTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

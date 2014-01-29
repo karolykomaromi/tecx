@@ -4,23 +4,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:Search.ViewModels"
-             xmlns:theming="clr-namespace:Infrastructure.Theming;assembly=Infrastructure.Client"
-             mc:Ignorable="d"
+    xmlns:t="clr-namespace:Infrastructure.Theming;assembly=Infrastructure.Client"
+    mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
     d:DataContext="{d:DesignInstance d:Type=viewModels:SearchResultsViewModel}">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Infrastructure.Client;component/Resources.xaml" theming:Themes.Enlist="true"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border Style="{StaticResource TitleBorder}">
+        <Border t:Theming.Style="{StaticResource TitleBorder}">
             <TextBlock Style="{StaticResource TitleText}" Text="{Binding Title}"/>
         </Border>
         <ListBox  Grid.Row="1" ItemsSource="{Binding Results}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">

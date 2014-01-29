@@ -1,6 +1,4 @@
-﻿using Infrastructure.Theming;
-
-namespace Modular
+﻿namespace Modular
 {
     using System.Collections;
     using System.IO;
@@ -15,6 +13,7 @@ namespace Modular
     using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
+    using Infrastructure.Theming;
     using Infrastructure.UnityExtensions;
     using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
@@ -99,7 +98,7 @@ namespace Modular
         {
             this.ModuleCatalog.AddModule(new ModuleInfo(Main.Module.Name, typeof(Main.Module).AssemblyQualifiedName));
             this.ModuleCatalog.AddModule(new ModuleInfo(Search.Module.Name, typeof(Search.Module).AssemblyQualifiedName));
-            this.ModuleCatalog.AddModule(new ModuleInfo(Details.Module.Name, typeof(Details.Module).AssemblyQualifiedName));
+            ////this.ModuleCatalog.AddModule(new ModuleInfo(Details.Module.Name, typeof(Details.Module).AssemblyQualifiedName));
             this.ModuleCatalog.AddModule(new ModuleInfo(Recipe.Module.Name, typeof(Recipe.Module).AssemblyQualifiedName));
         }
 

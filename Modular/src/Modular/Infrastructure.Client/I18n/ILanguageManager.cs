@@ -1,11 +1,14 @@
 ﻿namespace Infrastructure.I18n
 {
     using System;
+    using System.Globalization;
 
     public interface ILanguageManager
     {
         event EventHandler LanguageChanged;
 
-        void NotifyApplicationLanguageChanged();
+        CultureInfo CurrentCulture { get; }
+
+        void ChangeLanguage(CultureInfo newCulture);
     }
 }

@@ -6,6 +6,8 @@
     {
         event EventHandler<ThemeChangedEventArgs> ThemeChanged;
 
-        void NotifyThemeChanged(Uri newThemeUri);
+        Uri CurrentTheme { get; }
+
+        void ChangeTheme(Uri newThemeUri);
     }
 }

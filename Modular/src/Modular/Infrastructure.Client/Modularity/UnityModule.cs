@@ -167,12 +167,6 @@ namespace Infrastructure.Modularity
             return false;
         }
 
-        protected virtual bool TryGetListView(ListViewName listViewName, out DynamicListView view)
-        {
-            view = null;
-            return false;
-        }
-
         [DebuggerDisplay("Name='{parameterName}' Value='{parameterValue}'")]
         protected class Param
         {
