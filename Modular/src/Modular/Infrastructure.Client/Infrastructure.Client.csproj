@@ -177,7 +177,7 @@
     <Compile Include="Modularity\ResourceManagerInitializer.cs" />
     <Compile Include="Modularity\UnityModule.cs" />
     <Compile Include="Options\IOptions.cs" />
-    <Compile Include="Options\OptionName.cs" />
+    <Compile Include="Options\Option.cs" />
     <Compile Include="Options\Options.cs" />
     <Compile Include="Options\OptionsChanged.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

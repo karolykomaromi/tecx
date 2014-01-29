@@ -5,9 +5,9 @@ namespace Infrastructure.Options
     public class OptionsChanged
     {
         private readonly IOptions options;
-        private readonly OptionName optionName;
+        private readonly Option optionName;
 
-        public OptionsChanged(IOptions options, OptionName optionName)
+        public OptionsChanged(IOptions options, Option optionName)
         {
             Contract.Requires(options != null);
 
@@ -20,7 +20,7 @@ namespace Infrastructure.Options
             get { return this.options; }
         }
 
-        public OptionName OptionName
+        public Option OptionName
         {
             get { return this.optionName; }
         }

@@ -9,8 +9,8 @@
 
     public abstract class Options : IOptions
     {
-        private readonly IDictionary<OptionName, Func<object, object>> getters;
-        private readonly IDictionary<OptionName, Action<object, object>> setters;
+        private readonly IDictionary<Option, Func<object, object>> getters;
+        private readonly IDictionary<Option, Action<object, object>> setters;
         private readonly IEventAggregator eventAggregator;
 
         protected Options(IEventAggregator eventAggregator)
@@ -19,8 +19,8 @@
 
             this.eventAggregator = eventAggregator;
 
-            this.setters = new Dictionary<OptionName, Action<object, object>>();
-            this.getters = new Dictionary<OptionName, Func<object, object>>();
+            this.setters = new Dictionary<Option, Action<object, object>>();
+            this.getters = new Dictionary<Option, Func<object, object>>();
         }
 
         protected IEventAggregator EventAggregator
@@ -28,15 +28,20 @@
             get { return this.eventAggregator; }
         }
 
-        public object this[OptionName optionName]
+        public virtual object this[Option option]
         {
             get
             {
-                Func<object, object> getter;
-                if (!this.getters.TryGetValue(optionName, out getter))
+                if (!this.KnowsAbout(option))
                 {
-                    getter = this.GetValueGetter(optionName);
-                    this.getters[optionName] = getter;
+                    return null;
+                }
+
+                Func<object, object> getter;
+                if (!this.getters.TryGetValue(option, out getter))
+                {
+                    getter = this.GetValueGetter(option);
+                    this.getters[option] = getter;
                 }
 
                 return getter(this);
@@ -44,28 +49,42 @@
 
             set
             {
-                Action<object, object> setter;
-                if (!this.setters.TryGetValue(optionName, out setter))
+                if (!this.KnowsAbout(option))
                 {
-                    setter = this.GetValueSetter(optionName);
-                    this.setters[optionName] = setter;
+                    return;
+                }
+
+                Action<object, object> setter;
+                if (!this.setters.TryGetValue(option, out setter))
+                {
+                    setter = this.GetValueSetter(option);
+                    this.setters[option] = setter;
                 }
 
                 setter(this, value);
 
-                this.EventAggregator.Publish(new OptionsChanged(this, optionName));
+                this.EventAggregator.Publish(new OptionsChanged(this, option));
             }
         }
 
-        private Func<object, object> GetValueGetter(OptionName optionName)
+        public virtual bool KnowsAbout(Option option)
         {
+            string typeName = option.GetTypeName();
+
+            return string.Equals(this.GetType().FullName, typeName, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private Func<object, object> GetValueGetter(Option option)
+        {
+            var propertyName = option.GetPropertyName();
+
             Type optionType = this.GetType();
 
-            PropertyInfo propertyInfo = optionType.GetProperty(optionName.ToString(), BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+            PropertyInfo propertyInfo = optionType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
 
             if (propertyInfo == null)
             {
-                throw new InvalidOperationException(string.Format("No property named '{0}' in options of Type '{1}'", optionName.ToString(), optionType.FullName));
+                throw new InvalidOperationException(string.Format("No property named '{0}' in options of Type '{1}'", propertyName, optionType.FullName));
             }
 
             var instance = Expression.Parameter(typeof(object), "i");
@@ -75,15 +94,17 @@
             return Expression.Lambda<Func<object, object>>(convert2, instance).Compile();
         }
 
-        private Action<object, object> GetValueSetter(OptionName optionName)
+        private Action<object, object> GetValueSetter(Option option)
         {
             Type optionType = this.GetType();
 
-            PropertyInfo propertyInfo = optionType.GetProperty(optionName.ToString(), BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+            string optionName = option.GetPropertyName();
+
+            PropertyInfo propertyInfo = optionType.GetProperty(optionName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
 
             if (propertyInfo == null)
             {
-                throw new InvalidOperationException(string.Format("No property named '{0}' in options of Type '{1}'", optionName.ToString(), optionType.FullName));
+                throw new InvalidOperationException(string.Format("No property named '{0}' in options of Type '{1}'", optionName, optionType.FullName));
             }
 
             var instance = Expression.Parameter(typeof(object), "i");
