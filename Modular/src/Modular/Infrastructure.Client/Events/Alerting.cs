@@ -1,9 +1,11 @@
 namespace Infrastructure.Events
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
     using System.Windows.Threading;
 
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Generic and non-generic version of same class.")]
     public abstract class Alerting
     {
         private readonly EventHandlerList eventHandlers;
@@ -57,8 +59,8 @@ namespace Infrastructure.Events
         }
     }
 
-    public abstract class Alerting<T>
-        where T : EventArgs
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Generic and non-generic version of same class.")]
+    public abstract class Alerting<T> where T : EventArgs
     {
         private readonly EventHandlerList<T> eventHandlers;
         private readonly Dispatcher dispatcher;
