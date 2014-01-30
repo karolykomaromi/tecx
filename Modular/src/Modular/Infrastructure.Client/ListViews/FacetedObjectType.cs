@@ -117,7 +117,8 @@ namespace Infrastructure.ListViews
 
         public override MemberInfo[] GetMembers(BindingFlags bindingAttr)
         {
-            var members = this.ProxyTargetType.GetMembers(bindingAttr);
+            MemberInfo[] members = this.ProxyTargetType.GetMembers(bindingAttr).Where(this.ShouldShowInDynamicListView).ToArray();
+
             if (BindingFlags.Instance == (bindingAttr & BindingFlags.Instance) && BindingFlags.Public == (bindingAttr & BindingFlags.Public))
             {
                 var dynamicMembers = this.GetPublicDynamicProperties();
@@ -148,7 +149,7 @@ namespace Infrastructure.ListViews
 
         public override PropertyInfo[] GetProperties(BindingFlags bindingAttr)
         {
-            var properties = this.ProxyTargetType.GetProperties(bindingAttr).Where(this.ShouldShowInDynamicListView).ToArray();
+            PropertyInfo[] properties = this.ProxyTargetType.GetProperties(bindingAttr).Where(this.ShouldShowInDynamicListView).ToArray();
 
             if (BindingFlags.Instance == (bindingAttr & BindingFlags.Instance) && BindingFlags.Public == (bindingAttr & BindingFlags.Public))
             {
@@ -274,7 +275,7 @@ namespace Infrastructure.ListViews
             }
         }
 
-        private bool ShouldShowInDynamicListView(PropertyInfo property)
+        private bool ShouldShowInDynamicListView(MemberInfo property)
         {
             PropertyMetaAttribute attribute = property.GetCustomAttributes(typeof(PropertyMetaAttribute), true).OfType<PropertyMetaAttribute>().SingleOrDefault();
 

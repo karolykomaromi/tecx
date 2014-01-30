@@ -10,5 +10,8 @@ namespace Infrastructure.Entities
 
         [DataMember]
         public string PropertyType { get; set; }
+
+        [DataMember]
+        public string ResourceKey { get; set; }
     }
 }

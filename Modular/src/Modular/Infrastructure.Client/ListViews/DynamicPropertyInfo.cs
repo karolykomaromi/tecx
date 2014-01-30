@@ -77,14 +77,24 @@ namespace Infrastructure.ListViews
 
         public override object GetValue(object obj, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture)
         {
-            var fo = obj as FacetedViewModel;
-            return fo[this.Name];
+            var vm = obj as FacetedViewModel;
+
+            if (vm != null)
+            {
+                return vm[this.Name];
+            }
+
+            return null;
         }
 
         public override void SetValue(object obj, object value, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture)
         {
-            var fo = obj as FacetedViewModel;
-            fo[this.Name] = value;
+            var vm = obj as FacetedViewModel;
+
+            if (vm != null)
+            {
+                vm[this.Name] = value;
+            }
         }
 
         public override object[] GetCustomAttributes(Type attributeType, bool inherit)
