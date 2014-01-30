@@ -165,7 +165,6 @@
     <Compile Include="ListViews\FacetedObjectType.cs" />
     <Compile Include="ListViews\FacetedViewModel.cs" />
     <Compile Include="ListViews\ListViewName.cs" />
-    <Compile Include="ListViews\ListViewRegistry.cs" />
     <Compile Include="Meta\PropertyMetaAttribute.cs" />
     <Compile Include="Modularity\AutoMapperInitializer.cs" />
     <Compile Include="Modularity\CompositeInitializer.cs" />
@@ -194,6 +193,7 @@
     <Compile Include="Triggers\PopulatingCompletedToken.cs" />
     <Compile Include="Triggers\AutoCompleteToCommand.cs" />
     <Compile Include="Triggers\DoubleClickTrigger.cs" />
+    <Compile Include="Triggers\TranslateColumnHeader.cs" />
     <Compile Include="UnityExtensions\CommandManagerExtension.cs" />
     <Compile Include="UnityExtensions\CommandManagerStrategy.cs" />
     <Compile Include="UnityExtensions\EventAggregatorExtension.cs" />

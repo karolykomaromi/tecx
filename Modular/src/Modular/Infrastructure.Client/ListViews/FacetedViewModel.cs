@@ -8,13 +8,19 @@ namespace Infrastructure.ListViews
 
     public class FacetedViewModel : ViewModel, ICustomTypeProvider
     {
-        private readonly List<Facet> currentFacets;
-        private readonly IDictionary<string, object> facetValues;
+        private readonly List<Facet> facets;
+        private readonly IDictionary<string, object> values;
 
         public FacetedViewModel()
         {
-            this.facetValues = new Dictionary<string, object>();
-            this.currentFacets = new List<Facet>();
+            this.values = new Dictionary<string, object>();
+            this.facets = new List<Facet>();
+        }
+
+        [PropertyMeta(IsListViewRelevant = false)]
+        public IEnumerable<Facet> Facets
+        {
+            get { return this.facets; }
         }
 
         [PropertyMeta(IsListViewRelevant = false)]
@@ -22,29 +28,29 @@ namespace Infrastructure.ListViews
         {
             get
             {
-                if (!this.facetValues.ContainsKey(key))
+                if (!this.values.ContainsKey(key))
                 {
                     return null;
                 }
 
-                return this.facetValues[key];
+                return this.values[key];
             }
 
             set
             {
-                this.facetValues[key] = value;
+                this.values[key] = value;
                 this.OnPropertyChanged(key);
             }
         }
 
         public Type GetCustomType()
         {
-            return new FacetedObjectType<FacetedViewModel>(this.currentFacets);
+            return new FacetedObjectType<FacetedViewModel>(this.facets);
         }
 
-        public void AddFacet(Facet f)
+        public void AddFacet(Facet facet)
         {
-            this.currentFacets.Add(f);
+            this.facets.Add(facet);
         }
     }
 }

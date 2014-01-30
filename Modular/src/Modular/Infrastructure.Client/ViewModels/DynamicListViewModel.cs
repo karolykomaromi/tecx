@@ -1,8 +1,10 @@
 ﻿namespace Infrastructure.ViewModels
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics.Contracts;
+    using System.Linq;
     using Infrastructure.Entities;
     using Infrastructure.Events;
     using Infrastructure.I18n;
@@ -15,6 +17,7 @@
         private readonly ListViewName listViewName;
         private readonly IListViewService listViewService;
         private readonly ObservableCollection<FacetedViewModel> items;
+        private readonly List<Facet> facets;
 
         public DynamicListViewModel(ListViewName listViewName, ResxKey listViewTitleKey, IListViewService listViewService)
             : base(listViewTitleKey)
@@ -24,6 +27,7 @@
             this.listViewName = listViewName;
             this.listViewService = listViewService;
             this.items = new ObservableCollection<FacetedViewModel>();
+            this.facets = new List<Facet>();
         }
 
         public ObservableCollection<FacetedViewModel> Items
@@ -50,6 +54,20 @@
         void INavigationAware.OnNavigatedFrom(NavigationContext navigationContext)
         {
         }
+        
+        public string TranslatePropertyName(string propertyName)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(propertyName));
+
+            Facet facet = this.facets.FirstOrDefault(f => string.Equals(propertyName, f.PropertyName, StringComparison.OrdinalIgnoreCase));
+
+            if (facet != null)
+            {
+                return this.ResourceManager[facet.ResourceKey];
+            }
+
+            return propertyName;
+        }
 
         private void OnGetListViewCompleted(IAsyncResult result)
         {
@@ -57,14 +75,20 @@
 
             ListView listView = this.listViewService.EndGetListView(result);
 
+            this.facets.Clear();
+
+            this.facets.AddRange(listView.Properties.Select(p => new Facet
+                {
+                    PropertyName = p.PropertyName, 
+                    PropertyType = Type.GetType(p.PropertyType), 
+                    ResourceKey = new ResxKey(p.ResourceKey)
+                }));
+
             foreach (ListViewRow row in listView.Rows)
             {
                 FacetedViewModel vm = new FacetedViewModel();
 
-                foreach (Property property in listView.Properties)
-                {
-                    vm.AddFacet(new Facet { PropertyName = property.PropertyName, PropertyType = Type.GetType(property.PropertyType) });
-                }
+                facets.ForEach(vm.AddFacet);
 
                 foreach (ListViewCell cell in row.Cells)
                 {

@@ -1,5 +1,6 @@
 ﻿namespace Infrastructure.Theming
 {
+    using System.ComponentModel;
     using System.Windows;
 
     public class Theming
@@ -22,6 +23,11 @@
 
         private static void OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            if (DesignerProperties.IsInDesignTool)
+            {
+                return;
+            }
+
             FrameworkElement element = d as FrameworkElement;
             Style style = e.NewValue as Style;
 

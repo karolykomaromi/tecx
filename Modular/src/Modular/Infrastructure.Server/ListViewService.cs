@@ -8,7 +8,7 @@
         {
             return new ListView
                 {
-                    Properties = new[] { new Property { PropertyName = "Foo", PropertyType = "System.String, mscorlib" } },
+                    Properties = new[] { new Property { PropertyName = "Foo", PropertyType = "System.String, mscorlib", ResourceKey = "SEARCH.LABEL_SEARCHRESULTS" } },
                     Name = "DUMMY",
                     PageNumber = 1,
                     PageSize = 50,

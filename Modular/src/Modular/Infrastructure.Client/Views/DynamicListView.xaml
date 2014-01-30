@@ -6,6 +6,8 @@
     xmlns:viewModels="clr-namespace:Infrastructure.ViewModels"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
     xmlns:t="clr-namespace:Infrastructure.Theming"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:triggers="clr-namespace:Infrastructure.Triggers"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
     d:DataContext="{d:DesignInstance d:Type=viewModels:DynamicListViewModel}">
@@ -25,6 +27,13 @@
         <Border t:Theming.Style="{StaticResource TitleBorder}">
             <TextBlock Text="{Binding Title}" t:Theming.Style="{StaticResource TitleText}" />
         </Border>
-        <sdk:DataGrid Grid.Row="1" ItemsSource="{Binding Items}" Margin="10"/>
+        <sdk:DataGrid Grid.Row="1" ItemsSource="{Binding Items}" Margin="10" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="AutoGeneratingColumn">
+                    <triggers:TranslateColumnHeader />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </sdk:DataGrid>
+
     </Grid>
 </UserControl>
