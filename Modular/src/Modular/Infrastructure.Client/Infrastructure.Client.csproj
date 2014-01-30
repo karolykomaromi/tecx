@@ -198,6 +198,8 @@
     <Compile Include="UnityExtensions\CommandManagerStrategy.cs" />
     <Compile Include="UnityExtensions\EventAggregatorExtension.cs" />
     <Compile Include="UnityExtensions\EventAggregatorStrategy.cs" />
+    <Compile Include="UnityExtensions\ListViewExtension.cs" />
+    <Compile Include="UnityExtensions\ListViewStrategy.cs" />
     <Compile Include="UnityExtensions\RegionExtension.cs" />
     <Compile Include="UnityExtensions\RegionStrategy.cs" />
     <Compile Include="UnityExtensions\ResourceManagerExtension.cs" />

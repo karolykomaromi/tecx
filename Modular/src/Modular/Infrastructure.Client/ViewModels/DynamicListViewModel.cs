@@ -69,6 +69,15 @@
             return propertyName;
         }
 
+        public void OnLanguageChanged(object sender, EventArgs args)
+        {
+            List<FacetedViewModel> copy = new List<FacetedViewModel>(this.Items);
+
+            this.Items.Clear();
+
+            copy.ForEach(this.Items.Add);
+        }
+
         private void OnGetListViewCompleted(IAsyncResult result)
         {
             this.Items.Clear();
@@ -88,7 +97,7 @@
             {
                 FacetedViewModel vm = new FacetedViewModel();
 
-                facets.ForEach(vm.AddFacet);
+                this.facets.ForEach(vm.AddFacet);
 
                 foreach (ListViewCell cell in row.Cells)
                 {
