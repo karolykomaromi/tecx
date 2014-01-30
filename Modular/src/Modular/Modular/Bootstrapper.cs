@@ -18,6 +18,7 @@
     using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration.ContainerModel.Unity;
+    using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Modularity;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Prism.UnityExtensions;
@@ -45,6 +46,11 @@
             mappings.RegisterMapping(typeof(StackPanel), this.Container.Resolve<StackPanelRegionAdapter>());
 
             return mappings;
+        }
+
+        protected override ILoggerFacade CreateLogger()
+        {
+            return new DebugLogger();
         }
 
         protected override void ConfigureContainer()

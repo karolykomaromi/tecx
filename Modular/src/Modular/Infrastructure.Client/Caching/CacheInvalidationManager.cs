@@ -3,11 +3,12 @@
     using System;
     using System.Windows.Threading;
     using Infrastructure.Events;
+    using Microsoft.Practices.Prism.Logging;
 
     public class CacheInvalidationManager : Alerting<CacheInvalidationEventArgs>, ICacheInvalidationManager
     {
-        public CacheInvalidationManager(Dispatcher dispatcher)
-            : base(dispatcher)
+        public CacheInvalidationManager(Dispatcher dispatcher, ILoggerFacade logger)
+            : base(dispatcher, logger)
         {
         }
 

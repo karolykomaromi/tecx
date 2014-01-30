@@ -14,7 +14,7 @@
             {
                 ILanguageManager languageManager = context.NewBuildUp<ILanguageManager>();
 
-                languageManager.LanguageChanged += vm.OnLanguageChanged;
+                languageManager.LanguageChanged += (s, e) => vm.Refresh();
             }
         }
     }

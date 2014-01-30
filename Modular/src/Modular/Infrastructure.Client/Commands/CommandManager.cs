@@ -3,11 +3,12 @@ namespace Infrastructure.Commands
     using System;
     using System.Windows.Threading;
     using Infrastructure.Events;
+    using Microsoft.Practices.Prism.Logging;
 
     public class CommandManager : Alerting, ICommandManager
     {
-        public CommandManager(Dispatcher dispatcher)
-            : base(dispatcher)
+        public CommandManager(Dispatcher dispatcher, ILoggerFacade logger)
+            : base(dispatcher, logger)
         {
         }
 

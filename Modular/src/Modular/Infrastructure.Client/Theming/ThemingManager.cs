@@ -5,6 +5,7 @@
     using System.Windows;
     using System.Windows.Threading;
     using Infrastructure.Events;
+    using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.ServiceLocation;
 
     public class ThemingManager : Alerting<ThemeChangedEventArgs>, IThemingManager
@@ -12,8 +13,8 @@
         private static readonly Lazy<IThemingManager> Lazy = new Lazy<IThemingManager>(() => ServiceLocator.Current.GetInstance<IThemingManager>());
         private Uri currentTheme;
 
-        public ThemingManager(Dispatcher dispatcher)
-            : base(dispatcher)
+        public ThemingManager(Dispatcher dispatcher, ILoggerFacade logger)
+            : base(dispatcher, logger)
         {
             this.currentTheme = new Uri("/Infrastructure.Client;component/Assets/Themes/DefaultTheme.xaml", UriKind.Relative);
         }
