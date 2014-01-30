@@ -69,7 +69,7 @@
             return propertyName;
         }
 
-        public void OnLanguageChanged(object sender, EventArgs args)
+        public void Refresh()
         {
             List<FacetedViewModel> copy = new List<FacetedViewModel>(this.Items);
 

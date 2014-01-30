@@ -5,14 +5,15 @@
     using System.Threading;
     using System.Windows.Threading;
     using Infrastructure.Events;
+    using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.ServiceLocation;
 
     public class LanguageManager : Alerting, ILanguageManager
     {
         private static readonly Lazy<ILanguageManager> Lazy = new Lazy<ILanguageManager>(() => ServiceLocator.Current.GetInstance<ILanguageManager>());
 
-        public LanguageManager(Dispatcher dispatcher)
-            : base(dispatcher)
+        public LanguageManager(Dispatcher dispatcher, ILoggerFacade logger)
+            : base(dispatcher, logger)
         {
         }
 

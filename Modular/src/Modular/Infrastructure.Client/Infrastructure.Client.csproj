@@ -140,6 +140,7 @@
     <Compile Include="Commands\NavigationCommand.cs" />
     <Compile Include="Commands\NullCommand.cs" />
     <Compile Include="Commands\NullCommandManager.cs" />
+    <Compile Include="DebugLogger.cs" />
     <Compile Include="DispatchingListViewServiceClient.cs" />
     <Compile Include="Events\Alerting.cs" />
     <Compile Include="Events\EventAggregator.cs" />

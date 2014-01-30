@@ -73,28 +73,28 @@
             {
                 return;
             }
-
-            ResourceDictionary dictionary = uc.Resources.MergedDictionaries
-                    .FirstOrDefault(dict => dict.Source != null && dict.Source.ToString().EndsWith("Theme.xaml", StringComparison.OrdinalIgnoreCase));
-
+            
             this.styleKey = GetStyleKey(Application.Current.Resources, this.style);
-
-            if (dictionary == null)
-            {
-                return;
-            }
             
             if (this.styleKey == null)
             {
-                this.styleKey = GetStyleKey(dictionary, this.style);
-            }
+                ResourceDictionary dictionary = uc.Resources.MergedDictionaries
+                        .FirstOrDefault(dict => dict.Source != null && dict.Source.ToString().EndsWith("Theme.xaml", StringComparison.OrdinalIgnoreCase));
 
-            this.beforeThemeChanged = () =>
+                if (dictionary == null)
                 {
-                    UserControl uc1 = uc;
-                    uc1.Resources.MergedDictionaries.Remove(dictionary);
-                    this.beforeThemeChanged = () => { };
+                    return;
+                }
+
+                this.styleKey = GetStyleKey(dictionary, this.style);
+
+                this.beforeThemeChanged = () =>
+                {
+                    //UserControl uc1 = uc;
+                    //uc1.Resources.MergedDictionaries.Remove(dictionary);
+                    //this.beforeThemeChanged = () => { };
                 };
+            }
 
             this.style = null;
         }
