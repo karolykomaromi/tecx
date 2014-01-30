@@ -85,6 +85,7 @@
             this.Container.RegisterType<Infrastructure.Modularity.IModuleInitializer, DefaultInitializer>();
 
             this.Container.RegisterInstance<IMappingEngine>(Mapper.Engine);
+            this.Container.AddNewExtension<ListViewExtension>();
             this.Container.RegisterType<ILanguageManager, LanguageManager>(new ContainerControlledLifetimeManager());
 
             this.Container.RegisterType<IListViewService, ListViewServiceClient>("client", new InjectionConstructor());
