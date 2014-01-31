@@ -14,7 +14,7 @@
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
-    <SilverlightApplication>false</SilverlightApplication>
+    <SilverlightApplication>true</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <SccProjectName>&lt;Project Location In Database&gt;</SccProjectName>
@@ -23,6 +23,14 @@
     <SccProvider>Mercurial Source Control Package</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>
+    </SilverlightAppEntry>
+    <TestPageFileName>InfrastructureTestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <XapFilename>Infrastructure.xap</XapFilename>
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -167,6 +175,7 @@
     <Compile Include="Modularity\ContainerInitializer.cs" />
     <Compile Include="Modularity\DefaultInitializer.cs" />
     <Compile Include="Modularity\IModuleInitializer.cs" />
+    <Compile Include="Modularity\IModuleTracker.cs" />
     <Compile Include="Modularity\ModuleResourcesInitializer.cs" />
     <Compile Include="Modularity\RegionInitializer.cs" />
     <Compile Include="Modularity\ResourceManagerInitializer.cs" />
@@ -229,7 +238,9 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

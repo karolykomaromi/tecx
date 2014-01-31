@@ -241,3 +241,7 @@ Modular/src/Modular/Recipe.Client/Bin
 Modular/src/Modular/Recipe.Client/obj
 Modular/src/Modular/Recipe.Server/obj
 Modular/src/Modular/Recipe.Server/bin
+Modular/src/Modular/Modular.Web/ClientBin/Infrastructure.xap
+Modular/src/Modular/Modular.Web/ClientBin/Main.xap
+Modular/src/Modular/Modular.Web/ClientBin/Recipe.xap
+Modular/src/Modular/Modular.Web/ClientBin/Search.xap
