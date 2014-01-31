@@ -4,24 +4,12 @@ namespace Search.Commands
     using System.Diagnostics.Contracts;
     using System.Windows.Input;
     using Infrastructure.Commands;
+    using Infrastructure.Events;
     using Search.ViewModels;
 
-    public class SearchCommand : ICommand
+    public class SearchCommand : ICommand, ISubscribeTo<CanExecuteChanged>
     {
-        private readonly ICommandManager commandManager;
-
-        public SearchCommand(ICommandManager commandManager)
-        {
-            Contract.Requires(commandManager != null);
-
-            this.commandManager = commandManager;
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { this.commandManager.RequerySuggested += value; }
-            remove { this.commandManager.RequerySuggested -= value; }
-        }
+        public event EventHandler CanExecuteChanged = delegate { };
 
         public bool CanExecute(object parameter)
         {
@@ -44,6 +32,11 @@ namespace Search.Commands
             {
                 vm.Search();
             }
+        }
+
+        void ISubscribeTo<CanExecuteChanged>.Handle(CanExecuteChanged message)
+        {
+            this.CanExecuteChanged(this, EventArgs.Empty);
         }
     }
 }

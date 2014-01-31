@@ -6,39 +6,24 @@ namespace Infrastructure.ViewModels
     using System.Linq.Expressions;
     using System.Text;
     using Infrastructure.Commands;
+    using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.Meta;
 
     public abstract class ViewModel : INotifyPropertyChanged, INotifyPropertyChanging
     {
-        private ICommandManager commandManager;
         private IResourceManager resourceManager;
+        private IEventAggregator eventAggregator;
 
         protected ViewModel()
         {
-            this.commandManager = new NullCommandManager();
             this.resourceManager = new EchoResourceManager();
+            this.eventAggregator = new NullEventAggregator();
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         public event PropertyChangingEventHandler PropertyChanging = delegate { };
-
-        [PropertyMeta(IsListViewRelevant = false)]
-        public ICommandManager CommandManager
-        {
-            get
-            {
-                return this.commandManager;
-            }
-
-            set
-            {
-                Contract.Requires(value != null);
-
-                this.commandManager = value;
-            }
-        }
 
         [PropertyMeta(IsListViewRelevant = false)]
         public IResourceManager ResourceManager
@@ -51,8 +36,22 @@ namespace Infrastructure.ViewModels
             set
             {
                 Contract.Requires(value != null);
-
                 this.resourceManager = value;
+            }
+        }
+
+        [PropertyMeta(IsListViewRelevant = false)]
+        public IEventAggregator EventAggregator
+        {
+            get
+            {
+                return eventAggregator;
+            }
+
+            set
+            {
+                Contract.Requires(value != null);
+                eventAggregator = value;
             }
         }
 
@@ -61,7 +60,7 @@ namespace Infrastructure.ViewModels
             Contract.Requires(!string.IsNullOrEmpty(propertyName));
 
             this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            this.CommandManager.InvalidateRequerySuggested();
+            this.EventAggregator.Publish(new CanExecuteChanged());
         }
 
         protected virtual void OnPropertyChanged<T>(Expression<Func<T>> propertySelector)

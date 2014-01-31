@@ -6,8 +6,9 @@
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
+    using Infrastructure.Events;
 
-    public class ThemeStyleAdapter
+    public class ThemeStyleAdapter : ISubscribeTo<ThemeChanged>
     {
         private readonly FrameworkElement element;
         private Style style;
@@ -25,10 +26,10 @@
             this.element.LayoutUpdated += this.OnLayoutUpdated;
         }
 
-        public void OnThemeChanged(object sender, ThemeChangedEventArgs args)
+        void ISubscribeTo<ThemeChanged>.Handle(ThemeChanged message)
         {
-            Contract.Requires(args != null);
-            Contract.Requires(args.ThemeUri != null);
+            Contract.Requires(message != null);
+            Contract.Requires(message.ThemeUri != null);
 
             this.beforeThemeChanged();
 

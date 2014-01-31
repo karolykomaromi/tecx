@@ -1,4 +1,8 @@
-﻿namespace Main.Commands
+﻿using System.Linq;
+using System.Windows;
+using Infrastructure.Events;
+
+namespace Main.Commands
 {
     using System;
     using System.Diagnostics.Contracts;
@@ -7,13 +11,13 @@
 
     public class ChangeThemeCommand : ICommand
     {
-        private readonly IThemingManager themingManager;
+        private readonly IEventAggregator eventAggregator;
 
-        public ChangeThemeCommand(IThemingManager themingManager)
+        public ChangeThemeCommand(IEventAggregator eventAggregator)
         {
-            Contract.Requires(themingManager != null);
+            Contract.Requires(eventAggregator != null);
 
-            this.themingManager = themingManager;
+            this.eventAggregator = eventAggregator;
         }
 
         public event EventHandler CanExecuteChanged = delegate { };
@@ -29,7 +33,18 @@
 
             if (themeUri != null)
             {
-                this.themingManager.ChangeTheme(themeUri);
+                ResourceDictionary dictionary =
+                    Application.Current.Resources.MergedDictionaries.FirstOrDefault(
+                        theme =>
+                        theme.Source != null &&
+                        theme.Source.ToString().EndsWith("Theme.xaml", StringComparison.OrdinalIgnoreCase));
+
+                if (dictionary != null)
+                {
+                    dictionary.Source = themeUri;
+                }
+
+                this.eventAggregator.Publish(new ThemeChanged(themeUri));
             }
         }
     }

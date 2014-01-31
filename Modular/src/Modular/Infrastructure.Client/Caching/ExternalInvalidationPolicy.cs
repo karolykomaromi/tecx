@@ -1,8 +1,10 @@
 ﻿namespace Infrastructure.Caching
 {
+    using System.Diagnostics.Contracts;
+    using Infrastructure.Events;
     using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
 
-    public class ExternalInvalidationPolicy : CacheItemPolicy
+    public class ExternalInvalidationPolicy : CacheItemPolicy, ISubscribeTo<CacheInvalidated>
     {
         private readonly CacheRegionName cacheRegionName;
 
@@ -11,9 +13,11 @@
             this.cacheRegionName = cacheRegionName;
         }
 
-        public void OnCacheInvalidated(object sender, CacheInvalidationEventArgs args)
+        void ISubscribeTo<CacheInvalidated>.Handle(CacheInvalidated message)
         {
-            if (args.CacheRegion == this.cacheRegionName || args.CacheRegion == CacheRegions.All)
+            Contract.Requires(message != null);
+
+            if (message.CacheRegion == this.cacheRegionName || message.CacheRegion == CacheRegions.All)
             {
                 this.AbsoluteExpiration = TimeProvider.Now - 1.Days();
             }

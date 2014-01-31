@@ -3,6 +3,7 @@ namespace Infrastructure.UnityExtensions
     using System;
     using System.Linq;
     using Infrastructure.Events;
+    using Infrastructure.ViewModels;
     using Microsoft.Practices.ObjectBuilder2;
 
     public class EventAggregatorStrategy : BuilderStrategy
@@ -23,6 +24,15 @@ namespace Infrastructure.UnityExtensions
 
                     ea.Subscribe(existing);
                 }
+            }
+
+            ViewModel vm = context.Existing as ViewModel;
+
+            if (vm != null)
+            {
+                IEventAggregator ea = context.NewBuildUp<IEventAggregator>();
+
+                vm.EventAggregator = ea;
             }
         }
     }
