@@ -2,6 +2,7 @@
 {
     using System.ComponentModel;
     using System.Windows;
+    using Infrastructure.Events;
 
     public class Theming
     {
@@ -38,7 +39,7 @@
 
             var adapter = new ThemeStyleAdapter(element, style);
 
-            ThemingManager.ThemeChanged += adapter.OnThemeChanged;
+            EventAggregator.Current.Subscribe(adapter);
 
             element.Style = style;
         }

@@ -8,12 +8,10 @@
     using System.Windows.Threading;
     using AutoMapper;
     using Infrastructure;
-    using Infrastructure.Caching;
     using Infrastructure.Commands;
     using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
-    using Infrastructure.Theming;
     using Infrastructure.UnityExtensions;
     using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
@@ -60,12 +58,8 @@
             this.Container.AddNewExtension<RegionExtension>();
 
             this.Container.RegisterInstance(Deployment.Current.Dispatcher);
-            this.Container.AddNewExtension<CommandManagerExtension>();
-            this.Container.RegisterType<ICommandManager, CommandManager>(new ContainerControlledLifetimeManager());
             this.Container.AddNewExtension<EventAggregatorExtension>();
             this.Container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
-
-            this.Container.RegisterType<ICacheInvalidationManager, CacheInvalidationManager>(new ContainerControlledLifetimeManager());
 
             string xaml;
             using (Stream s = this.GetType().Assembly.GetManifestResourceStream("Modular.CacheConfig.xaml"))
@@ -84,21 +78,17 @@
             this.Container.RegisterType<IResourceManager, CompositeResourceManager>(Constants.AppWideResources, new ContainerControlledLifetimeManager(), new InjectionConstructor());
             this.Container.RegisterType<IResourceManager, CachingResourceManager>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new ResolvedParameter<IResourceManager>(Constants.AppWideResources), typeof(ICacheInvalidationManager), typeof(ObjectCache)));
+                new InjectionConstructor(new ResolvedParameter<IResourceManager>(Constants.AppWideResources), typeof(IEventAggregator), typeof(ObjectCache)));
             
             this.Container.RegisterType<ModuleResourcesInitializer>(new InjectionConstructor(Application.Current.Resources));
             this.Container.RegisterType<ResourceManagerInitializer>(new InjectionConstructor(new ResolvedParameter<CompositeResourceManager>(Constants.AppWideResources)));
             this.Container.RegisterType<Infrastructure.Modularity.IModuleInitializer, DefaultInitializer>();
 
             this.Container.RegisterInstance<IMappingEngine>(Mapper.Engine);
-            this.Container.AddNewExtension<ListViewExtension>();
-            this.Container.RegisterType<ILanguageManager, LanguageManager>(new ContainerControlledLifetimeManager());
 
             this.Container.RegisterType<IListViewService, ListViewServiceClient>("client", new InjectionConstructor());
             this.Container.RegisterType<IListViewService, DispatchingListViewServiceClient>(
                 new InjectionConstructor(new ResolvedParameter<IListViewService>("client"), typeof(Dispatcher)));
-
-            this.Container.RegisterType<IThemingManager, ThemingManager>(new ContainerControlledLifetimeManager());
         }
 
         protected override void ConfigureModuleCatalog()

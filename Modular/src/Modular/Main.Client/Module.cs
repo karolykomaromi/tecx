@@ -50,12 +50,12 @@
             container.RegisterType<ICommand, ChangeLanguageCommand>("language");
             container.RegisterType<LanguageSelectionViewModel>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new ResolvedParameter<ICommand>("language"), typeof(ILanguageManager)));
+                new InjectionConstructor(new ResolvedParameter<ICommand>("language")));
 
             container.RegisterType<ICommand, ChangeThemeCommand>("theme");
             container.RegisterType<ThemeSelectionViewModel>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new ResolvedParameter<ICommand>("theme"), typeof(IThemingManager)));
+                new InjectionConstructor(new ResolvedParameter<ICommand>("theme")));
         }
     }
 }

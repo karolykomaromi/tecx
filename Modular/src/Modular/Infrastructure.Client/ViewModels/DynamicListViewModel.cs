@@ -12,7 +12,7 @@
     using Infrastructure.Options;
     using Microsoft.Practices.Prism.Regions;
 
-    public class DynamicListViewModel : TitledViewModel, ISubscribeTo<OptionsChanged>, INavigationAware
+    public class DynamicListViewModel : TitledViewModel, INavigationAware, ISubscribeTo<OptionsChanged>, ISubscribeTo<LanguageChanged>
     {
         private readonly ListViewName listViewName;
         private readonly IListViewService listViewService;
@@ -37,6 +37,11 @@
 
         void ISubscribeTo<OptionsChanged>.Handle(OptionsChanged message)
         {
+        }
+
+        void ISubscribeTo<LanguageChanged>.Handle(LanguageChanged message)
+        {
+            this.Refresh();
         }
 
         void INavigationAware.OnNavigatedTo(NavigationContext navigationContext)

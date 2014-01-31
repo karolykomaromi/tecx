@@ -3,22 +3,23 @@
     using System;
     using System.Diagnostics.Contracts;
     using Infrastructure.Caching;
+    using Infrastructure.Events;
     using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
 
     public class CachingResourceManager : IResourceManager
     {
         private readonly IResourceManager inner;
-        private readonly ICacheInvalidationManager cacheInvalidationManager;
+        private readonly IEventAggregator eventAggregator;
         private readonly ObjectCache cache;
 
-        public CachingResourceManager(IResourceManager inner, ICacheInvalidationManager cacheInvalidationManager, ObjectCache cache)
+        public CachingResourceManager(IResourceManager inner, IEventAggregator eventAggregator, ObjectCache cache)
         {
             Contract.Requires(inner != null);
-            Contract.Requires(cacheInvalidationManager != null);
+            Contract.Requires(eventAggregator != null);
             Contract.Requires(cache != null);
 
             this.inner = inner;
-            this.cacheInvalidationManager = cacheInvalidationManager;
+            this.eventAggregator = eventAggregator;
             this.cache = cache;
         }
 
@@ -39,7 +40,7 @@
                 {
                     ExternalInvalidationPolicy policy = new ExternalInvalidationPolicy(CacheRegions.Resources);
 
-                    this.cacheInvalidationManager.CacheInvalidated += policy.OnCacheInvalidated;
+                    this.eventAggregator.Subscribe(policy);
 
                     this.cache.Add(key.ToString(), value, policy);
 

@@ -2,11 +2,11 @@
 {
     using System;
 
-    public class ThemeChangedEventArgs : EventArgs
+    public class ThemeChanged
     {
         private readonly Uri themeUri;
 
-        public ThemeChangedEventArgs(Uri themeUri)
+        public ThemeChanged(Uri themeUri)
         {
             this.themeUri = themeUri;
         }

@@ -7,7 +7,7 @@
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
     xmlns:t="clr-namespace:Infrastructure.Theming"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:triggers="clr-namespace:Infrastructure.Triggers"
+    xmlns:tr="clr-namespace:Infrastructure.Triggers" xmlns:c="clr-namespace:Infrastructure.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
     d:DataContext="{d:DesignInstance d:Type=viewModels:DynamicListViewModel}">
@@ -30,7 +30,7 @@
         <sdk:DataGrid Grid.Row="1" ItemsSource="{Binding Items}" Margin="10" >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="AutoGeneratingColumn">
-                    <triggers:TranslateColumnHeader />
+                    <tr:TranslateColumnHeader />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </sdk:DataGrid>

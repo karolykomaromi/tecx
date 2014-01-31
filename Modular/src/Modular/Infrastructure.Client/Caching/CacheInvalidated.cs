@@ -1,22 +1,17 @@
 ﻿namespace Infrastructure.Caching
 {
-    using System;
-
-    public class CacheInvalidationEventArgs : EventArgs
+    public class CacheInvalidated
     {
         private readonly CacheRegionName cacheRegion;
 
-        public CacheInvalidationEventArgs(CacheRegionName cacheRegion)
+        public CacheInvalidated(CacheRegionName cacheRegion)
         {
             this.cacheRegion = cacheRegion;
         }
 
         public CacheRegionName CacheRegion
         {
-            get
-            {
-                return this.cacheRegion;
-            }
+            get { return cacheRegion; }
         }
     }
 }

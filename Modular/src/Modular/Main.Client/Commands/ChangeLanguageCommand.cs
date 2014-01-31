@@ -3,24 +3,21 @@ namespace Main.Commands
     using System;
     using System.Diagnostics.Contracts;
     using System.Globalization;
+    using System.Threading;
     using System.Windows.Input;
-
     using Infrastructure.Caching;
+    using Infrastructure.Events;
     using Infrastructure.I18n;
 
     public class ChangeLanguageCommand : ICommand
     {
-        private readonly ILanguageManager languageManager;
+        private readonly IEventAggregator eventAggregator;
 
-        private readonly ICacheInvalidationManager cacheInvalidationManager;
-
-        public ChangeLanguageCommand(ILanguageManager languageManager, ICacheInvalidationManager cacheInvalidationManager)
+        public ChangeLanguageCommand(IEventAggregator eventAggregator)
         {
-            Contract.Requires(languageManager != null);
-            Contract.Requires(cacheInvalidationManager != null);
+            Contract.Requires(eventAggregator != null);
 
-            this.languageManager = languageManager;
-            this.cacheInvalidationManager = cacheInvalidationManager;
+            this.eventAggregator = eventAggregator;
         }
 
         public event EventHandler CanExecuteChanged = delegate { };
@@ -36,9 +33,12 @@ namespace Main.Commands
 
             if (culture != null)
             {
+                Thread.CurrentThread.CurrentCulture = culture;
+                Thread.CurrentThread.CurrentUICulture = culture;
+
                 // must invalidate cache before triggering reload of localized resources
-                this.cacheInvalidationManager.RequestInvalidate(CacheRegions.Resources);
-                this.languageManager.ChangeLanguage(culture);
+                this.eventAggregator.Publish(new CacheInvalidated(CacheRegions.Resources));
+                this.eventAggregator.Publish(new LanguageChanged(culture));
             }
         }
     }

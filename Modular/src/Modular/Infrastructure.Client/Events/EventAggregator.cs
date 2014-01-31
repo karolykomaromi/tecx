@@ -5,13 +5,14 @@
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Windows.Threading;
+    using Microsoft.Practices.ServiceLocation;
 
     public class EventAggregator : IEventAggregator
     {
+        private static readonly Lazy<IEventAggregator> Lazy = new Lazy<IEventAggregator>(() => ServiceLocator.Current.GetInstance<IEventAggregator>());
+
         private readonly List<WeakReference> subscribers = new List<WeakReference>();
-
         private readonly Dispatcher dispatcher;
-
         private readonly object locker = new object();
 
         public EventAggregator(Dispatcher dispatcher)
@@ -25,6 +26,11 @@
             dispatcherTimer.Tick += this.RemoveDeadReferences;
             dispatcherTimer.Interval = TimeSpan.FromMinutes(1);
             dispatcherTimer.Start();
+        }
+
+        public static IEventAggregator Current
+        {
+            get { return Lazy.Value; }
         }
 
         public void Subscribe(object subscriber)
@@ -62,16 +68,8 @@
                     {
                         foreach (var subscriber in this.GetAllSubscribersFor<TMessage>())
                         {
-                            if (this.dispatcher != null)
-                            {
-                                ISubscribeTo<TMessage> sub = subscriber;
-
-                                this.dispatcher.BeginInvoke(() => sub.Handle(message));
-                            }
-                            else
-                            {
-                                subscriber.Handle(message);
-                            }
+                            ISubscribeTo<TMessage> sub = subscriber;
+                            this.dispatcher.BeginInvoke(() => sub.Handle(message));
                         }
                     });
 
