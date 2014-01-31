@@ -15,7 +15,7 @@
     <AssemblyName>Modular.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <UseIISExpress>false</UseIISExpress>
-    <SilverlightApplicationList>{60C2BB68-C05A-43E8-BCA8-073FF85D0FCD}|..\Modular\Modular.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{60C2BB68-C05A-43E8-BCA8-073FF85D0FCD}|..\Modular\Modular.csproj|ClientBin|False,{13CEE176-151F-4B3A-BC0A-9066E8E84B7B}|..\Infrastructure.Client\Infrastructure.Client.csproj|ClientBin|False,{D1E90FA8-5C6B-4ABB-829E-AB5CBE36B605}|..\Search.Client\Search.Client.csproj|ClientBin|False,{AC8B5172-A2ED-4E4B-B7CA-63346627AA80}|..\Main.Client\Main.Client.csproj|ClientBin|False,{5BCFAEAB-ED2D-452A-91EA-8C858A6594F2}|..\Recipe.Client\Recipe.Client.csproj|ClientBin|False</SilverlightApplicationList>
     <SccProjectName>&lt;Project Location In Database&gt;</SccProjectName>
     <SccLocalPath>&lt;Local Binding Root of Project&gt;</SccLocalPath>
     <SccAuxPath>&lt;Source Control Database&gt;</SccAuxPath>
@@ -82,9 +82,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientBin\Modular.xap" />
+    <Content Include="ClientBin\Infrastructure.xap" />
+    <Content Include="ClientBin\Main.xap" />
+    <Content Include="ClientBin\Recipe.xap" />
+    <Content Include="ClientBin\Search.xap" />
+    <Content Include="Infrastructure.ClientTestPage.aspx" />
+    <Content Include="Infrastructure.ClientTestPage.html" />
     <Content Include="ListViewService.svc" />
+    <Content Include="Main.ClientTestPage.aspx" />
+    <Content Include="Main.ClientTestPage.html" />
     <Content Include="Modular.aspx" />
     <Content Include="Modular.html" />
+    <Content Include="Recipe.ClientTestPage.aspx" />
+    <Content Include="Recipe.ClientTestPage.html" />
+    <Content Include="Search.ClientTestPage.aspx" />
+    <Content Include="Search.ClientTestPage.html" />
     <Content Include="SearchService.svc" />
     <Content Include="Silverlight.js" />
     <Content Include="Web.config" />
@@ -104,6 +116,7 @@
     <Compile Include="Hosting\UnityServiceHost.cs" />
     <Compile Include="Hosting\UnityServiceHostFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XapDownloadHandler.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
