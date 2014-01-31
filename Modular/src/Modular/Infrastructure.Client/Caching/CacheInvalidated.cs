@@ -11,7 +11,7 @@
 
         public CacheRegionName CacheRegion
         {
-            get { return cacheRegion; }
+            get { return this.cacheRegion; }
         }
     }
 }
