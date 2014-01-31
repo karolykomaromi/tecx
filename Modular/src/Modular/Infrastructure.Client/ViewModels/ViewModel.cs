@@ -45,13 +45,14 @@ namespace Infrastructure.ViewModels
         {
             get
             {
-                return eventAggregator;
+                return this.eventAggregator;
             }
 
             set
             {
                 Contract.Requires(value != null);
-                eventAggregator = value;
+                
+                this.eventAggregator = value;
             }
         }
 

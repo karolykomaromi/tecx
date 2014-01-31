@@ -8,7 +8,6 @@
     using System.Windows.Threading;
     using AutoMapper;
     using Infrastructure;
-    using Infrastructure.Commands;
     using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
@@ -79,23 +78,22 @@
             this.Container.RegisterType<IResourceManager, CachingResourceManager>(
                 new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(new ResolvedParameter<IResourceManager>(Constants.AppWideResources), typeof(IEventAggregator), typeof(ObjectCache)));
-            
+
             this.Container.RegisterType<ModuleResourcesInitializer>(new InjectionConstructor(Application.Current.Resources));
             this.Container.RegisterType<ResourceManagerInitializer>(new InjectionConstructor(new ResolvedParameter<CompositeResourceManager>(Constants.AppWideResources)));
             this.Container.RegisterType<Infrastructure.Modularity.IModuleInitializer, DefaultInitializer>();
 
             this.Container.RegisterInstance<IMappingEngine>(Mapper.Engine);
 
-            this.Container.RegisterType<IListViewService, ListViewServiceClient>("client", new InjectionConstructor());
+            this.Container.RegisterType<IListViewService, ListViewServiceClient>(Constants.Client, new InjectionConstructor());
             this.Container.RegisterType<IListViewService, DispatchingListViewServiceClient>(
-                new InjectionConstructor(new ResolvedParameter<IListViewService>("client"), typeof(Dispatcher)));
+                new InjectionConstructor(new ResolvedParameter<IListViewService>(Constants.Client), typeof(Dispatcher)));
         }
 
         protected override void ConfigureModuleCatalog()
         {
             this.ModuleCatalog.AddModule(new ModuleInfo(Main.Module.Name, typeof(Main.Module).AssemblyQualifiedName));
             this.ModuleCatalog.AddModule(new ModuleInfo(Search.Module.Name, typeof(Search.Module).AssemblyQualifiedName));
-            ////this.ModuleCatalog.AddModule(new ModuleInfo(Details.Module.Name, typeof(Details.Module).AssemblyQualifiedName));
             this.ModuleCatalog.AddModule(new ModuleInfo(Recipe.Module.Name, typeof(Recipe.Module).AssemblyQualifiedName));
         }
 
@@ -104,7 +102,12 @@
             /// <summary>
             /// appWideResources
             /// </summary>
-            public static readonly string AppWideResources = "appWideResources";
+            public const string AppWideResources = "appWideResources";
+
+            /// <summary>
+            /// Client
+            /// </summary>
+            public const string Client = "client";
         }
     }
 }

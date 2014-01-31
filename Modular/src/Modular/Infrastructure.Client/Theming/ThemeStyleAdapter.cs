@@ -91,9 +91,9 @@
 
                 this.beforeThemeChanged = () =>
                 {
-                    //UserControl uc1 = uc;
-                    //uc1.Resources.MergedDictionaries.Remove(dictionary);
-                    //this.beforeThemeChanged = () => { };
+                    UserControl uc1 = uc;
+                    uc1.Resources.MergedDictionaries.Remove(dictionary);
+                    this.beforeThemeChanged = () => { };
                 };
             }
 

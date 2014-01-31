@@ -13,7 +13,7 @@ namespace Infrastructure.I18n
 
         public CultureInfo Culture
         {
-            get { return culture; }
+            get { return this.culture; }
         }
     }
 }

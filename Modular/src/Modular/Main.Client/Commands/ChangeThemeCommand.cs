@@ -1,12 +1,11 @@
-﻿using System.Linq;
-using System.Windows;
-using Infrastructure.Events;
-
-namespace Main.Commands
+﻿namespace Main.Commands
 {
     using System;
     using System.Diagnostics.Contracts;
+    using System.Linq;
+    using System.Windows;
     using System.Windows.Input;
+    using Infrastructure.Events;
     using Infrastructure.Theming;
 
     public class ChangeThemeCommand : ICommand
