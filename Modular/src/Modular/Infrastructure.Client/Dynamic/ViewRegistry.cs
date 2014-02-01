@@ -31,7 +31,8 @@
 
             IControl control = this.controlAdapterFactory.CreateAdapter(element);
 
-            this.controls.Add(control.Id, control);
+            // TODO weberse 2014-02-01 need to check why searchresultview is added twice. eventhandler not removed in time?
+            this.controls[control.Id] = control;
         }
 
         public bool TryFindById(ControlId id, out IControl control)

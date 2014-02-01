@@ -35,6 +35,11 @@
             get { return this.items; }
         }
 
+        public ListViewName ListViewName
+        {
+            get { return this.listViewName; }
+        }
+
         void ISubscribeTo<OptionsChanged>.Handle(OptionsChanged message)
         {
         }
@@ -46,14 +51,14 @@
 
         void INavigationAware.OnNavigatedTo(NavigationContext navigationContext)
         {
-            this.listViewService.BeginGetListView(this.listViewName.ToString(), 1, 50, this.OnGetListViewCompleted, null);
+            this.listViewService.BeginGetListView(this.ListViewName.ToString(), 1, 50, this.OnGetListViewCompleted, null);
         }
 
         bool INavigationAware.IsNavigationTarget(NavigationContext navigationContext)
         {
             ListViewName target = new ListViewName(navigationContext.Parameters["name"]);
 
-            return this.listViewName == target;
+            return this.ListViewName == target;
         }
 
         void INavigationAware.OnNavigatedFrom(NavigationContext navigationContext)

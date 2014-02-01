@@ -25,11 +25,20 @@ namespace Infrastructure.Dynamic
 
         private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            FrameworkElement element = d as FrameworkElement;
+            bool oldValue = (bool)e.OldValue;
+            bool newValue = (bool)e.NewValue;
 
-            IViewRegistry registry = ViewRegistry.Current;
-            
-            registry.Register(element);
+            if (oldValue == newValue)
+            {
+                return;
+            }
+
+            if (!newValue)
+            {
+                return;
+            }
+
+            var registration = new DelayedRegistration(ViewRegistry.Current, (FrameworkElement)d);
         }
     }
 }

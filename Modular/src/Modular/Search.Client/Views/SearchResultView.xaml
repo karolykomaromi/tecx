@@ -7,9 +7,11 @@
     xmlns:mvvm="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.SL5"
     xmlns:viewModels="clr-namespace:Search.ViewModels"
     xmlns:triggers="clr-namespace:Infrastructure.Triggers;assembly=Infrastructure.Client"
+    xmlns:dyn="clr-namespace:Infrastructure.Dynamic;assembly=Infrastructure.Client"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance d:Type=viewModels:SearchResultViewModel}">
+    d:DataContext="{d:DesignInstance d:Type=viewModels:SearchResultViewModel}"
+    dyn:DynamicView.IsEnabled="True">
     <i:Interaction.Triggers>
         <triggers:DoubleClickTrigger>
             <mvvm:EventToCommand Command="{Binding OpenDetailsCommand}" CommandParameter="{Binding Uri}" />

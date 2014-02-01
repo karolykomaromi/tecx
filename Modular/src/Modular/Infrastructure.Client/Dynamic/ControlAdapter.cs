@@ -2,10 +2,10 @@ namespace Infrastructure.Dynamic
 {
     using System.Windows.Controls;
 
-    public abstract class ControlAdapter : FrameworkElementAdapter
+    public class ControlAdapter : FrameworkElementAdapter
     {
-        protected ControlAdapter(Control control)
-            : base(control)
+        public ControlAdapter(Control control, IControlAdapterFactory factory)
+            : base(control, factory)
         {
         }
 

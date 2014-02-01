@@ -4,17 +4,19 @@ namespace Infrastructure.Dynamic
     using System.Diagnostics.Contracts;
     using System.Windows;
 
-    public abstract class FrameworkElementAdapter : IControl
+    public class FrameworkElementAdapter : IControl
     {
-        private readonly WeakReference reference;
-        private readonly ControlId id;
+        private readonly IControlAdapterFactory factory;
 
-        protected FrameworkElementAdapter(FrameworkElement element)
+        private readonly WeakReference reference;
+
+        public FrameworkElementAdapter(FrameworkElement element, IControlAdapterFactory factory)
         {
             Contract.Requires(element != null);
             Contract.Requires(!string.IsNullOrEmpty(element.Name));
 
             this.reference = new WeakReference(element);
+            this.factory = factory;
 
             string name = element.Name;
 
@@ -23,13 +25,10 @@ namespace Infrastructure.Dynamic
                 name = element.GetType().Name;
             }
 
-            this.id = new ControlId(name);
+            this.Id = new ControlId(name);
         }
 
-        public virtual ControlId Id
-        {
-            get { return this.id; }
-        }
+        public ControlId Id { get; protected set; }
 
         public virtual bool IsAlive
         {
@@ -39,6 +38,11 @@ namespace Infrastructure.Dynamic
         protected virtual WeakReference Reference
         {
             get { return this.reference; }
+        }
+
+        protected virtual IControlAdapterFactory Factory
+        {
+            get { return this.factory; }
         }
 
         public virtual void Show()
@@ -61,10 +65,31 @@ namespace Infrastructure.Dynamic
             }
         }
 
-        public abstract bool TryFindById(ControlId id, out IControl control);
+        public virtual bool TryFindById(ControlId id, out IControl control)
+        {
+            FrameworkElement element = this.Reference.Target as FrameworkElement;
 
-        public abstract void Enable();
+            if (element != null)
+            {
+                FrameworkElement found = element.FindName(id.ToString()) as FrameworkElement;
 
-        public abstract void Disable();
+                if (found != null)
+                {
+                    control = this.Factory.CreateAdapter(found);
+                    return true;
+                }
+            }
+
+            control = null;
+            return false;
+        }
+
+        public virtual void Enable()
+        {
+        }
+
+        public virtual void Disable()
+        {
+        }
     }
 }
