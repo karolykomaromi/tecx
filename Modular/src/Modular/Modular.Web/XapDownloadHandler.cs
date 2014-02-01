@@ -86,6 +86,5 @@
                 context.Response.BinaryWrite(chunkBufer);
             }
         }
-
     }
 }

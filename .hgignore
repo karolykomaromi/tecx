@@ -245,3 +245,5 @@ Modular/src/Modular/Modular.Web/ClientBin/Infrastructure.xap
 Modular/src/Modular/Modular.Web/ClientBin/Main.xap
 Modular/src/Modular/Modular.Web/ClientBin/Recipe.xap
 Modular/src/Modular/Modular.Web/ClientBin/Search.xap
+Modular/src/Modular/Infrastructure.Server.Test/bin
+Modular/src/Modular/Infrastructure.Server.Test/obj

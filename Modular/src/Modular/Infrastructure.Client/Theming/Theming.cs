@@ -6,7 +6,7 @@
 
     public class Theming
     {
-        public static readonly DependencyProperty Style = DependencyProperty.RegisterAttached(
+        public static readonly DependencyProperty StyleProperty = DependencyProperty.RegisterAttached(
             "Style",
             typeof(Style),
             typeof(Theming),
@@ -14,12 +14,12 @@
 
         public static Style GetStyle(FrameworkElement element)
         {
-            return (Style)element.GetValue(Style);
+            return (Style)element.GetValue(StyleProperty);
         }
 
         public static void SetStyle(FrameworkElement element, Style style)
         {
-            element.SetValue(Style, style);
+            element.SetValue(StyleProperty, style);
         }
 
         private static void OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
