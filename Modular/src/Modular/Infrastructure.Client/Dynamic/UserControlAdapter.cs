@@ -4,15 +4,9 @@ namespace Infrastructure.Dynamic
 
     public class UserControlAdapter : ControlAdapter
     {
-        public UserControlAdapter(UserControl userControl)
-            : base(userControl)
+        public UserControlAdapter(UserControl listView, IControlAdapterFactory factory)
+            : base(listView, factory)
         {
-        }
-
-        public override bool TryFindById(ControlId id, out IControl control)
-        {
-            control = null;
-            return false;
         }
     }
 }

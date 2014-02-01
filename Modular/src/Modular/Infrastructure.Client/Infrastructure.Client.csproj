@@ -150,11 +150,14 @@
     <Compile Include="Dynamic\ControlAdapter.cs" />
     <Compile Include="Dynamic\ControlAdapterFactory.cs" />
     <Compile Include="Dynamic\ControlId.cs" />
+    <Compile Include="Dynamic\DelayedRegistration.cs" />
+    <Compile Include="Dynamic\DynamicListViewAdapter.cs" />
     <Compile Include="Dynamic\DynamicView.cs" />
     <Compile Include="Dynamic\FrameworkElementAdapter.cs" />
     <Compile Include="Dynamic\IControl.cs" />
     <Compile Include="Dynamic\IControlAdapterFactory.cs" />
     <Compile Include="Dynamic\IViewRegistry.cs" />
+    <Compile Include="Dynamic\NavigationViewAdapter.cs" />
     <Compile Include="Dynamic\NullControlAdapter.cs" />
     <Compile Include="Dynamic\UserControlAdapter.cs" />
     <Compile Include="Dynamic\ViewRegistry.cs" />

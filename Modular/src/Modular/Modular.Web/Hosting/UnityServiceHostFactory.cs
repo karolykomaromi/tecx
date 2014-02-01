@@ -6,7 +6,7 @@
     using Microsoft.Practices.Unity;
     using Search;
 
-    public class UnityServiceHostFactory : ServiceHostFactory
+    public class UnityServiceHostFactory : ServiceHostFactory, IDisposable
     {
         private readonly IUnityContainer container;
 
@@ -15,6 +15,11 @@
             this.container = new UnityContainer();
 
             this.ConfigureContainer();
+        }
+
+        public void Dispose()
+        {
+            this.container.Dispose();
         }
 
         protected override ServiceHost CreateServiceHost(Type serviceType, Uri[] baseAddresses)

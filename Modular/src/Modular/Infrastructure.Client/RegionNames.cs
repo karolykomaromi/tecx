@@ -29,5 +29,13 @@
             /// </summary>
             public static readonly string MenuRight = "MenuRight";
         }
+
+        public static class Main
+        {
+            /// <summary>
+            /// Options
+            /// </summary>
+            public static readonly string Options = "Options";
+        }
     }
 }
