@@ -147,6 +147,17 @@
     <Compile Include="Converters\NullConverter.cs" />
     <Compile Include="DebugLogger.cs" />
     <Compile Include="DispatchingListViewServiceClient.cs" />
+    <Compile Include="Dynamic\ControlAdapter.cs" />
+    <Compile Include="Dynamic\ControlAdapterFactory.cs" />
+    <Compile Include="Dynamic\ControlId.cs" />
+    <Compile Include="Dynamic\DynamicView.cs" />
+    <Compile Include="Dynamic\FrameworkElementAdapter.cs" />
+    <Compile Include="Dynamic\IControl.cs" />
+    <Compile Include="Dynamic\IControlAdapterFactory.cs" />
+    <Compile Include="Dynamic\IViewRegistry.cs" />
+    <Compile Include="Dynamic\NullControlAdapter.cs" />
+    <Compile Include="Dynamic\UserControlAdapter.cs" />
+    <Compile Include="Dynamic\ViewRegistry.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\IEventAggregator.cs" />
     <Compile Include="Events\ISubscribeTo.cs" />
@@ -174,12 +185,18 @@
     <Compile Include="Modularity\CompositeInitializer.cs" />
     <Compile Include="Modularity\ContainerInitializer.cs" />
     <Compile Include="Modularity\DefaultInitializer.cs" />
+    <Compile Include="Modularity\DiscoveryMethod.cs" />
+    <Compile Include="Modularity\DownloadTiming.cs" />
     <Compile Include="Modularity\IModuleInitializer.cs" />
     <Compile Include="Modularity\IModuleTracker.cs" />
+    <Compile Include="Modularity\ModuleInitializationStatus.cs" />
     <Compile Include="Modularity\ModuleResourcesInitializer.cs" />
+    <Compile Include="Modularity\ModuleTracker.cs" />
+    <Compile Include="Modularity\ModuleTrackingState.cs" />
     <Compile Include="Modularity\RegionInitializer.cs" />
     <Compile Include="Modularity\ResourceManagerInitializer.cs" />
     <Compile Include="Modularity\UnityModule.cs" />
+    <Compile Include="Modularity\WellKnownModuleNames.cs" />
     <Compile Include="Options\IOptions.cs" />
     <Compile Include="Options\Option.cs" />
     <Compile Include="Options\Options.cs" />
@@ -241,6 +258,7 @@
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
