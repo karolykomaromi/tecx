@@ -8,9 +8,11 @@
     using System.Windows.Threading;
     using AutoMapper;
     using Infrastructure;
+    using Infrastructure.Dynamic;
     using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
+    using Infrastructure.Options;
     using Infrastructure.UnityExtensions;
     using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
@@ -20,6 +22,7 @@
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Prism.UnityExtensions;
     using Microsoft.Practices.Unity;
+    using Search.ViewModels;
 
     public class Bootstrapper : UnityBootstrapper
     {
@@ -88,6 +91,10 @@
             this.Container.RegisterType<IListViewService, ListViewServiceClient>(Constants.Client, new InjectionConstructor());
             this.Container.RegisterType<IListViewService, DispatchingListViewServiceClient>(
                 new InjectionConstructor(new ResolvedParameter<IListViewService>(Constants.Client), typeof(Dispatcher)));
+
+            this.Container.RegisterType<IViewRuleEngine, ViewRuleEngine>(new ContainerControlledLifetimeManager());
+
+            this.Container.RegisterType<IOptions, SearchOptionsViewModel>(new ContainerControlledLifetimeManager());
         }
 
         protected override void ConfigureModuleCatalog()

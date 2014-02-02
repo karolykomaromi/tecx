@@ -7,6 +7,7 @@
     using AutoMapper;
     using Infrastructure;
     using Infrastructure.Commands;
+    using Infrastructure.Dynamic;
     using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
@@ -70,6 +71,12 @@
                 regionManager.AddToRegion(RegionNames.Shell.Content, searchResultView);
             }
 
+            FrameworkElement searchOptionsView;
+            if (this.TryGetViewFor<SearchOptionsViewModel>(out searchOptionsView))
+            {
+                regionManager.AddToRegion(RegionNames.Main.Options, searchOptionsView);
+            }
+
             NavigationViewModel navigationViewModel = new NavigationBuilder()
                                                         .ToView(searchResultView)
                                                         .InRegion(regionManager.Regions[RegionNames.Shell.Content])
@@ -92,6 +99,11 @@
             ResourceDictionary resources = new ResourceDictionary { Source = source };
 
             return resources;
+        }
+
+        protected override void ConfigureViewRules(IViewRuleEngine ruleEngine)
+        {
+            ruleEngine.Add(new DisableSearchRule());
         }
     }
 }

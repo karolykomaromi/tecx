@@ -5,7 +5,7 @@
     using Infrastructure;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
-    using Infrastructure.Theming;
+    using Infrastructure.ViewModels;
     using Main.Assets.Resources;
     using Main.Commands;
     using Main.ViewModels;
@@ -38,6 +38,18 @@
             {
                 regionManager.AddToRegion(RegionNames.Shell.MenuLeft, theme);
             }
+
+            FrameworkElement options;
+            if (this.TryGetViewFor<OptionsViewModel>(out options, new Param("titleKey", new ResxKey("Label_Options"))))
+            {
+                regionManager.AddToRegion(RegionNames.Shell.Content, options);
+            }
+
+            NavigationViewModel navigation = new NavigationBuilder().ToView(options)
+                .InRegion(regionManager.Regions[RegionNames.Shell.Content])
+                .WithLabel(new ResxKey("Label_Options"));
+
+            regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
         }
 
         protected override IResourceManager CreateResourceManager()

@@ -6,26 +6,24 @@
     using System.Linq.Expressions;
     using System.Reflection;
     using Infrastructure.Events;
+    using Infrastructure.ViewModels;
 
-    public abstract class Options : IOptions
+    public abstract class Options : ViewModel, IOptions
     {
-        private readonly IDictionary<Option, Func<object, object>> getters;
-        private readonly IDictionary<Option, Action<object, object>> setters;
-        private readonly IEventAggregator eventAggregator;
+        private readonly IDictionary<Option, Func<IOptions, object>> getters;
+        private readonly IDictionary<Option, Action<IOptions, object>> setters;
+
+        private readonly Action<IOptions, Option> publish;
 
         protected Options(IEventAggregator eventAggregator)
         {
             Contract.Requires(eventAggregator != null);
 
-            this.eventAggregator = eventAggregator;
+            this.EventAggregator = eventAggregator;
 
-            this.setters = new Dictionary<Option, Action<object, object>>();
-            this.getters = new Dictionary<Option, Func<object, object>>();
-        }
-
-        protected IEventAggregator EventAggregator
-        {
-            get { return this.eventAggregator; }
+            this.setters = new Dictionary<Option, Action<IOptions, object>>();
+            this.getters = new Dictionary<Option, Func<IOptions, object>>();
+            this.publish = this.GetPublish();
         }
 
         public virtual object this[Option option]
@@ -34,10 +32,10 @@
             {
                 if (!this.KnowsAbout(option))
                 {
-                    return null;
+                    throw new UnknownOptionException(option, this.GetType());
                 }
 
-                Func<object, object> getter;
+                Func<IOptions, object> getter;
                 if (!this.getters.TryGetValue(option, out getter))
                 {
                     getter = this.GetValueGetter(option);
@@ -54,16 +52,26 @@
                     return;
                 }
 
-                Action<object, object> setter;
-                if (!this.setters.TryGetValue(option, out setter))
+                Func<IOptions, object> getter;
+                if (!this.getters.TryGetValue(option, out getter))
                 {
-                    setter = this.GetValueSetter(option);
-                    this.setters[option] = setter;
+                    getter = this.GetValueGetter(option);
+                    this.getters[option] = getter;
                 }
 
-                setter(this, value);
+                object currentValue = getter(this);
 
-                this.EventAggregator.Publish(new OptionsChanged(this, option));
+                if (!Equals(currentValue, value))
+                {
+                    Action<IOptions, object> setter;
+                    if (!this.setters.TryGetValue(option, out setter))
+                    {
+                        setter = this.GetValueSetter(option);
+                        this.setters[option] = setter;
+                    }
+
+                    setter(this, value);
+                }
             }
         }
 
@@ -74,7 +82,7 @@
             return string.Equals(this.GetType().FullName, typeName, StringComparison.OrdinalIgnoreCase);
         }
 
-        private Func<object, object> GetValueGetter(Option option)
+        private Func<IOptions, object> GetValueGetter(Option option)
         {
             var propertyName = option.GetPropertyName();
 
@@ -87,14 +95,14 @@
                 throw new InvalidOperationException(string.Format("No property named '{0}' in options of Type '{1}'", propertyName, optionType.FullName));
             }
 
-            var instance = Expression.Parameter(typeof(object), "i");
-            var convert1 = Expression.TypeAs(instance, optionType);
-            var property = Expression.Property(convert1, propertyInfo);
+            var instance = Expression.Parameter(typeof(IOptions), "options");
+            var options = Expression.TypeAs(instance, optionType);
+            var property = Expression.Property(options, propertyInfo);
             var convert2 = Expression.TypeAs(property, typeof(object));
-            return Expression.Lambda<Func<object, object>>(convert2, instance).Compile();
+            return Expression.Lambda<Func<IOptions, object>>(convert2, instance).Compile();
         }
 
-        private Action<object, object> GetValueSetter(Option option)
+        private Action<IOptions, object> GetValueSetter(Option option)
         {
             Type optionType = this.GetType();
 
@@ -107,13 +115,42 @@
                 throw new InvalidOperationException(string.Format("No property named '{0}' in options of Type '{1}'", optionName, optionType.FullName));
             }
 
-            var instance = Expression.Parameter(typeof(object), "i");
+            var instance = Expression.Parameter(typeof(IOptions), "i");
             var convert1 = Expression.TypeAs(instance, optionType);
             var argument = Expression.Parameter(typeof(object), "a");
             var convert2 = Expression.Convert(argument, propertyInfo.PropertyType);
             var setterCall = Expression.Call(convert1, propertyInfo.GetSetMethod(), convert2);
 
             return Expression.Lambda<Action<object, object>>(setterCall, instance, argument).Compile();
+        }
+
+        private Action<IOptions, Option> GetPublish()
+        {
+            Type optionsType = this.GetType();
+
+            Type messageType = typeof(OptionsChanged<>).MakeGenericType(optionsType);
+            Type messageInterfaceType = typeof(IOptionsChanged<>).MakeGenericType(optionsType);
+
+            var msgCtor = messageType.GetConstructor(new[] { optionsType, typeof(Option) });
+
+            var instance = Expression.Parameter(typeof(IOptions), "options");
+            var options = Expression.TypeAs(instance, optionsType);
+            var option = Expression.Parameter(typeof(Option), "option");
+
+            var newMessage = Expression.New(msgCtor, options, option);
+            var msg = Expression.TypeAs(newMessage, messageInterfaceType);
+
+            var property = optionsType.GetProperty("EventAggregator", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+            var getter = property.GetGetMethod(true);
+
+            var getEa = Expression.Call(options, getter);
+            var publishMethod = typeof(IEventAggregator).GetMethod("Publish", BindingFlags.Instance | BindingFlags.Public).MakeGenericMethod(messageInterfaceType);
+
+            var body = Expression.Call(getEa, publishMethod, msg);
+
+            Action<IOptions, Option> publish = Expression.Lambda<Action<IOptions, Option>>(body, instance, option).Compile();
+
+            return publish;
         }
     }
 }

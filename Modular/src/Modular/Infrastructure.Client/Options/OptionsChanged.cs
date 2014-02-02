@@ -2,12 +2,13 @@ namespace Infrastructure.Options
 {
     using System.Diagnostics.Contracts;
 
-    public class OptionsChanged
+    public class OptionsChanged<TOptions> : IOptionsChanged<TOptions>
+        where TOptions : IOptions
     {
-        private readonly IOptions options;
+        private readonly TOptions options;
         private readonly Option optionName;
 
-        public OptionsChanged(IOptions options, Option optionName)
+        public OptionsChanged(TOptions options, Option optionName)
         {
             Contract.Requires(options != null);
 
@@ -15,7 +16,7 @@ namespace Infrastructure.Options
             this.optionName = optionName;
         }
 
-        public IOptions Options
+        public TOptions Options
         {
             get { return this.options; }
         }
@@ -24,5 +25,13 @@ namespace Infrastructure.Options
         {
             get { return this.optionName; }
         }
+    }
+
+    public interface IOptionsChanged<out TOptions>
+        where TOptions : IOptions
+    {
+        TOptions Options { get; }
+
+        Option OptionName { get; }
     }
 }

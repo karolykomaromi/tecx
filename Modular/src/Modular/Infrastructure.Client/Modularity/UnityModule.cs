@@ -8,10 +8,9 @@ namespace Infrastructure.Modularity
     using System.Reflection;
     using System.Windows;
     using AutoMapper;
+    using Infrastructure.Dynamic;
     using Infrastructure.I18n;
-    using Infrastructure.ListViews;
     using Infrastructure.ViewModels;
-    using Infrastructure.Views;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Modularity;
     using Microsoft.Practices.Prism.Regions;
@@ -97,6 +96,10 @@ namespace Infrastructure.Modularity
             Contract.Ensures(Contract.Result<ResourceDictionary>() != null);
 
             return new ResourceDictionary();
+        }
+
+        protected internal virtual void ConfigureViewRules(IViewRuleEngine ruleEngine)
+        {
         }
 
         protected virtual bool TryGetViewFor<TViewModel>(out FrameworkElement view, params Param[] parameters)

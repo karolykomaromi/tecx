@@ -32,8 +32,6 @@
         <Border Grid.ColumnSpan="2" t:Theming.Style="{StaticResource TitleBorder}">
             <TextBlock Text="{Binding Title}" t:Theming.Style="{StaticResource TitleText}" />
         </Border>
-        <TextBlock Grid.Row="1" Text="{Binding LabelShowSomething}"/>
-        <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding ShowSomething, Mode=TwoWay}" />
         <ItemsControl Grid.Row="2" Grid.ColumnSpan="2" regions:RegionManager.RegionName="Options" />
     </Grid>
 </UserControl>
