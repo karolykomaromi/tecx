@@ -9,10 +9,9 @@
     using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.ListViews;
-    using Infrastructure.Options;
     using Microsoft.Practices.Prism.Regions;
 
-    public class DynamicListViewModel : TitledViewModel, INavigationAware, ISubscribeTo<OptionsChanged>, ISubscribeTo<LanguageChanged>
+    public class DynamicListViewModel : TitledViewModel, INavigationAware, ISubscribeTo<LanguageChanged>
     {
         private readonly ListViewName listViewName;
         private readonly IListViewService listViewService;
@@ -38,10 +37,6 @@
         public ListViewName ListViewName
         {
             get { return this.listViewName; }
-        }
-
-        void ISubscribeTo<OptionsChanged>.Handle(OptionsChanged message)
-        {
         }
 
         void ISubscribeTo<LanguageChanged>.Handle(LanguageChanged message)

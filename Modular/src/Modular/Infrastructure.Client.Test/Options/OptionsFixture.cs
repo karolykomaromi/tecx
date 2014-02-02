@@ -43,7 +43,7 @@
             Option option = Option.Create(options, o => o.Foo);
             options[option] = "Bar";
 
-            ea.Verify(e => e.Publish(It.Is<OptionsChanged>(msg => msg.OptionName == option && ReferenceEquals(options, msg.Options))));
+            ea.Verify(e => e.Publish(It.Is<OptionsChanged<MyOptions>>(msg => msg.OptionName == option && ReferenceEquals(options, msg.Options))));
         }
 
         [TestMethod]
