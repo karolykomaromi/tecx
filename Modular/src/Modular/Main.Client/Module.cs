@@ -27,18 +27,6 @@
 
         protected override void ConfigureRegions(IRegionManager regionManager)
         {
-            FrameworkElement language;
-            if (this.TryGetViewFor<LanguageSelectionViewModel>(out language))
-            {
-                regionManager.AddToRegion(RegionNames.Shell.MenuRight, language);
-            }
-
-            FrameworkElement theme;
-            if (this.TryGetViewFor<ThemeSelectionViewModel>(out theme))
-            {
-                regionManager.AddToRegion(RegionNames.Shell.MenuLeft, theme);
-            }
-
             FrameworkElement options;
             if (this.TryGetViewFor<OptionsViewModel>(out options))
             {
@@ -77,7 +65,7 @@
 
             container.RegisterType<OptionsViewModel>(
                 new ContainerControlledLifetimeManager(), 
-                new InjectionConstructor(new ResxKey("MAIN.LABEL_OPTIONS")));
+                new InjectionConstructor(new ResxKey("MAIN.LABEL_OPTIONS"), typeof(LanguageSelectionViewModel), typeof(ThemeSelectionViewModel)));
         }
     }
 }

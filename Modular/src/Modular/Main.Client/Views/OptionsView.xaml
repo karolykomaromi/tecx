@@ -8,10 +8,11 @@
     xmlns:t="clr-namespace:Infrastructure.Theming;assembly=Infrastructure.Client"
     xmlns:regions="http://www.codeplex.com/prism"
              xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+             xmlns:views="clr-namespace:Main.Views"
              mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
     d:DataContext="{d:DesignInstance d:Type=viewModels:OptionsViewModel}"
-    dyn:DynamicView.IsEnabled="True">
+    dyn:DynamicView.IsEnabled="True" xmlns:my="clr-namespace:Modular;assembly=Modular">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -28,7 +29,22 @@
         <Border Grid.ColumnSpan="2" t:Theme.Style="{StaticResource TitleBorder}">
             <TextBlock Text="{Binding Title}" t:Theme.Style="{StaticResource TitleText}" />
         </Border>
-        <toolkit:Expander Grid.Row="1" Margin="10" Header="{Binding Title}">
+        <toolkit:Expander Grid.Row="1" Margin="10" Header="{Binding Title}" IsExpanded="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding LabelLanguageSelection}" />
+                <views:LanguageSelectionView Grid.Column="1"  DataContext="{Binding LanguageSelection}" />
+                <TextBlock Grid.Row="1" Text="{Binding LabelThemeSelection}"/>
+                <views:ThemeSelectionView Grid.Column="1" Grid.Row="1" DataContext="{Binding ThemeSelection}" />
+            </Grid>
         </toolkit:Expander>
         <ItemsControl Grid.Row="2" regions:RegionManager.RegionName="Options" Margin="10"/>
     </Grid>

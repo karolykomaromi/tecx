@@ -8,17 +8,17 @@
              mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
     d:DataContext="{d:DesignInstance d:Type=viewModels:SearchOptionsViewModel}">
-    <toolkit:Expander Header="{Binding Title}">
+    <toolkit:Expander Header="{Binding Title}" IsExpanded="True">
         <Grid Background="White">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="{Binding LabelIsSearchEnabled}" HorizontalAlignment="Right"/>
+            <TextBlock Text="{Binding LabelIsSearchEnabled}"/>
             <CheckBox Grid.Column="1" IsChecked="{Binding IsSearchEnabled, Mode=TwoWay}" HorizontalAlignment="Left"/>
         </Grid>
     </toolkit:Expander>
