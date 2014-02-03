@@ -6,17 +6,24 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:mvvm="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.SL5"
     xmlns:viewModels="clr-namespace:Infrastructure.ViewModels"
-    xmlns:dyn="clr-namespace:Infrastructure.Dynamic"
-    mc:Ignorable="d"
+    xmlns:dyn="clr-namespace:Infrastructure.Dynamic" xmlns:t="clr-namespace:Infrastructure.Theming"
+             mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
     d:DataContext="{d:DesignInstance d:Type=viewModels:NavigationViewModel}"
     dyn:DynamicView.IsEnabled="True">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Infrastructure.Client;component/Assets/Themes/DefaultTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseLeftButtonDown">
             <mvvm:EventToCommand Command="{Binding NavigationCommand}" CommandParameter="{Binding Destination}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Border Background="White" CornerRadius="20" BorderBrush="Black" BorderThickness="1" Margin="5">
-        <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" Margin="10" TextAlignment="Center" />
+    <Border t:Theme.Background="{StaticResource MenuBackground}" Margin="5">
+        <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" Margin="10" t:Theme.Foreground="{StaticResource MenuText}"/>
     </Border>
 </UserControl>

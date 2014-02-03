@@ -217,7 +217,7 @@
     <Compile Include="StackPanelRegionAdapter.cs" />
     <Compile Include="Theming\ThemeStyleAdapter.cs" />
     <Compile Include="Theming\ThemeChanged.cs" />
-    <Compile Include="Theming\Theming.cs" />
+    <Compile Include="Theming\Theme.cs" />
     <Compile Include="Theming\VisualTree.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="Triggers\PopulatingCompletedToken.cs" />
@@ -231,13 +231,13 @@
     <Compile Include="UnityExtensions\ResourceManagerExtension.cs" />
     <Compile Include="UnityExtensions\ResourceManagerStrategy.cs" />
     <Compile Include="ViewModels\DynamicListViewModel.cs" />
-    <Compile Include="ViewModels\NavigationBuilder.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\TitledViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\DynamicListView.xaml.cs">
       <DependentUpon>DynamicListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\NavigationBuilder.cs" />
     <Compile Include="Views\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
     </Compile>

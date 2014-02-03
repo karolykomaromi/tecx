@@ -61,6 +61,15 @@ namespace Search.Assets.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable search.
+        /// </summary>
+        public static string Label_IsSearchEnabled {
+            get {
+                return ResourceManager.GetString("Label_IsSearchEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string Label_Search {

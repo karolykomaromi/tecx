@@ -1,4 +1,6 @@
-﻿namespace Recipe
+﻿using Infrastructure.Views;
+
+namespace Recipe
 {
     using System.Windows;
     using Infrastructure;
@@ -34,7 +36,7 @@
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, view);
 
-                NavigationViewModel navigation = new NavigationBuilder()
+                NavigationView navigation = new NavigationBuilder()
                                                     .ToView(view)
                                                     .WithParameter("name", recipesList.ToString())
                                                     .InRegion(regionManager.Regions[RegionNames.Shell.Content])
@@ -50,11 +52,11 @@
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, view);
 
-                NavigationViewModel navigation = new NavigationBuilder()
-                                                    .ToView(view)
-                                                    .WithParameter("name", ingredientsList.ToString())
-                                                    .InRegion(regionManager.Regions[RegionNames.Shell.Content])
-                                                    .WithLabel(ingredientsTitle);
+                NavigationView navigation = new NavigationBuilder()
+                                                .ToView(view)
+                                                .WithParameter("name", ingredientsList.ToString())
+                                                .InRegion(regionManager.Regions[RegionNames.Shell.Content])
+                                                .WithLabel(ingredientsTitle);
 
                 regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
             }

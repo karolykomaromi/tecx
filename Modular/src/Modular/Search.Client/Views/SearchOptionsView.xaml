@@ -12,7 +12,11 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="{Binding LabelIsSearchEnabled}"/>
-        <CheckBox Grid.Column="1" IsChecked="{Binding IsSearchEnabled, Mode=TwoWay}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding LabelIsSearchEnabled}" HorizontalAlignment="Right"/>
+        <CheckBox Grid.Column="1" IsChecked="{Binding IsSearchEnabled, Mode=TwoWay}" HorizontalAlignment="Left"/>
     </Grid>
 </UserControl>

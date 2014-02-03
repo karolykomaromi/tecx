@@ -1,23 +1,21 @@
-namespace Infrastructure.ViewModels
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
-    using System.Windows;
-    using System.Windows.Input;
-    using Infrastructure.Commands;
-    using Infrastructure.I18n;
-    using Microsoft.Practices.Prism;
-    using Microsoft.Practices.Prism.Regions;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Windows;
+using System.Windows.Input;
+using Infrastructure.Commands;
+using Infrastructure.I18n;
+using Infrastructure.ViewModels;
+using Microsoft.Practices.Prism;
+using Microsoft.Practices.Prism.Regions;
 
+namespace Infrastructure.Views
+{
     public class NavigationBuilder
     {
         private readonly List<KeyValuePair<string, string>> parameters;
-
         private ViewModel target;
-
         private INavigateAsync region;
-
         private ResxKey resourceKey;
 
         public NavigationBuilder()
@@ -25,7 +23,7 @@ namespace Infrastructure.ViewModels
             this.parameters = new List<KeyValuePair<string, string>>();
         }
 
-        public static implicit operator NavigationViewModel(NavigationBuilder navigate)
+        public static implicit operator NavigationView(NavigationBuilder navigate)
         {
             Contract.Requires(navigate != null);
 
@@ -39,6 +37,7 @@ namespace Infrastructure.ViewModels
             Contract.Requires(target.DataContext is ViewModel);
 
             this.target = (ViewModel)target.DataContext;
+
             return this;
         }
 
@@ -55,13 +54,14 @@ namespace Infrastructure.ViewModels
             Contract.Requires(resourceKey != ResxKey.Empty);
 
             this.resourceKey = resourceKey;
+
             return this;
         }
 
-        public NavigationViewModel Build()
+        public NavigationView Build()
         {
             ICommand navigationCommand = new NavigationCommand(this.region);
-            
+
             UriQuery query = new UriQuery();
 
             foreach (var parameter in this.parameters)
@@ -69,13 +69,17 @@ namespace Infrastructure.ViewModels
                 query.Add(parameter.Key, parameter.Value);
             }
 
-            NavigationViewModel viewModel = new NavigationViewModel(navigationCommand, this.resourceKey)
+            NavigationViewModel viewModel = new NavigationViewModel(
+                navigationCommand, 
+                this.resourceKey, 
+                new Uri(this.target.GetType().Name.Replace("Model", string.Empty) + query, UriKind.Relative))
                 {
-                    ResourceManager = this.target.ResourceManager,
-                    Destination = new Uri(this.target.GetType().Name.Replace("Model", string.Empty) + query, UriKind.Relative)
+                    ResourceManager = this.target.ResourceManager
                 };
 
-            return viewModel;
+            NavigationView view = new NavigationView { DataContext = viewModel };
+
+            return view;
         }
 
         public NavigationBuilder WithParameter(string parameterName, string parameterValue)

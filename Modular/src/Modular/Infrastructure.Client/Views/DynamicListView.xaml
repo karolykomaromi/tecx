@@ -14,7 +14,6 @@
     d:DataContext="{d:DesignInstance d:Type=viewModels:DynamicListViewModel}"
     dyn:DynamicView.IsEnabled="True">
     <UserControl.Resources>
-        <!-- The UI designer crashes without a reference to that dictionary. Will be removed by ThemeStyleAdapter when application starts -->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Infrastructure.Client;component/Assets/Themes/DefaultTheme.xaml" />
@@ -26,8 +25,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border t:Theming.Style="{StaticResource TitleBorder}">
-            <TextBlock Text="{Binding Title}" t:Theming.Style="{StaticResource TitleText}" />
+        <Border t:Theme.Style="{StaticResource TitleBorder}">
+            <TextBlock Text="{Binding Title}" t:Theme.Style="{StaticResource TitleText}" />
         </Border>
         <sdk:DataGrid Grid.Row="1" ItemsSource="{Binding Items}" Margin="10" >
             <i:Interaction.Triggers>
