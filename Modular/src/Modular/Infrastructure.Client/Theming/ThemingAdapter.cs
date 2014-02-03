@@ -45,6 +45,8 @@
         {
             this.Target.LayoutUpdated -= this.OnLayoutUpdated;
 
+            this.Target.Unloaded += this.OnUnloaded;
+
             UserControl uc = VisualTree.FindAncestor<UserControl>(this.Target);
 
             if (uc == null)
@@ -70,6 +72,12 @@
             }
 
             this.ObjectFromTheme = null;
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            // the target must keep a reference to the adapter or the adapter will be gc'ed
+            this.Target.Unloaded -= this.OnUnloaded;
         }
     }
 }
