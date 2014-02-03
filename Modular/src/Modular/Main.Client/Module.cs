@@ -1,13 +1,11 @@
-﻿using Infrastructure.Views;
-
-namespace Main
+﻿namespace Main
 {
     using System.Windows;
     using System.Windows.Input;
     using Infrastructure;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
-    using Infrastructure.ViewModels;
+    using Infrastructure.Views;
     using Main.Assets.Resources;
     using Main.Commands;
     using Main.ViewModels;

@@ -26,12 +26,4 @@ namespace Infrastructure.Options
             get { return this.optionName; }
         }
     }
-
-    public interface IOptionsChanged<out TOptions>
-        where TOptions : IOptions
-    {
-        TOptions Options { get; }
-
-        Option OptionName { get; }
-    }
 }

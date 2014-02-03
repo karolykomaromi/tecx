@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Windows;
-using System.Windows.Input;
-using Infrastructure.Commands;
-using Infrastructure.I18n;
-using Infrastructure.ViewModels;
-using Microsoft.Practices.Prism;
-using Microsoft.Practices.Prism.Regions;
-
 namespace Infrastructure.Views
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Windows;
+    using System.Windows.Input;
+    using Infrastructure.Commands;
+    using Infrastructure.I18n;
+    using Infrastructure.ViewModels;
+    using Microsoft.Practices.Prism;
+    using Microsoft.Practices.Prism.Regions;
+
     public class NavigationBuilder
     {
         private readonly List<KeyValuePair<string, string>> parameters;
