@@ -1,4 +1,6 @@
-﻿namespace Search
+﻿using Infrastructure.Views;
+
+namespace Search
 {
     using System;
     using System.Windows;
@@ -59,30 +61,30 @@
 
         protected override void ConfigureRegions(IRegionManager regionManager)
         {
-            FrameworkElement searchView;
-            if (this.TryGetViewFor<SearchViewModel>(out searchView))
+            FrameworkElement search;
+            if (this.TryGetViewFor<SearchViewModel>(out search))
             {
-                regionManager.AddToRegion(RegionNames.Shell.TopLeft, searchView);
+                regionManager.AddToRegion(RegionNames.Shell.TopLeft, search);
             }
 
-            FrameworkElement searchResultView;
-            if (this.TryGetViewFor<SearchResultsViewModel>(out searchResultView, new Param("titleKey", new ResxKey("Search.Label_SearchResults"))))
+            FrameworkElement searchResult;
+            if (this.TryGetViewFor<SearchResultsViewModel>(out searchResult, new Param("titleKey", new ResxKey("Search.Label_SearchResults"))))
             {
-                regionManager.AddToRegion(RegionNames.Shell.Content, searchResultView);
+                regionManager.AddToRegion(RegionNames.Shell.Content, searchResult);
             }
 
-            FrameworkElement searchOptionsView;
-            if (this.TryGetViewFor<SearchOptionsViewModel>(out searchOptionsView))
+            FrameworkElement searchOptions;
+            if (this.TryGetViewFor<SearchOptionsViewModel>(out searchOptions))
             {
-                regionManager.AddToRegion(RegionNames.Main.Options, searchOptionsView);
+                regionManager.AddToRegion(RegionNames.Main.Options, searchOptions);
             }
 
-            NavigationViewModel navigationViewModel = new NavigationBuilder()
-                                                        .ToView(searchResultView)
+            NavigationView navigation = new NavigationBuilder()
+                                                        .ToView(searchResult)
                                                         .InRegion(regionManager.Regions[RegionNames.Shell.Content])
                                                         .WithLabel(new ResxKey("SEARCH.LABEL_SEARCHRESULTS"));
 
-            regionManager.AddToRegion(RegionNames.Shell.Navigation, navigationViewModel);
+            regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
         }
 
         protected override IResourceManager CreateResourceManager()

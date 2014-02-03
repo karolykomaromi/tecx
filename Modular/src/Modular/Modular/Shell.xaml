@@ -5,19 +5,27 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:regions="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
     xmlns:dyn="clr-namespace:Infrastructure.Dynamic;assembly=Infrastructure.Client"
+    xmlns:t="clr-namespace:Infrastructure.Theming;assembly=Infrastructure.Client"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
     dyn:DynamicView.IsEnabled="True">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Infrastructure.Client;component/Assets/Themes/DefaultTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1" Background="Yellow">
+        <Border t:Theme.Background="{StaticResource MenuBackground}">
             <ItemsControl regions:RegionManager.RegionName="TopLeft" />
         </Border>
         <Grid Grid.Column="1">
@@ -25,17 +33,17 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Border BorderBrush="Black" BorderThickness="1" Background="Aqua">
+            <Border t:Theme.Background="{StaticResource ContentBackground}">
                 <ItemsControl regions:RegionManager.RegionName="MenuLeft" />
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Background="BlueViolet">
+            <Border Grid.Column="1" t:Theme.Background="{StaticResource ContentBackground}">
                 <ContentControl regions:RegionManager.RegionName="MenuRight" HorizontalContentAlignment="Stretch" />
             </Border>
         </Grid>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Background="Khaki" >
+        <Border Grid.Row="1" t:Theme.Background="{StaticResource MenuBackground}" >
             <ItemsControl regions:RegionManager.RegionName="Navigation" />
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="1" Background="Aquamarine" >
+        <Border Grid.Column="1" Grid.Row="1" t:Theme.Background="{StaticResource ContentBackground}" >
             <ContentControl regions:RegionManager.RegionName="Content" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
         </Border>
     </Grid>

@@ -1,4 +1,6 @@
-﻿namespace Main
+﻿using Infrastructure.Views;
+
+namespace Main
 {
     using System.Windows;
     using System.Windows.Input;
@@ -40,14 +42,15 @@
             }
 
             FrameworkElement options;
-            if (this.TryGetViewFor<OptionsViewModel>(out options, new Param("titleKey", new ResxKey("Label_Options"))))
+            if (this.TryGetViewFor<OptionsViewModel>(out options, new Param("titleKey", new ResxKey("MAIN.LABEL_OPTIONS"))))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, options);
             }
 
-            NavigationViewModel navigation = new NavigationBuilder().ToView(options)
+            NavigationView navigation = new NavigationBuilder()
+                .ToView(options)
                 .InRegion(regionManager.Regions[RegionNames.Shell.Content])
-                .WithLabel(new ResxKey("Label_Options"));
+                .WithLabel(new ResxKey("MAIN.LABEL_OPTIONS"));
 
             regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
         }

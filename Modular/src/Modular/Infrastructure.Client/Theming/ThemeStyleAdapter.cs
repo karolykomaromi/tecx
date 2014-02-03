@@ -6,46 +6,154 @@
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Media;
     using Infrastructure.Events;
 
-    public class ThemeStyleAdapter : ISubscribeTo<ThemeChanged>
+    public class ThemeBackgroundAdapter : ThemingAdapter<Control>
     {
-        private readonly FrameworkElement element;
-        private Style style;
-        private object styleKey;
-        private Action beforeThemeChanged;
-
-        public ThemeStyleAdapter(FrameworkElement element, Style style)
+        public ThemeBackgroundAdapter(Control control, Brush objectFromTheme)
         {
-            Contract.Requires(element != null);
-            Contract.Requires(style != null);
+            Contract.Requires(control != null);
+            Contract.Requires(objectFromTheme != null);
 
-            this.element = element;
-            this.style = style;
+            this.Target = control;
+            this.ObjectFromTheme = objectFromTheme;
 
-            this.element.LayoutUpdated += this.OnLayoutUpdated;
+            this.Target.LayoutUpdated += this.OnLayoutUpdated;
         }
 
-        void ISubscribeTo<ThemeChanged>.Handle(ThemeChanged message)
+        public override void Handle(ThemeChanged message)
+        {
+            Contract.Requires(message != null);
+
+            Brush newBrush = Application.Current.Resources[this.Key] as Brush;
+
+            if (newBrush != null)
+            {
+                this.Target.Background = newBrush;
+            }
+        }
+    }
+
+    public class ThemeBorderBackgroundAdapter : ThemingAdapter<Border>
+    {
+        public ThemeBorderBackgroundAdapter(Border border, Brush objectFromTheme)
+        {
+            Contract.Requires(border != null);
+            Contract.Requires(objectFromTheme != null);
+
+            this.Target = border;
+            this.ObjectFromTheme = objectFromTheme;
+
+            this.Target.LayoutUpdated += this.OnLayoutUpdated;
+        }
+
+        public override void Handle(ThemeChanged message)
+        {
+            Contract.Requires(message != null);
+
+            Brush newBrush = Application.Current.Resources[this.Key] as Brush;
+
+            if (newBrush != null)
+            {
+                this.Target.Background = newBrush;
+            }
+        }
+    }
+
+    public class ThemeForegroundAdapter : ThemingAdapter<Control>
+    {
+        public ThemeForegroundAdapter(Control control, Brush objectFromTheme)
+        {
+            Contract.Requires(control != null);
+            Contract.Requires(objectFromTheme != null);
+
+            this.Target = control;
+            this.ObjectFromTheme = objectFromTheme;
+
+            this.Target.LayoutUpdated += this.OnLayoutUpdated;
+        }
+
+        public override void Handle(ThemeChanged message)
+        {
+            Contract.Requires(message != null);
+
+            Brush newBrush = Application.Current.Resources[this.Key] as Brush;
+
+            if (newBrush != null)
+            {
+                this.Target.Foreground = newBrush;
+            }
+        }
+    }
+
+    public class ThemeTextBlockForegroundAdapter : ThemingAdapter<TextBlock>
+    {
+        public ThemeTextBlockForegroundAdapter(TextBlock textBlock, Brush objectFromTheme)
+        {
+            Contract.Requires(textBlock != null);
+            Contract.Requires(objectFromTheme != null);
+
+            this.Target = textBlock;
+            this.ObjectFromTheme = objectFromTheme;
+
+            this.Target.LayoutUpdated += this.OnLayoutUpdated;
+        }
+
+        public override void Handle(ThemeChanged message)
+        {
+            Contract.Requires(message != null);
+
+            Brush newBrush = Application.Current.Resources[this.Key] as Brush;
+
+            if (newBrush != null)
+            {
+                this.Target.Foreground = newBrush;
+            }
+        }
+    }
+
+    public class ThemeStyleAdapter : ThemingAdapter<FrameworkElement>
+    {
+        public ThemeStyleAdapter(FrameworkElement target, Style style)
+        {
+            Contract.Requires(target != null);
+            Contract.Requires(style != null);
+
+            this.Target = target;
+            this.ObjectFromTheme = style;
+
+            this.Target.LayoutUpdated += this.OnLayoutUpdated;
+        }
+
+        public override void Handle(ThemeChanged message)
         {
             Contract.Requires(message != null);
             Contract.Requires(message.ThemeUri != null);
 
-            this.beforeThemeChanged();
-
-            Style newStyle = Application.Current.Resources[this.styleKey] as Style;
+            Style newStyle = Application.Current.Resources[this.Key] as Style;
 
             if (newStyle != null)
             {
-                this.element.Style = newStyle;
+                this.Target.Style = newStyle;
             }
         }
+    }
 
-        private static object GetStyleKey(ResourceDictionary dictionary, Style style)
+    public abstract class ThemingAdapter<T> : ISubscribeTo<ThemeChanged>
+        where T : FrameworkElement
+    {
+        protected T Target { get; set; }
+        protected object ObjectFromTheme { get; set; }
+        protected object Key { get; set; }
+        
+        public abstract void Handle(ThemeChanged message);
+
+        protected static object GetKey(ResourceDictionary dictionary, object o)
         {
             foreach (DictionaryEntry resource in dictionary)
             {
-                if (resource.Value == style)
+                if (resource.Value == o)
                 {
                     return resource.Key;
                 }
@@ -53,7 +161,7 @@
 
             foreach (ResourceDictionary mergedDictionary in dictionary.MergedDictionaries)
             {
-                object key = GetStyleKey(mergedDictionary, style);
+                object key = GetKey(mergedDictionary, o);
 
                 if (key != null)
                 {
@@ -64,40 +172,35 @@
             return null;
         }
 
-        private void OnLayoutUpdated(object sender, EventArgs e)
+        protected virtual void OnLayoutUpdated(object sender, EventArgs e)
         {
-            this.element.LayoutUpdated -= this.OnLayoutUpdated;
+            this.Target.LayoutUpdated -= this.OnLayoutUpdated;
 
-            UserControl uc = VisualTree.FindAncestor<UserControl>(this.element);
+            UserControl uc = VisualTree.FindAncestor<UserControl>(this.Target);
 
             if (uc == null)
             {
                 return;
             }
-            
-            this.styleKey = GetStyleKey(Application.Current.Resources, this.style);
-            
-            if (this.styleKey == null)
+
+            this.Key = GetKey(Application.Current.Resources, this.ObjectFromTheme);
+
+            if (this.Key == null)
             {
-                ResourceDictionary dictionary = uc.Resources.MergedDictionaries
-                        .FirstOrDefault(dict => dict.Source != null && dict.Source.ToString().EndsWith("Theme.xaml", StringComparison.OrdinalIgnoreCase));
+                ResourceDictionary dictionary = uc
+                    .Resources
+                    .MergedDictionaries
+                    .FirstOrDefault(dict => dict.Source != null && dict.Source.ToString().EndsWith("Theme.xaml", StringComparison.OrdinalIgnoreCase));
 
                 if (dictionary == null)
                 {
                     return;
                 }
 
-                this.styleKey = GetStyleKey(dictionary, this.style);
-
-                this.beforeThemeChanged = () =>
-                {
-                    UserControl uc1 = uc;
-                    uc1.Resources.MergedDictionaries.Remove(dictionary);
-                    this.beforeThemeChanged = () => { };
-                };
+                this.Key = GetKey(dictionary, this.ObjectFromTheme);
             }
 
-            this.style = null;
+            this.ObjectFromTheme = null;
         }
     }
 }

@@ -23,7 +23,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border t:Theming.Style="{StaticResource TitleBorder}">
+        <Border t:Theme.Style="{StaticResource TitleBorder}">
             <TextBlock Style="{StaticResource TitleText}" Text="{Binding Title}"/>
         </Border>
         <ListBox  Grid.Row="1" ItemsSource="{Binding Results}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">

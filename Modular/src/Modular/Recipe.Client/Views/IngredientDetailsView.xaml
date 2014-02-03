@@ -27,8 +27,8 @@
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-        <Border t:Theming.Style="{StaticResource TitleBorder}" Grid.ColumnSpan="2">
-            <TextBlock t:Theming.Style="{StaticResource TitleText}" Text="{Binding Title}"/>
+        <Border t:Theme.Style="{StaticResource TitleBorder}" Grid.ColumnSpan="2">
+            <TextBlock t:Theme.Style="{StaticResource TitleText}" Text="{Binding Title}"/>
         </Border>
     </Grid>
 </UserControl>
