@@ -18,16 +18,6 @@
             /// Navigation
             /// </summary>
             public static readonly string Navigation = "Navigation";
-
-            /// <summary>
-            /// MenuLeft
-            /// </summary>
-            public static readonly string MenuLeft = "MenuLeft";
-
-            /// <summary>
-            /// MenuRight
-            /// </summary>
-            public static readonly string MenuRight = "MenuRight";
         }
 
         public static class Main
