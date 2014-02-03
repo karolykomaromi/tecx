@@ -1,6 +1,4 @@
-﻿using Infrastructure.Views;
-
-namespace Recipe
+﻿namespace Recipe
 {
     using System.Windows;
     using Infrastructure;
@@ -8,6 +6,7 @@ namespace Recipe
     using Infrastructure.ListViews;
     using Infrastructure.Modularity;
     using Infrastructure.ViewModels;
+    using Infrastructure.Views;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;

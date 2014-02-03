@@ -207,6 +207,7 @@
     <Compile Include="Modularity\ViewRuleInitializer.cs" />
     <Compile Include="Modularity\WellKnownModuleNames.cs" />
     <Compile Include="Options\IOptions.cs" />
+    <Compile Include="Options\IOptionsChanged.cs" />
     <Compile Include="Options\Option.cs" />
     <Compile Include="Options\Options.cs" />
     <Compile Include="Options\OptionsChanged.cs" />
@@ -215,9 +216,14 @@
     <Compile Include="ReflectionHelper.cs" />
     <Compile Include="RegionNames.cs" />
     <Compile Include="StackPanelRegionAdapter.cs" />
+    <Compile Include="Theming\ThemeBackgroundAdapter.cs" />
+    <Compile Include="Theming\ThemeBorderBackgroundAdapter.cs" />
+    <Compile Include="Theming\ThemeForegroundAdapter.cs" />
     <Compile Include="Theming\ThemeStyleAdapter.cs" />
     <Compile Include="Theming\ThemeChanged.cs" />
     <Compile Include="Theming\Theme.cs" />
+    <Compile Include="Theming\ThemeTextBlockForegroundAdapter.cs" />
+    <Compile Include="Theming\ThemingAdapter.cs" />
     <Compile Include="Theming\VisualTree.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="Triggers\PopulatingCompletedToken.cs" />

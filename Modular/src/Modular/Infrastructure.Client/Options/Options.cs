@@ -61,7 +61,7 @@
 
                 object currentValue = getter(this);
 
-                if (!Equals(currentValue, value))
+                if (!object.Equals(currentValue, value))
                 {
                     Action<IOptions, object> setter;
                     if (!this.setters.TryGetValue(option, out setter))

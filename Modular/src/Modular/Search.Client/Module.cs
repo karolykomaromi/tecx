@@ -1,6 +1,4 @@
-﻿using Infrastructure.Views;
-
-namespace Search
+﻿namespace Search
 {
     using System;
     using System.Windows;
@@ -13,7 +11,7 @@ namespace Search
     using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
-    using Infrastructure.ViewModels;
+    using Infrastructure.Views;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
