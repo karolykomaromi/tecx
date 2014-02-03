@@ -22,7 +22,6 @@
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Prism.UnityExtensions;
     using Microsoft.Practices.Unity;
-    using Search.ViewModels;
 
     public class Bootstrapper : UnityBootstrapper
     {
@@ -94,7 +93,7 @@
 
             this.Container.RegisterType<IViewRuleEngine, ViewRuleEngine>(new ContainerControlledLifetimeManager());
 
-            this.Container.RegisterType<IOptions, SearchOptionsViewModel>(new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IOptions, CompositeOptions>(new ContainerControlledLifetimeManager());
         }
 
         protected override void ConfigureModuleCatalog()

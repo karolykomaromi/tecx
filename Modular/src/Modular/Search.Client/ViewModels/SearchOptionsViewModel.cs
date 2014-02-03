@@ -1,6 +1,5 @@
 ﻿namespace Search.ViewModels
 {
-    using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.Options;
 
@@ -10,8 +9,8 @@
 
         private bool isSearchEnabled;
 
-        public SearchOptionsViewModel(IEventAggregator eventAggregator)
-            : base(eventAggregator)
+        public SearchOptionsViewModel(ResxKey titleKey)
+            : base(titleKey)
         {
             this.labelIsSearchEnabled = new LocalizedString(this, "LabelIsSearchEnabled", new ResxKey("Search.Label_IsSearchEnabled"), this.OnPropertyChanged);
         }

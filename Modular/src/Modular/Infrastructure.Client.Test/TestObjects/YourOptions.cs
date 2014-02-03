@@ -1,12 +1,12 @@
 namespace Infrastructure.Client.Test.TestObjects
 {
-    using Infrastructure.Events;
+    using Infrastructure.I18n;
     using Infrastructure.Options;
 
     public class YourOptions : Options
     {
-        public YourOptions(IEventAggregator eventAggregator)
-            : base(eventAggregator)
+        public YourOptions()
+            : base(ResxKey.Empty)
         {
         }
 

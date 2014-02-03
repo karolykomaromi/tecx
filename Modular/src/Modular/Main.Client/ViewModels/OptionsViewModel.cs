@@ -1,9 +1,9 @@
 ﻿namespace Main.ViewModels
 {
     using Infrastructure.I18n;
-    using Infrastructure.ViewModels;
+    using Infrastructure.Options;
 
-    public class OptionsViewModel : TitledViewModel
+    public class OptionsViewModel : Options
     {
         public OptionsViewModel(ResxKey titleKey)
             : base(titleKey)

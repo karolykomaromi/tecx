@@ -201,13 +201,16 @@
     <Compile Include="Modularity\ModuleResourcesInitializer.cs" />
     <Compile Include="Modularity\ModuleTracker.cs" />
     <Compile Include="Modularity\ModuleTrackingState.cs" />
+    <Compile Include="Modularity\OptionsInitializer.cs" />
     <Compile Include="Modularity\RegionInitializer.cs" />
     <Compile Include="Modularity\ResourceManagerInitializer.cs" />
     <Compile Include="Modularity\UnityModule.cs" />
     <Compile Include="Modularity\ViewRuleInitializer.cs" />
     <Compile Include="Modularity\WellKnownModuleNames.cs" />
+    <Compile Include="Options\CompositeOptions.cs" />
     <Compile Include="Options\IOptions.cs" />
     <Compile Include="Options\IOptionsChanged.cs" />
+    <Compile Include="Options\NullOptions.cs" />
     <Compile Include="Options\Option.cs" />
     <Compile Include="Options\Options.cs" />
     <Compile Include="Options\OptionsChanged.cs" />

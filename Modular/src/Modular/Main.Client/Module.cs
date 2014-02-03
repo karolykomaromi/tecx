@@ -40,7 +40,7 @@
             }
 
             FrameworkElement options;
-            if (this.TryGetViewFor<OptionsViewModel>(out options, new Param("titleKey", new ResxKey("MAIN.LABEL_OPTIONS"))))
+            if (this.TryGetViewFor<OptionsViewModel>(out options))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, options);
             }
@@ -51,6 +51,11 @@
                 .WithLabel(new ResxKey("MAIN.LABEL_OPTIONS"));
 
             regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
+        }
+
+        protected override Infrastructure.Options.IOptions CreateModuleOptions()
+        {
+            return this.Container.Resolve<OptionsViewModel>();
         }
 
         protected override IResourceManager CreateResourceManager()
@@ -69,6 +74,10 @@
             container.RegisterType<ThemeSelectionViewModel>(
                 new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(new ResolvedParameter<ICommand>("theme")));
+
+            container.RegisterType<OptionsViewModel>(
+                new ContainerControlledLifetimeManager(), 
+                new InjectionConstructor(new ResxKey("MAIN.LABEL_OPTIONS")));
         }
     }
 }

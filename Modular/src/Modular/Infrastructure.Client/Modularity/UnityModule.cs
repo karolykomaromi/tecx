@@ -10,6 +10,7 @@ namespace Infrastructure.Modularity
     using AutoMapper;
     using Infrastructure.Dynamic;
     using Infrastructure.I18n;
+    using Infrastructure.Options;
     using Infrastructure.ViewModels;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Modularity;
@@ -53,6 +54,11 @@ namespace Infrastructure.Modularity
             Contract.Ensures(Contract.Result<IResourceManager>() != null);
 
             return new EchoResourceManager();
+        }
+
+        protected internal virtual IOptions CreateModuleOptions()
+        {
+            return new NullOptions();
         }
 
         protected internal virtual void ConfigureContainer(IUnityContainer container)
