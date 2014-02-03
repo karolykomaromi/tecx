@@ -11,6 +11,7 @@
     using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
+    using Infrastructure.Options;
     using Infrastructure.Views;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
@@ -48,13 +49,17 @@
             container.RegisterType<ICommand, SearchCommand>("search");
             container.RegisterType<ICommand, SuggestionsCommand>("suggestions");
 
-            this.Container.RegisterType<ISearchService, SearchServiceClient>("client", new InjectionConstructor());
-            this.Container.RegisterType<ISearchService, DispatchingSearchServiceClient>(
+            container.RegisterType<ISearchService, SearchServiceClient>("client", new InjectionConstructor());
+            container.RegisterType<ISearchService, DispatchingSearchServiceClient>(
                 new InjectionConstructor(new ResolvedParameter<ISearchService>("client"), typeof(Dispatcher)));
 
             container.RegisterType<ICommand, NavigationCommand>(
                 RegionNames.Shell.Content, 
                 new InjectionConstructor(new ResolvedParameter<INavigateAsync>(RegionNames.Shell.Content)));
+
+            container.RegisterType<SearchOptionsViewModel>(
+                new ContainerControlledLifetimeManager(), 
+                new InjectionConstructor(new ResxKey("SEARCH.LABEL_SEARCHOPTIONS")));
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)
@@ -66,7 +71,7 @@
             }
 
             FrameworkElement searchResult;
-            if (this.TryGetViewFor<SearchResultsViewModel>(out searchResult, new Param("titleKey", new ResxKey("Search.Label_SearchResults"))))
+            if (this.TryGetViewFor<SearchResultsViewModel>(out searchResult, new Param("titleKey", new ResxKey("SEARCH.LABEL_SEARCHRESULTS"))))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, searchResult);
             }
@@ -90,6 +95,11 @@
             IResourceManager rm = new ResxFilesResourceManager(typeof(Labels));
 
             return rm;
+        }
+
+        protected override IOptions CreateModuleOptions()
+        {
+            return this.Container.Resolve<SearchOptionsViewModel>();
         }
 
         protected override ResourceDictionary CreateModuleResources()

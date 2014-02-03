@@ -14,7 +14,7 @@
         {
             var ea = new Mock<IEventAggregator>();
 
-            MyOptions options = new MyOptions(ea.Object);
+            MyOptions options = new MyOptions { EventAggregator = ea.Object };
 
             options[Option.Create(options, o => o.Foo)] = "Bar";
 
@@ -26,7 +26,11 @@
         {
             var ea = new Mock<IEventAggregator>();
 
-            MyOptions options = new MyOptions(ea.Object) { Foo = "Bar" };
+            MyOptions options = new MyOptions
+            {
+                EventAggregator = ea.Object,
+                Foo = "Bar"
+            };
 
             object actual = options[Option.Create(options, o => o.Foo)];
 
@@ -38,7 +42,7 @@
         {
             var ea = new Mock<IEventAggregator>();
 
-            MyOptions options = new MyOptions(ea.Object);
+            MyOptions options = new MyOptions { EventAggregator = ea.Object };
 
             Option option = Option.Create(options, o => o.Foo);
             options[option] = "Bar";
@@ -51,9 +55,9 @@
         {
             var ea = new Mock<IEventAggregator>();
 
-            YourOptions yours = new YourOptions(ea.Object);
+            YourOptions yours = new YourOptions { EventAggregator = ea.Object };
 
-            MyOptions mine = new MyOptions(ea.Object);
+            MyOptions mine = new MyOptions { EventAggregator = ea.Object };
 
             Option option = Option.Create(yours, y => y.Bar);
 
@@ -65,7 +69,7 @@
         {
             var ea = new Mock<IEventAggregator>();
 
-            MyOptions mine = new MyOptions(ea.Object);
+            MyOptions mine = new MyOptions { EventAggregator = ea.Object };
 
             Option option = Option.Create(mine, m => m.Foo);
 

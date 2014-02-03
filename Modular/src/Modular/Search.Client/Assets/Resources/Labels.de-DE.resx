@@ -123,6 +123,9 @@
   <data name="Label_Search" xml:space="preserve">
     <value>Suche</value>
   </data>
+  <data name="Label_SearchOptions" xml:space="preserve">
+    <value>Suchoptionen</value>
+  </data>
   <data name="Label_SearchResults" xml:space="preserve">
     <value>Suchergebnisse</value>
   </data>

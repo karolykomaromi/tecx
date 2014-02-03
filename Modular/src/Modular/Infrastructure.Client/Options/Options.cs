@@ -2,25 +2,21 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
     using System.Linq.Expressions;
     using System.Reflection;
     using Infrastructure.Events;
+    using Infrastructure.I18n;
     using Infrastructure.ViewModels;
 
-    public abstract class Options : ViewModel, IOptions
+    public abstract class Options : TitledViewModel, IOptions
     {
         private readonly IDictionary<Option, Func<IOptions, object>> getters;
         private readonly IDictionary<Option, Action<IOptions, object>> setters;
-
         private readonly Action<IOptions, Option> publish;
 
-        protected Options(IEventAggregator eventAggregator)
+        protected Options(ResxKey titleKey)
+            : base(titleKey)
         {
-            Contract.Requires(eventAggregator != null);
-
-            this.EventAggregator = eventAggregator;
-
             this.setters = new Dictionary<Option, Action<IOptions, object>>();
             this.getters = new Dictionary<Option, Func<IOptions, object>>();
             this.publish = this.GetPublish();

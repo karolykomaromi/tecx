@@ -79,6 +79,15 @@ namespace Search.Assets.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search options.
+        /// </summary>
+        public static string Label_SearchOptions {
+            get {
+                return ResourceManager.GetString("Label_SearchOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search Results.
         /// </summary>
         public static string Label_SearchResults {
