@@ -105,7 +105,16 @@
       <HintPath>..\packages\Unity.2.1.505.2\lib\SL30\Microsoft.Practices.Unity.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.4\lib\sl4\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SignalR.Client.Silverlight5">
+      <HintPath>..\packages\SignalR.Client.Silverlight5.0.5.0\lib\sl50\SignalR.Client.Silverlight5.dll</HintPath>
+    </Reference>
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Threading.Tasks.SL5">
+      <HintPath>..\packages\System.Threading.Tasks.3.0.1\lib\sl50\System.Threading.Tasks.SL5.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
