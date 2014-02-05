@@ -38,12 +38,27 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="{Binding LabelLanguageSelection}" />
                 <views:LanguageSelectionView Grid.Column="1"  DataContext="{Binding LanguageSelection}" />
                 <TextBlock Grid.Row="1" Text="{Binding LabelThemeSelection}"/>
                 <views:ThemeSelectionView Grid.Column="1" Grid.Row="1" DataContext="{Binding ThemeSelection}" />
+                <TextBlock Grid.Row="2" Text="{Binding LabelNotificationUrl}"/>
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Text="{Binding NotificationUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"/>
+                    <Button Content="{Binding LabelTestConnection}" Command="{Binding TestConnectionCommand}" CommandParameter="{Binding NotificationUrl}" />
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding TestConnectionReturn}"/>
+                </Grid>
             </Grid>
         </toolkit:Expander>
         <ItemsControl Grid.Row="2" regions:RegionManager.RegionName="Options" Margin="10"/>
