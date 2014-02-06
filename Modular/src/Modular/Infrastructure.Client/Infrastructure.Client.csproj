@@ -240,7 +240,11 @@
     <Compile Include="UnityExtensions\ResourceManagerExtension.cs" />
     <Compile Include="UnityExtensions\ResourceManagerStrategy.cs" />
     <Compile Include="ViewModels\DynamicListViewModel.cs" />
+    <Compile Include="ViewModels\EmptyFilterViewModel.cs" />
+    <Compile Include="ViewModels\Filter.cs" />
+    <Compile Include="ViewModels\FilterViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
+    <Compile Include="ViewModels\NullFilter.cs" />
     <Compile Include="ViewModels\TitledViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\DynamicListView.xaml.cs">
@@ -277,7 +281,9 @@
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Filters\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

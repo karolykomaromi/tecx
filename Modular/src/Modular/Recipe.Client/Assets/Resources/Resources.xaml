@@ -1,0 +1,12 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:viewModels="clr-namespace:Recipe.ViewModels"
+    xmlns:views="clr-namespace:Recipe.Views">
+    <DataTemplate DataType="viewModels:RecipesFilterViewModel">
+        <views:RecipesFilterView />
+    </DataTemplate>
+    <DataTemplate DataType="viewModels:IngredientsFilterViewModel">
+        <views:IngredientsFilterView />
+    </DataTemplate>
+</ResourceDictionary>

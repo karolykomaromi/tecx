@@ -70,11 +70,29 @@ namespace Main.Assets.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to URL for notification service.
+        /// </summary>
+        public static string Label_NotificationUrl {
+            get {
+                return ResourceManager.GetString("Label_NotificationUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string Label_Options {
             get {
                 return ResourceManager.GetString("Label_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test connection.
+        /// </summary>
+        public static string Label_TestConnection {
+            get {
+                return ResourceManager.GetString("Label_TestConnection", resourceCulture);
             }
         }
         

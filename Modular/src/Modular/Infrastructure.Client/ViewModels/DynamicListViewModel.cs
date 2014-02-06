@@ -17,6 +17,7 @@
         private readonly IListViewService listViewService;
         private readonly ObservableCollection<FacetedViewModel> items;
         private readonly List<Facet> facets;
+        private FilterViewModel filter;
 
         public DynamicListViewModel(ListViewName listViewName, ResxKey listViewTitleKey, IListViewService listViewService)
             : base(listViewTitleKey)
@@ -27,6 +28,7 @@
             this.listViewService = listViewService;
             this.items = new ObservableCollection<FacetedViewModel>();
             this.facets = new List<Facet>();
+            this.filter = new EmptyFilterViewModel();
         }
 
         public ObservableCollection<FacetedViewModel> Items
@@ -37,6 +39,24 @@
         public ListViewName ListViewName
         {
             get { return this.listViewName; }
+        }
+
+        public FilterViewModel Filter
+        {
+            get
+            {
+                return this.filter;
+            }
+
+            set
+            {
+                if (this.filter != value)
+                {
+                    this.OnPropertyChanging(() => this.Filter);
+                    this.filter = value;
+                    this.OnPropertyChanged(() => this.Filter);
+                }
+            }
         }
 
         void ISubscribeTo<LanguageChanged>.Handle(LanguageChanged message)

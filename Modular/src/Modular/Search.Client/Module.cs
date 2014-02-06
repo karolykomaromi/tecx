@@ -102,15 +102,6 @@
             return this.Container.Resolve<SearchOptionsViewModel>();
         }
 
-        protected override ResourceDictionary CreateModuleResources()
-        {
-            Uri source = new Uri("/Search.Client;component/Resources.xaml", UriKind.Relative);
-
-            ResourceDictionary resources = new ResourceDictionary { Source = source };
-
-            return resources;
-        }
-
         protected override void ConfigureViewRules(IViewRuleEngine ruleEngine)
         {
             ruleEngine.Add(new DisableSearchRule());

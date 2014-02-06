@@ -119,6 +119,7 @@
     </Compile>
     <Compile Include="Commands\ChangeLanguageCommand.cs" />
     <Compile Include="Commands\ChangeThemeCommand.cs" />
+    <Compile Include="Commands\TestNotificationConnectionCommand.cs" />
     <Compile Include="Converters\ThemeUriConverter.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Notification\NotificationReceiver.cs" />
@@ -170,6 +171,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\Images\de24x16.png" />
+    <Resource Include="Assets\Images\de48x32.png" />
+    <Resource Include="Assets\Images\us24x16.png" />
+    <Resource Include="Assets\Images\us48x32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
