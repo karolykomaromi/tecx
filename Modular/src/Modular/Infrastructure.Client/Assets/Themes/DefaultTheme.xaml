@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:viewModels="clr-namespace:Infrastructure.ViewModels">
     <!-- WP8 default colors -->
     <Color x:Key="Purple">#FFA200FF</Color>
     <Color x:Key="Magenta">#FFFF0097</Color>
@@ -49,4 +49,7 @@
         <Setter Property="Margin" Value="5" />
         <Setter Property="TextAlignment" Value="Center" />
     </Style>
+    <DataTemplate DataType="viewModels:EmptyFilterViewModel">
+        <Rectangle Height="100" Width="400" Fill="YellowGreen"/>
+    </DataTemplate>
 </ResourceDictionary>

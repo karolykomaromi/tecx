@@ -120,8 +120,14 @@
   <data name="Label_LanguageSelection" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="Label_NotificationUrl" xml:space="preserve">
+    <value>URL for notification service</value>
+  </data>
   <data name="Label_Options" xml:space="preserve">
     <value>Options</value>
+  </data>
+  <data name="Label_TestConnection" xml:space="preserve">
+    <value>Test connection</value>
   </data>
   <data name="Label_ThemeSelection" xml:space="preserve">
     <value>Theme</value>

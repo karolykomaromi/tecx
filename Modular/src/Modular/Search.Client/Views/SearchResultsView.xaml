@@ -24,7 +24,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Border t:Theme.Style="{StaticResource TitleBorder}">
-            <TextBlock Style="{StaticResource TitleText}" Text="{Binding Title}"/>
+            <TextBlock t:Theme.Style="{StaticResource TitleText}" Text="{Binding Title}"/>
         </Border>
         <ListBox  Grid.Row="1" ItemsSource="{Binding Results}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
             <ListBox.ItemContainerStyle>

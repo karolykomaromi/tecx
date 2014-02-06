@@ -1,4 +1,6 @@
-﻿namespace Recipe
+﻿using System;
+
+namespace Recipe
 {
     using System.Windows;
     using Infrastructure;
@@ -59,6 +61,15 @@
 
                 regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
             }
+        }
+
+        protected override ResourceDictionary CreateModuleResources()
+        {
+            Uri source = new Uri("/Recipe.Client;component/Assets/Resources/Resources.xaml", UriKind.Relative);
+
+            ResourceDictionary resources = new ResourceDictionary { Source = source };
+
+            return resources;
         }
 
         protected override IResourceManager CreateResourceManager()

@@ -23,12 +23,14 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Border t:Theme.Style="{StaticResource TitleBorder}">
             <TextBlock Text="{Binding Title}" t:Theme.Style="{StaticResource TitleText}" />
         </Border>
-        <sdk:DataGrid Grid.Row="1" ItemsSource="{Binding Items}" Margin="10" >
+        <ContentControl Grid.Row="1" Content="{Binding Filter}"/>
+        <sdk:DataGrid Grid.Row="2" ItemsSource="{Binding Items}" Margin="10" >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="AutoGeneratingColumn">
                     <tr:TranslateColumnHeader />

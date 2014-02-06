@@ -1,10 +1,6 @@
-﻿using System;
-using System.Windows.Input;
-using Infrastructure.Commands;
-using Infrastructure.Events;
-
-namespace Main.ViewModels
+﻿namespace Main.ViewModels
 {
+    using System.Windows.Input;
     using Infrastructure.I18n;
     using Infrastructure.Options;
 
@@ -18,16 +14,20 @@ namespace Main.ViewModels
 
         private string notificationUrl;
         private string testConnectionReturn;
+        private readonly LocalizedString labelNotificationUrl;
+        private readonly ICommand testNotificationCommand;
 
-        public OptionsViewModel(ResxKey titleKey, LanguageSelectionViewModel languageSelection, ThemeSelectionViewModel themeSelection)
+        public OptionsViewModel(ResxKey titleKey, LanguageSelectionViewModel languageSelection, ThemeSelectionViewModel themeSelection, ICommand testNotificationCommand)
             : base(titleKey)
         {
             this.languageSelection = languageSelection;
             this.themeSelection = themeSelection;
+            this.testNotificationCommand = testNotificationCommand;
 
             this.labelLanguageSelection = new LocalizedString(this, "LabelLanguageSelection", new ResxKey("MAIN.LABEL_LANGUAGESELECTION"), this.OnPropertyChanged);
             this.labelThemeSelection = new LocalizedString(this, "LabelThemeSelection", new ResxKey("MAIN.LABEL_THEMESELECTION"), this.OnPropertyChanged);
             this.labelTestConnection = new LocalizedString(this, "LabelTestConnection", new ResxKey("MAIN.LABEL_TESTCONNECTION"), this.OnPropertyChanged);
+            this.labelNotificationUrl = new LocalizedString(this, "LabelNotificationUrl", new ResxKey("MAIN.LABEL_NOTIFICATIONURL"), this.OnPropertyChanged);
         }
 
         public string LabelLanguageSelection
@@ -73,9 +73,9 @@ namespace Main.ViewModels
             get { return this.labelTestConnection.Value; }
         }
 
-        public ICommand TestConnectionCommand
+        public ICommand TestNotificationCommand
         {
-            get { throw new System.NotImplementedException(); }
+            get { return this.testNotificationCommand; }
         }
 
         public string TestConnectionReturn
@@ -95,37 +95,10 @@ namespace Main.ViewModels
                 }
             }
         }
-    }
 
-    public class TestNotificationConnectionCommand : ICommand, ISubscribeTo<CanExecuteChanged>
-    {
-        public event EventHandler CanExecuteChanged = delegate { };
-
-        public bool CanExecute(object parameter)
+        public string LabelNotificationUrl
         {
-            string uri = parameter as string;
-
-            if (!string.IsNullOrEmpty(uri))
-            {
-                return Uri.IsWellFormedUriString(uri, UriKind.Absolute);
-            }
-
-            return false;
-        }
-
-        public void Execute(object parameter)
-        {
-            string uriString = parameter as string;
-
-            if (!string.IsNullOrEmpty(uriString) && Uri.IsWellFormedUriString(uriString, UriKind.Absolute))
-            {
-                
-            }
-        }
-
-        public void Handle(CanExecuteChanged message)
-        {
-            this.CanExecuteChanged(this, EventArgs.Empty);
+            get { return this.labelNotificationUrl.Value; }
         }
     }
 }

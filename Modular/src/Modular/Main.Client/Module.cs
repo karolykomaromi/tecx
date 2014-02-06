@@ -63,9 +63,15 @@
                 new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(new ResolvedParameter<ICommand>("theme")));
 
+            container.RegisterType<ICommand, TestNotificationConnectionCommand>("notification");
+
             container.RegisterType<OptionsViewModel>(
                 new ContainerControlledLifetimeManager(), 
-                new InjectionConstructor(new ResxKey("MAIN.LABEL_OPTIONS"), typeof(LanguageSelectionViewModel), typeof(ThemeSelectionViewModel)));
+                new InjectionConstructor(
+                    new ResxKey("MAIN.LABEL_OPTIONS"), 
+                    typeof(LanguageSelectionViewModel), 
+                    typeof(ThemeSelectionViewModel), 
+                    new ResolvedParameter<ICommand>("notification")));
         }
     }
 }

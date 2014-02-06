@@ -7,12 +7,12 @@
     xmlns:dyn="clr-namespace:Infrastructure.Dynamic;assembly=Infrastructure.Client"
     xmlns:t="clr-namespace:Infrastructure.Theming;assembly=Infrastructure.Client"
     xmlns:regions="http://www.codeplex.com/prism"
-             xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
-             xmlns:views="clr-namespace:Main.Views"
-             mc:Ignorable="d"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:views="clr-namespace:Main.Views"
+    mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
     d:DataContext="{d:DesignInstance d:Type=viewModels:OptionsViewModel}"
-    dyn:DynamicView.IsEnabled="True" xmlns:my="clr-namespace:Modular;assembly=Modular">
+    dyn:DynamicView.IsEnabled="True">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -52,12 +52,12 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Text="{Binding NotificationUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"/>
-                    <Button Content="{Binding LabelTestConnection}" Command="{Binding TestConnectionCommand}" CommandParameter="{Binding NotificationUrl}" />
-                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding TestConnectionReturn}"/>
+                    <TextBox Text="{Binding NotificationUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="5" />
+                    <Button Grid.Row="1" Content="{Binding LabelTestConnection}" Command="{Binding TestNotificationCommand}" CommandParameter="{Binding}" Margin="5" />
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding TestConnectionReturn}" Margin="5" />
                 </Grid>
             </Grid>
         </toolkit:Expander>
