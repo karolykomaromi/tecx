@@ -3,7 +3,7 @@
     using System;
     using System.Diagnostics.Contracts;
     using Infrastructure.Events;
-    using SignalR.Client.Hubs;
+    using Microsoft.AspNet.SignalR.Client.Hubs;
 
     public class NotificationReceiver : IDisposable
     {
@@ -26,7 +26,7 @@
             this.connection.Received += this.OnReceived;
             this.connection.Reconnected += this.OnReconnected;
 
-            this.proxy = this.connection.CreateProxy("NotificationHub");
+            this.proxy = this.connection.CreateHubProxy("NotificationHub");
 
             this.subscription = this.proxy.On("notify", (string notification) => this.OnNotified(notification));
 

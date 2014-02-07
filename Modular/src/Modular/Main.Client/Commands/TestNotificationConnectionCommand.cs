@@ -1,16 +1,26 @@
-﻿using System.Threading.Tasks;
-
-namespace Main.Commands
+﻿namespace Main.Commands
 {
     using System;
+    using System.Diagnostics.Contracts;
+    using System.Threading.Tasks;
     using System.Windows.Input;
+    using System.Windows.Threading;
     using Infrastructure.Commands;
     using Infrastructure.Events;
     using Main.ViewModels;
-    using SignalR.Client.Hubs;
+    using Microsoft.AspNet.SignalR.Client.Hubs;
 
     public class TestNotificationConnectionCommand : ICommand, ISubscribeTo<CanExecuteChanged>
     {
+        private readonly Dispatcher dispatcher;
+
+        public TestNotificationConnectionCommand(Dispatcher dispatcher)
+        {
+            Contract.Requires(dispatcher != null);
+
+            this.dispatcher = dispatcher;
+        }
+
         public event EventHandler CanExecuteChanged = delegate { };
 
         public bool CanExecute(object parameter)
@@ -45,10 +55,10 @@ namespace Main.Commands
                 connection.Error += (Exception ex) =>
                     {
                         var vm1 = vm;
-                        vm1.TestConnectionReturn = ex.ToString();
+                        this.dispatcher.BeginInvoke(() => vm1.TestConnectionReturn = ex.ToString());
                     };
 
-                IHubProxy proxy = connection.CreateProxy("NotificationHub");
+                IHubProxy proxy = connection.CreateHubProxy("NotificationHub");
 
                 proxy.On(
                     "notify",
@@ -56,7 +66,7 @@ namespace Main.Commands
                     {
                         var vm1 = vm;
                         var c1 = connection;
-                        vm1.TestConnectionReturn = notification;
+                        this.dispatcher.BeginInvoke(() => vm1.TestConnectionReturn = notification);
                         c1.Stop();
                     });
 
