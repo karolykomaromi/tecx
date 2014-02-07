@@ -76,13 +76,11 @@
                     {
                         if (startCompleted.IsFaulted)
                         {
-
                         }
                         else
                         {
                             proxy.Invoke("Notify", "Test successfull.").ContinueWith(invokeCompleted =>
                             {
-
                             });
                         }
                     });

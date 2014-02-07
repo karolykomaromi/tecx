@@ -60,7 +60,8 @@
                         .Append(propertyName)
                         .Replace(".ViewModels", string.Empty)
                         .Replace("ViewModel", string.Empty)
-                        .Replace("Label", "Label_")
+                        .Replace("Label_", string.Empty)
+                        .Replace("Label", string.Empty)
                         .ToString();
 
             ResxKey resourceKey = new ResxKey(rk);

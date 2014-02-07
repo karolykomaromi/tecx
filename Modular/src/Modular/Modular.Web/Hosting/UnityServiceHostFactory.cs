@@ -1,4 +1,6 @@
-﻿namespace Modular.Web.Hosting
+﻿using Modular.Web.Configuration;
+
+namespace Modular.Web.Hosting
 {
     using System;
     using System.ServiceModel;
@@ -12,9 +14,7 @@
 
         public UnityServiceHostFactory()
         {
-            this.container = new UnityContainer();
-
-            this.ConfigureContainer();
+            this.container = new UnityContainer().AddNewExtension<UnityContainerConfiguration>();
         }
 
         public void Dispose()
@@ -27,11 +27,6 @@
             UnityServiceHost host = new UnityServiceHost(this.container, serviceType, baseAddresses);
 
             return host;
-        }
-
-        private void ConfigureContainer()
-        {
-            this.container.RegisterType<ISearchService, SearchService>();
         }
     }
 }

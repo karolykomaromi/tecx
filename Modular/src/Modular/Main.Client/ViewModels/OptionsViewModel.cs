@@ -1,8 +1,7 @@
-﻿using System;
-using System.Windows;
-
-namespace Main.ViewModels
+﻿namespace Main.ViewModels
 {
+    using System;
+    using System.Windows;
     using System.Windows.Input;
     using Infrastructure.I18n;
     using Infrastructure.Options;

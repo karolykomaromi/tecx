@@ -3,11 +3,15 @@
     using System;
     using System.Web.Routing;
     using Microsoft.AspNet.SignalR;
+    using Microsoft.AspNet.SignalR.Hubs;
+    using Modular.Web.Hubs;
 
     public class Global : System.Web.HttpApplication
     {
         protected void Application_Start(object sender, EventArgs e)
         {
+            GlobalHost.DependencyResolver.Register(typeof(IHubActivator), () => new UnityHubActivator());
+
             HubConfiguration configuration = new HubConfiguration
                 {
                     EnableCrossDomain = true,
