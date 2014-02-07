@@ -132,6 +132,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Configuration\UnityContainerConfiguration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -140,6 +141,7 @@
     <Compile Include="Hosting\UnityServiceHost.cs" />
     <Compile Include="Hosting\UnityServiceHostFactory.cs" />
     <Compile Include="Hubs\NotificationHub.cs" />
+    <Compile Include="Hubs\UnityHubActivator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XapDownloadHandler.cs" />
   </ItemGroup>
