@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace Recipe
+﻿namespace Recipe
 {
+    using System;
     using System.Windows;
     using Infrastructure;
     using Infrastructure.I18n;

@@ -7,7 +7,6 @@
     public class NotificationSender : INotificationSender, IDisposable
     {
         private readonly HubConnection connection;
-        private readonly IDisposable subscription;
         private readonly IHubProxy proxy;
 
         public NotificationSender(Uri uri)
@@ -33,6 +32,11 @@
             this.proxy.Invoke("Notify", notification);
         }
 
+        public void Dispose()
+        {
+            this.connection.Stop();
+        }
+
         private void OnReconnected()
         {
         }
@@ -47,12 +51,6 @@
 
         private void OnClosed()
         {
-        }
-
-        public void Dispose()
-        {
-            this.connection.Stop();
-            this.subscription.Dispose();
         }
     }
 }

@@ -64,6 +64,9 @@
       <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\SL5\GalaSoft.MvvmLight.SL5.dll</HintPath>
     </Reference>
     <Reference Include="Main.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="Microsoft.AspNet.SignalR.Client">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.1.2.0\lib\sl5\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions">
       <HintPath>..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
@@ -88,8 +91,9 @@
       <HintPath>..\Modular\Bin\Debug\Modular.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.4\lib\sl4\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\sl4\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SignalR.Client.Silverlight5">
       <HintPath>..\packages\SignalR.Client.Silverlight5.0.5.0\lib\sl50\SignalR.Client.Silverlight5.dll</HintPath>
@@ -120,7 +124,9 @@
     <Compile Include="Commands\ChangeLanguageCommand.cs" />
     <Compile Include="Commands\ChangeThemeCommand.cs" />
     <Compile Include="Commands\TestNotificationConnectionCommand.cs" />
+    <Compile Include="Converters\SmallIconConverter.cs" />
     <Compile Include="Converters\ThemeUriConverter.cs" />
+    <Compile Include="Converters\UpperCaseConverter.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Notification\NotificationReceiver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -174,8 +180,8 @@
   <ItemGroup>
     <Resource Include="Assets\Images\de24x16.png" />
     <Resource Include="Assets\Images\de48x32.png" />
-    <Resource Include="Assets\Images\us24x16.png" />
-    <Resource Include="Assets\Images\us48x32.png" />
+    <Resource Include="Assets\Images\en24x16.png" />
+    <Resource Include="Assets\Images\en48x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
