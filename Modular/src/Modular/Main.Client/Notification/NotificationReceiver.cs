@@ -33,9 +33,14 @@
             this.connection.Start();
         }
 
-        private void OnNotified(string notification)
+        public void Dispose()
         {
-            
+            this.connection.Stop();
+            this.subscription.Dispose();
+        }
+
+        private void OnNotified(string notification)
+        {   
         }
 
         private void OnReconnected()
@@ -52,12 +57,6 @@
 
         private void OnClosed()
         {
-        }
-
-        public void Dispose()
-        {
-            this.connection.Stop();
-            this.subscription.Dispose();
         }
     }
 }

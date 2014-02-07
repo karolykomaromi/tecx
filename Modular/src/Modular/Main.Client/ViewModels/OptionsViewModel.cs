@@ -1,4 +1,7 @@
-﻿namespace Main.ViewModels
+﻿using System;
+using System.Windows;
+
+namespace Main.ViewModels
 {
     using System.Windows.Input;
     using Infrastructure.I18n;
@@ -11,11 +14,11 @@
         private readonly LocalizedString labelLanguageSelection;
         private readonly LocalizedString labelThemeSelection;
         private readonly LocalizedString labelTestConnection;
+        private readonly LocalizedString labelNotificationUrl;
+        private readonly ICommand testNotificationCommand;
 
         private string notificationUrl;
         private string testConnectionReturn;
-        private readonly LocalizedString labelNotificationUrl;
-        private readonly ICommand testNotificationCommand;
 
         public OptionsViewModel(ResxKey titleKey, LanguageSelectionViewModel languageSelection, ThemeSelectionViewModel themeSelection, ICommand testNotificationCommand)
             : base(titleKey)
@@ -28,6 +31,10 @@
             this.labelThemeSelection = new LocalizedString(this, "LabelThemeSelection", new ResxKey("MAIN.LABEL_THEMESELECTION"), this.OnPropertyChanged);
             this.labelTestConnection = new LocalizedString(this, "LabelTestConnection", new ResxKey("MAIN.LABEL_TESTCONNECTION"), this.OnPropertyChanged);
             this.labelNotificationUrl = new LocalizedString(this, "LabelNotificationUrl", new ResxKey("MAIN.LABEL_NOTIFICATIONURL"), this.OnPropertyChanged);
+
+            Uri source = Application.Current.Host.Source;
+
+            this.NotificationUrl = source.AbsoluteUri.Replace(source.AbsolutePath, string.Empty) + "/signalr/hubs/";
         }
 
         public string LabelLanguageSelection

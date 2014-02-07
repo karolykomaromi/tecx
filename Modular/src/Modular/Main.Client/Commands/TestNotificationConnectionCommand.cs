@@ -1,11 +1,14 @@
-﻿using System;
-using System.Windows.Input;
-using Infrastructure.Commands;
-using Infrastructure.Events;
-using Main.ViewModels;
+﻿using System.Threading.Tasks;
 
 namespace Main.Commands
 {
+    using System;
+    using System.Windows.Input;
+    using Infrastructure.Commands;
+    using Infrastructure.Events;
+    using Main.ViewModels;
+    using SignalR.Client.Hubs;
+
     public class TestNotificationConnectionCommand : ICommand, ISubscribeTo<CanExecuteChanged>
     {
         public event EventHandler CanExecuteChanged = delegate { };
@@ -31,12 +34,49 @@ namespace Main.Commands
 
         public void Execute(object parameter)
         {
-            ////var vm = parameter as OptionsViewModel;
+            var vm = parameter as OptionsViewModel;
 
-            ////if (vm != null)
-            ////{
-            ////    vm.TestConnection();
-            ////}
+            if (vm != null)
+            {
+                Uri uri = new Uri(vm.NotificationUrl, UriKind.Absolute);
+
+                HubConnection connection = new HubConnection(uri.ToString());
+
+                connection.Error += (Exception ex) =>
+                    {
+                        var vm1 = vm;
+                        vm1.TestConnectionReturn = ex.ToString();
+                    };
+
+                IHubProxy proxy = connection.CreateProxy("NotificationHub");
+
+                proxy.On(
+                    "notify",
+                    (string notification) =>
+                    {
+                        var vm1 = vm;
+                        var c1 = connection;
+                        vm1.TestConnectionReturn = notification;
+                        c1.Stop();
+                    });
+
+                Task start = connection.Start();
+
+                start.ContinueWith(startCompleted =>
+                    {
+                        if (startCompleted.IsFaulted)
+                        {
+
+                        }
+                        else
+                        {
+                            proxy.Invoke("Notify", "Test successfull.").ContinueWith(invokeCompleted =>
+                            {
+
+                            });
+                        }
+                    });
+            }
         }
 
         public void Handle(CanExecuteChanged message)
