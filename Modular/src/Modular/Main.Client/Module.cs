@@ -1,6 +1,6 @@
 ﻿namespace Main
 {
-    using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Input;
     using Infrastructure;
     using Infrastructure.I18n;
@@ -27,7 +27,7 @@
 
         protected override void ConfigureRegions(IRegionManager regionManager)
         {
-            FrameworkElement options;
+            Control options;
             if (this.TryGetViewFor<OptionsViewModel>(out options))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, options);

@@ -239,6 +239,7 @@
     <Compile Include="UnityExtensions\RegionStrategy.cs" />
     <Compile Include="UnityExtensions\ResourceManagerExtension.cs" />
     <Compile Include="UnityExtensions\ResourceManagerStrategy.cs" />
+    <Compile Include="ViewModels\ViewModelBinder.cs" />
     <Compile Include="ViewModels\DynamicListViewModel.cs" />
     <Compile Include="ViewModels\EmptyFilterViewModel.cs" />
     <Compile Include="ViewModels\Filter.cs" />

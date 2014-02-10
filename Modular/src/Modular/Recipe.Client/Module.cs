@@ -2,6 +2,7 @@
 {
     using System;
     using System.Windows;
+    using System.Windows.Controls;
     using Infrastructure;
     using Infrastructure.I18n;
     using Infrastructure.ListViews;
@@ -27,7 +28,7 @@
 
         protected override void ConfigureRegions(IRegionManager regionManager)
         {
-            FrameworkElement view;
+            Control view;
 
             ResxKey recipesTitle = new ResxKey("Recipe.Label_Recipes");
             ListViewName recipesList = new ListViewName("Recipes");

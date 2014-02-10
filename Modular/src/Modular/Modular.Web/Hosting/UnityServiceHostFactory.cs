@@ -1,12 +1,10 @@
-﻿using Modular.Web.Configuration;
-
-namespace Modular.Web.Hosting
+﻿namespace Modular.Web.Hosting
 {
     using System;
     using System.ServiceModel;
     using System.ServiceModel.Activation;
     using Microsoft.Practices.Unity;
-    using Search;
+    using Modular.Web.Configuration;
 
     public class UnityServiceHostFactory : ServiceHostFactory, IDisposable
     {
