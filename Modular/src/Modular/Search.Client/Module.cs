@@ -1,12 +1,13 @@
 ﻿namespace Search
 {
+    using System;
+    using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Threading;
     using AutoMapper;
     using Infrastructure;
     using Infrastructure.Commands;
-    using Infrastructure.Dynamic;
     using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
@@ -34,16 +35,15 @@
         protected override void ConfigureContainer(IUnityContainer container)
         {
             container.RegisterType<SearchResultsViewModel>(
-                new ContainerControlledLifetimeManager(), 
+                new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(new ResolvedParameter<ICommand>(RegionNames.Shell.Content), typeof(IMappingEngine), typeof(ResxKey)));
 
             container.RegisterType<SearchViewModel>(
-                new ContainerControlledLifetimeManager(), 
+                new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
-                    new ResolvedParameter<ICommand>("search"), 
-                    new ResolvedParameter<ICommand>("suggestions"), 
-                    typeof(ISearchService), 
-                    typeof(IEventAggregator)));
+                    new ResolvedParameter<ICommand>("search"),
+                    new ResolvedParameter<ICommand>("suggestions"),
+                    typeof(ISearchService)));
 
             container.RegisterType<ICommand, SearchCommand>("search");
             container.RegisterType<ICommand, SuggestionsCommand>("suggestions");
@@ -53,11 +53,11 @@
                 new InjectionConstructor(new ResolvedParameter<ISearchService>("client"), typeof(Dispatcher)));
 
             container.RegisterType<ICommand, NavigationCommand>(
-                RegionNames.Shell.Content, 
+                RegionNames.Shell.Content,
                 new InjectionConstructor(new ResolvedParameter<INavigateAsync>(RegionNames.Shell.Content)));
 
             container.RegisterType<SearchOptionsViewModel>(
-                new ContainerControlledLifetimeManager(), 
+                new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(new ResxKey("SEARCH.LABEL_SEARCHOPTIONS")));
         }
 
@@ -84,9 +84,34 @@
             NavigationView navigation = new NavigationBuilder()
                                                         .ToView(searchResult)
                                                         .InRegion(regionManager.Regions[RegionNames.Shell.Content])
-                                                        .WithLabel(new ResxKey("SEARCH.LABEL_SEARCHRESULTS"));
+                                                        .WithLabel(new ResxKey("SEARCH.LABEL_SEARCHRESULTS"))
+                                                        .OnOptionsChanged((msg, vm) =>
+                                                            {
+                                                                var options = msg.Options as SearchOptionsViewModel;
+
+                                                                if (options != null)
+                                                                {
+                                                                    if (options.IsSearchEnabled)
+                                                                    {
+                                                                        vm.Show();
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        vm.Hide();
+                                                                    }
+                                                                }
+                                                            });
 
             regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
+        }
+
+        protected override ResourceDictionary CreateModuleResources()
+        {
+            Uri uri = new Uri("/Search.Client;component/Assets/Resources/Resources.xaml", UriKind.Relative);
+
+            ResourceDictionary resources = new ResourceDictionary { Source = uri };
+
+            return resources;
         }
 
         protected override IResourceManager CreateResourceManager()
@@ -99,11 +124,6 @@
         protected override IOptions CreateModuleOptions()
         {
             return this.Container.Resolve<SearchOptionsViewModel>();
-        }
-
-        protected override void ConfigureViewRules(IViewRuleEngine ruleEngine)
-        {
-            ruleEngine.Add(new DisableSearchRule());
         }
     }
 }

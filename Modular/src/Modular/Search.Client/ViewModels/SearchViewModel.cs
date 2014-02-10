@@ -7,32 +7,30 @@ namespace Search.ViewModels
     using Infrastructure;
     using Infrastructure.Events;
     using Infrastructure.I18n;
+    using Infrastructure.Options;
     using Infrastructure.ViewModels;
     using Search.Entities;
     using Search.Events;
 
-    public class SearchViewModel : ViewModel
+    public class SearchViewModel : ViewModel, ISubscribeTo<IOptionsChanged<SearchOptionsViewModel>>
     {
         private readonly ICommand searchCommand;
         private readonly ICommand suggestionsCommand;
         private readonly ISearchService searchService;
-        private readonly IEventAggregator eventAggregator;
         private readonly ObservableCollection<string> suggestions;
         private readonly LocalizedString labelSearch;
 
         private string searchTerm;
 
-        public SearchViewModel(ICommand searchCommand, ICommand suggestionsCommand, ISearchService searchService, IEventAggregator eventAggregator)
+        public SearchViewModel(ICommand searchCommand, ICommand suggestionsCommand, ISearchService searchService)
         {
             Contract.Requires(searchCommand != null);
             Contract.Requires(suggestionsCommand != null);
             Contract.Requires(searchService != null);
-            Contract.Requires(eventAggregator != null);
 
             this.searchCommand = searchCommand;
             this.suggestionsCommand = suggestionsCommand;
             this.searchService = searchService;
-            this.eventAggregator = eventAggregator;
 
             this.suggestions = new ObservableCollection<string>();
             this.labelSearch = new LocalizedString(this, ReflectionHelper.GetPropertyName(() => this.LabelSearch), new ResxKey("SEARCH.LABEL_SEARCH"), this.OnPropertyChanged);
@@ -86,11 +84,23 @@ namespace Search.ViewModels
             this.searchService.BeginSearchSuggestions(this.SearchTerm, this.OnSearchSuggestionsCompleted, token);
         }
 
+        public void Handle(IOptionsChanged<SearchOptionsViewModel> message)
+        {
+            if (message.Options.IsSearchEnabled)
+            {
+                this.Show();
+            }
+            else
+            {
+                this.Hide();
+            }
+        }
+
         private void OnSearchCompleted(IAsyncResult ar)
         {
             SearchResult[] searchResults = this.searchService.EndSearch(ar);
 
-            this.eventAggregator.Publish(new DisplaySearchResults(new ReadOnlyCollection<SearchResult>(searchResults)));
+            this.EventAggregator.Publish(new DisplaySearchResults(new ReadOnlyCollection<SearchResult>(searchResults)));
         }
 
         private void OnSearchSuggestionsCompleted(IAsyncResult ar)

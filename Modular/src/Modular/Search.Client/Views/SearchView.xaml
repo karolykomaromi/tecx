@@ -7,15 +7,13 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:viewModels="clr-namespace:Search.ViewModels"
     xmlns:triggers="clr-namespace:Infrastructure.Triggers;assembly=Infrastructure.Client"
-    xmlns:dyn="clr-namespace:Infrastructure.Dynamic;assembly=Infrastructure.Client"
     mc:Ignorable="d"
     d:DesignHeight="50" d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance d:Type=viewModels:SearchViewModel}"
-    dyn:DynamicView.IsEnabled="True">
+    d:DataContext="{d:DesignInstance d:Type=viewModels:SearchViewModel}">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <sdk:AutoCompleteBox Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Suggestions}" FilterMode="None" MinimumPrefixLength="3">
             <i:Interaction.Triggers>

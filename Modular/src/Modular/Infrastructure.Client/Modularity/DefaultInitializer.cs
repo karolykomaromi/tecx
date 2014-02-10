@@ -7,15 +7,13 @@
             ResourceManagerInitializer resourceManagerInitializer, 
             ModuleResourcesInitializer moduleResourcesInitializer, 
             AutoMapperInitializer autoMapperInitializer,
-            ViewRuleInitializer viewRuleInitializer,
             OptionsInitializer optionsInitializer,
             RegionInitializer regionInitializer)
             : base(
                 containerInitializer, 
                 resourceManagerInitializer, 
                 moduleResourcesInitializer, 
-                autoMapperInitializer, 
-                viewRuleInitializer, 
+                autoMapperInitializer,
                 optionsInitializer, 
                 regionInitializer)
         {

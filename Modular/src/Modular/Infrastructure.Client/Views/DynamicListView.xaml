@@ -8,11 +8,9 @@
     xmlns:t="clr-namespace:Infrastructure.Theming"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:tr="clr-namespace:Infrastructure.Triggers"
-    xmlns:dyn="clr-namespace:Infrastructure.Dynamic"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance d:Type=viewModels:DynamicListViewModel}"
-    dyn:DynamicView.IsEnabled="True">
+    d:DataContext="{d:DesignInstance d:Type=viewModels:DynamicListViewModel}">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -29,7 +27,7 @@
         <Border t:Theme.Style="{StaticResource TitleBorder}">
             <TextBlock Text="{Binding Title}" t:Theme.Style="{StaticResource TitleText}" />
         </Border>
-        <ContentControl Grid.Row="1" Content="{Binding Filter}"/>
+        <ContentControl Grid.Row="1" Content="{Binding Filter}" Margin="10" />
         <sdk:DataGrid Grid.Row="2" ItemsSource="{Binding Items}" Margin="10" >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="AutoGeneratingColumn">

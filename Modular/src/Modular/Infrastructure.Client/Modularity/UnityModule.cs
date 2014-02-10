@@ -9,7 +9,6 @@ namespace Infrastructure.Modularity
     using System.Windows;
     using System.Windows.Controls;
     using AutoMapper;
-    using Infrastructure.Dynamic;
     using Infrastructure.I18n;
     using Infrastructure.Options;
     using Infrastructure.ViewModels;
@@ -103,10 +102,6 @@ namespace Infrastructure.Modularity
             Contract.Ensures(Contract.Result<ResourceDictionary>() != null);
 
             return new ResourceDictionary();
-        }
-
-        protected internal virtual void ConfigureViewRules(IViewRuleEngine ruleEngine)
-        {
         }
 
         protected virtual bool TryGetViewFor<TViewModel>(out Control view, params Param[] parameters)

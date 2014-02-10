@@ -78,6 +78,7 @@
         {
             // the target must keep a reference to the adapter or the adapter will be gc'ed
             this.Target.Unloaded -= this.OnUnloaded;
+            this.Target.LayoutUpdated += this.OnLayoutUpdated;
         }
     }
 }

@@ -22,6 +22,9 @@ namespace Infrastructure.ViewModels
         {
             this.resourceManager = new EchoResourceManager();
             this.eventAggregator = new NullEventAggregator();
+
+            this.Visibility = Visibility.Visible;
+            this.IsEnabled = true;
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
@@ -95,6 +98,26 @@ namespace Infrastructure.ViewModels
                     this.OnPropertyChanged(() => this.Visibility);
                 }
             }
+        }
+
+        public void Enable()
+        {
+            this.IsEnabled = true;
+        }
+
+        public void Disable()
+        {
+            this.IsEnabled = false;
+        }
+
+        public void Hide()
+        {
+            this.Visibility = Visibility.Collapsed;
+        }
+
+        public void Show()
+        {
+            this.Visibility = Visibility.Visible;
         }
 
         protected virtual void OnPropertyChanged(string propertyName)

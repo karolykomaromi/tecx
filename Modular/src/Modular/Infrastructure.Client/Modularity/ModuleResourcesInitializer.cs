@@ -1,6 +1,7 @@
 ﻿namespace Infrastructure.Modularity
 {
     using System.Diagnostics.Contracts;
+    using System.Linq;
     using System.Windows;
 
     public class ModuleResourcesInitializer : IModuleInitializer
@@ -18,8 +19,7 @@
         {
             ResourceDictionary moduleResources = module.CreateModuleResources();
 
-            if (moduleResources != null && 
-                moduleResources.Count > 0)
+            if (moduleResources != null && (moduleResources.Count > 0 || moduleResources.MergedDictionaries.Any()))
             {
                 this.applicationResources.MergedDictionaries.Add(moduleResources);
             }
