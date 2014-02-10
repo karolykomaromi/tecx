@@ -6,12 +6,10 @@
     xmlns:viewModels="clr-namespace:Main.ViewModels"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:mvvm="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.SL5"
-    xmlns:dyn="clr-namespace:Infrastructure.Dynamic;assembly=Infrastructure.Client"
     xmlns:converters="clr-namespace:Main.Converters"
     mc:Ignorable="d"
     d:DesignHeight="50" d:DesignWidth="100"
-    d:DataContext="{d:DesignInstance d:Type=viewModels:LanguageSelectionViewModel}"
-    dyn:DynamicView.IsEnabled="True">
+    d:DataContext="{d:DesignInstance d:Type=viewModels:LanguageSelectionViewModel}">
     <UserControl.Resources>
         <converters:UpperCaseConverter x:Key="UpperCaseConverter" />
         <converters:SmallIconConverter x:Key="SmallIconConverter" />

@@ -7,6 +7,7 @@ namespace Infrastructure.Views
     using System.Windows.Input;
     using Infrastructure.Commands;
     using Infrastructure.I18n;
+    using Infrastructure.Options;
     using Infrastructure.ViewModels;
     using Microsoft.Practices.Prism;
     using Microsoft.Practices.Prism.Regions;
@@ -17,6 +18,7 @@ namespace Infrastructure.Views
         private ViewModel target;
         private INavigateAsync region;
         private ResxKey resourceKey;
+        private Action<IOptionsChanged<IOptions>, NavigationViewModel> handleOptionsChanged;
 
         public NavigationBuilder()
         {
@@ -58,6 +60,13 @@ namespace Infrastructure.Views
             return this;
         }
 
+        public NavigationBuilder OnOptionsChanged(Action<IOptionsChanged<IOptions>, NavigationViewModel> handleOptionsChanged)
+        {
+            this.handleOptionsChanged = handleOptionsChanged;
+
+            return this;
+        }
+
         public NavigationView Build()
         {
             ICommand navigationCommand = new NavigationCommand(this.region);
@@ -72,12 +81,18 @@ namespace Infrastructure.Views
             NavigationViewModel viewModel = new NavigationViewModel(
                 navigationCommand, 
                 this.resourceKey, 
-                new Uri(this.target.GetType().Name.Replace("Model", string.Empty) + query, UriKind.Relative))
+                new Uri(this.target.GetType().Name.Replace("Model", string.Empty) + query, UriKind.Relative),
+                this.handleOptionsChanged)
                 {
-                    ResourceManager = this.target.ResourceManager
+                    ResourceManager = this.target.ResourceManager,
+                    EventAggregator = this.target.EventAggregator
                 };
 
+            this.target.EventAggregator.Subscribe(viewModel);
+
             NavigationView view = new NavigationView { DataContext = viewModel };
+
+            ViewModelBinder.Bind(view, viewModel);
 
             return view;
         }

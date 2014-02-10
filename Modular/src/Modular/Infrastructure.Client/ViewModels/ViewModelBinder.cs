@@ -10,8 +10,15 @@
             where TView : Control
             where TViewModel : ViewModel
         {
-            view.SetBinding(Control.IsEnabledProperty, new Binding("IsEnabled") { Mode = BindingMode.TwoWay });
-            view.SetBinding(UIElement.VisibilityProperty, new Binding("Visibility") { Mode = BindingMode.TwoWay });
+            if (view.GetBindingExpression(Control.IsEnabledProperty) == null)
+            {
+                view.SetBinding(Control.IsEnabledProperty, new Binding(ReflectionHelper.GetPropertyName((TViewModel vm) => vm.IsEnabled)) { Mode = BindingMode.TwoWay });
+            }
+
+            if (view.GetBindingExpression(UIElement.VisibilityProperty) == null)
+            {
+                view.SetBinding(UIElement.VisibilityProperty, new Binding(ReflectionHelper.GetPropertyName((TViewModel vm) => vm.Visibility)) { Mode = BindingMode.TwoWay });
+            }
         }
     }
 }

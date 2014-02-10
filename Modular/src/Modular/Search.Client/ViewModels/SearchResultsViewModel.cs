@@ -7,11 +7,12 @@ namespace Search.ViewModels
     using AutoMapper;
     using Infrastructure.Events;
     using Infrastructure.I18n;
+    using Infrastructure.Options;
     using Infrastructure.ViewModels;
     using Search.Entities;
     using Search.Events;
 
-    public class SearchResultsViewModel : TitledViewModel, ISubscribeTo<DisplaySearchResults>
+    public class SearchResultsViewModel : TitledViewModel, ISubscribeTo<DisplaySearchResults>, ISubscribeTo<IOptionsChanged<SearchOptionsViewModel>>
     {
         private readonly ICommand navigateContentCommand;
         private readonly IMappingEngine mappingEngine;
@@ -55,6 +56,20 @@ namespace Search.ViewModels
             if (this.navigateContentCommand.CanExecute(destination))
             {
                 this.navigateContentCommand.Execute(destination);
+            }
+        }
+
+        public void Handle(IOptionsChanged<SearchOptionsViewModel> message)
+        {
+            var options = message.Options;
+
+            if (options.IsSearchEnabled)
+            {
+                this.Show();
+            }
+            else
+            {
+                this.Hide();
             }
         }
     }

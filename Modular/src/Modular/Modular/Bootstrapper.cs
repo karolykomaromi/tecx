@@ -8,7 +8,6 @@
     using System.Windows.Threading;
     using AutoMapper;
     using Infrastructure;
-    using Infrastructure.Dynamic;
     using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
@@ -90,9 +89,7 @@
             this.Container.RegisterType<IListViewService, ListViewServiceClient>(Constants.Client, new InjectionConstructor());
             this.Container.RegisterType<IListViewService, DispatchingListViewServiceClient>(
                 new InjectionConstructor(new ResolvedParameter<IListViewService>(Constants.Client), typeof(Dispatcher)));
-
-            this.Container.RegisterType<IViewRuleEngine, ViewRuleEngine>(new ContainerControlledLifetimeManager());
-
+            
             this.Container.RegisterType<IOptions, CompositeOptions>(new ContainerControlledLifetimeManager());
         }
 
