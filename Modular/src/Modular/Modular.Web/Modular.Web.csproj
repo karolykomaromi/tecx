@@ -113,11 +113,6 @@
     <Content Include="ListViewService.svc" />
     <Content Include="Modular.aspx" />
     <Content Include="Default.html" />
-    <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.6.4.js" />
-    <Content Include="Scripts\jquery-1.6.4.min.js" />
-    <Content Include="Scripts\jquery.signalR-1.2.0.js" />
-    <Content Include="Scripts\jquery.signalR-1.2.0.min.js" />
     <Content Include="SearchService.svc" />
     <Content Include="Silverlight.js" />
     <Content Include="Web.config" />

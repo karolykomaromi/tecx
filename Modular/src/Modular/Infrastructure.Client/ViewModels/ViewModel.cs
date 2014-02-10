@@ -5,6 +5,7 @@ namespace Infrastructure.ViewModels
     using System.Diagnostics.Contracts;
     using System.Linq.Expressions;
     using System.Text;
+    using System.Windows;
     using Infrastructure.Commands;
     using Infrastructure.Events;
     using Infrastructure.I18n;
@@ -14,6 +15,8 @@ namespace Infrastructure.ViewModels
     {
         private IResourceManager resourceManager;
         private IEventAggregator eventAggregator;
+        private bool isEnabled;
+        private Visibility visibility;
 
         protected ViewModel()
         {
@@ -53,6 +56,44 @@ namespace Infrastructure.ViewModels
                 Contract.Requires(value != null);
                 
                 this.eventAggregator = value;
+            }
+        }
+
+        [PropertyMeta(IsListViewRelevant = false)]
+        public bool IsEnabled
+        {
+            get
+            {
+                return this.isEnabled;
+            }
+
+            set
+            {
+                if (this.isEnabled != value)
+                {
+                    this.OnPropertyChanging(() => this.IsEnabled);
+                    this.isEnabled = value;
+                    this.OnPropertyChanged(() => this.IsEnabled);
+                }
+            }
+        }
+
+        [PropertyMeta(IsListViewRelevant = false)]
+        public Visibility Visibility
+        {
+            get
+            {
+                return this.visibility;
+            }
+
+            set
+            {
+                if (this.visibility != value)
+                {
+                    this.OnPropertyChanging(() => this.Visibility);
+                    this.visibility = value;
+                    this.OnPropertyChanged(() => this.Visibility);
+                }
             }
         }
 

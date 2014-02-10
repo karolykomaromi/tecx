@@ -1,7 +1,6 @@
 ﻿namespace Search
 {
-    using System;
-    using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Threading;
     using AutoMapper;
@@ -64,19 +63,19 @@
 
         protected override void ConfigureRegions(IRegionManager regionManager)
         {
-            FrameworkElement search;
+            Control search;
             if (this.TryGetViewFor<SearchViewModel>(out search))
             {
                 regionManager.AddToRegion(RegionNames.Shell.TopLeft, search);
             }
 
-            FrameworkElement searchResult;
+            Control searchResult;
             if (this.TryGetViewFor<SearchResultsViewModel>(out searchResult, new Param("titleKey", new ResxKey("SEARCH.LABEL_SEARCHRESULTS"))))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, searchResult);
             }
 
-            FrameworkElement searchOptions;
+            Control searchOptions;
             if (this.TryGetViewFor<SearchOptionsViewModel>(out searchOptions))
             {
                 regionManager.AddToRegion(RegionNames.Main.Options, searchOptions);

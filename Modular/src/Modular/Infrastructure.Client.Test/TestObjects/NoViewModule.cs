@@ -1,6 +1,6 @@
 namespace Infrastructure.Client.Test.TestObjects
 {
-    using System.Windows;
+    using System.Windows.Controls;
     using Infrastructure.Modularity;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
@@ -15,7 +15,7 @@ namespace Infrastructure.Client.Test.TestObjects
 
         protected override void ConfigureRegions(IRegionManager regionManager)
         {
-            FrameworkElement view;
+            Control view;
             this.TryGetViewFor<NoView>(out view);
         }
     }

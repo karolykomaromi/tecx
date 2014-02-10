@@ -7,6 +7,7 @@ namespace Infrastructure.Modularity
     using System.Linq;
     using System.Reflection;
     using System.Windows;
+    using System.Windows.Controls;
     using AutoMapper;
     using Infrastructure.Dynamic;
     using Infrastructure.I18n;
@@ -108,7 +109,7 @@ namespace Infrastructure.Modularity
         {
         }
 
-        protected virtual bool TryGetViewFor<TViewModel>(out FrameworkElement view, params Param[] parameters)
+        protected virtual bool TryGetViewFor<TViewModel>(out Control view, params Param[] parameters)
             where TViewModel : ViewModel
         {
             string viewTypeName = typeof(TViewModel).AssemblyQualifiedName.Replace("ViewModel", "View");
@@ -120,7 +121,7 @@ namespace Infrastructure.Modularity
             {
                 try
                 {
-                    view = this.Container.Resolve(viewType) as FrameworkElement;
+                    view = this.Container.Resolve(viewType) as Control;
                 }
                 catch (ResolutionFailedException ex)
                 {
@@ -166,6 +167,7 @@ namespace Infrastructure.Modularity
                     message = string.Format("Successfully created view (Type='{0}') and view model (Type='{1}').", typeof(TViewModel).AssemblyQualifiedName, viewTypeName);
                     this.Logger.Log(message, Category.Info, Priority.Low);
                     view.DataContext = vm;
+                    ViewModelBinder.Bind(view, vm);
                     return true;
                 }
             }
