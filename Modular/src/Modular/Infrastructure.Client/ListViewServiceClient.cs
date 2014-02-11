@@ -31,9 +31,9 @@
         {
         }
 
-        public IAsyncResult BeginGetListView(string listViewName, int pageNumber, int pageSize, AsyncCallback callback, object asyncState)
+        public IAsyncResult BeginGetListView(string listViewName, int skip, int take, AsyncCallback callback, object asyncState)
         {
-            return this.Channel.BeginGetListView(listViewName, pageNumber, pageSize, callback, asyncState);
+            return this.Channel.BeginGetListView(listViewName, skip, take, callback, asyncState);
         }
 
         public ListView EndGetListView(IAsyncResult result)

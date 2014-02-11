@@ -9,19 +9,21 @@
     public interface IListViewService
     {
         [OperationContract]
-        ListView GetListView(string listViewName, int pageNumber, int pageSize);
+        ListView GetListView(string listViewName, int skip, int take);
     }
 
     [ContractClassFor(typeof(IListViewService))]
     internal abstract class ListViewServiceContract : IListViewService
     {
-        public ListView GetListView(string listViewName, int pageNumber, int pageSize)
+        public ListView GetListView(string listViewName, int skip, int take)
         {
             Contract.Requires(!string.IsNullOrEmpty(listViewName));
-            Contract.Requires(pageNumber >= 0);
-            Contract.Requires(pageSize >= 0);
+            Contract.Requires(skip >= 0);
+            Contract.Requires(take >= 0);
 
-            return null;
+            Contract.Ensures(Contract.Result<ListView>() != null);
+
+            return new ListView();
         }
     }
 }

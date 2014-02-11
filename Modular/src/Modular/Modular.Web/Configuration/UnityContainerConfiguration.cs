@@ -1,5 +1,6 @@
 ﻿namespace Modular.Web.Configuration
 {
+    using Infrastructure;
     using Microsoft.AspNet.SignalR.Hubs;
     using Microsoft.Practices.Unity;
     using Modular.Web.Hubs;
@@ -11,6 +12,7 @@
         {
             this.Container.RegisterType<IHubActivator, UnityHubActivator>(new ContainerControlledLifetimeManager());
             this.Container.RegisterType<ISearchService, SearchService>();
+            this.Container.RegisterType<IResourceKeyProvider, ResourceKeyProvider>();
         }
     }
 }

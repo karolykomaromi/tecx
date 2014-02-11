@@ -16,9 +16,9 @@
             this.dispatcher = dispatcher;
         }
 
-        public IAsyncResult BeginGetListView(string listViewName, int pageNumber, int pageSize, AsyncCallback callback, object asyncState)
+        public IAsyncResult BeginGetListView(string listViewName, int skip, int take, AsyncCallback callback, object asyncState)
         {
-            return this.inner.BeginGetListView(listViewName, pageNumber, pageSize, new Dispatched(this.dispatcher, callback).Callback, asyncState);
+            return this.inner.BeginGetListView(listViewName, skip, take, new Dispatched(this.dispatcher, callback).Callback, asyncState);
         }
 
         public ListView EndGetListView(IAsyncResult result)
