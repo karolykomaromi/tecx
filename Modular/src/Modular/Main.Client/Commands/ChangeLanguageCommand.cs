@@ -33,6 +33,8 @@ namespace Main.Commands
 
             if (culture != null)
             {
+                this.eventAggregator.Publish(new LanguageChanging(culture));
+
                 Thread.CurrentThread.CurrentCulture = culture;
                 Thread.CurrentThread.CurrentUICulture = culture;
 

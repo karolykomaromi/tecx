@@ -140,7 +140,6 @@
     <Compile Include="TestObjects\CancelMessage.cs" />
     <Compile Include="TestObjects\CountingSubscriber.cs" />
     <Compile Include="TestObjects\Message.cs" />
-    <Compile Include="TestObjects\MultiLanguageViewModel.cs" />
     <Compile Include="TestObjects\MyOptions.cs" />
     <Compile Include="TestObjects\NoView.cs" />
     <Compile Include="TestObjects\NoViewModule.cs" />
@@ -152,7 +151,6 @@
     <Compile Include="TestObjects\ViewModelResolutionFailsModule.cs" />
     <Compile Include="TestObjects\ViewResolutionFailsModule.cs" />
     <Compile Include="TestObjects\YourOptions.cs" />
-    <Compile Include="ViewModels\ViewModelFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -166,7 +164,9 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure.Client\Infrastructure.Client.csproj">
       <Project>{13CEE176-151F-4B3A-BC0A-9066E8E84B7B}</Project>

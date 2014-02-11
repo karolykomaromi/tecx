@@ -4,19 +4,21 @@ namespace Infrastructure.ViewModels
     using System.ComponentModel;
     using System.Diagnostics.Contracts;
     using System.Linq.Expressions;
-    using System.Text;
+    using System.Threading;
     using System.Windows;
+    using System.Windows.Markup;
     using Infrastructure.Commands;
     using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.Meta;
 
-    public abstract class ViewModel : INotifyPropertyChanged, INotifyPropertyChanging
+    public abstract class ViewModel : INotifyPropertyChanged, INotifyPropertyChanging, ISubscribeTo<LanguageChanging>
     {
         private IResourceManager resourceManager;
         private IEventAggregator eventAggregator;
         private bool isEnabled;
         private Visibility visibility;
+        private XmlLanguage language;
 
         protected ViewModel()
         {
@@ -25,6 +27,7 @@ namespace Infrastructure.ViewModels
 
             this.Visibility = Visibility.Visible;
             this.IsEnabled = true;
+            this.Language = XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentUICulture.Name);
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
@@ -99,6 +102,25 @@ namespace Infrastructure.ViewModels
                 }
             }
         }
+
+        [PropertyMeta(IsListViewRelevant = false)]
+        public XmlLanguage Language
+        {
+            get
+            {
+                return this.language;
+            }
+
+            set
+            {
+                if (this.language != value)
+                {
+                    this.OnPropertyChanging(() => this.Language);
+                    this.language = value;
+                    this.OnPropertyChanged(() => this.Language);
+                }
+            }
+        }
         
         public void Enable()
         {
@@ -118,6 +140,11 @@ namespace Infrastructure.ViewModels
         public void Show()
         {
             this.Visibility = Visibility.Visible;
+        }
+
+        public void Handle(LanguageChanging message)
+        {
+            this.Language = XmlLanguage.GetLanguage(message.Culture.Name);
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -159,23 +186,6 @@ namespace Infrastructure.ViewModels
                 string propertyName = property.Member.Name;
                 this.OnPropertyChanging(propertyName);
             }
-        }
-
-        protected virtual string Translate<T>(Expression<Func<T>> propertySelector)
-        {
-            Contract.Requires(propertySelector != null);
-
-            string propertyName = ReflectionHelper.GetPropertyName(propertySelector);
-
-            string key = new StringBuilder(this.GetType().FullName)
-                .Append(".")
-                .Append(propertyName)
-                .Replace(".ViewModels", string.Empty)
-                .Replace("ViewModel", string.Empty)
-                .Replace("Label", "Label_")
-                .ToString();
-
-            return this.ResourceManager[new ResxKey(key)];
         }
     }
 }

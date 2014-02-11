@@ -2,7 +2,6 @@
 {
     using System;
     using System.Globalization;
-    using System.Threading;
     using System.Windows.Data;
 
     public class DateTimeFormatConverter : IValueConverter
@@ -13,9 +12,7 @@
             {
                 DateTime dt = (DateTime)value;
 
-                // changing the (ui)culture of the current thread does obviously not effect the culture
-                // of the current control and thus the converter is handed the wrong culture object
-                return dt.ToString("d", Thread.CurrentThread.CurrentUICulture);
+                return dt.ToString("d", culture);
             }
 
             return value;
