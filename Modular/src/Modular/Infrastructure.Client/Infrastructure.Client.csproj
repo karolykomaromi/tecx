@@ -144,6 +144,7 @@
     <Compile Include="Commands\CanExecuteChanged.cs" />
     <Compile Include="Commands\NavigationCommand.cs" />
     <Compile Include="Commands\NullCommand.cs" />
+    <Compile Include="Converters\DateTimeFormatConverter.cs" />
     <Compile Include="Converters\NullConverter.cs" />
     <Compile Include="DebugLogger.cs" />
     <Compile Include="DispatchingListViewServiceClient.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Theming\ThemingAdapter.cs" />
     <Compile Include="Theming\VisualTree.cs" />
     <Compile Include="Token.cs" />
+    <Compile Include="Triggers\FormatDateTimeColumn.cs" />
     <Compile Include="Triggers\PopulatingCompletedToken.cs" />
     <Compile Include="Triggers\AutoCompleteToCommand.cs" />
     <Compile Include="Triggers\DoubleClickTrigger.cs" />

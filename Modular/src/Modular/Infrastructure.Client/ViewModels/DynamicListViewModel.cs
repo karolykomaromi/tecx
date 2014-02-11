@@ -59,24 +59,24 @@
             }
         }
 
-        void ISubscribeTo<LanguageChanged>.Handle(LanguageChanged message)
+        public void Handle(LanguageChanged message)
         {
             this.Refresh();
         }
 
-        void INavigationAware.OnNavigatedTo(NavigationContext navigationContext)
+        public void OnNavigatedTo(NavigationContext navigationContext)
         {
             this.listViewService.BeginGetListView(this.ListViewName.ToString(), 1, 50, this.OnGetListViewCompleted, null);
         }
 
-        bool INavigationAware.IsNavigationTarget(NavigationContext navigationContext)
+        public bool IsNavigationTarget(NavigationContext navigationContext)
         {
             ListViewName target = new ListViewName(navigationContext.Parameters["name"]);
 
             return this.ListViewName == target;
         }
 
-        void INavigationAware.OnNavigatedFrom(NavigationContext navigationContext)
+        public void OnNavigatedFrom(NavigationContext navigationContext)
         {
         }
         

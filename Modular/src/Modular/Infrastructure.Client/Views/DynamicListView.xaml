@@ -32,6 +32,7 @@
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="AutoGeneratingColumn">
                     <tr:TranslateColumnHeader />
+                    <tr:FormatDateTimeColumn />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </sdk:DataGrid>
