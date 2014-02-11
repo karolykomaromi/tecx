@@ -1,8 +1,10 @@
 namespace Infrastructure.Entities
 {
+    using System.Diagnostics;
     using System.Runtime.Serialization;
 
     [DataContract]
+    [DebuggerDisplay("Name={PropertyName} Type={PropertyType} Resx={ResourceKey}")]
     public class Property
     {
         [DataMember]
