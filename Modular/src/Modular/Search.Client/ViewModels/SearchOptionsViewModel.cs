@@ -1,5 +1,6 @@
 ﻿namespace Search.ViewModels
 {
+    using Infrastructure;
     using Infrastructure.I18n;
     using Infrastructure.Options;
 
@@ -12,7 +13,8 @@
         public SearchOptionsViewModel(ResxKey titleKey)
             : base(titleKey)
         {
-            this.labelIsSearchEnabled = new LocalizedString(this, "LabelIsSearchEnabled", new ResxKey("Search.Label_IsSearchEnabled"), this.OnPropertyChanged);
+            this.labelIsSearchEnabled = new LocalizedString(this, ReflectionHelper.GetPropertyName(() => this.LabelIsSearchEnabled), new ResxKey("SEARCH.LABEL_ISSEARCHENABLED"), this.OnPropertyChanged);
+            this.IsSearchEnabled = true;
         }
 
         public bool IsSearchEnabled

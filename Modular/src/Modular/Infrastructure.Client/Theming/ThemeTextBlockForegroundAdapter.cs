@@ -8,14 +8,8 @@
     public class ThemeTextBlockForegroundAdapter : ThemingAdapter<TextBlock>
     {
         public ThemeTextBlockForegroundAdapter(TextBlock textBlock, Brush objectFromTheme)
+            : base(textBlock, objectFromTheme)
         {
-            Contract.Requires(textBlock != null);
-            Contract.Requires(objectFromTheme != null);
-
-            this.Target = textBlock;
-            this.ObjectFromTheme = objectFromTheme;
-
-            this.Target.LayoutUpdated += this.OnLayoutUpdated;
         }
 
         public override void Handle(ThemeChanged message)

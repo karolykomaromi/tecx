@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
@@ -10,6 +11,18 @@
     public abstract class ThemingAdapter<T> : ISubscribeTo<ThemeChanged>
         where T : FrameworkElement
     {
+        protected ThemingAdapter(T target, object objectFromTheme)
+        {
+            Contract.Requires(target != null);
+            Contract.Requires(objectFromTheme != null);
+
+            this.Target = target;
+            this.ObjectFromTheme = objectFromTheme;
+
+            this.Target.Resources.Add(Guid.NewGuid().ToString(), this);
+            this.Target.LayoutUpdated += this.OnLayoutUpdated;
+        }
+
         protected T Target { get; set; }
 
         protected object ObjectFromTheme { get; set; }

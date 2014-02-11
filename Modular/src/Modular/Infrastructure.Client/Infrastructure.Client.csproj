@@ -147,7 +147,6 @@
     <Compile Include="Converters\DateTimeFormatConverter.cs" />
     <Compile Include="Converters\NullConverter.cs" />
     <Compile Include="DebugLogger.cs" />
-    <Compile Include="DispatchingListViewServiceClient.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\IEventAggregator.cs" />
     <Compile Include="Events\ISubscribeTo.cs" />

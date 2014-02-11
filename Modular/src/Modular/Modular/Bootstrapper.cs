@@ -62,7 +62,7 @@
             this.Container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
 
             string xaml;
-            using (Stream s = this.GetType().Assembly.GetManifestResourceStream("Modular.CacheConfig.xaml"))
+            using (Stream s = this.GetType().Assembly.GetManifestResourceStream("Modular.Configuration.xaml"))
             {
                 using (StreamReader sr = new StreamReader(s))
                 {
@@ -86,9 +86,7 @@
 
             this.Container.RegisterInstance<IMappingEngine>(Mapper.Engine);
 
-            this.Container.RegisterType<IListViewService, ListViewServiceClient>(Constants.Client, new InjectionConstructor());
-            this.Container.RegisterType<IListViewService, DispatchingListViewServiceClient>(
-                new InjectionConstructor(new ResolvedParameter<IListViewService>(Constants.Client), typeof(Dispatcher)));
+            this.Container.RegisterType<IListViewService, ListViewServiceClient>(new InjectionConstructor(typeof(Dispatcher)));
             
             this.Container.RegisterType<IOptions, CompositeOptions>(new ContainerControlledLifetimeManager());
         }
@@ -106,11 +104,6 @@
             /// appWideResources
             /// </summary>
             public const string AppWideResources = "appWideResources";
-
-            /// <summary>
-            /// Client
-            /// </summary>
-            public const string Client = "client";
         }
     }
 }
