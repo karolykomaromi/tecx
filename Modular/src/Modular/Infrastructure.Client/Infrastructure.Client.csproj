@@ -159,6 +159,7 @@
     <Compile Include="I18n\CompositeResourceManager.cs" />
     <Compile Include="I18n\EchoResourceManager.cs" />
     <Compile Include="I18n\IResourceManager.cs" />
+    <Compile Include="I18n\LanguageChanging.cs" />
     <Compile Include="I18n\LocalizedString.cs" />
     <Compile Include="I18n\ResxFilesResourceManager.cs" />
     <Compile Include="I18n\ResxKey.cs" />

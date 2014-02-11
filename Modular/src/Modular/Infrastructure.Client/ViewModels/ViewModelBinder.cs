@@ -19,6 +19,11 @@
             {
                 view.SetBinding(UIElement.VisibilityProperty, new Binding(ReflectionHelper.GetPropertyName((TViewModel vm) => vm.Visibility)) { Mode = BindingMode.TwoWay });
             }
+
+            if (view.GetBindingExpression(FrameworkElement.LanguageProperty) == null)
+            {
+                view.SetBinding(FrameworkElement.LanguageProperty, new Binding(ReflectionHelper.GetPropertyName((TViewModel vm) => vm.Language)) { Mode = BindingMode.TwoWay });
+            }
         }
     }
 }
