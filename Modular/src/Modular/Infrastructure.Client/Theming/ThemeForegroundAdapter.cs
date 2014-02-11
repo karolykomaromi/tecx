@@ -8,14 +8,8 @@
     public class ThemeForegroundAdapter : ThemingAdapter<Control>
     {
         public ThemeForegroundAdapter(Control control, Brush objectFromTheme)
+            : base(control, objectFromTheme)
         {
-            Contract.Requires(control != null);
-            Contract.Requires(objectFromTheme != null);
-
-            this.Target = control;
-            this.ObjectFromTheme = objectFromTheme;
-
-            this.Target.LayoutUpdated += this.OnLayoutUpdated;
         }
 
         public override void Handle(ThemeChanged message)

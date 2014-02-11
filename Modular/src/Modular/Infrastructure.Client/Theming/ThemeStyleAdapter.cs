@@ -6,14 +6,8 @@
     public class ThemeStyleAdapter : ThemingAdapter<FrameworkElement>
     {
         public ThemeStyleAdapter(FrameworkElement target, Style style)
+            : base(target, style)
         {
-            Contract.Requires(target != null);
-            Contract.Requires(style != null);
-
-            this.Target = target;
-            this.ObjectFromTheme = style;
-
-            this.Target.LayoutUpdated += this.OnLayoutUpdated;
         }
 
         public override void Handle(ThemeChanged message)

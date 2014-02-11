@@ -117,7 +117,6 @@
     </Compile>
     <Compile Include="Commands\SearchCommand.cs" />
     <Compile Include="Commands\SuggestionsCommand.cs" />
-    <Compile Include="DispatchingSearchServiceClient.cs" />
     <Compile Include="Events\DisplaySearchResults.cs" />
     <Compile Include="ISearchService.cs" />
     <Compile Include="Module.cs" />

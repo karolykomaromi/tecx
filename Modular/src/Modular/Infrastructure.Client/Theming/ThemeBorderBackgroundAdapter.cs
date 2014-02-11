@@ -8,14 +8,8 @@
     public class ThemeBorderBackgroundAdapter : ThemingAdapter<Border>
     {
         public ThemeBorderBackgroundAdapter(Border border, Brush objectFromTheme)
+            : base(border, objectFromTheme)
         {
-            Contract.Requires(border != null);
-            Contract.Requires(objectFromTheme != null);
-
-            this.Target = border;
-            this.ObjectFromTheme = objectFromTheme;
-
-            this.Target.LayoutUpdated += this.OnLayoutUpdated;
         }
 
         public override void Handle(ThemeChanged message)

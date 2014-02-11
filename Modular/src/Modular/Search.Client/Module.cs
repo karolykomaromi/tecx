@@ -48,9 +48,7 @@
             container.RegisterType<ICommand, SearchCommand>("search");
             container.RegisterType<ICommand, SuggestionsCommand>("suggestions");
 
-            container.RegisterType<ISearchService, SearchServiceClient>("client", new InjectionConstructor());
-            container.RegisterType<ISearchService, DispatchingSearchServiceClient>(
-                new InjectionConstructor(new ResolvedParameter<ISearchService>("client"), typeof(Dispatcher)));
+            container.RegisterType<ISearchService, SearchServiceClient>(new InjectionConstructor(typeof(Dispatcher)));
 
             container.RegisterType<ICommand, NavigationCommand>(
                 RegionNames.Shell.Content,
