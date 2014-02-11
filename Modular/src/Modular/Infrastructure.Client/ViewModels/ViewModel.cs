@@ -99,7 +99,7 @@ namespace Infrastructure.ViewModels
                 }
             }
         }
-
+        
         public void Enable()
         {
             this.IsEnabled = true;
