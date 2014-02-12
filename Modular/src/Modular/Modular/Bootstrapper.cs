@@ -10,6 +10,7 @@
     using Infrastructure;
     using Infrastructure.Events;
     using Infrastructure.I18n;
+    using Infrastructure.Logging;
     using Infrastructure.Modularity;
     using Infrastructure.Options;
     using Infrastructure.UnityExtensions;
@@ -48,7 +49,26 @@
 
         protected override ILoggerFacade CreateLogger()
         {
-            return new DebugLogger();
+            using (IUnityContainer throwAwayContainer = new UnityContainer())
+            {
+                // The logger is about the first thing created by the bootstrapper. That means the default container is not yet
+                // created and we can't use it in this step. So we create a throw-away container just for resolving the RemoteServiceTraceListener.
+                // Maybe I will change that when I find out how to manually assemble the configuration.
+                string xaml;
+                using (Stream stream = this.GetType().Assembly.GetManifestResourceStream("Modular.LoggingConfiguration.xaml"))
+                {
+                    using (TextReader reader = new StreamReader(stream))
+                    {
+                        xaml = reader.ReadToEnd();
+                    }
+                }
+
+                IDictionary configDictionary = (IDictionary)XamlReader.Load(xaml);
+                IConfigurationSource configSource = DictionaryConfigurationSource.FromDictionary(configDictionary);
+                EnterpriseLibraryContainer.ConfigureContainer(new UnityContainerConfigurator(throwAwayContainer), configSource);
+
+                return throwAwayContainer.Resolve<EnterpriseLibraryLogger>();
+            }
         }
 
         protected override void ConfigureContainer()
@@ -62,16 +82,16 @@
             this.Container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
 
             string xaml;
-            using (Stream s = this.GetType().Assembly.GetManifestResourceStream("Modular.Configuration.xaml"))
+            using (Stream stream = this.GetType().Assembly.GetManifestResourceStream("Modular.CachingConfiguration.xaml"))
             {
-                using (StreamReader sr = new StreamReader(s))
+                using (TextReader reader = new StreamReader(stream))
                 {
-                    xaml = sr.ReadToEnd();
+                    xaml = reader.ReadToEnd();
                 }
             }
 
             IDictionary configDictionary = (IDictionary)XamlReader.Load(xaml);
-            DictionaryConfigurationSource configSource = DictionaryConfigurationSource.FromDictionary(configDictionary);
+            IConfigurationSource configSource = DictionaryConfigurationSource.FromDictionary(configDictionary);
             EnterpriseLibraryContainer.ConfigureContainer(new UnityContainerConfigurator(this.Container), configSource);
 
             this.Container.AddNewExtension<ResourceManagerExtension>();
@@ -87,7 +107,7 @@
             this.Container.RegisterInstance<IMappingEngine>(Mapper.Engine);
 
             this.Container.RegisterType<IListViewService, ListViewServiceClient>(new InjectionConstructor(typeof(Dispatcher)));
-            
+
             this.Container.RegisterType<IOptions, CompositeOptions>(new ContainerControlledLifetimeManager());
         }
 

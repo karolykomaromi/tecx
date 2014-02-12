@@ -12,6 +12,9 @@
       <endpoint address="http://localhost:18448/SearchService.svc"
           binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ISearchService"
           contract="Search.ISearchService" name="BasicHttpBinding_ISearchService" />
+      <endpoint address="http://localhost:18448/LoggingService.svc"
+          binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ISearchService"
+          contract="Microsoft.Practices.EnterpriseLibrary.Logging.Service.ILoggingService" name="BasicHttpBinding_ILoggingService" />
       <endpoint address="http://localhost:18448/ListViewService.svc"
           binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ISearchService"
           contract="Infrastructure.IListViewService" name="BasicHttpBinding_IListViewService" />

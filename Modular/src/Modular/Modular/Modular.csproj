@@ -149,8 +149,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <EmbeddedResource Include="Configuration.xaml">
+    <EmbeddedResource Include="CachingConfiguration.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoggingConfiguration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <Page Include="Shell.xaml">
       <SubType>Designer</SubType>
