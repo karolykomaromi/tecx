@@ -45,7 +45,7 @@
                 // For production applications this error handling should be replaced with something that will 
                 // report the error to the website and stop the application.
                 e.Handled = true;
-                Deployment.Current.Dispatcher.BeginInvoke(delegate { this.ReportErrorToDOM(e); });
+                Deployment.Current.Dispatcher.BeginInvoke(() => this.ReportErrorToDOM(e));
             }
         }
 

@@ -18,9 +18,10 @@ namespace Infrastructure.Client.Test.Modularity
             IUnityContainer container = new UnityContainer();
             var logger = new Mock<ILoggerFacade>();
             var regionManager = new Mock<IRegionManager>();
+            var moduleTracker = new Mock<IModuleTracker>();
             var initializer = new RegionInitializer(regionManager.Object);
 
-            IModule module = new ViewModelResolutionFailsModule(container, logger.Object, initializer);
+            IModule module = new ViewModelResolutionFailsModule(container, logger.Object, moduleTracker.Object, initializer);
 
             module.Initialize();
 
@@ -33,9 +34,10 @@ namespace Infrastructure.Client.Test.Modularity
             IUnityContainer container = new UnityContainer();
             var logger = new Mock<ILoggerFacade>();
             var regionManager = new Mock<IRegionManager>();
+            var moduleTracker = new Mock<IModuleTracker>();
             var initializer = new RegionInitializer(regionManager.Object);
 
-            IModule module = new ViewResolutionFailsModule(container, logger.Object, initializer);
+            IModule module = new ViewResolutionFailsModule(container, logger.Object, moduleTracker.Object, initializer);
 
             module.Initialize();
 
@@ -48,9 +50,10 @@ namespace Infrastructure.Client.Test.Modularity
             IUnityContainer container = new UnityContainer();
             var logger = new Mock<ILoggerFacade>();
             var regionManager = new Mock<IRegionManager>();
+            var moduleTracker = new Mock<IModuleTracker>();
             var initializer = new RegionInitializer(regionManager.Object);
 
-            IModule module = new NoViewModule(container, logger.Object, initializer);
+            IModule module = new ViewModelResolutionFailsModule(container, logger.Object, moduleTracker.Object, initializer);
 
             module.Initialize();
 

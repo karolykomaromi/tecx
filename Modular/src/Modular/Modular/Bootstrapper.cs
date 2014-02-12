@@ -1,4 +1,6 @@
-﻿namespace Modular
+﻿using System;
+
+namespace Modular
 {
     using System.Collections;
     using System.IO;
@@ -25,6 +27,8 @@
 
     public class Bootstrapper : UnityBootstrapper
     {
+        public IModuleTracker ModuleTracker { get; protected set; }
+
         protected override DependencyObject CreateShell()
         {
             Shell shell = this.Container.Resolve<Shell>();
@@ -79,7 +83,8 @@
 
             this.Container.RegisterInstance(Deployment.Current.Dispatcher);
             this.Container.AddNewExtension<EventAggregatorExtension>();
-            this.Container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
+            this.RegisterTypeIfMissing(typeof(IEventAggregator), typeof(EventAggregator), true);
+            this.RegisterTypeIfMissing(typeof(IModuleTracker), typeof(ModuleTracker), true);
 
             string xaml;
             using (Stream stream = this.GetType().Assembly.GetManifestResourceStream("Modular.CachingConfiguration.xaml"))
@@ -108,14 +113,36 @@
 
             this.Container.RegisterType<IListViewService, ListViewServiceClient>(new InjectionConstructor(typeof(Dispatcher)));
 
-            this.Container.RegisterType<IOptions, CompositeOptions>(new ContainerControlledLifetimeManager());
+            this.RegisterTypeIfMissing(typeof(IOptions), typeof(CompositeOptions), true);
         }
 
         protected override void ConfigureModuleCatalog()
         {
             this.ModuleCatalog.AddModule(new ModuleInfo(Main.Module.Name, typeof(Main.Module).AssemblyQualifiedName));
-            this.ModuleCatalog.AddModule(new ModuleInfo(Search.Module.Name, typeof(Search.Module).AssemblyQualifiedName));
-            this.ModuleCatalog.AddModule(new ModuleInfo(Recipe.Module.Name, typeof(Recipe.Module).AssemblyQualifiedName));
+            this.ModuleCatalog.AddModule(new ModuleInfo(Search.Module.Name, typeof(Search.Module).AssemblyQualifiedName, Main.Module.Name));
+
+            this.ModuleCatalog.AddModule(new ModuleInfo("Recipe", "Recipe.Module, Recipe.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "Search") { Ref = "Recipe.xap", InitializationMode = InitializationMode.WhenAvailable });
+        }
+
+        protected override void InitializeModules()
+        {
+            IModuleManager moduleManager = this.Container.Resolve<IModuleManager>(new ResolverOverride[0]);
+            IModuleTracker tracker = this.Container.Resolve<IModuleTracker>();
+
+            foreach (ModuleInfo module in this.ModuleCatalog.Modules)
+            {
+                tracker.Register(new ModuleTrackingState
+                    {
+                        ModuleName = module.ModuleName, 
+                        ExpectedInitializationMode = module.InitializationMode,
+                        ConfiguredDependencies = module.Ref
+                    });
+            }
+
+            moduleManager.LoadModuleCompleted += (s, e) => tracker.RecordModuleLoaded(e.ModuleInfo.ModuleName);
+            moduleManager.ModuleDownloadProgressChanged += (s, e) => tracker.RecordModuleDownloading(e.ModuleInfo.ModuleName, e.BytesReceived, e.TotalBytesToReceive);
+
+            moduleManager.Run();
         }
 
         private static class Constants

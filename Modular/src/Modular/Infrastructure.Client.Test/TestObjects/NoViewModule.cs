@@ -8,9 +8,14 @@ namespace Infrastructure.Client.Test.TestObjects
 
     public class NoViewModule : UnityModule
     {
-        public NoViewModule(IUnityContainer container, ILoggerFacade logger, IModuleInitializer initializer)
-            : base(container, logger, initializer)
+        public NoViewModule(IUnityContainer container, ILoggerFacade logger, IModuleTracker moduleTracker, IModuleInitializer initializer)
+            : base(container, logger, moduleTracker, initializer)
         {
+        }
+
+        public override string ModuleName
+        {
+            get { return "NoView"; }
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)

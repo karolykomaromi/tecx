@@ -8,9 +8,14 @@ namespace Infrastructure.Client.Test.TestObjects
 
     public class ViewModelResolutionFailsModule : UnityModule
     {
-        public ViewModelResolutionFailsModule(IUnityContainer container, ILoggerFacade logger, IModuleInitializer initializer)
-            : base(container, logger, initializer)
+        public ViewModelResolutionFailsModule(IUnityContainer container, ILoggerFacade logger, IModuleTracker moduleTracker, IModuleInitializer initializer)
+            : base(container, logger, moduleTracker, initializer)
         {
+        }
+
+        public override string ModuleName
+        {
+            get { return "ViewModelResolutionFails"; }
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)

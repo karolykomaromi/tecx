@@ -21,18 +21,25 @@ namespace Infrastructure.Modularity
     {
         private readonly IUnityContainer container;
         private readonly ILoggerFacade logger;
+        private readonly IModuleTracker moduleTracker;
         private readonly IModuleInitializer initializer;
 
-        protected UnityModule(IUnityContainer container, ILoggerFacade logger, IModuleInitializer initializer)
+        protected UnityModule(IUnityContainer container, ILoggerFacade logger, IModuleTracker moduleTracker, IModuleInitializer initializer)
         {
             Contract.Requires(container != null);
             Contract.Requires(logger != null);
+            Contract.Requires(moduleTracker != null);
             Contract.Requires(initializer != null);
 
             this.container = container;
             this.logger = logger;
+            this.moduleTracker = moduleTracker;
             this.initializer = initializer;
+
+            this.moduleTracker.RecordModuleConstructed(this.ModuleName);
         }
+
+        public abstract string ModuleName { get; }
 
         protected ILoggerFacade Logger
         {
@@ -47,6 +54,8 @@ namespace Infrastructure.Modularity
         public virtual void Initialize()
         {
             this.initializer.Initialize(this);
+
+            this.moduleTracker.RecordModuleInitialized(this.ModuleName);
         }
 
         protected internal virtual IResourceManager CreateResourceManager()
