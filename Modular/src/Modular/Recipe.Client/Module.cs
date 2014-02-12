@@ -21,9 +21,14 @@
         /// </summary>
         public static readonly string Name = "Recipe";
 
-        public Module(IUnityContainer container, ILoggerFacade logger, IModuleInitializer initializer)
-            : base(container, logger, initializer)
+        public Module(IUnityContainer container, ILoggerFacade logger, IModuleTracker moduleTracker, IModuleInitializer initializer)
+            : base(container, logger, moduleTracker, initializer)
         {
+        }
+
+        public override string ModuleName
+        {
+            get { return Name; }
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)

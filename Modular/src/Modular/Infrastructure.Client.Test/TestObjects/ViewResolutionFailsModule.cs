@@ -8,9 +8,14 @@
 
     public class ViewResolutionFailsModule : UnityModule
     {
-        public ViewResolutionFailsModule(IUnityContainer container, ILoggerFacade logger, IModuleInitializer initializer)
-            : base(container, logger, initializer)
+        public ViewResolutionFailsModule(IUnityContainer container, ILoggerFacade logger, IModuleTracker moduleTracker, IModuleInitializer initializer)
+            : base(container, logger, moduleTracker, initializer)
         {
+        }
+
+        public override string ModuleName
+        {
+            get { return "ViewModelResolutionFails"; }
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)

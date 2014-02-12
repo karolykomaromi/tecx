@@ -9,5 +9,7 @@
         void RecordModuleConstructed(string moduleName);
 
         void RecordModuleInitialized(string moduleName);
+
+        void Register(ModuleTrackingState state);
     }
 }
