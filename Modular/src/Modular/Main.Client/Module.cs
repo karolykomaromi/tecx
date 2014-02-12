@@ -75,7 +75,8 @@
                 new InjectionConstructor(
                     new ResxKey("MAIN.LABEL_OPTIONS"), 
                     typeof(LanguageSelectionViewModel), 
-                    typeof(ThemeSelectionViewModel), 
+                    typeof(ThemeSelectionViewModel),
+                    typeof(AppInfoViewModel),
                     new ResolvedParameter<ICommand>("notification")));
         }
     }
