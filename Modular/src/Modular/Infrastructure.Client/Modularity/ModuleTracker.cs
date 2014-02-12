@@ -18,6 +18,11 @@ namespace Infrastructure.Modularity
             this.moduleTrackingStates = new Dictionary<string, ModuleTrackingState>(StringComparer.OrdinalIgnoreCase);
         }
 
+        public IEnumerable<ModuleTrackingState> ModuleTrackingStates
+        {
+            get { return this.moduleTrackingStates.Values; }
+        }
+
         public void RecordModuleConstructed(string moduleName)
         {
             Contract.Requires(!string.IsNullOrEmpty(moduleName));

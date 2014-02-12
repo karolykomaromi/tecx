@@ -10,26 +10,30 @@
     {
         private readonly LanguageSelectionViewModel languageSelection;
         private readonly ThemeSelectionViewModel themeSelection;
+        private readonly AppInfoViewModel appInfo;
         private readonly LocalizedString labelLanguageSelection;
         private readonly LocalizedString labelThemeSelection;
         private readonly LocalizedString labelTestConnection;
         private readonly LocalizedString labelNotificationUrl;
+        private readonly LocalizedString labelAppInfo;
         private readonly ICommand testNotificationCommand;
 
         private string notificationUrl;
         private string testConnectionReturn;
 
-        public OptionsViewModel(ResxKey titleKey, LanguageSelectionViewModel languageSelection, ThemeSelectionViewModel themeSelection, ICommand testNotificationCommand)
+        public OptionsViewModel(ResxKey titleKey, LanguageSelectionViewModel languageSelection, ThemeSelectionViewModel themeSelection, AppInfoViewModel appInfo, ICommand testNotificationCommand)
             : base(titleKey)
         {
             this.languageSelection = languageSelection;
             this.themeSelection = themeSelection;
+            this.appInfo = appInfo;
             this.testNotificationCommand = testNotificationCommand;
 
             this.labelLanguageSelection = new LocalizedString(this, "LabelLanguageSelection", new ResxKey("MAIN.LABEL_LANGUAGESELECTION"), this.OnPropertyChanged);
             this.labelThemeSelection = new LocalizedString(this, "LabelThemeSelection", new ResxKey("MAIN.LABEL_THEMESELECTION"), this.OnPropertyChanged);
             this.labelTestConnection = new LocalizedString(this, "LabelTestConnection", new ResxKey("MAIN.LABEL_TESTCONNECTION"), this.OnPropertyChanged);
             this.labelNotificationUrl = new LocalizedString(this, "LabelNotificationUrl", new ResxKey("MAIN.LABEL_NOTIFICATIONURL"), this.OnPropertyChanged);
+            this.labelAppInfo = new LocalizedString(this, "LabelAppInfo", new ResxKey("MAIN.LABEL_APPINFO"), this.OnPropertyChanged);
 
             Uri source = Application.Current.Host.Source;
 
@@ -46,9 +50,19 @@
             get { return this.languageSelection; }
         }
 
+        public AppInfoViewModel AppInfo
+        {
+            get { return this.appInfo; }
+        }
+
         public string LabelThemeSelection
         {
             get { return this.labelThemeSelection.Value; }
+        }
+
+        public string LabelAppInfo
+        {
+            get { return this.labelAppInfo.Value; }
         }
 
         public ThemeSelectionViewModel ThemeSelection
