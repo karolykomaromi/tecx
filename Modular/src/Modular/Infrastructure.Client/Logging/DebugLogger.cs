@@ -1,4 +1,4 @@
-﻿namespace Infrastructure
+namespace Infrastructure.Logging
 {
     using System.Diagnostics;
     using System.Globalization;

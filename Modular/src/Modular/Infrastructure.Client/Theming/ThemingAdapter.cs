@@ -31,29 +31,6 @@
         
         public abstract void Handle(ThemeChanged message);
 
-        protected static object GetKey(ResourceDictionary dictionary, object o)
-        {
-            foreach (DictionaryEntry resource in dictionary)
-            {
-                if (resource.Value == o)
-                {
-                    return resource.Key;
-                }
-            }
-
-            foreach (ResourceDictionary mergedDictionary in dictionary.MergedDictionaries)
-            {
-                object key = GetKey(mergedDictionary, o);
-
-                if (key != null)
-                {
-                    return key;
-                }
-            }
-
-            return null;
-        }
-
         protected virtual void OnLayoutUpdated(object sender, EventArgs e)
         {
             this.Target.LayoutUpdated -= this.OnLayoutUpdated;
@@ -87,9 +64,31 @@
             this.ObjectFromTheme = null;
         }
 
+        private static object GetKey(ResourceDictionary dictionary, object o)
+        {
+            foreach (DictionaryEntry resource in dictionary)
+            {
+                if (resource.Value == o)
+                {
+                    return resource.Key;
+                }
+            }
+
+            foreach (ResourceDictionary mergedDictionary in dictionary.MergedDictionaries)
+            {
+                object key = GetKey(mergedDictionary, o);
+
+                if (key != null)
+                {
+                    return key;
+                }
+            }
+
+            return null;
+        }
+
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            // the target must keep a reference to the adapter or the adapter will be gc'ed
             this.Target.Unloaded -= this.OnUnloaded;
             this.Target.LayoutUpdated += this.OnLayoutUpdated;
         }
