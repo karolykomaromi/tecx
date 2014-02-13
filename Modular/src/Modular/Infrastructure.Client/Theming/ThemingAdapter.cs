@@ -19,8 +19,10 @@
             this.Target = target;
             this.ObjectFromTheme = objectFromTheme;
 
-            this.Target.Resources.Add(Guid.NewGuid().ToString(), this);
             this.Target.LayoutUpdated += this.OnLayoutUpdated;
+
+            // to avoid gc'ing we need to add a backward reference from target to adapter
+            this.Target.Resources.Add(Guid.NewGuid().ToString(), this);
         }
 
         protected T Target { get; set; }
@@ -34,8 +36,14 @@
         protected virtual void OnLayoutUpdated(object sender, EventArgs e)
         {
             this.Target.LayoutUpdated -= this.OnLayoutUpdated;
-
             this.Target.Unloaded += this.OnUnloaded;
+
+            // don't try to find the key twice because we reset ObjectFromTheme
+            // when we find the key for the first time.
+            if (this.Key != null)
+            {
+                return;
+            }
 
             UserControl uc = VisualTree.FindAncestor<UserControl>(this.Target);
 

@@ -154,7 +154,7 @@
             else
             {
                 throw new InvalidOperationException(
-                "You must attach the 'Infrastructure.Theming.Theme.BackgroundProperty' to an element that is either a 'Border' or a 'Control'.");
+                    "You must attach the 'Infrastructure.Theming.Theme.BackgroundProperty' to an element that is either a 'Border' or a 'Control'.");
             }
         }
 

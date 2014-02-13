@@ -14,6 +14,7 @@
 
             Assert.Equal(expected, actual);
         }
+
         [Fact]
         public void Should_GetSilverlightCompatibleTypeName_For_Int32()
         {
@@ -23,6 +24,7 @@
 
             Assert.Equal(expected, actual);
         }
+
         [Fact]
         public void Should_GetSilverlightCompatibleTypeName_For_DateTime()
         {

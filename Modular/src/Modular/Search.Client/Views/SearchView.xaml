@@ -5,11 +5,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:viewModels="clr-namespace:Search.ViewModels"
-    xmlns:triggers="clr-namespace:Infrastructure.Triggers;assembly=Infrastructure.Client"
+    xmlns:vm="clr-namespace:Search.ViewModels"
+    xmlns:tr="clr-namespace:Infrastructure.Triggers;assembly=Infrastructure.Client"
     mc:Ignorable="d"
     d:DesignHeight="50" d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance d:Type=viewModels:SearchViewModel}">
+    d:DataContext="{d:DesignInstance d:Type=vm:SearchViewModel}">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -18,7 +18,7 @@
         <sdk:AutoCompleteBox Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Suggestions}" FilterMode="None" MinimumPrefixLength="3">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Populating">
-                    <triggers:AutoCompleteToCommand Command="{Binding SuggestionsCommand}" CommandParameter="{Binding}" />
+                    <tr:AutoCompleteToCommand Command="{Binding SuggestionsCommand}" CommandParameter="{Binding}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </sdk:AutoCompleteBox>
