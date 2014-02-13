@@ -33,17 +33,16 @@
 
         protected override void ConfigureRegions(IRegionManager regionManager)
         {
-            Control view;
-
             ResxKey recipesTitle = new ResxKey("Recipe.Label_Recipes");
             ListViewName recipesList = new ListViewName("Recipes");
 
-            if (this.TryGetViewFor<DynamicListViewModel>(out view, new Param("listViewName", recipesList), new Param("listViewTitleKey", recipesTitle)))
+            Control recipes;
+            if (this.TryGetViewFor<DynamicListViewModel>(out recipes, new Param("listViewName", recipesList), new Param("listViewTitleKey", recipesTitle)))
             {
-                regionManager.AddToRegion(RegionNames.Shell.Content, view);
+                regionManager.AddToRegion(RegionNames.Shell.Content, recipes);
 
                 NavigationView navigation = new NavigationBuilder()
-                                                    .ToView(view)
+                                                    .ToView(recipes)
                                                     .WithParameter("name", recipesList.ToString())
                                                     .InRegion(regionManager.Regions[RegionNames.Shell.Content])
                                                     .WithLabel(recipesTitle);
@@ -54,12 +53,13 @@
             ResxKey ingredientsTitle = new ResxKey("Recipe.Label_Ingredients");
             ListViewName ingredientsList = new ListViewName("Ingredients");
 
-            if (this.TryGetViewFor<DynamicListViewModel>(out view, new Param("listViewName", ingredientsList), new Param("listViewTitleKey", ingredientsTitle)))
+            Control ingredients;
+            if (this.TryGetViewFor<DynamicListViewModel>(out ingredients, new Param("listViewName", ingredientsList), new Param("listViewTitleKey", ingredientsTitle)))
             {
-                regionManager.AddToRegion(RegionNames.Shell.Content, view);
+                regionManager.AddToRegion(RegionNames.Shell.Content, ingredients);
 
                 NavigationView navigation = new NavigationBuilder()
-                                                .ToView(view)
+                                                .ToView(ingredients)
                                                 .WithParameter("name", ingredientsList.ToString())
                                                 .InRegion(regionManager.Regions[RegionNames.Shell.Content])
                                                 .WithLabel(ingredientsTitle);
