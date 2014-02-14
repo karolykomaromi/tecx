@@ -119,7 +119,7 @@
 
         protected override IResourceManager CreateResourceManager()
         {
-            IResourceManager rm = new ResxFilesResourceManager(typeof(Labels));
+            IResourceManager rm = new ResxFilesResourceManager(typeof(Labels), this.Logger);
 
             return rm;
         }

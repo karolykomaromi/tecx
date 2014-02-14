@@ -4,6 +4,7 @@
     using System.Threading;
     using Infrastructure.Client.Test.Assets.Resources;
     using Infrastructure.I18n;
+    using Infrastructure.Logging;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -34,7 +35,7 @@
             Thread.CurrentThread.CurrentCulture = englishUs;
             Thread.CurrentThread.CurrentUICulture = englishUs;
 
-            IResourceManager resourceManager = new ResxFilesResourceManager(typeof(Labels));
+            IResourceManager resourceManager = new ResxFilesResourceManager(typeof(Labels), new NullLogger());
 
             string actual = resourceManager[new ResxKey("INFRASTRUCTURE.TRANSLATEME")];
 
@@ -49,7 +50,7 @@
             Thread.CurrentThread.CurrentCulture = englishUs;
             Thread.CurrentThread.CurrentUICulture = englishUs;
 
-            IResourceManager resourceManager = new ResxFilesResourceManager(typeof(Labels));
+            IResourceManager resourceManager = new ResxFilesResourceManager(typeof(Labels), new NullLogger());
 
             string actual = resourceManager[new ResxKey("INFRASTRUCTURE.TRANSLATEME")];
 

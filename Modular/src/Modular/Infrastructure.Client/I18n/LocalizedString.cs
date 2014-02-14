@@ -69,7 +69,7 @@
             return new LocalizedString(viewModel, propertyName, resourceKey, notifyPropertyChanged, eventAggregator);
         }
 
-        void ISubscribeTo<LanguageChanged>.Handle(LanguageChanged message)
+        public void Handle(LanguageChanged message)
         {
             this.notifyPropertyChanged(this.propertyName);
         }

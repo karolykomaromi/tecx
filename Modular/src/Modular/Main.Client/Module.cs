@@ -53,7 +53,7 @@
 
         protected override IResourceManager CreateResourceManager()
         {
-            return new ResxFilesResourceManager(typeof(Labels));
+            return new ResxFilesResourceManager(typeof(Labels), this.Logger);
         }
 
         protected override void ConfigureContainer(IUnityContainer container)
