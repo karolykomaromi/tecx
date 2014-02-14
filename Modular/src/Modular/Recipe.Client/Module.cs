@@ -33,7 +33,7 @@
 
         protected override void ConfigureRegions(IRegionManager regionManager)
         {
-            ResxKey recipesTitle = new ResxKey("Recipe.Label_Recipes");
+            ResxKey recipesTitle = new ResxKey("RECIPE.LABEL_RECIPES");
             ListViewName recipesList = new ListViewName("Recipes");
 
             Control recipes;
@@ -50,7 +50,7 @@
                 regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
             }
 
-            ResxKey ingredientsTitle = new ResxKey("Recipe.Label_Ingredients");
+            ResxKey ingredientsTitle = new ResxKey("RECIPE.LABEL_INGREDIENTS");
             ListViewName ingredientsList = new ListViewName("Ingredients");
 
             Control ingredients;
@@ -79,7 +79,7 @@
 
         protected override IResourceManager CreateResourceManager()
         {
-            return new ResxFilesResourceManager(typeof(Labels));
+            return new ResxFilesResourceManager(typeof(Labels), this.Logger);
         }
     }
 }

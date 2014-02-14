@@ -173,8 +173,10 @@
     <Compile Include="ListViews\FacetedObjectType.cs" />
     <Compile Include="ListViews\FacetedViewModel.cs" />
     <Compile Include="ListViews\ListViewName.cs" />
+    <Compile Include="Logging\CompositeLogger.cs" />
     <Compile Include="Logging\DebugLogger.cs" />
     <Compile Include="Logging\EnterpriseLibraryLogger.cs" />
+    <Compile Include="Logging\NullLogger.cs" />
     <Compile Include="Meta\PropertyMetaAttribute.cs" />
     <Compile Include="Modularity\AutoMapperInitializer.cs" />
     <Compile Include="Modularity\CompositeInitializer.cs" />

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Modular
+﻿namespace Modular
 {
     using System.Collections;
     using System.IO;
@@ -71,7 +69,11 @@ namespace Modular
                 IConfigurationSource configSource = DictionaryConfigurationSource.FromDictionary(configDictionary);
                 EnterpriseLibraryContainer.ConfigureContainer(new UnityContainerConfigurator(throwAwayContainer), configSource);
 
-                return throwAwayContainer.Resolve<EnterpriseLibraryLogger>();
+                ILoggerFacade entLibLogger = throwAwayContainer.Resolve<EnterpriseLibraryLogger>();
+
+                CompositeLogger composite = new CompositeLogger(entLibLogger, new DebugLogger());
+
+                return composite;
             }
         }
 
@@ -103,7 +105,7 @@ namespace Modular
             this.Container.RegisterType<IResourceManager, CompositeResourceManager>(Constants.AppWideResources, new ContainerControlledLifetimeManager(), new InjectionConstructor());
             this.Container.RegisterType<IResourceManager, CachingResourceManager>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new ResolvedParameter<IResourceManager>(Constants.AppWideResources), typeof(IEventAggregator), typeof(ObjectCache)));
+                new InjectionConstructor(new ResolvedParameter<IResourceManager>(Constants.AppWideResources), typeof(IEventAggregator), typeof(ObjectCache), typeof(ILoggerFacade)));
 
             this.Container.RegisterType<ModuleResourcesInitializer>(new InjectionConstructor(Application.Current.Resources));
             this.Container.RegisterType<ResourceManagerInitializer>(new InjectionConstructor(new ResolvedParameter<CompositeResourceManager>(Constants.AppWideResources)));
