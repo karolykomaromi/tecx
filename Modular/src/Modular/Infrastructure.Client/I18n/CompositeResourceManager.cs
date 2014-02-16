@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
+    using System.Globalization;
 
     public class CompositeResourceManager : IResourceManager
     {
@@ -34,6 +35,11 @@
 
                 return key.ToString();
             }
+        }
+
+        public string GetString(string name, CultureInfo culture)
+        {
+            return name.ToUpperInvariant();
         }
 
         public void Add(IResourceManager resourceManager)

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.Contracts;
+    using System.Globalization;
     using Infrastructure.Caching;
     using Infrastructure.Events;
     using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
@@ -56,6 +57,11 @@
 
                 return key.ToString();
             }
+        }
+
+        public string GetString(string name, CultureInfo culture)
+        {
+            return name.ToUpperInvariant();
         }
     }
 }
