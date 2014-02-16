@@ -41,7 +41,7 @@
         {
             container.RegisterType<SearchResultsViewModel>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new ResolvedParameter<ICommand>(RegionNames.Shell.Content), typeof(IMappingEngine), typeof(ResxKey)));
+                new InjectionConstructor(new ResolvedParameter<ICommand>(RegionNames.Shell.Content), typeof(IMappingEngine), typeof(ResourceAccessor)));
 
             container.RegisterType<SearchViewModel>(
                 new ContainerControlledLifetimeManager(),
@@ -61,7 +61,7 @@
 
             container.RegisterType<SearchOptionsViewModel>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new ResxKey("SEARCH.LABEL_SEARCHOPTIONS")));
+                new InjectionConstructor(new ResourceAccessor(() => Labels.SearchOptions)));
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)
@@ -73,7 +73,7 @@
             }
 
             Control searchResult;
-            if (this.TryGetViewFor<SearchResultsViewModel>(out searchResult, new Param("titleKey", new ResxKey("SEARCH.LABEL_SEARCHRESULTS"))))
+            if (this.TryGetViewFor<SearchResultsViewModel>(out searchResult, new Param("title", new ResourceAccessor(() => Labels.SearchResults))))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, searchResult);
             }
@@ -87,7 +87,7 @@
             NavigationView navigation = new NavigationBuilder()
                                                         .ToView(searchResult)
                                                         .InRegion(regionManager.Regions[RegionNames.Shell.Content])
-                                                        .WithLabel(new ResxKey("SEARCH.LABEL_SEARCHRESULTS"))
+                                                        .WithTitle(() => Labels.SearchResults)
                                                         .OnOptionsChanged((msg, vm) =>
                                                             {
                                                                 var options = msg.Options as SearchOptionsViewModel;
@@ -115,13 +115,6 @@
             ResourceDictionary resources = new ResourceDictionary { Source = uri };
 
             return resources;
-        }
-
-        protected override IResourceManager CreateResourceManager()
-        {
-            IResourceManager rm = new ResxFilesResourceManager(typeof(Labels), this.Logger);
-
-            return rm;
         }
 
         protected override IOptions CreateModuleOptions()

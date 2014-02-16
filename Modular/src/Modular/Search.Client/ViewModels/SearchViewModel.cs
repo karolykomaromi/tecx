@@ -9,6 +9,7 @@ namespace Search.ViewModels
     using Infrastructure.I18n;
     using Infrastructure.Options;
     using Infrastructure.ViewModels;
+    using Search.Assets.Resources;
     using Search.Entities;
     using Search.Events;
 
@@ -33,7 +34,7 @@ namespace Search.ViewModels
             this.searchService = searchService;
 
             this.suggestions = new ObservableCollection<string>();
-            this.labelSearch = new LocalizedString(this, ReflectionHelper.GetPropertyName(() => this.LabelSearch), new ResxKey("SEARCH.LABEL_SEARCH"), this.OnPropertyChanged);
+            this.labelSearch = new LocalizedString(() => this.LabelSearch, () => Labels.Search, this.OnPropertyChanged);
         }
 
         public string LabelSearch

@@ -19,27 +19,19 @@
             this.resourceManagers = new List<IResourceManager>(resourceManagers ?? new IResourceManager[0]);
         }
 
-        public string this[ResxKey key]
-        {
-            get
-            {
-                foreach (IResourceManager resourceManager in this.resourceManagers)
-                {
-                    string value = resourceManager[key];
-
-                    if (!string.Equals(key.ToString(), value, StringComparison.Ordinal))
-                    {
-                        return value;
-                    }
-                }
-
-                return key.ToString();
-            }
-        }
-
         public string GetString(string name, CultureInfo culture)
         {
-            return name.ToUpperInvariant();
+            foreach (IResourceManager resourceManager in this.resourceManagers)
+            {
+                string value = resourceManager.GetString(name, culture);
+
+                if (!string.Equals(name, value, StringComparison.Ordinal))
+                {
+                    return value;
+                }
+            }
+
+            return name;
         }
 
         public void Add(IResourceManager resourceManager)

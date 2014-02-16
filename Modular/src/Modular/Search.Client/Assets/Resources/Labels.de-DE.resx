@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Label_IsSearchEnabled" xml:space="preserve">
+  <data name="IsSearchEnabled" xml:space="preserve">
     <value>Suche einschalten</value>
   </data>
-  <data name="Label_Search" xml:space="preserve">
+  <data name="Search" xml:space="preserve">
     <value>Suche</value>
   </data>
-  <data name="Label_SearchOptions" xml:space="preserve">
+  <data name="SearchOptions" xml:space="preserve">
     <value>Suchoptionen</value>
   </data>
-  <data name="Label_SearchResults" xml:space="preserve">
+  <data name="SearchResults" xml:space="preserve">
     <value>Suchergebnisse</value>
   </data>
 </root>

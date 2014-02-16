@@ -57,29 +57,29 @@ namespace Main.Assets.Resources
             }
         }
 
-        public static string Label_LanguageSelection
+        public static string LanguageSelection
         {
-            get { return ResourceManager.GetString("Label_LanguageSelection", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("LanguageSelection", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
         }
 
-        public static string Label_NotificationUrl
+        public static string NotificationUrl
         {
-            get { return ResourceManager.GetString("Label_NotificationUrl", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("NotificationUrl", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
         }
 
-        public static string Label_Options
+        public static string Options
         {
-            get { return ResourceManager.GetString("Label_Options", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Options", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
         }
 
-        public static string Label_TestConnection
+        public static string TestConnection
         {
-            get { return ResourceManager.GetString("Label_TestConnection", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("TestConnection", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
         }
 
-        public static string Label_ThemeSelection
+        public static string ThemeSelection
         {
-            get { return ResourceManager.GetString("Label_ThemeSelection", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("ThemeSelection", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
         }
     }
 }

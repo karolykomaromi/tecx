@@ -7,11 +7,11 @@
     {
         private readonly LocalizedString title;
 
-        protected TitledViewModel(ResxKey titleKey)
+        protected TitledViewModel(ResourceAccessor title)
         {
-            Contract.Requires(titleKey != ResxKey.Empty);
+            Contract.Requires(title != null);
 
-            this.title = new LocalizedString(this, "Title", titleKey, this.OnPropertyChanged);
+            this.title = new LocalizedString(() => this.Title, title.GetResource, this.OnPropertyChanged);
         }
 
         public string Title

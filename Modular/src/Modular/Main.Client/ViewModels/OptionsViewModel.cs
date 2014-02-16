@@ -5,6 +5,7 @@
     using System.Windows.Input;
     using Infrastructure.I18n;
     using Infrastructure.Options;
+    using Main.Assets.Resources;
 
     public class OptionsViewModel : Options
     {
@@ -21,19 +22,19 @@
         private string notificationUrl;
         private string testConnectionReturn;
 
-        public OptionsViewModel(ResxKey titleKey, LanguageSelectionViewModel languageSelection, ThemeSelectionViewModel themeSelection, AppInfoViewModel appInfo, ICommand testNotificationCommand)
-            : base(titleKey)
+        public OptionsViewModel(ResourceAccessor title, LanguageSelectionViewModel languageSelection, ThemeSelectionViewModel themeSelection, AppInfoViewModel appInfo, ICommand testNotificationCommand)
+            : base(title)
         {
             this.languageSelection = languageSelection;
             this.themeSelection = themeSelection;
             this.appInfo = appInfo;
             this.testNotificationCommand = testNotificationCommand;
 
-            this.labelLanguageSelection = new LocalizedString(this, "LabelLanguageSelection", new ResxKey("MAIN.LABEL_LANGUAGESELECTION"), this.OnPropertyChanged);
-            this.labelThemeSelection = new LocalizedString(this, "LabelThemeSelection", new ResxKey("MAIN.LABEL_THEMESELECTION"), this.OnPropertyChanged);
-            this.labelTestConnection = new LocalizedString(this, "LabelTestConnection", new ResxKey("MAIN.LABEL_TESTCONNECTION"), this.OnPropertyChanged);
-            this.labelNotificationUrl = new LocalizedString(this, "LabelNotificationUrl", new ResxKey("MAIN.LABEL_NOTIFICATIONURL"), this.OnPropertyChanged);
-            this.labelAppInfo = new LocalizedString(this, "LabelAppInfo", new ResxKey("MAIN.LABEL_APPINFO"), this.OnPropertyChanged);
+            this.labelLanguageSelection = new LocalizedString(() => this.LabelLanguageSelection, () => Labels.LanguageSelection, this.OnPropertyChanged);
+            this.labelThemeSelection = new LocalizedString(() => this.LabelThemeSelection, () => Labels.ThemeSelection, this.OnPropertyChanged);
+            this.labelTestConnection = new LocalizedString(() => this.LabelTestConnection, () => Labels.TestConnection, this.OnPropertyChanged);
+            this.labelNotificationUrl = new LocalizedString(() => this.LabelNotificationUrl, () => Labels.NotificationUrl, this.OnPropertyChanged);
+            this.labelAppInfo = new LocalizedString(() => this.LabelAppInfo, () => Labels.NotificationUrl, this.OnPropertyChanged);
 
             Uri source = Application.Current.Host.Source;
 

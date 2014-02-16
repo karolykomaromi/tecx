@@ -5,8 +5,8 @@
 
     public class IngredientDetailsViewModel : TitledViewModel
     {
-        public IngredientDetailsViewModel(ResxKey titleKey)
-            : base(titleKey)
+        public IngredientDetailsViewModel(ResourceAccessor title)
+            : base(title)
         {
         }
     }

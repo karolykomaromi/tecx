@@ -1,7 +1,6 @@
 namespace Infrastructure.ListViews
 {
     using System;
-    using Infrastructure.I18n;
 
     public class Facet
     {
@@ -12,6 +11,6 @@ namespace Infrastructure.ListViews
 
         public Type PropertyType { get; set; }
 
-        public ResxKey ResourceKey { get; set; }
+        public Func<string> GetResource { get; set; }
     }
 }
