@@ -57,24 +57,24 @@ namespace Search.Assets.Resources
             }
         }
 
-        public static string Label_IsSearchEnabled
+        public static string IsSearchEnabled
         {
-            get { return ResourceManager.GetString("Label_IsSearchEnabled", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("IsSearchEnabled", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
         }
 
-        public static string Label_Search
+        public static string Search
         {
-            get { return ResourceManager.GetString("Label_Search", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Search", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
         }
 
-        public static string Label_SearchOptions
+        public static string SearchOptions
         {
-            get { return ResourceManager.GetString("Label_SearchOptions", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("SearchOptions", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
         }
 
-        public static string Label_SearchResults
+        public static string SearchResults
         {
-            get { return ResourceManager.GetString("Label_SearchResults", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("SearchResults", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
         }
     }
 }

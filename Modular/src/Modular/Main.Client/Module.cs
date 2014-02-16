@@ -1,5 +1,7 @@
 ﻿namespace Main
 {
+    using System;
+    using System.Linq;
     using System.Windows.Controls;
     using System.Windows.Input;
     using Infrastructure;
@@ -41,7 +43,7 @@
             NavigationView navigation = new NavigationBuilder()
                 .ToView(options)
                 .InRegion(regionManager.Regions[RegionNames.Shell.Content])
-                .WithLabel(new ResxKey("MAIN.LABEL_OPTIONS"));
+                .WithTitle(() => Labels.Options);
 
             regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
         }
@@ -49,11 +51,6 @@
         protected override Infrastructure.Options.IOptions CreateModuleOptions()
         {
             return this.Container.Resolve<OptionsViewModel>();
-        }
-
-        protected override IResourceManager CreateResourceManager()
-        {
-            return new ResxFilesResourceManager(typeof(Labels), this.Logger);
         }
 
         protected override void ConfigureContainer(IUnityContainer container)
@@ -73,7 +70,7 @@
             container.RegisterType<OptionsViewModel>(
                 new ContainerControlledLifetimeManager(), 
                 new InjectionConstructor(
-                    new ResxKey("MAIN.LABEL_OPTIONS"), 
+                    new ResourceAccessor(() => Labels.Options), 
                     typeof(LanguageSelectionViewModel), 
                     typeof(ThemeSelectionViewModel),
                     typeof(AppInfoViewModel),

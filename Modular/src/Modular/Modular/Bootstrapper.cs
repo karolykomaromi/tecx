@@ -101,14 +101,12 @@
             IConfigurationSource configSource = DictionaryConfigurationSource.FromDictionary(configDictionary);
             EnterpriseLibraryContainer.ConfigureContainer(new UnityContainerConfigurator(this.Container), configSource);
 
-            this.Container.AddNewExtension<ResourceManagerExtension>();
             this.Container.RegisterType<IResourceManager, CompositeResourceManager>(Constants.AppWideResources, new ContainerControlledLifetimeManager(), new InjectionConstructor());
             this.Container.RegisterType<IResourceManager, CachingResourceManager>(
                 new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(new ResolvedParameter<IResourceManager>(Constants.AppWideResources), typeof(IEventAggregator), typeof(ObjectCache), typeof(ILoggerFacade)));
 
             this.Container.RegisterType<ModuleResourcesInitializer>(new InjectionConstructor(Application.Current.Resources));
-            this.Container.RegisterType<ResourceManagerInitializer>(new InjectionConstructor(new ResolvedParameter<CompositeResourceManager>(Constants.AppWideResources)));
             this.Container.RegisterType<Infrastructure.Modularity.IModuleInitializer, DefaultInitializer>();
 
             this.Container.RegisterInstance<IMappingEngine>(Mapper.Engine);

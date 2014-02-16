@@ -5,7 +5,7 @@
     internal class MyOptions : Infrastructure.Options.Options
     {
         public MyOptions()
-            : base(ResxKey.Empty)
+            : base(new ResourceAccessor(() => "NONAME"))
         {
         }
 

@@ -18,8 +18,8 @@ namespace Search.ViewModels
         private readonly IMappingEngine mappingEngine;
         private readonly ObservableCollection<SearchResultViewModel> results;
 
-        public SearchResultsViewModel(ICommand navigateContentCommand, IMappingEngine mappingEngine, ResxKey titleKey)
-            : base(titleKey)
+        public SearchResultsViewModel(ICommand navigateContentCommand, IMappingEngine mappingEngine, ResourceAccessor title)
+            : base(title)
         {
             Contract.Requires(navigateContentCommand != null);
             Contract.Requires(mappingEngine != null);

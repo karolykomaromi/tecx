@@ -165,9 +165,8 @@
     <Compile Include="I18n\IResourceManager.cs" />
     <Compile Include="I18n\LanguageChanging.cs" />
     <Compile Include="I18n\LocalizedString.cs" />
+    <Compile Include="I18n\ResourceAccessor.cs" />
     <Compile Include="I18n\ResourceManagerWrapper.cs" />
-    <Compile Include="I18n\ResxFilesResourceManager.cs" />
-    <Compile Include="I18n\ResxKey.cs" />
     <Compile Include="I18n\WebSvcResourceManager.cs" />
     <Compile Include="IListViewService.cs" />
     <Compile Include="ListViewServiceClient.cs" />
@@ -195,7 +194,6 @@
     <Compile Include="Modularity\ModuleTrackingState.cs" />
     <Compile Include="Modularity\OptionsInitializer.cs" />
     <Compile Include="Modularity\RegionInitializer.cs" />
-    <Compile Include="Modularity\ResourceManagerInitializer.cs" />
     <Compile Include="Modularity\UnityModule.cs" />
     <Compile Include="Modularity\WellKnownModuleNames.cs" />
     <Compile Include="Options\CompositeOptions.cs" />
@@ -229,8 +227,6 @@
     <Compile Include="UnityExtensions\EventAggregatorStrategy.cs" />
     <Compile Include="UnityExtensions\RegionExtension.cs" />
     <Compile Include="UnityExtensions\RegionStrategy.cs" />
-    <Compile Include="UnityExtensions\ResourceManagerExtension.cs" />
-    <Compile Include="UnityExtensions\ResourceManagerStrategy.cs" />
     <Compile Include="ViewModels\ViewModelBinder.cs" />
     <Compile Include="ViewModels\DynamicListViewModel.cs" />
     <Compile Include="ViewModels\EmptyFilterViewModel.cs" />

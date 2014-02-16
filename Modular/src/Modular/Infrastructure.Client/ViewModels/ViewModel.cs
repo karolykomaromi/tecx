@@ -14,7 +14,6 @@ namespace Infrastructure.ViewModels
 
     public abstract class ViewModel : INotifyPropertyChanged, INotifyPropertyChanging, ISubscribeTo<LanguageChanging>
     {
-        private IResourceManager resourceManager;
         private IEventAggregator eventAggregator;
         private bool isEnabled;
         private Visibility visibility;
@@ -22,7 +21,6 @@ namespace Infrastructure.ViewModels
 
         protected ViewModel()
         {
-            this.resourceManager = new EchoResourceManager();
             this.eventAggregator = new NullEventAggregator();
 
             this.Visibility = Visibility.Visible;
@@ -33,21 +31,6 @@ namespace Infrastructure.ViewModels
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         public event PropertyChangingEventHandler PropertyChanging = delegate { };
-
-        [PropertyMeta(IsListViewRelevant = false)]
-        public IResourceManager ResourceManager
-        {
-            get
-            {
-                return this.resourceManager;
-            }
-
-            set
-            {
-                Contract.Requires(value != null);
-                this.resourceManager = value;
-            }
-        }
 
         [PropertyMeta(IsListViewRelevant = false)]
         public IEventAggregator EventAggregator

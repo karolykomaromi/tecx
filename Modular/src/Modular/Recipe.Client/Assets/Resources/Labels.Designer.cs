@@ -57,24 +57,24 @@ namespace Recipe.Assets.Resources
             }
         }
 
-        public static string Label_Ingredient
+        public static string Ingredient
         {
-            get { return ResourceManager.GetString("Label_Ingredient", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Ingredient", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
         }
 
-        public static string Label_Ingredients
+        public static string Ingredients
         {
-            get { return ResourceManager.GetString("Label_Ingredients", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Ingredients", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
         }
 
-        public static string Label_Recipe
+        public static string Recipe
         {
-            get { return ResourceManager.GetString("Label_Recipe", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Recipe", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
         }
 
-        public static string Label_Recipes
+        public static string Recipes
         {
-            get { return ResourceManager.GetString("Label_Recipes", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Recipes", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
         }
     }
 }

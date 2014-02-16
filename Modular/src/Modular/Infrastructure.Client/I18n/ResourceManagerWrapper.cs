@@ -15,14 +15,6 @@ namespace Infrastructure.I18n
             this.resourceManager = resourceManager;
         }
 
-        public string this[ResxKey key]
-        {
-            get
-            {
-                return key.ToString();
-            }
-        }
-
         public string GetString(string name, CultureInfo culture)
         {
             return this.resourceManager.GetString(name, culture);

@@ -17,8 +17,8 @@ namespace Infrastructure.Views
         private readonly List<KeyValuePair<string, string>> parameters;
         private ViewModel target;
         private INavigateAsync region;
-        private ResxKey resourceKey;
         private Action<IOptionsChanged<IOptions>, NavigationViewModel> handleOptionsChanged;
+        private Func<string> title;
 
         public NavigationBuilder()
         {
@@ -51,11 +51,11 @@ namespace Infrastructure.Views
             return this;
         }
 
-        public NavigationBuilder WithLabel(ResxKey resourceKey)
+        public NavigationBuilder WithTitle(Func<string> title)
         {
-            Contract.Requires(resourceKey != ResxKey.Empty);
+            Contract.Requires(title != null);
 
-            this.resourceKey = resourceKey;
+            this.title = title;
 
             return this;
         }
@@ -80,11 +80,10 @@ namespace Infrastructure.Views
 
             NavigationViewModel viewModel = new NavigationViewModel(
                 navigationCommand, 
-                this.resourceKey, 
+                new ResourceAccessor(this.title), 
                 new Uri(this.target.GetType().Name.Replace("Model", string.Empty) + query, UriKind.Relative),
                 this.handleOptionsChanged)
                 {
-                    ResourceManager = this.target.ResourceManager,
                     EventAggregator = this.target.EventAggregator
                 };
 

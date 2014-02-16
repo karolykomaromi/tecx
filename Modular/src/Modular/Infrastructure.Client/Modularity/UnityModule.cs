@@ -58,13 +58,6 @@ namespace Infrastructure.Modularity
             this.moduleTracker.RecordModuleInitialized(this.ModuleName);
         }
 
-        protected internal virtual IResourceManager CreateResourceManager()
-        {
-            Contract.Ensures(Contract.Result<IResourceManager>() != null);
-
-            return new EchoResourceManager();
-        }
-
         protected internal virtual IOptions CreateModuleOptions()
         {
             return new NullOptions();

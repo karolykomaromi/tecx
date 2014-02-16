@@ -19,8 +19,8 @@
         private readonly List<Facet> facets;
         private FilterViewModel filter;
 
-        public DynamicListViewModel(ListViewName listViewName, ResxKey listViewTitleKey, IListViewService listViewService)
-            : base(listViewTitleKey)
+        public DynamicListViewModel(ListViewName listViewName, ResourceAccessor title, IListViewService listViewService)
+            : base(title)
         {
             Contract.Requires(listViewService != null);
 
@@ -79,7 +79,7 @@
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
         }
-        
+
         public string TranslatePropertyName(string propertyName)
         {
             Contract.Requires(!string.IsNullOrEmpty(propertyName));
@@ -88,7 +88,7 @@
 
             if (facet != null)
             {
-                return this.ResourceManager[facet.ResourceKey];
+                return facet.GetResource();
             }
 
             return propertyName;
@@ -113,9 +113,9 @@
 
             this.facets.AddRange(listView.Properties.Select(p => new Facet
                 {
-                    PropertyName = p.PropertyName, 
-                    PropertyType = Type.GetType(p.PropertyType), 
-                    ResourceKey = new ResxKey(p.ResourceKey)
+                    PropertyName = p.PropertyName,
+                    PropertyType = Type.GetType(p.PropertyType),
+                    GetResource = this.CreateResourceAccessor(p.ResourceKey)
                 }));
 
             foreach (ListViewRow row in listView.Rows)
@@ -130,6 +130,26 @@
                 }
 
                 this.Items.Add(vm);
+            }
+        }
+
+        private Func<string> CreateResourceAccessor(string resourceIdentifier)
+        {
+            try
+            {
+                ResourceAccessor accessor = ResourceAccessor.Create(resourceIdentifier);
+
+                return accessor.GetResource;
+            }
+            catch (PropertyNotFoundException ex)
+            {
+                // TODO weberse 2014-02-16 log exception
+
+                return () =>
+                    {
+                        string rid = resourceIdentifier.ToUpperInvariant();
+                        return rid;
+                    };
             }
         }
     }

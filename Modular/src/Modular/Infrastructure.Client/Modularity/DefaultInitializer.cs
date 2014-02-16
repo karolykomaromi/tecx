@@ -4,14 +4,12 @@
     {
         public DefaultInitializer(
             ContainerInitializer containerInitializer, 
-            ResourceManagerInitializer resourceManagerInitializer, 
             ModuleResourcesInitializer moduleResourcesInitializer, 
             AutoMapperInitializer autoMapperInitializer,
             OptionsInitializer optionsInitializer,
             RegionInitializer regionInitializer)
             : base(
                 containerInitializer, 
-                resourceManagerInitializer, 
                 moduleResourcesInitializer, 
                 autoMapperInitializer,
                 optionsInitializer, 

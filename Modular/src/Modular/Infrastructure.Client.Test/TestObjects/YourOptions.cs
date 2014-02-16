@@ -6,7 +6,7 @@ namespace Infrastructure.Client.Test.TestObjects
     public class YourOptions : Options
     {
         public YourOptions()
-            : base(ResxKey.Empty)
+            : base(new ResourceAccessor(() => "NONAME"))
         {
         }
 

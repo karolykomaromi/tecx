@@ -14,8 +14,8 @@
         private readonly IDictionary<Option, Action<IOptions, object>> setters;
         private readonly Action<IOptions, Option> publish;
 
-        protected Options(ResxKey titleKey)
-            : base(titleKey)
+        protected Options(ResourceAccessor title)
+            : base(title)
         {
             this.setters = new Dictionary<Option, Action<IOptions, object>>();
             this.getters = new Dictionary<Option, Func<IOptions, object>>();

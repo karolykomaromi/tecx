@@ -132,7 +132,6 @@
     </Compile>
     <Compile Include="Events\EventAggregatorExtensionFixtures.cs" />
     <Compile Include="Events\EventAggregatorFixture.cs" />
-    <Compile Include="I18n\ResxFileResourceManagerFixture.cs" />
     <Compile Include="Modularity\UnityModuleFixture.cs" />
     <Compile Include="Options\OptionsFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -165,6 +164,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="I18n\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>

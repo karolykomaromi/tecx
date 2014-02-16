@@ -33,11 +33,10 @@
 
         protected override void ConfigureRegions(IRegionManager regionManager)
         {
-            ResxKey recipesTitle = new ResxKey("RECIPE.LABEL_RECIPES");
             ListViewName recipesList = new ListViewName("Recipes");
 
             Control recipes;
-            if (this.TryGetViewFor<DynamicListViewModel>(out recipes, new Param("listViewName", recipesList), new Param("listViewTitleKey", recipesTitle)))
+            if (this.TryGetViewFor<DynamicListViewModel>(out recipes, new Param("listViewName", recipesList), new Param("title", new ResourceAccessor(() => Labels.Recipes))))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, recipes);
 
@@ -45,16 +44,15 @@
                                                     .ToView(recipes)
                                                     .WithParameter("name", recipesList.ToString())
                                                     .InRegion(regionManager.Regions[RegionNames.Shell.Content])
-                                                    .WithLabel(recipesTitle);
+                                                    .WithTitle(() => Labels.Recipes);
 
                 regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
             }
 
-            ResxKey ingredientsTitle = new ResxKey("RECIPE.LABEL_INGREDIENTS");
             ListViewName ingredientsList = new ListViewName("Ingredients");
 
             Control ingredients;
-            if (this.TryGetViewFor<DynamicListViewModel>(out ingredients, new Param("listViewName", ingredientsList), new Param("listViewTitleKey", ingredientsTitle)))
+            if (this.TryGetViewFor<DynamicListViewModel>(out ingredients, new Param("listViewName", ingredientsList), new Param("title", new ResourceAccessor(() => Labels.Ingredients))))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, ingredients);
 
@@ -62,7 +60,7 @@
                                                 .ToView(ingredients)
                                                 .WithParameter("name", ingredientsList.ToString())
                                                 .InRegion(regionManager.Regions[RegionNames.Shell.Content])
-                                                .WithLabel(ingredientsTitle);
+                                                .WithTitle(() => Labels.Ingredients);
 
                 regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
             }
@@ -75,11 +73,6 @@
             ResourceDictionary resources = new ResourceDictionary { Source = source };
 
             return resources;
-        }
-
-        protected override IResourceManager CreateResourceManager()
-        {
-            return new ResxFilesResourceManager(typeof(Labels), this.Logger);
         }
     }
 }

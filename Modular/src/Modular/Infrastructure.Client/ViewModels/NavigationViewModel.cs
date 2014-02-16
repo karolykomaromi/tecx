@@ -13,8 +13,8 @@ namespace Infrastructure.ViewModels
         private readonly Uri destination;
         private readonly Action<IOptionsChanged<IOptions>, NavigationViewModel> handleOptionsChanged;
 
-        public NavigationViewModel(ICommand navigationCommand, ResxKey resourceKey, Uri destination, Action<IOptionsChanged<IOptions>, NavigationViewModel> handleOptionsChanged)
-            : base(resourceKey)
+        public NavigationViewModel(ICommand navigationCommand, ResourceAccessor title, Uri destination, Action<IOptionsChanged<IOptions>, NavigationViewModel> handleOptionsChanged)
+            : base(title)
         {
             Contract.Requires(navigationCommand != null);
             Contract.Requires(destination != null);
