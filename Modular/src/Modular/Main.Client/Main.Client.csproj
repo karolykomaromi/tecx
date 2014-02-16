@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -27,6 +28,11 @@
     <XapFilename>Main.xap</XapFilename>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
     <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -56,7 +62,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=3.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005" />
+    <Reference Include="AutoMapper, Version=3.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005">
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\sl5\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.SL5">
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\sl5\AutoMapper.SL5.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras.SL5">
       <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\SL5\GalaSoft.MvvmLight.Extras.SL5.dll</HintPath>
     </Reference>
@@ -69,8 +80,12 @@
     <Reference Include="Microsoft.Expression.Interactions">
       <HintPath>..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching.Silverlight, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common.Silverlight, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching.Silverlight, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\EnterpriseLibrary.Caching.5.0.505.0\lib\SL40\Microsoft.Practices.EnterpriseLibrary.Caching.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common.Silverlight, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\EnterpriseLibrary.Common.5.0.505.0\lib\SL40\Microsoft.Practices.EnterpriseLibrary.Common.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
@@ -93,7 +108,9 @@
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Controls.Toolkit, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Toolkit">
+      <HintPath>..\packages\SilverlightToolkit-Core.4.2010.4\lib\sl4\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\SL5\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -108,7 +125,7 @@
     <Compile Include="Assets\Resources\Labels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.resx</DependentUpon>
+      <DependentUpon>Labels.tt</DependentUpon>
     </Compile>
     <Compile Include="Commands\ChangeLanguageCommand.cs" />
     <Compile Include="Commands\ChangeThemeCommand.cs" />
@@ -137,6 +154,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Resources\Labels.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
+      <DependentUpon>Labels.resx</DependentUpon>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -150,36 +172,47 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Resources\Labels.de-DE.resx" />
-    <EmbeddedResource Include="Assets\Resources\Labels.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Resources\Labels.resx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\AppInfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\LanguageSelectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\OptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ThemeSelectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\de24x16.png" />
     <Resource Include="Assets\Images\de48x32.png" />
     <Resource Include="Assets\Images\en24x16.png" />
     <Resource Include="Assets\Images\en48x32.png" />
   </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.Contracts;
+    using System.Globalization;
     using System.Reflection;
     using System.Threading;
     using Microsoft.Practices.Prism.Logging;
@@ -64,6 +65,11 @@
 
                 return rsk;
             }
+        }
+
+        public string GetString(string name, CultureInfo culture)
+        {
+            return name.ToUpperInvariant();
         }
     }
 }
