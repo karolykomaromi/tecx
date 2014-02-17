@@ -49,32 +49,36 @@
             return mappings;
         }
 
+        protected override IUnityContainer CreateContainer()
+        {
+            return this.Container;
+        }
+
         protected override ILoggerFacade CreateLogger()
         {
-            using (IUnityContainer throwAwayContainer = new UnityContainer())
+            this.Container = new UnityContainer();
+
+            // The logger is about the first thing created by the bootstrapper. That means the default container is not yet
+            // created and we can't use it in this step. So we create a throw-away container just for resolving the RemoteServiceTraceListener.
+            // Maybe I will change that when I find out how to manually assemble the configuration.
+            string xaml;
+            using (Stream stream = this.GetType().Assembly.GetManifestResourceStream("Modular.LoggingConfiguration.xaml"))
             {
-                // The logger is about the first thing created by the bootstrapper. That means the default container is not yet
-                // created and we can't use it in this step. So we create a throw-away container just for resolving the RemoteServiceTraceListener.
-                // Maybe I will change that when I find out how to manually assemble the configuration.
-                string xaml;
-                using (Stream stream = this.GetType().Assembly.GetManifestResourceStream("Modular.LoggingConfiguration.xaml"))
+                using (TextReader reader = new StreamReader(stream))
                 {
-                    using (TextReader reader = new StreamReader(stream))
-                    {
-                        xaml = reader.ReadToEnd();
-                    }
+                    xaml = reader.ReadToEnd();
                 }
-
-                IDictionary configDictionary = (IDictionary)XamlReader.Load(xaml);
-                IConfigurationSource configSource = DictionaryConfigurationSource.FromDictionary(configDictionary);
-                EnterpriseLibraryContainer.ConfigureContainer(new UnityContainerConfigurator(throwAwayContainer), configSource);
-
-                ILoggerFacade entLibLogger = throwAwayContainer.Resolve<EnterpriseLibraryLogger>();
-
-                CompositeLogger composite = new CompositeLogger(entLibLogger, new DebugLogger());
-
-                return composite;
             }
+
+            IDictionary configDictionary = (IDictionary)XamlReader.Load(xaml);
+            IConfigurationSource configSource = DictionaryConfigurationSource.FromDictionary(configDictionary);
+            EnterpriseLibraryContainer.ConfigureContainer(new UnityContainerConfigurator(this.Container), configSource);
+
+            ILoggerFacade entLibLogger = this.Container.Resolve<EnterpriseLibraryLogger>();
+
+            CompositeLogger composite = new CompositeLogger(entLibLogger, new DebugLogger());
+
+            return composite;
         }
 
         protected override void ConfigureContainer()
@@ -133,7 +137,7 @@
             {
                 tracker.Register(new ModuleTrackingState
                     {
-                        ModuleName = module.ModuleName, 
+                        ModuleName = module.ModuleName,
                         ExpectedInitializationMode = module.InitializationMode,
                         ConfiguredDependencies = module.Ref
                     });
