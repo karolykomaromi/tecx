@@ -1,3 +1,5 @@
+using Infrastructure.UnityExtensions.Injection;
+
 namespace Infrastructure.Modularity
 {
     using System;
@@ -106,7 +108,7 @@ namespace Infrastructure.Modularity
             return new ResourceDictionary();
         }
 
-        protected virtual bool TryGetViewFor<TViewModel>(out Control view, params Param[] parameters)
+        protected virtual bool TryGetViewFor<TViewModel>(out Control view, params Parameter[] parameters)
             where TViewModel : ViewModel
         {
             string viewTypeName = typeof(TViewModel).AssemblyQualifiedName.Replace("ViewModel", "View");
@@ -141,9 +143,9 @@ namespace Infrastructure.Modularity
 
                             for (int i = 0; i < parameters.Length; i++)
                             {
-                                Param parameter = parameters[i];
+                                Parameter parameter = parameters[i];
 
-                                overrides[i] = new ParameterOverride(parameter.ParameterName, parameter.ParameterValue);
+                                overrides[i] = new ParameterOverride(parameter.Name, parameter.Value);
                             }
 
                             vm = this.Container.Resolve<TViewModel>(overrides);
@@ -173,32 +175,6 @@ namespace Infrastructure.Modularity
             this.Logger.Log(message, Category.Warn, Priority.High);
             view = null;
             return false;
-        }
-
-        [DebuggerDisplay("Name='{parameterName}' Value='{parameterValue}'")]
-        protected class Param
-        {
-            private readonly string parameterName;
-
-            private readonly object parameterValue;
-
-            public Param(string parameterName, object parameterValue)
-            {
-                Contract.Requires(!string.IsNullOrEmpty(parameterName));
-
-                this.parameterName = parameterName;
-                this.parameterValue = parameterValue;
-            }
-
-            public string ParameterName
-            {
-                get { return this.parameterName; }
-            }
-
-            public object ParameterValue
-            {
-                get { return this.parameterValue; }
-            }
         }
     }
 }

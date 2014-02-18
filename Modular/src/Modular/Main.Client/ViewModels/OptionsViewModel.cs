@@ -1,6 +1,7 @@
 ﻿namespace Main.ViewModels
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Windows;
     using System.Windows.Input;
     using Infrastructure.I18n;
@@ -22,13 +23,18 @@
         private string notificationUrl;
         private string testConnectionReturn;
 
-        public OptionsViewModel(ResourceAccessor title, LanguageSelectionViewModel languageSelection, ThemeSelectionViewModel themeSelection, AppInfoViewModel appInfo, ICommand testNotificationCommand)
+        public OptionsViewModel(ResourceAccessor title, LanguageSelectionViewModel languageSelection, ThemeSelectionViewModel themeSelection, AppInfoViewModel appInfo, ICommand testNotificationConnectionCommand)
             : base(title)
         {
+            Contract.Requires(languageSelection != null);
+            Contract.Requires(themeSelection != null);
+            Contract.Requires(appInfo != null);
+            Contract.Requires(testNotificationConnectionCommand != null);
+
             this.languageSelection = languageSelection;
             this.themeSelection = themeSelection;
             this.appInfo = appInfo;
-            this.testNotificationCommand = testNotificationCommand;
+            this.testNotificationCommand = testNotificationConnectionCommand;
 
             this.labelLanguageSelection = new LocalizedString(() => this.LabelLanguageSelection, () => Labels.LanguageSelection, this.OnPropertyChanged);
             this.labelThemeSelection = new LocalizedString(() => this.LabelThemeSelection, () => Labels.ThemeSelection, this.OnPropertyChanged);

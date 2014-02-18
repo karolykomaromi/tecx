@@ -4,7 +4,6 @@
 
     public class WebSvcResourceManager : IResourceManager
     {
-
         public string GetString(string name, CultureInfo culture)
         {
             return name;

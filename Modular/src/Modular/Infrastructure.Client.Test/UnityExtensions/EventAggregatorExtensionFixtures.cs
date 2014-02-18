@@ -1,12 +1,10 @@
-﻿namespace Infrastructure.Client.Test.Events
+namespace Infrastructure.Client.Test.UnityExtensions
 {
     using Infrastructure.Client.Test.TestObjects;
     using Infrastructure.Events;
     using Infrastructure.UnityExtensions;
-
     using Microsoft.Practices.Unity;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-
     using Moq;
 
     [TestClass]

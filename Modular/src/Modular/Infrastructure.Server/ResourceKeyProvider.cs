@@ -12,7 +12,7 @@
                 listViewName = "Recipe";
             }
 
-            return (listViewName + "." + propertyName);
+            return listViewName + "." + propertyName;
         }
     }
 }

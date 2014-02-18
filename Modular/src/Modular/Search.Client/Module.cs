@@ -1,4 +1,6 @@
-﻿namespace Search
+﻿using Infrastructure.UnityExtensions.Injection;
+
+namespace Search
 {
     using System;
     using System.Windows;
@@ -43,12 +45,7 @@
                 new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(new ResolvedParameter<ICommand>(RegionNames.Shell.Content), typeof(IMappingEngine), typeof(ResourceAccessor)));
 
-            container.RegisterType<SearchViewModel>(
-                new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(
-                    new ResolvedParameter<ICommand>("search"),
-                    new ResolvedParameter<ICommand>("suggestions"),
-                    typeof(ISearchService)));
+            container.RegisterType<SearchViewModel>(new ContainerControlledLifetimeManager(), new MapToRegistrationNames());
 
             container.RegisterType<ICommand, SearchCommand>("search");
             container.RegisterType<ICommand, SuggestionsCommand>("suggestions");
@@ -73,7 +70,7 @@
             }
 
             Control searchResult;
-            if (this.TryGetViewFor<SearchResultsViewModel>(out searchResult, new Param("title", new ResourceAccessor(() => Labels.SearchResults))))
+            if (this.TryGetViewFor<SearchResultsViewModel>(out searchResult, new Parameter("title", new ResourceAccessor(() => Labels.SearchResults))))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, searchResult);
             }

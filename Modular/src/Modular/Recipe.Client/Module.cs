@@ -1,4 +1,6 @@
-﻿namespace Recipe
+﻿using Infrastructure.UnityExtensions.Injection;
+
+namespace Recipe
 {
     using System;
     using System.Windows;
@@ -36,7 +38,7 @@
             ListViewName recipesList = new ListViewName("Recipes");
 
             Control recipes;
-            if (this.TryGetViewFor<DynamicListViewModel>(out recipes, new Param("listViewName", recipesList), new Param("title", new ResourceAccessor(() => Labels.Recipes))))
+            if (this.TryGetViewFor<DynamicListViewModel>(out recipes, new Parameter("listViewName", recipesList), new Parameter("title", new ResourceAccessor(() => Labels.Recipes))))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, recipes);
 
@@ -52,7 +54,7 @@
             ListViewName ingredientsList = new ListViewName("Ingredients");
 
             Control ingredients;
-            if (this.TryGetViewFor<DynamicListViewModel>(out ingredients, new Param("listViewName", ingredientsList), new Param("title", new ResourceAccessor(() => Labels.Ingredients))))
+            if (this.TryGetViewFor<DynamicListViewModel>(out ingredients, new Parameter("listViewName", ingredientsList), new Parameter("title", new ResourceAccessor(() => Labels.Ingredients))))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, ingredients);
 
