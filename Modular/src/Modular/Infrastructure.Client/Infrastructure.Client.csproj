@@ -143,6 +143,63 @@
     <Compile Include="..\Infrastructure.Server\TimeProvider.cs">
       <Link>TimeProvider.cs</Link>
     </Compile>
+    <Compile Include="..\Infrastructure.Server\TypeHelper.cs">
+      <Link>TypeHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\CompositePredicate.cs">
+      <Link>UnityExtensions\Injection\CompositePredicate.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\Conventions\ByTypeConvention.cs">
+      <Link>UnityExtensions\Injection\Conventions\ByTypeConvention.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\Conventions\ConnectionStringConvention.cs">
+      <Link>UnityExtensions\Injection\Conventions\ConnectionStringConvention.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\Conventions\FileNameConvention.cs">
+      <Link>UnityExtensions\Injection\Conventions\FileNameConvention.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\Conventions\IParameterMatchingPolicy.cs">
+      <Link>UnityExtensions\Injection\Conventions\IParameterMatchingPolicy.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\Conventions\ParameterMatchingConvention.cs">
+      <Link>UnityExtensions\Injection\Conventions\ParameterMatchingConvention.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\Conventions\ParameterMatchingPolicy.cs">
+      <Link>UnityExtensions\Injection\Conventions\ParameterMatchingPolicy.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\Conventions\SpecifiedNameConvention.cs">
+      <Link>UnityExtensions\Injection\Conventions\SpecifiedNameConvention.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\Conventions\StringAsMappingNameConvention.cs">
+      <Link>UnityExtensions\Injection\Conventions\StringAsMappingNameConvention.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\IMapToRegistrationNamePolicy.cs">
+      <Link>UnityExtensions\Injection\IMapToRegistrationNamePolicy.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\MapToRegistrationNamePolicy.cs">
+      <Link>UnityExtensions\Injection\MapToRegistrationNamePolicy.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\MapToRegistrationNames.cs">
+      <Link>UnityExtensions\Injection\MapToRegistrationNames.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\MapToRegistrationNamesExtension.cs">
+      <Link>UnityExtensions\Injection\MapToRegistrationNamesExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\MapToRegistrationNamesStrategy.cs">
+      <Link>UnityExtensions\Injection\MapToRegistrationNamesStrategy.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\Parameter.cs">
+      <Link>UnityExtensions\Injection\Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\ParameterMatcher.cs">
+      <Link>UnityExtensions\Injection\ParameterMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\SmartConstructor.cs">
+      <Link>UnityExtensions\Injection\SmartConstructor.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\SelectedConstructorCache.cs">
+      <Link>UnityExtensions\SelectedConstructorCache.cs</Link>
+    </Compile>
     <Compile Include="Caching\CacheRegionName.cs" />
     <Compile Include="Caching\CacheRegions.cs" />
     <Compile Include="Caching\ExternalInvalidationPolicy.cs" />
@@ -165,6 +222,7 @@
     <Compile Include="I18n\IResourceManager.cs" />
     <Compile Include="I18n\LanguageChanging.cs" />
     <Compile Include="I18n\LocalizedString.cs" />
+    <Compile Include="I18n\PropertyNotFoundException.cs" />
     <Compile Include="I18n\ResourceAccessor.cs" />
     <Compile Include="I18n\ResourceManagerWrapper.cs" />
     <Compile Include="I18n\WebSvcResourceManager.cs" />

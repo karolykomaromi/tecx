@@ -1,4 +1,6 @@
-﻿namespace Modular
+﻿using Infrastructure.UnityExtensions.Injection;
+
+namespace Modular
 {
     using System.Collections;
     using System.IO;
@@ -86,6 +88,7 @@
             base.ConfigureContainer();
 
             this.Container.AddNewExtension<RegionExtension>();
+            this.Container.AddNewExtension<MapToRegistrationNamesExtension>();
 
             this.Container.RegisterInstance(Deployment.Current.Dispatcher);
             this.Container.AddNewExtension<EventAggregatorExtension>();

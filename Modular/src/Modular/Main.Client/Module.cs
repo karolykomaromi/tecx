@@ -1,15 +1,14 @@
 ﻿namespace Main
 {
-    using System;
-    using System.Linq;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using Assets.Resources;
+    using Commands;
     using Infrastructure;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
+    using Infrastructure.UnityExtensions.Injection;
     using Infrastructure.Views;
-    using Main.Assets.Resources;
-    using Main.Commands;
     using Main.ViewModels;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
@@ -55,26 +54,18 @@
 
         protected override void ConfigureContainer(IUnityContainer container)
         {
-            container.RegisterType<ICommand, ChangeLanguageCommand>("language");
-            container.RegisterType<LanguageSelectionViewModel>(
-                new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new ResolvedParameter<ICommand>("language")));
+            container.RegisterType<ICommand, ChangeLanguageCommand>("changeLanguageCommand");
 
-            container.RegisterType<ICommand, ChangeThemeCommand>("theme");
-            container.RegisterType<ThemeSelectionViewModel>(
-                new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new ResolvedParameter<ICommand>("theme")));
+            container.RegisterType<LanguageSelectionViewModel>(new ContainerControlledLifetimeManager(), new MapToRegistrationNames());
 
-            container.RegisterType<ICommand, TestNotificationConnectionCommand>("notification");
+            container.RegisterType<ICommand, ChangeThemeCommand>("changeThemeCommand");
+            container.RegisterType<ThemeSelectionViewModel>(new ContainerControlledLifetimeManager(), new MapToRegistrationNames());
+
+            container.RegisterType<ICommand, TestNotificationConnectionCommand>("testNotificationConnectionCommand");
 
             container.RegisterType<OptionsViewModel>(
-                new ContainerControlledLifetimeManager(), 
-                new InjectionConstructor(
-                    new ResourceAccessor(() => Labels.Options), 
-                    typeof(LanguageSelectionViewModel), 
-                    typeof(ThemeSelectionViewModel),
-                    typeof(AppInfoViewModel),
-                    new ResolvedParameter<ICommand>("notification")));
+                new ContainerControlledLifetimeManager(),
+                new SmartConstructor(new ResourceAccessor(() => Labels.Options)));
         }
     }
 }

@@ -143,7 +143,7 @@
             }
             catch (PropertyNotFoundException ex)
             {
-                // TODO weberse 2014-02-16 log exception
+                //// TODO weberse 2014-02-16 log exception
 
                 return () =>
                     {

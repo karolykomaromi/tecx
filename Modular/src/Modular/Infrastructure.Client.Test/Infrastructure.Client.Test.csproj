@@ -130,7 +130,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Labels.resx</DependentUpon>
     </Compile>
-    <Compile Include="Events\EventAggregatorExtensionFixtures.cs" />
     <Compile Include="Events\EventAggregatorFixture.cs" />
     <Compile Include="Modularity\UnityModuleFixture.cs" />
     <Compile Include="Options\OptionsFixture.cs" />
@@ -150,6 +149,7 @@
     <Compile Include="TestObjects\ViewModelResolutionFailsModule.cs" />
     <Compile Include="TestObjects\ViewResolutionFailsModule.cs" />
     <Compile Include="TestObjects\YourOptions.cs" />
+    <Compile Include="UnityExtensions\EventAggregatorExtensionFixtures.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

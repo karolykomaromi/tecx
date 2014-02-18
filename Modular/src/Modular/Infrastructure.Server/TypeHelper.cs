@@ -1,9 +1,11 @@
 ﻿namespace Infrastructure
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Linq.Expressions;
     using System.Reflection;
+    using System.Runtime.CompilerServices;
 
     public static class TypeHelper
     {
@@ -71,6 +73,48 @@
                 };
 
             return f;
+        }
+
+        public static bool IsAnonymous(Type type)
+        {
+            Contract.Requires(type != null);
+
+            bool hasCompilerGeneratedAttribute = type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Length > 0;
+            bool nameContainsAnonymousType = type.Name.IndexOf("AnonymousType", StringComparison.OrdinalIgnoreCase) >= 0;
+
+            return hasCompilerGeneratedAttribute && nameContainsAnonymousType;
+        }
+
+        public static PropertyInfo[] GetPublicProperties(object obj)
+        {
+            Contract.Requires(obj != null);
+
+            return obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        }
+
+        public static IEnumerable<Type> GetAllBaseClassesAndInterfaces(Type type)
+        {
+            Contract.Requires(type != null);
+
+            List<Type> allTypes = new List<Type>();
+
+            Type current = type;
+            while (current != null && current != typeof(object))
+            {
+                allTypes.Add(current);
+                current = current.BaseType;
+            }
+
+            allTypes.AddRange(GetAllInterfaces(type));
+            return allTypes;
+        }
+
+        public static IEnumerable<Type> GetAllInterfaces(Type type)
+        {
+            foreach (Type @interface in type.GetInterfaces())
+            {
+                yield return @interface;
+            }
         }
     }
 }
