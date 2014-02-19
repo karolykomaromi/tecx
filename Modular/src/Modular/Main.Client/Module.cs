@@ -56,10 +56,10 @@
         {
             container.RegisterType<ICommand, ChangeLanguageCommand>("changeLanguageCommand");
 
-            container.RegisterType<LanguageSelectionViewModel>(new ContainerControlledLifetimeManager(), new MapToRegistrationNames());
+            container.RegisterType<LanguageSelectionViewModel>(new ContainerControlledLifetimeManager(), new SmartConstructor());
 
             container.RegisterType<ICommand, ChangeThemeCommand>("changeThemeCommand");
-            container.RegisterType<ThemeSelectionViewModel>(new ContainerControlledLifetimeManager(), new MapToRegistrationNames());
+            container.RegisterType<ThemeSelectionViewModel>(new ContainerControlledLifetimeManager(), new SmartConstructor());
 
             container.RegisterType<ICommand, TestNotificationConnectionCommand>("testNotificationConnectionCommand");
 
