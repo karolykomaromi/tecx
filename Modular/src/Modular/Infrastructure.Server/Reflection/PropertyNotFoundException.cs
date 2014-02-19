@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.I18n
+﻿namespace Infrastructure.Reflection
 {
     using System;
 

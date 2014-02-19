@@ -74,13 +74,35 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="TestObjects\ClassWithInterfaceCtorParameter.cs" />
+    <Compile Include="TestObjects\ClassWithStringCtorParameter.cs" />
     <Compile Include="TestObjects\Consumer1.cs" />
+    <Compile Include="TestObjects\CtorTest.cs" />
+    <Compile Include="TestObjects\DefaultCtorOnly.cs" />
     <Compile Include="TestObjects\DontMapToRegName.cs" />
+    <Compile Include="TestObjects\Foo.cs" />
+    <Compile Include="TestObjects\ICtorTest.cs" />
+    <Compile Include="TestObjects\IFoo.cs" />
+    <Compile Include="TestObjects\ILogger.cs" />
+    <Compile Include="TestObjects\IMatchByConvention.cs" />
     <Compile Include="TestObjects\ISearchService.cs" />
     <Compile Include="TestObjects\MapToRegNameViewModel.cs" />
+    <Compile Include="TestObjects\MatchByConvention.cs" />
+    <Compile Include="TestObjects\MyService.cs" />
+    <Compile Include="TestObjects\NamingConventionTestObject.cs" />
+    <Compile Include="TestObjects\SomeBaseClass.cs" />
+    <Compile Include="TestObjects\TestLogger.cs" />
     <Compile Include="TypeHelperFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnityExtensions\Injection\Conventions\ByTypeConventionFixture.cs" />
+    <Compile Include="UnityExtensions\Injection\Conventions\ConnectionStringConventionFixture.cs" />
+    <Compile Include="UnityExtensions\Injection\Conventions\FakeParameterInfo.cs" />
+    <Compile Include="UnityExtensions\Injection\Conventions\FileNameConventionFixture.cs" />
+    <Compile Include="UnityExtensions\Injection\Conventions\SpecifiedNameConventionFixture.cs" />
+    <Compile Include="UnityExtensions\Injection\Conventions\StringAsMappingNameConventionFixture.cs" />
     <Compile Include="UnityExtensions\Injection\MapToRegistrationNamesExtensionFixture.cs" />
+    <Compile Include="UnityExtensions\Injection\ParameterMatcherFixture.cs" />
+    <Compile Include="UnityExtensions\Injection\SmartConstructorFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

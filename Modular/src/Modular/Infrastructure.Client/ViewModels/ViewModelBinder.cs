@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.ViewModels
+﻿using Infrastructure.Reflection;
+
+namespace Infrastructure.ViewModels
 {
     using System.Windows;
     using System.Windows.Controls;

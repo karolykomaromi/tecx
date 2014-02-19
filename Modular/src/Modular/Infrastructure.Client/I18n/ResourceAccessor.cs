@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.I18n
+﻿using Infrastructure.Reflection;
+
+namespace Infrastructure.I18n
 {
     using System;
     using System.Diagnostics.Contracts;

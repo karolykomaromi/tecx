@@ -3,13 +3,18 @@ namespace Infrastructure.UnityExtensions.Injection.Conventions
     using System;
     using System.Reflection;
 
-    public class SpecifiedNameConvention : ParameterMatchingConvention
+    public class SpecifiedNameConvention : IParameterMatchingConvention
     {
-        protected override bool MatchesCore(Parameter argument, ParameterInfo parameter)
+        public bool IsMatch(Parameter argument, ParameterInfo parameter)
         {
-            if (!string.IsNullOrEmpty(argument.Name))
+            // argument and param name match and the argument value is of a type
+            // that is assignable to the parameter type
+            if (!string.IsNullOrEmpty(argument.Name) &&
+                string.Equals(argument.Name, parameter.Name, StringComparison.OrdinalIgnoreCase) &&
+                argument.Value != null && 
+                parameter.ParameterType.IsInstanceOfType(argument.Value))
             {
-                return string.Equals(argument.Name, parameter.Name, StringComparison.OrdinalIgnoreCase);
+                return true;
             }
 
             return false;
