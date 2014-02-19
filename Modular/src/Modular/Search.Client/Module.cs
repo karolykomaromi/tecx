@@ -1,6 +1,4 @@
-﻿using Infrastructure.UnityExtensions.Injection;
-
-namespace Search
+﻿namespace Search
 {
     using System;
     using System.Windows;
@@ -10,10 +8,10 @@ namespace Search
     using AutoMapper;
     using Infrastructure;
     using Infrastructure.Commands;
-    using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
     using Infrastructure.Options;
+    using Infrastructure.UnityExtensions.Injection;
     using Infrastructure.Views;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
@@ -43,12 +41,12 @@ namespace Search
         {
             container.RegisterType<SearchResultsViewModel>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new ResolvedParameter<ICommand>(RegionNames.Shell.Content), typeof(IMappingEngine), typeof(ResourceAccessor)));
+                new SmartConstructor(new ResolvedParameter<ICommand>(RegionNames.Shell.Content)));
 
-            container.RegisterType<SearchViewModel>(new ContainerControlledLifetimeManager(), new MapToRegistrationNames());
+            container.RegisterType<SearchViewModel>(new ContainerControlledLifetimeManager(), new SmartConstructor());
 
-            container.RegisterType<ICommand, SearchCommand>("search");
-            container.RegisterType<ICommand, SuggestionsCommand>("suggestions");
+            container.RegisterType<ICommand, SearchCommand>("searchCommand");
+            container.RegisterType<ICommand, SuggestionsCommand>("suggestionsCommand");
 
             container.RegisterType<ISearchService, SearchServiceClient>(new InjectionConstructor(typeof(Dispatcher)));
 

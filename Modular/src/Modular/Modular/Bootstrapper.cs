@@ -88,7 +88,6 @@ namespace Modular
             base.ConfigureContainer();
 
             this.Container.AddNewExtension<RegionExtension>();
-            this.Container.AddNewExtension<MapToRegistrationNamesExtension>();
 
             this.Container.RegisterInstance(Deployment.Current.Dispatcher);
             this.Container.AddNewExtension<EventAggregatorExtension>();
