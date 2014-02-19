@@ -9,19 +9,16 @@
 
     public class ParameterMatcher
     {
-        private readonly IEnumerable<Parameter> constructorArguments;
-        private readonly IParameterMatchingPolicy conventions;
-        private readonly CompositePredicate<ConstructorInfo> filters;
+        private readonly IEnumerable<Parameter> parameters;
+        private readonly IParameterMatchingConvention convention;
 
-        public ParameterMatcher(IEnumerable<Parameter> constructorArguments, IParameterMatchingPolicy conventions)
+        public ParameterMatcher(IEnumerable<Parameter> parameters, IParameterMatchingConvention convention)
         {
-            Contract.Requires(constructorArguments != null);
-            Contract.Requires(conventions != null);
+            Contract.Requires(parameters != null);
+            Contract.Requires(convention != null);
 
-            this.constructorArguments = constructorArguments;
-            this.conventions = conventions;
-
-            this.filters = new CompositePredicate<ConstructorInfo>().Add(this.ConstructorDoesNotTakeAllArguments).Add(this.NonSatisfiedPrimitiveArgs);
+            this.parameters = parameters;
+            this.convention = convention;
         }
 
         public ConstructorInfo BestMatch(IEnumerable<ConstructorInfo> ctors)
@@ -31,17 +28,16 @@
             // sort by number of arguments the ctor takes
             ctors = ctors.OrderByDescending(ctor => ctor.GetParameters().Length);
 
-            List<ConstructorInfo> potentialMatches = ctors
-                .Where(ctor => this.filters.MatchesNone(ctor)).ToList();
+            var potentialMatches = ctors.Where(ctor => this.ConstructorTakesAllParameters(ctor) && this.AllPrimitiveArgsSatisfied(ctor)).ToArray();
 
             // no match -> exceptional situation which should cause some error))
-            if (potentialMatches.Count == 0)
+            if (potentialMatches.Length == 0)
             {
-                throw new ArgumentException("no matching ctor found");
+                throw new ArgumentException("No matching ctor found");
             }
 
             // one perfect match
-            if (potentialMatches.Count == 1)
+            if (potentialMatches.Length == 1)
             {
                 return potentialMatches.Single();
             }
@@ -52,15 +48,15 @@
                 .First();
         }
 
-        private bool ConstructorDoesNotTakeAllArguments(ConstructorInfo ctor)
+        public bool ConstructorTakesAllParameters(ConstructorInfo ctor)
         {
             Contract.Requires(ctor != null);
 
             ParameterInfo[] parameters = ctor.GetParameters();
 
-            foreach (var argument in this.constructorArguments)
+            foreach (var argument in this.parameters)
             {
-                if (!parameters.Any(p => this.conventions.Matches(argument, p)))
+                if (parameters.Any(parameter => this.convention.IsMatch(argument, parameter)))
                 {
                     return true;
                 }
@@ -69,28 +65,28 @@
             return false;
         }
 
-        private bool NonSatisfiedPrimitiveArgs(ConstructorInfo ctor)
+        public bool AllPrimitiveArgsSatisfied(ConstructorInfo ctor)
         {
             Contract.Requires(ctor != null);
 
-            ParameterInfo[] parameters = ctor.GetParameters();
+            ParameterInfo[] arguments = ctor.GetParameters();
 
             // find parameters not satisfied by provided args
-            IEnumerable<ParameterInfo> parametersWithNoMatchingCtorArgument = parameters.Where(p => !this.constructorArguments.Any(a => this.conventions.Matches(a, p)));
+            IEnumerable<ParameterInfo> argumentWithNoMatchingParameter = arguments.Where(p => !this.parameters.Any(a => this.convention.IsMatch(a, p)));
 
-            foreach (ParameterInfo parameter in parametersWithNoMatchingCtorArgument)
+            foreach (ParameterInfo argument in argumentWithNoMatchingParameter)
             {
-                Type paramType = parameter.ParameterType;
+                Type paramType = argument.ParameterType;
 
                 if (paramType.IsEnum ||
                     paramType.IsPrimitive ||
                     paramType == typeof(string))
                 {
-                    return true;
+                    return false;
                 }
             }
 
-            return false;
+            return true;
         }
     }
 }

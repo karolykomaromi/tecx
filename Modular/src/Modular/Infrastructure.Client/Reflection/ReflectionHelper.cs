@@ -1,9 +1,9 @@
-namespace Infrastructure
-{
-    using System;
-    using System.Diagnostics.Contracts;
-    using System.Linq.Expressions;
+using System;
+using System.Diagnostics.Contracts;
+using System.Linq.Expressions;
 
+namespace Infrastructure.Reflection
+{
     public static class ReflectionHelper
     {
         public static string GetPropertyName<T, TProperty>(Expression<Func<T, TProperty>> propertySelector)

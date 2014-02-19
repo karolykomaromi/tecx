@@ -5,7 +5,7 @@ namespace Infrastructure.UnityExtensions.Injection.Conventions
     using System.Reflection;
     using Microsoft.Practices.Unity;
 
-    public class ByTypeConvention : ParameterMatchingConvention
+    public class ByTypeConvention : IParameterMatchingConvention
     {
         private readonly Dictionary<Type, ICollection<string>> snippetsByType;
 
@@ -14,13 +14,15 @@ namespace Infrastructure.UnityExtensions.Injection.Conventions
             this.snippetsByType = new Dictionary<Type, ICollection<string>>();
         }
 
-        protected override bool MatchesCore(Parameter argument, ParameterInfo parameter)
+        public bool IsMatch(Parameter argument, ParameterInfo parameter)
         {
             ResolvedParameter rp = argument.Value as ResolvedParameter;
 
             Type type = rp != null ? rp.ParameterType : argument.Value.GetType();
 
-            if (parameter.ParameterType.IsAssignableFrom(type))
+            if (parameter.ParameterType.IsAssignableFrom(type) &&
+                !FileNameConvention.HintsAtFileName(argument.Name) &&
+                !ConnectionStringConvention.HintsAtConnectionString(argument.Name))
             {
                 return true;
             }
