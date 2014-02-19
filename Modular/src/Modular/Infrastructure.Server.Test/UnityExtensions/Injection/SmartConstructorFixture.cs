@@ -66,7 +66,7 @@
         }
 
         [Fact]
-        public void Should_Invoke_Default_Ctor()
+        public void Should_Invoke_Default_Ctor_When_No_Better_Match()
         {
             var container = new UnityContainer();
 
@@ -123,7 +123,7 @@
             var searchService = new Mock<ISearchService>();
 
             var container = new UnityContainer();
-            container.RegisterType<MapToRegNameViewModel>(new SmartConstructor(new { }));
+            container.RegisterType<MapToRegNameViewModel>(new SmartConstructor());
             container.RegisterInstance<ICommand>("searchCommand", searchCommand.Object);
             container.RegisterInstance<ICommand>("suggestionsCommand", suggestionsCommand.Object);
             container.RegisterInstance<ISearchService>(searchService.Object);
@@ -140,9 +140,9 @@
         {
             DontMapToRegName dontMap = new DontMapToRegName();
 
-            var container = new UnityContainer().AddNewExtension<MapToRegistrationNamesExtension>();
+            var container = new UnityContainer();
             container.RegisterInstance(dontMap);
-            container.RegisterType<Consumer1>(new MapToRegistrationNames());
+            container.RegisterType<Consumer1>(new SmartConstructor());
 
             Consumer1 sut = container.Resolve<Consumer1>();
 

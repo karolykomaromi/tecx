@@ -63,30 +63,30 @@
                                 new ByTypeConvention());
         }
 
-        public static ConstructorInfo FindConstructor(Type typeToCreate, IEnumerable<Parameter> constructorArguments, IParameterMatchingConvention convention)
+        public static ConstructorInfo FindConstructor(Type typeToCreate, IEnumerable<Parameter> parameters, IParameterMatchingConvention convention)
         {
-            ConstructorInfo[] ctors = typeToCreate.GetConstructors();
-
-            ParameterMatcher matcher = new ParameterMatcher(constructorArguments, convention);
+            ConstructorInfo[] ctors = typeToCreate.GetConstructors().OrderByDescending(ctor => ctor.GetParameters().Length).ToArray();
+            
+            ParameterMatcher matcher = new ParameterMatcher(parameters, convention);
 
             return matcher.BestMatch(ctors);
         }
 
-        public static InjectionParameterValue[] GetParameterValues(ConstructorInfo ctor, ICollection<Parameter> constructorArguments, IParameterMatchingConvention convention)
+        public static InjectionParameterValue[] GetParameterValues(ConstructorInfo ctor, ICollection<Parameter> parameters, IParameterMatchingConvention convention)
         {
-            ParameterInfo[] parameters = ctor.GetParameters();
+            ParameterInfo[] arguments = ctor.GetParameters();
 
-            object[] parameterValues = new object[parameters.Length];
+            object[] parameterValues = new object[arguments.Length];
 
             // fill in the provided values and add the type of the parameter that the
             // ctor expects otherwise. unity will take care of resolving parameters that
             // are provided that way
-            for (int i = 0; i < parameters.Length; i++)
+            for (int i = 0; i < arguments.Length; i++)
             {
-                Type parameterType = parameters[i].ParameterType;
-                string parameterName = parameters[i].Name;
+                Type parameterType = arguments[i].ParameterType;
+                string parameterName = arguments[i].Name;
 
-                Parameter parameter = constructorArguments.FirstOrDefault(arg => convention.IsMatch(arg, parameters[i]));
+                Parameter parameter = parameters.FirstOrDefault(arg => convention.IsMatch(arg, arguments[i]));
                 if (parameter != null)
                 {
 
@@ -103,15 +103,15 @@
                 }
                 else
                 {
-                    if (MapToRegistrationNamesStrategy.IsAbstractAndTypeNameDoesntStartWithParamName(parameterType, parameterName) ||
-                        MapToRegistrationNamesStrategy.IsInterfaceAndTypeNameDoesntStartWithIPlusParamName(parameterType, parameterName) ||
-                        MapToRegistrationNamesStrategy.IsClassNotStringAndTypeNameDoesntStartWithParamName(parameterType, parameterName))
+                    if (IsAbstractAndTypeNameDoesntStartWithParamName(parameterType, parameterName) ||
+                        IsInterfaceAndTypeNameDoesntStartWithIPlusParamName(parameterType, parameterName) ||
+                        IsClassNotStringAndTypeNameDoesntStartWithParamName(parameterType, parameterName))
                     {
                         parameterValues[i] = new ResolvedParameter(parameterType, parameterName);
                     }
                     else
                     {
-                        parameterValues[i] = parameters[i].ParameterType;
+                        parameterValues[i] = arguments[i].ParameterType;
                     }
                 }
             }
@@ -147,14 +147,23 @@
 
             if (this.parameters.Count == 0)
             {
-                ctor = implementationType.GetConstructor(Type.EmptyTypes);
+                ctor = FindConstructor(implementationType, this.parameters, this.convention);
 
                 if (ctor == null)
                 {
-                    throw new ConstructorNotFoundException(implementationType);
-                }
+                    ctor = implementationType.GetConstructor(Type.EmptyTypes);
 
-                parameterValues = new InjectionParameterValue[0];
+                    if (ctor == null)
+                    {
+                        throw new ConstructorNotFoundException(implementationType);
+                    }
+
+                    parameterValues = new InjectionParameterValue[0];
+                }
+                else
+                {
+                    parameterValues = GetParameterValues(ctor, this.parameters, this.convention);
+                }
             }
             else
             {
@@ -168,6 +177,27 @@
             NamedTypeBuildKey buildKey = new NamedTypeBuildKey(implementationType, name);
 
             policies.Set<IConstructorSelectorPolicy>(policy, buildKey);
+        }
+
+        private static bool IsClassNotStringAndTypeNameDoesntStartWithParamName(Type parameterType, string paramName)
+        {
+            bool isMatch = parameterType.IsClass && parameterType != typeof(string) && !parameterType.Name.StartsWith(paramName, StringComparison.OrdinalIgnoreCase);
+
+            return isMatch;
+        }
+
+        private static bool IsInterfaceAndTypeNameDoesntStartWithIPlusParamName(Type parameterType, string paramName)
+        {
+            bool isMatch = parameterType.IsInterface && !parameterType.Name.StartsWith("I" + paramName, StringComparison.OrdinalIgnoreCase);
+
+            return isMatch;
+        }
+
+        private static bool IsAbstractAndTypeNameDoesntStartWithParamName(Type parameterType, string paramName)
+        {
+            bool isMatch = !parameterType.IsInterface && parameterType.IsAbstract && !parameterType.Name.StartsWith(paramName, StringComparison.OrdinalIgnoreCase);
+
+            return isMatch;
         }
     }
 }

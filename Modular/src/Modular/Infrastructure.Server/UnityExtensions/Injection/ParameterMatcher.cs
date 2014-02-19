@@ -9,7 +9,7 @@
 
     public class ParameterMatcher
     {
-        private readonly IEnumerable<Parameter> parameters;
+        private readonly List<Parameter> parameters;
         private readonly IParameterMatchingConvention convention;
 
         public ParameterMatcher(IEnumerable<Parameter> parameters, IParameterMatchingConvention convention)
@@ -17,7 +17,7 @@
             Contract.Requires(parameters != null);
             Contract.Requires(convention != null);
 
-            this.parameters = parameters;
+            this.parameters = new List<Parameter>(parameters);
             this.convention = convention;
         }
 
@@ -52,11 +52,16 @@
         {
             Contract.Requires(ctor != null);
 
-            ParameterInfo[] parameters = ctor.GetParameters();
-
-            foreach (var argument in this.parameters)
+            if (this.parameters.Count == 0)
             {
-                if (parameters.Any(parameter => this.convention.IsMatch(argument, parameter)))
+                return true;
+            }
+
+            ParameterInfo[] arguments = ctor.GetParameters();
+
+            foreach (var parameter in this.parameters)
+            {
+                if (arguments.Any(p => this.convention.IsMatch(parameter, p)))
                 {
                     return true;
                 }
