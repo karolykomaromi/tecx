@@ -100,7 +100,6 @@
     <Compile Include="UnityExtensions\Injection\Conventions\FileNameConventionFixture.cs" />
     <Compile Include="UnityExtensions\Injection\Conventions\SpecifiedNameConventionFixture.cs" />
     <Compile Include="UnityExtensions\Injection\Conventions\StringAsMappingNameConventionFixture.cs" />
-    <Compile Include="UnityExtensions\Injection\MapToRegistrationNamesExtensionFixture.cs" />
     <Compile Include="UnityExtensions\Injection\ParameterMatcherFixture.cs" />
     <Compile Include="UnityExtensions\Injection\SmartConstructorFixture.cs" />
   </ItemGroup>

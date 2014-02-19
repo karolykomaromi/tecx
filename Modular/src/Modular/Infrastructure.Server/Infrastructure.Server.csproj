@@ -99,11 +99,6 @@
     <Compile Include="UnityExtensions\Injection\Conventions\ParameterMatchingConvention.cs" />
     <Compile Include="UnityExtensions\Injection\Conventions\SpecifiedNameConvention.cs" />
     <Compile Include="UnityExtensions\Injection\Conventions\StringAsMappingNameConvention.cs" />
-    <Compile Include="UnityExtensions\Injection\IMapToRegistrationNamePolicy.cs" />
-    <Compile Include="UnityExtensions\Injection\MapToRegistrationNamePolicy.cs" />
-    <Compile Include="UnityExtensions\Injection\MapToRegistrationNames.cs" />
-    <Compile Include="UnityExtensions\Injection\MapToRegistrationNamesExtension.cs" />
-    <Compile Include="UnityExtensions\Injection\MapToRegistrationNamesStrategy.cs" />
     <Compile Include="UnityExtensions\Injection\Parameter.cs" />
     <Compile Include="UnityExtensions\Injection\ParameterMatcher.cs" />
     <Compile Include="UnityExtensions\Injection\SmartConstructor.cs" />
