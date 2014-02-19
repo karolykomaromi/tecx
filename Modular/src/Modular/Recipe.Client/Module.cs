@@ -1,6 +1,4 @@
-﻿using Infrastructure.UnityExtensions.Injection;
-
-namespace Recipe
+﻿namespace Recipe
 {
     using System;
     using System.Windows;
@@ -9,6 +7,7 @@ namespace Recipe
     using Infrastructure.I18n;
     using Infrastructure.ListViews;
     using Infrastructure.Modularity;
+    using Infrastructure.UnityExtensions.Injection;
     using Infrastructure.ViewModels;
     using Infrastructure.Views;
     using Microsoft.Practices.Prism.Logging;

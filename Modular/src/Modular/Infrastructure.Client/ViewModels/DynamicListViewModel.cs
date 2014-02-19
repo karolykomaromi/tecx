@@ -1,6 +1,4 @@
-﻿using Infrastructure.Reflection;
-
-namespace Infrastructure.ViewModels
+﻿namespace Infrastructure.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -11,23 +9,27 @@ namespace Infrastructure.ViewModels
     using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.ListViews;
+    using Infrastructure.Reflection;
+    using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
 
     public class DynamicListViewModel : TitledViewModel, INavigationAware, ISubscribeTo<LanguageChanged>
     {
         private readonly ListViewName listViewName;
         private readonly IListViewService listViewService;
+        private readonly ILoggerFacade logger;
         private readonly ObservableCollection<FacetedViewModel> items;
         private readonly List<Facet> facets;
         private FilterViewModel filter;
 
-        public DynamicListViewModel(ListViewName listViewName, ResourceAccessor title, IListViewService listViewService)
+        public DynamicListViewModel(ListViewName listViewName, ResourceAccessor title, IListViewService listViewService, ILoggerFacade logger)
             : base(title)
         {
             Contract.Requires(listViewService != null);
 
             this.listViewName = listViewName;
             this.listViewService = listViewService;
+            this.logger = logger;
             this.items = new ObservableCollection<FacetedViewModel>();
             this.facets = new List<Facet>();
             this.filter = new EmptyFilterViewModel();
@@ -145,7 +147,8 @@ namespace Infrastructure.ViewModels
             }
             catch (PropertyNotFoundException ex)
             {
-                //// TODO weberse 2014-02-16 log exception
+                string msg = string.Format("An error occured while trying to create an accessor for resource '{0}'.\r\n{1}", resourceIdentifier, ex);
+                this.logger.Log(msg, Category.Exception, Priority.Medium);
 
                 return () =>
                     {
