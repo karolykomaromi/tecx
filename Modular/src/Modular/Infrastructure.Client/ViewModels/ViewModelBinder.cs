@@ -1,10 +1,9 @@
-﻿using Infrastructure.Reflection;
-
-namespace Infrastructure.ViewModels
+﻿namespace Infrastructure.ViewModels
 {
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Data;
+    using Infrastructure.Reflection;
 
     public class ViewModelBinder
     {

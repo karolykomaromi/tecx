@@ -16,7 +16,7 @@
 
         public Type Type
         {
-            get { return type; }
+            get { return this.type; }
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using Infrastructure.UnityExtensions.Injection;
-
-namespace Modular
+﻿namespace Modular
 {
+    using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.IO;
     using System.Windows;
     using System.Windows.Controls;
@@ -19,6 +19,12 @@ namespace Modular
     using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration.ContainerModel.Unity;
+    using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
+    using Microsoft.Practices.EnterpriseLibrary.Logging;
+    using Microsoft.Practices.EnterpriseLibrary.Logging.Diagnostics;
+    using Microsoft.Practices.EnterpriseLibrary.Logging.Filters;
+    using Microsoft.Practices.EnterpriseLibrary.Logging.Service;
+    using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Modularity;
     using Microsoft.Practices.Prism.Regions;
@@ -51,33 +57,37 @@ namespace Modular
             return mappings;
         }
 
-        protected override IUnityContainer CreateContainer()
-        {
-            return this.Container;
-        }
-
         protected override ILoggerFacade CreateLogger()
         {
-            this.Container = new UnityContainer();
+            // manually assembling a remote tracelistener is way too much effort :(
+            TraceListener remote = new RemoteServiceTraceListener(
+                true,
+                new LoggingServiceFactory { EndpointConfigurationName = "BasicHttpBinding_ILoggingService" },
+                new RecurringWorkScheduler(TimeSpan.FromMinutes(1)),
+                new LogEntryMessageStore("remote", 100, 0),
+                new AsyncTracingErrorReporter(),
+                new NetworkStatus());
 
-            // The logger is about the first thing created by the bootstrapper. That means the default container is not yet
-            // created and we can't use it in this step. So we create a throw-away container just for resolving the RemoteServiceTraceListener.
-            // Maybe I will change that when I find out how to manually assemble the configuration.
-            string xaml;
-            using (Stream stream = this.GetType().Assembly.GetManifestResourceStream("Modular.LoggingConfiguration.xaml"))
-            {
-                using (TextReader reader = new StreamReader(stream))
+            var debug = new LogSource("Debug", new[] { remote }, SourceLevels.All);
+            var info = new LogSource("Info", new[] { remote }, SourceLevels.All);
+            var warn = new LogSource("Warn", new[] { remote }, SourceLevels.All);
+            var exception = new LogSource("Exception", new[] { remote }, SourceLevels.All);
+            
+            var traceSources = new Dictionary<string, LogSource>
                 {
-                    xaml = reader.ReadToEnd();
-                }
-            }
+                    { "Debug", debug },
+                    { "Info", info },
+                    { "Warn", warn },
+                    { "Exception", exception }
+                };
 
-            IDictionary configDictionary = (IDictionary)XamlReader.Load(xaml);
-            IConfigurationSource configSource = DictionaryConfigurationSource.FromDictionary(configDictionary);
-            EnterpriseLibraryContainer.ConfigureContainer(new UnityContainerConfigurator(this.Container), configSource);
+            var general = new LogSource("general", new[] { remote }, SourceLevels.All);
+            var notProcessed = new LogSource("general", new[] { remote }, SourceLevels.All);
+            var errors = new LogSource("general", new[] { remote }, SourceLevels.All);
 
-            ILoggerFacade entLibLogger = this.Container.Resolve<EnterpriseLibraryLogger>();
-
+            LogWriter logWriter = new LogWriterImpl(new ILogFilter[0], traceSources, general, notProcessed, errors, "general", true, true);
+            ILoggerFacade entLibLogger = new EnterpriseLibraryLogger(logWriter);
+            
             CompositeLogger composite = new CompositeLogger(entLibLogger, new DebugLogger());
 
             return composite;

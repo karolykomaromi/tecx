@@ -1,11 +1,10 @@
-﻿using Infrastructure.Reflection;
-
-namespace Infrastructure.I18n
+﻿namespace Infrastructure.I18n
 {
     using System;
     using System.Diagnostics.Contracts;
     using System.Linq.Expressions;
     using Infrastructure.Events;
+    using Infrastructure.Reflection;
 
     public class LocalizedString : ISubscribeTo<LanguageChanged>
     {

@@ -1,11 +1,10 @@
-﻿using Infrastructure.Reflection;
-
-namespace Infrastructure.I18n
+﻿namespace Infrastructure.I18n
 {
     using System;
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
+    using Infrastructure.Reflection;
 
     public class ResourceAccessor
     {

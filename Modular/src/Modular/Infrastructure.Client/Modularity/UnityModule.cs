@@ -1,18 +1,15 @@
-using Infrastructure.UnityExtensions.Injection;
-
 namespace Infrastructure.Modularity
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
     using AutoMapper;
-    using Infrastructure.I18n;
     using Infrastructure.Options;
+    using Infrastructure.UnityExtensions.Injection;
     using Infrastructure.ViewModels;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Modularity;

@@ -1,11 +1,10 @@
-using Infrastructure.Reflection;
-
 namespace Infrastructure.Options
 {
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.Linq.Expressions;
+    using Infrastructure.Reflection;
 
     [DebuggerDisplay("{name}")]
     public struct Option

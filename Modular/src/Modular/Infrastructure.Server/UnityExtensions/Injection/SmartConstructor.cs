@@ -89,7 +89,6 @@
                 Parameter parameter = parameters.FirstOrDefault(arg => convention.IsMatch(arg, arguments[i]));
                 if (parameter != null)
                 {
-
                     if (parameter.Value is string &&
                         parameterType != typeof(string) &&
                         (parameterType.IsInterface || parameterType.IsClass))
