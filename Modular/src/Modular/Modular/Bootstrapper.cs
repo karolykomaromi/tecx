@@ -1,4 +1,7 @@
-﻿using Infrastructure.UnityExtensions.Injection;
+﻿using System.Windows.Input;
+using Infrastructure.Commands;
+using Infrastructure.UnityExtensions.Injection;
+using Infrastructure.ViewModels;
 
 namespace Modular
 {
@@ -127,6 +130,9 @@ namespace Modular
             this.Container.RegisterInstance<IMappingEngine>(Mapper.Engine);
 
             this.Container.RegisterType<IListViewService, ListViewServiceClient>(new InjectionConstructor(typeof(Dispatcher)));
+
+            this.Container.RegisterType<ICommand, LoadListViewItemsCommand>("loadListViewItemsCommand");
+            this.Container.RegisterType<DynamicListViewModel>(new SmartConstructor());
 
             this.RegisterTypeIfMissing(typeof(IOptions), typeof(CompositeOptions), true);
         }
