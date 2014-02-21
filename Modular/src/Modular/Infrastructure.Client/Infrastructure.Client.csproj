@@ -190,10 +190,13 @@
     <Compile Include="Caching\ExternalInvalidationPolicy.cs" />
     <Compile Include="Caching\CacheInvalidated.cs" />
     <Compile Include="Commands\CanExecuteChanged.cs" />
+    <Compile Include="Commands\LoadListViewItemsCommand.cs" />
+    <Compile Include="Commands\LoadListViewItemsCommandParameter.cs" />
     <Compile Include="Commands\NavigationCommand.cs" />
     <Compile Include="Commands\NullCommand.cs" />
     <Compile Include="Converters\DateTimeFormatConverter.cs" />
     <Compile Include="Converters\NullConverter.cs" />
+    <Compile Include="Converters\DynamicListViewRowLoadingConverter.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\IEventAggregator.cs" />
     <Compile Include="Events\ISubscribeTo.cs" />

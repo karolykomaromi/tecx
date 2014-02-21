@@ -1,12 +1,12 @@
-﻿using System.Globalization;
-
-namespace Infrastructure.ViewModels
+﻿namespace Infrastructure.ViewModels
 {
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics.Contracts;
+    using System.Globalization;
     using System.Linq;
+    using System.Windows.Input;
     using Infrastructure.Entities;
     using Infrastructure.Events;
     using Infrastructure.I18n;
@@ -20,11 +20,16 @@ namespace Infrastructure.ViewModels
         private readonly ListViewName listViewName;
         private readonly IListViewService listViewService;
         private readonly ILoggerFacade logger;
+        private readonly ICommand loadListViewItemsCommand;
         private readonly ObservableCollection<FacetedViewModel> items;
         private readonly List<Facet> facets;
         private FilterViewModel filter;
+        private bool isCurrentlyLoading;
+        private int loadNextBeforeEndOfItemsThreshold;
+        private int takeCount;
 
-        public DynamicListViewModel(ListViewName listViewName, ResourceAccessor title, IListViewService listViewService, ILoggerFacade logger)
+
+        public DynamicListViewModel(ListViewName listViewName, ResourceAccessor title, IListViewService listViewService, ILoggerFacade logger, ICommand loadListViewItemsCommand)
             : base(title)
         {
             Contract.Requires(listViewService != null);
@@ -32,9 +37,13 @@ namespace Infrastructure.ViewModels
             this.listViewName = listViewName;
             this.listViewService = listViewService;
             this.logger = logger;
+            this.loadListViewItemsCommand = loadListViewItemsCommand;
             this.items = new ObservableCollection<FacetedViewModel>();
             this.facets = new List<Facet>();
             this.filter = new EmptyFilterViewModel();
+
+            this.TakeCount = 25;
+            this.LoadNextBeforeEndOfItemsThreshold = 10;
         }
 
         public ObservableCollection<FacetedViewModel> Items
@@ -64,6 +73,65 @@ namespace Infrastructure.ViewModels
                 }
             }
         }
+        
+        public ICommand LoadListViewItemsCommand
+        {
+            get { return this.loadListViewItemsCommand; }
+        }
+
+        public bool IsCurrentlyLoading
+        {
+            get
+            {
+                return this.isCurrentlyLoading;
+            }
+
+            set
+            {
+                if (this.isCurrentlyLoading != value)
+                {
+                    this.OnPropertyChanging(() => this.IsCurrentlyLoading);
+                    this.isCurrentlyLoading = value;
+                    this.OnPropertyChanged(() => this.IsCurrentlyLoading);
+                }
+            }
+        }
+
+        public int TakeCount
+        {
+            get
+            {
+                return this.takeCount;
+            }
+
+            set
+            {
+                if (this.takeCount != value)
+                {
+                    this.OnPropertyChanging(() => this.TakeCount);
+                    this.takeCount = value;
+                    this.OnPropertyChanged(() => this.TakeCount);
+                }
+            }
+        }
+
+        public int LoadNextBeforeEndOfItemsThreshold
+        {
+            get
+            {
+                return this.loadNextBeforeEndOfItemsThreshold;
+            }
+
+            set
+            {
+                if (this.loadNextBeforeEndOfItemsThreshold != value)
+                {
+                    this.OnPropertyChanging(() => this.LoadNextBeforeEndOfItemsThreshold);
+                    this.loadNextBeforeEndOfItemsThreshold = value;
+                    this.OnPropertyChanged(() => this.LoadNextBeforeEndOfItemsThreshold);
+                }
+            }
+        }
 
         public void Handle(LanguageChanged message)
         {
@@ -72,7 +140,19 @@ namespace Infrastructure.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            this.listViewService.BeginGetListView(this.ListViewName.ToString(), 1, 50, this.OnGetListViewCompleted, null);
+            if (this.Items.Count == 0)
+            {
+                this.LoadListViewItems();
+            }
+        }
+
+        public void LoadListViewItems()
+        {
+            if (!this.IsCurrentlyLoading)
+            {
+                this.IsCurrentlyLoading = true;
+                this.listViewService.BeginGetListView(this.ListViewName.ToString(), this.Items.Count, this.TakeCount, this.OnGetListViewCompleted, null);
+            }
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -111,8 +191,6 @@ namespace Infrastructure.ViewModels
 
         private void OnGetListViewCompleted(IAsyncResult result)
         {
-            this.Items.Clear();
-
             ListView listView = this.listViewService.EndGetListView(result);
 
             this.facets.Clear();
@@ -137,6 +215,8 @@ namespace Infrastructure.ViewModels
 
                 this.Items.Add(vm);
             }
+
+            this.IsCurrentlyLoading = false;
         }
 
         private Func<string> CreateResourceAccessor(string resourceIdentifier)
@@ -149,7 +229,12 @@ namespace Infrastructure.ViewModels
             }
             catch (PropertyNotFoundException ex)
             {
-                string msg = string.Format(CultureInfo.CurrentCulture, "An error occured while trying to create an accessor for resource '{0}'.\r\n{1}", resourceIdentifier, ex);
+                string msg = string.Format(
+                    CultureInfo.CurrentCulture, 
+                    "An error occured while trying to create an accessor for resource '{0}'.\r\n{1}", 
+                    resourceIdentifier, 
+                    ex);
+
                 this.logger.Log(msg, Category.Exception, Priority.Medium);
 
                 return () =>

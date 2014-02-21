@@ -20,12 +20,12 @@
 
         public ListView GetListView(string listViewName, int skip, int take)
         {
-            var objects = new[]
-                {
-                    new DataFromView { Foo = "abc", Bar = 123, Timestamp = TimeProvider.Now },
-                    new DataFromView { Foo = "def", Bar = 456, Timestamp = TimeProvider.Now },
-                    new DataFromView { Foo = "ghi", Bar = 789, Timestamp = TimeProvider.Now }
-                };
+            List<DataFromView> objects = new List<DataFromView>();
+
+            for (int i = skip; i < skip + take; i++)
+            {
+                objects.Add(new DataFromView { Foo = Guid.NewGuid().ToString(), Bar = i, Timestamp = TimeProvider.Now });
+            }
 
             IDataReader reader = objects.AsDataReader();
 

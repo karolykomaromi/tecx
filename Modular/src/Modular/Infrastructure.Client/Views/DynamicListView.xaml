@@ -8,7 +8,9 @@
     xmlns:t="clr-namespace:Infrastructure.Theming"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:tr="clr-namespace:Infrastructure.Triggers"
-    mc:Ignorable="d"
+             xmlns:mvvm="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.SL5"
+             xmlns:converters="clr-namespace:Infrastructure.Converters"
+             mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400"
     d:DataContext="{d:DesignInstance d:Type=viewModels:DynamicListViewModel}">
     <UserControl.Resources>
@@ -16,6 +18,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Infrastructure.Client;component/Assets/Themes/DefaultTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <converters:DynamicListViewRowLoadingConverter x:Key="RowLoadingConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -33,6 +36,13 @@
                 <i:EventTrigger EventName="AutoGeneratingColumn">
                     <tr:TranslateColumnHeader />
                     <tr:FormatDateTimeColumn />
+                </i:EventTrigger>
+                <i:EventTrigger EventName="LoadingRow">
+                    <mvvm:EventToCommand 
+                        Command="{Binding LoadListViewItemsCommand}" 
+                        PassEventArgsToCommand="True" 
+                        EventArgsConverter="{StaticResource RowLoadingConverter}" 
+                        EventArgsConverterParameter="{Binding}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </sdk:DataGrid>
