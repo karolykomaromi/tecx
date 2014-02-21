@@ -1,20 +1,16 @@
 namespace Infrastructure.Modularity
 {
-    using System.ComponentModel;
+    using Infrastructure.ViewModels;
     using Microsoft.Practices.Prism.Modularity;
 
-    public class ModuleTrackingState : INotifyPropertyChanged
+    public class ModuleTrackingState : NotificationBase
     {
         private string moduleName;
         private ModuleInitializationStatus moduleInitializationStatus;
-        private DiscoveryMethod expectedDiscoveryMethod;
         private InitializationMode expectedInitializationMode;
-        private DownloadTiming expectedDownloadTiming;
         private string configuredDependencies = "(none)";
         private long bytesReceived;
         private long totalBytesToReceive;
-
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         public string ModuleName
         {
@@ -27,8 +23,9 @@ namespace Infrastructure.Modularity
             {
                 if (this.moduleName != value)
                 {
+                    this.OnPropertyChanging(() => this.ModuleName);
                     this.moduleName = value;
-                    this.RaisePropertyChanged(PropertyNames.ModuleName);
+                    this.OnPropertyChanged(() => this.ModuleName);
                 }
             }
         }
@@ -44,25 +41,9 @@ namespace Infrastructure.Modularity
             {
                 if (this.moduleInitializationStatus != value)
                 {
+                    this.OnPropertyChanging(() => this.ModuleInitializationStatus);
                     this.moduleInitializationStatus = value;
-                    this.RaisePropertyChanged(PropertyNames.ModuleInitializationStatus);
-                }
-            }
-        }
-
-        public DiscoveryMethod ExpectedDiscoveryMethod
-        {
-            get
-            {
-                return this.expectedDiscoveryMethod;
-            }
-
-            set
-            {
-                if (this.expectedDiscoveryMethod != value)
-                {
-                    this.expectedDiscoveryMethod = value;
-                    this.RaisePropertyChanged(PropertyNames.ExpectedDiscoveryMethod);
+                    this.OnPropertyChanged(() => this.ModuleInitializationStatus);
                 }
             }
         }
@@ -78,25 +59,9 @@ namespace Infrastructure.Modularity
             {
                 if (this.expectedInitializationMode != value)
                 {
+                    this.OnPropertyChanging(() => this.ExpectedInitializationMode);
                     this.expectedInitializationMode = value;
-                    this.RaisePropertyChanged(PropertyNames.ExpectedInitializationMode);
-                }
-            }
-        }
-
-        public DownloadTiming ExpectedDownloadTiming
-        {
-            get
-            {
-                return this.expectedDownloadTiming;
-            }
-
-            set
-            {
-                if (this.expectedDownloadTiming != value)
-                {
-                    this.expectedDownloadTiming = value;
-                    this.RaisePropertyChanged(PropertyNames.ExpectedDownloadTiming);
+                    this.OnPropertyChanged(() => this.ExpectedInitializationMode);
                 }
             }
         }
@@ -112,8 +77,9 @@ namespace Infrastructure.Modularity
             {
                 if (this.configuredDependencies != value)
                 {
+                    this.OnPropertyChanging(() => this.ConfiguredDependencies);
                     this.configuredDependencies = value;
-                    this.RaisePropertyChanged(PropertyNames.ConfiguredDependencies);
+                    this.OnPropertyChanged(() => this.ConfiguredDependencies);
                 }
             }
         }
@@ -129,9 +95,11 @@ namespace Infrastructure.Modularity
             {
                 if (this.bytesReceived != value)
                 {
+                    this.OnPropertyChanging(() => this.BytesReceived);
+                    this.OnPropertyChanging(() => this.DownloadProgressPercentage);
                     this.bytesReceived = value;
-                    this.RaisePropertyChanged(PropertyNames.BytesReceived);
-                    this.RaisePropertyChanged(PropertyNames.DownloadProgressPercentage);
+                    this.OnPropertyChanged(() => this.BytesReceived);
+                    this.OnPropertyChanged(() => this.DownloadProgressPercentage);
                 }
             }
         }
@@ -147,9 +115,11 @@ namespace Infrastructure.Modularity
             {
                 if (this.totalBytesToReceive != value)
                 {
+                    this.OnPropertyChanging(() => this.TotalBytesToReceive);
+                    this.OnPropertyChanging(() => this.DownloadProgressPercentage);
                     this.totalBytesToReceive = value;
-                    this.RaisePropertyChanged(PropertyNames.TotalBytesToReceive);
-                    this.RaisePropertyChanged(PropertyNames.DownloadProgressPercentage);
+                    this.OnPropertyChanged(() => this.TotalBytesToReceive);
+                    this.OnPropertyChanged(() => this.DownloadProgressPercentage);
                 }
             }
         }
@@ -165,24 +135,6 @@ namespace Infrastructure.Modularity
 
                 return 100;
             }
-        }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public static class PropertyNames
-        {
-            public const string ModuleName = "ModuleName";
-            public const string ModuleInitializationStatus = "ModuleInitializationStatus";
-            public const string ExpectedDiscoveryMethod = "ExpectedDiscoveryMethod";
-            public const string ExpectedInitializationMode = "ExpectedInitializationMode";
-            public const string ExpectedDownloadTiming = "ExpectedDownloadTiming";
-            public const string ConfiguredDependencies = "ConfiguredDependencies";
-            public const string BytesReceived = "BytesReceived";
-            public const string TotalBytesToReceive = "TotalBytesToReceive";
-            public const string DownloadProgressPercentage = "DownloadProgressPercentage";
         }
     }
 }
