@@ -1,4 +1,6 @@
-﻿namespace Modular
+﻿using Infrastructure.UnityExtensions.Injection;
+
+namespace Modular
 {
     using System;
     using System.Collections;
@@ -97,6 +99,8 @@
         {
             base.ConfigureContainer();
 
+            this.Container.RegisterType<Microsoft.Practices.Prism.Modularity.IModuleInitializer, UnityModuleInitializer>(new ContainerControlledLifetimeManager());
+
             this.Container.AddNewExtension<RegionExtension>();
 
             this.Container.RegisterInstance(Deployment.Current.Dispatcher);
@@ -116,11 +120,6 @@
             IDictionary configDictionary = (IDictionary)XamlReader.Load(xaml);
             IConfigurationSource configSource = DictionaryConfigurationSource.FromDictionary(configDictionary);
             EnterpriseLibraryContainer.ConfigureContainer(new UnityContainerConfigurator(this.Container), configSource);
-
-            this.Container.RegisterType<IResourceManager, CompositeResourceManager>(Constants.AppWideResources, new ContainerControlledLifetimeManager(), new InjectionConstructor());
-            this.Container.RegisterType<IResourceManager, CachingResourceManager>(
-                new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new ResolvedParameter<IResourceManager>(Constants.AppWideResources), typeof(IEventAggregator), typeof(ObjectCache), typeof(ILoggerFacade)));
 
             this.Container.RegisterType<ModuleResourcesInitializer>(new InjectionConstructor(Application.Current.Resources));
             this.Container.RegisterType<Infrastructure.Modularity.IModuleInitializer, DefaultInitializer>();

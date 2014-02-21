@@ -226,8 +226,6 @@
     <Compile Include="Modularity\CompositeInitializer.cs" />
     <Compile Include="Modularity\ContainerInitializer.cs" />
     <Compile Include="Modularity\DefaultInitializer.cs" />
-    <Compile Include="Modularity\DiscoveryMethod.cs" />
-    <Compile Include="Modularity\DownloadTiming.cs" />
     <Compile Include="Modularity\IModuleInitializer.cs" />
     <Compile Include="Modularity\IModuleTracker.cs" />
     <Compile Include="Modularity\ModuleInitializationStatus.cs" />
@@ -237,6 +235,7 @@
     <Compile Include="Modularity\OptionsInitializer.cs" />
     <Compile Include="Modularity\RegionInitializer.cs" />
     <Compile Include="Modularity\UnityModule.cs" />
+    <Compile Include="Modularity\UnityModuleInitializer.cs" />
     <Compile Include="Modularity\WellKnownModuleNames.cs" />
     <Compile Include="Options\CompositeOptions.cs" />
     <Compile Include="Options\IOptions.cs" />
@@ -269,6 +268,7 @@
     <Compile Include="UnityExtensions\EventAggregatorStrategy.cs" />
     <Compile Include="UnityExtensions\RegionExtension.cs" />
     <Compile Include="UnityExtensions\RegionStrategy.cs" />
+    <Compile Include="ViewModels\NotificationBase.cs" />
     <Compile Include="ViewModels\ViewModelBinder.cs" />
     <Compile Include="ViewModels\DynamicListViewModel.cs" />
     <Compile Include="ViewModels\EmptyFilterViewModel.cs" />
