@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Options
+﻿using System.Globalization;
+
+namespace Infrastructure.Options
 {
     using System;
     using System.Collections.Generic;
@@ -88,7 +90,7 @@
 
             if (propertyInfo == null)
             {
-                throw new InvalidOperationException(string.Format("No property named '{0}' in options of Type '{1}'", propertyName, optionType.FullName));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "No property named '{0}' in options of Type '{1}'", propertyName, optionType.FullName));
             }
 
             var instance = Expression.Parameter(typeof(IOptions), "options");
@@ -108,7 +110,7 @@
 
             if (propertyInfo == null)
             {
-                throw new InvalidOperationException(string.Format("No property named '{0}' in options of Type '{1}'", optionName, optionType.FullName));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "No property named '{0}' in options of Type '{1}'", optionName, optionType.FullName));
             }
 
             var instance = Expression.Parameter(typeof(IOptions), "i");

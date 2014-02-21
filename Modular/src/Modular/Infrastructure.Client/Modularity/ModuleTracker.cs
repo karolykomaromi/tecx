@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Infrastructure.Modularity
 {
     using System;
@@ -33,7 +35,7 @@ namespace Infrastructure.Modularity
                 moduleTrackingState.ModuleInitializationStatus = ModuleInitializationStatus.Constructed;
             }
 
-            this.logger.Log(string.Format("'{0}' module constructed.", moduleName), Category.Debug, Priority.Low);
+            this.logger.Log(string.Format(CultureInfo.CurrentCulture, "'{0}' module constructed.", moduleName), Category.Debug, Priority.Low);
         }
 
         public void RecordModuleDownloading(string moduleName, long bytesReceived, long totalBytesToReceive)
@@ -58,7 +60,7 @@ namespace Infrastructure.Modularity
                 }
             }
 
-            this.logger.Log(string.Format("'{0}' module is loading {1}/{2} bytes.", moduleName, bytesReceived, totalBytesToReceive), Category.Debug, Priority.Low);
+            this.logger.Log(string.Format(CultureInfo.CurrentCulture, "'{0}' module is loading {1}/{2} bytes.", moduleName, bytesReceived, totalBytesToReceive), Category.Debug, Priority.Low);
         }
 
         public void RecordModuleInitialized(string moduleName)
@@ -71,7 +73,7 @@ namespace Infrastructure.Modularity
                 moduleTrackingState.ModuleInitializationStatus = ModuleInitializationStatus.Initialized;
             }
 
-            this.logger.Log(string.Format("{0} module initialized.", moduleName), Category.Debug, Priority.Low);
+            this.logger.Log(string.Format(CultureInfo.CurrentCulture, "{0} module initialized.", moduleName), Category.Debug, Priority.Low);
         }
 
         public void Register(ModuleTrackingState state)
@@ -85,7 +87,7 @@ namespace Infrastructure.Modularity
         {
             Contract.Requires(!string.IsNullOrEmpty(moduleName));
 
-            this.logger.Log(string.Format("'{0}' module loaded.", moduleName), Category.Debug, Priority.Low);
+            this.logger.Log(string.Format(CultureInfo.CurrentCulture, "'{0}' module loaded.", moduleName), Category.Debug, Priority.Low);
         }
     }
 }
