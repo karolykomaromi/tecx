@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Infrastructure.Modularity
 {
     using System;
@@ -59,6 +61,29 @@ namespace Infrastructure.Modularity
 
         protected internal virtual IOptions CreateModuleOptions()
         {
+            Contract.Ensures(Contract.Result<IOptions>() != null);
+
+            Type optionsType = this.GetType().Assembly.GetExportedTypes().FirstOrDefault(typeof(IOptions).IsAssignableFrom);
+
+            if (optionsType != null)
+            {
+                try
+                {
+                    return (IOptions)this.Container.Resolve(optionsType);
+                }
+                catch (ResolutionFailedException ex)
+                {
+                    string msg = string.Format(
+                        CultureInfo.CurrentCulture,
+                        "An error occured while trying to resolve the default options for module '{0}'. Options type is '{1}'.\r\n{2}", 
+                        this.ModuleName, 
+                        optionsType.AssemblyQualifiedName, 
+                        ex);
+
+                    this.Logger.Log(msg, Category.Exception, Priority.Medium);
+                }
+            }
+
             return new NullOptions();
         }
 
@@ -102,6 +127,26 @@ namespace Infrastructure.Modularity
         {
             Contract.Ensures(Contract.Result<ResourceDictionary>() != null);
 
+            string uriString = "/" + this.GetType().Namespace + ".Client;component/Assets/Resources/Resources.xaml";
+
+            Uri source = new Uri(uriString, UriKind.Relative);
+
+            try
+            {
+                return new ResourceDictionary { Source = source };
+            }
+            catch (Exception ex)
+            {
+                string msg = string.Format(
+                    CultureInfo.CurrentCulture,
+                    "An exception occured while trying to create the default resources for module '{0}' from source '{1}'.\r\n{2}",
+                    this.ModuleName, 
+                    source, 
+                    ex);
+
+                this.Logger.Log(msg, Category.Exception, Priority.Medium);
+            }
+
             return new ResourceDictionary();
         }
 
@@ -121,7 +166,7 @@ namespace Infrastructure.Modularity
                 }
                 catch (ResolutionFailedException ex)
                 {
-                    message = string.Format("Could not resolve view of Type '{0}'.\r\n{1}", viewTypeName, ex);
+                    message = string.Format(CultureInfo.CurrentCulture, "Could not resolve view of Type '{0}'.\r\n{1}", viewTypeName, ex);
                     this.Logger.Log(message, Category.Exception, Priority.High);
 
                     view = null;
@@ -154,13 +199,13 @@ namespace Infrastructure.Modularity
                     }
                     catch (ResolutionFailedException ex)
                     {
-                        message = string.Format("Could not resolve view model of Type '{0}'.\r\n{1}", typeof(TViewModel).AssemblyQualifiedName, ex);
+                        message = string.Format(CultureInfo.CurrentCulture, "Could not resolve view model of Type '{0}'.\r\n{1}", typeof(TViewModel).AssemblyQualifiedName, ex);
                         this.Logger.Log(message, Category.Exception, Priority.High);
                         view = null;
                         return false;
                     }
 
-                    message = string.Format("Successfully created view (Type='{0}') and view model (Type='{1}').", typeof(TViewModel).AssemblyQualifiedName, viewTypeName);
+                    message = string.Format(CultureInfo.CurrentCulture, "Successfully created view (Type='{0}') and view model (Type='{1}').", typeof(TViewModel).AssemblyQualifiedName, viewTypeName);
                     this.Logger.Log(message, Category.Info, Priority.Low);
                     view.DataContext = vm;
                     ViewModelBinder.Bind(view, vm);
@@ -168,7 +213,7 @@ namespace Infrastructure.Modularity
                 }
             }
 
-            message = string.Format("Could not resolve view (Type='{0}') for view model (Type='{1}').", viewTypeName, typeof(TViewModel).AssemblyQualifiedName);
+            message = string.Format(CultureInfo.CurrentCulture, "Could not resolve view (Type='{0}') for view model (Type='{1}').", viewTypeName, typeof(TViewModel).AssemblyQualifiedName);
             this.Logger.Log(message, Category.Warn, Priority.High);
             view = null;
             return false;

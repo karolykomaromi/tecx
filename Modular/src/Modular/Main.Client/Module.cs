@@ -47,11 +47,6 @@
             regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
         }
 
-        protected override Infrastructure.Options.IOptions CreateModuleOptions()
-        {
-            return this.Container.Resolve<OptionsViewModel>();
-        }
-
         protected override void ConfigureContainer(IUnityContainer container)
         {
             container.RegisterType<ICommand, ChangeLanguageCommand>("changeLanguageCommand");

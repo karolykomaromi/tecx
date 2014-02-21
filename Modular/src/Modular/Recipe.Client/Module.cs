@@ -66,14 +66,5 @@
                 regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
             }
         }
-
-        protected override ResourceDictionary CreateModuleResources()
-        {
-            Uri source = new Uri("/Recipe.Client;component/Assets/Resources/Resources.xaml", UriKind.Relative);
-
-            ResourceDictionary resources = new ResourceDictionary { Source = source };
-
-            return resources;
-        }
     }
 }

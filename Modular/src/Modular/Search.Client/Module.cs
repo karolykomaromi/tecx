@@ -1,16 +1,12 @@
 ﻿namespace Search
 {
-    using System;
-    using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Threading;
-    using AutoMapper;
     using Infrastructure;
     using Infrastructure.Commands;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
-    using Infrastructure.Options;
     using Infrastructure.UnityExtensions.Injection;
     using Infrastructure.Views;
     using Microsoft.Practices.Prism.Logging;
@@ -101,20 +97,6 @@
                                                             });
 
             regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
-        }
-
-        protected override ResourceDictionary CreateModuleResources()
-        {
-            Uri uri = new Uri("/Search.Client;component/Assets/Resources/Resources.xaml", UriKind.Relative);
-
-            ResourceDictionary resources = new ResourceDictionary { Source = uri };
-
-            return resources;
-        }
-
-        protected override IOptions CreateModuleOptions()
-        {
-            return this.Container.Resolve<SearchOptionsViewModel>();
         }
     }
 }

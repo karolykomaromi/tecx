@@ -9,11 +9,11 @@ namespace Infrastructure.Logging
         public void Log(string message, Category category, Priority priority)
         {
             string msg = string.Format(
-                CultureInfo.InvariantCulture,
+                CultureInfo.CurrentCulture,
                 "{0:u} {1} {2} - {3}", 
                 TimeProvider.UtcNow,
-                category.ToString().ToUpper(CultureInfo.InvariantCulture), 
-                priority.ToString(), 
+                category.ToString().ToUpperInvariant(), 
+                priority, 
                 message);
 
             Debug.WriteLine(msg);

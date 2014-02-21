@@ -34,12 +34,12 @@
 
             if (cached != null)
             {
-                string msg = string.Format("Cache hit. Name=\"{0}\" Value=\"{1}\"", name, cached);
+                string msg = string.Format(CultureInfo.CurrentCulture, "Cache hit. Name=\"{0}\" Value=\"{1}\"", name, cached);
                 this.logger.Log(msg, Category.Debug, Priority.Low);
                 return cached;
             }
 
-            this.logger.Log(string.Format("Cache hit. Name=\"{0}\"", name), Category.Debug, Priority.Low);
+            this.logger.Log(string.Format(CultureInfo.CurrentCulture, "Cache hit. Name=\"{0}\"", name), Category.Debug, Priority.Low);
             string value = this.inner.GetString(name, culture);
 
             if (!string.Equals(name, value, StringComparison.Ordinal))

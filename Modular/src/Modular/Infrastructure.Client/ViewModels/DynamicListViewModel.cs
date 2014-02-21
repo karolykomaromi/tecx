@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.ViewModels
+﻿using System.Globalization;
+
+namespace Infrastructure.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -147,7 +149,7 @@
             }
             catch (PropertyNotFoundException ex)
             {
-                string msg = string.Format("An error occured while trying to create an accessor for resource '{0}'.\r\n{1}", resourceIdentifier, ex);
+                string msg = string.Format(CultureInfo.CurrentCulture, "An error occured while trying to create an accessor for resource '{0}'.\r\n{1}", resourceIdentifier, ex);
                 this.logger.Log(msg, Category.Exception, Priority.Medium);
 
                 return () =>
