@@ -137,6 +137,9 @@
     <Compile Include="..\Infrastructure.Server\Entities\Property.cs">
       <Link>Entities\Property.cs</Link>
     </Compile>
+    <Compile Include="..\Infrastructure.Server\Entities\ResourceString.cs">
+      <Link>Entities\ResourceString.cs</Link>
+    </Compile>
     <Compile Include="..\Infrastructure.Server\Reflection\ConstructorNotFoundException.cs">
       <Link>Reflection\ConstructorNotFoundException.cs</Link>
     </Compile>
@@ -197,12 +200,14 @@
     <Compile Include="Converters\DateTimeFormatConverter.cs" />
     <Compile Include="Converters\NullConverter.cs" />
     <Compile Include="Converters\DynamicListViewRowLoadingConverter.cs" />
+    <Compile Include="DisplayManager.cs" />
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Events\IEventAggregator.cs" />
     <Compile Include="Events\ISubscribeTo.cs" />
     <Compile Include="Events\NullEventAggregator.cs" />
     <Compile Include="Events\TypeExtensions.cs" />
     <Compile Include="Events\TypeFilter.cs" />
+    <Compile Include="I18n\CacheBackedResourceManager.cs" />
     <Compile Include="I18n\CachingResourceManager.cs" />
     <Compile Include="I18n\LanguageChanged.cs" />
     <Compile Include="I18n\CompositeResourceManager.cs" />
@@ -211,9 +216,12 @@
     <Compile Include="I18n\LanguageChanging.cs" />
     <Compile Include="I18n\LocalizedString.cs" />
     <Compile Include="I18n\ResourceAccessor.cs" />
+    <Compile Include="I18n\ResourceCachePreLoader.cs" />
     <Compile Include="I18n\ResourceManagerWrapper.cs" />
     <Compile Include="I18n\WebSvcResourceManager.cs" />
+    <Compile Include="IDisplayManager.cs" />
     <Compile Include="IListViewService.cs" />
+    <Compile Include="IResourceService.cs" />
     <Compile Include="ListViewServiceClient.cs" />
     <Compile Include="ListViews\DynamicPropertyInfo.cs" />
     <Compile Include="ListViews\Facet.cs" />
@@ -251,6 +259,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />
     <Compile Include="RegionNames.cs" />
+    <Compile Include="ResourceServiceClient.cs" />
     <Compile Include="StackPanelRegionAdapter.cs" />
     <Compile Include="Theming\ThemeBackgroundAdapter.cs" />
     <Compile Include="Theming\ThemeBorderBackgroundAdapter.cs" />

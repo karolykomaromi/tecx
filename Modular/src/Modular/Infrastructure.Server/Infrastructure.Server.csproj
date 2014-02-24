@@ -80,6 +80,7 @@
     <Compile Include="Entities\ListViewCell.cs" />
     <Compile Include="Entities\ListViewRow.cs" />
     <Compile Include="Entities\Property.cs" />
+    <Compile Include="Entities\ResourceString.cs" />
     <Compile Include="IListViewService.cs" />
     <Compile Include="IResourceKeyProvider.cs" />
     <Compile Include="ListViewService.cs" />
@@ -89,6 +90,8 @@
     <Compile Include="Reflection\ConstructorNotFoundException.cs" />
     <Compile Include="Reflection\PropertyNotFoundException.cs" />
     <Compile Include="ResourceKeyProvider.cs" />
+    <Compile Include="IResourceService.cs" />
+    <Compile Include="ResourceService.cs" />
     <Compile Include="TimeExtensions.cs" />
     <Compile Include="TimeProvider.cs" />
     <Compile Include="TypeHelper.cs" />
