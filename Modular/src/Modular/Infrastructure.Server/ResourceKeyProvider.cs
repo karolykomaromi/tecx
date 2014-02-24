@@ -6,13 +6,7 @@
     {
         public string GetResourceKey(string listViewName, string propertyName)
         {
-            if (string.Equals(listViewName, "RECIPES", StringComparison.OrdinalIgnoreCase) || 
-                string.Equals(listViewName, "INGREDIENTS", StringComparison.OrdinalIgnoreCase))
-            {
-                listViewName = "Recipe";
-            }
-
-            return listViewName + "." + propertyName;
+            return listViewName.Substring(0, 1) + listViewName.Substring(1, listViewName.IndexOf(".", 0, StringComparison.Ordinal) - 1).ToLowerInvariant() + "." + propertyName;
         }
     }
 }

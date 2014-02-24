@@ -34,7 +34,7 @@
 
         protected override void ConfigureRegions(IRegionManager regionManager)
         {
-            ListViewName recipesList = new ListViewName("Recipes");
+            ListViewName recipesList = new ListViewName("Recipe.Recipes");
 
             Control recipes;
             if (this.TryGetViewFor<DynamicListViewModel>(out recipes, new Parameter("listViewName", recipesList), new Parameter("title", new ResourceAccessor(() => Labels.Recipes))))
@@ -50,7 +50,7 @@
                 regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
             }
 
-            ListViewName ingredientsList = new ListViewName("Ingredients");
+            ListViewName ingredientsList = new ListViewName("Recipe.Ingredients");
 
             Control ingredients;
             if (this.TryGetViewFor<DynamicListViewModel>(out ingredients, new Parameter("listViewName", ingredientsList), new Parameter("title", new ResourceAccessor(() => Labels.Ingredients))))

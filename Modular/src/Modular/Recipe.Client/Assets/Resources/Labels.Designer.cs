@@ -57,6 +57,16 @@ namespace Recipe.Assets.Resources
             }
         }
 
+        public static string Bar
+        {
+            get { return ResourceManager.GetString("Bar", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+        }
+
+        public static string Foo
+        {
+            get { return ResourceManager.GetString("Foo", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+        }
+
         public static string Ingredient
         {
             get { return ResourceManager.GetString("Ingredient", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
@@ -75,6 +85,11 @@ namespace Recipe.Assets.Resources
         public static string Recipes
         {
             get { return ResourceManager.GetString("Recipes", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+        }
+
+        public static string Timestamp
+        {
+            get { return ResourceManager.GetString("Timestamp", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
         }
     }
 }
