@@ -129,6 +129,7 @@
     <Content Include="LoggingService.svc" />
     <Content Include="Modular.aspx" />
     <Content Include="Default.html" />
+    <Content Include="ResourceService.svc" />
     <Content Include="SearchService.svc" />
     <Content Include="Silverlight.js" />
     <Content Include="Web.config">

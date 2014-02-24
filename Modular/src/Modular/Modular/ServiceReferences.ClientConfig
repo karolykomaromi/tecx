@@ -18,6 +18,9 @@
       <endpoint address="http://localhost:18448/ListViewService.svc"
           binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ISearchService"
           contract="Infrastructure.IListViewService" name="BasicHttpBinding_IListViewService" />
+      <endpoint address="http://localhost:18448/ResourceService.svc"
+          binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ISearchService"
+          contract="Infrastructure.IResourceService" name="BasicHttpBinding_IResourceService" />
     </client>
   </system.serviceModel>
 </configuration>
