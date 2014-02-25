@@ -17,6 +17,7 @@
 
     public class DynamicListViewModel : TitledViewModel, INavigationAware, ISubscribeTo<LanguageChanged>
     {
+        private readonly LocalizedString title;
         private readonly ListViewName listViewName;
         private readonly IListViewService listViewService;
         private readonly ILoggerFacade logger;
@@ -28,12 +29,11 @@
         private int loadNextBeforeEndOfItemsThreshold;
         private int takeCount;
 
-
         public DynamicListViewModel(ListViewName listViewName, ResourceAccessor title, IListViewService listViewService, ILoggerFacade logger, ICommand loadListViewItemsCommand)
-            : base(title)
         {
             Contract.Requires(listViewService != null);
 
+            this.title = new LocalizedString(() => this.Title, title.GetResource, this.OnPropertyChanged);
             this.listViewName = listViewName;
             this.listViewService = listViewService;
             this.logger = logger;
@@ -44,6 +44,11 @@
 
             this.TakeCount = 25;
             this.LoadNextBeforeEndOfItemsThreshold = 10;
+        }
+
+        public override string Title
+        {
+            get { return this.title.Value; }
         }
 
         public ObservableCollection<FacetedViewModel> Items

@@ -92,6 +92,7 @@
     <Compile Include="ResourceKeyProvider.cs" />
     <Compile Include="IResourceService.cs" />
     <Compile Include="ResourceService.cs" />
+    <Compile Include="StringHelper.cs" />
     <Compile Include="TimeExtensions.cs" />
     <Compile Include="TimeProvider.cs" />
     <Compile Include="TypeHelper.cs" />
@@ -105,6 +106,9 @@
     <Compile Include="UnityExtensions\Injection\Parameter.cs" />
     <Compile Include="UnityExtensions\Injection\ParameterMatcher.cs" />
     <Compile Include="UnityExtensions\Injection\SmartConstructor.cs" />
+    <Compile Include="UnityExtensions\Registration\CompositeConvention.cs" />
+    <Compile Include="UnityExtensions\Registration\IRegistrationConvention.cs" />
+    <Compile Include="UnityExtensions\Registration\RegistrationConvention.cs" />
     <Compile Include="UnityExtensions\SelectedConstructorCache.cs" />
   </ItemGroup>
   <ItemGroup>

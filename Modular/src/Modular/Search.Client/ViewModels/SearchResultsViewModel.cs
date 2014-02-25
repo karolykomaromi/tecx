@@ -9,6 +9,7 @@ namespace Search.ViewModels
     using Infrastructure.I18n;
     using Infrastructure.Options;
     using Infrastructure.ViewModels;
+    using Search.Assets.Resources;
     using Search.Entities;
     using Search.Events;
 
@@ -17,17 +18,23 @@ namespace Search.ViewModels
         private readonly ICommand navigateContentCommand;
         private readonly IMappingEngine mappingEngine;
         private readonly ObservableCollection<SearchResultViewModel> results;
+        private readonly LocalizedString title;
 
-        public SearchResultsViewModel(ICommand navigateContentCommand, IMappingEngine mappingEngine, ResourceAccessor title)
-            : base(title)
+        public SearchResultsViewModel(ICommand navigateContentCommand, IMappingEngine mappingEngine)
         {
             Contract.Requires(navigateContentCommand != null);
             Contract.Requires(mappingEngine != null);
 
+            this.title = new LocalizedString(() => this.Title, () => Labels.SearchResults, this.OnPropertyChanged);
             this.navigateContentCommand = navigateContentCommand;
             this.mappingEngine = mappingEngine;
 
             this.results = new ObservableCollection<SearchResultViewModel>();
+        }
+
+        public override string Title
+        {
+            get { return this.title.Value; }
         }
 
         public ObservableCollection<SearchResultViewModel> Results

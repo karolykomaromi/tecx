@@ -1,7 +1,7 @@
-﻿using System.Windows.Controls;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
+    using System.Windows.Controls;
+
     public class DisplayManager : IDisplayManager
     {
         private readonly BusyIndicator busyIndicator;

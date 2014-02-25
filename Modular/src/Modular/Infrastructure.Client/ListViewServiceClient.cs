@@ -3,7 +3,6 @@
     using System;
     using System.Diagnostics.Contracts;
     using System.ServiceModel;
-    using System.ServiceModel.Channels;
     using System.Windows.Threading;
     using Infrastructure.Entities;
 
@@ -14,34 +13,7 @@
         public ListViewServiceClient(Dispatcher dispatcher)
         {
             Contract.Requires(dispatcher != null);
-            this.dispatcher = dispatcher;
-        }
 
-        public ListViewServiceClient(Dispatcher dispatcher, string endpointConfigurationName)
-            : base(endpointConfigurationName)
-        {
-            Contract.Requires(dispatcher != null);
-            this.dispatcher = dispatcher;
-        }
-
-        public ListViewServiceClient(Dispatcher dispatcher, string endpointConfigurationName, string remoteAddress)
-            : base(endpointConfigurationName, remoteAddress)
-        {
-            Contract.Requires(dispatcher != null);
-            this.dispatcher = dispatcher;
-        }
-
-        public ListViewServiceClient(Dispatcher dispatcher, string endpointConfigurationName, EndpointAddress remoteAddress)
-            : base(endpointConfigurationName, remoteAddress)
-        {
-            Contract.Requires(dispatcher != null);
-            this.dispatcher = dispatcher;
-        }
-
-        public ListViewServiceClient(Dispatcher dispatcher, Binding binding, EndpointAddress remoteAddress)
-            : base(binding, remoteAddress)
-        {
-            Contract.Requires(dispatcher != null);
             this.dispatcher = dispatcher;
         }
 

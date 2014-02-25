@@ -1,17 +1,19 @@
-﻿using System;
-using System.ServiceModel;
-using System.Windows.Threading;
-using Infrastructure.Entities;
-using Infrastructure.I18n;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
+    using System;
+    using System.Diagnostics.Contracts;
+    using System.ServiceModel;
+    using System.Windows.Threading;
+    using Infrastructure.Entities;
+
     public class ResourceServiceClient : ClientBase<IResourceService>, IResourceService
     {
         private readonly Dispatcher dispatcher;
 
         public ResourceServiceClient(Dispatcher dispatcher)
         {
+            Contract.Requires(dispatcher != null);
+
             this.dispatcher = dispatcher;
         }
 

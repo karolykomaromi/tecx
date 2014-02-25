@@ -13,7 +13,7 @@
 
             int rowIndex = args.Row.GetIndex();
 
-            return new LoadListViewItemsCommandParameter(rowIndex, (DynamicListViewModel) parameter);
+            return new LoadListViewItemsCommandParameter(rowIndex, (DynamicListViewModel)parameter);
         }
     }
 }

@@ -1,8 +1,12 @@
-﻿namespace Infrastructure.Modularity
+﻿using System.Windows;
+
+namespace Infrastructure.Modularity
 {
     using System;
     using System.Diagnostics.Contracts;
     using System.Globalization;
+    using System.Reflection;
+    using Infrastructure.UnityExtensions.Registration;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Modularity;
     using Microsoft.Practices.Unity;
@@ -30,14 +34,37 @@
             {
                 moduleInstance = this.CreateModule(moduleInfo);
 
-                UnityModule module = moduleInstance as UnityModule;
-
-                if (module != null)
+                if (moduleInstance != null)
                 {
-                    // wondering wether I should call all the methods on the unitymodule here or not...
-                }
+                    Assembly moduleAssembly = moduleInstance.GetType().Assembly;
 
-                moduleInstance.Initialize();
+                    if (moduleAssembly != null)
+                    {
+                        IRegistrationConvention convention = new CompositeConvention(new CommandsConvention(), new OptionsConvention());
+
+                        foreach (Type type in moduleAssembly.GetExportedTypes())
+                        {
+                            convention.RegisterOnMatch(this.container, type);
+                        }
+                    }
+
+                    if (Application.Current != null &&
+                        Application.Current.Resources != null)
+                    {
+                        ResourceDictionary moduleResources = this.CreateModuleResourceDictionary(moduleInstance);
+
+                        Application.Current.Resources.MergedDictionaries.Add(moduleResources);
+                    }
+
+                    //// automapper
+
+                    //// options => how do we collect options from latebound modules?
+
+                    //// regions => should be done by module
+
+
+                    moduleInstance.Initialize();
+                }
             }
             catch (Exception ex)
             {
@@ -46,6 +73,30 @@
                     moduleInstance != null ? moduleInstance.GetType().Assembly.FullName : null,
                     ex);
             }
+        }
+
+        private ResourceDictionary CreateModuleResourceDictionary(IModule moduleInstance)
+        {
+            string uriString = "/" + moduleInstance.GetType().Namespace + ".Client;component/Assets/Resources/Resources.xaml";
+            Uri source = new Uri(uriString, UriKind.Relative);
+
+            try
+            {
+                return new ResourceDictionary { Source = source };
+            }
+            catch (Exception ex)
+            {
+                string msg = string.Format(
+                    CultureInfo.CurrentCulture,
+                    "An exception occured while trying to create the default resources for module '{0}' from source '{1}'.\r\n{2}",
+                    moduleInstance.GetType().FullName,
+                    source,
+                    ex);
+
+                this.logger.Log(msg, Category.Exception, Priority.Medium);
+            }
+
+            return new ResourceDictionary();
         }
 
         public virtual void HandleModuleInitializationError(ModuleInfo moduleInfo, string assemblyName, Exception exception)
@@ -94,8 +145,8 @@
             if (moduleType == null)
             {
                 string msg = string.Format(
-                    CultureInfo.CurrentCulture, 
-                    "Unable to retrieve the module type {0} from the loaded assemblies.  You may need to specify a more fully-qualified type name.", 
+                    CultureInfo.CurrentCulture,
+                    "Unable to retrieve the module type {0} from the loaded assemblies.  You may need to specify a more fully-qualified type name.",
                     typeName);
 
                 throw new ModuleInitializeException(msg);

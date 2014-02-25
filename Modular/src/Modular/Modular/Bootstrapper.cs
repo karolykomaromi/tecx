@@ -1,9 +1,4 @@
-﻿using System.Windows.Input;
-using Infrastructure.Commands;
-using Infrastructure.UnityExtensions.Injection;
-using Infrastructure.ViewModels;
-
-namespace Modular
+﻿namespace Modular
 {
     using System;
     using System.Collections;
@@ -11,17 +6,18 @@ namespace Modular
     using System.IO;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Input;
     using System.Windows.Markup;
-    using System.Windows.Threading;
     using AutoMapper;
     using Infrastructure;
+    using Infrastructure.Commands;
     using Infrastructure.Events;
-    using Infrastructure.I18n;
     using Infrastructure.Logging;
     using Infrastructure.Modularity;
     using Infrastructure.Options;
     using Infrastructure.UnityExtensions;
-    using Microsoft.Practices.EnterpriseLibrary.Caching.Runtime.Caching;
+    using Infrastructure.UnityExtensions.Injection;
+    using Infrastructure.ViewModels;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration.ContainerModel.Unity;
     using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
@@ -129,9 +125,10 @@ namespace Modular
 
             this.Container.RegisterInstance<IMappingEngine>(Mapper.Engine);
 
-            this.Container.RegisterType<IListViewService, ListViewServiceClient>(new InjectionConstructor(typeof(Dispatcher)));
+            this.Container.RegisterType<IListViewService, ListViewServiceClient>();
 
             this.Container.RegisterType<ICommand, LoadListViewItemsCommand>("loadListViewItemsCommand");
+
             this.Container.RegisterType<DynamicListViewModel>(new SmartConstructor());
 
             this.RegisterTypeIfMissing(typeof(IOptions), typeof(CompositeOptions), true);

@@ -9,19 +9,25 @@ namespace Infrastructure.ViewModels
 
     public class NavigationViewModel : TitledViewModel, ISubscribeTo<IOptionsChanged<IOptions>>
     {
+        private readonly LocalizedString title;
         private readonly ICommand navigationCommand;
         private readonly Uri destination;
         private readonly Action<IOptionsChanged<IOptions>, NavigationViewModel> handleOptionsChanged;
 
         public NavigationViewModel(ICommand navigationCommand, ResourceAccessor title, Uri destination, Action<IOptionsChanged<IOptions>, NavigationViewModel> handleOptionsChanged)
-            : base(title)
         {
             Contract.Requires(navigationCommand != null);
             Contract.Requires(destination != null);
 
+            this.title = new LocalizedString(() => this.Title, title.GetResource, this.OnPropertyChanged);
             this.navigationCommand = navigationCommand;
             this.destination = destination;
             this.handleOptionsChanged = handleOptionsChanged ?? ((msg, vm) => { });
+        }
+
+        public override string Title
+        {
+            get { return this.title.Value; }
         }
 
         public Uri Destination

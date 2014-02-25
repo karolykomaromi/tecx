@@ -74,6 +74,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="StringHelperFixture.cs" />
     <Compile Include="TestObjects\ClassWithInterfaceCtorParameter.cs" />
     <Compile Include="TestObjects\ClassWithStringCtorParameter.cs" />
     <Compile Include="TestObjects\Consumer1.cs" />

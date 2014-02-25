@@ -146,6 +146,9 @@
     <Compile Include="..\Infrastructure.Server\Reflection\PropertyNotFoundException.cs">
       <Link>Reflection\PropertyNotFoundException.cs</Link>
     </Compile>
+    <Compile Include="..\Infrastructure.Server\StringHelper.cs">
+      <Link>StringHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Infrastructure.Server\TimeExtensions.cs">
       <Link>TimeExtensions.cs</Link>
     </Compile>
@@ -184,6 +187,15 @@
     </Compile>
     <Compile Include="..\Infrastructure.Server\UnityExtensions\Injection\SmartConstructor.cs">
       <Link>UnityExtensions\Injection\SmartConstructor.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Registration\CompositeConvention.cs">
+      <Link>UnityExtensions\Registration\CompositeConvention.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Registration\IRegistrationConvention.cs">
+      <Link>UnityExtensions\Registration\IRegistrationConvention.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Server\UnityExtensions\Registration\RegistrationConvention.cs">
+      <Link>UnityExtensions\Registration\RegistrationConvention.cs</Link>
     </Compile>
     <Compile Include="..\Infrastructure.Server\UnityExtensions\SelectedConstructorCache.cs">
       <Link>UnityExtensions\SelectedConstructorCache.cs</Link>
@@ -247,7 +259,6 @@
     <Compile Include="Modularity\RegionInitializer.cs" />
     <Compile Include="Modularity\UnityModule.cs" />
     <Compile Include="Modularity\UnityModuleInitializer.cs" />
-    <Compile Include="Modularity\WellKnownModuleNames.cs" />
     <Compile Include="Options\CompositeOptions.cs" />
     <Compile Include="Options\IOptions.cs" />
     <Compile Include="Options\IOptionsChanged.cs" />
@@ -280,6 +291,8 @@
     <Compile Include="UnityExtensions\EventAggregatorStrategy.cs" />
     <Compile Include="UnityExtensions\RegionExtension.cs" />
     <Compile Include="UnityExtensions\RegionStrategy.cs" />
+    <Compile Include="UnityExtensions\Registration\CommandsConvention.cs" />
+    <Compile Include="UnityExtensions\Registration\OptionsConvention.cs" />
     <Compile Include="ViewModels\NotificationBase.cs" />
     <Compile Include="ViewModels\ViewModelBinder.cs" />
     <Compile Include="ViewModels\DynamicListViewModel.cs" />

@@ -41,18 +41,13 @@
 
             container.RegisterType<SearchViewModel>(new ContainerControlledLifetimeManager(), new SmartConstructor());
 
-            container.RegisterType<ICommand, SearchCommand>("searchCommand");
-            container.RegisterType<ICommand, SuggestionsCommand>("suggestionsCommand");
-
-            container.RegisterType<ISearchService, SearchServiceClient>(new InjectionConstructor(typeof(Dispatcher)));
+            container.RegisterType<ISearchService, SearchServiceClient>();
 
             container.RegisterType<ICommand, NavigationCommand>(
                 RegionNames.Shell.Content,
                 new InjectionConstructor(new ResolvedParameter<INavigateAsync>(RegionNames.Shell.Content)));
 
-            container.RegisterType<SearchOptionsViewModel>(
-                new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(new ResourceAccessor(() => Labels.SearchOptions)));
+            container.RegisterType<SearchOptionsViewModel>(new ContainerControlledLifetimeManager());
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)
