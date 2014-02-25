@@ -1,13 +1,11 @@
-﻿using System.Globalization;
-
-namespace Infrastructure.Options
+﻿namespace Infrastructure.Options
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq.Expressions;
     using System.Reflection;
     using Infrastructure.Events;
-    using Infrastructure.I18n;
     using Infrastructure.ViewModels;
 
     public abstract class Options : TitledViewModel, IOptions
@@ -16,8 +14,7 @@ namespace Infrastructure.Options
         private readonly IDictionary<Option, Action<IOptions, object>> setters;
         private readonly Action<IOptions, Option> publish;
 
-        protected Options(ResourceAccessor title)
-            : base(title)
+        protected Options()
         {
             this.setters = new Dictionary<Option, Action<IOptions, object>>();
             this.getters = new Dictionary<Option, Func<IOptions, object>>();

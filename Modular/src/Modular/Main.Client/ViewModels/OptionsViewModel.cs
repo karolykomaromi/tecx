@@ -13,6 +13,7 @@
         private readonly LanguageSelectionViewModel languageSelection;
         private readonly ThemeSelectionViewModel themeSelection;
         private readonly AppInfoViewModel appInfo;
+        private readonly LocalizedString title;
         private readonly LocalizedString labelLanguageSelection;
         private readonly LocalizedString labelThemeSelection;
         private readonly LocalizedString labelTestConnection;
@@ -23,8 +24,7 @@
         private string notificationUrl;
         private string testConnectionReturn;
 
-        public OptionsViewModel(ResourceAccessor title, LanguageSelectionViewModel languageSelection, ThemeSelectionViewModel themeSelection, AppInfoViewModel appInfo, ICommand testNotificationConnectionCommand)
-            : base(title)
+        public OptionsViewModel(LanguageSelectionViewModel languageSelection, ThemeSelectionViewModel themeSelection, AppInfoViewModel appInfo, ICommand testNotificationConnectionCommand)
         {
             Contract.Requires(languageSelection != null);
             Contract.Requires(themeSelection != null);
@@ -36,6 +36,7 @@
             this.appInfo = appInfo;
             this.testNotificationCommand = testNotificationConnectionCommand;
 
+            this.title = new LocalizedString(() => this.Title, () => Labels.Options, this.OnPropertyChanged);
             this.labelLanguageSelection = new LocalizedString(() => this.LabelLanguageSelection, () => Labels.LanguageSelection, this.OnPropertyChanged);
             this.labelThemeSelection = new LocalizedString(() => this.LabelThemeSelection, () => Labels.ThemeSelection, this.OnPropertyChanged);
             this.labelTestConnection = new LocalizedString(() => this.LabelTestConnection, () => Labels.TestConnection, this.OnPropertyChanged);
@@ -45,6 +46,11 @@
             Uri source = Application.Current.Host.Source;
 
             this.NotificationUrl = source.AbsoluteUri.Replace(source.AbsolutePath, string.Empty) + "/signalr/hubs/";
+        }
+
+        public override string Title
+        {
+            get { return this.title.Value; }
         }
 
         public string LabelLanguageSelection

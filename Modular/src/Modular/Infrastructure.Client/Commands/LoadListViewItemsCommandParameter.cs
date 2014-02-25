@@ -1,7 +1,7 @@
-﻿using Infrastructure.ViewModels;
-
-namespace Infrastructure.Commands
+﻿namespace Infrastructure.Commands
 {
+    using Infrastructure.ViewModels;
+
     public class LoadListViewItemsCommandParameter
     {
         private readonly int rowIndex;

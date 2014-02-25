@@ -49,18 +49,9 @@
 
         protected override void ConfigureContainer(IUnityContainer container)
         {
-            container.RegisterType<ICommand, ChangeLanguageCommand>("changeLanguageCommand");
-
             container.RegisterType<LanguageSelectionViewModel>(new ContainerControlledLifetimeManager(), new SmartConstructor());
-
-            container.RegisterType<ICommand, ChangeThemeCommand>("changeThemeCommand");
             container.RegisterType<ThemeSelectionViewModel>(new ContainerControlledLifetimeManager(), new SmartConstructor());
-
-            container.RegisterType<ICommand, TestNotificationConnectionCommand>("testNotificationConnectionCommand");
-
-            container.RegisterType<OptionsViewModel>(
-                new ContainerControlledLifetimeManager(),
-                new SmartConstructor(new ResourceAccessor(() => Labels.Options)));
+            container.RegisterType<OptionsViewModel>(new ContainerControlledLifetimeManager(), new SmartConstructor());
         }
     }
 }

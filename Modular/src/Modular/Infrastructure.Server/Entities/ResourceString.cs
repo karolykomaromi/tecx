@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
-
-namespace Infrastructure.Entities
+﻿namespace Infrastructure.Entities
 {
+    using System.Runtime.Serialization;
+
     [DataContract]
     public class ResourceString
     {

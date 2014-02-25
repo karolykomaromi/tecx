@@ -1,10 +1,9 @@
-using System.Globalization;
-
 namespace Infrastructure.Modularity
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
+    using System.Globalization;
     using Microsoft.Practices.Prism.Logging;
 
     public class ModuleTracker : IModuleTracker

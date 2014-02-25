@@ -24,7 +24,6 @@
             Contract.Requires(take >= 0);
 
             return null;
-
         }
 
         public ResourceString[] EndGetStrings(IAsyncResult result)

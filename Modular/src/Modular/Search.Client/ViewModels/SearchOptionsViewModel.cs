@@ -1,21 +1,26 @@
 ﻿namespace Search.ViewModels
 {
-    using System;
     using Infrastructure.I18n;
     using Infrastructure.Options;
     using Search.Assets.Resources;
 
     public class SearchOptionsViewModel : Options
     {
+        private readonly LocalizedString title;
         private readonly LocalizedString labelIsSearchEnabled;
 
         private bool isSearchEnabled;
 
-        public SearchOptionsViewModel(ResourceAccessor title)
-            : base(title)
+        public SearchOptionsViewModel()
         {
+            this.title = new LocalizedString(() => this.Title, () => Labels.SearchOptions, this.OnPropertyChanged);
             this.labelIsSearchEnabled = new LocalizedString(() => this.LabelIsSearchEnabled, () => Labels.IsSearchEnabled, this.OnPropertyChanged);
             this.IsSearchEnabled = true;
+        }
+
+        public override string Title
+        {
+            get { return this.title.Value; }
         }
 
         public bool IsSearchEnabled
