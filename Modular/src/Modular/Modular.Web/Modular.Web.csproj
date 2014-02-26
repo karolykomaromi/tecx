@@ -151,10 +151,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hosting\EmbeddedPathHelper.cs" />
+    <Compile Include="Hosting\EmbeddedResourceVirtualDirectory.cs" />
+    <Compile Include="Hosting\EmbeddedResourceVirtualFile.cs" />
+    <Compile Include="Hosting\EmbeddedResourceVirtualPathProvider.cs" />
+    <Compile Include="Hosting\IVirtualPathUtility.cs" />
     <Compile Include="Hosting\UnityInstanceProvider.cs" />
     <Compile Include="Hosting\UnityServiceBehavior.cs" />
     <Compile Include="Hosting\UnityServiceHost.cs" />
     <Compile Include="Hosting\UnityServiceHostFactory.cs" />
+    <Compile Include="Hosting\VirtualPathUtilityContract.cs" />
+    <Compile Include="Hosting\VirtualPathUtilityWrapper.cs" />
     <Compile Include="Hubs\NotificationHub.cs" />
     <Compile Include="Hubs\UnityHubActivator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
