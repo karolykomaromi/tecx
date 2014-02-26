@@ -52,19 +52,12 @@ namespace Infrastructure.Modularity
 
         public virtual void Initialize()
         {
-            this.ConfigureContainer(this.Container);
-
             this.ConfigureRegions(this.RegionManager);
 
             this.moduleTracker.RecordModuleInitialized(this.ModuleName);
         }
-        
-        protected internal virtual void ConfigureContainer(IUnityContainer container)
-        {
-            Contract.Requires(container != null);
-        }
 
-        protected internal virtual void ConfigureRegions(IRegionManager regionManager)
+        protected virtual void ConfigureRegions(IRegionManager regionManager)
         {
             Contract.Requires(regionManager != null);
         }

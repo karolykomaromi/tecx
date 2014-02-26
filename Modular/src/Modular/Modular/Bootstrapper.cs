@@ -18,6 +18,7 @@
     using Infrastructure.UnityExtensions;
     using Infrastructure.UnityExtensions.Injection;
     using Infrastructure.ViewModels;
+    using Main.ViewModels;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration.ContainerModel.Unity;
     using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
@@ -102,7 +103,6 @@
             this.Container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
             this.Container.RegisterType<IModuleTracker, ModuleTracker>(new ContainerControlledLifetimeManager());
 
-            this.Container.AddNewExtension<RegionExtension>();
             this.Container.AddNewExtension<EventAggregatorExtension>();
 
             this.Container.RegisterInstance(Deployment.Current.Dispatcher);
@@ -123,9 +123,12 @@
             
 
             this.Container.RegisterType<IListViewService, ListViewServiceClient>();
+
             this.Container.RegisterType<ICommand, LoadListViewItemsCommand>("loadListViewItemsCommand");
             this.Container.RegisterType<DynamicListViewModel>(new SmartConstructor());
             this.Container.RegisterType<IOptions, CompositeOptions>(new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<ICommand, NavigateContentCommand>("navigateContentCommand");
+            this.Container.RegisterType<OptionsViewModel>(new ContainerControlledLifetimeManager(), new SmartConstructor());
         }
 
         protected override void ConfigureModuleCatalog()

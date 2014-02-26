@@ -1,11 +1,10 @@
 ﻿namespace Search
 {
     using System.Windows.Controls;
-    using System.Windows.Input;
     using Infrastructure;
-    using Infrastructure.Commands;
     using Infrastructure.I18n;
     using Infrastructure.Modularity;
+    using Infrastructure.Options;
     using Infrastructure.UnityExtensions.Injection;
     using Infrastructure.Views;
     using Microsoft.Practices.Prism.Logging;
@@ -31,21 +30,6 @@
             get { return Name; }
         }
 
-        protected override void ConfigureContainer(IUnityContainer container)
-        {
-            container.RegisterType<SearchResultsViewModel>(
-                new ContainerControlledLifetimeManager(),
-                new SmartConstructor(new ResolvedParameter<ICommand>(RegionNames.Shell.Content)));
-
-            container.RegisterType<SearchViewModel>(new ContainerControlledLifetimeManager(), new SmartConstructor());
-
-            container.RegisterType<ISearchService, SearchServiceClient>();
-
-            container.RegisterType<ICommand, NavigationCommand>(
-                RegionNames.Shell.Content,
-                new InjectionConstructor(new ResolvedParameter<INavigateAsync>(RegionNames.Shell.Content)));
-        }
-
         protected override void ConfigureRegions(IRegionManager regionManager)
         {
             Control search;
@@ -58,6 +42,13 @@
             if (this.TryGetViewFor<SearchResultsViewModel>(out searchResult, new Parameter("title", new ResourceAccessor(() => Labels.SearchResults))))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, searchResult);
+
+                NavigationView navigation = new NavigationBuilder(this.RegionManager)
+                    .ToView(searchResult)
+                    .WithTitle(() => Labels.SearchResults)
+                    .HideOn(Option.Create((SearchOptionsViewModel vm) => vm.IsSearchEnabled));
+
+                regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
             }
 
             Control searchOptions;
@@ -65,29 +56,6 @@
             {
                 regionManager.AddToRegion(RegionNames.Main.Options, searchOptions);
             }
-
-            NavigationView navigation = new NavigationBuilder()
-                                                        .ToView(searchResult)
-                                                        .InRegion(regionManager.Regions[RegionNames.Shell.Content])
-                                                        .WithTitle(() => Labels.SearchResults)
-                                                        .OnOptionsChanged((msg, vm) =>
-                                                            {
-                                                                var options = msg.Options as SearchOptionsViewModel;
-
-                                                                if (options != null)
-                                                                {
-                                                                    if (options.IsSearchEnabled)
-                                                                    {
-                                                                        vm.Show();
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        vm.Hide();
-                                                                    }
-                                                                }
-                                                            });
-
-            regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
         }
     }
 }

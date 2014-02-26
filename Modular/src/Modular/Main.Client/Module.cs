@@ -1,11 +1,11 @@
 ﻿namespace Main
 {
     using System.Windows.Controls;
-    using Assets.Resources;
     using Infrastructure;
     using Infrastructure.Modularity;
     using Infrastructure.UnityExtensions.Injection;
     using Infrastructure.Views;
+    using Main.Assets.Resources;
     using Main.ViewModels;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
@@ -36,19 +36,11 @@
                 regionManager.AddToRegion(RegionNames.Shell.Content, options);
             }
 
-            NavigationView navigation = new NavigationBuilder()
+            NavigationView navigation = new NavigationBuilder(this.RegionManager)
                 .ToView(options)
-                .InRegion(regionManager.Regions[RegionNames.Shell.Content])
                 .WithTitle(() => Labels.Options);
 
             regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
-        }
-
-        protected override void ConfigureContainer(IUnityContainer container)
-        {
-            container.RegisterType<LanguageSelectionViewModel>(new ContainerControlledLifetimeManager(), new SmartConstructor());
-            container.RegisterType<ThemeSelectionViewModel>(new ContainerControlledLifetimeManager(), new SmartConstructor());
-            container.RegisterType<OptionsViewModel>(new ContainerControlledLifetimeManager(), new SmartConstructor());
         }
     }
 }

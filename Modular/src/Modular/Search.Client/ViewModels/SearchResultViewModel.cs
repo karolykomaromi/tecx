@@ -7,16 +7,16 @@ namespace Search.ViewModels
 
     public class SearchResultViewModel : ViewModel
     {
-        private readonly ICommand openDetailsCommand;
+        private readonly ICommand navigateContentCommand;
         private string foundSearchTermIn;
         private Uri uri;
         private string name;
 
-        public SearchResultViewModel(ICommand openDetailsCommand)
+        public SearchResultViewModel(ICommand navigateContentCommand)
         {
-            Contract.Requires(openDetailsCommand != null);
+            Contract.Requires(navigateContentCommand != null);
 
-            this.openDetailsCommand = openDetailsCommand;
+            this.navigateContentCommand = navigateContentCommand;
             this.foundSearchTermIn = string.Empty;
             this.name = string.Empty;
             this.uri = new Uri("http://localhost");
@@ -78,7 +78,7 @@ namespace Search.ViewModels
 
         public ICommand OpenDetailsCommand
         {
-            get { return this.openDetailsCommand; }
+            get { return this.navigateContentCommand; }
         }
     }
 }

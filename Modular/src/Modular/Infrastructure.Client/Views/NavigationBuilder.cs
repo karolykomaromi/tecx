@@ -16,12 +16,15 @@ namespace Infrastructure.Views
     {
         private readonly List<KeyValuePair<string, string>> parameters;
         private ViewModel target;
-        private INavigateAsync region;
+        private IRegionManager regionManager;
         private Action<IOptionsChanged<IOptions>, NavigationViewModel> handleOptionsChanged;
         private Func<string> title;
 
-        public NavigationBuilder()
+        public NavigationBuilder(IRegionManager regionManager)
         {
+            Contract.Requires(regionManager != null);
+
+            this.regionManager = regionManager;
             this.parameters = new List<KeyValuePair<string, string>>();
         }
 
@@ -43,14 +46,6 @@ namespace Infrastructure.Views
             return this;
         }
 
-        public NavigationBuilder InRegion(INavigateAsync region)
-        {
-            Contract.Requires(region != null);
-
-            this.region = region;
-            return this;
-        }
-
         public NavigationBuilder WithTitle(Func<string> title)
         {
             Contract.Requires(title != null);
@@ -60,16 +55,42 @@ namespace Infrastructure.Views
             return this;
         }
 
-        public NavigationBuilder OnOptionsChanged(Action<IOptionsChanged<IOptions>, NavigationViewModel> handleOptionsChanged)
+        public NavigationBuilder HideOn(Option option)
         {
-            this.handleOptionsChanged = handleOptionsChanged;
+            Action<IOptionsChanged<IOptions>, NavigationViewModel> onOptionsChanged =
+                (msg, vm) =>
+                {
+                    Option option1 = option;
+                    if (msg.OptionName != option1)
+                    {
+                        return;
+                    }
+
+                    object value = msg.Options[option1];
+
+                    if (value is bool)
+                    {
+                        bool isEnabled = (bool)value;
+
+                        if (isEnabled)
+                        {
+                            vm.Show();
+                        }
+                        else
+                        {
+                            vm.Hide();
+                        }
+                    }
+                };
+
+            this.handleOptionsChanged = onOptionsChanged;
 
             return this;
         }
 
         public NavigationView Build()
         {
-            ICommand navigationCommand = new NavigationCommand(this.region);
+            ICommand navigationCommand = new NavigateContentCommand(this.regionManager);
 
             UriQuery query = new UriQuery();
 
@@ -79,8 +100,8 @@ namespace Infrastructure.Views
             }
 
             NavigationViewModel viewModel = new NavigationViewModel(
-                navigationCommand, 
-                new ResourceAccessor(this.title), 
+                navigationCommand,
+                new ResourceAccessor(this.title),
                 new Uri(this.target.GetType().Name.Replace("Model", string.Empty) + query, UriKind.Relative),
                 this.handleOptionsChanged)
                 {

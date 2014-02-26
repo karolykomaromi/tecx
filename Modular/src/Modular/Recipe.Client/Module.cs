@@ -39,10 +39,9 @@
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, recipes);
 
-                NavigationView navigation = new NavigationBuilder()
+                NavigationView navigation = new NavigationBuilder(this.RegionManager)
                                                     .ToView(recipes)
                                                     .WithParameter("name", recipesList.ToString())
-                                                    .InRegion(regionManager.Regions[RegionNames.Shell.Content])
                                                     .WithTitle(() => Labels.Recipes);
 
                 regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
@@ -55,10 +54,9 @@
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, ingredients);
 
-                NavigationView navigation = new NavigationBuilder()
+                NavigationView navigation = new NavigationBuilder(this.RegionManager)
                                                 .ToView(ingredients)
                                                 .WithParameter("name", ingredientsList.ToString())
-                                                .InRegion(regionManager.Regions[RegionNames.Shell.Content])
                                                 .WithTitle(() => Labels.Ingredients);
 
                 regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);

@@ -5,15 +5,15 @@
     using System.Windows.Input;
     using Microsoft.Practices.Prism.Regions;
 
-    public class NavigationCommand : ICommand
+    public class NavigateContentCommand : ICommand
     {
-        private readonly INavigateAsync navigate;
+        private readonly IRegionManager regionManager;
 
-        public NavigationCommand(INavigateAsync navigate)
+        public NavigateContentCommand(IRegionManager regionManager)
         {
-            Contract.Requires(navigate != null);
+            Contract.Requires(regionManager != null);
 
-            this.navigate = navigate;
+            this.regionManager = regionManager;
         }
 
         public event EventHandler CanExecuteChanged = delegate { };
@@ -31,7 +31,12 @@
 
             if (destination != null)
             {
-                this.navigate.RequestNavigate(destination);
+                IRegion content = this.regionManager.Regions[RegionNames.Shell.Content];
+
+                if (content != null)
+                {
+                    content.RequestNavigate(destination);
+                }
             }
         }
     }
