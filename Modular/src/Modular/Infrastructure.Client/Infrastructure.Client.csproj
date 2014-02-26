@@ -210,7 +210,7 @@
     <Compile Include="Commands\CanExecuteChanged.cs" />
     <Compile Include="Commands\LoadListViewItemsCommand.cs" />
     <Compile Include="Commands\LoadListViewItemsCommandParameter.cs" />
-    <Compile Include="Commands\NavigationCommand.cs" />
+    <Compile Include="Commands\NavigateContentCommand.cs" />
     <Compile Include="Commands\NullCommand.cs" />
     <Compile Include="Converters\DateTimeFormatConverter.cs" />
     <Compile Include="Converters\NullConverter.cs" />
@@ -285,10 +285,12 @@
     <Compile Include="Triggers\TranslateColumnHeader.cs" />
     <Compile Include="UnityExtensions\EventAggregatorExtension.cs" />
     <Compile Include="UnityExtensions\EventAggregatorStrategy.cs" />
-    <Compile Include="UnityExtensions\RegionExtension.cs" />
-    <Compile Include="UnityExtensions\RegionStrategy.cs" />
     <Compile Include="UnityExtensions\Registration\CommandsConvention.cs" />
     <Compile Include="UnityExtensions\Registration\OptionsConvention.cs" />
+    <Compile Include="UnityExtensions\Registration\ServiceClientConvention.cs" />
+    <Compile Include="UnityExtensions\Registration\ViewModelConvention.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ViewModels\NotificationBase.cs" />
     <Compile Include="ViewModels\ViewModelBinder.cs" />
     <Compile Include="ViewModels\DynamicListViewModel.cs" />

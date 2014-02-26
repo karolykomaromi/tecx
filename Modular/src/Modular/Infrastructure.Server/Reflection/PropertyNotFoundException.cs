@@ -20,7 +20,6 @@
             this.propertyName = propertyName;
         }
 
-
         public PropertyNotFoundException(Type type, string propertyName)
             : this(type, propertyName, null)
         {

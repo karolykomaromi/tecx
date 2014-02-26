@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Infrastructure.Options;
-
-namespace Infrastructure.Modularity
+﻿namespace Infrastructure.Modularity
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Globalization;
+    using System.Linq;
     using System.Reflection;
     using System.Windows;
     using AutoMapper;
@@ -70,62 +68,6 @@ namespace Infrastructure.Modularity
             }
         }
 
-        private void ConfigureContainer(Assembly moduleAssembly)
-        {
-            IRegistrationConvention convention = new CompositeConvention(new CommandsConvention(), new OptionsConvention());
-
-            foreach (Type type in moduleAssembly.GetExportedTypes())
-            {
-                convention.RegisterOnMatch(this.container, type);
-            }
-        }
-
-        private void ConfigureAutoMapper(Assembly moduleAssembly)
-        {
-            IDictionary<string, Type> viewModels = moduleAssembly
-                .GetExportedTypes()
-                .Where(type => type.Name.EndsWith("ViewModel", StringComparison.Ordinal))
-                .ToDictionary(type => type.Name.Replace("ViewModel", string.Empty).ToUpperInvariant());
-
-            IDictionary<string, Type> entities = moduleAssembly
-                .GetExportedTypes()
-                .Where(type => type.FullName.IndexOf("Entities", StringComparison.OrdinalIgnoreCase) >= 0)
-                .ToDictionary(type => type.Name.ToUpperInvariant());
-
-            foreach (var entity in entities)
-            {
-                Type viewModelType;
-                if (viewModels.TryGetValue(entity.Key, out viewModelType))
-                {
-                    this.mapper.ConfigurationProvider.CreateTypeMap(entity.Value, viewModelType);
-                }
-            }
-        }
-
-        private ResourceDictionary CreateModuleResourceDictionary(IModule moduleInstance)
-        {
-            string uriString = "/" + moduleInstance.GetType().Namespace + ".Client;component/Assets/Resources/Resources.xaml";
-            Uri source = new Uri(uriString, UriKind.Relative);
-
-            try
-            {
-                return new ResourceDictionary { Source = source };
-            }
-            catch (Exception ex)
-            {
-                string msg = string.Format(
-                    CultureInfo.CurrentCulture,
-                    "An exception occured while trying to create the default resources for module '{0}' from source '{1}'.\r\n{2}",
-                    moduleInstance.GetType().FullName,
-                    source,
-                    ex);
-
-                this.logger.Log(msg, Category.Exception, Priority.Medium);
-            }
-
-            return new ResourceDictionary();
-        }
-
         public virtual void HandleModuleInitializationError(ModuleInfo moduleInfo, string assemblyName, Exception exception)
         {
             Contract.Requires(moduleInfo != null);
@@ -181,5 +123,66 @@ namespace Infrastructure.Modularity
 
             return (IModule)this.container.Resolve(moduleType);
         }
+
+        private void ConfigureContainer(Assembly moduleAssembly)
+        {
+            IRegistrationConvention convention = new CompositeConvention(
+                new CommandsConvention(), 
+                new OptionsConvention(), 
+                new ViewModelConvention(), 
+                new ServiceClientConvention());
+
+            foreach (Type type in moduleAssembly.GetExportedTypes())
+            {
+                convention.RegisterOnMatch(this.container, type);
+            }
+        }
+
+        private void ConfigureAutoMapper(Assembly moduleAssembly)
+        {
+            IDictionary<string, Type> viewModels = moduleAssembly
+                .GetExportedTypes()
+                .Where(type => type.Name.EndsWith("ViewModel", StringComparison.Ordinal))
+                .ToDictionary(type => type.Name.Replace("ViewModel", string.Empty).ToUpperInvariant());
+
+            IDictionary<string, Type> entities = moduleAssembly
+                .GetExportedTypes()
+                .Where(type => type.FullName.IndexOf("Entities", StringComparison.OrdinalIgnoreCase) >= 0)
+                .ToDictionary(type => type.Name.ToUpperInvariant());
+
+            foreach (var entity in entities)
+            {
+                Type viewModelType;
+                if (viewModels.TryGetValue(entity.Key, out viewModelType))
+                {
+                    this.mapper.ConfigurationProvider.CreateTypeMap(entity.Value, viewModelType);
+                }
+            }
+        }
+
+        private ResourceDictionary CreateModuleResourceDictionary(IModule moduleInstance)
+        {
+            string uriString = "/" + moduleInstance.GetType().Namespace + ".Client;component/Assets/Resources/Resources.xaml";
+            Uri source = new Uri(uriString, UriKind.Relative);
+
+            try
+            {
+                return new ResourceDictionary { Source = source };
+            }
+            catch (Exception ex)
+            {
+                string msg = string.Format(
+                    CultureInfo.CurrentCulture,
+                    "An exception occured while trying to create the default resources for module '{0}' from source '{1}'.\r\n{2}",
+                    moduleInstance.GetType().FullName,
+                    source,
+                    ex);
+
+                this.logger.Log(msg, Category.Exception, Priority.Medium);
+            }
+
+            return new ResourceDictionary();
+        }
+
     }
 }

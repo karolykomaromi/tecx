@@ -129,6 +129,7 @@
     <Content Include="LoggingService.svc" />
     <Content Include="Modular.aspx" />
     <Content Include="Default.html" />
+    <Content Include="RecipeService.svc" />
     <Content Include="ResourceService.svc" />
     <Content Include="SearchService.svc" />
     <Content Include="Silverlight.js" />
@@ -163,6 +164,10 @@
     <ProjectReference Include="..\Infrastructure.Server\Infrastructure.Server.csproj">
       <Project>{DF45D65F-DEDE-410A-8102-1168B8D224FF}</Project>
       <Name>Infrastructure.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Recipe.Server\Recipe.Server.csproj">
+      <Project>{fd6a132a-1d0f-4077-aede-85de47529e72}</Project>
+      <Name>Recipe.Server</Name>
     </ProjectReference>
     <ProjectReference Include="..\Search.Server\Search.Server.csproj">
       <Project>{B0971617-85EB-457F-91FD-016F2CC825D9}</Project>

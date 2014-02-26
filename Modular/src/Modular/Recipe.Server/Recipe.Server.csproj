@@ -49,8 +49,16 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Ingredient.cs" />
+    <Compile Include="IngredientItem.cs" />
+    <Compile Include="IRecipeService.cs" />
+    <Compile Include="Measure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recipe.cs" />
     <Compile Include="RecipeService.cs" />
+    <Compile Include="SpecialKitchenMeasure.cs" />
+    <Compile Include="VolumeMeasure.cs" />
+    <Compile Include="WeightMeasure.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
