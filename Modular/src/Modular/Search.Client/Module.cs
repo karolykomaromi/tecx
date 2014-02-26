@@ -2,7 +2,6 @@
 {
     using System.Windows.Controls;
     using System.Windows.Input;
-    using System.Windows.Threading;
     using Infrastructure;
     using Infrastructure.Commands;
     using Infrastructure.I18n;
@@ -13,7 +12,6 @@
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
     using Search.Assets.Resources;
-    using Search.Commands;
     using Search.ViewModels;
 
     public class Module : UnityModule
@@ -23,8 +21,8 @@
         /// </summary>
         public static readonly string Name = "Search";
 
-        public Module(IUnityContainer container, ILoggerFacade logger, IModuleTracker moduleTracker, IModuleInitializer initializer)
-            : base(container, logger, moduleTracker, initializer)
+        public Module(IUnityContainer container, ILoggerFacade logger, IModuleTracker moduleTracker, IRegionManager regionManager)
+            : base(container, logger, moduleTracker, regionManager)
         {
         }
 
@@ -46,8 +44,6 @@
             container.RegisterType<ICommand, NavigationCommand>(
                 RegionNames.Shell.Content,
                 new InjectionConstructor(new ResolvedParameter<INavigateAsync>(RegionNames.Shell.Content)));
-
-            container.RegisterType<SearchOptionsViewModel>(new ContainerControlledLifetimeManager());
         }
 
         protected override void ConfigureRegions(IRegionManager regionManager)

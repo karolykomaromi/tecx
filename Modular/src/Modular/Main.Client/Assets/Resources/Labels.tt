@@ -27,7 +27,6 @@ namespace Main.Assets.Resources
 
     public class Labels
     {
-        private static readonly object Sync = new object();
         private static IResourceManager resourceManager;
         private static CultureInfo resourceCulture;
 
@@ -76,7 +75,7 @@ namespace Main.Assets.Resources
             WriteLine(string.Empty);
             WriteLine("        public static string " + name);
             WriteLine("        {");
-            WriteLine("            get { return ResourceManager.GetString(\"" + name + "\", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }");
+            WriteLine("            get { return ResourceManager.GetString(\"" + name + "\", resourceCulture ?? CultureInfo.CurrentUICulture); }");
             WriteLine("        }");
         }
     }

@@ -1,15 +1,9 @@
 namespace Infrastructure.Modularity
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Globalization;
-    using System.Linq;
-    using System.Reflection;
-    using System.Windows;
     using System.Windows.Controls;
-    using AutoMapper;
-    using Infrastructure.Options;
     using Infrastructure.UnityExtensions.Injection;
     using Infrastructure.ViewModels;
     using Microsoft.Practices.Prism.Logging;
@@ -22,19 +16,19 @@ namespace Infrastructure.Modularity
         private readonly IUnityContainer container;
         private readonly ILoggerFacade logger;
         private readonly IModuleTracker moduleTracker;
-        private readonly IModuleInitializer initializer;
+        private readonly IRegionManager regionManager;
 
-        protected UnityModule(IUnityContainer container, ILoggerFacade logger, IModuleTracker moduleTracker, IModuleInitializer initializer)
+        protected UnityModule(IUnityContainer container, ILoggerFacade logger, IModuleTracker moduleTracker, IRegionManager regionManager)
         {
             Contract.Requires(container != null);
             Contract.Requires(logger != null);
             Contract.Requires(moduleTracker != null);
-            Contract.Requires(initializer != null);
+            Contract.Requires(regionManager != null);
 
             this.container = container;
             this.logger = logger;
             this.moduleTracker = moduleTracker;
-            this.initializer = initializer;
+            this.regionManager = regionManager;
 
             this.moduleTracker.RecordModuleConstructed(this.ModuleName);
         }
@@ -51,41 +45,20 @@ namespace Infrastructure.Modularity
             get { return this.container; }
         }
 
+        protected IRegionManager RegionManager
+        {
+            get { return this.regionManager; }
+        }
+
         public virtual void Initialize()
         {
-            this.initializer.Initialize(this);
+            this.ConfigureContainer(this.Container);
+
+            this.ConfigureRegions(this.RegionManager);
 
             this.moduleTracker.RecordModuleInitialized(this.ModuleName);
         }
-
-        protected internal virtual IOptions CreateModuleOptions()
-        {
-            Contract.Ensures(Contract.Result<IOptions>() != null);
-
-            Type optionsType = this.GetType().Assembly.GetExportedTypes().FirstOrDefault(typeof(IOptions).IsAssignableFrom);
-
-            if (optionsType != null)
-            {
-                try
-                {
-                    return (IOptions)this.Container.Resolve(optionsType);
-                }
-                catch (ResolutionFailedException ex)
-                {
-                    string msg = string.Format(
-                        CultureInfo.CurrentCulture,
-                        "An error occured while trying to resolve the default options for module '{0}'. Options type is '{1}'.\r\n{2}", 
-                        this.ModuleName, 
-                        optionsType.AssemblyQualifiedName, 
-                        ex);
-
-                    this.Logger.Log(msg, Category.Exception, Priority.Medium);
-                }
-            }
-
-            return new NullOptions();
-        }
-
+        
         protected internal virtual void ConfigureContainer(IUnityContainer container)
         {
             Contract.Requires(container != null);
@@ -94,59 +67,6 @@ namespace Infrastructure.Modularity
         protected internal virtual void ConfigureRegions(IRegionManager regionManager)
         {
             Contract.Requires(regionManager != null);
-        }
-
-        protected internal virtual void ConfigureMapping(IMappingEngine mappingEngine)
-        {
-            Contract.Requires(mappingEngine != null);
-
-            Assembly assembly = this.GetType().Assembly;
-
-            IDictionary<string, Type> viewModels =
-                assembly.GetExportedTypes()
-                        .Where(type => type.Name.EndsWith("ViewModel", StringComparison.Ordinal))
-                        .ToDictionary(type => type.Name.Replace("ViewModel", string.Empty).ToUpperInvariant());
-
-            IDictionary<string, Type> entities =
-                assembly.GetExportedTypes()
-                        .Where(type => type.FullName.IndexOf("Entities", StringComparison.OrdinalIgnoreCase) > -1)
-                        .ToDictionary(type => type.Name.ToUpperInvariant());
-
-            foreach (var entity in entities)
-            {
-                Type viewModelType;
-                if (viewModels.TryGetValue(entity.Key, out viewModelType))
-                {
-                    mappingEngine.ConfigurationProvider.CreateTypeMap(entity.Value, viewModelType);
-                }
-            }
-        }
-
-        protected internal virtual ResourceDictionary CreateModuleResources()
-        {
-            Contract.Ensures(Contract.Result<ResourceDictionary>() != null);
-
-            string uriString = "/" + this.GetType().Namespace + ".Client;component/Assets/Resources/Resources.xaml";
-
-            Uri source = new Uri(uriString, UriKind.Relative);
-
-            try
-            {
-                return new ResourceDictionary { Source = source };
-            }
-            catch (Exception ex)
-            {
-                string msg = string.Format(
-                    CultureInfo.CurrentCulture,
-                    "An exception occured while trying to create the default resources for module '{0}' from source '{1}'.\r\n{2}",
-                    this.ModuleName, 
-                    source, 
-                    ex);
-
-                this.Logger.Log(msg, Category.Exception, Priority.Medium);
-            }
-
-            return new ResourceDictionary();
         }
 
         protected virtual bool TryGetViewFor<TViewModel>(out Control view, params Parameter[] parameters)

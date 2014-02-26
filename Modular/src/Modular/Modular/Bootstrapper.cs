@@ -98,14 +98,15 @@
         {
             base.ConfigureContainer();
 
-            this.Container.RegisterType<Microsoft.Practices.Prism.Modularity.IModuleInitializer, UnityModuleInitializer>(new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IModuleInitializer, UnityModuleInitializer>(new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IModuleTracker, ModuleTracker>(new ContainerControlledLifetimeManager());
 
             this.Container.AddNewExtension<RegionExtension>();
+            this.Container.AddNewExtension<EventAggregatorExtension>();
 
             this.Container.RegisterInstance(Deployment.Current.Dispatcher);
-            this.Container.AddNewExtension<EventAggregatorExtension>();
-            this.RegisterTypeIfMissing(typeof(IEventAggregator), typeof(EventAggregator), true);
-            this.RegisterTypeIfMissing(typeof(IModuleTracker), typeof(ModuleTracker), true);
+            this.Container.RegisterInstance<IMappingEngine>(Mapper.Engine);
 
             string xaml;
             using (Stream stream = this.GetType().Assembly.GetManifestResourceStream("Modular.CachingConfiguration.xaml"))
@@ -119,19 +120,12 @@
             IDictionary configDictionary = (IDictionary)XamlReader.Load(xaml);
             IConfigurationSource configSource = DictionaryConfigurationSource.FromDictionary(configDictionary);
             EnterpriseLibraryContainer.ConfigureContainer(new UnityContainerConfigurator(this.Container), configSource);
-
-            this.Container.RegisterType<ModuleResourcesInitializer>(new InjectionConstructor(Application.Current.Resources));
-            this.Container.RegisterType<Infrastructure.Modularity.IModuleInitializer, DefaultInitializer>();
-
-            this.Container.RegisterInstance<IMappingEngine>(Mapper.Engine);
+            
 
             this.Container.RegisterType<IListViewService, ListViewServiceClient>();
-
             this.Container.RegisterType<ICommand, LoadListViewItemsCommand>("loadListViewItemsCommand");
-
             this.Container.RegisterType<DynamicListViewModel>(new SmartConstructor());
-
-            this.RegisterTypeIfMissing(typeof(IOptions), typeof(CompositeOptions), true);
+            this.Container.RegisterType<IOptions, CompositeOptions>(new ContainerControlledLifetimeManager());
         }
 
         protected override void ConfigureModuleCatalog()

@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Infrastructure.Options;
 
 namespace Infrastructure.Modularity
 {
@@ -6,6 +8,8 @@ namespace Infrastructure.Modularity
     using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Reflection;
+    using System.Windows;
+    using AutoMapper;
     using Infrastructure.UnityExtensions.Registration;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Modularity;
@@ -14,14 +18,17 @@ namespace Infrastructure.Modularity
     public class UnityModuleInitializer : Microsoft.Practices.Prism.Modularity.IModuleInitializer
     {
         private readonly IUnityContainer container;
+        private readonly IMappingEngine mapper;
         private readonly ILoggerFacade logger;
 
-        public UnityModuleInitializer(IUnityContainer container, ILoggerFacade logger)
+        public UnityModuleInitializer(IUnityContainer container, IMappingEngine mapper, ILoggerFacade logger)
         {
             Contract.Requires(container != null);
+            Contract.Requires(mapper != null);
             Contract.Requires(logger != null);
 
             this.container = container;
+            this.mapper = mapper;
             this.logger = logger;
         }
 
@@ -38,30 +45,18 @@ namespace Infrastructure.Modularity
                 {
                     Assembly moduleAssembly = moduleInstance.GetType().Assembly;
 
-                    if (moduleAssembly != null)
-                    {
-                        IRegistrationConvention convention = new CompositeConvention(new CommandsConvention(), new OptionsConvention());
+                    this.ConfigureContainer(moduleAssembly);
 
-                        foreach (Type type in moduleAssembly.GetExportedTypes())
-                        {
-                            convention.RegisterOnMatch(this.container, type);
-                        }
-                    }
-
-                    if (Application.Current != null &&
-                        Application.Current.Resources != null)
+                    if (Application.Current != null && Application.Current.Resources != null)
                     {
                         ResourceDictionary moduleResources = this.CreateModuleResourceDictionary(moduleInstance);
 
                         Application.Current.Resources.MergedDictionaries.Add(moduleResources);
                     }
 
-                    //// automapper
-
-                    //// options => how do we collect options from latebound modules?
+                    this.ConfigureAutoMapper(moduleAssembly);
 
                     //// regions => should be done by module
-
 
                     moduleInstance.Initialize();
                 }
@@ -72,6 +67,38 @@ namespace Infrastructure.Modularity
                     moduleInfo,
                     moduleInstance != null ? moduleInstance.GetType().Assembly.FullName : null,
                     ex);
+            }
+        }
+
+        private void ConfigureContainer(Assembly moduleAssembly)
+        {
+            IRegistrationConvention convention = new CompositeConvention(new CommandsConvention(), new OptionsConvention());
+
+            foreach (Type type in moduleAssembly.GetExportedTypes())
+            {
+                convention.RegisterOnMatch(this.container, type);
+            }
+        }
+
+        private void ConfigureAutoMapper(Assembly moduleAssembly)
+        {
+            IDictionary<string, Type> viewModels = moduleAssembly
+                .GetExportedTypes()
+                .Where(type => type.Name.EndsWith("ViewModel", StringComparison.Ordinal))
+                .ToDictionary(type => type.Name.Replace("ViewModel", string.Empty).ToUpperInvariant());
+
+            IDictionary<string, Type> entities = moduleAssembly
+                .GetExportedTypes()
+                .Where(type => type.FullName.IndexOf("Entities", StringComparison.OrdinalIgnoreCase) >= 0)
+                .ToDictionary(type => type.Name.ToUpperInvariant());
+
+            foreach (var entity in entities)
+            {
+                Type viewModelType;
+                if (viewModels.TryGetValue(entity.Key, out viewModelType))
+                {
+                    this.mapper.ConfigurationProvider.CreateTypeMap(entity.Value, viewModelType);
+                }
             }
         }
 

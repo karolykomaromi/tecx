@@ -19,7 +19,6 @@ namespace Main.Assets.Resources
 
     public class Labels
     {
-        private static readonly object Sync = new object();
         private static IResourceManager resourceManager;
         private static CultureInfo resourceCulture;
 
@@ -59,27 +58,27 @@ namespace Main.Assets.Resources
 
         public static string LanguageSelection
         {
-            get { return ResourceManager.GetString("LanguageSelection", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("LanguageSelection", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string NotificationUrl
         {
-            get { return ResourceManager.GetString("NotificationUrl", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("NotificationUrl", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string Options
         {
-            get { return ResourceManager.GetString("Options", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Options", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string TestConnection
         {
-            get { return ResourceManager.GetString("TestConnection", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("TestConnection", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string ThemeSelection
         {
-            get { return ResourceManager.GetString("ThemeSelection", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("ThemeSelection", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
     }
 }

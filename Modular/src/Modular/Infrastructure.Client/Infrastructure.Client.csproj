@@ -140,6 +140,9 @@
     <Compile Include="..\Infrastructure.Server\Entities\ResourceString.cs">
       <Link>Entities\ResourceString.cs</Link>
     </Compile>
+    <Compile Include="..\Infrastructure.Server\Reflection\AssemblyNotFoundException.cs">
+      <Link>Reflection\AssemblyNotFoundException.cs</Link>
+    </Compile>
     <Compile Include="..\Infrastructure.Server\Reflection\ConstructorNotFoundException.cs">
       <Link>Reflection\ConstructorNotFoundException.cs</Link>
     </Compile>
@@ -245,23 +248,16 @@
     <Compile Include="Logging\EnterpriseLibraryLogger.cs" />
     <Compile Include="Logging\NullLogger.cs" />
     <Compile Include="Meta\PropertyMetaAttribute.cs" />
-    <Compile Include="Modularity\AutoMapperInitializer.cs" />
-    <Compile Include="Modularity\CompositeInitializer.cs" />
-    <Compile Include="Modularity\ContainerInitializer.cs" />
-    <Compile Include="Modularity\DefaultInitializer.cs" />
-    <Compile Include="Modularity\IModuleInitializer.cs" />
     <Compile Include="Modularity\IModuleTracker.cs" />
     <Compile Include="Modularity\ModuleInitializationStatus.cs" />
-    <Compile Include="Modularity\ModuleResourcesInitializer.cs" />
     <Compile Include="Modularity\ModuleTracker.cs" />
     <Compile Include="Modularity\ModuleTrackingState.cs" />
-    <Compile Include="Modularity\OptionsInitializer.cs" />
-    <Compile Include="Modularity\RegionInitializer.cs" />
     <Compile Include="Modularity\UnityModule.cs" />
     <Compile Include="Modularity\UnityModuleInitializer.cs" />
     <Compile Include="Options\CompositeOptions.cs" />
     <Compile Include="Options\IOptions.cs" />
     <Compile Include="Options\IOptionsChanged.cs" />
+    <Compile Include="Options\LazyOptions.cs" />
     <Compile Include="Options\NullOptions.cs" />
     <Compile Include="Options\Option.cs" />
     <Compile Include="Options\Options.cs" />

@@ -19,7 +19,6 @@ namespace Search.Assets.Resources
 
     public class Labels
     {
-        private static readonly object Sync = new object();
         private static IResourceManager resourceManager;
         private static CultureInfo resourceCulture;
 
@@ -59,22 +58,22 @@ namespace Search.Assets.Resources
 
         public static string IsSearchEnabled
         {
-            get { return ResourceManager.GetString("IsSearchEnabled", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("IsSearchEnabled", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string Search
         {
-            get { return ResourceManager.GetString("Search", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Search", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string SearchOptions
         {
-            get { return ResourceManager.GetString("SearchOptions", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("SearchOptions", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string SearchResults
         {
-            get { return ResourceManager.GetString("SearchResults", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("SearchResults", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
     }
 }
