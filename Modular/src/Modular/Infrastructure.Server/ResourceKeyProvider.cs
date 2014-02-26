@@ -6,7 +6,7 @@
     {
         public string GetResourceKey(string listViewName, string propertyName)
         {
-            int beforeFirstDot = listViewName.IndexOf(".", 0, StringComparison.Ordinal) - 1;
+            int beforeFirstDot = listViewName.IndexOf(".", 0, StringComparison.Ordinal);
 
             string name = listViewName.Substring(0, beforeFirstDot);
 

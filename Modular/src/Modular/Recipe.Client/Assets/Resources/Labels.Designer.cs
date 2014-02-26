@@ -19,7 +19,6 @@ namespace Recipe.Assets.Resources
 
     public class Labels
     {
-        private static readonly object Sync = new object();
         private static IResourceManager resourceManager;
         private static CultureInfo resourceCulture;
 
@@ -59,37 +58,37 @@ namespace Recipe.Assets.Resources
 
         public static string Bar
         {
-            get { return ResourceManager.GetString("Bar", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Bar", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string Foo
         {
-            get { return ResourceManager.GetString("Foo", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Foo", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string Ingredient
         {
-            get { return ResourceManager.GetString("Ingredient", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Ingredient", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string Ingredients
         {
-            get { return ResourceManager.GetString("Ingredients", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Ingredients", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string Recipe
         {
-            get { return ResourceManager.GetString("Recipe", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Recipe", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string Recipes
         {
-            get { return ResourceManager.GetString("Recipes", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Recipes", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string Timestamp
         {
-            get { return ResourceManager.GetString("Timestamp", resourceCulture ?? Thread.CurrentThread.CurrentUICulture); }
+            get { return ResourceManager.GetString("Timestamp", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
     }
 }

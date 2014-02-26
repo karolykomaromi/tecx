@@ -30,13 +30,13 @@
             Assembly resourceAssembly = AppDomain.CurrentDomain
                 .GetAssemblies()
                 .FirstOrDefault(a => a.FullName.StartsWith(assemblyName, StringComparison.OrdinalIgnoreCase));
-            
-            Type resourceType = null;
 
-            if (resourceAssembly != null)
+            if (resourceAssembly == null)
             {
-                resourceType = resourceAssembly.GetType(typeName, true);
+                throw new AssemblyNotFoundException(assemblyName);
             }
+
+            Type resourceType = resourceAssembly.GetType(typeName, true);
 
             idx = resourceIdentifier.LastIndexOf(".", StringComparison.Ordinal);
 

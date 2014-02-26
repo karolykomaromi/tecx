@@ -1,7 +1,5 @@
 ﻿namespace Recipe
 {
-    using System;
-    using System.Windows;
     using System.Windows.Controls;
     using Infrastructure;
     using Infrastructure.I18n;
@@ -22,8 +20,8 @@
         /// </summary>
         public static readonly string Name = "Recipe";
 
-        public Module(IUnityContainer container, ILoggerFacade logger, IModuleTracker moduleTracker, IModuleInitializer initializer)
-            : base(container, logger, moduleTracker, initializer)
+        public Module(IUnityContainer container, ILoggerFacade logger, IModuleTracker moduleTracker, IRegionManager regionManager)
+            : base(container, logger, moduleTracker, regionManager)
         {
         }
 

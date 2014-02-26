@@ -1,11 +1,8 @@
 ﻿namespace Main
 {
     using System.Windows.Controls;
-    using System.Windows.Input;
     using Assets.Resources;
-    using Commands;
     using Infrastructure;
-    using Infrastructure.I18n;
     using Infrastructure.Modularity;
     using Infrastructure.UnityExtensions.Injection;
     using Infrastructure.Views;
@@ -21,8 +18,8 @@
         /// </summary>
         public static readonly string Name = "Main";
 
-        public Module(IUnityContainer container, ILoggerFacade logger, IModuleTracker moduleTracker, IModuleInitializer initializer)
-            : base(container, logger, moduleTracker, initializer)
+        public Module(IUnityContainer container, ILoggerFacade logger, IModuleTracker moduleTracker, IRegionManager regionManager)
+            : base(container, logger, moduleTracker, regionManager)
         {
         }
 

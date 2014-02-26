@@ -232,7 +232,7 @@
 
                 return accessor.GetResource;
             }
-            catch (PropertyNotFoundException ex)
+            catch (Exception ex)
             {
                 string msg = string.Format(
                     CultureInfo.CurrentCulture, 
