@@ -32,5 +32,33 @@
                 }
             }
         }
+
+        [Fact]
+        public void Should_Find_Existing_File()
+        {
+            string fileName = "~/Texts/Long/VeryLong.txt";
+            var virtualPathUtility = new Mock<IVirtualPathUtility>();
+            virtualPathUtility.Setup(vpu => vpu.ToAppRelative(fileName)).Returns(fileName);
+
+            Assembly assembly = this.GetType().Assembly;
+
+            var provider = EmbeddedResourceVirtualPathProvider.Create(assembly, virtualPathUtility.Object);
+
+            Assert.True(provider.FileExists(fileName));
+        }
+
+        [Fact]
+        public void Should_Find_Existing_Directory()
+        {
+            string dirName = "~/Texts/Long/";
+            var virtualPathUtility = new Mock<IVirtualPathUtility>();
+            virtualPathUtility.Setup(vpu => vpu.ToAppRelative(dirName)).Returns(dirName);
+
+            Assembly assembly = this.GetType().Assembly;
+
+            var provider = EmbeddedResourceVirtualPathProvider.Create(assembly, virtualPathUtility.Object);
+
+            Assert.True(provider.DirectoryExists(dirName));
+        }
     }
 }
