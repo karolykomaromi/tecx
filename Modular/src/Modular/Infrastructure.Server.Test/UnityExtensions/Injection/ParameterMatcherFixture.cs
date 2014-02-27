@@ -31,7 +31,7 @@ namespace Infrastructure.Server.Test.UnityExtensions.Injection
         }
 
         [Fact]
-        public void Test()
+        public void Should_Not_Match_Single_Provided_String_Parameter_To_Multiple_Ctor_Arguments()
         {
             ParameterMatcher matcher = new ParameterMatcher(
                 new[] { new Parameter("connectionString", SmartConstructorFixture.Constants.ConnectionStringValue) },
