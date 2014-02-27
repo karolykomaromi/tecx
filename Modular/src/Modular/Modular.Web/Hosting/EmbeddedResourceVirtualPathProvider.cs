@@ -2,36 +2,66 @@
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
-    using System.Linq;
     using System.Reflection;
     using System.Web.Caching;
     using System.Web.Hosting;
 
     public class EmbeddedResourceVirtualPathProvider : VirtualPathProvider
     {
-        private readonly Assembly assembly;
         private readonly IVirtualPathUtility virtualPathUtility;
+        private readonly IDictionary<string, EmbeddedFile> filesByAppRelativePath;
+        private readonly IDictionary<string, EmbeddedDirectory> directoriesByAppRelativePath;
 
-        public EmbeddedResourceVirtualPathProvider(Assembly assembly, IVirtualPathUtility virtualPathUtility)
+        public EmbeddedResourceVirtualPathProvider(IVirtualPathUtility virtualPathUtility, EmbeddedDirectory root)
+        {
+            Contract.Requires(virtualPathUtility != null);
+            Contract.Requires(root != null);
+
+            this.virtualPathUtility = virtualPathUtility;
+
+            var visitor = new CreateLookUpVisitor();
+
+            root.Accept(visitor);
+
+            this.filesByAppRelativePath = visitor.Files;
+            this.directoriesByAppRelativePath = visitor.Directories;
+        }
+
+        public static EmbeddedResourceVirtualPathProvider Create(Assembly assembly, IVirtualPathUtility virtualPathUtility)
         {
             Contract.Requires(assembly != null);
             Contract.Requires(virtualPathUtility != null);
+            Contract.Ensures(Contract.Result<EmbeddedResourceVirtualPathProvider>() != null);
 
-            this.assembly = assembly;
-            this.virtualPathUtility = virtualPathUtility;
+            return new EmbeddedResourceVirtualPathProvider(virtualPathUtility, EmbeddedPathHelper.ToDirectoryStructure(assembly));
         }
 
         public override bool FileExists(string virtualPath)
         {
-            return base.FileExists(virtualPath);
+            Contract.Requires(!string.IsNullOrEmpty(virtualPath));
+
+            string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualPath);
+
+            if (this.filesByAppRelativePath.ContainsKey(appRelativePath))
+            {
+                return true;
+            }
+
+            return this.Previous.FileExists(virtualPath);
         }
 
         public override VirtualFile GetFile(string virtualPath)
         {
-            if (this.IsEmbeddedResource(virtualPath))
+            Contract.Requires(!string.IsNullOrEmpty(virtualPath));
+
+            string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualPath);
+
+            EmbeddedFile file;
+            if (this.filesByAppRelativePath.TryGetValue(appRelativePath, out file))
             {
-                return new EmbeddedResourceVirtualFile(virtualPath, this.assembly, this.virtualPathUtility);
+                return file;
             }
 
             return this.Previous.GetFile(virtualPath);
@@ -39,14 +69,28 @@
 
         public override bool DirectoryExists(string virtualDir)
         {
-            return base.DirectoryExists(virtualDir);
+            Contract.Requires(!string.IsNullOrEmpty(virtualDir));
+
+            string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualDir);
+
+            if (this.directoriesByAppRelativePath.ContainsKey(appRelativePath))
+            {
+                return true;
+            }
+
+            return this.Previous.DirectoryExists(virtualDir);
         }
 
         public override VirtualDirectory GetDirectory(string virtualDir)
         {
-            if (this.IsEmbeddedResource(virtualDir))
+            Contract.Requires(!string.IsNullOrEmpty(virtualDir));
+
+            string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualDir);
+
+            EmbeddedDirectory dir;
+            if (this.directoriesByAppRelativePath.TryGetValue(appRelativePath, out dir))
             {
-                return new EmbeddedResourceVirtualDirectory(virtualDir, this.assembly, this.virtualPathUtility);
+                return dir;
             }
 
             return this.Previous.GetDirectory(virtualDir);
@@ -54,18 +98,15 @@
 
         public override CacheDependency GetCacheDependency(string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
-            if (this.IsEmbeddedResource(virtualPath))
+            string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualPath);
+
+            if (this.filesByAppRelativePath.ContainsKey(appRelativePath) ||
+                this.directoriesByAppRelativePath.ContainsKey(appRelativePath))
             {
-                // TODO weberse 2014-02-26 need to figure out how to create a meaningful cache dependency
                 return null;
             }
 
             return this.Previous.GetCacheDependency(virtualPath, virtualPathDependencies, utcStart);
-        }
-
-        public bool IsEmbeddedResource(string virtualPath)
-        {
-            return false;
         }
     }
 }

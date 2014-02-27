@@ -37,10 +37,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="xunit">
       <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
     </Reference>
@@ -57,14 +61,16 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Hosting\EmbeddedDirectoryFixture.cs" />
     <Compile Include="Hosting\EmbeddedPathHelperFixture.cs" />
+    <Compile Include="Hosting\EmbeddedResourceVirtualPathProviderFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Images\" />
+    <EmbeddedResource Include="Assets\Texts\Long\AnotherLong.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Texts\Long\VeryLong.txt" />
@@ -77,6 +83,9 @@
       <Project>{e44bf907-64db-4a7a-854c-6a31d7c4fcdf}</Project>
       <Name>Modular.Web</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Images\Red.png" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
