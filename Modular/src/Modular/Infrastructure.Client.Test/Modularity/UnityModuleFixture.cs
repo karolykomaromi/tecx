@@ -24,7 +24,7 @@ namespace Infrastructure.Client.Test.Modularity
 
             module.Initialize();
 
-            logger.Verify(l => l.Log(It.IsAny<string>(), Category.Exception, Priority.High));
+            logger.Verify(l => l.Log(It.IsAny<string>(), Category.Warn, Priority.High));
         }
 
         [TestMethod]

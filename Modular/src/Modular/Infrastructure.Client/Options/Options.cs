@@ -66,6 +66,7 @@
                     }
 
                     setter(this, value);
+                    this.publish(this, option);
                 }
             }
         }
@@ -116,7 +117,7 @@
             var convert2 = Expression.Convert(argument, propertyInfo.PropertyType);
             var setterCall = Expression.Call(convert1, propertyInfo.GetSetMethod(), convert2);
 
-            return Expression.Lambda<Action<object, object>>(setterCall, instance, argument).Compile();
+            return Expression.Lambda<Action<IOptions, object>>(setterCall, instance, argument).Compile();
         }
 
         private Action<IOptions, Option> GetPublish()

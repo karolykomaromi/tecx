@@ -15,7 +15,7 @@
     <AssemblyName>Modular.Silverlight.Test.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <UseIISExpress>false</UseIISExpress>
-    <SilverlightApplicationList>{4E12CE25-6FF1-40F6-819A-8C4265969E21}|..\Infrastructure.Client.Test\Infrastructure.Client.Test.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{4E12CE25-6FF1-40F6-819A-8C4265969E21}|..\Infrastructure.Client.Test\Infrastructure.Client.Test.csproj|ClientBin|False,{DD2E0114-2AFB-464A-9144-65A933466D48}|..\Modular.Test\Modular.Test.csproj|ClientBin|False</SilverlightApplicationList>
     <SccProjectName>&lt;Project Location In Database&gt;</SccProjectName>
     <SccLocalPath>&lt;Local Binding Root of Project&gt;</SccLocalPath>
     <SccAuxPath>&lt;Source Control Database&gt;</SccAuxPath>
@@ -25,6 +25,10 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -63,10 +67,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientBin\Infrastructure.Client.Test.xap" />
+    <Content Include="ClientBin\Modular.Test.xap" />
     <Content Include="Infrastructure.Client.TestTestPage.aspx" />
     <Content Include="Infrastructure.Client.TestTestPage.html" />
     <Content Include="Silverlight.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
