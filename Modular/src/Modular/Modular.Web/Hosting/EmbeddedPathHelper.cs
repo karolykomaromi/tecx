@@ -4,6 +4,7 @@ namespace Modular.Web.Hosting
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Linq;
+    using System.Reflection;
 
     public static class EmbeddedPathHelper
     {
@@ -44,6 +45,42 @@ namespace Modular.Web.Hosting
 
                 yield return directory;
             }
+        }
+
+        public static EmbeddedDirectory ToDirectoryStructure(Assembly assembly, string manifestResourceName)
+        {
+            Contract.Requires(assembly != null);
+            Contract.Requires(!string.IsNullOrEmpty(manifestResourceName));
+            Contract.Ensures(Contract.Result<EmbeddedDirectory>() != null);
+
+            string[] directories = GetDirectories(manifestResourceName).OrderByDescending(d => d.Length).ToArray();
+
+            string fileName = ToAppRelative(manifestResourceName);
+
+            EmbeddedFile file = new EmbeddedFile(fileName, manifestResourceName, assembly);
+
+            EmbeddedDirectory subDir = new EmbeddedDirectory(directories[0], null, new[] { file });
+
+            foreach (string directory in directories.Skip(1))
+            {
+                subDir = new EmbeddedDirectory(directory, new[] { subDir }, null);
+            }
+
+            return subDir;
+        }
+
+        public static EmbeddedDirectory ToDirectoryStructure(Assembly assembly)
+        {
+            Contract.Requires(assembly != null);
+            Contract.Ensures(Contract.Result<EmbeddedDirectory>() != null);
+
+            string[] manifestResourceNames = assembly.GetManifestResourceNames();
+
+            var directories = manifestResourceNames.Select(res => ToDirectoryStructure(assembly, res));
+
+            directories = EmbeddedDirectory.Merge(directories);
+
+            return new EmbeddedDirectory("~/", directories, null);
         }
     }
 }
