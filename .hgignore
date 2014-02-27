@@ -252,3 +252,6 @@ Modular/src/Modular/Modular.Web/Modular.log
 *.log
 Modular/src/Modular/Modular.Web.Test/bin
 Modular/src/Modular/Modular.Web.Test/obj
+Modular/src/Modular/Modular.Test/Bin
+Modular/src/Modular/Modular.Test/obj
+Modular/src/Modular/Modular.Silverlight.Test.Web/ClientBin/Modular.Test.xap
