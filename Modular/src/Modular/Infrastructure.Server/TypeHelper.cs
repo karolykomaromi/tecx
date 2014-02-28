@@ -13,6 +13,7 @@
         {
             Contract.Requires(type != null);
             Contract.Requires(!string.IsNullOrEmpty(type.AssemblyQualifiedName));
+            Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 
             string name = type.AssemblyQualifiedName;
 
@@ -27,6 +28,9 @@
 
         public static Func<TObject, TProperty> MakePropertyAccessor<TObject, TProperty>(PropertyInfo pi)
         {
+            Contract.Requires(pi != null);
+            Contract.Ensures(Contract.Result<Func<TObject, TProperty>>() != null);
+
             ParameterExpression objParam = Expression.Parameter(typeof(TObject), "obj");
             MemberExpression typedAccessor = Expression.PropertyOrField(objParam, pi.Name);
             UnaryExpression castToObject = Expression.Convert(typedAccessor, typeof(object));
@@ -37,6 +41,10 @@
 
         public static Func<TObject, TProperty> MakeRelatedPropertyAccessor<TObject, TProperty, T>(PropertyInfo pi, PropertyInfo pi2)
         {
+            Contract.Requires(pi != null);
+            Contract.Requires(pi2 != null);
+            Contract.Ensures(Contract.Result<Func<TObject, TProperty>>() != null);
+
             Func<TObject, object> getRelatedObject;
             {
                 // expression like:
@@ -85,9 +93,10 @@
             return hasCompilerGeneratedAttribute && nameContainsAnonymousType;
         }
 
-        public static PropertyInfo[] GetPublicProperties(object obj)
+        public static IEnumerable<PropertyInfo> GetPublicProperties(object obj)
         {
             Contract.Requires(obj != null);
+            Contract.Ensures(Contract.Result<IEnumerable<PropertyInfo>>() != null);
 
             return obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
         }
@@ -95,6 +104,7 @@
         public static IEnumerable<Type> GetAllBaseClassesAndInterfaces(Type type)
         {
             Contract.Requires(type != null);
+            Contract.Ensures(Contract.Result<IEnumerable<Type>>() != null);
 
             List<Type> allTypes = new List<Type>();
 
@@ -105,16 +115,9 @@
                 current = current.BaseType;
             }
 
-            allTypes.AddRange(GetAllInterfaces(type));
-            return allTypes;
-        }
+            allTypes.AddRange(type.GetInterfaces());
 
-        public static IEnumerable<Type> GetAllInterfaces(Type type)
-        {
-            foreach (Type @interface in type.GetInterfaces())
-            {
-                yield return @interface;
-            }
+            return allTypes;
         }
     }
 }

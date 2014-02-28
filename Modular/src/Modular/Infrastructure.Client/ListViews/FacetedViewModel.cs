@@ -3,7 +3,7 @@ namespace Infrastructure.ListViews
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-    using Infrastructure.Meta;
+    using Infrastructure.Reflection;
     using Infrastructure.ViewModels;
 
     public class FacetedViewModel : ViewModel, ICustomTypeProvider

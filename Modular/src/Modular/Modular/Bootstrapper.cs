@@ -121,7 +121,6 @@
             IConfigurationSource configSource = DictionaryConfigurationSource.FromDictionary(configDictionary);
             EnterpriseLibraryContainer.ConfigureContainer(new UnityContainerConfigurator(this.Container), configSource);
             
-
             this.Container.RegisterType<IListViewService, ListViewServiceClient>();
 
             this.Container.RegisterType<ICommand, LoadListViewItemsCommand>("loadListViewItemsCommand");

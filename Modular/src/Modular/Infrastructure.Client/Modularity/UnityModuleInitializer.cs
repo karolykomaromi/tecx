@@ -183,6 +183,5 @@
 
             return new ResourceDictionary();
         }
-
     }
 }

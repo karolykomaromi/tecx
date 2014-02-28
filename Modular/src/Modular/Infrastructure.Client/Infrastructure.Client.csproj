@@ -226,8 +226,6 @@
     <Compile Include="Events\IEventAggregator.cs" />
     <Compile Include="Events\ISubscribeTo.cs" />
     <Compile Include="Events\NullEventAggregator.cs" />
-    <Compile Include="Events\TypeExtensions.cs" />
-    <Compile Include="Events\TypeFilter.cs" />
     <Compile Include="I18n\CacheBackedResourceManager.cs" />
     <Compile Include="I18n\CachingResourceManager.cs" />
     <Compile Include="I18n\LanguageChanged.cs" />
@@ -253,7 +251,6 @@
     <Compile Include="Logging\DebugLogger.cs" />
     <Compile Include="Logging\EnterpriseLibraryLogger.cs" />
     <Compile Include="Logging\NullLogger.cs" />
-    <Compile Include="Meta\PropertyMetaAttribute.cs" />
     <Compile Include="Modularity\IModuleTracker.cs" />
     <Compile Include="Modularity\ModuleInitializationStatus.cs" />
     <Compile Include="Modularity\ModuleTracker.cs" />
@@ -270,6 +267,7 @@
     <Compile Include="Options\OptionsChanged.cs" />
     <Compile Include="Options\UnknownOptionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\PropertyMetaAttribute.cs" />
     <Compile Include="RegionNames.cs" />
     <Compile Include="ResourceServiceClient.cs" />
     <Compile Include="StackPanelRegionAdapter.cs" />

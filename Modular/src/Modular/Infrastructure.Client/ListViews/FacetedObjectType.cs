@@ -5,7 +5,7 @@ namespace Infrastructure.ListViews
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
-    using Infrastructure.Meta;
+    using Infrastructure.Reflection;
 
     /// <summary>
     /// A custom System.Type implementation that can provide different Properties at runtime.  All operations except those related to
@@ -15,7 +15,6 @@ namespace Infrastructure.ListViews
     public class FacetedObjectType<TSource> : Type
     {
         private readonly IDictionary<string, Facet> dynamicFacets;
-
         private IDictionary<string, DynamicPropertyInfo> dynamicPropertyInfos;
 
         public FacetedObjectType(List<Facet> dynamicFacets)

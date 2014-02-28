@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
-
-namespace Recipe
+﻿namespace Recipe
 {
+    using System.Runtime.Serialization;
+
     [DataContract]
     [KnownType(typeof(VolumeMeasure))]
     [KnownType(typeof(WeightMeasure))]

@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Meta
+namespace Infrastructure.Reflection
 {
     using System;
 

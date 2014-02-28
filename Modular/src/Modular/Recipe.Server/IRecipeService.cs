@@ -1,7 +1,7 @@
-﻿using System.ServiceModel;
-
-namespace Recipe
+﻿namespace Recipe
 {
+    using System.ServiceModel;
+
     [ServiceContract]
     public interface IRecipeService
     {
