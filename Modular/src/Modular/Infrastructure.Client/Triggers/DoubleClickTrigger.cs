@@ -7,11 +7,20 @@ namespace Infrastructure.Triggers
 
     public class DoubleClickTrigger : TriggerBase<FrameworkElement>
     {
+        public bool HandledEventsToo { get; set; }
+
         protected override void OnAttached()
         {
             if (this.AssociatedObject != null && !DesignerProperties.GetIsInDesignMode(this.AssociatedObject))
             {
-                this.AssociatedObject.MouseLeftButtonDown += this.OnMouseLeftButtonDown;
+                if (this.HandledEventsToo)
+                {
+                    this.AssociatedObject.AddHandler(UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(this.OnMouseLeftButtonDown), true);
+                }
+                else
+                {
+                    this.AssociatedObject.MouseLeftButtonDown += this.OnMouseLeftButtonDown;
+                }
             }
         }
 
@@ -19,7 +28,14 @@ namespace Infrastructure.Triggers
         {
             if (this.AssociatedObject != null && !DesignerProperties.GetIsInDesignMode(this.AssociatedObject))
             {
-                this.AssociatedObject.MouseLeftButtonDown -= this.OnMouseLeftButtonDown;
+                if (this.HandledEventsToo)
+                {
+                    this.AssociatedObject.RemoveHandler(UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(this.OnMouseLeftButtonDown));
+                }
+                else
+                {
+                    this.AssociatedObject.MouseLeftButtonDown -= this.OnMouseLeftButtonDown;
+                }
             }
         }
 
