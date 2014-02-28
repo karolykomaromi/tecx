@@ -29,13 +29,13 @@
             this.directoriesByAppRelativePath = visitor.Directories;
         }
 
-        public static EmbeddedResourceVirtualPathProvider Create(Assembly assembly, IVirtualPathUtility virtualPathUtility)
+        public static EmbeddedResourceVirtualPathProvider Create(IVirtualPathUtility virtualPathUtility, params Assembly[] assemblies)
         {
-            Contract.Requires(assembly != null);
+            Contract.Requires(assemblies != null);
             Contract.Requires(virtualPathUtility != null);
             Contract.Ensures(Contract.Result<EmbeddedResourceVirtualPathProvider>() != null);
 
-            return new EmbeddedResourceVirtualPathProvider(virtualPathUtility, EmbeddedPathHelper.ToDirectoryStructure(assembly));
+            return new EmbeddedResourceVirtualPathProvider(virtualPathUtility, EmbeddedPathHelper.ToDirectoryStructure(assemblies));
         }
 
         public override bool FileExists(string virtualPath)

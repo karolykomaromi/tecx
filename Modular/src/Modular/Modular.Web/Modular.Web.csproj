@@ -118,7 +118,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Assets\Images\Red.png" />
+    <EmbeddedResource Include="Assets\Images\Blue.png" />
     <Content Include="clientaccesspolicy.xml" />
     <Content Include="ClientBin\Modular.xap" />
     <Content Include="ClientBin\Infrastructure.xap" />

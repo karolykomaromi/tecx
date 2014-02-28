@@ -18,7 +18,7 @@
 
             Assembly assembly = this.GetType().Assembly;
 
-            var provider = EmbeddedResourceVirtualPathProvider.Create(assembly, virtualPathUtility.Object);
+            var provider = EmbeddedResourceVirtualPathProvider.Create(virtualPathUtility.Object, assembly);
 
             VirtualFile file = provider.GetFile(fileName);
 
@@ -42,7 +42,7 @@
 
             Assembly assembly = this.GetType().Assembly;
 
-            var provider = EmbeddedResourceVirtualPathProvider.Create(assembly, virtualPathUtility.Object);
+            var provider = EmbeddedResourceVirtualPathProvider.Create(virtualPathUtility.Object, assembly);
 
             Assert.True(provider.FileExists(fileName));
         }
@@ -56,9 +56,27 @@
 
             Assembly assembly = this.GetType().Assembly;
 
-            var provider = EmbeddedResourceVirtualPathProvider.Create(assembly, virtualPathUtility.Object);
+            var provider = EmbeddedResourceVirtualPathProvider.Create(virtualPathUtility.Object, assembly);
 
             Assert.True(provider.DirectoryExists(dirName));
+        }
+
+        [Fact]
+        public void Should_Find_Existing_Files_From_Multiple_Assemblies()
+        {
+            string blue = "~/Images/Blue.png";
+            string red = "~/Images/Red.png";
+
+            var virtualPathUtility = new Mock<IVirtualPathUtility>();
+            virtualPathUtility.Setup(vpu => vpu.ToAppRelative(It.IsAny<string>()))
+                              .Returns((string virtualPath) => virtualPath);
+
+            var assemblies = new[] { this.GetType().Assembly, typeof(UnityServiceHostFactory).Assembly };
+
+            var provider = EmbeddedResourceVirtualPathProvider.Create(virtualPathUtility.Object, assemblies);
+
+            Assert.True(provider.FileExists(blue));
+            Assert.True(provider.FileExists(red));
         }
     }
 }
