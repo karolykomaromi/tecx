@@ -49,7 +49,7 @@
                 return true;
             }
 
-            bool fileExists = this.Previous.FileExists(virtualPath);
+            bool fileExists = base.FileExists(virtualPath);
 
             return fileExists;
         }
@@ -66,7 +66,7 @@
                 return file;
             }
 
-            VirtualFile virtualFile = this.Previous.GetFile(virtualPath);
+            VirtualFile virtualFile = base.GetFile(virtualPath);
 
             return virtualFile;
         }
@@ -82,7 +82,7 @@
                 return true;
             }
 
-            bool directoryExists = this.Previous.DirectoryExists(virtualDir);
+            bool directoryExists = base.DirectoryExists(virtualDir);
 
             return directoryExists;
         }
@@ -99,7 +99,7 @@
                 return dir;
             }
 
-            VirtualDirectory virtualDirectory = this.Previous.GetDirectory(virtualDir);
+            VirtualDirectory virtualDirectory = base.GetDirectory(virtualDir);
 
             return virtualDirectory;
         }
@@ -114,7 +114,7 @@
                 return null;
             }
 
-            CacheDependency cacheDependency = this.Previous.GetCacheDependency(virtualPath, virtualPathDependencies, utcStart);
+            CacheDependency cacheDependency = base.GetCacheDependency(virtualPath, virtualPathDependencies, utcStart);
 
             return cacheDependency;
         }

@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="DefaultNamespaceFixture.cs" />
     <Compile Include="Hosting\EmbeddedDirectoryFixture.cs" />
+    <Compile Include="Hosting\EmbeddedFileFixture.cs" />
     <Compile Include="Hosting\EmbeddedPathHelperFixture.cs" />
     <Compile Include="Hosting\EmbeddedResourceVirtualPathProviderFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
