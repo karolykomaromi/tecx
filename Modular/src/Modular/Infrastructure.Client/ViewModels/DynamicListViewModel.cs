@@ -1,6 +1,4 @@
-﻿using Infrastructure.Commands;
-
-namespace Infrastructure.ViewModels
+﻿namespace Infrastructure.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +7,7 @@ namespace Infrastructure.ViewModels
     using System.Globalization;
     using System.Linq;
     using System.Windows.Input;
+    using Infrastructure.Commands;
     using Infrastructure.Entities;
     using Infrastructure.Events;
     using Infrastructure.I18n;
