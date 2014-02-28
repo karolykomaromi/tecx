@@ -109,6 +109,7 @@
     <Reference Include="Moq.Silverlight">
       <HintPath>..\packages\Moq.4.2.1312.1622\lib\sl4\Moq.Silverlight.dll</HintPath>
     </Reference>
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows" />
     <Reference Include="mscorlib" />
     <Reference Include="system" />
@@ -137,6 +138,8 @@
     <Compile Include="TestObjects\CancelingSubscriber.cs" />
     <Compile Include="TestObjects\CancelMessage.cs" />
     <Compile Include="TestObjects\CountingSubscriber.cs" />
+    <Compile Include="TestObjects\DummyServiceClient.cs" />
+    <Compile Include="TestObjects\IDummyService.cs" />
     <Compile Include="TestObjects\Message.cs" />
     <Compile Include="TestObjects\MyOptions.cs" />
     <Compile Include="TestObjects\NoView.cs" />
@@ -150,6 +153,10 @@
     <Compile Include="TestObjects\ViewResolutionFailsModule.cs" />
     <Compile Include="TestObjects\YourOptions.cs" />
     <Compile Include="UnityExtensions\EventAggregatorExtensionFixtures.cs" />
+    <Compile Include="UnityExtensions\Registration\CommandConventionFixture.cs" />
+    <Compile Include="UnityExtensions\Registration\ViewModelConventionFixture.cs" />
+    <Compile Include="UnityExtensions\Registration\ServiceClientConventionFixture.cs" />
+    <Compile Include="UnityExtensions\Registration\OptionsConventionFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

@@ -65,36 +65,34 @@
         {
             this.RunLocked(
                 () =>
+                {
+                    foreach (var subscriber in this.GetAllSubscribersFor<TMessage>())
                     {
-                        foreach (var subscriber in this.GetAllSubscribersFor<TMessage>())
-                        {
-                            ISubscribeTo<TMessage> sub = subscriber;
-                            this.dispatcher.BeginInvoke(() => sub.Handle(message));
-                        }
-                    });
+                        ISubscribeTo<TMessage> sub = subscriber;
+                        this.dispatcher.BeginInvoke(() => sub.Handle(message));
+                    }
+                });
 
             return message;
         }
 
         private static void AssertHandlerInterfaceImplemented(object subscriber)
         {
-            Type[] interfaces = subscriber.GetType().FindInterfaces(
-                (type, criteria) =>
-                    {
-                        if (type.IsGenericType &&
-                            type.GetGenericTypeDefinition() == typeof(ISubscribeTo<>))
-                        {
-                            return true;
-                        }
-
-                        return false;
-                    },
-                null);
-
-            if (interfaces.Length == 0)
+            if (!subscriber.GetType().GetInterfaces().Any(ImplementsSubscriberInterface))
             {
                 throw new ArgumentException("Subscriber must implement ISubscribeTo<TMessage>.", "subscriber");
             }
+        }
+
+        private static bool ImplementsSubscriberInterface(Type type)
+        {
+            if (type.IsGenericType &&
+                type.GetGenericTypeDefinition() == typeof(ISubscribeTo<>))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private IEnumerable<ISubscribeTo<TMessage>> GetAllSubscribersFor<TMessage>()

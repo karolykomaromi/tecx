@@ -26,7 +26,7 @@
 
             if (TypeHelper.IsAnonymous(anonymous.GetType()))
             {
-                PropertyInfo[] properties = TypeHelper.GetPublicProperties(anonymous);
+                IEnumerable<PropertyInfo> properties = TypeHelper.GetPublicProperties(anonymous);
 
                 foreach (var property in properties)
                 {

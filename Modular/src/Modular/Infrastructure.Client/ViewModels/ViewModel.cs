@@ -7,7 +7,7 @@ namespace Infrastructure.ViewModels
     using Infrastructure.Commands;
     using Infrastructure.Events;
     using Infrastructure.I18n;
-    using Infrastructure.Meta;
+    using Infrastructure.Reflection;
 
     public abstract class ViewModel : NotificationBase, ISubscribeTo<LanguageChanging>
     {
