@@ -82,5 +82,26 @@ namespace Modular.Web.Hosting
 
             return new EmbeddedDirectory("~/", directories, null);
         }
+
+        public static EmbeddedDirectory ToDirectoryStructure(params Assembly[] assemblies)
+        {
+            if (assemblies == null)
+            {
+                return new EmbeddedDirectory("~/", null, null);
+            }
+
+            if (assemblies.Length == 1)
+            {
+                return ToDirectoryStructure(assemblies[0]);
+            }
+
+            var directories = from assembly in assemblies
+                              from res in assembly.GetManifestResourceNames()
+                              select ToDirectoryStructure(assembly, res);
+
+            directories = EmbeddedDirectory.Merge(directories);
+
+            return new EmbeddedDirectory("~/", directories, null);
+        }
     }
 }
