@@ -49,7 +49,9 @@
                 return true;
             }
 
-            return this.Previous.FileExists(virtualPath);
+            bool fileExists = this.Previous.FileExists(virtualPath);
+
+            return fileExists;
         }
 
         public override VirtualFile GetFile(string virtualPath)
@@ -64,7 +66,9 @@
                 return file;
             }
 
-            return this.Previous.GetFile(virtualPath);
+            VirtualFile virtualFile = this.Previous.GetFile(virtualPath);
+
+            return virtualFile;
         }
 
         public override bool DirectoryExists(string virtualDir)
@@ -78,7 +82,9 @@
                 return true;
             }
 
-            return this.Previous.DirectoryExists(virtualDir);
+            bool directoryExists = this.Previous.DirectoryExists(virtualDir);
+
+            return directoryExists;
         }
 
         public override VirtualDirectory GetDirectory(string virtualDir)
@@ -93,7 +99,9 @@
                 return dir;
             }
 
-            return this.Previous.GetDirectory(virtualDir);
+            VirtualDirectory virtualDirectory = this.Previous.GetDirectory(virtualDir);
+
+            return virtualDirectory;
         }
 
         public override CacheDependency GetCacheDependency(string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
@@ -106,7 +114,9 @@
                 return null;
             }
 
-            return this.Previous.GetCacheDependency(virtualPath, virtualPathDependencies, utcStart);
+            CacheDependency cacheDependency = this.Previous.GetCacheDependency(virtualPath, virtualPathDependencies, utcStart);
+
+            return cacheDependency;
         }
     }
 }

@@ -1,15 +1,18 @@
 ﻿namespace Modular.Web
 {
     using System;
+    using System.Web.Hosting;
     using System.Web.Routing;
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Hubs;
+    using Modular.Web.Hosting;
     using Modular.Web.Hubs;
 
     public class Global : System.Web.HttpApplication
     {
         protected void Application_Start(object sender, EventArgs e)
         {
+            // weberse 2014-02-28 setup Unity to resolve SignalR hubs
             GlobalHost.DependencyResolver.Register(typeof(IHubActivator), () => new UnityHubActivator());
 
             HubConfiguration configuration = new HubConfiguration
@@ -20,6 +23,13 @@
                 };
 
             RouteTable.Routes.MapHubs(configuration);
+
+            // weberse 2014-02-28 The ERVPP has a fallback mechanism that uses the previous VPP when a file cannot be found in the embedded resources.
+            // as there is only one image in the resources that fallback will be used in almost all cases.
+            // To test if the provider is actually working modify the url in your browser and replace "Modular.aspx" with "images/red.png".
+            // If you see a small red rectangle you are fine.
+            VirtualPathProvider provider = EmbeddedResourceVirtualPathProvider.Create(typeof(UnityServiceHostFactory).Assembly, new VirtualPathUtilityWrapper());
+            HostingEnvironment.RegisterVirtualPathProvider(provider);
         }
 
         protected void Session_Start(object sender, EventArgs e)
