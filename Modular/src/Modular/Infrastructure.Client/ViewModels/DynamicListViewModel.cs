@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.ViewModels
+﻿using Infrastructure.Commands;
+
+namespace Infrastructure.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +13,6 @@
     using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.ListViews;
-    using Infrastructure.Reflection;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
 
@@ -22,12 +23,14 @@
         private readonly IListViewService listViewService;
         private readonly ILoggerFacade logger;
         private readonly ICommand loadListViewItemsCommand;
+        private readonly ICommand openDetailsCommand;
         private readonly ObservableCollection<FacetedViewModel> items;
         private readonly List<Facet> facets;
         private FilterViewModel filter;
         private bool isCurrentlyLoading;
         private int loadNextBeforeEndOfItemsThreshold;
         private int takeCount;
+        private FacetedViewModel selectedItem;
 
         public DynamicListViewModel(ListViewName listViewName, ResourceAccessor title, IListViewService listViewService, ILoggerFacade logger, ICommand loadListViewItemsCommand)
         {
@@ -38,6 +41,7 @@
             this.listViewService = listViewService;
             this.logger = logger;
             this.loadListViewItemsCommand = loadListViewItemsCommand;
+            this.openDetailsCommand = new NullCommand();
             this.items = new ObservableCollection<FacetedViewModel>();
             this.facets = new List<Facet>();
             this.filter = new EmptyFilterViewModel();
@@ -49,6 +53,24 @@
         public override string Title
         {
             get { return this.title.Value; }
+        }
+
+        public FacetedViewModel SelectedItem
+        {
+            get
+            {
+                return this.selectedItem;
+            }
+
+            set
+            {
+                if (this.selectedItem != value)
+                {
+                    this.OnPropertyChanging(() => this.SelectedItem);
+                    this.selectedItem = value;
+                    this.OnPropertyChanged(() => this.SelectedItem);
+                }
+            }
         }
 
         public ObservableCollection<FacetedViewModel> Items
@@ -82,6 +104,11 @@
         public ICommand LoadListViewItemsCommand
         {
             get { return this.loadListViewItemsCommand; }
+        }
+
+        public ICommand OpenDetailsCommand
+        {
+            get { return this.openDetailsCommand; }
         }
 
         public bool IsCurrentlyLoading

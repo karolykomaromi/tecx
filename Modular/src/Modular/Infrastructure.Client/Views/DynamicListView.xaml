@@ -19,6 +19,9 @@
                 <ResourceDictionary Source="/Infrastructure.Client;component/Assets/Themes/DefaultTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:DynamicListViewRowLoadingConverter x:Key="RowLoadingConverter" />
+            <Style TargetType="sdk:DataGridCell">
+                <Setter Property="Background" Value="Blue" />
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -31,7 +34,7 @@
             <TextBlock Text="{Binding Title}" t:Theme.Style="{StaticResource TitleText}" />
         </Border>
         <ContentControl Grid.Row="1" Content="{Binding Filter}" Margin="10" />
-        <sdk:DataGrid Grid.Row="2" ItemsSource="{Binding Items}" Margin="10" >
+        <sdk:DataGrid Grid.Row="2" ItemsSource="{Binding Items}" Margin="10" IsReadOnly="True" SelectionMode="Single" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="AutoGeneratingColumn">
                     <tr:TranslateColumnHeader />
@@ -43,6 +46,8 @@
                         PassEventArgsToCommand="True" 
                         EventArgsConverter="{StaticResource RowLoadingConverter}" 
                         EventArgsConverterParameter="{Binding}" />
+                    <!--<mvvm:EventToCommand Command="{Binding OpenDetailsCommand}" CommandParameter="{Binding SelectedItem}" />-->
+                    <mvvm:EventToCommand Command="{Binding OpenDetailsCommand}" PassEventArgsToCommand="True" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </sdk:DataGrid>
