@@ -33,7 +33,7 @@
         <ContentControl Grid.Row="1" Content="{Binding Filter}" Margin="10" />
         <sdk:DataGrid Grid.Row="2" ItemsSource="{Binding Items}" Margin="10" IsReadOnly="True" SelectionMode="Single" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
             <i:Interaction.Triggers>
-                <i:EventTrigger EventName="AutoGeneratingColumn">
+                <i:EventTrigger EventName="AutoGeneratingColumn" >
                     <tr:TranslateColumnHeader />
                     <tr:FormatDateTimeColumn />
                 </i:EventTrigger>
@@ -49,6 +49,5 @@
                 </tr:DoubleClickTrigger>
             </i:Interaction.Triggers>
         </sdk:DataGrid>
-
     </Grid>
 </UserControl>

@@ -140,6 +140,9 @@
     <Compile Include="..\Infrastructure.Server\Entities\ResourceString.cs">
       <Link>Entities\ResourceString.cs</Link>
     </Compile>
+    <Compile Include="..\Infrastructure.Server\ListViews\ListViewId.cs">
+      <Link>ListViews\ListViewId.cs</Link>
+    </Compile>
     <Compile Include="..\Infrastructure.Server\Reflection\AssemblyNotFoundException.cs">
       <Link>Reflection\AssemblyNotFoundException.cs</Link>
     </Compile>
@@ -239,14 +242,13 @@
     <Compile Include="I18n\ResourceManagerWrapper.cs" />
     <Compile Include="I18n\WebSvcResourceManager.cs" />
     <Compile Include="IDisplayManager.cs" />
-    <Compile Include="IListViewService.cs" />
     <Compile Include="IResourceService.cs" />
-    <Compile Include="ListViewServiceClient.cs" />
     <Compile Include="ListViews\DynamicPropertyInfo.cs" />
     <Compile Include="ListViews\Facet.cs" />
     <Compile Include="ListViews\FacetedObjectType.cs" />
     <Compile Include="ListViews\FacetedViewModel.cs" />
-    <Compile Include="ListViews\ListViewName.cs" />
+    <Compile Include="ListViews\IListViewService.cs" />
+    <Compile Include="ListViews\ListViewServiceClient.cs" />
     <Compile Include="Logging\CompositeLogger.cs" />
     <Compile Include="Logging\DebugLogger.cs" />
     <Compile Include="Logging\EnterpriseLibraryLogger.cs" />

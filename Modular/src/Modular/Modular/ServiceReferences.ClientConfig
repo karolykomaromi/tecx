@@ -17,7 +17,7 @@
           contract="Microsoft.Practices.EnterpriseLibrary.Logging.Service.ILoggingService" name="BasicHttpBinding_ILoggingService" />
       <endpoint address="http://localhost:18448/ListViewService.svc"
           binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ISearchService"
-          contract="Infrastructure.IListViewService" name="BasicHttpBinding_IListViewService" />
+          contract="Infrastructure.ListViews.IListViewService" name="BasicHttpBinding_IListViewService" />
       <endpoint address="http://localhost:18448/ResourceService.svc"
           binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ISearchService"
           contract="Infrastructure.IResourceService" name="BasicHttpBinding_IResourceService" />

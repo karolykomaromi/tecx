@@ -1,4 +1,4 @@
-﻿namespace Infrastructure
+﻿namespace Infrastructure.ListViews
 {
     using System.Diagnostics.Contracts;
     using System.ServiceModel;

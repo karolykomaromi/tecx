@@ -39,7 +39,7 @@
             }
 
             Control searchResult;
-            if (this.TryGetViewFor<SearchResultsViewModel>(out searchResult, new Parameter("title", new ResourceAccessor(() => Labels.SearchResults))))
+            if (this.TryGetViewFor<SearchResultsViewModel>(out searchResult))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, searchResult);
 

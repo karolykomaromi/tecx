@@ -81,9 +81,11 @@
     <Compile Include="Entities\ListViewRow.cs" />
     <Compile Include="Entities\Property.cs" />
     <Compile Include="Entities\ResourceString.cs" />
-    <Compile Include="IListViewService.cs" />
-    <Compile Include="IResourceKeyProvider.cs" />
-    <Compile Include="ListViewService.cs" />
+    <Compile Include="ListViews\IListViewService.cs" />
+    <Compile Include="ListViews\IResourceKeyProvider.cs" />
+    <Compile Include="ListViews\ListViewId.cs" />
+    <Compile Include="ListViews\ListViewService.cs" />
+    <Compile Include="ListViews\ResourceKeyProvider.cs" />
     <Compile Include="Notifications\INotificationSender.cs" />
     <Compile Include="Notifications\NotificationSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -92,7 +94,6 @@
     <Compile Include="Reflection\DefaultNamespaceAttribute.cs" />
     <Compile Include="Reflection\PropertyNotFoundException.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />
-    <Compile Include="ResourceKeyProvider.cs" />
     <Compile Include="IResourceService.cs" />
     <Compile Include="ResourceService.cs" />
     <Compile Include="StringHelper.cs" />

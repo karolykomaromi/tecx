@@ -1,6 +1,7 @@
 ﻿namespace Modular.Web.Configuration
 {
     using Infrastructure;
+    using Infrastructure.ListViews;
     using Microsoft.AspNet.SignalR.Hubs;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration.ContainerModel.Unity;
