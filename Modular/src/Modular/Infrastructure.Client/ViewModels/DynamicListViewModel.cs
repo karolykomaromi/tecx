@@ -18,7 +18,7 @@
     public class DynamicListViewModel : TitledViewModel, INavigationAware, ISubscribeTo<LanguageChanged>
     {
         private readonly LocalizedString title;
-        private readonly ListViewName listViewName;
+        private readonly ListViewId listViewId;
         private readonly IListViewService listViewService;
         private readonly ILoggerFacade logger;
         private readonly ICommand loadListViewItemsCommand;
@@ -31,12 +31,12 @@
         private int takeCount;
         private FacetedViewModel selectedItem;
 
-        public DynamicListViewModel(ListViewName listViewName, ResourceAccessor title, IListViewService listViewService, ILoggerFacade logger, ICommand loadListViewItemsCommand)
+        public DynamicListViewModel(ListViewId listViewId, IListViewService listViewService, ILoggerFacade logger, ICommand loadListViewItemsCommand)
         {
             Contract.Requires(listViewService != null);
 
-            this.title = new LocalizedString(() => this.Title, title.GetResource, this.OnPropertyChanged);
-            this.listViewName = listViewName;
+            this.title = new LocalizedString(() => this.Title, ResourceAccessor.Create(listViewId.ModuleQualifiedListViewName).GetResource, this.OnPropertyChanged);
+            this.listViewId = listViewId;
             this.listViewService = listViewService;
             this.logger = logger;
             this.loadListViewItemsCommand = loadListViewItemsCommand;
@@ -47,6 +47,9 @@
 
             this.TakeCount = 25;
             this.LoadNextBeforeEndOfItemsThreshold = 10;
+
+            //string s = this.ListViewId.ToString();
+            //this.detailsViewName = s.Substring(0, s.IndexOf(".", StringComparison.Ordinal)) + "DetailsView";
         }
 
         public override string Title
@@ -72,14 +75,19 @@
             }
         }
 
+        //public Uri DetailsViewUri
+        //{
+        //    get { return this.detailsViewName}
+        //}
+
         public ObservableCollection<FacetedViewModel> Items
         {
             get { return this.items; }
         }
 
-        public ListViewName ListViewName
+        public ListViewId ListViewId
         {
-            get { return this.listViewName; }
+            get { return this.listViewId; }
         }
 
         public FilterViewModel Filter
@@ -182,15 +190,19 @@
             if (!this.IsCurrentlyLoading)
             {
                 this.IsCurrentlyLoading = true;
-                this.listViewService.BeginGetListView(this.ListViewName.ToString(), this.Items.Count, this.TakeCount, this.OnGetListViewCompleted, null);
+                this.listViewService.BeginGetListView(this.ListViewId.ToString(), this.Items.Count, this.TakeCount, this.OnGetListViewCompleted, null);
             }
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            ListViewName target = new ListViewName(navigationContext.Parameters["name"]);
+            ListViewId target;
+            if (!ListViewId.TryParse(navigationContext.Parameters["name"], out target))
+            {
+                return false;
+            }
 
-            return this.ListViewName == target;
+            return this.ListViewId == target;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)

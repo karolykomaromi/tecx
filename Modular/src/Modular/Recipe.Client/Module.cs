@@ -2,7 +2,6 @@
 {
     using System.Windows.Controls;
     using Infrastructure;
-    using Infrastructure.I18n;
     using Infrastructure.ListViews;
     using Infrastructure.Modularity;
     using Infrastructure.UnityExtensions.Injection;
@@ -32,10 +31,10 @@
 
         protected override void ConfigureRegions(IRegionManager regionManager)
         {
-            ListViewName recipesList = new ListViewName("Recipe.Recipes");
+            ListViewId recipesList = new ListViewId("Recipe", "Recipes");
 
             Control recipes;
-            if (this.TryGetViewFor<DynamicListViewModel>(out recipes, new Parameter("listViewName", recipesList), new Parameter("title", new ResourceAccessor(() => Labels.Recipes))))
+            if (this.TryGetViewFor<DynamicListViewModel>(out recipes, new Parameter("listViewId", recipesList)))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, recipes);
 
@@ -47,10 +46,10 @@
                 regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
             }
 
-            ListViewName ingredientsList = new ListViewName("Recipe.Ingredients");
+            ListViewId ingredientsList = new ListViewId("Recipe", "Ingredients");
 
             Control ingredients;
-            if (this.TryGetViewFor<DynamicListViewModel>(out ingredients, new Parameter("listViewName", ingredientsList), new Parameter("title", new ResourceAccessor(() => Labels.Ingredients))))
+            if (this.TryGetViewFor<DynamicListViewModel>(out ingredients, new Parameter("listViewId", ingredientsList)))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, ingredients);
 

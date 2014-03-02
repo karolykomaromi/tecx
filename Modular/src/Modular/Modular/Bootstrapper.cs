@@ -12,6 +12,7 @@
     using Infrastructure;
     using Infrastructure.Commands;
     using Infrastructure.Events;
+    using Infrastructure.ListViews;
     using Infrastructure.Logging;
     using Infrastructure.Modularity;
     using Infrastructure.Options;

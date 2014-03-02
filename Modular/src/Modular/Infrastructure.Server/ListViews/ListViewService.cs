@@ -1,4 +1,4 @@
-﻿namespace Infrastructure
+﻿namespace Infrastructure.ListViews
 {
     using System;
     using System.Collections.Generic;
@@ -20,6 +20,14 @@
 
         public ListView GetListView(string listViewName, int skip, int take)
         {
+            ListViewId listViewId;
+            if (!ListViewId.TryParse(listViewName, out listViewId))
+            {
+                string msg = string.Format("Format for names of list views is '<Module>.<Name of ListView>'. You provided the following name '{0}'.", listViewName);
+                FormatException inner = new FormatException(msg);
+                throw new ArgumentException("Invalid format for name of list view. See inner exception for details.", "listViewName", inner);
+            }
+
             List<DataFromView> objects = new List<DataFromView>();
 
             for (int i = skip; i < skip + take; i++)
@@ -29,7 +37,7 @@
 
             IDataReader reader = objects.AsDataReader();
 
-            ListView listView = new ListView { Name = listViewName, Skip = skip, Take = take };
+            ListView listView = new ListView { Name = listViewId.ModuleQualifiedListViewName, Skip = skip, Take = take };
 
             var properties = new List<Property>();
 
@@ -41,7 +49,7 @@
                     {
                         PropertyName = propertyName,
                         PropertyType = TypeHelper.GetSilverlightCompatibleTypeName(reader.GetFieldType(i)),
-                        ResourceKey = this.resourceKeyProvider.GetResourceKey(listViewName, propertyName)
+                        ResourceKey = this.resourceKeyProvider.GetResourceKey(listViewId, propertyName)
                     };
 
                 properties.Add(property);

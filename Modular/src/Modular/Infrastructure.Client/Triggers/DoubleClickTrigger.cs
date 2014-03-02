@@ -5,22 +5,22 @@ namespace Infrastructure.Triggers
     using System.Windows.Input;
     using System.Windows.Interactivity;
 
-    public class DoubleClickTrigger : TriggerBase<FrameworkElement>
+    public class DoubleClickTrigger : TriggerBase<UIElement>
     {
+        private readonly MouseButtonEventHandler handler;
+
+        public DoubleClickTrigger()
+        {
+            this.handler = this.OnMouseLeftButtonDown;
+        }
+
         public bool HandledEventsToo { get; set; }
 
         protected override void OnAttached()
         {
             if (this.AssociatedObject != null && !DesignerProperties.GetIsInDesignMode(this.AssociatedObject))
             {
-                if (this.HandledEventsToo)
-                {
-                    this.AssociatedObject.AddHandler(UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(this.OnMouseLeftButtonDown), true);
-                }
-                else
-                {
-                    this.AssociatedObject.MouseLeftButtonDown += this.OnMouseLeftButtonDown;
-                }
+                this.AssociatedObject.AddHandler(UIElement.MouseLeftButtonDownEvent, this.handler, this.HandledEventsToo);
             }
         }
 
@@ -28,14 +28,7 @@ namespace Infrastructure.Triggers
         {
             if (this.AssociatedObject != null && !DesignerProperties.GetIsInDesignMode(this.AssociatedObject))
             {
-                if (this.HandledEventsToo)
-                {
-                    this.AssociatedObject.RemoveHandler(UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(this.OnMouseLeftButtonDown));
-                }
-                else
-                {
-                    this.AssociatedObject.MouseLeftButtonDown -= this.OnMouseLeftButtonDown;
-                }
+                this.AssociatedObject.RemoveHandler(UIElement.MouseLeftButtonDownEvent, this.handler);
             }
         }
 
