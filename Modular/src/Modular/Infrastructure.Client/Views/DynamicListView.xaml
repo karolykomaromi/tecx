@@ -45,7 +45,7 @@
                         EventArgsConverterParameter="{Binding}" />
                 </i:EventTrigger>
                 <tr:DoubleClickTrigger HandledEventsToo="True" >
-                    <mvvm:EventToCommand Command="{Binding OpenDetailsCommand}" CommandParameter="{Binding SelectedItem}" />
+                    <mvvm:EventToCommand Command="{Binding OpenDetailsCommand}" CommandParameter="{Binding DetailsViewUri}" />
                 </tr:DoubleClickTrigger>
             </i:Interaction.Triggers>
         </sdk:DataGrid>

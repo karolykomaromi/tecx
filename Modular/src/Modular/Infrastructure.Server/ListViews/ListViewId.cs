@@ -25,16 +25,6 @@ namespace Infrastructure.ListViews
             this.moduleQualifiedListViewName = this.moduleName + "." + this.listViewName;
         }
 
-        public static bool operator ==(ListViewId x, ListViewId y)
-        {
-            return x.Equals(y);
-        }
-
-        public static bool operator !=(ListViewId x, ListViewId y)
-        {
-            return !x.Equals(y);
-        }
-
         public string ModuleName
         {
             get { return this.moduleName; }
@@ -48,6 +38,16 @@ namespace Infrastructure.ListViews
         public string ModuleQualifiedListViewName
         {
             get { return this.moduleQualifiedListViewName; }
+        }
+
+        public static bool operator ==(ListViewId x, ListViewId y)
+        {
+            return x.Equals(y);
+        }
+
+        public static bool operator !=(ListViewId x, ListViewId y)
+        {
+            return !x.Equals(y);
         }
 
         public static bool TryParse(string s, out ListViewId id)

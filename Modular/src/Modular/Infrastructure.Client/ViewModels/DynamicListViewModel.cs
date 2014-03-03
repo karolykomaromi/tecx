@@ -12,6 +12,7 @@
     using Infrastructure.Events;
     using Infrastructure.I18n;
     using Infrastructure.ListViews;
+    using Microsoft.Practices.Prism;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
 
@@ -25,13 +26,14 @@
         private readonly ICommand openDetailsCommand;
         private readonly ObservableCollection<FacetedViewModel> items;
         private readonly List<Facet> facets;
+        private readonly string detailsViewName;
         private FilterViewModel filter;
         private bool isCurrentlyLoading;
         private int loadNextBeforeEndOfItemsThreshold;
         private int takeCount;
         private FacetedViewModel selectedItem;
 
-        public DynamicListViewModel(ListViewId listViewId, IListViewService listViewService, ILoggerFacade logger, ICommand loadListViewItemsCommand)
+        public DynamicListViewModel(ListViewId listViewId, IListViewService listViewService, ILoggerFacade logger, ICommand loadListViewItemsCommand, ICommand navigateContentCommand)
         {
             Contract.Requires(listViewService != null);
 
@@ -40,7 +42,7 @@
             this.listViewService = listViewService;
             this.logger = logger;
             this.loadListViewItemsCommand = loadListViewItemsCommand;
-            this.openDetailsCommand = new NullCommand();
+            this.openDetailsCommand = navigateContentCommand;
             this.items = new ObservableCollection<FacetedViewModel>();
             this.facets = new List<Facet>();
             this.filter = new EmptyFilterViewModel();
@@ -48,8 +50,7 @@
             this.TakeCount = 25;
             this.LoadNextBeforeEndOfItemsThreshold = 10;
 
-            //string s = this.ListViewId.ToString();
-            //this.detailsViewName = s.Substring(0, s.IndexOf(".", StringComparison.Ordinal)) + "DetailsView";
+            this.detailsViewName = StringHelper.Singularize(this.listViewId.ListViewName) + "DetailsView";
         }
 
         public override string Title
@@ -71,14 +72,28 @@
                     this.OnPropertyChanging(() => this.SelectedItem);
                     this.selectedItem = value;
                     this.OnPropertyChanged(() => this.SelectedItem);
+                    this.OnPropertyChanged(() => this.DetailsViewUri);
                 }
             }
         }
 
-        //public Uri DetailsViewUri
-        //{
-        //    get { return this.detailsViewName}
-        //}
+        public Uri DetailsViewUri
+        {
+            get
+            {
+                if (this.SelectedItem == null)
+                {
+                    return new Uri(string.Empty, UriKind.Relative);
+                }
+
+                UriQuery query = new UriQuery();
+                query.Add("id", this.SelectedItem["Bar"].ToString());
+
+                Uri uri = new Uri(this.detailsViewName + query, UriKind.Relative);
+
+                return uri;
+            }
+        }
 
         public ObservableCollection<FacetedViewModel> Items
         {

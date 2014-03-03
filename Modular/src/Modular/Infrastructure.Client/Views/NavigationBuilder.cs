@@ -8,6 +8,7 @@ namespace Infrastructure.Views
     using Infrastructure.Commands;
     using Infrastructure.I18n;
     using Infrastructure.Options;
+    using Infrastructure.Reflection;
     using Infrastructure.ViewModels;
     using Microsoft.Practices.Prism;
     using Microsoft.Practices.Prism.Regions;
@@ -15,10 +16,9 @@ namespace Infrastructure.Views
     public class NavigationBuilder
     {
         private readonly List<KeyValuePair<string, string>> parameters;
-        private ViewModel target;
-        private IRegionManager regionManager;
+        private readonly IRegionManager regionManager;
+        private ViewModel viewModel;
         private Action<IOptionsChanged<IOptions>, NavigationViewModel> handleOptionsChanged;
-        private Func<string> title;
 
         public NavigationBuilder(IRegionManager regionManager)
         {
@@ -35,22 +35,13 @@ namespace Infrastructure.Views
             return navigate.Build();
         }
 
-        public NavigationBuilder ToView(FrameworkElement target)
+        public NavigationBuilder ToView(FrameworkElement view)
         {
-            Contract.Requires(target != null);
-            Contract.Requires(target.DataContext != null);
-            Contract.Requires(target.DataContext is ViewModel);
+            Contract.Requires(view != null);
+            Contract.Requires(view.DataContext != null);
+            Contract.Requires(view.DataContext is ViewModel);
 
-            this.target = (ViewModel)target.DataContext;
-
-            return this;
-        }
-
-        public NavigationBuilder WithTitle(Func<string> title)
-        {
-            Contract.Requires(title != null);
-
-            this.title = title;
+            this.viewModel = (ViewModel)view.DataContext;
 
             return this;
         }
@@ -92,6 +83,22 @@ namespace Infrastructure.Views
         {
             ICommand navigationCommand = new NavigateContentCommand(this.regionManager);
 
+            Type viewModelType = this.viewModel.GetType();
+
+            ResourceAccessor resource;
+            DynamicListViewModel listView = this.viewModel as DynamicListViewModel;
+            if (listView == null)
+            {
+                string module = ReflectionHelper.GetDefaultNamespace(viewModelType.Assembly);
+                string titleResourceKey = module + "." + viewModelType.Name.Replace("ViewModel", string.Empty);
+                resource = ResourceAccessor.Create(titleResourceKey);
+            }
+            else
+            {
+                resource = ResourceAccessor.Create(listView.ListViewId.ModuleQualifiedListViewName);
+                this.parameters.Add(new KeyValuePair<string, string>("name", listView.ListViewId.ToString()));
+            }
+
             UriQuery query = new UriQuery();
 
             foreach (var parameter in this.parameters)
@@ -99,32 +106,22 @@ namespace Infrastructure.Views
                 query.Add(parameter.Key, parameter.Value);
             }
 
-            NavigationViewModel viewModel = new NavigationViewModel(
+            NavigationViewModel navigationViewModel = new NavigationViewModel(
                 navigationCommand,
-                new ResourceAccessor(this.title),
-                new Uri(this.target.GetType().Name.Replace("Model", string.Empty) + query, UriKind.Relative),
+                resource,
+                new Uri(viewModelType.Name.Replace("ViewModel", "View") + query, UriKind.Relative),
                 this.handleOptionsChanged)
                 {
-                    EventAggregator = this.target.EventAggregator
+                    EventAggregator = this.viewModel.EventAggregator
                 };
 
-            this.target.EventAggregator.Subscribe(viewModel);
+            this.viewModel.EventAggregator.Subscribe(navigationViewModel);
 
-            NavigationView view = new NavigationView { DataContext = viewModel };
+            NavigationView view = new NavigationView { DataContext = navigationViewModel };
 
-            ViewModelBinder.Bind(view, viewModel);
+            ViewModelBinder.Bind(view, navigationViewModel);
 
             return view;
-        }
-
-        public NavigationBuilder WithParameter(string parameterName, string parameterValue)
-        {
-            Contract.Requires(!string.IsNullOrEmpty(parameterName));
-            Contract.Requires(!string.IsNullOrEmpty(parameterValue));
-
-            this.parameters.Add(new KeyValuePair<string, string>(parameterName, parameterValue));
-
-            return this;
         }
     }
 }

@@ -10,6 +10,27 @@
     {
         private readonly Func<string> getResource;
 
+        public ResourceAccessor(string moduleName, string resourceName)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(moduleName));
+            Contract.Requires(!string.IsNullOrEmpty(resourceName));
+
+            string assemblyQualifiedResourceTypeName = string.Format("{0}.Assets.Resources.Labels, {0}.Client", moduleName);
+
+            Type resourceType = Type.GetType(assemblyQualifiedResourceTypeName, true);
+
+            PropertyInfo property = resourceType.GetProperty(resourceName, BindingFlags.Public | BindingFlags.Static);
+
+            if (property == null)
+            {
+                throw new PropertyNotFoundException(resourceType, resourceName);
+            }
+
+            MethodInfo getter = property.GetGetMethod(false);
+
+            this.getResource = () => (string)getter.Invoke(null, null);
+        }
+
         public ResourceAccessor(Func<string> getResource)
         {
             Contract.Requires(getResource != null);
