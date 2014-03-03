@@ -107,7 +107,7 @@
       <HintPath>..\packages\SilverlightToolkit-Testing.5.2011.12.1\lib\SL5\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="Moq.Silverlight">
-      <HintPath>..\packages\Moq.4.2.1312.1622\lib\sl4\Moq.Silverlight.dll</HintPath>
+      <HintPath>..\packages\Moq.4.2.1402.2112\lib\sl4\Moq.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows" />

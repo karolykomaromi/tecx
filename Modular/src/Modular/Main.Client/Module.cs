@@ -3,9 +3,7 @@
     using System.Windows.Controls;
     using Infrastructure;
     using Infrastructure.Modularity;
-    using Infrastructure.UnityExtensions.Injection;
     using Infrastructure.Views;
-    using Main.Assets.Resources;
     using Main.ViewModels;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
@@ -34,13 +32,11 @@
             if (this.TryGetViewFor<OptionsViewModel>(out options))
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, options);
+
+                NavigationView navigation = new NavigationBuilder(this.RegionManager).ToView(options);
+
+                regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
             }
-
-            NavigationView navigation = new NavigationBuilder(this.RegionManager)
-                .ToView(options)
-                .WithTitle(() => Labels.Options);
-
-            regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
         }
     }
 }

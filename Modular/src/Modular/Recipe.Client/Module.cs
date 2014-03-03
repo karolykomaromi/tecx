@@ -10,7 +10,7 @@
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
-    using Recipe.Assets.Resources;
+    using Recipe.ViewModels;
 
     public class Module : UnityModule
     {
@@ -38,10 +38,7 @@
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, recipes);
 
-                NavigationView navigation = new NavigationBuilder(this.RegionManager)
-                                                    .ToView(recipes)
-                                                    .WithParameter("name", recipesList.ToString())
-                                                    .WithTitle(() => Labels.Recipes);
+                NavigationView navigation = new NavigationBuilder(this.RegionManager).ToView(recipes);
 
                 regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
             }
@@ -53,12 +50,21 @@
             {
                 regionManager.AddToRegion(RegionNames.Shell.Content, ingredients);
 
-                NavigationView navigation = new NavigationBuilder(this.RegionManager)
-                                                .ToView(ingredients)
-                                                .WithParameter("name", ingredientsList.ToString())
-                                                .WithTitle(() => Labels.Ingredients);
+                NavigationView navigation = new NavigationBuilder(this.RegionManager).ToView(ingredients);
 
                 regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
+            }
+
+            Control ingredientDetails;
+            if (this.TryGetViewFor<IngredientDetailsViewModel>(out ingredientDetails))
+            {
+                regionManager.AddToRegion(RegionNames.Shell.Content, ingredientDetails);
+            }
+
+            Control recipeDetails;
+            if (this.TryGetViewFor<RecipeDetailsViewModel>(out recipeDetails))
+            {
+                regionManager.AddToRegion(RegionNames.Shell.Content, recipeDetails);
             }
         }
     }

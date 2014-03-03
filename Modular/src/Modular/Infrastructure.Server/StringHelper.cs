@@ -6,6 +6,15 @@
 
     public static class StringHelper
     {
+        public static string Singularize(string s)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(s));
+
+            string singularized = s.TrimEnd('s');
+
+            return singularized;
+        }
+
         public static string ToUpperCamelCase(string s)
         {
             Contract.Requires(!string.IsNullOrEmpty(s));

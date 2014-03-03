@@ -2,15 +2,12 @@
 {
     using System.Windows.Controls;
     using Infrastructure;
-    using Infrastructure.I18n;
     using Infrastructure.Modularity;
     using Infrastructure.Options;
-    using Infrastructure.UnityExtensions.Injection;
     using Infrastructure.Views;
     using Microsoft.Practices.Prism.Logging;
     using Microsoft.Practices.Prism.Regions;
     using Microsoft.Practices.Unity;
-    using Search.Assets.Resources;
     using Search.ViewModels;
 
     public class Module : UnityModule
@@ -45,7 +42,6 @@
 
                 NavigationView navigation = new NavigationBuilder(this.RegionManager)
                     .ToView(searchResult)
-                    .WithTitle(() => Labels.SearchResults)
                     .HideOn(Option.Create((SearchOptionsViewModel vm) => vm.IsSearchEnabled));
 
                 regionManager.AddToRegion(RegionNames.Shell.Navigation, navigation);
