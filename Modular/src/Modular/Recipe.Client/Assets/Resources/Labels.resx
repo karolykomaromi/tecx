@@ -120,6 +120,9 @@
   <data name="Bar" xml:space="preserve">
     <value>Serial</value>
   </data>
+  <data name="Basil" xml:space="preserve">
+    <value>Basil</value>
+  </data>
   <data name="Foo" xml:space="preserve">
     <value>ID</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="Ingredients" xml:space="preserve">
     <value>Ingredients</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
   </data>
   <data name="Recipe" xml:space="preserve">
     <value>Recipe</value>

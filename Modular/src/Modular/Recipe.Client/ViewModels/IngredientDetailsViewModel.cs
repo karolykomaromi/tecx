@@ -1,6 +1,8 @@
 ﻿namespace Recipe.ViewModels
 {
     using System;
+    using System.Diagnostics.Contracts;
+    using AutoMapper;
     using Infrastructure.I18n;
     using Infrastructure.ViewModels;
     using Microsoft.Practices.Prism.Regions;
@@ -10,12 +12,17 @@
     public class IngredientDetailsViewModel : TitledViewModel, INavigationAware
     {
         private readonly IRecipeService recipeService;
+        private readonly IMappingEngine mappingEngine;
         private readonly LocalizedString title;
-        private Ingredient ingredient;
+        private IngredientViewModel ingredient;
 
-        public IngredientDetailsViewModel(IRecipeService recipeService)
+        public IngredientDetailsViewModel(IRecipeService recipeService, IMappingEngine mappingEngine)
         {
+            Contract.Requires(recipeService != null);
+            Contract.Requires(mappingEngine != null);
+
             this.recipeService = recipeService;
+            this.mappingEngine = mappingEngine;
             this.title = new LocalizedString(() => this.Title, () => Labels.Ingredient, this.OnPropertyChanged);
         }
 
@@ -24,7 +31,7 @@
             get { return this.title.Value; }
         }
 
-        public Ingredient Ingredient
+        public IngredientViewModel Ingredient
         {
             get
             {
@@ -66,7 +73,7 @@
         {
             Ingredient i = this.recipeService.EndGetIngredient(ar);
 
-            this.Ingredient = i;
+            this.Ingredient = this.mappingEngine.Map<Ingredient, IngredientViewModel>(i);
         }
     }
 }

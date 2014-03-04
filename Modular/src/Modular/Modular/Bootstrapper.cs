@@ -36,8 +36,6 @@
 
     public class Bootstrapper : UnityBootstrapper
     {
-        public IModuleTracker ModuleTracker { get; protected set; }
-
         protected override DependencyObject CreateShell()
         {
             Shell shell = this.Container.Resolve<Shell>();
@@ -141,7 +139,7 @@
 
         protected override void InitializeModules()
         {
-            IModuleManager moduleManager = this.Container.Resolve<IModuleManager>(new ResolverOverride[0]);
+            IModuleManager moduleManager = this.Container.Resolve<IModuleManager>();
             IModuleTracker tracker = this.Container.Resolve<IModuleTracker>();
 
             foreach (ModuleInfo module in this.ModuleCatalog.Modules)
@@ -158,14 +156,6 @@
             moduleManager.ModuleDownloadProgressChanged += (s, e) => tracker.RecordModuleDownloading(e.ModuleInfo.ModuleName, e.BytesReceived, e.TotalBytesToReceive);
 
             moduleManager.Run();
-        }
-
-        private static class Constants
-        {
-            /// <summary>
-            /// appWideResources
-            /// </summary>
-            public const string AppWideResources = "appWideResources";
         }
     }
 }

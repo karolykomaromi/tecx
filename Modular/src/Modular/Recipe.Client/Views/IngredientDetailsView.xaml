@@ -17,6 +17,10 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -24,6 +28,7 @@
         <Border t:Theme.Style="{StaticResource TitleBorder}" Grid.ColumnSpan="2">
             <TextBlock t:Theme.Style="{StaticResource TitleText}" Text="{Binding Title}"/>
         </Border>
-        <TextBlock Grid.Row="1" Text="{Binding Path=Ingredient.Id}" />
+        <TextBlock Text="{Binding Path=Ingredient.LabelName}" Grid.Row="1"/>
+        <TextBlock Text="{Binding Path=Ingredient.Name}" Grid.Row="1" Grid.Column="1"/>
     </Grid>
 </UserControl>

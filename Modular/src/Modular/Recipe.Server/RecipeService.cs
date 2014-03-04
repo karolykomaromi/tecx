@@ -21,7 +21,7 @@
 
         public Ingredient GetIngredient(long id)
         {
-            return new Ingredient { Id = id };
+            return new Ingredient { Id = id, Name = "Recipe.Basil" };
         }
     }
 }
