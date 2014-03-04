@@ -63,6 +63,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\sl5\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.SL5">
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\sl5\AutoMapper.SL5.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions">
       <HintPath>..\packages\Prism.4.1.0.0\lib\SL5\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
@@ -134,6 +141,7 @@
     <Compile Include="RecipeServiceClient.cs" />
     <Compile Include="ViewModels\IngredientDetailsViewModel.cs" />
     <Compile Include="ViewModels\IngredientsFilterViewModel.cs" />
+    <Compile Include="ViewModels\IngredientViewModel.cs" />
     <Compile Include="ViewModels\RecipeDetailsViewModel.cs" />
     <Compile Include="ViewModels\RecipesFilterViewModel.cs" />
     <Compile Include="Views\IngredientDetailsView.xaml.cs">
@@ -205,7 +213,12 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="..\packages\AutoMapper.3.1.1\lib\sl5\AutoMapper.SL5.dll">
+      <Link>AutoMapper.SL5.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

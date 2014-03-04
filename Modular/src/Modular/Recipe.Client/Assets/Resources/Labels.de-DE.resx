@@ -120,8 +120,8 @@
   <data name="Bar" xml:space="preserve">
     <value>Lfd. Nr.</value>
   </data>
-  <data name="Foo" xml:space="preserve">
-    <value>ID</value>
+  <data name="Basil" xml:space="preserve">
+    <value>Basilikum</value>
   </data>
   <data name="Ingredient" xml:space="preserve">
     <value>Zutat</value>

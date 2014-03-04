@@ -1,11 +1,13 @@
 ﻿namespace Infrastructure.I18n
 {
     using System;
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.Linq.Expressions;
     using Infrastructure.Events;
     using Infrastructure.Reflection;
 
+    [DebuggerDisplay("Value={Value}")]
     public class LocalizedString : ISubscribeTo<LanguageChanged>
     {
         private readonly string propertyName;
