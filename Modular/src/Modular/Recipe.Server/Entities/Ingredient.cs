@@ -1,4 +1,4 @@
-﻿namespace Recipe
+namespace Recipe.Entities
 {
     using System.Runtime.Serialization;
 

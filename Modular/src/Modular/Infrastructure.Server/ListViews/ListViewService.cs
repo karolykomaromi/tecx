@@ -6,16 +6,20 @@
     using System.Diagnostics.Contracts;
     using Infrastructure.Data;
     using Infrastructure.Entities;
+    using Infrastructure.ListViews.Filter;
 
     public class ListViewService : IListViewService
     {
         private readonly IResourceKeyProvider resourceKeyProvider;
+        private readonly IPropertyFilter propertyFilter;
 
-        public ListViewService(IResourceKeyProvider resourceKeyProvider)
+        public ListViewService(IResourceKeyProvider resourceKeyProvider, IPropertyFilter propertyFilter)
         {
             Contract.Requires(resourceKeyProvider != null);
+            Contract.Requires(propertyFilter != null);
 
             this.resourceKeyProvider = resourceKeyProvider;
+            this.propertyFilter = propertyFilter;
         }
 
         public ListView GetListView(string listViewName, int skip, int take)
@@ -32,7 +36,7 @@
 
             for (int i = skip; i < skip + take; i++)
             {
-                objects.Add(new DataFromView { Foo = Guid.NewGuid().ToString(), Bar = i, Timestamp = TimeProvider.Now });
+                objects.Add(new DataFromView { Id = i, Foo = Guid.NewGuid().ToString(), Bar = i, Timestamp = TimeProvider.Now });
             }
 
             IDataReader reader = objects.AsDataReader();
@@ -45,14 +49,17 @@
             {
                 string propertyName = reader.GetName(i);
 
-                var property = new Property
-                    {
-                        PropertyName = propertyName,
-                        PropertyType = TypeHelper.GetSilverlightCompatibleTypeName(reader.GetFieldType(i)),
-                        ResourceKey = this.resourceKeyProvider.GetResourceKey(listViewId, propertyName)
-                    };
+                if (!this.propertyFilter.IsMatch(propertyName))
+                {
+                    var property = new Property
+                        {
+                            PropertyName = propertyName,
+                            PropertyType = TypeHelper.GetSilverlightCompatibleTypeName(reader.GetFieldType(i)),
+                            ResourceKey = this.resourceKeyProvider.GetResourceKey(listViewId, propertyName)
+                        };
 
-                properties.Add(property);
+                    properties.Add(property);
+                }
             }
 
             listView.Properties = properties.ToArray();
@@ -67,13 +74,26 @@
 
                 for (int i = 0; i < reader.FieldCount; i++)
                 {
-                    var cell = new ListViewCell
-                        {
-                            PropertyName = reader.GetName(i),
-                            Value = reader.GetValue(i)
-                        };
+                    string propertyName = reader.GetName(i);
+                    object value = reader.GetValue(i);
 
-                    cells.Add(cell);
+                    if (string.Equals("Id", propertyName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        row.Id = (long)value;
+                    }
+                    else
+                    {
+                        if (!this.propertyFilter.IsMatch(propertyName))
+                        {
+                            var cell = new ListViewCell
+                                {
+                                    PropertyName = propertyName,
+                                    Value = value
+                                };
+
+                            cells.Add(cell);
+                        }
+                    }
                 }
 
                 row.Cells = cells.ToArray();
@@ -88,6 +108,8 @@
 
         private class DataFromView
         {
+            public long Id { get; set; }
+
             public string Foo { get; set; }
 
             public int Bar { get; set; }

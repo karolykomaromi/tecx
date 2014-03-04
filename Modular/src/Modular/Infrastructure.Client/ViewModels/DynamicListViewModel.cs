@@ -262,7 +262,7 @@
 
             foreach (ListViewRow row in listView.Rows)
             {
-                FacetedViewModel vm = new FacetedViewModel();
+                FacetedViewModel vm = new FacetedViewModel { Id = row.Id };
 
                 this.facets.ForEach(vm.AddFacet);
 

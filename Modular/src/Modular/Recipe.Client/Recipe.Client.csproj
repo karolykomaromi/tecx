@@ -82,6 +82,8 @@
       <HintPath>..\packages\Unity.2.1.505.2\lib\SL30\Microsoft.Practices.Unity.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -100,13 +102,36 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="..\Recipe.Server\Entities\Ingredient.cs">
+      <Link>Entities\Ingredient.cs</Link>
+    </Compile>
+    <Compile Include="..\Recipe.Server\Entities\IngredientItem.cs">
+      <Link>Entities\IngredientItem.cs</Link>
+    </Compile>
+    <Compile Include="..\Recipe.Server\Entities\Measure.cs">
+      <Link>Entities\Measure.cs</Link>
+    </Compile>
+    <Compile Include="..\Recipe.Server\Entities\Recipe.cs">
+      <Link>Entities\Recipe.cs</Link>
+    </Compile>
+    <Compile Include="..\Recipe.Server\Entities\SpecialKitchenMeasure.cs">
+      <Link>Entities\SpecialKitchenMeasure.cs</Link>
+    </Compile>
+    <Compile Include="..\Recipe.Server\Entities\VolumeMeasure.cs">
+      <Link>Entities\VolumeMeasure.cs</Link>
+    </Compile>
+    <Compile Include="..\Recipe.Server\Entities\WeightMeasure.cs">
+      <Link>Entities\WeightMeasure.cs</Link>
+    </Compile>
     <Compile Include="Assets\Resources\Labels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Labels.tt</DependentUpon>
     </Compile>
+    <Compile Include="IRecipeService.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecipeServiceClient.cs" />
     <Compile Include="ViewModels\IngredientDetailsViewModel.cs" />
     <Compile Include="ViewModels\IngredientsFilterViewModel.cs" />
     <Compile Include="ViewModels\RecipeDetailsViewModel.cs" />
@@ -180,6 +205,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

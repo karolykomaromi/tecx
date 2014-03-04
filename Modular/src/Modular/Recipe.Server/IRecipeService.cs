@@ -1,16 +1,21 @@
 ﻿namespace Recipe
 {
     using System.ServiceModel;
+    using Recipe.Entities;
 
     [ServiceContract]
     public interface IRecipeService
     {
-        Recipe[] GetRecipes();
+        [OperationContract]
+        Recipe[] GetRecipes(int skip, int take);
 
+        [OperationContract]
         Recipe GetRecipe(long id);
 
-        Ingredient[] GetIngredients();
+        [OperationContract]
+        Ingredient[] GetIngredients(int skip, int take);
 
+        [OperationContract]
         Ingredient GetIngredient(long id);
     }
 }

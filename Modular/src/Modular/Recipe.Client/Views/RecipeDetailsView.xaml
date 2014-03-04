@@ -21,12 +21,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="2*" />
-        </Grid.ColumnDefinitions>
         <Border t:Theme.Style="{StaticResource TitleBorder}" Grid.ColumnSpan="2">
             <TextBlock t:Theme.Style="{StaticResource TitleText}" Text="{Binding Title}"/>
         </Border>
+        <TextBlock Grid.Row="1"  Text="{Binding Path=Recipe.Id}" />
     </Grid>
 </UserControl>
