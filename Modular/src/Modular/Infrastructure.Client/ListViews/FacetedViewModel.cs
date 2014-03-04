@@ -18,6 +18,9 @@ namespace Infrastructure.ListViews
         }
 
         [PropertyMeta(IsListViewRelevant = false)]
+        public long Id { get; set; }
+
+        [PropertyMeta(IsListViewRelevant = false)]
         public IEnumerable<Facet> Facets
         {
             get { return this.facets; }

@@ -1,9 +1,9 @@
-﻿namespace Recipe
+namespace Recipe.Entities
 {
     using System.Runtime.Serialization;
 
     [DataContract]
-    public class Measure
+    public class SpecialKitchenMeasure : Measure
     {
     }
 }

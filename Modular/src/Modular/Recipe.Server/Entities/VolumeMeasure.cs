@@ -1,9 +1,9 @@
-﻿namespace Recipe
+namespace Recipe.Entities
 {
     using System.Runtime.Serialization;
 
     [DataContract]
-    public class WeightMeasure : Measure
+    public class VolumeMeasure : Measure
     {
     }
 }

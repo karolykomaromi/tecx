@@ -1,7 +1,7 @@
 ﻿namespace Modular.Web.Configuration
 {
-    using Infrastructure;
     using Infrastructure.ListViews;
+    using Infrastructure.ListViews.Filter;
     using Microsoft.AspNet.SignalR.Hubs;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration.ContainerModel.Unity;
@@ -22,6 +22,7 @@
             this.Container.RegisterType<IHubActivator, UnityHubActivator>(new ContainerControlledLifetimeManager());
             this.Container.RegisterType<ISearchService, SearchService>();
             this.Container.RegisterType<IResourceKeyProvider, ResourceKeyProvider>();
+            this.Container.RegisterType<IPropertyFilter, IdFilter>();
         }
     }
 }

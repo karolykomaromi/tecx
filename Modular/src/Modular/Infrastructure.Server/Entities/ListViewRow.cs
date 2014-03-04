@@ -13,6 +13,9 @@ namespace Infrastructure.Entities
         }
 
         [DataMember]
+        public long Id { get; set; }
+
+        [DataMember]
         public ListViewCell[] Cells { get; set; }
     }
 }

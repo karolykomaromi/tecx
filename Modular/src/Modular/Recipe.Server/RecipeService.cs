@@ -1,25 +1,27 @@
 ﻿namespace Recipe
 {
+    using Recipe.Entities;
+
     public class RecipeService : IRecipeService
     {
-        public Recipe[] GetRecipes()
+        public Recipe[] GetRecipes(int skip, int take)
         {
-            throw new System.NotImplementedException();
+            return new Recipe[0];
         }
 
         public Recipe GetRecipe(long id)
         {
-            throw new System.NotImplementedException();
+            return new Recipe { Id = id };
         }
 
-        public Ingredient[] GetIngredients()
+        public Ingredient[] GetIngredients(int skip, int take)
         {
-            throw new System.NotImplementedException();
+            return new Ingredient[0];
         }
 
         public Ingredient GetIngredient(long id)
         {
-            throw new System.NotImplementedException();
+            return new Ingredient { Id = id };
         }
     }
 }
