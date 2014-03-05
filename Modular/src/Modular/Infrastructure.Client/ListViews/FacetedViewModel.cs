@@ -2,6 +2,7 @@ namespace Infrastructure.ListViews
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Reflection;
     using Infrastructure.Reflection;
     using Infrastructure.ViewModels;
@@ -27,22 +28,26 @@ namespace Infrastructure.ListViews
         }
 
         [PropertyMeta(IsListViewRelevant = false)]
-        public object this[string key]
+        public object this[string propertyName]
         {
             get
             {
-                if (!this.values.ContainsKey(key))
+                Contract.Requires(!string.IsNullOrEmpty(propertyName));
+
+                if (!this.values.ContainsKey(propertyName))
                 {
                     return null;
                 }
 
-                return this.values[key];
+                return this.values[propertyName];
             }
 
             set
             {
-                this.values[key] = value;
-                this.OnPropertyChanged(key);
+                Contract.Requires(!string.IsNullOrEmpty(propertyName));
+
+                this.values[propertyName] = value;
+                this.OnPropertyChanged(propertyName);
             }
         }
 
@@ -53,6 +58,8 @@ namespace Infrastructure.ListViews
 
         public void AddFacet(Facet facet)
         {
+            Contract.Requires(facet != null);
+
             this.facets.Add(facet);
         }
     }

@@ -248,6 +248,7 @@
     <Compile Include="ListViews\FacetedObjectType.cs" />
     <Compile Include="ListViews\FacetedViewModel.cs" />
     <Compile Include="ListViews\IListViewService.cs" />
+    <Compile Include="ListViews\ImplicitTemplateDataGridColumn.cs" />
     <Compile Include="ListViews\ListViewServiceClient.cs" />
     <Compile Include="Logging\CompositeLogger.cs" />
     <Compile Include="Logging\DebugLogger.cs" />
@@ -287,6 +288,7 @@
     <Compile Include="Triggers\PopulatingCompletedToken.cs" />
     <Compile Include="Triggers\AutoCompleteToCommand.cs" />
     <Compile Include="Triggers\DoubleClickTrigger.cs" />
+    <Compile Include="Triggers\SetImplicitColumnTemplate.cs" />
     <Compile Include="Triggers\TranslateColumnHeader.cs" />
     <Compile Include="UnityExtensions\EventAggregatorExtension.cs" />
     <Compile Include="UnityExtensions\EventAggregatorStrategy.cs" />
