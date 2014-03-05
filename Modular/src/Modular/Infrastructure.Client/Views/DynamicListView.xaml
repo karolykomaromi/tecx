@@ -36,6 +36,7 @@
                 <i:EventTrigger EventName="AutoGeneratingColumn" >
                     <tr:TranslateColumnHeader />
                     <tr:FormatDateTimeColumn />
+                    <tr:SetImplicitColumnTemplate />
                 </i:EventTrigger>
                 <i:EventTrigger EventName="LoadingRow">
                     <mvvm:EventToCommand 
