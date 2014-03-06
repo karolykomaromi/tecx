@@ -58,6 +58,8 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="xunit">
       <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
     </Reference>
@@ -74,6 +76,10 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ListViews\Filters\CompositePropertyFilterFixture.cs" />
+    <Compile Include="ListViews\Filters\LazyFilterFixture.cs" />
+    <Compile Include="ListViews\Filters\PropertyFilterFixture.cs" />
+    <Compile Include="ListViews\Filters\XmlPropertyFilterFactoryFixture.cs" />
     <Compile Include="ResourceKeyProviderFixture.cs" />
     <Compile Include="StringHelperFixture.cs" />
     <Compile Include="TestObjects\ClassWithInterfaceCtorParameter.cs" />

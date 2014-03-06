@@ -157,6 +157,7 @@
     <Compile Include="UnityExtensions\Registration\ViewModelConventionFixture.cs" />
     <Compile Include="UnityExtensions\Registration\ServiceClientConventionFixture.cs" />
     <Compile Include="UnityExtensions\Registration\OptionsConventionFixture.cs" />
+    <Compile Include="VisualTreeFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

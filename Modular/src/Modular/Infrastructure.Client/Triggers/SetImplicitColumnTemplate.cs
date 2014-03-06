@@ -1,10 +1,10 @@
 ﻿namespace Infrastructure.Triggers
 {
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Interactivity;
     using Infrastructure.ListViews;
-    using Infrastructure.Theming;
 
     public class SetImplicitColumnTemplate : TriggerAction<DataGrid>
     {
@@ -17,7 +17,7 @@
                 return;
             }
 
-            if (args.PropertyType.IsPrimitive)
+            if (args.PropertyType.IsPrimitive && args.PropertyType != typeof(bool))
             {
                 return;
             }
@@ -27,7 +27,13 @@
                 return;
             }
 
-            UserControl parent = VisualTree.FindAncestor<UserControl>(this.AssociatedObject);
+            FrameworkElement parent = VisualTree.Ancestors<FrameworkElement>(AssociatedObject)
+                .FirstOrDefault(p => p.Resources[args.PropertyType] != null);
+
+            if (parent == null)
+            {
+                return;
+            }
 
             DataTemplate template = parent.Resources[args.PropertyType] as DataTemplate;
 

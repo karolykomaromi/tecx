@@ -45,7 +45,7 @@
                 return;
             }
 
-            UserControl uc = VisualTree.FindAncestor<UserControl>(this.Target);
+            UserControl uc = VisualTree.Ancestor<UserControl>(this.Target);
 
             if (uc == null)
             {
