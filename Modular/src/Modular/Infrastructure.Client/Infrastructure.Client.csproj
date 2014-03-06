@@ -282,7 +282,6 @@
     <Compile Include="Theming\Theme.cs" />
     <Compile Include="Theming\ThemeTextBlockForegroundAdapter.cs" />
     <Compile Include="Theming\ThemingAdapter.cs" />
-    <Compile Include="Theming\VisualTree.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="Triggers\FormatDateTimeColumn.cs" />
     <Compile Include="Triggers\PopulatingCompletedToken.cs" />
@@ -315,6 +314,7 @@
     <Compile Include="Views\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VisualTree.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

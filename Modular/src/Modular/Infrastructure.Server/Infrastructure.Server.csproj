@@ -81,8 +81,11 @@
     <Compile Include="Entities\ListViewRow.cs" />
     <Compile Include="Entities\Property.cs" />
     <Compile Include="Entities\ResourceString.cs" />
-    <Compile Include="ListViews\Filter\IdFilter.cs" />
+    <Compile Include="ListViews\Filter\CompositeFilter.cs" />
     <Compile Include="ListViews\Filter\IPropertyFilter.cs" />
+    <Compile Include="ListViews\Filter\LazyPropertyFilter.cs" />
+    <Compile Include="ListViews\Filter\PropertyFilter.cs" />
+    <Compile Include="ListViews\Filter\XmlPropertyFilterFactory.cs" />
     <Compile Include="ListViews\IListViewService.cs" />
     <Compile Include="ListViews\IResourceKeyProvider.cs" />
     <Compile Include="ListViews\ListViewId.cs" />

@@ -22,7 +22,7 @@
             this.Container.RegisterType<IHubActivator, UnityHubActivator>(new ContainerControlledLifetimeManager());
             this.Container.RegisterType<ISearchService, SearchService>();
             this.Container.RegisterType<IResourceKeyProvider, ResourceKeyProvider>();
-            this.Container.RegisterType<IPropertyFilter, IdFilter>();
+            this.Container.RegisterInstance<IPropertyFilter>(new PropertyFilter("Id"));
         }
     }
 }
