@@ -132,6 +132,7 @@
       <DependentUpon>Labels.resx</DependentUpon>
     </Compile>
     <Compile Include="Events\EventAggregatorFixture.cs" />
+    <Compile Include="ListViews\FacetedObjectTypeFixture.cs" />
     <Compile Include="Modularity\UnityModuleFixture.cs" />
     <Compile Include="Options\OptionsFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

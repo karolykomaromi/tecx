@@ -202,12 +202,27 @@ namespace Infrastructure.ListViews
         {
             if (!this.dynamicFacets.ContainsKey(name))
             {
-                if (null == types)
+                PropertyInfo property;
+                if (types == null)
                 {
-                    return this.ProxyTargetType.GetProperty(name, bindingAttr);
+                    property = this.ProxyTargetType.GetProperty(name, bindingAttr);
+
+                    if (property != null && !this.ShouldShowInDynamicListView(property))
+                    {
+                        return null;
+                    }
+
+                    return property;
                 }
 
-                return this.ProxyTargetType.GetProperty(name, bindingAttr, binder, returnType, types, modifiers);
+                property = this.ProxyTargetType.GetProperty(name, bindingAttr, binder, returnType, types, modifiers);
+                
+                if (property != null && !this.ShouldShowInDynamicListView(property))
+                {
+                    return null;
+                }
+
+                return property;
             }
 
             return this.CreateFromFacet(this.dynamicFacets[name]);
