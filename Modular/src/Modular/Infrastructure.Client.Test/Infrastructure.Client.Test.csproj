@@ -132,6 +132,7 @@
       <DependentUpon>Labels.resx</DependentUpon>
     </Compile>
     <Compile Include="Events\EventAggregatorFixture.cs" />
+    <Compile Include="ListViews\DynamicPropertyFixture.cs" />
     <Compile Include="ListViews\FacetedObjectTypeFixture.cs" />
     <Compile Include="Modularity\UnityModuleFixture.cs" />
     <Compile Include="Options\OptionsFixture.cs" />
@@ -140,6 +141,9 @@
     <Compile Include="TestObjects\CancelMessage.cs" />
     <Compile Include="TestObjects\CountingSubscriber.cs" />
     <Compile Include="TestObjects\DummyServiceClient.cs" />
+    <Compile Include="TestObjects\HasClassLevelProperty.cs" />
+    <Compile Include="TestObjects\HasNoProperties.cs" />
+    <Compile Include="TestObjects\HasNotListViewRelevantAttribute.cs" />
     <Compile Include="TestObjects\IDummyService.cs" />
     <Compile Include="TestObjects\Message.cs" />
     <Compile Include="TestObjects\MyOptions.cs" />

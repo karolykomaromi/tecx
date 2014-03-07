@@ -23,7 +23,10 @@ namespace Infrastructure.ListViews
             this.dynamicFacets = new Dictionary<string, Facet>();
             dynamicFacets.ForEach(f =>
             {
-                this.dynamicFacets[f.PropertyName] = f;
+                if (!string.IsNullOrWhiteSpace(f.PropertyName))
+                {
+                    this.dynamicFacets[f.PropertyName] = f;
+                }
             });
         }
 
