@@ -1,8 +1,8 @@
-﻿using System;
-using System.Diagnostics.Contracts;
-
-namespace Infrastructure.ListViews.Filter
+﻿namespace Infrastructure.ListViews.Filter
 {
+    using System;
+    using System.Diagnostics.Contracts;
+
     public class PropertyFilter : IPropertyFilter
     {
         private readonly string propertyName;

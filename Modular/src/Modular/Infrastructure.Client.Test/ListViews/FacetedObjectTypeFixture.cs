@@ -63,7 +63,7 @@
             Type type = new FacetedObjectType<HasNoProperties>(
                 new List<Facet>
                     {
-                        new Facet { PropertyName = " ", PropertyType = typeof (string) }
+                        new Facet { PropertyName = " ", PropertyType = typeof(string) }
                     });
 
             Assert.IsNull(type.GetProperty(" "));
