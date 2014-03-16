@@ -122,7 +122,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
