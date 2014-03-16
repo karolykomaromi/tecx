@@ -1,7 +1,7 @@
-﻿using Infrastructure.Reflection;
-
-namespace Infrastructure.Client.Test.TestObjects
+﻿namespace Infrastructure.Client.Test.TestObjects
 {
+    using Infrastructure.Reflection;
+
     public class HasNotListViewRelevantAttribute
     {
         [PropertyMeta(IsListViewRelevant = false)]
