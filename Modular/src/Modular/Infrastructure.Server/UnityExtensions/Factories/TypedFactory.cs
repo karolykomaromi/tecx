@@ -1,6 +1,7 @@
 ﻿namespace Infrastructure.UnityExtensions.Factories
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Reflection;
     using Microsoft.Practices.ObjectBuilder2;
@@ -27,35 +28,21 @@
         {
             AssertNoMethodHasOutParams(factoryType);
 
-            IUnityContainer container = GetContainer(policies);
-
-            IInterceptionBehavior factoryBehavior = new FactoryBehavior(container, this.selector);
-
             InjectionFactory injectionFactory = new InjectionFactory(
-                (c, t, n) => Intercept.NewInstanceWithAdditionalInterfaces(typeof(object), new VirtualMethodInterceptor(), new[] { factoryBehavior }, new[] { factoryType }));
+                (container, t, n) =>
+                {
+                    IEnumerable<IInterceptionBehavior> interceptionBehaviors = new[] { new FactoryBehavior(container, this.selector) };
+
+                    IEnumerable<Type> additionalInterfaces = new[] { factoryType };
+
+                    return Intercept.NewInstanceWithAdditionalInterfaces(
+                                             typeof(object), 
+                                             new VirtualMethodInterceptor(), 
+                                             interceptionBehaviors, 
+                                             additionalInterfaces);
+                });
 
             injectionFactory.AddPolicies(ignore, factoryType, name, policies);
-        }
-
-        private static IUnityContainer GetContainer(IPolicyList policies)
-        {
-            NamedTypeBuildKey key = new NamedTypeBuildKey(typeof(IUnityContainer));
-
-            ILifetimePolicy policy = policies.Get<ILifetimePolicy>(key);
-
-            if (policy == null)
-            {
-                throw new InvalidOperationException("Could not find the 'ILifetimePolicy' for the current instance of 'IUnityContainer'.");
-            }
-
-            IUnityContainer container = policy.GetValue() as IUnityContainer;
-
-            if (container == null)
-            {
-                throw new InvalidOperationException("Could not get an instance of 'IUnityContainer' from the 'ILifetimePolicy' with the key 'new NamedTypeBuildKey(typeof(IUnityContainer))'");
-            }
-
-            return container;
         }
 
         private static void AssertNoMethodHasOutParams(Type factoryType)
