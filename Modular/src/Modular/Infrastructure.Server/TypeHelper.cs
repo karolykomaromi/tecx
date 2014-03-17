@@ -26,6 +26,37 @@
             return silverlightCompatibleTypeName;
         }
 
+        public static bool TryGetCompatibleCollectionItemType(Type type, out Type itemType)
+        {
+            Contract.Requires(type != null);
+
+            if (type.IsArray)
+            {
+                itemType = type.GetElementType();
+                return true;
+            }
+
+            if (type.IsGenericType == false ||
+                type.IsGenericTypeDefinition)
+            {
+                itemType = null;
+                return false;
+            }
+
+            var openGeneric = type.GetGenericTypeDefinition();
+
+            if (openGeneric == typeof(IList<>) ||
+                openGeneric == typeof(ICollection<>) ||
+                openGeneric == typeof(IEnumerable<>))
+            {
+                itemType = type.GetGenericArguments()[0];
+                return true;
+            }
+
+            itemType = null;
+            return false;
+        }
+
         public static Func<TObject, TProperty> MakePropertyAccessor<TObject, TProperty>(PropertyInfo pi)
         {
             Contract.Requires(pi != null);
