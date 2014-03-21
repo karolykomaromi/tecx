@@ -4,29 +4,27 @@ namespace TecX.Unity.Factories
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.InterceptionExtension;
-
     using TecX.Common;
 
-    public class FactoryInterceptor : IInterceptionBehavior
+    public class FactoryBehavior : IInterceptionBehavior
     {
+        private readonly IUnityContainer container;
         private readonly ITypedFactoryComponentSelector selector;
 
-        public FactoryInterceptor(ITypedFactoryComponentSelector selector)
+        public FactoryBehavior(IUnityContainer container, ITypedFactoryComponentSelector selector)
         {
+            Guard.AssertNotNull(container, "container");
             Guard.AssertNotNull(selector, "selector");
 
+            this.container = container;
             this.selector = selector;
         }
 
         public bool WillExecute
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
         public IMethodReturn Invoke(IMethodInvocation input, GetNextInterceptionBehaviorDelegate getNext)
@@ -34,23 +32,16 @@ namespace TecX.Unity.Factories
             Guard.AssertNotNull(input, "input");
 
             // can't intercept calls to constructor anyway so why do they use MethodBase instead of MethodInfo?
-            var component = this.selector.SelectComponent((MethodInfo)input.MethodBase, input.MethodBase.DeclaringType, input.Arguments.OfType<object>().ToArray());
+            MethodInfo method = input.MethodBase as MethodInfo;
 
-            IUnityContainer container = null;
-
-            if (input.InvocationContext.ContainsKey("container"))
+            if (method == null)
             {
-                container = input.InvocationContext["container"] as IUnityContainer;
+                return getNext()(input, getNext);
             }
 
-            if (container == null)
-            {
-                throw new InvalidOperationException(
-                    "Could not find an IUnityContainer in 'input.InvocationContext'. " +
-                    "The TypedFactory must add an IInterceptionBehavior to the pipeline that provides that container instance with 'container' as its key.");
-            }
+            var component = this.selector.SelectComponent(method, method.DeclaringType, Enumerable.OfType<object>(input.Arguments).ToArray());
 
-            object resolvedObject = component.Resolve(container);
+            object resolvedObject = component.Resolve(this.container);
 
             return input.CreateMethodReturn(resolvedObject);
         }

@@ -1,17 +1,14 @@
-﻿namespace TecX.Unity.Test
+namespace TecX.Unity.Test.Factories
 {
     using System;
-
     using Microsoft.Practices.Unity;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-
     using TecX.Unity.Factories;
     using TecX.Unity.Test.TestObjects;
+    using Xunit;
 
-    [TestClass]
     public class DelegateFactoryFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanCreateDelegate()
         {
             var container = new UnityContainer();
@@ -23,11 +20,11 @@
 
             var uow = consumer.Factory(true) as UnitOfWork;
 
-            Assert.IsNotNull(uow);
-            Assert.IsTrue(uow.ReadOnly);
+            Assert.NotNull(uow);
+            Assert.True(uow.ReadOnly);
         }
 
-        [TestMethod]
+        [Fact]
         public void Test()
         {
             var container = new UnityContainer();
@@ -40,11 +37,11 @@
 
             UnitOfWork uow = @delegate.DynamicInvoke(true) as UnitOfWork;
 
-            Assert.IsNotNull(uow);
-            Assert.IsTrue(uow.ReadOnly);
+            Assert.NotNull(uow);
+            Assert.True(uow.ReadOnly);
         }
 
-        [TestMethod]
+        [Fact]
         public void Blueprint()
         {
             var container = new UnityContainer();
@@ -62,11 +59,11 @@
 
             UnitOfWork uow = factory(true) as UnitOfWork;
 
-            Assert.IsNotNull(uow);
-            Assert.IsTrue(uow.ReadOnly);
+            Assert.NotNull(uow);
+            Assert.True(uow.ReadOnly);
         }
 
-        [TestMethod]
+        [Fact]
         public void TheRealThing()
         {
             var container = new UnityContainer();
@@ -79,8 +76,30 @@
 
             UnitOfWork uow = consumer.Factory(true) as UnitOfWork;
 
-            Assert.IsNotNull(uow);
-            Assert.IsTrue(uow.ReadOnly);
+            Assert.NotNull(uow);
+            Assert.True(uow.ReadOnly);
         }
+    }
+
+    public delegate IUnitOfWork UnitOfWorkFactory(bool readOnly);
+
+    public class Consumer
+    {
+        public Consumer(UnitOfWorkFactory factory)
+        {
+            this.Factory = factory;
+        }
+
+        public UnitOfWorkFactory Factory { get; set; }
+    }
+
+    public class UnitOfWork : IUnitOfWork
+    {
+        public UnitOfWork(bool readOnly)
+        {
+            this.ReadOnly = readOnly;
+        }
+
+        public bool ReadOnly { get; set; }
     }
 }

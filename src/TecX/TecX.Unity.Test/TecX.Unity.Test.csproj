@@ -82,9 +82,10 @@
     <Compile Include="DecoratorExtensionFixture.cs" />
     <Compile Include="DefaultLifetimeFixture.cs" />
     <Compile Include="DefaultMappingExtensionFixture.cs" />
-    <Compile Include="DelegateFactoryFixture.cs" />
     <Compile Include="EnrichmentFixture.cs" />
     <Compile Include="EnumFixture.cs" />
+    <Compile Include="Factories\DelegateFactoryFixture.cs" />
+    <Compile Include="Factories\TypedFactoryFixture.cs" />
     <Compile Include="LiteralParametersFixture.cs" />
     <Compile Include="MapParameterNamesToRegistrationNamesFixture.cs" />
     <Compile Include="NamedPropertyOverrideFixture.cs" />
@@ -107,7 +108,6 @@
     <Compile Include="TestObjects\CompanyImplementation.cs" />
     <Compile Include="TestObjects\CompanyWrapper1.cs" />
     <Compile Include="TestObjects\CompanyWrapper2.cs" />
-    <Compile Include="TestObjects\Consumer.cs" />
     <Compile Include="TestObjects\Contract.cs" />
     <Compile Include="TestObjects\ContractDecorator.cs" />
     <Compile Include="TestObjects\CtorTest.cs" />
@@ -152,8 +152,6 @@
     <Compile Include="TestObjects\TestLogger.cs" />
     <Compile Include="TestObjects\Three.cs" />
     <Compile Include="TestObjects\Two.cs" />
-    <Compile Include="TestObjects\UnitOfWork.cs" />
-    <Compile Include="TestObjects\UnitOfWorkFactory.cs" />
     <Compile Include="TestObjects\UsesLog.cs" />
     <Compile Include="TestObjects\ViewModel.cs" />
     <Compile Include="WasResolvedFixture.cs" />

@@ -119,7 +119,7 @@
     <Compile Include="Factories\DefaultTypedFactoryComponentSelector.cs" />
     <Compile Include="Factories\DelegateFactory.cs" />
     <Compile Include="Factories\DelegateFactoryBuildPlanPolicy.cs" />
-    <Compile Include="Factories\FactoryInterceptor.cs" />
+    <Compile Include="Factories\FactoryBehavior.cs" />
     <Compile Include="Factories\ITypedFactoryComponentSelector.cs" />
     <Compile Include="Factories\TypedFactory.cs" />
     <Compile Include="Factories\TypedFactoryComponent.cs" />
