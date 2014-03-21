@@ -3,18 +3,14 @@ namespace TecX.Unity.Factories
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-
     using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.InterceptionExtension;
-
     using TecX.Common;
-    using TecX.Unity.Proxies;
+
 
     public class TypedFactory : InjectionMember
     {
-        private const string ProxyGeneratorBuildKey = "ProxyGenerator";
-
         private readonly ITypedFactoryComponentSelector selector;
 
         public TypedFactory()
@@ -29,39 +25,25 @@ namespace TecX.Unity.Factories
             this.selector = selector;
         }
 
-        public override void AddPolicies(Type notNeeded, Type interfaceToProxy, string name, IPolicyList policies)
+        public override void AddPolicies(Type ignore, Type factoryType, string name, IPolicyList policies)
         {
-            Guard.AssertNotNull(interfaceToProxy, "interfaceToProxy");
-            //Guard.AssertIsInterface(interfaceToProxy, "interfaceToProxy");
+            AssertNoMethodHasOutParams(factoryType);
 
-            AssertNoMethodHasOutParams(interfaceToProxy);
+            InjectionFactory injectionFactory = new InjectionFactory(
+                (container, t, n) =>
+                {
+                    IEnumerable<IInterceptionBehavior> interceptionBehaviors = new[] { new FactoryBehavior(container, this.selector) };
 
-            IProxyGeneratorPolicy generator = policies.Get<IProxyGeneratorPolicy>(new NamedTypeBuildKey(interfaceToProxy, name));
+                    IEnumerable<Type> additionalInterfaces = new[] { factoryType };
 
-            if (generator == null)
-            {
-                generator = new ProxyGeneratorPolicy();
+                    return Intercept.NewInstanceWithAdditionalInterfaces(
+                                             typeof(object),
+                                             new VirtualMethodInterceptor(),
+                                             interceptionBehaviors,
+                                             additionalInterfaces);
+                });
 
-                policies.SetDefault<IProxyGeneratorPolicy>(generator);
-            }
-
-            Type dummy = generator.GenerateDummyImplementation(interfaceToProxy);
-
-            var mappingPolicy = new BuildKeyMappingPolicy(new NamedTypeBuildKey(dummy, name));
-
-            policies.Set<IBuildKeyMappingPolicy>(mappingPolicy, new NamedTypeBuildKey(interfaceToProxy, name));
-
-            var interceptor = new Interceptor<InterfaceInterceptor>();
-
-            interceptor.AddPolicies(interfaceToProxy, dummy, name, policies);
-
-            var containerProvider = new InterceptionBehavior<HandContainerDownTheInterceptionPipeline>();
-
-            containerProvider.AddPolicies(interfaceToProxy, dummy, name, policies);
-
-            var factoryInterceptor = new InterceptionBehavior(new FactoryInterceptor(this.selector));
-            
-            factoryInterceptor.AddPolicies(interfaceToProxy, dummy, name, policies);
+            injectionFactory.AddPolicies(ignore, factoryType, name, policies);
         }
 
         private static void AssertNoMethodHasOutParams(Type factoryType)
@@ -77,38 +59,6 @@ namespace TecX.Unity.Factories
                         throw new ArgumentException("Methods in factory interface must not have out parameters", "factoryType");
                     }
                 }
-            }
-        }
-
-        private class HandContainerDownTheInterceptionPipeline : IInterceptionBehavior
-        {
-            private readonly IUnityContainer container;
-
-            public HandContainerDownTheInterceptionPipeline(IUnityContainer container)
-            {
-                Guard.AssertNotNull(container, "container");
-
-                this.container = container;
-            }
-
-            public bool WillExecute
-            {
-                get
-                {
-                    return true;
-                }
-            }
-
-            public IMethodReturn Invoke(IMethodInvocation input, GetNextInterceptionBehaviorDelegate getNext)
-            {
-                input.InvocationContext.Add("container", this.container);
-
-                return getNext()(input, getNext);
-            }
-
-            public IEnumerable<Type> GetRequiredInterfaces()
-            {
-                return Type.EmptyTypes;
             }
         }
     }
