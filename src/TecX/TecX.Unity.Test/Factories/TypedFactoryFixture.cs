@@ -24,7 +24,7 @@
         [Fact]
         public void Should_Create_Object_From_Generated_Factory()
         {
-            IUnityContainer container = new UnityContainer().AddNewExtension<Interception>();
+            IUnityContainer container = new UnityContainer();
 
             container.RegisterType<ITypedFactoryTestObject, P1>();
 
@@ -40,7 +40,7 @@
         [Fact]
         public void Should_Create_Object_With_Specified_Parameter_From_Generated_Factory()
         {
-            IUnityContainer container = new UnityContainer().AddNewExtension<Interception>();
+            IUnityContainer container = new UnityContainer();
 
             container.RegisterType<ITypedFactoryTestObject, P3>();
 
@@ -56,7 +56,7 @@
         [Fact]
         public void Should_Create_Array_From_Generated_Factory()
         {
-            IUnityContainer container = new UnityContainer().AddNewExtension<Interception>();
+            IUnityContainer container = new UnityContainer();
 
             container.RegisterType<ITypedFactoryTestObject, P1>("1");
             container.RegisterType<ITypedFactoryTestObject, P2>("2");
@@ -73,7 +73,7 @@
         [Fact]
         public void Should_Create_IEnumerable_From_Generated_Factory()
         {
-            IUnityContainer container = new UnityContainer().AddNewExtension<Interception>();
+            IUnityContainer container = new UnityContainer();
 
             container.RegisterType<ITypedFactoryTestObject, P1>("1");
             container.RegisterType<ITypedFactoryTestObject, P2>("2");
@@ -90,7 +90,7 @@
         [Fact]
         public void Should_Create_ICollection_From_Generated_Factory()
         {
-            IUnityContainer container = new UnityContainer().AddNewExtension<Interception>();
+            IUnityContainer container = new UnityContainer();
 
             container.RegisterType<ITypedFactoryTestObject, P1>("1");
             container.RegisterType<ITypedFactoryTestObject, P2>("2");
@@ -107,7 +107,7 @@
         [Fact]
         public void Should_Create_Collection_With_Specified_Parameter_From_Generated_Factory()
         {
-            IUnityContainer container = new UnityContainer().AddNewExtension<Interception>();
+            IUnityContainer container = new UnityContainer();
 
             container.RegisterType<ITypedFactoryTestObject, P1>("1");
             container.RegisterType<ITypedFactoryTestObject, P2>("2");
@@ -129,7 +129,7 @@
         [Fact]
         public void Should_Create_IList_From_Generated_Factory()
         {
-            IUnityContainer container = new UnityContainer().AddNewExtension<Interception>();
+            IUnityContainer container = new UnityContainer();
 
             container.RegisterType<ITypedFactoryTestObject, P1>("1");
             container.RegisterType<ITypedFactoryTestObject, P2>("2");
@@ -142,6 +142,39 @@
 
             Assert.Equal(2, list.Count);
         }
+
+        [Fact]
+        public void Should_Resolve_Abstract_Factory()
+        {
+            IUnityContainer container = new UnityContainer();
+
+            container.RegisterType<AbstractFactory>(new TypedFactory());
+
+            AbstractFactory factory = container.Resolve<AbstractFactory>();
+
+            Assert.NotNull(factory);
+        }
+
+        [Fact]
+        public void Should_Create_Object_From_Abstract_Factory()
+        {
+            IUnityContainer container = new UnityContainer();
+
+            container.RegisterType<ITypedFactoryTestObject, P1>();
+
+            container.RegisterType<AbstractFactory>(new TypedFactory());
+
+            AbstractFactory factory = container.Resolve<AbstractFactory>();
+
+            ITypedFactoryTestObject obj = factory.Create();
+
+            Assert.NotNull(obj);
+        }
+    }
+
+    public abstract class AbstractFactory
+    {
+        public abstract ITypedFactoryTestObject Create();
     }
 
     public interface IGeneratedFactory

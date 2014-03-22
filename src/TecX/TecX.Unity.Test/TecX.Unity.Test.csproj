@@ -84,6 +84,7 @@
     <Compile Include="DefaultMappingExtensionFixture.cs" />
     <Compile Include="EnrichmentFixture.cs" />
     <Compile Include="EnumFixture.cs" />
+    <Compile Include="Factories\DelegateFactoryExtensionFixture.cs" />
     <Compile Include="Factories\DelegateFactoryFixture.cs" />
     <Compile Include="Factories\TypedFactoryFixture.cs" />
     <Compile Include="LiteralParametersFixture.cs" />
@@ -128,7 +129,6 @@
     <Compile Include="TestObjects\ILogger.cs" />
     <Compile Include="TestObjects\IMatchByConvention.cs" />
     <Compile Include="TestObjects\INumber.cs" />
-    <Compile Include="TestObjects\IUnitOfWork.cs" />
     <Compile Include="TestObjects\IVehicle.cs" />
     <Compile Include="TestObjects\IWheel.cs" />
     <Compile Include="TestObjects\LoadCommand.cs" />
