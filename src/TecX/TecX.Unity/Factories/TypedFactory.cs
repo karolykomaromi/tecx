@@ -1,7 +1,6 @@
 namespace TecX.Unity.Factories
 {
     using System;
-    using System.Collections.Generic;
     using System.Reflection;
     using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
@@ -28,22 +27,32 @@ namespace TecX.Unity.Factories
         public override void AddPolicies(Type ignore, Type factoryType, string name, IPolicyList policies)
         {
             AssertNoMethodHasOutParams(factoryType);
+            
+            if (factoryType.IsInterface)
+            {
+                InjectionFactory injectionFactory = new InjectionFactory(
+                    (container, t, n) => Intercept.NewInstanceWithAdditionalInterfaces(
+                        typeof(object),
+                        new VirtualMethodInterceptor(),
+                        new IInterceptionBehavior[] { new FactoryBehavior(container, this.selector) },
+                        new[] { factoryType }));
 
-            InjectionFactory injectionFactory = new InjectionFactory(
-                (container, t, n) =>
-                {
-                    IEnumerable<IInterceptionBehavior> interceptionBehaviors = new[] { new FactoryBehavior(container, this.selector) };
+                injectionFactory.AddPolicies(ignore, factoryType, name, policies);
+            }
+            else if (factoryType.IsAbstract)
+            {
+                InjectionFactory injectionFactory = new InjectionFactory(
+                    (container, t, n) => Intercept.NewInstance(
+                        factoryType,
+                        new VirtualMethodInterceptor(),
+                        new IInterceptionBehavior[] { new FactoryBehavior(container, this.selector) }));
 
-                    IEnumerable<Type> additionalInterfaces = new[] { factoryType };
-
-                    return Intercept.NewInstanceWithAdditionalInterfaces(
-                                             typeof(object),
-                                             new VirtualMethodInterceptor(),
-                                             interceptionBehaviors,
-                                             additionalInterfaces);
-                });
-
-            injectionFactory.AddPolicies(ignore, factoryType, name, policies);
+                injectionFactory.AddPolicies(ignore, factoryType, name, policies);
+            }
+            else
+            {
+                throw new ArgumentException("'factoryType' must either be an interface or an abstract class.", "factoryType");
+            }
         }
 
         private static void AssertNoMethodHasOutParams(Type factoryType)
@@ -56,7 +65,13 @@ namespace TecX.Unity.Factories
                 {
                     if (parameter.IsOut)
                     {
-                        throw new ArgumentException("Methods in factory interface must not have out parameters", "factoryType");
+                        string msg = string.Format(
+                                "Parameter '{0}' of method '{1}.{2}' is an 'out' parameter. No method of your factory type is allowed to use an 'out' parameter.",
+                                parameter.Name,
+                                factoryType.FullName,
+                                method.Name);
+
+                        throw new ArgumentException(msg, "factoryType");
                     }
                 }
             }

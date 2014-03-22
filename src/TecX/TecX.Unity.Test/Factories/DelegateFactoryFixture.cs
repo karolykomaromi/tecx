@@ -3,103 +3,106 @@ namespace TecX.Unity.Test.Factories
     using System;
     using Microsoft.Practices.Unity;
     using TecX.Unity.Factories;
-    using TecX.Unity.Test.TestObjects;
     using Xunit;
 
     public class DelegateFactoryFixture
     {
         [Fact]
-        public void CanCreateDelegate()
+        public void Should_Resolve_Delegate()
         {
-            var container = new UnityContainer();
+            IUnityContainer container = new UnityContainer();
 
-            container.RegisterType<IUnitOfWork, UnitOfWork>();
-            container.RegisterType<UnitOfWorkFactory>(new DelegateFactory());
+            container.RegisterType<IRepository, Repository>();
+            container.RegisterType<SomeFactoryDelegate>(new DelegateFactory());
 
-            var consumer = container.Resolve<Consumer>();
+            SomeFactoryDelegate factory = container.Resolve<SomeFactoryDelegate>();
 
-            var uow = consumer.Factory(true) as UnitOfWork;
+            IRepository repository = factory(true);
 
-            Assert.NotNull(uow);
-            Assert.True(uow.ReadOnly);
+            Assert.NotNull(repository);
+            Assert.True(repository.IsReadOnly);
         }
 
         [Fact]
-        public void Test()
+        public void Should_Construct_Delegate()
         {
             var container = new UnityContainer();
 
-            container.RegisterType<IUnitOfWork, UnitOfWork>();
+            container.RegisterType<IRepository, Repository>();
 
-            Type delegateType = typeof(UnitOfWorkFactory);
+            Type delegateType = typeof(SomeFactoryDelegate);
 
-            Delegate @delegate = DelegateFactoryBuildPlanPolicy.GetDelegate(container, delegateType);
+            Delegate factory = DelegateFactoryBuildPlanPolicy.GetDelegate(container, delegateType);
 
-            UnitOfWork uow = @delegate.DynamicInvoke(true) as UnitOfWork;
+            IRepository repository = factory.DynamicInvoke(true) as IRepository;
 
-            Assert.NotNull(uow);
-            Assert.True(uow.ReadOnly);
+            Assert.NotNull(repository);
+            Assert.True(repository.IsReadOnly);
         }
 
         [Fact]
-        public void Blueprint()
+        public void Should_Resolve_Func_Factory_Delegate()
         {
-            var container = new UnityContainer();
+            IUnityContainer container = new UnityContainer();
 
-            container.RegisterType<IUnitOfWork, UnitOfWork>();
+            container.RegisterType<IRepository, Repository>();
+            container.RegisterType<Func<bool, IRepository>>(new DelegateFactory());
 
-            Func<bool, IUnitOfWork> func = readOnly =>
-            {
-                ParameterOverride po1 = new ParameterOverride("readOnly", readOnly);
+            Func<bool, IRepository> factory = container.Resolve<Func<bool, IRepository>>();
 
-                return container.Resolve<IUnitOfWork>(po1);
-            };
+            IRepository repository = factory(true);
 
-            UnitOfWorkFactory factory = new UnitOfWorkFactory(func);
-
-            UnitOfWork uow = factory(true) as UnitOfWork;
-
-            Assert.NotNull(uow);
-            Assert.True(uow.ReadOnly);
+            Assert.NotNull(repository);
+            Assert.True(repository.IsReadOnly);
         }
 
         [Fact]
-        public void TheRealThing()
+        public void Should_Use_Overrides_In_Order_Of_Appearance_When_Resolving_Func()
         {
-            var container = new UnityContainer();
+            IUnityContainer container = new UnityContainer();
 
-            container.RegisterType<UnitOfWorkFactory>(new DelegateFactory());
+            container.RegisterType<Func<string, string, string, OrderOfAppearance>>(new DelegateFactory());
 
-            container.RegisterType<IUnitOfWork, UnitOfWork>();
+            var factory = container.Resolve<Func<string, string, string, OrderOfAppearance>>();
 
-            Consumer consumer = container.Resolve<Consumer>();
+            var sut = factory("1", "2", "3");
 
-            UnitOfWork uow = consumer.Factory(true) as UnitOfWork;
-
-            Assert.NotNull(uow);
-            Assert.True(uow.ReadOnly);
+            Assert.Equal("1", sut.First);
+            Assert.Equal("2", sut.Second);
+            Assert.Equal("3", sut.Third);
         }
     }
 
-    public delegate IUnitOfWork UnitOfWorkFactory(bool readOnly);
-
-    public class Consumer
+    public class OrderOfAppearance
     {
-        public Consumer(UnitOfWorkFactory factory)
+        public OrderOfAppearance(string first, string second, string third)
         {
-            this.Factory = factory;
+            this.First = first;
+            this.Second = second;
+            this.Third = third;
         }
 
-        public UnitOfWorkFactory Factory { get; set; }
+        public string First { get; private set; }
+
+        public string Second { get; private set; }
+
+        public string Third { get; private set; }
     }
 
-    public class UnitOfWork : IUnitOfWork
+    public delegate IRepository SomeFactoryDelegate(bool isReadOnly);
+
+    public class Repository : IRepository
     {
-        public UnitOfWork(bool readOnly)
+        public Repository(bool isReadOnly)
         {
-            this.ReadOnly = readOnly;
+            this.IsReadOnly = isReadOnly;
         }
 
-        public bool ReadOnly { get; set; }
+        public bool IsReadOnly { get; private set; }
+    }
+
+    public interface IRepository
+    {
+        bool IsReadOnly { get; }
     }
 }

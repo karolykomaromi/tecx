@@ -119,8 +119,11 @@
     <Compile Include="Factories\DefaultTypedFactoryComponentSelector.cs" />
     <Compile Include="Factories\DelegateFactory.cs" />
     <Compile Include="Factories\DelegateFactoryBuildPlanPolicy.cs" />
+    <Compile Include="Factories\DelegateFactoryExtension.cs" />
+    <Compile Include="Factories\DelegateFactoryStrategy.cs" />
     <Compile Include="Factories\FactoryBehavior.cs" />
     <Compile Include="Factories\ITypedFactoryComponentSelector.cs" />
+    <Compile Include="Factories\OneTimeTypeMatchParameterOverride.cs" />
     <Compile Include="Factories\TypedFactory.cs" />
     <Compile Include="Factories\TypedFactoryComponent.cs" />
     <Compile Include="Factories\TypedFactoryComponentCollection.cs" />

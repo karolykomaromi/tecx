@@ -29,58 +29,56 @@ namespace TecX.Unity.Factories
             public const string Resolve = "Resolve";
         }
 
-        private readonly Type delegateType;
+        // get constructor ParameterOverride(string name, object value)
+        private static readonly ConstructorInfo ParameterOverrideCtor =
+            typeof(ParameterOverride).GetConstructor(new[] { typeof(string), typeof(object) });
 
+        // get ctor OneTimeTypeMatchParameterOverride(object value)
+        private static readonly ConstructorInfo OneTimeTypeMatchParameterOverrideCtor =
+            typeof(OneTimeTypeMatchParameterOverride).GetConstructor(new[] { typeof(object) });
+
+        // find the method IUnityContainer.Resolve(Type type, string name, ResolverOverride[] resolverOverrides)
+        private static readonly MethodInfo ContainerResolveMethod =
+            typeof(IUnityContainer).GetMethod(MethodNames.Resolve, new[] { typeof(Type), typeof(string), typeof(ResolverOverride[]) });
+
+        private readonly Type delegateType;
+        
         public DelegateFactoryBuildPlanPolicy(Type delegateType)
         {
             Guard.AssertNotNull(delegateType, "delegateType");
+
+            if (!typeof(Delegate).IsAssignableFrom(delegateType))
+            {
+                throw new ArgumentException("'delegateType' must derive from 'System.Delegate'.", "delegateType");
+            }
 
             this.delegateType = delegateType;
         }
 
         public static Delegate GetDelegate(IUnityContainer container, Type delegateType)
         {
+            if (!typeof(Delegate).IsAssignableFrom(delegateType))
+            {
+                throw new ArgumentException("'delegateType' must derive from 'System.Delegate'.", "delegateType");
+            }
+
+            bool isFunc = delegateType.FullName.StartsWith("System.Func", StringComparison.Ordinal);
+
             MethodInfo method = delegateType.GetMethod(MethodNames.Invoke);
 
             // alle parametertypen des delegate aufsammeln
             ParameterInfo[] parameters = method.GetParameters();
 
-            Type[] funcParameterTypes =
-                parameters.Select(pi => pi.ParameterType).Union(new[] { method.ReturnType }).ToArray();
+            Type[] funcParameterTypes = 
+                parameters.Select(pi => pi.ParameterType).Concat(new[] { method.ReturnType }).ToArray();
 
             Type funcType = Expression.GetFuncType(funcParameterTypes);
 
             // prepare expression for every parameter of the delegate
             ParameterExpression[] parameterExpressions =
                 parameters.Select(pi => Expression.Parameter(pi.ParameterType, pi.Name)).ToArray();
-
-            // get constructor ParameterOverride(string name, object value)
-            ConstructorInfo parameterOverrideCtor =
-                typeof(ParameterOverride).GetConstructor(new[] { typeof(string), typeof(object) });
-
-            if (parameterOverrideCtor == null)
-            {
-                throw new InvalidOperationException(
-                    "Constructor ParameterOverride(string,object) not found on Type Microsoft.Practices.Unity.ParameterOverride");
-            }
-
-            List<Expression> resolverOverrides = new List<Expression>();
-
-            // prepare a ParameterOverride for every parameter of the delegate
-            foreach (ParameterExpression parameterExpression in parameterExpressions)
-            {
-                ConstantExpression parameterName = Expression.Constant(parameterExpression.Name, typeof(string));
-
-                NewExpression @new = Expression.New(
-                    parameterOverrideCtor,
-                    new Expression[] { parameterName, Expression.Convert(parameterExpression, typeof(object)) });
-
-                resolverOverrides.Add(Expression.Convert(@new, typeof(ResolverOverride)));
-            }
-
-            // find the method IUnityContainer.Resolve(Type type, string name, ResolverOverride[] resolverOverrides)
-            MethodInfo resolve = typeof(IUnityContainer).GetMethod(
-                MethodNames.Resolve, new[] { typeof(Type), typeof(string), typeof(ResolverOverride[]) });
+            
+            IEnumerable<Expression> resolverOverrides = isFunc ? GetResolverOverridesForFunc(parameterExpressions) : GetResolverOverrides(parameterExpressions);
 
             ConstantExpression ctr = Expression.Constant(container);
 
@@ -92,7 +90,7 @@ namespace TecX.Unity.Factories
                     Expression.NewArrayInit(typeof(ResolverOverride), resolverOverrides)
                 };
 
-            MethodCallExpression callContainerResolve = Expression.Call(ctr, resolve, resolveParameters);
+            MethodCallExpression callContainerResolve = Expression.Call(ctr, ContainerResolveMethod, resolveParameters);
 
             // convert the result of the call to container.Resolve from object to the return type of the delegate
             UnaryExpression returnValue = Expression.Convert(callContainerResolve, method.ReturnType);
@@ -121,6 +119,43 @@ namespace TecX.Unity.Factories
 
                 context.Existing = factoryDelegate;
             }
+        }
+
+        private static IEnumerable<Expression> GetResolverOverridesForFunc(IEnumerable<ParameterExpression> parameterExpressions)
+        {
+            List<Expression> resolverOverrides = new List<Expression>();
+            
+            foreach (ParameterExpression parameterExpression in parameterExpressions)
+            {
+                NewExpression @new = Expression.New(
+                    OneTimeTypeMatchParameterOverrideCtor,
+                    new Expression[] { Expression.Convert(parameterExpression, typeof(object)) });
+
+                resolverOverrides.Add(Expression.Convert(@new, typeof(ResolverOverride)));
+            }
+
+            resolverOverrides.Reverse();
+
+            return resolverOverrides;
+        }
+
+        private static IEnumerable<Expression> GetResolverOverrides(IEnumerable<ParameterExpression> parameterExpressions)
+        {
+            List<Expression> resolverOverrides = new List<Expression>();
+
+            // prepare a ParameterOverride for every parameter of the delegate
+            foreach (ParameterExpression parameterExpression in parameterExpressions)
+            {
+                ConstantExpression parameterName = Expression.Constant(parameterExpression.Name, typeof(string));
+
+                NewExpression @new = Expression.New(
+                    ParameterOverrideCtor,
+                    new Expression[] { parameterName, Expression.Convert(parameterExpression, typeof(object)) });
+
+                resolverOverrides.Add(Expression.Convert(@new, typeof(ResolverOverride)));
+            }
+
+            return resolverOverrides;
         }
     }
 }
