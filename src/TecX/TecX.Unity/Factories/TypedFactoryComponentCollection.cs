@@ -11,7 +11,7 @@ namespace TecX.Unity.Factories
     public class TypedFactoryComponentCollection<TItem> : TypedFactoryComponent
             where TItem : class
     {
-        public TypedFactoryComponentCollection(Type typeToBuild, ResolverOverrides additionalArguments)
+        public TypedFactoryComponentCollection(Type typeToBuild, ResolverOverride[] additionalArguments)
             : base(typeToBuild, additionalArguments)
         {
         }

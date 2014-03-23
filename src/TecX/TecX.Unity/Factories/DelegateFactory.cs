@@ -9,14 +9,19 @@ namespace TecX.Unity.Factories
 
     public class DelegateFactory : InjectionMember
     {
-        public override void AddPolicies(Type serviceType, Type implementationType, string name, IPolicyList policies)
+        public override void AddPolicies(Type serviceType, Type delegateType, string name, IPolicyList policies)
         {
-            Guard.AssertNotNull(implementationType, "implementationType");
+            Guard.AssertNotNull(delegateType, "delegateType");
             Guard.AssertNotNull(policies, "policies");
+            
+            if (!typeof(Delegate).IsAssignableFrom(delegateType))
+            {
+                throw new ArgumentException("'delegateType' must derive from 'System.Delegate'.", "delegateType");
+            }
 
-            DelegateFactoryBuildPlanPolicy policy = new DelegateFactoryBuildPlanPolicy(implementationType);
+            DelegateFactoryBuildPlanPolicy policy = new DelegateFactoryBuildPlanPolicy(delegateType);
 
-            policies.Set<IBuildPlanPolicy>(policy, new NamedTypeBuildKey(implementationType, name));
+            policies.Set<IBuildPlanPolicy>(policy, new NamedTypeBuildKey(delegateType, name));
         }
     }
 }

@@ -6,10 +6,8 @@ namespace TecX.Unity.Factories
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
-
     using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
-
     using TecX.Common;
 
     public class DelegateFactoryBuildPlanPolicy : IBuildPlanPolicy
@@ -29,7 +27,7 @@ namespace TecX.Unity.Factories
             public const string Resolve = "Resolve";
         }
 
-        // get constructor ParameterOverride(string name, object value)
+        // get ctor ParameterOverride(string name, object value)
         private static readonly ConstructorInfo ParameterOverrideCtor =
             typeof(ParameterOverride).GetConstructor(new[] { typeof(string), typeof(object) });
 
@@ -37,7 +35,7 @@ namespace TecX.Unity.Factories
         private static readonly ConstructorInfo OneTimeTypeMatchParameterOverrideCtor =
             typeof(OneTimeTypeMatchParameterOverride).GetConstructor(new[] { typeof(object) });
 
-        // find the method IUnityContainer.Resolve(Type type, string name, ResolverOverride[] resolverOverrides)
+        // get method IUnityContainer.Resolve(Type type, string name, ResolverOverride[] resolverOverrides)
         private static readonly MethodInfo ContainerResolveMethod =
             typeof(IUnityContainer).GetMethod(MethodNames.Resolve, new[] { typeof(Type), typeof(string), typeof(ResolverOverride[]) });
 
@@ -57,6 +55,8 @@ namespace TecX.Unity.Factories
 
         public static Delegate GetDelegate(IUnityContainer container, Type delegateType)
         {
+            Guard.AssertNotNull(container, "container");
+
             if (!typeof(Delegate).IsAssignableFrom(delegateType))
             {
                 throw new ArgumentException("'delegateType' must derive from 'System.Delegate'.", "delegateType");
@@ -83,12 +83,11 @@ namespace TecX.Unity.Factories
             ConstantExpression ctr = Expression.Constant(container);
 
             // prepare the parameters for the resolve method
-            Expression[] resolveParameters = new Expression[]
-                {
-                    Expression.Constant(method.ReturnType, typeof(Type)),
-                    Expression.Constant((string)null, typeof(string)),
-                    Expression.NewArrayInit(typeof(ResolverOverride), resolverOverrides)
-                };
+            Expression[] resolveParameters = {
+                                                 Expression.Constant(method.ReturnType, typeof(Type)),
+                                                 Expression.Constant((string)null, typeof(string)),
+                                                 Expression.NewArrayInit(typeof(ResolverOverride), resolverOverrides)
+                                             };
 
             MethodCallExpression callContainerResolve = Expression.Call(ctr, ContainerResolveMethod, resolveParameters);
 
