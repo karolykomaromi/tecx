@@ -6,7 +6,6 @@ namespace TecX.Unity.Factories
     using Microsoft.Practices.Unity;
 
     using TecX.Common;
-    using TecX.Common.Extensions.Primitives;
     using TecX.Unity.Utility;
 
     public class DefaultTypedFactoryComponentSelector : ITypedFactoryComponentSelector
@@ -16,9 +15,9 @@ namespace TecX.Unity.Factories
             Guard.AssertNotNull(method, "method");
             Guard.AssertNotNull(arguments, "arguments");
 
-            var componentName = this.GetComponentName(method, arguments);
-            var componentType = this.GetComponentType(method, arguments);
-            var additionalArguments = this.GetArguments(method, arguments);
+            string componentName = this.GetComponentName(method, arguments);
+            Type componentType = this.GetComponentType(method, arguments);
+            ResolverOverride[] additionalArguments = this.GetArguments(method, arguments);
 
             return this.BuildFactoryComponent(method, componentName, componentType, additionalArguments);
         }
@@ -27,10 +26,10 @@ namespace TecX.Unity.Factories
             MethodInfo method,
             string nameToBuild,
             Type typeToBuild,
-            ResolverOverrides additionalArguments)
+            ResolverOverride[] additionalArguments)
         {
             Type itemType;
-            if (typeToBuild.TryGetCompatibleCollectionItemType(out itemType))
+            if (TypeHelper.TryGetCompatibleCollectionItemType(typeToBuild, out itemType))
             {
                 TypedFactoryComponent tfc = (TypedFactoryComponent)Activator.CreateInstance(
                                                 typeof(TypedFactoryComponentCollection<>).MakeGenericType(itemType),

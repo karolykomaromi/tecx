@@ -61,9 +61,9 @@ namespace TecX.Unity.Test.Factories
         {
             IUnityContainer container = new UnityContainer();
 
-            container.RegisterType<Func<string, string, string, OrderOfAppearance>>(new DelegateFactory());
+            container.RegisterType<Func<string, string, string, OrderOfAppearanceMatters>>(new DelegateFactory());
 
-            var factory = container.Resolve<Func<string, string, string, OrderOfAppearance>>();
+            var factory = container.Resolve<Func<string, string, string, OrderOfAppearanceMatters>>();
 
             var sut = factory("1", "2", "3");
 
@@ -73,9 +73,9 @@ namespace TecX.Unity.Test.Factories
         }
     }
 
-    public class OrderOfAppearance
+    public class OrderOfAppearanceMatters
     {
-        public OrderOfAppearance(string first, string second, string third)
+        public OrderOfAppearanceMatters(string first, string second, string third)
         {
             this.First = first;
             this.Second = second;

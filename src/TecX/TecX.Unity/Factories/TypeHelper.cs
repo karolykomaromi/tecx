@@ -7,30 +7,29 @@ namespace TecX.Unity.Factories
 
     internal static class TypeHelper
     {
-        public static bool TryGetCompatibleCollectionItemType(this Type type, out Type itemType)
+        public static bool TryGetCompatibleCollectionItemType(Type collectionType, out Type itemType)
         {
-            Guard.AssertNotNull(type, "type");
+            Guard.AssertNotNull(collectionType, "collectionType");
 
-            if (type.IsArray)
+            if (collectionType.IsArray)
             {
-                itemType = type.GetElementType();
+                itemType = collectionType.GetElementType();
                 return true;
             }
 
-            if (type.IsGenericType == false ||
-                type.IsGenericTypeDefinition)
+            if (!collectionType.IsGenericType || collectionType.IsGenericTypeDefinition)
             {
                 itemType = null;
                 return false;
             }
 
-            var openGeneric = type.GetGenericTypeDefinition();
+            Type openGeneric = collectionType.GetGenericTypeDefinition();
 
-            if (openGeneric == typeof(IList<>) ||
-                openGeneric == typeof(ICollection<>) ||
-                openGeneric == typeof(IEnumerable<>))
+            if (typeof(IList<>).IsAssignableFrom(openGeneric) ||
+                typeof(ICollection<>).IsAssignableFrom(openGeneric) ||
+                typeof(IEnumerable<>).IsAssignableFrom(openGeneric))
             {
-                itemType = type.GetGenericArguments()[0];
+                itemType = collectionType.GetGenericArguments()[0];
                 return true;
             }
 

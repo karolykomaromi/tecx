@@ -1,9 +1,7 @@
 namespace TecX.Unity.Factories
 {
     using System;
-
     using Microsoft.Practices.Unity;
-
     using TecX.Common;
 
     public class TypedFactoryComponent
@@ -12,9 +10,9 @@ namespace TecX.Unity.Factories
 
         private readonly Type typeToBuild;
 
-        private readonly ResolverOverrides additionalArguments;
+        private readonly ResolverOverride[] additionalArguments;
 
-        public TypedFactoryComponent(Type typeToBuild, string nameToBuild, ResolverOverrides additionalArguments)
+        public TypedFactoryComponent(Type typeToBuild, string nameToBuild, ResolverOverride[] additionalArguments)
             : this(typeToBuild, additionalArguments)
         {
             if (nameToBuild == string.Empty)
@@ -25,7 +23,7 @@ namespace TecX.Unity.Factories
             this.nameToBuild = nameToBuild;
         }
 
-        protected TypedFactoryComponent(Type typeToBuild, ResolverOverrides additionalArguments)
+        protected TypedFactoryComponent(Type typeToBuild, ResolverOverride[] additionalArguments)
         {
             Guard.AssertNotNull(typeToBuild, "typeToBuild");
             Guard.AssertNotNull(additionalArguments, "additionalArguments");
@@ -36,26 +34,17 @@ namespace TecX.Unity.Factories
 
         public string NameToBuild
         {
-            get
-            {
-                return this.nameToBuild;
-            }
+            get { return this.nameToBuild; }
         }
 
         public Type TypeToBuild
         {
-            get
-            {
-                return this.typeToBuild;
-            }
+            get { return this.typeToBuild; }
         }
 
-        public ResolverOverrides AdditionalArguments
+        public ResolverOverride[] AdditionalArguments
         {
-            get
-            {
-                return this.additionalArguments;
-            }
+            get { return this.additionalArguments; }
         }
 
         public virtual object Resolve(IUnityContainer container)
