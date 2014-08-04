@@ -256,7 +256,7 @@
             this.facets.AddRange(listView.Properties.Select(p => new Facet
                 {
                     PropertyName = p.PropertyName,
-                    PropertyType = Type.GetType(p.PropertyType),
+                    PropertyType = TypeHelper.GetType(p.PropertyType),
                     GetResource = this.CreateResourceAccessor(p.ResourceKey)
                 }));
 

@@ -1,4 +1,6 @@
-﻿namespace Infrastructure
+﻿using System.Linq;
+
+namespace Infrastructure
 {
     using System;
     using System.Collections.Generic;
@@ -12,8 +14,8 @@
         public static string GetSilverlightCompatibleTypeName(Type type)
         {
             Contract.Requires(type != null);
-            Contract.Requires(!string.IsNullOrEmpty(type.AssemblyQualifiedName));
-            Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+            Contract.Requires(!String.IsNullOrEmpty(type.AssemblyQualifiedName));
+            Contract.Ensures(!String.IsNullOrEmpty(Contract.Result<string>()));
 
             string name = type.AssemblyQualifiedName;
 
@@ -149,6 +151,31 @@
             allTypes.AddRange(type.GetInterfaces());
 
             return allTypes;
+        }
+
+        public static Type GetType(string typeName)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(typeName));
+
+            Type type = Type.GetType(typeName, false);
+
+            if (type == null)
+            {
+                string fullName = typeName.Substring(0, typeName.IndexOf(", ", StringComparison.Ordinal));
+
+                type = (from assembly in AppDomain.CurrentDomain.GetAssemblies().Where(assembly => !assembly.IsDynamic)
+                        let t = assembly.GetType(fullName, false)
+                        where t != null
+                        select t).FirstOrDefault();
+
+                if (type == null)
+                {
+                    string msg = string.Format("Cannot load Type '{0}'", typeName);
+                    throw new TypeLoadException(msg);
+                }
+            }
+
+            return type;
         }
     }
 }

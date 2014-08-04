@@ -34,5 +34,15 @@
 
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void Should_GetType_From_Other_Assembly_By_FullName()
+        {
+            Type expected = typeof(IResourceService);
+            Type actual = TypeHelper.GetType(expected.FullName);
+
+            Assert.NotNull(actual);
+            Assert.Equal(expected, actual);
+        }
     }
 }
