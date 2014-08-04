@@ -1,0 +1,29 @@
+﻿<configuration>
+  <system.serviceModel>
+    <bindings>
+      <basicHttpBinding>
+        <binding name="DefaultBasicHttpBinding" maxBufferSize="2147483647"
+            maxReceivedMessageSize="2147483647">
+          <security mode="None" />
+        </binding>
+      </basicHttpBinding>
+    </bindings>
+    <client>
+      <endpoint address="http://localhost:18448/ListViewService.svc"
+          binding="basicHttpBinding" bindingConfiguration="DefaultBasicHttpBinding"
+          contract="Infrastructure.ListViews.IListViewService" name="BasicHttpBinding_IListViewService" />
+      <endpoint address="http://localhost:18448/LoggingService.svc"
+          binding="basicHttpBinding" bindingConfiguration="DefaultBasicHttpBinding"
+          contract="Microsoft.Practices.EnterpriseLibrary.Logging.Service.ILoggingService" name="BasicHttpBinding_ILoggingService" />
+      <endpoint address="http://localhost:18448/RecipeService.svc"
+          binding="basicHttpBinding" bindingConfiguration="DefaultBasicHttpBinding"
+          contract="Recipe.IRecipeService" name="BasicHttpBinding_IRecipeService" />
+      <endpoint address="http://localhost:18448/ResourceService.svc"
+          binding="basicHttpBinding" bindingConfiguration="DefaultBasicHttpBinding"
+          contract="Infrastructure.IResourceService" name="BasicHttpBinding_IResourceService" />
+      <endpoint address="http://localhost:18448/SearchService.svc"
+          binding="basicHttpBinding" bindingConfiguration="DefaultBasicHttpBinding"
+          contract="Search.ISearchService" name="BasicHttpBinding_ISearchService" />
+    </client>
+  </system.serviceModel>
+</configuration>

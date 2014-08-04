@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Microsoft.Practices.EnterpriseLibrary.Logging.Service.LoggingService" Factory="Modular.Web.Hosting.UnityServiceHostFactory" %>

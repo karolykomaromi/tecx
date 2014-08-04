@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="Main.Views.LanguageSelectionView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Main.ViewModels"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:mvvm="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.SL5"
+    xmlns:converters="clr-namespace:Main.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="50" d:DesignWidth="100"
+    d:DataContext="{d:DesignInstance d:Type=viewModels:LanguageSelectionViewModel}">
+    <UserControl.Resources>
+        <converters:UpperCaseConverter x:Key="UpperCaseConverter" />
+        <converters:SmallIconConverter x:Key="SmallIconConverter" />
+    </UserControl.Resources>
+    <Grid Background="White" Margin="10">
+        <ComboBox ItemsSource="{Binding AvailableLanguages}" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <mvvm:EventToCommand Command="{Binding ChangeLanguageCommand}" CommandParameter="{Binding SelectedLanguage}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{Binding TwoLetterISOLanguageName, Converter={StaticResource SmallIconConverter}}" Height="16" Width="24" Margin="5, 0, 10, 0"/>
+                        <TextBlock Grid.Column="1" Text="{Binding TwoLetterISOLanguageName, Converter={StaticResource UpperCaseConverter}}" />
+                    </Grid>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+    </Grid>
+</UserControl>

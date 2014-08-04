@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Infrastructure.ListViews.ListViewService" Factory="Modular.Web.Hosting.UnityServiceHostFactory" %>
