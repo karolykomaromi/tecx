@@ -1,4 +1,6 @@
-﻿namespace TecX.Unity.Test.Factories
+﻿using System;
+
+namespace TecX.Unity.Test.Factories
 {
     using Microsoft.Practices.Unity;
     using TecX.Unity.Factories;
@@ -42,6 +44,20 @@
             Assert.NotNull(actual(true));
 
             Assert.True(usedExistingRegistration);
+        }
+
+        [Fact]
+        public void Should_Resolve_Func_Delegate()
+        {
+            IUnityContainer container = new UnityContainer().AddNewExtension<DelegateFactoryExtension>();
+
+            var factory = container.Resolve<Func<string, string, string, OrderOfAppearanceMatters>>();
+
+            var sut = factory("1", "2", "3");
+
+            Assert.Equal("1", sut.First);
+            Assert.Equal("2", sut.Second);
+            Assert.Equal("3", sut.Third);
         }
     }
 }
