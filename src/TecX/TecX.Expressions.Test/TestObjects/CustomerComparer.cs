@@ -2,11 +2,16 @@ namespace TecX.Expressions.Test.TestObjects
 {
     using System.Collections.Generic;
 
-    public class CustomerComparer : Comparer<Customer>
+    public class CustomerComparer : EqualityComparer<Customer>
     {
-        public override int Compare(Customer x, Customer y)
+        public override bool Equals(Customer x, Customer y)
         {
-            return x.Id.CompareTo(y.Id);
+            return x.Id == y.Id;
+        }
+
+        public override int GetHashCode(Customer obj)
+        {
+            return obj.Id;
         }
     }
 }
