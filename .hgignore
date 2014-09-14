@@ -258,3 +258,5 @@ Modular/src/Modular/Modular.Silverlight.Test.Web/ClientBin/Modular.Test.xap
 Modular/src/Modular/Modular.Web/Logs
 Hydra/Hydra/bin
 Hydra/Hydra/obj
+Hydra/Hydra.Unity/obj
+Hydra/Hydra.Unity.Test/obj
