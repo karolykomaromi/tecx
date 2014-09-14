@@ -1,22 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra", "Hydra\Hydra.csproj", "{2EB208C3-154F-4E59-B834-A75FC7E7EB5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra", "Hydra\Hydra.csproj", "{38E6867F-8C1C-4FBB-8E83-9F50A7F96E54}"
 EndProject
 Global
-	GlobalSection(MercurialSourceControlSolutionProperties) = preSolution
-		SolutionIsControlled = True
-		SolutionBindings = <Solution Location In Database>
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2EB208C3-154F-4E59-B834-A75FC7E7EB5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EB208C3-154F-4E59-B834-A75FC7E7EB5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EB208C3-154F-4E59-B834-A75FC7E7EB5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EB208C3-154F-4E59-B834-A75FC7E7EB5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38E6867F-8C1C-4FBB-8E83-9F50A7F96E54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E6867F-8C1C-4FBB-8E83-9F50A7F96E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E6867F-8C1C-4FBB-8E83-9F50A7F96E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E6867F-8C1C-4FBB-8E83-9F50A7F96E54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
