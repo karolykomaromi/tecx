@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-
-namespace Hydra
+﻿namespace Hydra
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
+    using Hydra.Unity;
     using Microsoft.Practices.Unity;
 
     public class MvcApplication : System.Web.HttpApplication
