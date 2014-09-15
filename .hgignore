@@ -260,3 +260,5 @@ Hydra/Hydra/bin
 Hydra/Hydra/obj
 Hydra/Hydra.Unity/obj
 Hydra/Hydra.Unity.Test/obj
+Hydra/Hydra.Unity/bin
+Hydra/Hydra.Unity.Test/bin
