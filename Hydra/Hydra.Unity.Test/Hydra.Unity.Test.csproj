@@ -60,9 +60,13 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="DisposeThis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnityTests.cs" />
+    <Compile Include="Tracking\DisposableExtensionTests.cs" />
+    <Compile Include="Tracking\DisposableTestClassBase.cs" />
+    <Compile Include="Tracking\DisposeThis.cs" />
+    <Compile Include="Tracking\NotCreatedByContainer.cs" />
+    <Compile Include="Tracking\TakesItemNotCreatedByContainer.cs" />
+    <Compile Include="Tracking\WithSingletonLifetime.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -66,9 +66,16 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TearDownExtension.cs" />
-    <Compile Include="TearDownStrategy.cs" />
-    <Compile Include="TrackingDisposablesTransientLifetimeManager.cs" />
+    <Compile Include="Tracking\BuildTreeDisposer.cs" />
+    <Compile Include="Tracking\BuildTreeItemNode.cs" />
+    <Compile Include="Tracking\BuildTreeTracker.cs" />
+    <Compile Include="Tracking\DisposableItemNode.cs" />
+    <Compile Include="Tracking\DisposableExtension.cs" />
+    <Compile Include="Tracking\ITreeItemVisitor.cs" />
+    <Compile Include="Tracking\NonDisposableItemNode.cs" />
+    <Compile Include="Tracking\ReadLock.cs" />
+    <Compile Include="Tracking\UpgradeableReadLock.cs" />
+    <Compile Include="Tracking\WriteLock.cs" />
     <Compile Include="UnityContainerConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
