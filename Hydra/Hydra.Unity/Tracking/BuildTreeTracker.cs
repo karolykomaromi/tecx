@@ -84,17 +84,24 @@ namespace Hydra.Unity.Tracking
 
             BuildTreeItemNode newTreeNode;
 
-            // we can only dispose items that were created by the container, implement IDisposable and are not referenced in any
-            // singleton style LifetimeManagers
-            if (nodeCreatedByContainer &&
-                typeof(IDisposable).IsAssignableFrom(context.BuildKey.Type) &&
-                !context.Lifetime.OfType<ContainerControlledLifetimeManager>().Any() &&
-                !context.Lifetime.OfType<HierarchicalLifetimeManager>().Any())
+            if (!nodeCreatedByContainer ||
+                context.Lifetime.OfType<ContainerControlledLifetimeManager>().Any() ||
+                context.Lifetime.OfType<HierarchicalLifetimeManager>().Any())
             {
+                // This object was either not created by the container or is referenced by a LifetimeManager
+                // that will take care of disposing it when either this container or the parent container are disposed.
+                // Either way it is someone else's problem...
+                newTreeNode = new SomeoneElsesProblem(context.BuildKey, CurrentBuildNode);
+            }
+            else if (typeof(IDisposable).IsAssignableFrom(context.BuildKey.Type))
+            {
+                // we know this object was created by the container and implements IDisposable so we need to take 
+                // care of disposing it
                 newTreeNode = new DisposableItemNode(context.BuildKey, CurrentBuildNode);
             }
             else
             {
+                // the object is not disposable
                 newTreeNode = new NonDisposableItemNode(context.BuildKey, CurrentBuildNode);
             }
 

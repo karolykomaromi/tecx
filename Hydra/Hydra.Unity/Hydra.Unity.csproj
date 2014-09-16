@@ -74,6 +74,7 @@
     <Compile Include="Tracking\ITreeItemVisitor.cs" />
     <Compile Include="Tracking\NonDisposableItemNode.cs" />
     <Compile Include="Tracking\ReadLock.cs" />
+    <Compile Include="Tracking\SomeoneElsesProblem.cs" />
     <Compile Include="Tracking\UpgradeableReadLock.cs" />
     <Compile Include="Tracking\WriteLock.cs" />
     <Compile Include="UnityContainerConfiguration.cs" />
