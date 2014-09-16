@@ -5,5 +5,7 @@ namespace Hydra.Unity.Tracking
         void Visit(DisposableItemNode node);
 
         void Visit(NonDisposableItemNode node);
+
+        void Visit(SomeoneElsesProblem node);
     }
 }

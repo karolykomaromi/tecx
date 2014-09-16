@@ -1,5 +1,3 @@
-using System;
-
 namespace Hydra.Unity.Test.Tracking
 {
     using Hydra.Unity.Tracking;
