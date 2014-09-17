@@ -56,7 +56,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -79,7 +78,6 @@
     <Compile Include="Tracking\SomeoneElsesProblem.cs" />
     <Compile Include="Tracking\UpgradeableReadLock.cs" />
     <Compile Include="Tracking\WriteLock.cs" />
-    <Compile Include="UnityContainerConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

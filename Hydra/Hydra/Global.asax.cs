@@ -8,6 +8,8 @@
 
     public class MvcApplication : HttpApplication
     {
+        private const string ContainerKey = "unity";
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -15,27 +17,29 @@
 
             IUnityContainer container = new UnityContainer().AddNewExtension<UnityContainerConfiguration>();
 
-            this.Application["unity"] = container;
+            this.Application[ContainerKey] = container;
 
-            IControllerFactory controllerFactory = new UnityCompositionRoot(container);
+            IControllerFactory controllerFactory = new UnityCompositionRoot(new ContainerPerRequestAdapter());
 
             ControllerBuilder.Current.SetControllerFactory(controllerFactory);
         }
 
         protected void Application_BeginRequest()
         {
-            IUnityContainer container = (IUnityContainer)this.Application["unity"];
+            IUnityContainer container = (IUnityContainer)this.Application[ContainerKey];
 
-            this.Context.Items["unity"] = container.CreateChildContainer();
+            this.Context.Items[ContainerKey] = container.CreateChildContainer();
         }
 
         protected void Application_EndRequest()
         {
-            IUnityContainer childContainer = (IUnityContainer)this.Context.Items["unity"];
+            IUnityContainer childContainer = (IUnityContainer)this.Context.Items[ContainerKey];
 
             if (childContainer != null)
             {
                 childContainer.Dispose();
+
+                this.Context.Items.Remove(ContainerKey);
             }
         }
     }

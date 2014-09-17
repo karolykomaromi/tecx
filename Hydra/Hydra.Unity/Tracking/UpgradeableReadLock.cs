@@ -26,7 +26,7 @@ namespace Hydra.Unity.Tracking
 
         public bool IsDisposed
         {
-            get { return isDisposed; }
+            get { return this.isDisposed; }
         }
 
         public void Dispose()

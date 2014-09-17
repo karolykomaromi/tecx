@@ -1,4 +1,4 @@
-namespace Hydra.Unity
+namespace Hydra
 {
     using Microsoft.Practices.Unity;
 
