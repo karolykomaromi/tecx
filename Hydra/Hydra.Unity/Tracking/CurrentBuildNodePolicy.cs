@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-
 namespace Hydra.Unity.Tracking
 {
+    using System.Collections.Generic;
+
     public class CurrentBuildNodePolicy : ICurrentBuildNodePolicy
     {
         private readonly Stack<string> tags;
