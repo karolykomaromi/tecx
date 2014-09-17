@@ -1,3 +1,5 @@
+using System.Threading;
+
 namespace Hydra.Unity.Test.Tracking
 {
     using Hydra.Unity.Tracking;
@@ -23,7 +25,7 @@ namespace Hydra.Unity.Test.Tracking
         }
 
         [Fact]
-        public void Should_Dispose_All_Tree_On_Container_Dispose()
+        public void Should_Dispose_All_Trees_On_Container_Dispose()
         {
             DisposeThis sut1, sut2;
 
@@ -113,6 +115,19 @@ namespace Hydra.Unity.Test.Tracking
             Assert.False(fromParent.IsDisposed);
             Assert.True(fromChild1.IsDisposed);
             Assert.Equal(1, container.Configure<DisposableExtension>().Tracker.BuildTrees.Count);
+        }
+
+        [Fact]
+        public void Should_Dispose_Objects_In_Injection_Hierarchy_When_Levels_In_Between_Are_Not_Disposable()
+        {
+            Level0 level0;
+            using (var container = new UnityContainer().AddNewExtension<DisposableExtension>())
+            {
+                level0 = container.Resolve<Level0>();
+            }
+
+            Assert.True(level0.IsDisposed);
+            Assert.True(level0.Level1.Level2.Level3.IsDisposed);
         }
     }
 }

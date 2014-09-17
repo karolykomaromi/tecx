@@ -64,6 +64,10 @@
     <Compile Include="Tracking\DisposableExtensionTests.cs" />
     <Compile Include="Tracking\DisposableTestClassBase.cs" />
     <Compile Include="Tracking\DisposeThis.cs" />
+    <Compile Include="Tracking\Level0.cs" />
+    <Compile Include="Tracking\Level1.cs" />
+    <Compile Include="Tracking\Level2.cs" />
+    <Compile Include="Tracking\Level3.cs" />
     <Compile Include="Tracking\NotCreatedByContainer.cs" />
     <Compile Include="Tracking\TakesItemNotCreatedByContainer.cs" />
     <Compile Include="Tracking\WithSingletonLifetime.cs" />
