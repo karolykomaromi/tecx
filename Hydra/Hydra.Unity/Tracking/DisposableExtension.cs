@@ -1,9 +1,12 @@
 namespace Hydra.Unity.Tracking
 {
     using System;
+    using System.Diagnostics;
+    using System.Globalization;
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.ObjectBuilder;
 
+    [DebuggerDisplay("Tag={Tag}")]
     public class DisposableExtension : UnityContainerExtension, IDisposable
     {
         private readonly BuildTreeTracker tracker;
@@ -16,12 +19,11 @@ namespace Hydra.Unity.Tracking
         public string Tag
         {
             get { return this.Tracker.Tag; }
-            set { this.Tracker.Tag = value; }
         }
 
         public BuildTreeTracker Tracker
         {
-            get { return tracker; }
+            get { return this.tracker; }
         }
 
         public void Dispose()
@@ -41,7 +43,25 @@ namespace Hydra.Unity.Tracking
 
         protected override void Initialize()
         {
+            int level = 0;
+
+            IUnityContainer parent = this.Container.Parent;
+            while (parent != null)
+            {
+                level++;
+                parent = parent.Parent;
+            }
+
+            this.Tracker.Tag = "level" + level.ToString(CultureInfo.InvariantCulture);
+
             this.Context.Strategies.Add(this.Tracker, UnityBuildStage.PreCreation);
+
+            this.Context.ChildContainerCreated += this.OnChildContainerCreated;
+        }
+
+        private void OnChildContainerCreated(object sender, ChildContainerCreatedEventArgs e)
+        {
+            e.ChildContainer.AddNewExtension<DisposableExtension>();
         }
     }
 }

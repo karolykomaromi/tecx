@@ -2,12 +2,14 @@ namespace Hydra.Unity.Tracking
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Globalization;
     using System.Linq;
     using System.Threading;
     using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
 
+    [DebuggerDisplay("Tag={Tag} Count={BuildTrees.Count}")]
     public class BuildTreeTracker : BuilderStrategy, IDisposable
     {
         private static readonly ReaderWriterLockSlim ReaderWriterLock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
@@ -153,7 +155,7 @@ namespace Hydra.Unity.Tracking
                 this.DisposeItemsAndRemoveTree(buildTree);
             }
 
-            this.DisposeDeadTrees();
+            this.PurgeDeadTrees();
         }
 
         public void Dispose()
@@ -177,7 +179,7 @@ namespace Hydra.Unity.Tracking
             }
         }
 
-        private void DisposeDeadTrees()
+        private void PurgeDeadTrees()
         {
             // Need to enumerate in the reverse order because the trees that are torn down are removed from the set
             using (new UpgradeableReadLock(ReaderWriterLock))
