@@ -1,9 +1,11 @@
 namespace Hydra.Unity.Tracking
 {
     using System;
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Microsoft.Practices.ObjectBuilder2;
 
+    [DebuggerDisplay("NonDisposable Type={BuildKey.Type} Name={BuildKey.Name} Count={Children.Count}")]
     public class NonDisposableItemNode : BuildTreeItemNode
     {
         private WeakReference item;

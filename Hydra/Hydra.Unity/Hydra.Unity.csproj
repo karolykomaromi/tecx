@@ -69,8 +69,10 @@
     <Compile Include="Tracking\BuildTreeDisposer.cs" />
     <Compile Include="Tracking\BuildTreeItemNode.cs" />
     <Compile Include="Tracking\BuildTreeTracker.cs" />
+    <Compile Include="Tracking\CurrentBuildNodePolicy.cs" />
     <Compile Include="Tracking\DisposableItemNode.cs" />
     <Compile Include="Tracking\DisposableExtension.cs" />
+    <Compile Include="Tracking\ICurrentBuildNodePolicy.cs" />
     <Compile Include="Tracking\ITreeItemVisitor.cs" />
     <Compile Include="Tracking\NonDisposableItemNode.cs" />
     <Compile Include="Tracking\ReadLock.cs" />

@@ -87,20 +87,22 @@ namespace Hydra.Unity.Test.Tracking
         [Fact]
         public void Should_Dispose_Objects_Resolved_From_Child_Container_When_Child_Container_Is_Disposed()
         {
-            var container = new UnityContainer().AddNewExtension<DisposableExtension>();
+            DisposableExtension parentDisposableExtension = new DisposableExtension { Tag = "parent" };
 
-            DisposeThis fromParent = container.Resolve<DisposeThis>();
+            var container = new UnityContainer().AddExtension(parentDisposableExtension);
 
-            DisposeThis fromChild;
+            DisposeThis fromParent, fromChild;
 
             // TODO weberse 2014-09-16 should work if child container ran in separate thread...
-            using (var childContainer = container.CreateChildContainer().AddNewExtension<DisposableExtension>())
+            using (var childContainer = container.CreateChildContainer().AddExtension(new DisposableExtension { Tag = "child" }))
             {
+                fromParent = container.Resolve<DisposeThis>();
                 fromChild = childContainer.Resolve<DisposeThis>();
             }
 
             Assert.False(fromParent.IsDisposed);
             Assert.True(fromChild.IsDisposed);
+            Assert.Equal(1, parentDisposableExtension.Tracker.BuildTrees.Count);
         }
     }
 }

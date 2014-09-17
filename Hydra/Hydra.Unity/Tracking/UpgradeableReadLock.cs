@@ -1,8 +1,8 @@
-using System;
-using System.Threading;
-
 namespace Hydra.Unity.Tracking
 {
+    using System;
+    using System.Threading;
+
     public class UpgradeableReadLock : IDisposable
     {
         private readonly ReaderWriterLockSlim rws;

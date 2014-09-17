@@ -8,67 +8,28 @@ namespace Hydra.Unity.Tracking
     using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
 
-    public class BuildTreeTracker : BuilderStrategy
+    public class BuildTreeTracker : BuilderStrategy, IDisposable
     {
         private static readonly ReaderWriterLockSlim ReaderWriterLock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
 
-        private static readonly ThreadLocal<BuildTreeItemNode> CurrentNode = new ThreadLocal<BuildTreeItemNode>();
+        private readonly ThreadLocal<BuildTreeItemNode> currentNode = new ThreadLocal<BuildTreeItemNode>();
 
         private readonly List<BuildTreeItemNode> buildTrees = new List<BuildTreeItemNode>();
 
-        public static BuildTreeItemNode CurrentBuildNode
+        public BuildTreeItemNode CurrentBuildNode
         {
-            get
-            {
-                return CurrentNode.Value;
-            }
+            get { return this.currentNode.Value; }
 
-            set
-            {
-                CurrentNode.Value = value;
-            }
+            set { this.currentNode.Value = value; }
         }
 
-        public virtual IList<BuildTreeItemNode> BuildTrees
+        public string Tag { get; set; }
+
+        public IList<BuildTreeItemNode> BuildTrees
         {
             get
             {
                 return this.buildTrees;
-            }
-        }
-
-        public void AssignInstanceToCurrentTreeNode(NamedTypeBuildKey buildKey, object instance)
-        {
-            if (CurrentBuildNode.BuildKey != buildKey)
-            {
-                string errorMessageFormat = "Build tree constructed out of order. Build key '{0}' was expected but build key '{1}' was provided.";
-
-                string message = string.Format(CultureInfo.CurrentCulture, errorMessageFormat, CurrentBuildNode.BuildKey, buildKey);
-
-                throw new InvalidOperationException(message);
-            }
-
-            CurrentBuildNode.AssignInstance(instance);
-        }
-
-        public void DisposeAllTrees()
-        {
-            using (new UpgradeableReadLock(ReaderWriterLock))
-            {
-                for (int index = this.BuildTrees.Count - 1; index >= 0; index--)
-                {
-                    BuildTreeItemNode buildTree = this.BuildTrees[index];
-
-                    this.DisposeTree(buildTree);
-                }
-            }
-        }
-
-        public BuildTreeItemNode GetBuildTreeForInstance(object instance)
-        {
-            using (new ReadLock(ReaderWriterLock))
-            {
-                return this.BuildTrees.SingleOrDefault(x => x.Item != null && object.ReferenceEquals(x.Item, instance));
             }
         }
 
@@ -79,6 +40,17 @@ namespace Hydra.Unity.Tracking
             {
                 return;
             }
+
+            ICurrentBuildNodePolicy policy = context.Policies.Get<ICurrentBuildNodePolicy>(context.BuildKey);
+            
+            if (policy == null)
+            {
+                policy = new CurrentBuildNodePolicy();
+
+                context.Policies.Set<ICurrentBuildNodePolicy>(policy, context.BuildKey);
+            }
+
+            policy.Tags.Push(this.Tag);
 
             bool nodeCreatedByContainer = context.Existing == null;
 
@@ -91,27 +63,27 @@ namespace Hydra.Unity.Tracking
                 // This object was either not created by the container or is referenced by a LifetimeManager
                 // that will take care of disposing it when either this container or the parent container are disposed.
                 // Either way it is someone else's problem...
-                newTreeNode = new SomeoneElsesProblem(context.BuildKey, CurrentBuildNode);
+                newTreeNode = new SomeoneElsesProblem(context.BuildKey, this.CurrentBuildNode);
             }
             else if (typeof(IDisposable).IsAssignableFrom(context.BuildKey.Type))
             {
                 // we know this object was created by the container and implements IDisposable so we need to take 
                 // care of disposing it
-                newTreeNode = new DisposableItemNode(context.BuildKey, CurrentBuildNode);
+                newTreeNode = new DisposableItemNode(context.BuildKey, this.CurrentBuildNode);
             }
             else
             {
                 // the object is not disposable
-                newTreeNode = new NonDisposableItemNode(context.BuildKey, CurrentBuildNode);
+                newTreeNode = new NonDisposableItemNode(context.BuildKey, this.CurrentBuildNode);
             }
 
-            if (CurrentBuildNode != null)
+            if (this.CurrentBuildNode != null)
             {
                 // This is a child node
-                CurrentBuildNode.Children.Add(newTreeNode);
+                this.CurrentBuildNode.Children.Add(newTreeNode);
             }
 
-            CurrentBuildNode = newTreeNode;
+            this.CurrentBuildNode = newTreeNode;
         }
 
         public override void PostBuildUp(IBuilderContext context)
@@ -122,22 +94,47 @@ namespace Hydra.Unity.Tracking
                 return;
             }
 
-            this.AssignInstanceToCurrentTreeNode(context.BuildKey, context.Existing);
+            ICurrentBuildNodePolicy policy = context.Policies.Get<ICurrentBuildNodePolicy>(context.BuildKey);
 
-            BuildTreeItemNode parentNode = CurrentBuildNode.Parent;
+            if (!string.Equals(this.Tag, policy.Tags.Peek(), StringComparison.Ordinal))
+            {
+                this.CurrentBuildNode = null;
+
+                if (string.Equals(this.Tag, policy.Tags.Last(), StringComparison.Ordinal))
+                {
+                    context.Policies.Set<ICurrentBuildNodePolicy>(null, context.BuildKey);
+                }
+
+                return;
+            }
+
+            if (this.CurrentBuildNode.BuildKey != context.BuildKey)
+            {
+                string message = string.Format(
+                    CultureInfo.CurrentCulture,
+                    "Build tree constructed out of order. Build key '{0}' was expected but build key '{1}' was provided.",
+                    this.CurrentBuildNode.BuildKey,
+                    context.BuildKey);
+
+                throw new InvalidOperationException(message);
+            }
+
+            this.CurrentBuildNode.AssignInstance(context.Existing);
+
+            BuildTreeItemNode parentNode = this.CurrentBuildNode.Parent;
 
             if (parentNode == null)
             {
                 // This is the end of the creation of the root node
                 using (new WriteLock(ReaderWriterLock))
                 {
-                    this.BuildTrees.Add(CurrentBuildNode);
+                    this.BuildTrees.Add(this.CurrentBuildNode);
                 }
             }
 
             // Move the current node back up to the parent
             // If this is the top level node, this will set the current node back to null
-            CurrentBuildNode = parentNode;
+            this.CurrentBuildNode = parentNode;
         }
 
         public override void PostTearDown(IBuilderContext context)
@@ -146,10 +143,31 @@ namespace Hydra.Unity.Tracking
 
             if (buildTree != null)
             {
-                this.DisposeTree(buildTree);
+                this.DisposeItemsAndRemoveTree(buildTree);
             }
 
             this.DisposeDeadTrees();
+        }
+
+        public void Dispose()
+        {
+            using (new UpgradeableReadLock(ReaderWriterLock))
+            {
+                for (int index = this.BuildTrees.Count - 1; index >= 0; index--)
+                {
+                    BuildTreeItemNode buildTree = this.BuildTrees[index];
+
+                    this.DisposeItemsAndRemoveTree(buildTree);
+                }
+            }
+        }
+
+        private BuildTreeItemNode GetBuildTreeForInstance(object instance)
+        {
+            using (new ReadLock(ReaderWriterLock))
+            {
+                return this.BuildTrees.SingleOrDefault(x => x.Item != null && object.ReferenceEquals(x.Item, instance));
+            }
         }
 
         private void DisposeDeadTrees()
@@ -163,20 +181,20 @@ namespace Hydra.Unity.Tracking
 
                     if (buildTree.Item == null)
                     {
-                        this.DisposeTree(buildTree);
+                        this.DisposeItemsAndRemoveTree(buildTree);
                     }
                 }
             }
         }
 
-        private void DisposeTree(BuildTreeItemNode tree)
+        private void DisposeItemsAndRemoveTree(BuildTreeItemNode tree)
         {
-            var visitor = new BuildTreeDisposer();
-
-            tree.Accept(visitor);
-
             using (new WriteLock(ReaderWriterLock))
             {
+                var visitor = new BuildTreeDisposer();
+
+                tree.Accept(visitor);
+
                 this.BuildTrees.Remove(tree);
             }
         }
