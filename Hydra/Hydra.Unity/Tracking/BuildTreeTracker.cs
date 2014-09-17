@@ -41,6 +41,10 @@ namespace Hydra.Unity.Tracking
                 return;
             }
 
+            // If you use child containers this strategy might be called by all containers in the hierarchy.
+            // The last strategy called will be the one in the child container that was actually asked to Resolve the object.
+            // This policy is used to track which strategy instances where tracking the creation of this object. That information
+            // will be used to avoid tracking by a strategy in the wrong container.
             ICurrentBuildNodePolicy policy = context.Policies.Get<ICurrentBuildNodePolicy>(context.BuildKey);
             
             if (policy == null)
@@ -88,12 +92,15 @@ namespace Hydra.Unity.Tracking
 
         public override void PostBuildUp(IBuilderContext context)
         {
-            // weberse 2014-09-16 We don't track extension lifecycles. They will be disposed when the container is disposed.
+            // We don't track extension lifecycles. They will be disposed when the container is disposed.
             if (typeof(UnityContainerExtension).IsAssignableFrom(context.BuildKey.Type))
             {
                 return;
             }
 
+            // If you use child containers this strategy might be called by all containers in the hierarchy.
+            // The last strategy called will be the one in the child container that was actually asked to Resolve the object.
+            // Every other strategy has no business in tracking this object so we short circuit immediately.
             ICurrentBuildNodePolicy policy = context.Policies.Get<ICurrentBuildNodePolicy>(context.BuildKey);
 
             if (!string.Equals(this.Tag, policy.Tags.Peek(), StringComparison.Ordinal))
