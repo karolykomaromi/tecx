@@ -13,6 +13,17 @@ namespace Hydra.Unity.Tracking
             this.tracker = new BuildTreeTracker();
         }
 
+        public string Tag
+        {
+            get { return this.Tracker.Tag; }
+            set { this.Tracker.Tag = value; }
+        }
+
+        public BuildTreeTracker Tracker
+        {
+            get { return tracker; }
+        }
+
         public void Dispose()
         {
             this.Dispose(true);
@@ -24,13 +35,13 @@ namespace Hydra.Unity.Tracking
         {
             if (disposing)
             {
-                this.tracker.DisposeAllTrees();
+                this.Tracker.Dispose();
             }
         }
 
         protected override void Initialize()
         {
-            this.Context.Strategies.Add(this.tracker, UnityBuildStage.PreCreation);
+            this.Context.Strategies.Add(this.Tracker, UnityBuildStage.PreCreation);
         }
     }
 }

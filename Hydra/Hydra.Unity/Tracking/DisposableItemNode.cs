@@ -1,9 +1,11 @@
 namespace Hydra.Unity.Tracking
 {
     using System;
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using Microsoft.Practices.ObjectBuilder2;
 
+    [DebuggerDisplay("Disposable Type={BuildKey.Type} Name={BuildKey.Name} Count={Children.Count}")]
     public class DisposableItemNode : BuildTreeItemNode
     {
         private object item;
