@@ -1,17 +1,16 @@
 namespace Hydra.Unity.Test.Tracking
 {
+    using Hydra.Unity.Test.Utility;
     using Hydra.Unity.Tracking;
     using Microsoft.Practices.Unity;
     using Xunit;
+    using Xunit.Extensions;
 
     public class DisposableExtensionTests
     {
-        [Fact]
-        public void Should_Dispose_On_TearDown()
+        [Theory, ContainerData]
+        public void Should_Dispose_On_TearDown(IUnityContainer container)
         {
-            var container = new UnityContainer()
-                .AddNewExtension<DisposableExtension>();
-
             var sut = container.Resolve<DisposeThis>();
 
             var sut1 = container.Resolve<DisposeThis>();
@@ -22,13 +21,12 @@ namespace Hydra.Unity.Test.Tracking
             Assert.False(sut1.IsDisposed);
         }
 
-        [Fact]
-        public void Should_Dispose_All_Trees_On_Container_Dispose()
+        [Theory, ContainerData]
+        public void Should_Dispose_All_Trees_On_Container_Dispose(IUnityContainer container)
         {
             DisposeThis sut1, sut2;
 
-            using (IUnityContainer container = new UnityContainer()
-                .AddNewExtension<DisposableExtension>())
+            using (container)
             {
                 sut1 = container.Resolve<DisposeThis>();
 
@@ -39,12 +37,10 @@ namespace Hydra.Unity.Test.Tracking
             Assert.True(sut2.IsDisposed);
         }
 
-        [Fact]
-        public void Should_Not_Dispose_Item_With_ContainerControlledLifetime_On_Teardown()
+        [Theory, ContainerData]
+        public void Should_Not_Dispose_Item_With_ContainerControlledLifetime_On_Teardown(IUnityContainer container)
         {
-            var container = new UnityContainer()
-                .AddNewExtension<DisposableExtension>()
-                .RegisterType<WithSingletonLifetime>(new ContainerControlledLifetimeManager());
+            container.RegisterType<WithSingletonLifetime>(new ContainerControlledLifetimeManager());
 
             var sut = container.Resolve<WithSingletonLifetime>();
 
@@ -53,12 +49,10 @@ namespace Hydra.Unity.Test.Tracking
             Assert.False(sut.IsDisposed);
         }
 
-        [Fact]
-        public void Should_Not_Dispose_Item_With_HierarchicalLifetime_On_Teardown()
+        [Theory, ContainerData]
+        public void Should_Not_Dispose_Item_With_HierarchicalLifetime_On_Teardown(IUnityContainer container)
         {
-            var container = new UnityContainer()
-                .AddNewExtension<DisposableExtension>()
-                .RegisterType<WithSingletonLifetime>(new HierarchicalLifetimeManager());
+            container.RegisterType<WithSingletonLifetime>(new HierarchicalLifetimeManager());
 
             var sut = container.Resolve<WithSingletonLifetime>();
 
@@ -67,14 +61,14 @@ namespace Hydra.Unity.Test.Tracking
             Assert.False(sut.IsDisposed);
         }
 
-        [Fact]
-        public void Should_Not_Dispose_Objects_Not_Created_By_Container()
+        [Theory, ContainerData]
+        public void Should_Not_Dispose_Objects_Not_Created_By_Container(IUnityContainer container)
         {
             NotCreatedByContainer ncc = new NotCreatedByContainer();
 
             TakesItemNotCreatedByContainer t;
 
-            using (var container = new UnityContainer().AddNewExtension<DisposableExtension>().RegisterType<TakesItemNotCreatedByContainer>(new InjectionConstructor(ncc)))
+            using (container.RegisterType<TakesItemNotCreatedByContainer>(new InjectionConstructor(ncc)))
             {
                 t = container.Resolve<TakesItemNotCreatedByContainer>();
             }
@@ -84,11 +78,9 @@ namespace Hydra.Unity.Test.Tracking
             Assert.Same(ncc, t.OutsideReference);
         }
 
-        [Fact]
-        public void Should_Dispose_Objects_Resolved_From_Child_Container_When_Child_Container_Is_Disposed()
+        [Theory, ContainerData]
+        public void Should_Dispose_Objects_Resolved_From_Child_Container_When_Child_Container_Is_Disposed(IUnityContainer container)
         {
-            var container = new UnityContainer().AddNewExtension<DisposableExtension>();
-
             DisposeThis fromParent, fromChild1;
 
             using (var child1 = container.CreateChildContainer())
@@ -115,11 +107,11 @@ namespace Hydra.Unity.Test.Tracking
             Assert.Equal(1, container.Configure<DisposableExtension>().Tracker.BuildTrees.Count);
         }
 
-        [Fact]
-        public void Should_Dispose_Objects_In_Injection_Hierarchy_When_Levels_In_Between_Are_Not_Disposable()
+        [Theory, ContainerData]
+        public void Should_Dispose_Objects_In_Injection_Hierarchy_When_Levels_In_Between_Are_Not_Disposable(IUnityContainer container)
         {
             Level0 level0;
-            using (var container = new UnityContainer().AddNewExtension<DisposableExtension>())
+            using (container)
             {
                 level0 = container.Resolve<Level0>();
             }

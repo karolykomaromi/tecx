@@ -62,13 +62,11 @@ namespace Hydra.Unity.Tracking
 
             BuildTreeItemNode newTreeNode;
 
-            if (!nodeCreatedByContainer ||
-                context.Lifetime.OfType<ContainerControlledLifetimeManager>().Any() ||
-                context.Lifetime.OfType<HierarchicalLifetimeManager>().Any())
+            if (!nodeCreatedByContainer || context.Lifetime.OfType<LifetimeManager>().Any(lm => lm as TransientLifetimeManager == null))
             {
                 // This object was either not created by the container or is referenced by a LifetimeManager
-                // that will take care of disposing it when either this container or the parent container are disposed.
-                // Either way it is someone else's problem...
+                // that will take care of disposing it when either this container or the parent container are disposed or whose
+                // lifetime is externally controlled. Either way it is someone else's problem...
                 newTreeNode = new SomeoneElsesProblem(context.BuildKey, this.CurrentBuildNode);
             }
             else if (typeof(IDisposable).IsAssignableFrom(context.BuildKey.Type))

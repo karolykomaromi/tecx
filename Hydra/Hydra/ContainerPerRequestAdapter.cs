@@ -27,8 +27,6 @@
             }
         }
 
-        #region Not implemented
-
         public IUnityContainer Parent
         {
             get
@@ -49,12 +47,7 @@
         {
         }
 
-        public IUnityContainer RegisterType(
-            Type @from,
-            Type to,
-            string name,
-            LifetimeManager lifetimeManager,
-            params InjectionMember[] injectionMembers)
+        public IUnityContainer RegisterType(Type @from, Type to, string name, LifetimeManager lifetimeManager, params InjectionMember[] injectionMembers)
         {
             throw new NotImplementedException();
         }
@@ -83,8 +76,6 @@
         {
             throw new NotImplementedException();
         }
-
-        #endregion Not implemented
 
         public object Resolve(Type t, string name, params ResolverOverride[] resolverOverrides)
         {

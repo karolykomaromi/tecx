@@ -2,17 +2,26 @@ namespace Hydra.Unity.Tracking
 {
     using System;
     using System.Diagnostics;
-    using System.Globalization;
+    using System.Diagnostics.Contracts;
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.ObjectBuilder;
 
     [DebuggerDisplay("Tag={Tag}")]
     public class DisposableExtension : UnityContainerExtension, IDisposable
     {
+        private readonly Tags tags;
         private readonly BuildTreeTracker tracker;
 
         public DisposableExtension()
+            : this(Tags.Random)
         {
+        }
+
+        public DisposableExtension(Tags tags)
+        {
+            Contract.Requires(tags != null);
+
+            this.tags = tags;
             this.tracker = new BuildTreeTracker();
         }
 
@@ -43,16 +52,7 @@ namespace Hydra.Unity.Tracking
 
         protected override void Initialize()
         {
-            int level = 0;
-
-            IUnityContainer parent = this.Container.Parent;
-            while (parent != null)
-            {
-                level++;
-                parent = parent.Parent;
-            }
-
-            this.Tracker.Tag = "level" + level.ToString(CultureInfo.InvariantCulture);
+            this.Tracker.Tag = this.tags.GetTag(this.Container);
 
             this.Context.Strategies.Add(this.Tracker, UnityBuildStage.PreCreation);
 
@@ -61,7 +61,7 @@ namespace Hydra.Unity.Tracking
 
         private void OnChildContainerCreated(object sender, ChildContainerCreatedEventArgs e)
         {
-            e.ChildContainer.AddNewExtension<DisposableExtension>();
+            e.ChildContainer.AddExtension(new DisposableExtension(this.tags));
         }
     }
 }

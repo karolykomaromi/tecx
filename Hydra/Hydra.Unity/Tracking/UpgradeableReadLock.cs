@@ -9,7 +9,7 @@ namespace Hydra.Unity.Tracking
 
         private bool isDisposed;
 
-        public UpgradeableReadLock(ReaderWriterLockSlim rws, int timeoutInMilliseconds = Timeout.Infinite)
+        public UpgradeableReadLock(ReaderWriterLockSlim rws, int timeoutInMilliseconds = 500)
             : this(rws, TimeSpan.FromMilliseconds(timeoutInMilliseconds))
         {
         }
