@@ -262,3 +262,7 @@ Hydra/Hydra.Unity/obj
 Hydra/Hydra.Unity.Test/obj
 Hydra/Hydra.Unity/bin
 Hydra/Hydra.Unity.Test/bin
+Hydra/Hydra.Infrastructure.Test/bin
+Hydra/Hydra.Infrastructure.Test/obj
+Hydra/Hydra.Infrastructure/obj
+Hydra/Hydra.Infrastructure/bin

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{12A3BC58-9915-496B-A9C5-D43DD56A1CF2}</ProjectGuid>
+    <ProjectGuid>{D1C66A40-34A0-4469-882F-6AAC542E17B1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hydra.Unity.Test</RootNamespace>
-    <AssemblyName>Hydra.Unity.Test</AssemblyName>
+    <RootNamespace>Hydra.Infrastructure.Test</RootNamespace>
+    <AssemblyName>Hydra.Infrastructure.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>&lt;Project Location In Database&gt;</SccProjectName>
@@ -34,17 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.Unity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
-      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
-    </Reference>
     <Reference Include="Ploeh.AutoFixture">
       <HintPath>..\packages\AutoFixture.3.20.2\lib\net40\Ploeh.AutoFixture.dll</HintPath>
     </Reference>
@@ -69,33 +58,23 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="EnumerationConverterTests.cs" />
+    <Compile Include="FlagsConverterTests.cs" />
+    <Compile Include="FlagsTests.cs" />
+    <Compile Include="Numbers.cs" />
+    <Compile Include="Colors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tracking\DisposableExtensionTests.cs" />
-    <Compile Include="Tracking\DisposableTestClassBase.cs" />
-    <Compile Include="Tracking\DisposeThis.cs" />
-    <Compile Include="Tracking\Level0.cs" />
-    <Compile Include="Tracking\Level1.cs" />
-    <Compile Include="Tracking\Level2.cs" />
-    <Compile Include="Tracking\Level3.cs" />
-    <Compile Include="Tracking\NotCreatedByContainer.cs" />
-    <Compile Include="Tracking\TakesItemNotCreatedByContainer.cs" />
-    <Compile Include="Tracking\WithSingletonLifetime.cs" />
-    <Compile Include="Utility\ChildContainerSpecimenBuilder.cs" />
-    <Compile Include="Utility\ContainerCustomization.cs" />
-    <Compile Include="Utility\ContainerDataAttribute.cs" />
-    <Compile Include="Utility\ContainerSpecimenBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hydra.Unity\Hydra.Unity.csproj">
-      <Project>{9ed80c67-f60f-4cd5-a1c8-df4b8913e69a}</Project>
-      <Name>Hydra.Unity</Name>
+    <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj">
+      <Project>{DA9F1B57-18BD-451F-A3FA-7D149849A8BD}</Project>
+      <Name>Hydra.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
