@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
@@ -13,23 +14,32 @@
 
         protected static readonly SortedList<int, T> EnumerationValues = new SortedList<int, T>();
 
-        private static readonly Lazy<bool> IsInitialized = new Lazy<bool>(Initialize);
+        private static readonly Lazy<bool> isInitialized = new Lazy<bool>(Initialize);
 
         private readonly string name;
 
-        private readonly int key;
+        private readonly int sortKey;
 
-        protected Enumeration(string name, int key)
+        protected Enumeration(string name, int sortKey)
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
-            Contract.Requires(key >= 0);
+            Contract.Requires(sortKey >= 0);
 
             this.name = name;
-            this.key = key;
+            this.sortKey = sortKey;
 
-            if (key < Composite)
+            if (sortKey < Composite)
             {
-                Enumeration<T>.EnumerationValues.Add(this.Key, (T)this);
+                Enumeration<T>.EnumerationValues.Add(this.SortKey, (T)this);
+            }
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public static bool IsInitialized
+        {
+            get
+            {
+                return isInitialized.Value;
             }
         }
 
@@ -37,7 +47,7 @@
         {
             get
             {
-                if (!IsInitialized.Value)
+                if (!IsInitialized)
                 {
                     throw new EnumerationInitializationException();
                 }
@@ -62,15 +72,15 @@
             {
                 Contract.Ensures(Contract.Result<int>() >= 0);
 
-                return Enumeration<T>.EnumerationValues.IndexOfKey(this.Key);
+                return Enumeration<T>.EnumerationValues.IndexOfKey(this.SortKey);
             }
         }
 
-        protected int Key
+        protected int SortKey
         {
             get
             {
-                return this.key;
+                return this.sortKey;
             }
         }
 
@@ -78,7 +88,7 @@
         {
             Contract.Ensures(Contract.Result<IReadOnlyCollection<T>>() != null);
 
-            if (!IsInitialized.Value)
+            if (!IsInitialized)
             {
                 throw new EnumerationInitializationException();
             }
@@ -90,7 +100,7 @@
         {
             Contract.Ensures(Contract.Result<IReadOnlyCollection<string>>() != null);
 
-            if (!IsInitialized.Value)
+            if (!IsInitialized)
             {
                 throw new EnumerationInitializationException();
             }

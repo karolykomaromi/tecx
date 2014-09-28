@@ -5,8 +5,8 @@
 
     public abstract class Flags<T> : Enumeration<T> where T : Flags<T>
     {
-        protected Flags(string name, int key)
-            : base(name, key)
+        protected Flags(string name, int sortKey)
+            : base(name, sortKey)
         {
         }
 

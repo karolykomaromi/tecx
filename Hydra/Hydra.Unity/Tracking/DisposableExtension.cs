@@ -9,19 +9,19 @@ namespace Hydra.Unity.Tracking
     [DebuggerDisplay("Tag={Tag}")]
     public class DisposableExtension : UnityContainerExtension, IDisposable
     {
-        private readonly Tags tags;
+        private readonly TagGenerator tagGenerator;
         private readonly BuildTreeTracker tracker;
 
         public DisposableExtension()
-            : this(Tags.Random)
+            : this(new RandomTagGenerator())
         {
         }
 
-        public DisposableExtension(Tags tags)
+        public DisposableExtension(TagGenerator tagGenerator)
         {
-            Contract.Requires(tags != null);
+            Contract.Requires(tagGenerator != null);
 
-            this.tags = tags;
+            this.tagGenerator = tagGenerator;
             this.tracker = new BuildTreeTracker();
         }
 
@@ -52,7 +52,7 @@ namespace Hydra.Unity.Tracking
 
         protected override void Initialize()
         {
-            this.Tracker.Tag = this.tags.GetTag(this.Container);
+            this.Tracker.Tag = this.tagGenerator.GetTag(this.Container);
 
             this.Context.Strategies.Add(this.Tracker, UnityBuildStage.PreCreation);
 
@@ -61,7 +61,7 @@ namespace Hydra.Unity.Tracking
 
         private void OnChildContainerCreated(object sender, ChildContainerCreatedEventArgs e)
         {
-            e.ChildContainer.AddExtension(new DisposableExtension(this.tags));
+            e.ChildContainer.AddExtension(new DisposableExtension(this.tagGenerator));
         }
     }
 }

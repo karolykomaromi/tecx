@@ -6,11 +6,11 @@ namespace Hydra
     using System.Web.Routing;
     using Microsoft.Practices.Unity;
 
-    public class UnityCompositionRoot : DefaultControllerFactory
+    public class UnityControllerFactory : DefaultControllerFactory
     {
         private readonly IUnityContainer container;
 
-        public UnityCompositionRoot(IUnityContainer container)
+        public UnityControllerFactory(IUnityContainer container)
         {
             Contract.Requires(container != null);
 
