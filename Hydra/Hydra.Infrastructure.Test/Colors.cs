@@ -17,8 +17,8 @@ namespace Hydra.Infrastructure.Test
 
         public static readonly Colors Blue = new Colors();
 
-        private Colors([CallerMemberName] string name = "", [CallerLineNumber] int key = -1)
-            : base(name, key)
+        private Colors([CallerMemberName] string name = "", [CallerLineNumber] int sortKey = -1)
+            : base(name, sortKey)
         {
         }
 

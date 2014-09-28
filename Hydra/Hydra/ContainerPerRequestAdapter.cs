@@ -5,6 +5,10 @@
     using System.Web;
     using Microsoft.Practices.Unity;
 
+    /// <summary>
+    /// Allows the <see cref="UnityControllerFactory"/> to use child containers per request without pulling them from the session
+    /// state itself.
+    /// </summary>
     public class ContainerPerRequestAdapter : IUnityContainer
     {
         public IUnityContainer Container
@@ -16,7 +20,7 @@
                     throw new InvalidOperationException("HttpContext not found.");
                 }
 
-                IUnityContainer container = HttpContext.Current.Items["unity"] as IUnityContainer;
+                IUnityContainer container = HttpContext.Current.Items[Constants.ContainerKey] as IUnityContainer;
 
                 if (container == null)
                 {
@@ -31,7 +35,7 @@
         {
             get
             {
-                throw new NotImplementedException();
+                return this.Container.Parent;
             }
         }
 
@@ -39,42 +43,43 @@
         {
             get
             {
-                throw new NotImplementedException();
+                return this.Container.Registrations;
             }
         }
 
         public void Dispose()
         {
+            this.Container.Dispose();
         }
 
         public IUnityContainer RegisterType(Type @from, Type to, string name, LifetimeManager lifetimeManager, params InjectionMember[] injectionMembers)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException("Container configuration must not be altered when pulling container from request context.");
         }
 
         public IUnityContainer RegisterInstance(Type t, string name, object instance, LifetimeManager lifetime)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException("Container configuration must not be altered when pulling container from request context.");
         }
 
         public IUnityContainer AddExtension(UnityContainerExtension extension)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException("Container configuration must not be altered when pulling container from request context.");
         }
 
         public object Configure(Type configurationInterface)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException("Container configuration must not be altered when pulling container from request context.");
         }
 
         public IUnityContainer RemoveAllExtensions()
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException("Container configuration must not be altered when pulling container from request context.");
         }
 
         public IUnityContainer CreateChildContainer()
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException("Container configuration must not be altered when pulling container from request context.");
         }
 
         public object Resolve(Type t, string name, params ResolverOverride[] resolverOverrides)

@@ -12,8 +12,8 @@
 
         public static readonly Numbers Two = new Numbers();
 
-        private Numbers([CallerMemberName] string name = "", [CallerLineNumber] int key = -1)
-            : base(name, key)
+        private Numbers([CallerMemberName] string name = "", [CallerLineNumber] int sortKey = -1)
+            : base(name, sortKey)
         {
         }
     }

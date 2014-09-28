@@ -3,13 +3,10 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Hydra.Unity;
     using Microsoft.Practices.Unity;
 
     public class MvcApplication : HttpApplication
     {
-        private const string ContainerKey = "unity";
-
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -17,29 +14,29 @@
 
             IUnityContainer container = new UnityContainer().AddNewExtension<UnityContainerConfiguration>();
 
-            this.Application[ContainerKey] = container;
+            this.Application[Constants.ContainerKey] = container;
 
-            IControllerFactory controllerFactory = new UnityCompositionRoot(new ContainerPerRequestAdapter());
+            IControllerFactory factory = new UnityControllerFactory(new ContainerPerRequestAdapter());
 
-            ControllerBuilder.Current.SetControllerFactory(controllerFactory);
+            ControllerBuilder.Current.SetControllerFactory(factory);
         }
 
         protected void Application_BeginRequest()
         {
-            IUnityContainer container = (IUnityContainer)this.Application[ContainerKey];
+            IUnityContainer container = (IUnityContainer)this.Application[Constants.ContainerKey];
 
-            this.Context.Items[ContainerKey] = container.CreateChildContainer();
+            this.Context.Items[Constants.ContainerKey] = container.CreateChildContainer();
         }
 
         protected void Application_EndRequest()
         {
-            IUnityContainer childContainer = (IUnityContainer)this.Context.Items[ContainerKey];
+            IUnityContainer childContainer = (IUnityContainer)this.Context.Items[Constants.ContainerKey];
 
             if (childContainer != null)
             {
-                childContainer.Dispose();
+                this.Context.Items.Remove(Constants.ContainerKey);
 
-                this.Context.Items.Remove(ContainerKey);
+                childContainer.Dispose();
             }
         }
     }
