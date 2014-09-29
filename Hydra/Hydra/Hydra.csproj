@@ -159,14 +159,19 @@
     <Compile Include="Constants.cs" />
     <Compile Include="ContainerPerRequestAdapter.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="FubuAspNetTagExtensions.cs" />
+    <Compile Include="FubuConventions\ElementCategoryExpressionExtensions.cs" />
+    <Compile Include="FubuConventions\EnitityDropDownModifier.cs" />
+    <Compile Include="FubuConventions\EnumDropDownModifier.cs" />
+    <Compile Include="FubuConventions\FubuAspNetTagExtensions.cs" />
+    <Compile Include="FubuConventions\FubuUnityServiceLocator.cs" />
+    <Compile Include="FubuConventions\OverrideHtmlConventions.cs" />
     <Compile Include="FubuConfiguration.cs" />
+    <Compile Include="FubuConventions\SpanValidatorBuilder.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\HomeModel.cs" />
+    <Compile Include="Models\Registration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnityControllerFactory.cs" />
     <Compile Include="UnityContainerConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Default1\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj">

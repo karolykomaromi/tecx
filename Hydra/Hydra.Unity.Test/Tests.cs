@@ -1,5 +1,7 @@
 ﻿namespace Hydra.Unity.Test
 {
+    using System;
+    using System.Collections.Generic;
     using Microsoft.Practices.Unity;
     using Xunit;
 
@@ -8,26 +10,20 @@
         [Fact]
         public void Should_Map_Open_Generic_Interface_To_Open_Generic_Implementation()
         {
-            var container = new UnityContainer().RegisterType(typeof(IElementGenerator<>), typeof(ElementGenerator<>));
+            //Type t1 = typeof(GenericBaseClass<SomeDerivedClass>);
+            //Type t2 = typeof(SomeDerivedClass);
 
-            IElementGenerator<Foo> actual = container.Resolve<IElementGenerator<Foo>>();
+            //Assert.True(t1.IsAssignableFrom(t2));
 
-            Assert.IsType<ElementGenerator<Foo>>(actual);
+            Type genericType = typeof(GenericBaseClass<>).MakeGenericType(typeof(string));
         }
     }
 
-    public class Foo
+    public abstract class GenericBaseClass<T> where T : GenericBaseClass<T>
     {
-        
     }
 
-    public interface IElementGenerator<T>
+    public class SomeDerivedClass : GenericBaseClass<SomeDerivedClass>
     {
-        
-    }
-
-    public class ElementGenerator<T> : IElementGenerator<T>
-    {
-        
     }
 }

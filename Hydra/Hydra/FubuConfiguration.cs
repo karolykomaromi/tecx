@@ -13,6 +13,8 @@ namespace Hydra
     using FubuMVC.Core.UI.Elements;
     using FubuMVC.Core.UI.Security;
     using HtmlTags.Conventions;
+    using Hydra.Conventions;
+    using Hydra.FubuConventions;
     using Microsoft.Practices.Unity;
 
     public class FubuConfiguration : UnityContainerExtension
@@ -20,7 +22,7 @@ namespace Hydra
         protected override void Initialize()
         {
             HtmlConventionLibrary htmlConventionLibrary = new HtmlConventionLibrary();
-            htmlConventionLibrary.Import(new DefaultHtmlConventions().Library);
+            htmlConventionLibrary.Import(new OverrideHtmlConventions().Library);
 
             this.Container.RegisterInstance<HtmlConventionLibrary>(htmlConventionLibrary);
 
@@ -45,8 +47,9 @@ namespace Hydra
             this.Container.RegisterType(typeof(ITagGenerator<>), typeof(TagGenerator<>));
             this.Container.RegisterType(typeof(IElementGenerator<>), typeof(ElementGenerator<>));
 
-            this.Container.RegisterType<IServiceLocator, InMemoryServiceLocator>();
-            this.Container.RegisterType<IBindingLogger, RecordingBindingLogger>();
+            this.Container.RegisterType<IServiceLocator, FubuUnityServiceLocator>();
+
+            this.Container.RegisterType<IBindingLogger, NulloBindingLogger>();
 
             this.Container.RegisterTypes(
                 new[]
