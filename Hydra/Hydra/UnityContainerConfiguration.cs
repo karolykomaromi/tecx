@@ -1,12 +1,15 @@
 namespace Hydra
 {
+    using Hydra.Unity.Collections;
     using Microsoft.Practices.Unity;
 
     public class UnityContainerConfiguration : UnityContainerExtension
     {
         protected override void Initialize()
         {
-            // configure the container here
+            this.Container.AddNewExtension<CollectionResolutionExtension>();
+
+            this.Container.AddNewExtension<FubuConfiguration>();
         }
     }
 }
