@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Web;
+    using Hydra.Assets;
     using Microsoft.Practices.Unity;
 
     /// <summary>
@@ -17,14 +18,14 @@
             {
                 if (HttpContext.Current == null)
                 {
-                    throw new InvalidOperationException("HttpContext not found.");
+                    throw new InvalidOperationException(ErrorMessages.HttpContextNotFound);
                 }
 
                 IUnityContainer container = HttpContext.Current.Items[Constants.ContainerKey] as IUnityContainer;
 
                 if (container == null)
                 {
-                    throw new InvalidOperationException("Container not found in current Request context.");
+                    throw new InvalidOperationException(ErrorMessages.ContainerNotFound);
                 }
 
                 return container;
@@ -54,32 +55,32 @@
 
         public IUnityContainer RegisterType(Type @from, Type to, string name, LifetimeManager lifetimeManager, params InjectionMember[] injectionMembers)
         {
-            throw new InvalidOperationException("Container configuration must not be altered when pulling container from request context.");
+            throw new InvalidOperationException(ErrorMessages.ContainerConfigurationMustNotBeAltered);
         }
 
         public IUnityContainer RegisterInstance(Type t, string name, object instance, LifetimeManager lifetime)
         {
-            throw new InvalidOperationException("Container configuration must not be altered when pulling container from request context.");
+            throw new InvalidOperationException(ErrorMessages.ContainerConfigurationMustNotBeAltered);
         }
 
         public IUnityContainer AddExtension(UnityContainerExtension extension)
         {
-            throw new InvalidOperationException("Container configuration must not be altered when pulling container from request context.");
+            throw new InvalidOperationException(ErrorMessages.ContainerConfigurationMustNotBeAltered);
         }
 
         public object Configure(Type configurationInterface)
         {
-            throw new InvalidOperationException("Container configuration must not be altered when pulling container from request context.");
+            throw new InvalidOperationException(ErrorMessages.ContainerConfigurationMustNotBeAltered);
         }
 
         public IUnityContainer RemoveAllExtensions()
         {
-            throw new InvalidOperationException("Container configuration must not be altered when pulling container from request context.");
+            throw new InvalidOperationException(ErrorMessages.ContainerConfigurationMustNotBeAltered);
         }
 
         public IUnityContainer CreateChildContainer()
         {
-            throw new InvalidOperationException("Container configuration must not be altered when pulling container from request context.");
+            throw new InvalidOperationException(ErrorMessages.ContainerConfigurationMustNotBeAltered);
         }
 
         public object Resolve(Type t, string name, params ResolverOverride[] resolverOverrides)

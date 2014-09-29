@@ -108,6 +108,11 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Assets\ErrorMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorMessages.tt</DependentUpon>
+    </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="ContainerPerRequestAdapter.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -121,6 +126,11 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
+    <Content Include="Assets\ErrorMessages.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ErrorMessages.resx</DependentUpon>
+      <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -131,15 +141,24 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Assets\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj">
+      <Project>{da9f1b57-18bd-451f-a3fa-7d149849a8bd}</Project>
+      <Name>Hydra.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hydra.Unity\Hydra.Unity.csproj">
       <Project>{9ed80c67-f60f-4cd5-a1c8-df4b8913e69a}</Project>
       <Name>Hydra.Unity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\ErrorMessages.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -173,6 +192,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets'))" />
   </Target>
+  <Import Project="$(SolutionDir)\CommonFiles\Hydra.targets" Condition="Exists('$(SolutionDir)\CommonFiles\Hydra.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
