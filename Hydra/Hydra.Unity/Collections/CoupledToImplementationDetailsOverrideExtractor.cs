@@ -9,8 +9,7 @@ namespace Hydra.Unity.Collections
 
     public class CoupledToImplementationDetailsOverrideExtractor : ResolverOverrideExtractor
     {
-        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder",
-            Justification = "Reviewed. Suppression is OK here.")]
+        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:ElementsMustAppearInTheCorrectOrder", Justification = "Reviewed. Suppression is OK here.")]
         private static class FieldNames
         {
             /// <summary>resolverOverrides</summary>

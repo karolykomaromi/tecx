@@ -9,8 +9,8 @@
 
     public class CollectionResolutionStrategy : BuilderStrategy
     {
-        private static readonly MethodInfo genericResolveCollectionMethod = typeof(CollectionResolutionStrategy)
-                .GetMethod("ResolveCollection", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly);
+        private static readonly MethodInfo genericResolveCollectionMethod = 
+            typeof(CollectionResolutionStrategy).GetMethod("ResolveCollection", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly);
 
         private delegate object CollectionResolver(IBuilderContext context);
 

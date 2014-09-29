@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Web;
     using Hydra.Assets;
+    using Hydra.Unity;
     using Microsoft.Practices.Unity;
 
     /// <summary>

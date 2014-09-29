@@ -79,7 +79,7 @@ namespace Hydra.Infrastructure.Test
             private readonly HashSet<Colors> elements;
 
             public CompositeColors(Colors x, Colors y)
-                : base("COMPOSITE", Enumeration<Colors>.Composite)
+                : base("COMPOSITE", Enumeration<Colors>.CompositeSortKey)
             {
                 Contract.Requires(x != null);
                 Contract.Requires(y != null);

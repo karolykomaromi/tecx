@@ -1,4 +1,4 @@
-namespace Hydra
+namespace Hydra.Unity
 {
     using System;
     using System.Diagnostics.Contracts;

@@ -10,7 +10,7 @@
 
     public abstract class Enumeration<T> : IComparable<T>, IEquatable<T> where T : Enumeration<T>
     {
-        protected const int Composite = int.MaxValue;
+        protected const int CompositeSortKey = int.MaxValue;
 
         protected static readonly SortedList<int, T> EnumerationValues = new SortedList<int, T>();
 
@@ -28,7 +28,7 @@
             this.name = name;
             this.sortKey = sortKey;
 
-            if (sortKey < Composite)
+            if (sortKey < CompositeSortKey)
             {
                 Enumeration<T>.EnumerationValues.Add(this.SortKey, (T)this);
             }
