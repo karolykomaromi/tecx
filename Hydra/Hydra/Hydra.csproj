@@ -159,6 +159,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="ContainerPerRequestAdapter.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="FubuConventions\ElementCategoryExpressionExtensions.cs" />
     <Compile Include="FubuConventions\EnitityDropDownModifier.cs" />
     <Compile Include="FubuConventions\EnumDropDownModifier.cs" />
@@ -172,6 +173,10 @@
     </Compile>
     <Compile Include="Models\Registration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\IMediator.cs" />
+    <Compile Include="Queries\IQuery.cs" />
+    <Compile Include="Queries\IQueryHandler.cs" />
+    <Compile Include="Queries\Mediator.cs" />
     <Compile Include="UnityContainerConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +191,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Registration\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -196,7 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Default1\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj">
