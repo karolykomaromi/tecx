@@ -8,15 +8,15 @@ namespace Hydra.Unity
 
     public class UnityDependencyResolver : IDependencyResolver
     {
-        private readonly IDependencyResolver forward;
+        private readonly IDependencyResolver fallback;
         private readonly IUnityContainer container;
 
-        public UnityDependencyResolver(IDependencyResolver forward, IUnityContainer container)
+        public UnityDependencyResolver(IDependencyResolver fallback, IUnityContainer container)
         {
-            Contract.Requires(forward != null);
+            Contract.Requires(fallback != null);
             Contract.Requires(container != null);
 
-            this.forward = forward;
+            this.fallback = fallback;
             this.container = container;
         }
 
@@ -30,7 +30,7 @@ namespace Hydra.Unity
             }
             catch(ResolutionFailedException ex)
             {
-                return this.forward.GetService(serviceType);
+                return this.fallback.GetService(serviceType);
             }
         }
 
@@ -44,7 +44,7 @@ namespace Hydra.Unity
             }
             catch (ResolutionFailedException ex)
             {
-                return this.forward.GetServices(serviceType);
+                return this.fallback.GetServices(serviceType);
             }
         }
     }
