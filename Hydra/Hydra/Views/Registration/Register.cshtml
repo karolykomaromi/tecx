@@ -1,0 +1,42 @@
+﻿@using Hydra.FubuConventions
+@model Hydra.Models.Registration
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+
+<form method="POST">
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <fieldset>
+        <legend>Registration details</legend>
+        <p>
+            @Html.FormBlock(m => m.Email)
+        </p>
+        <p>
+            @Html.FormBlock(m => m.Password)
+        </p>
+        <p>
+            @Html.FormBlock(m => m.ConfirmPassword)
+        </p>
+    </fieldset>
+
+    <br />
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Register" />
+        </div>
+    </div>
+
+    <p>
+        <pre><code class="response">(No response body)</code></pre>
+    </p>
+
+    <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/vkbeautify.0.99.00.beta.js"></script>
+    <script src="~/Content/Validation.js"></script>
+</form>

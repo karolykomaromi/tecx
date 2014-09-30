@@ -5,12 +5,13 @@
 
     public class RegistrationController : Controller
     {
-        public ActionResult Create()
+        public ActionResult Register()
         {
             return this.View(new Registration());
         }
 
-        public ActionResult Save(Registration registration)
+        [HttpPost]
+        public ActionResult Register(Registration registration)
         {
             return this.Content("Successfully registered.");
         }
