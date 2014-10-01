@@ -170,7 +170,6 @@
       <DependentUpon>ErrorMessages.tt</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
-    <Compile Include="ContainerPerRequestAdapter.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Filters\ValidatorActionFilter.cs" />

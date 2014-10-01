@@ -53,6 +53,8 @@
     <Compile Include="Flags.cs" />
     <Compile Include="FlagsConverter.cs" />
     <Compile Include="FrozenTimeProvider.cs" />
+    <Compile Include="HttpStatusCode.cs" />
+    <Compile Include="HttpStatusCodes.cs" />
     <Compile Include="I18n\IResourceManager.cs" />
     <Compile Include="I18n\ResourceManagerWrapper.cs" />
     <Compile Include="TimeProvider.cs" />

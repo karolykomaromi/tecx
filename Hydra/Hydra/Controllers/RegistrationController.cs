@@ -13,7 +13,7 @@
         [HttpPost]
         public ActionResult Register(Registration registration)
         {
-            return this.Content("Successfully registered.");
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }
