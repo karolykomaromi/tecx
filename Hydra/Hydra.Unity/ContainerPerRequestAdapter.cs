@@ -1,10 +1,9 @@
-﻿namespace Hydra
+namespace Hydra.Unity
 {
     using System;
     using System.Collections.Generic;
     using System.Web;
-    using Hydra.Assets;
-    using Hydra.Unity;
+    using Hydra.Unity.Assets;
     using Microsoft.Practices.Unity;
 
     /// <summary>

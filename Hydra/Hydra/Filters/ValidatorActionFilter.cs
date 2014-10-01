@@ -1,6 +1,7 @@
 ﻿namespace Hydra.Filters
 {
     using System.Web.Mvc;
+    using Hydra.Infrastructure;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -30,29 +31,39 @@
                     ContentType = Constants.ContentTypes.Json
                 };
 
-            filterContext.HttpContext.Response.StatusCode = Constants.HttpStatusCodes.ClientError4xx.BadRequest;
+            filterContext.HttpContext.Response.StatusCode = HttpStatusCodes.ClientError4xx.BadRequest;
             filterContext.Result = result;
         }
 
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            if (filterContext.HttpContext.Response.StatusCode == Constants.HttpStatusCodes.ClientError4xx.BadRequest ||
-                filterContext.Result != null)
-            {
-                return;
-            }
+            ////if (filterContext.Result == null)
+            ////{
+            ////    return;
+            ////}
 
-            var data = new { redirect = "http://stackoverflow.com" };
+            ////RedirectToRouteResult redirect = filterContext.Result as RedirectToRouteResult;
 
-            var serializationSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                };
+            ////if (redirect == null)
+            ////{
+            ////    return;
+            ////}
 
-            var serializedData = JsonConvert.SerializeObject(data, serializationSettings);
+            ////var helper = new UrlHelper(filterContext.RequestContext);
 
-            filterContext.HttpContext.Response.StatusCode = Constants.HttpStatusCodes.Successful2xx.Ok;
-            filterContext.HttpContext.Response.Write(serializedData);
+            ////string url = helper.RouteUrl(redirect.RouteName, redirect.RouteValues);
+
+            ////var data = new { redirect = url };
+
+            ////var serializationSettings = new JsonSerializerSettings
+            ////    {
+            ////        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            ////    };
+
+            ////var serializedData = JsonConvert.SerializeObject(data, serializationSettings);
+
+            ////filterContext.HttpContext.Response.StatusCode = Constants.HttpStatusCodes.Successful2xx.Ok;
+            ////filterContext.HttpContext.Response.Write(serializedData);
         }
     }
 }

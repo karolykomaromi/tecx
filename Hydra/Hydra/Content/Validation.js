@@ -38,7 +38,7 @@
         $page.removeClass('invalid').addClass('successful');
         $response.text('(No response body)');
         
-        window.location.replace(foo.redirect);
+        //window.location.replace(foo.redirect);
     });
 
     return false;

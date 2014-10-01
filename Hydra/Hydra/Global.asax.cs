@@ -21,7 +21,7 @@
 
             // create application master container
             IUnityContainer container = new UnityContainer().AddNewExtension<UnityContainerConfiguration>();
-            this.Application[Constants.ContainerKey] = container;
+            this.Application[Unity.Constants.ContainerKey] = container;
 
             // unity backed controller factory
             IControllerFactory factory = new UnityControllerFactory(new ContainerPerRequestAdapter());
@@ -39,18 +39,18 @@
             // we use child containers per request as lifetime scope. disposing the child container at the
             // end of each request will trigger a cleanup that disposes all objects that implement IDisposable and where
             // pulled from the container.
-            IUnityContainer container = (IUnityContainer)this.Application[Constants.ContainerKey];
+            IUnityContainer container = (IUnityContainer)this.Application[Unity.Constants.ContainerKey];
 
-            this.Context.Items[Constants.ContainerKey] = container.CreateChildContainer();
+            this.Context.Items[Unity.Constants.ContainerKey] = container.CreateChildContainer();
         }
 
         protected void Application_EndRequest()
         {
-            IUnityContainer childContainer = (IUnityContainer)this.Context.Items[Constants.ContainerKey];
+            IUnityContainer childContainer = (IUnityContainer)this.Context.Items[Unity.Constants.ContainerKey];
 
             if (childContainer != null)
             {
-                this.Context.Items.Remove(Constants.ContainerKey);
+                this.Context.Items.Remove(Unity.Constants.ContainerKey);
 
                 childContainer.Dispose();
             }

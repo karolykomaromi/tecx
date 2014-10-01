@@ -28,7 +28,7 @@ namespace Hydra.Unity
 
                 return o;
             }
-            catch(ResolutionFailedException ex)
+            catch (ResolutionFailedException ex)
             {
                 return this.fallback.GetService(serviceType);
             }
