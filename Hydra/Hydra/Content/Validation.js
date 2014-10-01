@@ -23,7 +23,7 @@
 
             fields.forEach(function (field) {
                 if (response[field].Errors && response[field].Errors.length > 0) {
-                    $('[name=' + field + ']')
+                    $('[name=' + field + ']').siblings.first
                         .closest('p')
                         .addClass('invalid');
                 }

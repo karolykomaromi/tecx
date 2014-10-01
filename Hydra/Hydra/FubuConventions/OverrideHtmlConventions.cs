@@ -15,6 +15,9 @@ namespace Hydra.FubuConventions
             this.Validators.Always.BuildBy<SpanValidatorBuilder>();
 
             this.Editors.Always.AddClass("form-control");
+
+            //// this.Editors.Always.ModifyWith(er => er.CurrentTag.Id(er.Accessor.Name));
+
             this.Labels.Always.AddClass("control-label");
             this.Labels.Always.AddClass("col-md-2");
 

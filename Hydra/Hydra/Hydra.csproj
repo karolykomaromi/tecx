@@ -139,8 +139,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\Validation.js" />
+    <Content Include="Content\validation.js" />
     <Content Include="Content\vkbeautify.0.99.00.beta.js" />
+    <Content Include="Error.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -172,6 +173,8 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="ErrorHandlingActionInvoker.cs" />
+    <Compile Include="ErrorHandlingConfiguration.cs" />
     <Compile Include="Filters\ValidatorActionFilter.cs" />
     <Compile Include="FubuConventions\ElementCategoryExpressionExtensions.cs" />
     <Compile Include="FubuConventions\EnitityDropDownModifier.cs" />

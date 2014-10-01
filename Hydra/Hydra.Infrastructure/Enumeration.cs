@@ -14,7 +14,7 @@
 
         protected static readonly SortedList<int, T> EnumerationValues = new SortedList<int, T>();
 
-        private static readonly Lazy<bool> isInitialized = new Lazy<bool>(Initialize);
+        private static readonly Lazy<bool> IsInitializedField = new Lazy<bool>(Initialize);
 
         private readonly string name;
 
@@ -39,7 +39,7 @@
         {
             get
             {
-                return isInitialized.Value;
+                return IsInitializedField.Value;
             }
         }
 

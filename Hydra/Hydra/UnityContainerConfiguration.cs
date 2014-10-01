@@ -10,6 +10,8 @@ namespace Hydra
             this.Container.AddNewExtension<CollectionResolutionExtension>();
 
             this.Container.AddNewExtension<FubuConfiguration>();
+
+            this.Container.AddNewExtension<ErrorHandlingConfiguration>();
         }
     }
 }
