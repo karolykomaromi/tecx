@@ -9,7 +9,7 @@
 
     public class CollectionResolutionStrategy : BuilderStrategy
     {
-        private static readonly MethodInfo genericResolveCollectionMethod = 
+        private static readonly MethodInfo GenericResolveCollectionMethod = 
             typeof(CollectionResolutionStrategy).GetMethod("ResolveCollection", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly);
 
         private delegate object CollectionResolver(IBuilderContext context);
@@ -30,7 +30,7 @@
                 {
                     Type elementType = typeToBuild.GetGenericArguments()[0];
 
-                    MethodInfo resolverMethod = genericResolveCollectionMethod.MakeGenericMethod(elementType);
+                    MethodInfo resolverMethod = CollectionResolutionStrategy.GenericResolveCollectionMethod.MakeGenericMethod(elementType);
 
                     CollectionResolver resolver = (CollectionResolver)Delegate.CreateDelegate(typeof(CollectionResolver), resolverMethod);
 

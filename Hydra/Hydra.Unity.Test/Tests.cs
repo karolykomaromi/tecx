@@ -2,28 +2,19 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
     using Microsoft.Practices.Unity;
     using Xunit;
 
     public class Tests
     {
         [Fact]
-        public void Should_Map_Open_Generic_Interface_To_Open_Generic_Implementation()
+        public void Should_Do_What_I_Want_Not_What_I_Say()
         {
-            //Type t1 = typeof(GenericBaseClass<SomeDerivedClass>);
-            //Type t2 = typeof(SomeDerivedClass);
+            DateTimeFormatInfo format = CultureInfo.CreateSpecificCulture("en-US").DateTimeFormat;
 
-            //Assert.True(t1.IsAssignableFrom(t2));
-
-            Type genericType = typeof(GenericBaseClass<>).MakeGenericType(typeof(string));
+            string shortDatePattern = format.ShortDatePattern;
         }
-    }
-
-    public abstract class GenericBaseClass<T> where T : GenericBaseClass<T>
-    {
-    }
-
-    public class SomeDerivedClass : GenericBaseClass<SomeDerivedClass>
-    {
     }
 }

@@ -1,5 +1,3 @@
-using Hydra.Infrastructure;
-
 namespace Hydra.FubuConventions
 {
     using System;

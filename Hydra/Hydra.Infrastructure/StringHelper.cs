@@ -5,6 +5,8 @@
 
     public static class StringHelper
     {
+        private static readonly Regex CamelHumps = new Regex("(?<=[a-z])([A-Z])", RegexOptions.Compiled);
+
         public static string SplitCamelCase(string s)
         {
             Contract.Requires(s != null);
@@ -14,7 +16,7 @@
                 return s;
             }
 
-            string splitCamelCase = Regex.Replace(s, "(?<=[a-z])([A-Z])", " $1", RegexOptions.Compiled).Trim();
+            string splitCamelCase = StringHelper.CamelHumps.Replace(s, " $1").Trim();
 
             return splitCamelCase;
         }

@@ -55,20 +55,5 @@ namespace Hydra.Assets
                 resourceCulture = value;
             }
         }
-
-        public static string ContainerConfigurationMustNotBeAltered
-        {
-            get { return ErrorMessages.ResourceManager.GetString("ContainerConfigurationMustNotBeAltered", resourceCulture ?? CultureInfo.CurrentUICulture); }
-        }
-
-        public static string ContainerNotFound
-        {
-            get { return ErrorMessages.ResourceManager.GetString("ContainerNotFound", resourceCulture ?? CultureInfo.CurrentUICulture); }
-        }
-
-        public static string HttpContextNotFound
-        {
-            get { return ErrorMessages.ResourceManager.GetString("HttpContextNotFound", resourceCulture ?? CultureInfo.CurrentUICulture); }
-        }
     }
 }

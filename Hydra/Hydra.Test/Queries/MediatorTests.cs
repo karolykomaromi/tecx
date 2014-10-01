@@ -25,21 +25,21 @@
 
             Assert.NotNull(x(new MyQueryHandler(), new MyQuery()));
         }
-    }
 
-    public class MyQueryHandler : IQueryHandler<MyQuery, MyResponse>
-    {
-        public MyResponse Handle(MyQuery query)
+        public class MyQueryHandler : IQueryHandler<MyQuery, MyResponse>
         {
-            return new MyResponse();
+            public MyResponse Handle(MyQuery query)
+            {
+                return new MyResponse();
+            }
         }
-    }
 
-    public class MyQuery : IQuery<MyResponse>
-    {
-    }
+        public class MyQuery : IQuery<MyResponse>
+        {
+        }
 
-    public class MyResponse
-    {
+        public class MyResponse
+        {
+        }
     }
 }

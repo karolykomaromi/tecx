@@ -57,6 +57,7 @@
     <Compile Include="HttpStatusCodes.cs" />
     <Compile Include="I18n\IResourceManager.cs" />
     <Compile Include="I18n\ResourceManagerWrapper.cs" />
+    <Compile Include="StringHelper.cs" />
     <Compile Include="TimeProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

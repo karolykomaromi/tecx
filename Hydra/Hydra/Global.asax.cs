@@ -1,5 +1,6 @@
 ﻿namespace Hydra
 {
+    using System;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -54,6 +55,20 @@
 
                 childContainer.Dispose();
             }
+        }
+
+        protected void Application_Error()
+        {
+            Exception ex = this.Server.GetLastError();
+
+            if (ex is HttpUnhandledException)
+            {
+                ex = ex.InnerException;
+            }
+
+            this.Session["exception"] = ex; 
+
+            // TODO weberse 2014-10-01 write exception to log
         }
     }
 }
