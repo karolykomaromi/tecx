@@ -39,12 +39,14 @@
         $page.removeClass('successful').addClass('invalid');
     });
 
-    request.success(function () {
+    request.success(function (r) {
         $form.find('div.invalid').removeClass('invalid').attr('title', '');
         $page.removeClass('invalid').addClass('successful');
         $response.text('(No response body)');
 
-        //window.location.replace(foo.redirect);
+        if (r != null && r.redirect !== undefined && r.redirect != null && r.redirect != '') {
+            window.location.replace(r.redirect);
+        }
     });
 
     return false;
