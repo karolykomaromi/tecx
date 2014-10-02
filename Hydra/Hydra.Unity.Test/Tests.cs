@@ -1,9 +1,8 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace Hydra.Unity.Test
+﻿namespace Hydra.Unity.Test
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Linq;
     using Microsoft.Practices.Unity;
