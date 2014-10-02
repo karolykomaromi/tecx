@@ -13,15 +13,9 @@
 
     <fieldset>
         <legend>Registration details</legend>
-        <p>
-            @Html.FormBlock(m => m.Email)
-        </p>
-        <p>
-            @Html.FormBlock(m => m.Password)
-        </p>
-        <p>
-            @Html.FormBlock(m => m.ConfirmPassword)
-        </p>
+        @Html.FormBlock(m => m.Email)
+        @Html.FormBlock(m => m.Password)
+        @Html.FormBlock(m => m.ConfirmPassword)
     </fieldset>
 
     <br />

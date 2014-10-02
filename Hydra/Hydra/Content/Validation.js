@@ -23,9 +23,15 @@
 
             fields.forEach(function (field) {
                 if (response[field].Errors && response[field].Errors.length > 0) {
-                    $('[name=' + field + ']').siblings.first
-                        .closest('p')
-                        .addClass('invalid');
+                    var theDiv = $('#' + field).closest('div.form-group');
+                    theDiv.addClass('invalid');
+                    
+                    // the title of a div serves as tooltip. appending the error messages
+                    // will thus give you nice info what exactly is the problem with the field.
+                    theDiv[0].title = '';
+                    response[field].Errors.forEach(function (error) {
+                        theDiv[0].title = theDiv[0].title + error.ErrorMessage + '\n';
+                    });
                 }
             });
         }
@@ -33,11 +39,11 @@
         $page.removeClass('successful').addClass('invalid');
     });
 
-    request.success(function (foo) {
-        $form.find('p.invalid').removeClass('invalid');
+    request.success(function () {
+        $form.find('div.invalid').removeClass('invalid').attr('title', '');
         $page.removeClass('invalid').addClass('successful');
         $response.text('(No response body)');
-        
+
         //window.location.replace(foo.redirect);
     });
 
