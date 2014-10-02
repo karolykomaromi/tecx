@@ -37,33 +37,34 @@
 
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            ////if (filterContext.Result == null)
-            ////{
-            ////    return;
-            ////}
+            RedirectToRouteResult redirect = filterContext.Result as RedirectToRouteResult;
 
-            ////RedirectToRouteResult redirect = filterContext.Result as RedirectToRouteResult;
+            if (redirect == null)
+            {
+                return;
+            }
 
-            ////if (redirect == null)
-            ////{
-            ////    return;
-            ////}
+            var helper = new UrlHelper(filterContext.RequestContext);
 
-            ////var helper = new UrlHelper(filterContext.RequestContext);
+            string url = helper.RouteUrl(redirect.RouteName, redirect.RouteValues);
 
-            ////string url = helper.RouteUrl(redirect.RouteName, redirect.RouteValues);
+            var data = new { redirect = url };
 
-            ////var data = new { redirect = url };
+            var serializationSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
 
-            ////var serializationSettings = new JsonSerializerSettings
-            ////    {
-            ////        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            ////    };
+            var searializedRedirect = JsonConvert.SerializeObject(data, serializationSettings);
 
-            ////var serializedData = JsonConvert.SerializeObject(data, serializationSettings);
+            var result = new ContentResult
+                {
+                    Content = searializedRedirect,
+                    ContentType = Constants.ContentTypes.Json
+                };
 
-            ////filterContext.HttpContext.Response.StatusCode = Constants.HttpStatusCodes.Successful2xx.Ok;
-            ////filterContext.HttpContext.Response.Write(serializedData);
+            filterContext.HttpContext.Response.StatusCode = HttpStatusCodes.Successfull2xx.Ok;
+            filterContext.Result = result;
         }
     }
 }

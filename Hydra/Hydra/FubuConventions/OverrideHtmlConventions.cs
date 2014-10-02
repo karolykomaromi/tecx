@@ -15,6 +15,7 @@ namespace Hydra.FubuConventions
             this.Validators.Always.BuildBy<SpanValidatorBuilder>();
 
             this.Editors.Always.AddClass("form-control");
+
             // set the Id to the name of the accessor
             this.Editors.Always.ModifyWith(er => er.CurrentTag.Id(er.Accessor.Name));
 
