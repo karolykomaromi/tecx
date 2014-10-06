@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Hydra.Unity.Assets
+namespace Hydra.Assets
 {
     using System;
     using System.ComponentModel;
@@ -17,7 +17,7 @@ namespace Hydra.Unity.Assets
     using System.Threading;
     using Hydra.Infrastructure.I18n;
 
-    public class ErrorMessages
+    public class Resources
     {
         private static IResourceManager resourceManager;
         private static CultureInfo resourceCulture;
@@ -29,7 +29,7 @@ namespace Hydra.Unity.Assets
             {
                 if(resourceManager == null)
                 {
-                    IResourceManager temp = new ResourceManagerWrapper(new ResourceManager("Hydra.Unity.Assets.ErrorMessages", typeof(ErrorMessages).Assembly));
+                    IResourceManager temp = new ResourceManagerWrapper(new ResourceManager("Hydra.Assets.Resources", typeof(Resources).Assembly));
                     resourceManager = temp;
                 }
 
@@ -54,21 +54,6 @@ namespace Hydra.Unity.Assets
             {
                 resourceCulture = value;
             }
-        }
-
-        public static string ContainerConfigurationMustNotBeAltered
-        {
-            get { return ErrorMessages.ResourceManager.GetString("ContainerConfigurationMustNotBeAltered", resourceCulture ?? CultureInfo.CurrentUICulture); }
-        }
-
-        public static string ContainerNotFound
-        {
-            get { return ErrorMessages.ResourceManager.GetString("ContainerNotFound", resourceCulture ?? CultureInfo.CurrentUICulture); }
-        }
-
-        public static string HttpContextNotFound
-        {
-            get { return ErrorMessages.ResourceManager.GetString("HttpContextNotFound", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
     }
 }

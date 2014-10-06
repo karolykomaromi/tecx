@@ -28,7 +28,7 @@
             var result = new ContentResult
                 {
                     Content = serializedModelState,
-                    ContentType = Constants.ContentTypes.Json
+                    ContentType = HttpContentTypes.Json
                 };
 
             filterContext.HttpContext.Response.StatusCode = HttpStatusCodes.ClientError4xx.BadRequest;
@@ -63,7 +63,7 @@
             var result = new ContentResult
                 {
                     Content = searializedRedirect,
-                    ContentType = Constants.ContentTypes.Json
+                    ContentType = HttpContentTypes.Json
                 };
 
             filterContext.HttpContext.Response.StatusCode = HttpStatusCodes.Successfull2xx.Ok;

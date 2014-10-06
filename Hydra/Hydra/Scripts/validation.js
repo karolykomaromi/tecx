@@ -1,4 +1,4 @@
-﻿$('form').on('submit', function () {
+$('form').on('submit', function () {
 
     var request,
         $page = $('body'),

@@ -18,14 +18,14 @@ namespace Hydra.Unity
             {
                 if (HttpContext.Current == null)
                 {
-                    throw new InvalidOperationException(ErrorMessages.HttpContextNotFound);
+                    throw new InvalidOperationException(Resources.HttpContextNotFound);
                 }
 
                 IUnityContainer container = HttpContext.Current.Items[Constants.ContainerKey] as IUnityContainer;
 
                 if (container == null)
                 {
-                    throw new InvalidOperationException(ErrorMessages.ContainerNotFound);
+                    throw new InvalidOperationException(Resources.ContainerNotFound);
                 }
 
                 return container;
@@ -55,32 +55,32 @@ namespace Hydra.Unity
 
         public IUnityContainer RegisterType(Type @from, Type to, string name, LifetimeManager lifetimeManager, params InjectionMember[] injectionMembers)
         {
-            throw new InvalidOperationException(ErrorMessages.ContainerConfigurationMustNotBeAltered);
+            throw new InvalidOperationException(Resources.ContainerConfigurationMustNotBeAltered);
         }
 
         public IUnityContainer RegisterInstance(Type t, string name, object instance, LifetimeManager lifetime)
         {
-            throw new InvalidOperationException(ErrorMessages.ContainerConfigurationMustNotBeAltered);
+            throw new InvalidOperationException(Resources.ContainerConfigurationMustNotBeAltered);
         }
 
         public IUnityContainer AddExtension(UnityContainerExtension extension)
         {
-            throw new InvalidOperationException(ErrorMessages.ContainerConfigurationMustNotBeAltered);
+            throw new InvalidOperationException(Resources.ContainerConfigurationMustNotBeAltered);
         }
 
         public object Configure(Type configurationInterface)
         {
-            throw new InvalidOperationException(ErrorMessages.ContainerConfigurationMustNotBeAltered);
+            throw new InvalidOperationException(Resources.ContainerConfigurationMustNotBeAltered);
         }
 
         public IUnityContainer RemoveAllExtensions()
         {
-            throw new InvalidOperationException(ErrorMessages.ContainerConfigurationMustNotBeAltered);
+            throw new InvalidOperationException(Resources.ContainerConfigurationMustNotBeAltered);
         }
 
         public IUnityContainer CreateChildContainer()
         {
-            throw new InvalidOperationException(ErrorMessages.ContainerConfigurationMustNotBeAltered);
+            throw new InvalidOperationException(Resources.ContainerConfigurationMustNotBeAltered);
         }
 
         public object Resolve(Type t, string name, params ResolverOverride[] resolverOverrides)
