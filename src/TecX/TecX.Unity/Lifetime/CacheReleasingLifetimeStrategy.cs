@@ -1,11 +1,11 @@
-﻿using System.Linq;
-
-using Microsoft.Practices.ObjectBuilder2;
-
-using TecX.Common;
-
-namespace TecX.Unity.Lifetime
+﻿namespace TecX.Unity.Lifetime
 {
+    using System.Linq;
+
+    using Microsoft.Practices.ObjectBuilder2;
+
+    using TecX.Common;
+
     public class CacheReleasingLifetimeStrategy : BuilderStrategy
     {
         public override void PostTearDown(IBuilderContext context)
@@ -14,7 +14,7 @@ namespace TecX.Unity.Lifetime
 
             var lifetimes = context.Lifetime.OfType<CacheLifetimeManager>();
 
-            foreach (var lifetimePolicy in lifetimes)
+            foreach (CacheLifetimeManager lifetimePolicy in lifetimes)
             {
                 lifetimePolicy.RemoveValue();
             }

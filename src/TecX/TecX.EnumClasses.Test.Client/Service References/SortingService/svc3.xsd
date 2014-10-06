@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:12345/svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/TecX.EnumClasses.Test.TestObjects" />
+  <xs:import schemaLocation="http://localhost:12345/svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/" />
+  <xs:element name="Sort">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/TecX.EnumClasses.Test.TestObjects" minOccurs="0" name="itemsToSort" nillable="true" type="q1:ArrayOfSerializeMe" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="sortOrder" type="q2:SortOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SortResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/TecX.EnumClasses.Test.TestObjects" minOccurs="0" name="SortResult" nillable="true" type="q3:ArrayOfSerializeMe" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

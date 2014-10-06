@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9ED80C67-F60F-4CD5-A1C8-DF4B8913E69A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hydra.Unity</RootNamespace>
+    <AssemblyName>Hydra.Unity</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>&lt;Project Location In Database&gt;</SccProjectName>
+    <SccLocalPath>&lt;Local Binding Root of Project&gt;</SccLocalPath>
+    <SccAuxPath>&lt;Source Control Database&gt;</SccAuxPath>
+    <SccProvider>Mercurial Source Control Package</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
+      <Link>Properties\GlobalAssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="Assets\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\CollectionResolutionExtension.cs" />
+    <Compile Include="Collections\CollectionResolutionStrategy.cs" />
+    <Compile Include="Collections\CoupledToImplementationDetailsOverrideExtractor.cs" />
+    <Compile Include="Collections\ResolverOverrideExtractor.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="ContainerPerRequestAdapter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tracking\BuildTreeDisposer.cs" />
+    <Compile Include="Tracking\BuildTreeItemNode.cs" />
+    <Compile Include="Tracking\BuildTreeTracker.cs" />
+    <Compile Include="Tracking\CurrentBuildNodePolicy.cs" />
+    <Compile Include="Tracking\DisposableItemNode.cs" />
+    <Compile Include="Tracking\DisposableExtension.cs" />
+    <Compile Include="Tracking\HierachicalTagGenerator.cs" />
+    <Compile Include="Tracking\ICurrentBuildNodePolicy.cs" />
+    <Compile Include="Tracking\ITreeItemVisitor.cs" />
+    <Compile Include="Tracking\NonDisposableItemNode.cs" />
+    <Compile Include="Tracking\RandomTagGenerator.cs" />
+    <Compile Include="Tracking\ReadLock.cs" />
+    <Compile Include="Tracking\SomeoneElsesProblem.cs" />
+    <Compile Include="Tracking\TagGenerator.cs" />
+    <Compile Include="Tracking\UpgradeableReadLock.cs" />
+    <Compile Include="Tracking\WriteLock.cs" />
+    <Compile Include="UnityControllerFactory.cs" />
+    <Compile Include="UnityDependencyResolver.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj">
+      <Project>{DA9F1B57-18BD-451F-A3FA-7D149849A8BD}</Project>
+      <Name>Hydra.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets'))" />
+  </Target>
+  <Import Project="$(SolutionDir)\CommonFiles\Hydra.targets" Condition="Exists('$(SolutionDir)\CommonFiles\Hydra.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

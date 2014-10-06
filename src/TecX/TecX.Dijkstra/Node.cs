@@ -1,7 +1,7 @@
-namespace Dijkstra
-{
-    using System.Diagnostics;
+using System.Diagnostics;
 
+namespace TecX.Dijkstra
+{
     [DebuggerDisplay("Node Id={Id}, Cost={Cost}")]
     public struct Node
     {

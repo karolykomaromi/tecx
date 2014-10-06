@@ -20,6 +20,8 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\TecX\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,11 +41,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.4.0.0.0\lib\NET40\Microsoft.Practices.Prism.dll</HintPath>
+    <Reference Include="Microsoft.Expression.Interactions">
+      <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.Interactivity">
-      <HintPath>..\packages\Prism.4.0.0.0\lib\NET40\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+      <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -63,6 +68,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="WindowsBase" />
@@ -71,56 +80,47 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Module.cs" />
+    <Compile Include="MainModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ShowTextService.cs" />
-    <Compile Include="Services\ShowThingsService.cs" />
-    <Compile Include="View\InfoTextArea.xaml.cs">
-      <DependentUpon>InfoTextArea.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Surface.xaml.cs">
-      <DependentUpon>Surface.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.csproj">
       <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
       <Name>TecX.Agile.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TecX.Agile.ViewModel\TecX.Agile.ViewModel.csproj">
-      <Project>{E4698C1F-EF98-480C-B923-BB986C2B7F37}</Project>
-      <Name>TecX.Agile.ViewModel</Name>
+    <ProjectReference Include="..\TecX.Agile.Messaging\TecX.Agile.Messaging.csproj">
+      <Project>{C955D066-015D-40A4-B8AD-921888D1DA95}</Project>
+      <Name>TecX.Agile.Messaging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TecX.Agile.View\TecX.Agile.View.csproj">
-      <Project>{09B2D14D-9911-4CDA-A175-43754A2AAAFE}</Project>
-      <Name>TecX.Agile.View</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.csproj">
-      <Project>{266522EB-9DCB-451A-8CD7-678188DCB5F6}</Project>
-      <Name>TecX.Common.Event</Name>
+    <ProjectReference Include="..\TecX.CaliburnEx\TecX.CaliburnEx.csproj">
+      <Project>{4244D026-9657-41AD-8CFB-AA70E2372CF5}</Project>
+      <Name>TecX.CaliburnEx</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Event\TecX.Event.csproj">
+      <Project>{F1B1FD4F-F40F-4739-8EE4-D683440396DA}</Project>
+      <Name>TecX.Event</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="View\InfoTextArea.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Surface.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Include="ModuleStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(ProgramFiles)\MSBuild\StyleCop\v4.7\StyleCop.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using TecX.Common.Specifications;
-
-namespace TecX.Common.Test.TestObjects
+﻿namespace TecX.Common.Test.TestObjects
 {
-    internal class TextMatches : CompareToValueSpecification<SearchTestEntity, string>
+    using TecX.Common.Specifications;
+
+    internal class TextMatches : Specification<SearchTestEntity>
     {
+        private readonly string text;
+
         public override string Description
         {
             get { return "TextMatches"; }
@@ -12,12 +13,12 @@ namespace TecX.Common.Test.TestObjects
 
         public TextMatches(string text)
         {
-            this.Value = text;
+            this.text = text;
         }
 
-        protected override bool IsMatchCore(SearchTestEntity candidate, ICollection<ISpecification<SearchTestEntity>> matchedSpecifications)
+        public override bool IsSatisfiedBy(SearchTestEntity candidate)
         {
-            return candidate.Text == this.Value;
+            return candidate.Text == this.text;
         }
     }
 }

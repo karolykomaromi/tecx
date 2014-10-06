@@ -14,14 +14,12 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
+    <SccProjectName>&lt;Project Location In Database&gt;</SccProjectName>
+    <SccLocalPath>&lt;Local Binding Root of Project&gt;</SccLocalPath>
+    <SccAuxPath>&lt;Source Control Database&gt;</SccAuxPath>
+    <SccProvider>Mercurial Source Control Package</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\TecX\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,40 +39,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="WindowsBase" />
+    <Reference Include="xunit, Version=1.9.2.1705, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
@@ -82,69 +56,44 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityPredicateExtensionsFixture.cs" />
-    <Compile Include="EventAggregatorContainerExtensionFixture.cs" />
-    <Compile Include="EventAggregatorFixture.cs" />
-    <Compile Include="ExceptionExtensionFixture.cs" />
-    <Compile Include="FluentLoggingConfigFixture.cs" />
+    <Compile Include="Extensions\EntityPredicateExtensionsFixture.cs" />
+    <Compile Include="Extensions\ExceptionExtensionsFixture.cs" />
+    <Compile Include="Extensions\ObjectPredicateExtensionsFixture.cs" />
     <Compile Include="GuardFixture.cs" />
-    <Compile Include="LatchFixture.cs" />
-    <Compile Include="ObjectPredicateExtensionsFixture.cs" />
+    <Compile Include="Pipes\Numbers.cs" />
+    <Compile Include="Pipes\PipesFixture.cs" />
+    <Compile Include="Pipes\Printer.cs" />
+    <Compile Include="Pipes\Square.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReflectionHelperFixture.cs" />
-    <Compile Include="RegexBuilderFixture.cs" />
-    <Compile Include="SpecificationFixture.cs" />
-    <Compile Include="TestObjects\CancelingSubscriber.cs" />
-    <Compile Include="TestObjects\CancelMessage.cs" />
+    <Compile Include="Specifications\AlwaysFalse.cs" />
+    <Compile Include="Specifications\DummySpec2.cs" />
+    <Compile Include="Specifications\DummySpec3.cs" />
+    <Compile Include="Specifications\SpecificationFixture.cs" />
     <Compile Include="TestObjects\ClassA.cs" />
     <Compile Include="TestObjects\ClassB.cs" />
     <Compile Include="TestObjects\DummySpec1.cs" />
-    <Compile Include="TestObjects\DummySpec2.cs" />
-    <Compile Include="TestObjects\DummySpec3.cs" />
     <Compile Include="TestObjects\HasSomeFlag.cs" />
-    <Compile Include="TestObjects\MemoryTraceListener.cs" />
     <Compile Include="TestObjects\NumberBetween.cs" />
     <Compile Include="TestObjects\NumberMatches.cs" />
-    <Compile Include="TestObjects\OneTimeSubscriber.cs" />
     <Compile Include="TestObjects\Order.cs" />
     <Compile Include="TestObjects\ReflectionHelperTestClass.cs" />
     <Compile Include="TestObjects\SearchTestEntity.cs" />
-    <Compile Include="TestObjects\SimpleMessage.cs" />
-    <Compile Include="TestObjects\SimplePublisher.cs" />
-    <Compile Include="TestObjects\SimpleSubscriber.cs" />
     <Compile Include="TestObjects\Status.cs" />
     <Compile Include="TestObjects\StatusMatches.cs" />
     <Compile Include="TestObjects\TextMatches.cs" />
-    <Compile Include="TimeSlotFixture.cs" />
-    <Compile Include="TypeHelperFixture.cs" />
+    <Compile Include="TestObjects\TimeSlot.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TecX.Common.EntLib\TecX.Common.EntLib.csproj">
-      <Project>{45BE1494-E6F4-415F-8206-2856FBD28F66}</Project>
-      <Name>TecX.Common.EntLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TecX.Common.Event.Unity\TecX.Common.Event.Unity.csproj">
-      <Project>{A763CC8F-835E-444C-9A9F-88E7A443C1B2}</Project>
-      <Name>TecX.Common.Event.Unity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TecX.Common.Event\TecX.Common.Event.csproj">
-      <Project>{266522EB-9DCB-451A-8CD7-678188DCB5F6}</Project>
-      <Name>TecX.Common.Event</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TecX.TestTools\TecX.TestTools.csproj">
-      <Project>{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}</Project>
-      <Name>TecX.TestTools</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,75 +1,75 @@
-﻿using System;
-
-using Microsoft.Practices.Unity;
-
-using TecX.Common;
-using TecX.Common.Time;
-
-namespace TecX.Unity.Lifetime
+﻿namespace TecX.Unity.Lifetime
 {
+    using System;
+
+    using Microsoft.Practices.Unity;
+
+    using TecX.Common;
+    using TecX.Common.Time;
+
     public class CacheLifetimeManager : LifetimeManager, IDisposable
     {
-        private object _value;
-        private readonly ILease _lease;
+        private readonly ILease lease;
+        private object value;
 
         public CacheLifetimeManager(ILease lease)
         {
             Guard.AssertNotNull(lease, "lease");
 
-            _lease = lease;
+            this.lease = lease;
         }
 
         public override object GetValue()
         {
-            RemoveValue();
+            this.RemoveValue();
 
-            return _value;
+            return this.value;
         }
 
         public override void RemoveValue()
         {
-            if (_lease.IsExpired)
+            if (this.lease.IsExpired)
             {
-                Dispose();
+                this.Dispose();
             }
         }
 
         public override void SetValue(object newValue)
         {
-            _value = newValue;
-            _lease.Renew();
+            this.value = newValue;
+            this.lease.Renew();
         }
 
         public void Dispose()
         {
             GC.SuppressFinalize(this);
 
-            Dispose(true);
+            this.Dispose(true);
+        }
+
+        public CacheLifetimeManager Clone()
+        {
+            CacheLifetimeManager clone = new CacheLifetimeManager(this.lease)
+            {
+                value = this.value
+            };
+
+            return clone;
         }
 
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
             {
-                var d = _value as IDisposable;
+                var d = this.value as IDisposable;
 
                 if (d != null)
                 {
                     d.Dispose();
                 }
 
-                _value = null;
+                this.value = null;
             }
-        }
-
-        public CacheLifetimeManager Clone()
-        {
-            CacheLifetimeManager clone = new CacheLifetimeManager(_lease)
-                {
-                    _value = this._value
-                };
-
-            return clone;
         }
     }
 }

@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using TecX.Unity.Configuration.Expressions;
 using TecX.Unity.Configuration.Test.TestObjects;
 
 namespace TecX.Unity.Configuration.Test
 {
+    using TecX.Unity.Configuration.Builders;
+
     [TestClass]
     public class RegistrationExpressionFixture
     {
@@ -19,9 +20,9 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            TypeRegistrationExpression expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClass));
+            TypeRegistrationBuilder builder = new TypeRegistrationBuilder(typeof(IMyInterface), typeof(MyClass));
 
-            expression.Compile().Configure(container);
+            builder.Build().Configure(container);
 
             IMyInterface result = container.Resolve<IMyInterface>();
 
@@ -34,12 +35,9 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            var expression = new NamedTypeRegistrationExpression(typeof(IMyInterface), typeof(MyClass))
-                {
-                    Name = "1"
-                };
+            var expression = new TypeRegistrationBuilder(typeof(IMyInterface), typeof(MyClass)).Named("1");
 
-            expression.Compile().Configure(container);
+            expression.Build().Configure(container);
 
             IMyInterface result = container.Resolve<IMyInterface>("1");
 
@@ -52,11 +50,11 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            var expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClassWithCtorParams));
+            var expression = new TypeRegistrationBuilder(typeof(IMyInterface), typeof(MyClassWithCtorParams));
 
-            expression.CreatedUsing(c => new MyClassWithCtorParams("1"));
+            expression.Factory(c => new MyClassWithCtorParams("1"));
 
-            expression.Compile().Configure(container);
+            expression.Build().Configure(container);
 
             IMyInterface result = container.Resolve<IMyInterface>();
 
@@ -69,11 +67,11 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            var expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClassWithCtorParams));
+            var expression = new TypeRegistrationBuilder(typeof(IMyInterface), typeof(MyClassWithCtorParams));
 
-            expression.SelectConstructor(() => new MyClassWithCtorParams());
+            expression.Ctor(() => new MyClassWithCtorParams());
 
-            expression.Compile().Configure(container);
+            expression.Build().Configure(container);
 
             IMyInterface result = container.Resolve<IMyInterface>();
 
@@ -86,11 +84,11 @@ namespace TecX.Unity.Configuration.Test
         {
             IUnityContainer container = new UnityContainer();
 
-            var expression = new TypeRegistrationExpression(typeof(IMyInterface), typeof(MyClass));
+            var expression = new TypeRegistrationBuilder(typeof(IMyInterface), typeof(MyClass));
 
-            expression.LifetimeIs(() => new ContainerControlledLifetimeManager());
+            expression.LifetimeIs(new ContainerControlledLifetimeManager());
 
-            expression.Compile().Configure(container);
+            expression.Build().Configure(container);
 
             var r1 = container.Resolve<IMyInterface>();
             var r2 = container.Resolve<IMyInterface>();

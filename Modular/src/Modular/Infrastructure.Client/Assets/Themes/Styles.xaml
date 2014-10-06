@@ -1,0 +1,10 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit">
+    <Style TargetType="TextBlock">
+        <Setter Property="TextTrimming" Value="WordEllipsis"/>
+        <Setter Property="ToolTipService.ToolTip" Value="{Binding Text, RelativeSource={RelativeSource Self}}"/>
+    </Style>
+    
+</ResourceDictionary>
