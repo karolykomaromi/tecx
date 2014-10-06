@@ -12,6 +12,8 @@ namespace Hydra
             this.Container.AddNewExtension<FubuConfiguration>();
 
             this.Container.AddNewExtension<ErrorHandlingConfiguration>();
+
+            this.Container.AddNewExtension<RavenDBConfiguration>();
         }
     }
 }
