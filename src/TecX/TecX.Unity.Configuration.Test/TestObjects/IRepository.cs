@@ -1,6 +1,6 @@
 ﻿namespace TecX.Unity.Configuration.Test.TestObjects
 {
-    internal class IRepository<T>
+    internal interface IRepository<T>
     {
     }
 }

@@ -1,71 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-
-using TecX.Common;
-
-namespace TecX.Unity.Injection
+﻿namespace TecX.Unity.Injection
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
+    using TecX.Common;
+    using TecX.Unity.Utility;
+
     public class ParameterMatcher
     {
-        #region Fields
+        private readonly IEnumerable<ConstructorParameter> constructorArguments;
 
-        private readonly IDictionary<string, object> _ctorArgs;
-        private readonly IEnumerable<Predicate<ConstructorInfo>> _filters;
+        private readonly IParameterMatchingConventionsPolicy conventions;
 
-        #endregion Fields
+        private readonly CompositePredicate<ConstructorInfo> filters;
 
-        #region c'tor
-
-        private ParameterMatcher()
+        public ParameterMatcher(IEnumerable<ConstructorParameter> constructorArguments, IParameterMatchingConventionsPolicy conventions)
         {
-            _ctorArgs = new Dictionary<string, object>();
-            _filters = new Predicate<ConstructorInfo>[]
-                           {
-                               FilterByCtorTakesAllArgs, 
-                               FilterByNonSatisfiedPrimitiveArgs, 
-                               FilterByArgTypesFit
-                           };
+            Guard.AssertNotNull(constructorArguments, "ctorArgs");
+            Guard.AssertNotNull(conventions, "conventions");
+
+            this.constructorArguments = constructorArguments;
+            this.conventions = conventions;
+
+            this.filters = new CompositePredicate<ConstructorInfo>();
+            this.filters += this.ConstructorDoesNotTakeAllArguments;
+            this.filters += this.NonSatisfiedPrimitiveArgs;
         }
-
-        public ParameterMatcher(IEnumerable<KeyValuePair<string, object>> ctorArgs)
-            : this()
-        {
-            Guard.AssertNotNull(ctorArgs, "ctorArgs");
-
-            foreach (var arg in ctorArgs)
-            {
-                _ctorArgs.Add(arg);
-            }
-        }
-
-        #endregion c'tor
-
-        #region Methods
 
         public ConstructorInfo BestMatch(IEnumerable<ConstructorInfo> ctors)
         {
             Guard.AssertNotNull(ctors, "ctors");
 
-            //sort by number of arguments the ctor takes
+            // sort by number of arguments the ctor takes
             ctors = ctors.OrderByDescending(ctor => ctor.GetParameters().Length);
 
-            IEnumerable<ConstructorInfo> potentialMatches = ctors
-                .Where(ctor => !_filters.Any(filter => filter(ctor)));
+            List<ConstructorInfo> potentialMatches = ctors
+                .Where(ctor => this.filters.MatchesNone(ctor)).ToList();
 
-            //no match -> exceptional situation which should cause some error))
-            if (potentialMatches.Count() == 0)
+            // no match -> exceptional situation which should cause some error))
+            if (potentialMatches.Count == 0)
+            {
                 throw new ArgumentException("no matching ctor found");
+            }
 
-            //one perfect match
-            if (potentialMatches.Count() == 1)
+            // one perfect match
+            if (potentialMatches.Count == 1)
+            {
                 return potentialMatches.Single();
+            }
 
-            //several matches -> return ctor with most arguments
+            // several matches -> return ctor with most arguments
             return potentialMatches
                 .OrderByDescending(ctor => ctor.GetParameters().Length)
-                .FirstOrDefault();
+                .First();
         }
 
         /// <summary>
@@ -74,16 +63,18 @@ namespace TecX.Unity.Injection
         /// <param name="ctor">The ctor.</param>
         /// <returns><c>true</c> when a constructor does not take one of the provided
         /// arguments; otherwise <c>false</c></returns>
-        public bool FilterByCtorTakesAllArgs(ConstructorInfo ctor)
+        public bool ConstructorDoesNotTakeAllArguments(ConstructorInfo ctor)
         {
             Guard.AssertNotNull(ctor, "ctor");
 
             ParameterInfo[] parameters = ctor.GetParameters();
 
-            foreach (var arg in _ctorArgs)
+            foreach (var argument in this.constructorArguments)
             {
-                if (!parameters.Any(p => p.Name == arg.Key))
+                if (!parameters.Any(p => this.conventions.Matches(argument, p)))
+                {
                     return true;
+                }
             }
 
             return false;
@@ -96,18 +87,16 @@ namespace TecX.Unity.Injection
         /// <param name="ctor">The ctor.</param>
         /// <returns><c>true</c> if the ctor takes a primitive argument that is not provided;
         /// otherwise <c>false</c></returns>
-        public bool FilterByNonSatisfiedPrimitiveArgs(ConstructorInfo ctor)
+        public bool NonSatisfiedPrimitiveArgs(ConstructorInfo ctor)
         {
             Guard.AssertNotNull(ctor, "ctor");
 
             ParameterInfo[] parameters = ctor.GetParameters();
 
-            //find parameters not satisfied by provided args
-            var noMatch = from p in parameters
-                          where !_ctorArgs.Keys.Any(key => p.Name == key)
-                          select p;
+            // find parameters not satisfied by provided args
+            IEnumerable<ParameterInfo> parametersWithNoMatchingCtorArgument = parameters.Where(p => !this.constructorArguments.Any(a => this.conventions.Matches(a, p)));
 
-            foreach (ParameterInfo parameter in noMatch)
+            foreach (ParameterInfo parameter in parametersWithNoMatchingCtorArgument)
             {
                 Type paramType = parameter.ParameterType;
 
@@ -121,34 +110,5 @@ namespace TecX.Unity.Injection
 
             return false;
         }
-
-        /// <summary>
-        /// Filters ctor that takes argument that matches name of a provided argument but
-        /// not the provided arguments Type (e.g. ctor takes 'anotherParam' of Type string but argument
-        /// 'anotherParam' of type int is provided)
-        /// </summary>
-        /// <param name="ctor">The ctor.</param>
-        /// <returns><c>true</c> if ctor takes argument with correct argument name but wrong
-        /// argument Type; otherwise <c>false</c></returns>
-        public bool FilterByArgTypesFit(ConstructorInfo ctor)
-        {
-            Guard.AssertNotNull(ctor, "ctor");
-            
-            foreach (ParameterInfo parameter in ctor.GetParameters())
-            {
-                object value;
-                if (_ctorArgs.TryGetValue(parameter.Name, out value))
-                {
-                    if (parameter.ParameterType != value.GetType())
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        #endregion Methods
     }
 }

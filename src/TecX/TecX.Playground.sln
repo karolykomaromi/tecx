@@ -1,0 +1,92 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Common.Test", "TecX.Common.Test\TecX.Common.Test.csproj", "{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FB761D15-4518-4694-9D8C-B7BC9C7F5B44}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		TecX.Common.vsmdi = TecX.Common.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Common", "TecX.Common\TecX.Common.csproj", "{F749C03B-EC1A-460E-ACF8-05F70AD7512A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Katas.BankOcr", "TecX.Katas.BankOcr\TecX.Katas.BankOcr.csproj", "{B4EC49C3-481D-46A2-B58E-1D33E7B08FCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Katas.BankOcr.Test", "TecX.Katas.BankOcr.Test\TecX.Katas.BankOcr.Test.csproj", "{0D53B765-3B94-4A4F-A58F-31F07E8FAADB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Playground", "TecX.Playground\TecX.Playground.csproj", "{E5A0E85A-0B63-484F-B00E-8AB0BEE15CFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.BehavioralTesting", "TecX.BehavioralTesting\TecX.BehavioralTesting.csproj", "{9648A761-3D3E-4EA4-9073-987D0AB93BBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Query", "TecX.Query\TecX.Query.csproj", "{09D822F4-5B7E-444C-94A1-124FE1D4698B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99. Tests", "99. Tests", "{4BBE6C63-A347-419C-996C-E90A531A9170}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10. Common", "10. Common", "{831F338D-BEE5-4470-82F5-1C9C9015D46E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TecX.Query.Test", "TecX.Query.Test\TecX.Query.Test.csproj", "{488D1621-3FC8-4FF2-A029-8B23106E02A7}"
+EndProject
+Global
+	GlobalSection(MercurialSourceControlSolutionProperties) = preSolution
+		SolutionIsControlled = True
+		SolutionBindings = <Solution Location In Database>
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = TecX.Common.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4EC49C3-481D-46A2-B58E-1D33E7B08FCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4EC49C3-481D-46A2-B58E-1D33E7B08FCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4EC49C3-481D-46A2-B58E-1D33E7B08FCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4EC49C3-481D-46A2-B58E-1D33E7B08FCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D53B765-3B94-4A4F-A58F-31F07E8FAADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D53B765-3B94-4A4F-A58F-31F07E8FAADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D53B765-3B94-4A4F-A58F-31F07E8FAADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D53B765-3B94-4A4F-A58F-31F07E8FAADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5A0E85A-0B63-484F-B00E-8AB0BEE15CFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5A0E85A-0B63-484F-B00E-8AB0BEE15CFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5A0E85A-0B63-484F-B00E-8AB0BEE15CFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5A0E85A-0B63-484F-B00E-8AB0BEE15CFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9648A761-3D3E-4EA4-9073-987D0AB93BBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9648A761-3D3E-4EA4-9073-987D0AB93BBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9648A761-3D3E-4EA4-9073-987D0AB93BBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9648A761-3D3E-4EA4-9073-987D0AB93BBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09D822F4-5B7E-444C-94A1-124FE1D4698B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09D822F4-5B7E-444C-94A1-124FE1D4698B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09D822F4-5B7E-444C-94A1-124FE1D4698B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09D822F4-5B7E-444C-94A1-124FE1D4698B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{488D1621-3FC8-4FF2-A029-8B23106E02A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{488D1621-3FC8-4FF2-A029-8B23106E02A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{488D1621-3FC8-4FF2-A029-8B23106E02A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{488D1621-3FC8-4FF2-A029-8B23106E02A7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9648A761-3D3E-4EA4-9073-987D0AB93BBD} = {4BBE6C63-A347-419C-996C-E90A531A9170}
+		{20E26EB4-2A50-4D6B-B946-EF7E64F497E8} = {4BBE6C63-A347-419C-996C-E90A531A9170}
+		{0D53B765-3B94-4A4F-A58F-31F07E8FAADB} = {4BBE6C63-A347-419C-996C-E90A531A9170}
+		{488D1621-3FC8-4FF2-A029-8B23106E02A7} = {4BBE6C63-A347-419C-996C-E90A531A9170}
+		{F749C03B-EC1A-460E-ACF8-05F70AD7512A} = {831F338D-BEE5-4470-82F5-1C9C9015D46E}
+		{B4EC49C3-481D-46A2-B58E-1D33E7B08FCB} = {831F338D-BEE5-4470-82F5-1C9C9015D46E}
+		{09D822F4-5B7E-444C-94A1-124FE1D4698B} = {831F338D-BEE5-4470-82F5-1C9C9015D46E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35;packages\Unity.2.1.505.2\lib\NET35
+	EndGlobalSection
+EndGlobal

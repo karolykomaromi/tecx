@@ -1,0 +1,28 @@
+<UserControl x:Class="Search.Views.SearchView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:vm="clr-namespace:Search.ViewModels"
+    xmlns:tr="clr-namespace:Infrastructure.Triggers;assembly=Infrastructure.Client"
+    mc:Ignorable="d"
+    d:DesignHeight="50" d:DesignWidth="400"
+    d:DataContext="{d:DesignInstance d:Type=vm:SearchViewModel}">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <sdk:AutoCompleteBox Text="{Binding SearchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Suggestions}" FilterMode="None" MinimumPrefixLength="3">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Populating">
+                    <tr:AutoCompleteToCommand Command="{Binding SuggestionsCommand}" CommandParameter="{Binding}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </sdk:AutoCompleteBox>
+        <Button Command="{Binding SearchCommand}" CommandParameter="{Binding}" Grid.Column="1" Content="{Binding LabelSearch}" Margin="10,0,0,0"/>
+    </Grid>
+</UserControl>
+

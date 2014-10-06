@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-
-namespace TecX.Common.Extensions.LinqTo.Objects
+﻿namespace TecX.Common.Extensions.LinqTo.Objects
 {
+    using System;
+    using System.Linq;
+    using System.Linq.Expressions;
+
     /// <summary>
     /// This class extends the generic type "Expression(Func(T, bool))" to easily concatenate 
     /// multiple expressions of this type for a where statement
@@ -16,7 +16,7 @@ namespace TecX.Common.Extensions.LinqTo.Objects
         /// "always true" Expression for LinQ query building. This is a value you can start with to 
         /// build up a sequence of AND-concatenated expressions.
         /// </summary>
-        /// <typeparam name="T">pass here the type of the object you want to use inside the excpression</typeparam>
+        /// <typeparam name="T">pass here the type of the object you want to use inside the expression</typeparam>
         /// <returns>an expression that returns <c>true</c></returns>
         public static Expression<Func<T, bool>> True<T>()
         {
@@ -27,7 +27,7 @@ namespace TecX.Common.Extensions.LinqTo.Objects
         /// "always false" Expression for LinQ query building. This is a value you can start with to 
         /// build up a sequence of OR-concatenated expressions.
         /// </summary>
-        /// <typeparam name="T">pass here the type of the object you want to use inside the excpression</typeparam>
+        /// <typeparam name="T">pass here the type of the object you want to use inside the expression</typeparam>
         /// <returns>an expression that returns <c>false</c></returns>
         public static Expression<Func<T, bool>> False<T>()
         {
@@ -40,7 +40,7 @@ namespace TecX.Common.Extensions.LinqTo.Objects
         /// <typeparam name="T">the type of object you want to use inside the expression tree</typeparam>
         /// <param name="left">the "source" expression</param>
         /// <param name="right">the second expression to "add" to the first one using "OR"</param>
-        /// <returns>a comined expression using OR</returns>
+        /// <returns>a combined expression using OR</returns>
         public static Expression<Func<T, bool>> Or<T>(
             this Expression<Func<T, bool>> left,
             Expression<Func<T, bool>> right)
@@ -61,7 +61,7 @@ namespace TecX.Common.Extensions.LinqTo.Objects
         /// <typeparam name="T">the type of object you want to use inside the expression tree</typeparam>
         /// <param name="left">the "source" expression</param>
         /// <param name="right">the second expression to "add" to the first one using "AND"</param>
-        /// <returns>a comined expression using AND</returns>
+        /// <returns>a combined expression using AND</returns>
         public static Expression<Func<T, bool>> And<T>(
             this Expression<Func<T, bool>> left,
             Expression<Func<T, bool>> right)

@@ -1,8 +1,8 @@
-﻿using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.ObjectBuilder;
-
-namespace TecX.Unity.Lifetime
+﻿namespace TecX.Unity.Lifetime
 {
+    using Microsoft.Practices.Unity;
+    using Microsoft.Practices.Unity.ObjectBuilder;
+
     public class CacheLifetimeStrategyExtension : UnityContainerExtension
     {
         protected override void Initialize()

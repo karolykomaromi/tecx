@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{09D822F4-5B7E-444C-94A1-124FE1D4698B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TecX.Query</RootNamespace>
+    <AssemblyName>TecX.Query</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>&lt;Project Location In Database&gt;</SccProjectName>
+    <SccLocalPath>&lt;Local Binding Root of Project&gt;</SccLocalPath>
+    <SccAuxPath>&lt;Source Control Database&gt;</SccAuxPath>
+    <SccProvider>Mercurial Source Control Package</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Filters\DeletedItemsFilter.cs" />
+    <Compile Include="Filters\PrincipalFilter.cs" />
+    <Compile Include="PD\Bar.cs" />
+    <Compile Include="PD\ClientInfo.cs" />
+    <Compile Include="PD\Foo.cs" />
+    <Compile Include="PD\Historizable.cs" />
+    <Compile Include="PD\IClientInfo.cs" />
+    <Compile Include="PD\PDIteratorOperator.cs" />
+    <Compile Include="PD\PDObject.cs" />
+    <Compile Include="PD\PDPrincipal.cs" />
+    <Compile Include="PD\PersistentObject.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryInterceptor.cs" />
+    <Compile Include="QueryProviderInterceptor.cs" />
+    <Compile Include="Simulation\Extensions.cs" />
+    <Compile Include="Simulation\FooBuilder.cs" />
+    <Compile Include="Strategies\ExpressionManipulationStrategy.cs" />
+    <Compile Include="Strategies\Linq2ObjectStrategy.cs" />
+    <Compile Include="Utility\ExpressionHelper.cs" />
+    <Compile Include="Visitors\AppendFrameworkFilters.cs" />
+    <Compile Include="Visitors\CleanupAlwaysTrueNodes.cs" />
+    <Compile Include="Visitors\ContainsAlwaysTrueNode.cs" />
+    <Compile Include="Visitors\ElementTypeFinder.cs" />
+    <Compile Include="Visitors\ParameterRebinder.cs" />
+    <Compile Include="Visitors\PrependWhereClause.cs" />
+    <Compile Include="Visitors\VisitorCache.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
+      <Project>{f749c03b-ec1a-460e-acf8-05f70ad7512a}</Project>
+      <Name>TecX.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

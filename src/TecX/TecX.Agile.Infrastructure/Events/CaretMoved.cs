@@ -1,42 +1,29 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-using TecX.Common;
-
 namespace TecX.Agile.Infrastructure.Events
 {
-    [DataContract]
-    public class CaretMoved : IDomainEvent
+    using System;
+
+    using TecX.Common;
+
+    public class CaretMoved
     {
-        [DataMember]
-        private readonly Guid _artefactId;
-        [DataMember]
-        private readonly string _fieldName;
-        [DataMember]
-        private readonly int _caretIndex;
-
-        public string FieldName
-        {
-            get { return _fieldName; }
-        }
-
-        public int CaretIndex
-        {
-            get { return _caretIndex; }
-        }
-
-        public Guid ArtefactId
-        {
-            get { return _artefactId; }
-        }
-
-        public CaretMoved(Guid artefactId, string fieldName, int caretIndex)
+        public CaretMoved(Guid id, string fieldName, int caretIndex)
         {
             Guard.AssertNotEmpty(fieldName, "fieldName");
 
-            _artefactId = artefactId;
-            _fieldName = fieldName;
-            _caretIndex = caretIndex;
+            this.Id = id;
+            this.FieldName = fieldName;
+            this.CaretIndex = caretIndex;
+        }
+
+        public Guid Id { get; private set; }
+
+        public string FieldName { get; private set; }
+
+        public int CaretIndex { get; private set; }
+
+        public override string ToString()
+        {
+            return string.Format("CaretMoved Id:{0} Field:{1} Idx:{1}", this.Id, this.FieldName, this.CaretIndex);
         }
     }
 }

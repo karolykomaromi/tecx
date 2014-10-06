@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace TecX.Common.Extensions.Primitives
+﻿namespace TecX.Common.Extensions.Primitives
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public static class TypeExtensions
     {
         public static IEnumerable<Type> GetBaseTypes(this Type type)
@@ -12,7 +12,7 @@ namespace TecX.Common.Extensions.Primitives
 
             var baseTypes = GetBaseTypesInternal(type);
 
-            baseTypes = baseTypes.Except(new[] {type});
+            baseTypes = baseTypes.Except(new[] { type });
 
             return baseTypes;
         }

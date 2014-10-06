@@ -1,34 +1,34 @@
-﻿using System;
-
-namespace TecX.Common.Time
+﻿namespace TecX.Common.Time
 {
+    using System;
+
     public class SlidingLease : ILease
     {
-        private readonly TimeSpan _timeout;
-        private DateTime _renewed;
+        private readonly TimeSpan timeout;
+        private DateTime renewed;
+
+        public SlidingLease(TimeSpan timeout)
+        {
+            this.timeout = timeout;
+            this.renewed = TimeProvider.Now;
+        }
 
         public TimeSpan Timeout
         {
-            get { return _timeout; }
+            get { return this.timeout; }
         }
 
         public bool IsExpired
         {
             get
             {
-                return TimeProvider.Current.Now > _renewed + _timeout;
+                return TimeProvider.Now > this.renewed + this.timeout;
             }
-        }
-
-        public SlidingLease(TimeSpan timeout)
-        {
-            _timeout = timeout;
-            _renewed = TimeProvider.Current.Now;
         }
 
         public void Renew()
         {
-            _renewed = TimeProvider.Current.Now;
+            this.renewed = TimeProvider.Now;
         }
     }
 }

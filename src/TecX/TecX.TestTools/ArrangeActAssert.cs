@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace TecX.TestTools
+﻿namespace TecX.TestTools
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     /// <summary>
     /// A base class for tests written in the BDD style that provide standard
     /// methods to set up test actions and the "when" statements. "Then" is
@@ -9,6 +9,23 @@ namespace TecX.TestTools
     /// </summary>
     public abstract class ArrangeActAssert
     {
+        #region MSTEST integration methods
+
+        [TestInitialize]
+        public void MainSetup()
+        {
+            this.Arrange();
+            this.Act();
+        }
+
+        [TestCleanup]
+        public void MainTeardown()
+        {
+            this.Teardown();
+        }
+
+        #endregion
+
         /// <summary>
         /// When overridden in a derived class, this method is used to
         /// set up the current state of the specs context.
@@ -17,7 +34,6 @@ namespace TecX.TestTools
         /// before the <see cref="Act"/> method.</remarks>
         protected virtual void Arrange()
         {
-
         }
 
         /// <summary>
@@ -28,7 +44,6 @@ namespace TecX.TestTools
         /// and before each test method runs.</remarks>
         protected virtual void Act()
         {
-
         }
 
         /// <summary>
@@ -38,24 +53,6 @@ namespace TecX.TestTools
         /// <remarks>This method is called automatically after each TestMethod has run.</remarks>
         protected virtual void Teardown()
         {
-
         }
-
-        #region MSTEST integration methods
-
-        [TestInitialize]
-        public void MainSetup()
-        {
-            Arrange();
-            Act();
-        }
-
-        [TestCleanup]
-        public void MainTeardown()
-        {
-            Teardown();
-        }
-
-        #endregion
     }
 }

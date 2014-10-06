@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace TecX.Common.Time
+﻿namespace TecX.Common.Time
 {
+    using System;
+
     /// <summary>
     /// If you ever need to &quot;change time&quot; be it for tests or some kind of simulation you will have a 
     /// hard time doing so if you use <see cref="DateTime.Now"/> all over your code. This class allows you to 
@@ -9,64 +9,58 @@ namespace TecX.Common.Time
     /// </summary>
     public abstract class TimeProvider
     {
-        #region Fields
-
         private static readonly object SyncRoot = new object();
 
-        private static TimeProvider _current;
-
-        #endregion Fields
-
-        #region c'tor
+        private static TimeProvider current;
 
         static TimeProvider()
         {
-            _current = new DefaultTimeProvider();
+            current = new DefaultTimeProvider();
         }
 
-        #endregion c'tor
-
-        /// <summary>
-        /// Gets or sets the current <see cref="TimeProvider"/>
-        /// </summary>
-        /// <value>The current provider.</value>
         public static TimeProvider Current
         {
-            get { return _current; }
+            get
+            {
+                return current;
+            }
+
             set
             {
-                Guard.AssertNotNull(value, "value", "An Ambient Context must never be null");
+                Guard.AssertNotNull(value, "Current");
 
                 lock (SyncRoot)
                 {
-                    _current = value;
+                    current = value;
                 }
             }
         }
 
-        /// <summary>
-        /// Resets the current provider to a &quot;good local default&quot;.
-        /// </summary>
-        public static void ResetToDefault()
+        public static DateTime Now
         {
-            Current = new DefaultTimeProvider();
+            get
+            {
+                return Current.GetNow();
+            }
         }
 
-        /// <summary>
-        ///Gets a <see cref="DateTime"/> object that is set to the current date and time 
-        /// on this computer, expressed as the Coordinated Universal Time (UTC).
-        /// </summary>
-        public abstract DateTime UtcNow { get; }
+        public static DateTime UtcNow
+        {
+            get
+            {
+                return Current.GetUtcNow();
+            }
+        }
 
-        /// <summary>
-        /// Gets a <see cref="DateTime"/>  object that is set to the current date and time on this computer, 
-        /// expressed as the local time.
-        /// </summary>
-        public abstract DateTime Now { get; }
+        public static string ToString(DateTime dt)
+        {
+            return Current.GetString(dt);
+        }
 
-        /// <summary>
-        /// Gets the current date.
-        /// </summary>
-        public abstract DateTime Today { get; }
+        protected abstract string GetString(DateTime dt);
+
+        protected abstract DateTime GetUtcNow();
+
+        protected abstract DateTime GetNow();
     }
 }

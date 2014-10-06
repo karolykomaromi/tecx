@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using TecX.Common.Specifications;
-
-namespace TecX.Common.Test.TestObjects
+﻿namespace TecX.Common.Test.TestObjects
 {
+    using TecX.Common.Specifications;
+
     public class DummySpec1 : Specification<SearchTestEntity>
     {
         public override string Description
         {
-            get { return "DummySpec1"; }
+            get { return "dummy1"; }
         }
 
-        protected override bool IsMatchCore(SearchTestEntity candidate, ICollection<ISpecification<SearchTestEntity>> matchedSpecifications)
+        public override bool IsSatisfiedBy(SearchTestEntity candidate)
         {
             return true;
         }

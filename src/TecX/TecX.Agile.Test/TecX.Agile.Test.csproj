@@ -14,14 +14,12 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
+    <SccProjectName>&lt;Project Location In Database&gt;</SccProjectName>
+    <SccLocalPath>&lt;Local Binding Root of Project&gt;</SccLocalPath>
+    <SccAuxPath>&lt;Source Control Database&gt;</SccAuxPath>
+    <SccProvider>Mercurial Source Control Package</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\TecX\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,17 +39,56 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Ploeh.AutoFixture, Version=2.1.0.1, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+    <Reference Include="Caliburn.Micro, Version=1.4.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AutoFixture.2.1\lib\Ploeh.AutoFixture.dll</HintPath>
+      <HintPath>..\packages\Caliburn.Micro.1.4\lib\net40\Caliburn.Micro.dll</HintPath>
     </Reference>
-    <Reference Include="Ploeh.SemanticComparison">
-      <HintPath>..\packages\AutoFixture.2.1\lib\Ploeh.SemanticComparison.dll</HintPath>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling">
+      <HintPath>..\packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging">
+      <HintPath>..\packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration">
+      <HintPath>..\packages\Unity.Interception.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Ploeh.AutoFixture, Version=2.16.1.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoFixture.2.16.1\lib\net35\Ploeh.AutoFixture.dll</HintPath>
+    </Reference>
+    <Reference Include="Ploeh.SemanticComparison, Version=2.16.1.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoFixture.2.16.1\lib\net35\Ploeh.SemanticComparison.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Caliburn.Micro.1.4\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -60,28 +97,45 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntLibConfigBuilderFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AgileBuilderFixture.cs" />
-    <Compile Include="TestHelper.cs" />
+    <Compile Include="StoryCardViewModelFixture.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TecX.Agile.Infrastructure\TecX.Agile.Infrastructure.csproj">
+      <Project>{2BF60432-F87E-4D45-8B0D-7EC35F3384D5}</Project>
+      <Name>TecX.Agile.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.Agile\TecX.Agile.csproj">
-      <Project>{7E01FCA6-DB43-4A18-A38B-7E4BBF1C0300}</Project>
+      <Project>{D1D13473-4D5E-409D-9C95-35750985378E}</Project>
       <Name>TecX.Agile</Name>
     </ProjectReference>
     <ProjectReference Include="..\TecX.Common\TecX.Common.csproj">
       <Project>{F749C03B-EC1A-460E-ACF8-05F70AD7512A}</Project>
       <Name>TecX.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TecX.Event\TecX.Event.csproj">
+      <Project>{F1B1FD4F-F40F-4739-8EE4-D683440396DA}</Project>
+      <Name>TecX.Event</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TecX.TestTools\TecX.TestTools.csproj">
       <Project>{ADA070F7-75E5-4D33-AA48-534C5F8ABDCC}</Project>
       <Name>TecX.TestTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Unity.Configuration\TecX.Unity.Configuration.csproj">
+      <Project>{EDEA27F9-7BBB-499E-A06F-5E23F8804A62}</Project>
+      <Name>TecX.Unity.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TecX.Unity\TecX.Unity.csproj">
+      <Project>{69621991-8933-41FD-8493-87E7FA5A26FE}</Project>
+      <Name>TecX.Unity</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

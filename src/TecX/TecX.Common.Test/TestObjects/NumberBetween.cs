@@ -1,25 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using TecX.Common.Specifications;
-
-namespace TecX.Common.Test.TestObjects
+﻿namespace TecX.Common.Test.TestObjects
 {
-    internal class NumberBetween : RangeSpecification<SearchTestEntity>
+    using System;
+
+    using TecX.Common.Specifications;
+
+    internal class NumberBetween : Specification<SearchTestEntity>
     {
+        private readonly IComparable min;
+
+        private readonly IComparable max;
+
         public override string Description
         {
-            get { return "NumberBetween"; }
+            get { return "between"; }
         }
 
-        public NumberBetween(IComparable lowerBound, IComparable upperBound)
-            : base(lowerBound, upperBound)
+        public NumberBetween(IComparable min, IComparable max)
         {
+            Guard.AssertNotNull(min, "min");
+            Guard.AssertNotNull(max, "max");
+            this.min = min;
+            this.max = max;
         }
 
-        protected override bool IsMatchCore(SearchTestEntity candidate, ICollection<ISpecification<SearchTestEntity>> matchedSpecifications)
+        public override bool IsSatisfiedBy(SearchTestEntity candidate)
         {
-            return LowerBound.CompareTo(candidate.Number) <= 0 &&
-                   candidate.Number.CompareTo(UpperBound) <= 0;
+            return min.CompareTo(candidate.Number) <= 0 &&
+                   candidate.Number.CompareTo(max) <= 0;
         }
     }
 }

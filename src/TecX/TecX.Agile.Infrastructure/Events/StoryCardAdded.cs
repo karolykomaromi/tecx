@@ -1,66 +1,28 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-namespace TecX.Agile.Infrastructure.Events
+﻿namespace TecX.Agile.Infrastructure.Events
 {
-    [DataContract]
-    public class StoryCardAdded : IDomainEvent
+    using System;
+
+    public class StoryCardAdded
     {
-        #region Fields
-
-        [DataMember]
-        private readonly Guid _storyCardId;
-        [DataMember]
-        private readonly Guid _to;
-        [DataMember]
-        private readonly double _x;
-        [DataMember]
-        private readonly double _y;
-        [DataMember]
-        private readonly double _angle;
-
-        #endregion Fields
-
-        #region Properties
-
-        public double Angle
+        public StoryCardAdded(Guid id, double x, double y, double angle)
         {
-            get { return _angle; }
+            this.Id = id;
+            this.X = x;
+            this.Y = y;
+            this.Angle = angle;
         }
 
-        public double Y
+        public double X { get; private set; }
+
+        public double Y { get; private set; }
+
+        public double Angle { get; private set; }
+
+        public Guid Id { get; private set; }
+
+        public override string ToString()
         {
-            get { return _y; }
+            return string.Format("StoryCardAdded Id:{0} X:{1} Y:{2} Angle:{3}", this.Id, this.X, this.Y, this.Angle);
         }
-
-        public double X
-        {
-            get { return _x; }
-        }
-
-        public Guid To
-        {
-            get { return _to; }
-        }
-
-        public Guid StoryCardId
-        {
-            get { return _storyCardId; }
-        }
-
-        #endregion Properties
-
-        #region c'tor
-
-        public StoryCardAdded(Guid storyCardId, Guid to, double x, double y, double angle)
-        {
-            _storyCardId = storyCardId;
-            _to = to;
-            _x = x;
-            _y = y;
-            _angle = angle;
-        }
-
-        #endregion c'tor
     }
 }

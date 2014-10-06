@@ -1,7 +1,7 @@
-namespace Dijkstra
-{
-    using System.Collections.Generic;
+using System.Collections.Generic;
 
+namespace TecX.Dijkstra
+{
     public class NodeEqualityComparer : EqualityComparer<Node>
     {
         public override bool Equals(Node x, Node y)

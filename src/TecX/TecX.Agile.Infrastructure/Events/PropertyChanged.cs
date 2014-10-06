@@ -1,57 +1,28 @@
-﻿using System;
-
-using TecX.Agile.ViewModel;
-using TecX.Common;
-
-namespace TecX.Agile.Infrastructure.Events
+﻿namespace TecX.Agile.Infrastructure.Events
 {
-    public class PropertyChanged : IDomainEvent
+    using System;
+
+    public class PropertyChanged
     {
-        #region Fields
-
-        private readonly Guid _artefactId;
-        private readonly string _propertyName;
-        private readonly object _oldValue;
-        private readonly object _newValue;
-
-        #endregion Fields
-
-        #region Properties
-
-        public Guid ArtefactId
+        public PropertyChanged(Guid id, string propertyName, object before, object after)
         {
-            get { return _artefactId; }
+            this.Id = id;
+            this.PropertyName = propertyName;
+            this.From = before;
+            this.To = after;
         }
 
-        public object NewValue
+        public Guid Id { get; private set; }
+
+        public string PropertyName { get; private set; }
+
+        public object From { get; private set; }
+
+        public object To { get; private set; }
+
+        public override string ToString()
         {
-            get { return _newValue; }
+            return string.Format("PropertyChanged Id:{0} Property:{1} From:{2} To:{3}", this.Id, this.PropertyName, this.From, this.To);
         }
-
-        public object OldValue
-        {
-            get { return _oldValue; }
-        }
-
-        public string PropertyName
-        {
-            get { return _propertyName; }
-        }
-
-        #endregion Properties
-
-        #region c'tor
-
-        public PropertyChanged(Guid artefactId, string propertyName, object oldValue, object newValue)
-        {
-            Guard.AssertNotEmpty(propertyName, "propertyName");
-
-            _artefactId = artefactId;
-            _propertyName = propertyName;
-            _oldValue = oldValue;
-            _newValue = newValue;
-        }
-
-        #endregion c'tor
     }
 }

@@ -1,34 +1,26 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-using TecX.Common;
-
 namespace TecX.Agile.Infrastructure.Events
 {
-    [DataContract]
-    public class FieldHighlighted : IDomainEvent
-    {        
-        [DataMember]
-        private readonly Guid _artefactId;
-        [DataMember]
-        private readonly string _fieldName;
+    using System;
 
-        public string FieldName
-        {
-            get { return _fieldName; }
-        }
+    using TecX.Common;
 
-        public Guid ArtefactId
-        {
-            get { return _artefactId; }
-        }
-
-        public FieldHighlighted(Guid artefactId, string fieldName)
+    public class FieldHighlighted
+    {
+        public FieldHighlighted(Guid id, string fieldName)
         {
             Guard.AssertNotEmpty(fieldName, "fieldName");
 
-            _artefactId = artefactId;
-            _fieldName = fieldName;
+            this.Id = id;
+            this.FieldName = fieldName;
+        }
+
+        public Guid Id { get; private set; }
+
+        public string FieldName { get; private set; }
+
+        public override string ToString()
+        {
+            return string.Format("FieldHighlighted Id:{0} Field:{1}", this.Id, this.FieldName);
         }
     }
 }

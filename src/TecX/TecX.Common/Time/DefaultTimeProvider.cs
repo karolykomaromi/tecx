@@ -1,42 +1,24 @@
-﻿using System;
-
-namespace TecX.Common.Time
+﻿namespace TecX.Common.Time
 {
-    /// <summary>
-    /// Default implementation of a <see cref="TimeProvider"/> using <see cref="DateTime"/> internally
-    /// </summary>
+    using System;
+
     public class DefaultTimeProvider : TimeProvider
     {
-        #region Overrides of TimeProvider
-
-        /// <summary>
-        /// Gets a <see cref="DateTime"/> object that is set to the current date and time
-        /// on this computer, expressed as the Coordinated Universal Time (UTC).
-        /// </summary>
-        /// <value></value>
-        public override DateTime UtcNow
+        protected override string GetString(DateTime dt)
         {
-            get { return DateTime.UtcNow; }
+            // uses the roundtrip format string
+            // ignores any FormatProvider
+            return dt.ToString("o");
         }
 
-        /// <summary>
-        /// Gets a <see cref="DateTime"/>  object that is set to the current date and time on this computer,
-        /// expressed as the local time.
-        /// </summary>
-        /// <value></value>
-        public override DateTime Now
+        protected override DateTime GetUtcNow()
         {
-            get { return DateTime.Now; }
+            return DateTime.UtcNow;
         }
 
-        /// <summary>
-        /// Gets the current date.
-        /// </summary>
-        public override DateTime Today
+        protected override DateTime GetNow()
         {
-            get { return DateTime.Today; }
+            return DateTime.Now;
         }
-
-        #endregion Overrides of TimeProvider
     }
 }

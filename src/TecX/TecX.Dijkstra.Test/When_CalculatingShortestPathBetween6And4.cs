@@ -14,7 +14,7 @@ namespace TecX.Dijkstra.Test
 
         protected override void When()
         {
-            this.path = this.algorithm.CalculateDistance(this.dictNodes[6], this.dictNodes[4]).ToList();
+            this.path = this.algorithm.GetShortestPath(this.dictNodes[6], this.dictNodes[4]).ToList();
         }
 
         [TestMethod]
