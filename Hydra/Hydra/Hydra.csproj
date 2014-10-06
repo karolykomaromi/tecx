@@ -231,6 +231,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hosting\CollectAllVisitor.cs" />
+    <Compile Include="Hosting\CreateLookUpVisitor.cs" />
+    <Compile Include="Hosting\EmbeddedDirectory.cs" />
+    <Compile Include="Hosting\EmbeddedFile.cs" />
+    <Compile Include="Hosting\EmbeddedPathHelper.cs" />
+    <Compile Include="Hosting\EmbeddedResourceNotFoundException.cs" />
+    <Compile Include="Hosting\EmbeddedResourceVirtualPathProvider.cs" />
+    <Compile Include="Hosting\EmbeddedVisitor.cs" />
+    <Compile Include="Hosting\IVirtualPathUtility.cs" />
+    <Compile Include="Hosting\VirtualPathUtilityWrapper.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Registration.cs" />
     <Compile Include="Models\RegistrationValidator.cs" />
