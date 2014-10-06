@@ -24,6 +24,28 @@
             Assert.NotNull(actual);
             Assert.IsType<MyHandler>(actual);
         }
+
+        [Fact]
+        public void Should_Call_Dispose()
+        {
+            using (var container = new UnityContainer().RegisterType<IDocumentStore>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionFactory(_ => new EmbeddableDocumentStore())))
+            {
+                IDocumentStore store = container.Resolve<IDocumentStore>();
+            }
+        }
+    }
+
+    public interface IDocumentStore
+    {
+    }
+
+    public class EmbeddableDocumentStore: IDocumentStore, IDisposable
+    {
+        public void Dispose()
+        {
+        }
     }
 
     public static class AllClassesExtensions

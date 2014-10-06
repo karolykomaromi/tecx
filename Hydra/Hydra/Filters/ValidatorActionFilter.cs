@@ -37,6 +37,9 @@
 
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
+            // redirects are not properly forwarded when using this method of validation. this we return
+            // a simple json snippet that contains the redirect url and the client does the actual redirect.
+            // this solution is mentioned in the comments of the above blog post.
             RedirectToRouteResult redirect = filterContext.Result as RedirectToRouteResult;
 
             if (redirect == null)

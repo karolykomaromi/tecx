@@ -35,6 +35,18 @@
             DependencyResolver.SetResolver(resolver);
         }
 
+        protected void Application_End()
+        {
+            //// Logging ASP.NET Application Shutdown Events by ScottGu http://weblogs.asp.net/scottgu/433194
+
+            IUnityContainer container = this.Application[Unity.Constants.ContainerKey] as IUnityContainer;
+
+            if (container != null)
+            {
+                container.Dispose();
+            }
+        }
+
         protected void Application_BeginRequest()
         {
             // we use child containers per request as lifetime scope. disposing the child container at the
