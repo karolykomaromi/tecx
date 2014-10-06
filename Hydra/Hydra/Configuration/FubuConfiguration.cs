@@ -1,6 +1,8 @@
-namespace Hydra
+namespace Hydra.Configuration
 {
+    using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Web;
     using FubuCore;
@@ -13,7 +15,6 @@ namespace Hydra
     using FubuMVC.Core.UI.Elements;
     using FubuMVC.Core.UI.Security;
     using HtmlTags.Conventions;
-    using Hydra.Conventions;
     using Hydra.FubuConventions;
     using Microsoft.Practices.Unity;
 
@@ -60,6 +61,33 @@ namespace Hydra
                         typeof(IFieldAccessService).Assembly
                     }.SelectMany(a => a.GetTypes()),
                 WithMappings.FromMatchingInterface);
+        }
+
+        private class FubuUnityServiceLocator : IServiceLocator
+        {
+            private readonly IUnityContainer container;
+
+            public FubuUnityServiceLocator(IUnityContainer container)
+            {
+                Contract.Requires(container != null);
+
+                this.container = container;
+            }
+
+            public T GetInstance<T>()
+            {
+                return this.container.Resolve<T>();
+            }
+
+            public object GetInstance(Type type)
+            {
+                return this.container.Resolve(type);
+            }
+
+            public T GetInstance<T>(string name)
+            {
+                return this.container.Resolve<T>(name);
+            }
         }
     }
 }

@@ -5,6 +5,7 @@
     using System.Web.Mvc;
     using System.Web.Routing;
     using FluentValidation.Mvc;
+    using Hydra.Configuration;
     using Hydra.Filters;
     using Hydra.Unity;
     using Microsoft.Practices.Unity;

@@ -50,10 +50,10 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Assets\ErrorMessages.Designer.cs">
+    <Compile Include="Assets\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ErrorMessages.tt</DependentUpon>
+      <DependentUpon>Resources.tt</DependentUpon>
     </Compile>
     <Compile Include="Collections\CollectionResolutionExtension.cs" />
     <Compile Include="Collections\CollectionResolutionStrategy.cs" />
@@ -82,10 +82,10 @@
     <Compile Include="UnityDependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\ErrorMessages.tt">
+    <None Include="Assets\Resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ErrorMessages.resx</DependentUpon>
-      <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -97,7 +97,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Assets\ErrorMessages.resx" />
+    <EmbeddedResource Include="Assets\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

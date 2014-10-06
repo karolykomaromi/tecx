@@ -1,4 +1,4 @@
-﻿namespace Hydra
+namespace Hydra.Configuration
 {
     using Microsoft.Practices.Unity;
     using Raven.Client;
