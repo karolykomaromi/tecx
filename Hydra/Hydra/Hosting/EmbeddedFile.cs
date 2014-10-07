@@ -8,7 +8,7 @@
     using System.Web.Hosting;
 
     [DebuggerDisplay("File={AppRelativePath} Resource={ResourceName}")]
-    public class EmbeddedFile : VirtualFile
+    public class EmbeddedFile : VirtualFile, IEquatable<EmbeddedFile>
     {
         private readonly string resourceName;
         private readonly Assembly assembly;
@@ -63,8 +63,30 @@
             return this.ResourceName.GetHashCode();
         }
 
+        public bool Equals(EmbeddedFile other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            if (object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            bool equals = string.Equals(this.AppRelativePath, other.AppRelativePath, StringComparison.OrdinalIgnoreCase);
+
+            return equals;
+        }
+
         public override bool Equals(object obj)
         {
+            if (obj == null)
+            {
+                return false;
+            }
+
             if (object.ReferenceEquals(this, obj))
             {
                 return true;
@@ -77,7 +99,9 @@
                 return false;
             }
 
-            return string.Equals(this.ResourceName, other.ResourceName, StringComparison.Ordinal);
+            bool equals = string.Equals(this.ResourceName, other.ResourceName, StringComparison.Ordinal);
+
+            return equals;
         }
     }
 }

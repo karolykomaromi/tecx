@@ -25,8 +25,8 @@
 
             root.Accept(visitor);
 
-            this.filesByAppRelativePath = visitor.Files;
-            this.directoriesByAppRelativePath = visitor.Directories;
+            this.filesByAppRelativePath = new Dictionary<string, EmbeddedFile>(visitor.Files, StringComparer.OrdinalIgnoreCase);
+            this.directoriesByAppRelativePath = new Dictionary<string, EmbeddedDirectory>(visitor.Directories, StringComparer.OrdinalIgnoreCase);
         }
 
         public static EmbeddedResourceVirtualPathProvider Create(IVirtualPathUtility virtualPathUtility, params Assembly[] assemblies)
@@ -40,7 +40,7 @@
 
         public override bool FileExists(string virtualPath)
         {
-            Contract.Requires(!string.IsNullOrEmpty(virtualPath));
+            Contract.Requires(!string.IsNullOrWhiteSpace(virtualPath));
 
             string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualPath);
 
@@ -56,7 +56,7 @@
 
         public override VirtualFile GetFile(string virtualPath)
         {
-            Contract.Requires(!string.IsNullOrEmpty(virtualPath));
+            Contract.Requires(!string.IsNullOrWhiteSpace(virtualPath));
 
             string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualPath);
 
@@ -73,7 +73,7 @@
 
         public override bool DirectoryExists(string virtualDir)
         {
-            Contract.Requires(!string.IsNullOrEmpty(virtualDir));
+            Contract.Requires(!string.IsNullOrWhiteSpace(virtualDir));
 
             string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualDir);
 
@@ -89,7 +89,7 @@
 
         public override VirtualDirectory GetDirectory(string virtualDir)
         {
-            Contract.Requires(!string.IsNullOrEmpty(virtualDir));
+            Contract.Requires(!string.IsNullOrWhiteSpace(virtualDir));
 
             string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualDir);
 
@@ -106,6 +106,8 @@
 
         public override CacheDependency GetCacheDependency(string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
+            Contract.Requires(!string.IsNullOrWhiteSpace(virtualPath));
+
             string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualPath);
 
             if (this.filesByAppRelativePath.ContainsKey(appRelativePath) ||
