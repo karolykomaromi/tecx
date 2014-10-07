@@ -57,7 +57,7 @@ namespace Hydra.Unity
 
                 return service;
             }
-            catch (ResolutionFailedException ex)
+            catch (ResolutionFailedException)
             {
                 object service = this.fallback.GetService(serviceType);
 
@@ -90,7 +90,7 @@ namespace Hydra.Unity
 
                 return services;
             }
-            catch (ResolutionFailedException ex)
+            catch (ResolutionFailedException)
             {
                 IEnumerable<object> services = this.fallback.GetServices(serviceType);
 
