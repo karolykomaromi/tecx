@@ -12,11 +12,11 @@
         [Fact]
         public void Should_Transform_ManifestResourceName_To_App_Relative_Path()
         {
-            string manifestResourceName = "Modular.Web.Test.Assets.Texts.Long.VeryLong.txt";
+            string manifestResourceName = "Hydra.Test.Texts.Long.VeryLong.txt";
 
             string expected = "~/Texts/Long/VeryLong.txt";
 
-            string actual = EmbeddedPathHelper.ToAppRelative(manifestResourceName);
+            string actual = EmbeddedPathHelper.ToAppRelative("Hydra.Test", manifestResourceName);
 
             Assert.Equal(expected, actual, StringComparer.OrdinalIgnoreCase);
         }
@@ -24,11 +24,11 @@
         [Fact]
         public void Should_Get_AppRelative_Directories_From_ManifestResourceName()
         {
-            string manifestResourceName = "Modular.Web.Test.Assets.Texts.Long.VeryLong.txt";
+            string manifestResourceName = "Hydra.Test.Texts.Long.VeryLong.txt";
 
             IEnumerable<string> expected = new[] { "~/Texts/", "~/Texts/Long/" };
 
-            IEnumerable<string> actual = EmbeddedPathHelper.GetDirectories(manifestResourceName);
+            IEnumerable<string> actual = EmbeddedPathHelper.GetDirectories("Hydra.Test", manifestResourceName);
 
             Assert.Equal(expected, actual, StringComparer.OrdinalIgnoreCase);
         }
@@ -37,7 +37,7 @@
         public void Should_Produce_Correct_Directory_Structure()
         {
             Assembly assembly = this.GetType().Assembly;
-            string manifestResourceName = "Modular.Web.Test.Assets.Texts.Long.VeryLong.txt";
+            string manifestResourceName = "Hydra.Test.Texts.Long.VeryLong.txt";
 
             EmbeddedDirectory dir = EmbeddedPathHelper.ToDirectoryStructure(assembly, manifestResourceName);
 
@@ -53,7 +53,7 @@
 
             EmbeddedFile file = subDir.EmbeddedFiles[0];
             Assert.Equal("~/Texts/Long/VeryLong.txt", file.AppRelativePath);
-            Assert.Equal("Modular.Web.Test.Assets.Texts.Long.VeryLong.txt", file.ResourceName);
+            Assert.Equal("Hydra.Test.Texts.Long.VeryLong.txt", file.ResourceName);
         }
 
         [Fact]

@@ -125,6 +125,7 @@
       <HintPath>..\packages\RavenDB.Database.2.5.2935\lib\net45\Raven.Database.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
@@ -173,6 +174,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\favicon.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Error.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -231,6 +233,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hosting\CachingVirtualPathProvider.cs" />
     <Compile Include="Hosting\CollectAllVisitor.cs" />
     <Compile Include="Hosting\CreateLookUpVisitor.cs" />
     <Compile Include="Hosting\EmbeddedDirectory.cs" />
@@ -274,6 +277,14 @@
       <Project>{da9f1b57-18bd-451f-a3fa-7d149849a8bd}</Project>
       <Name>Hydra.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hydra.Theme.Blue\Hydra.Theme.Blue.csproj">
+      <Project>{4DEDE7A4-387F-49D7-8C16-60C81CE68E6E}</Project>
+      <Name>Hydra.Theme.Blue</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hydra.Theme.Green\Hydra.Theme.Green.csproj">
+      <Project>{2516F964-664E-4093-ABAF-2AD588253A01}</Project>
+      <Name>Hydra.Theme.Green</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hydra.Unity\Hydra.Unity.csproj">
       <Project>{9ed80c67-f60f-4cd5-a1c8-df4b8913e69a}</Project>
       <Name>Hydra.Unity</Name>
@@ -301,7 +312,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>44452</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:55876/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

@@ -8,14 +8,15 @@
 
     public static class EmbeddedPathHelper
     {
-        public static string ToAppRelative(string manifestResourceName)
+        public static string ToAppRelative(string assemblyName, string manifestResourceName)
         {
-            Contract.Requires(!string.IsNullOrEmpty(manifestResourceName));
+            Contract.Requires(!string.IsNullOrWhiteSpace(assemblyName));
+            Contract.Requires(!string.IsNullOrWhiteSpace(manifestResourceName));
             Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 
-            int idx = manifestResourceName.IndexOf("Assets.", StringComparison.Ordinal);
+            int idx = manifestResourceName.IndexOf(assemblyName, StringComparison.Ordinal);
 
-            string path = "~/" + manifestResourceName.Substring(idx + 7);
+            string path = "~/" + manifestResourceName.Substring(idx + assemblyName.Length + 1);
 
             path = path.Replace('.', '/');
 
@@ -28,14 +29,15 @@
             return path;
         }
 
-        public static IEnumerable<string> GetDirectories(string manifestResourceName)
+        public static IEnumerable<string> GetDirectories(string assemblyName, string manifestResourceName)
         {
-            Contract.Requires(!string.IsNullOrEmpty(manifestResourceName));
+            Contract.Requires(!string.IsNullOrWhiteSpace(assemblyName));
+            Contract.Requires(!string.IsNullOrWhiteSpace(manifestResourceName));
             Contract.Ensures(Contract.Result<IEnumerable<string>>() != null);
 
-            int idx = manifestResourceName.IndexOf("Assets.", StringComparison.Ordinal);
+            int idx = manifestResourceName.IndexOf(assemblyName, StringComparison.OrdinalIgnoreCase);
 
-            string path = manifestResourceName.Substring(idx + 7);
+            string path = manifestResourceName.Substring(idx + assemblyName.Length + 1);
 
             string[] parts = path.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -53,9 +55,11 @@
             Contract.Requires(!string.IsNullOrEmpty(manifestResourceName));
             Contract.Ensures(Contract.Result<EmbeddedDirectory>() != null);
 
-            string[] directories = GetDirectories(manifestResourceName).OrderByDescending(d => d.Length).ToArray();
+            string assemblyName = assembly.GetName().Name;
 
-            string fileName = ToAppRelative(manifestResourceName);
+            string[] directories = EmbeddedPathHelper.GetDirectories(assemblyName, manifestResourceName).OrderByDescending(d => d.Length).ToArray();
+
+            string fileName = EmbeddedPathHelper.ToAppRelative(assemblyName, manifestResourceName);
 
             EmbeddedFile file = new EmbeddedFile(fileName, manifestResourceName, assembly);
 
@@ -76,7 +80,7 @@
 
             string[] manifestResourceNames = assembly.GetManifestResourceNames();
 
-            var directories = manifestResourceNames.Select(res => ToDirectoryStructure(assembly, res));
+            var directories = manifestResourceNames.Select(manifestResourceName => EmbeddedPathHelper.ToDirectoryStructure(assembly, manifestResourceName));
 
             directories = EmbeddedDirectory.Merge(directories);
 
@@ -92,12 +96,12 @@
 
             if (assemblies.Length == 1)
             {
-                return ToDirectoryStructure(assemblies[0]);
+                return EmbeddedPathHelper.ToDirectoryStructure(assemblies[0]);
             }
 
             var directories = from assembly in assemblies
                               from res in assembly.GetManifestResourceNames()
-                              select ToDirectoryStructure(assembly, res);
+                              select EmbeddedPathHelper.ToDirectoryStructure(assembly, res);
 
             directories = EmbeddedDirectory.Merge(directories);
 

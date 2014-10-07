@@ -2,11 +2,15 @@
 {
     using System;
     using System.Web;
+    using System.Web.Hosting;
     using System.Web.Mvc;
     using System.Web.Routing;
     using FluentValidation.Mvc;
     using Hydra.Configuration;
     using Hydra.Filters;
+    using Hydra.Hosting;
+    using Hydra.Theme.Blue;
+    using Hydra.Theme.Green;
     using Hydra.Unity;
     using Microsoft.Practices.Unity;
 
@@ -34,6 +38,12 @@
             IDependencyResolver fallback = DependencyResolver.Current;
             IDependencyResolver resolver = new UnityDependencyResolver(fallback, new ContainerPerRequestAdapter());
             DependencyResolver.SetResolver(resolver);
+
+            // this alternative virtual path provider uses embedded resources instead of the file system. if no matching resource is found it will use
+            // the default, file-based vpp as fallback. the ervpp enables theming by packaging all theme resources into an assembly that can
+            // be picked up from a yet to define folder and dynamically loaded into the app domain.
+            VirtualPathProvider provider = EmbeddedResourceVirtualPathProvider.Create(new VirtualPathUtilityWrapper(), typeof(Green).Assembly);
+            HostingEnvironment.RegisterVirtualPathProvider(provider);
         }
 
         protected void Application_End()

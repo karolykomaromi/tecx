@@ -2,6 +2,7 @@
 {
     using System.Reflection;
     using Hydra.Hosting;
+    using Hydra.Theme.Blue;
     using Moq;
     using Xunit;
 
@@ -24,18 +25,18 @@
         [Fact]
         public void Should_Find_Existing_Files_From_Multiple_Assemblies()
         {
-            string blue = "~/Images/Blue.png";
+            string css = "~/Content/Site.css";
             string red = "~/Images/Red.png";
 
             var virtualPathUtility = new Mock<IVirtualPathUtility>();
             virtualPathUtility.Setup(vpu => vpu.ToAppRelative(It.IsAny<string>()))
                               .Returns((string virtualPath) => virtualPath);
 
-            var assemblies = new[] { this.GetType().Assembly, typeof(IVirtualPathUtility).Assembly };
+            var assemblies = new[] { this.GetType().Assembly, typeof(Blue).Assembly };
 
             var provider = EmbeddedResourceVirtualPathProvider.Create(virtualPathUtility.Object, assemblies);
 
-            Assert.True(provider.FileExists(blue));
+            Assert.True(provider.FileExists(css));
             Assert.True(provider.FileExists(red));
         }
 

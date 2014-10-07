@@ -269,3 +269,7 @@ Hydra/Hydra.Infrastructure/bin
 Hydra/Hydra.Test/bin
 Hydra/Hydra.Test/obj
 Hydra/Hydra.Theme.Blue/obj
+Hydra/Hydra.Theme.Green/obj
+Hydra/Hydra.Theme.Green/bin
+Hydra/Hydra/Raven
+Hydra/Hydra.Theme.Blue/bin

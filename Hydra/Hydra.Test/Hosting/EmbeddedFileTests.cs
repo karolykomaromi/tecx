@@ -14,7 +14,7 @@
             string fileName = "~/Texts/Long/VeryLong.txt";
             Assembly assembly = this.GetType().Assembly;
 
-            VirtualFile file = new EmbeddedFile(fileName, "Modular.Web.Test.Assets.Texts.Long.VeryLong.txt", assembly);
+            VirtualFile file = new EmbeddedFile(fileName, "Hydra.Test.Texts.Long.VeryLong.txt", assembly);
 
             using (Stream stream = file.Open())
             {
