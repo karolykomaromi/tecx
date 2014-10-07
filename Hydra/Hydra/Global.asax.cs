@@ -36,7 +36,8 @@
             // fubu conventions need container backed dependency resolver but we don't want to figure out the whole
             // configuration for all the other components so we use the default resolver as fallback.
             IDependencyResolver fallback = DependencyResolver.Current;
-            IDependencyResolver resolver = new UnityDependencyResolver(fallback, new ContainerPerRequestAdapter());
+            ////IDependencyResolver resolver = new UnityDependencyResolver(fallback, new ContainerPerRequestAdapter());
+            IDependencyResolver resolver = new LearningFromFailureUnityDependencyResolver(fallback, new ContainerPerRequestAdapter());
             DependencyResolver.SetResolver(resolver);
 
             // this alternative virtual path provider uses embedded resources instead of the file system. if no matching resource is found it will use
@@ -55,6 +56,14 @@
             if (container != null)
             {
                 container.Dispose();
+            }
+
+            var resolver = DependencyResolver.Current as LearningFromFailureUnityDependencyResolver;
+
+            if (resolver != null)
+            {
+                // TODO weberse 2014-10-07 log missing mappings so you can update your registration code later
+                //// resolver.MissingMappings
             }
         }
 

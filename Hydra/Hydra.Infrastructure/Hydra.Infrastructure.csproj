@@ -42,11 +42,6 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Assets\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.tt</DependentUpon>
-    </Compile>
     <Compile Include="Caching\CacheItemInvalidationToken.cs" />
     <Compile Include="Caching\ExternallyControlledChangeMonitor.cs" />
     <Compile Include="Caching\ObjectCacheExtensions.cs" />
@@ -65,22 +60,29 @@
     <Compile Include="I18n\IResourceManager.cs" />
     <Compile Include="I18n\ResourceManagerBase.cs" />
     <Compile Include="I18n\ResourceManagerWrapper.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="StringHelper.cs" />
     <Compile Include="TimeProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Resources.tt">
+    <None Include="packages.config" />
+    <None Include="Properties\Resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Resources.resx</DependentUpon>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Assets\Resources.resx" />
+    <Folder Include="Assets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

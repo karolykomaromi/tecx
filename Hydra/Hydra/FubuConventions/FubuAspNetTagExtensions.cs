@@ -14,7 +14,7 @@ namespace Hydra.FubuConventions
         public static HtmlTag Input<T>(this HtmlHelper<T> helper, Expression<Func<T, object>> expression)
             where T : class
         {
-            var generator = GetGenerator<T>();
+            var generator = FubuAspNetTagExtensions.GetGenerator<T>();
 
             return generator.InputFor(expression, model: helper.ViewData.Model);
         }
@@ -22,7 +22,7 @@ namespace Hydra.FubuConventions
         public static HtmlTag Label<T>(this HtmlHelper<T> helper, Expression<Func<T, object>> expression)
             where T : class
         {
-            var generator = GetGenerator<T>();
+            var generator = FubuAspNetTagExtensions.GetGenerator<T>();
 
             return generator.LabelFor(expression, model: helper.ViewData.Model);
         }
@@ -30,7 +30,7 @@ namespace Hydra.FubuConventions
         public static HtmlTag Display<T>(this HtmlHelper<T> helper, Expression<Func<T, object>> expression)
             where T : class
         {
-            var generator = GetGenerator<T>();
+            var generator = FubuAspNetTagExtensions.GetGenerator<T>();
 
             return generator.DisplayFor(expression, model: helper.ViewData.Model);
         }
@@ -39,7 +39,6 @@ namespace Hydra.FubuConventions
             where T : class
         {
             //// MVC code don't ask me I just copied
-            /// 
             string expressionText = ExpressionHelper.GetExpressionText(expression);
 
             string fullHtmlFieldName = helper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(expressionText);

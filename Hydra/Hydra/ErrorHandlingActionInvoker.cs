@@ -2,8 +2,13 @@ namespace Hydra
 {
     using System.Diagnostics.Contracts;
     using System.Web.Mvc;
+    using System.Web.Mvc.Async;
 
-    public class ErrorHandlingActionInvoker : ControllerActionInvoker
+    /// <summary>
+    /// Must derive from <see cref="AsyncControllerActionInvoker"/> to support async controller actions.
+    /// <seealso cref="http://stackoverflow.com/questions/26163046/async-controller-method-displays-type-name-of-taskactionresult"/>
+    /// </summary>
+    public class ErrorHandlingActionInvoker : AsyncControllerActionInvoker
     {
         private readonly IExceptionFilter filter;
 

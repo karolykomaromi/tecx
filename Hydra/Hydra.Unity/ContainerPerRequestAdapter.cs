@@ -3,7 +3,7 @@ namespace Hydra.Unity
     using System;
     using System.Collections.Generic;
     using System.Web;
-    using Hydra.Unity.Assets;
+    using Hydra.Unity.Properties;
     using Microsoft.Practices.Unity;
 
     /// <summary>
