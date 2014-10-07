@@ -69,9 +69,7 @@
       <Name>Hydra</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Texts\Long\VeryLong.txt" />
   </ItemGroup>

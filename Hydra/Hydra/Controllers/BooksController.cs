@@ -25,10 +25,14 @@
 
             // TODO weberse 2014-10-07 lightweight client does not support firstordefaultasync
             ////Book book = await books.FirstOrDefaultAsync() ?? new Book { Title = "Programming WCF service", ASIN = "B0043D2DUK" };
+            
+            Task<Book> t = Task<Book>.Factory.StartNew(() =>
+                {
+                    Thread.Sleep(1000);
+                    return new Book { Title = "Programming WCF service", ASIN = "B0043D2DUK" };
+                });
 
-            Book book = await Foo.Bar();
-
-            return this.View(book);
+            return this.View(await t);
         }
 
         public ActionResult Index()
@@ -38,20 +42,6 @@
             Book book = books.FirstOrDefault() ?? new Book { Title = "Programming WCF service", ASIN = "B0043D2DUK" };
 
             return this.View(book);
-        }
-    }
-
-    public static class Foo
-    {
-        public static async Task<Book> Bar()
-        {
-            var t = Task<Book>.Factory.StartNew(() =>
-                {
-                    Thread.Sleep(1000);
-                    return new Book { Title = "Programming WCF service", ASIN = "B0043D2DUK" };
-                });
-
-            return await t;
         }
     }
 }
