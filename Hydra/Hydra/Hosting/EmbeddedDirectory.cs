@@ -10,7 +10,7 @@
     using System.Web.Hosting;
 
     [DebuggerDisplay("Path={AppRelativePath} Directories={directories.Count} Files={files.Count}")]
-    public class EmbeddedDirectory : VirtualDirectory
+    public class EmbeddedDirectory : VirtualDirectory, IEquatable<EmbeddedDirectory>
     {
         private readonly List<EmbeddedFile> files;
         private readonly List<EmbeddedDirectory> directories;
@@ -145,8 +145,30 @@
             return this.AppRelativePath.GetHashCode();
         }
 
+        public bool Equals(EmbeddedDirectory other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            if (object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            bool equals = string.Equals(this.AppRelativePath, other.AppRelativePath, StringComparison.OrdinalIgnoreCase);
+
+            return equals;
+        }
+
         public override bool Equals(object obj)
         {
+            if (obj == null)
+            {
+                return false;
+            }
+
             if (object.ReferenceEquals(this, obj))
             {
                 return true;
@@ -159,7 +181,9 @@
                 return false;
             }
 
-            return string.Equals(this.AppRelativePath, other.AppRelativePath, StringComparison.OrdinalIgnoreCase);
+            bool equals = string.Equals(this.AppRelativePath, other.AppRelativePath, StringComparison.OrdinalIgnoreCase);
+
+            return equals;
         }
     }
 }
