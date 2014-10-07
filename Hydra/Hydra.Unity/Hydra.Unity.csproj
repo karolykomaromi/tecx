@@ -50,18 +50,19 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Assets\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.tt</DependentUpon>
-    </Compile>
     <Compile Include="Collections\CollectionResolutionExtension.cs" />
     <Compile Include="Collections\CollectionResolutionStrategy.cs" />
     <Compile Include="Collections\CoupledToImplementationDetailsOverrideExtractor.cs" />
     <Compile Include="Collections\ResolverOverrideExtractor.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContainerPerRequestAdapter.cs" />
+    <Compile Include="LearningFromFailureUnityDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Tracking\BuildTreeDisposer.cs" />
     <Compile Include="Tracking\BuildTreeItemNode.cs" />
     <Compile Include="Tracking\BuildTreeTracker.cs" />
@@ -82,12 +83,12 @@
     <Compile Include="UnityDependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Resources.tt">
+    <None Include="packages.config" />
+    <None Include="Properties\Resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Resources.resx</DependentUpon>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj">
@@ -95,9 +96,11 @@
       <Name>Hydra.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Assets\Resources.resx" />
+    <Folder Include="Assets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

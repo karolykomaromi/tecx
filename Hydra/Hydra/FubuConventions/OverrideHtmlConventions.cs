@@ -1,8 +1,12 @@
+using System.Linq;
+
 namespace Hydra.FubuConventions
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Drawing;
+    using System.Reflection;
     using System.Web.Mvc;
     using FubuMVC.Core.UI;
     using FubuMVC.Core.UI.Elements;
@@ -10,6 +14,8 @@ namespace Hydra.FubuConventions
 
     public class OverrideHtmlConventions : DefaultHtmlConventions
     {
+        private readonly IDictionary<Assembly, Type> resourcesPerAssembly = new Dictionary<Assembly, Type>();
+
         public OverrideHtmlConventions()
         {
             this.Validators.Always.BuildBy<SpanValidatorBuilder>();
@@ -24,6 +30,12 @@ namespace Hydra.FubuConventions
 
             // Labels
             this.Labels.ModifyForAttribute<DisplayAttribute>((t, a) => t.Text(a.Name));
+
+            // weberse 2014-10-07 http://lostechies.com/jimmybogard/2014/07/22/conventional-html-in-asp-net-mvc-replacing-form-helpers/
+            // how to internationalize labels
+            this.Labels.If(er => this.HasResources(er.HolderType()))
+                .ModifyWith(er => er.OriginalTag.Text(this.GetLabelText(er)), "Try to pull the text for the label from a resource file.");
+
             this.Labels.IfPropertyIs<bool>().ModifyWith(er => er.CurrentTag.Text(er.OriginalTag.Text() + "?"));
 
             // Checkbox
@@ -70,6 +82,52 @@ namespace Hydra.FubuConventions
 
                 return new ElementCategoryExpression(builderSet);
             }
+        }
+
+        private string GetLabelText(ElementRequest er)
+        {
+            Type resourceType = this.resourcesPerAssembly[er.HolderType().Assembly];
+
+            string resourceStringName = er.Model.GetType().Name + "_" + er.Accessor.Name;
+
+            PropertyInfo property = resourceType.GetTypeInfo().DeclaredProperties.FirstOrDefault(p => string.Equals(p.Name, resourceStringName, StringComparison.OrdinalIgnoreCase));
+
+            if (property != null)
+            {
+                string labelText = property.GetValue(null) as string;
+
+                if (!string.IsNullOrWhiteSpace(labelText))
+                {
+                    return labelText;
+                }
+            }
+
+            return er.OriginalTag.Text();
+        }
+
+        private bool HasResources(Type modelType)
+        {
+            Type resourceType;
+            if (this.resourcesPerAssembly.TryGetValue(modelType.Assembly, out resourceType))
+            {
+                if (resourceType != typeof(Missing))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            resourceType = modelType.Assembly.GetType(modelType.Assembly.GetName().Name + ".Properties.Resources", false);
+
+            if (resourceType == null)
+            {
+                this.resourcesPerAssembly[modelType.Assembly] = typeof(Missing);
+                return false;
+            }
+
+            this.resourcesPerAssembly[modelType.Assembly] = resourceType;
+            return true;
         }
     }
 }
