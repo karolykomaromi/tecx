@@ -40,8 +40,6 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
-
-
 /* Validation Styles */
 
 div .invalid label, div.invalid input
@@ -109,4 +107,15 @@ code
     margin: 5px 0;
     overflow: hidden;
     white-space: pre-wrap;
+}
+
+/* Me learning CSS */
+
+.footer {
+    position: absolute;
+    bottom: 0;
+}
+
+.company-logo {
+    float: right;
 }
