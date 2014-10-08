@@ -4,6 +4,7 @@ namespace Hydra.Unity
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Web.Mvc;
+    using Hydra.Infrastructure.Logging;
     using Microsoft.Practices.Unity;
 
     public class UnityDependencyResolver : IDependencyResolver
@@ -28,9 +29,16 @@ namespace Hydra.Unity
 
                 return o;
             }
-            catch (ResolutionFailedException ex)
+            catch (ResolutionFailedException)
             {
-                return this.fallback.GetService(serviceType);
+                object service = this.fallback.GetService(serviceType);
+
+                if (service != null)
+                {
+                    HydraEventSource.Log.MissingMapping(serviceType, service.GetType());
+                }
+
+                return service;
             }
         }
 
@@ -42,9 +50,19 @@ namespace Hydra.Unity
 
                 return all;
             }
-            catch (ResolutionFailedException ex)
+            catch (ResolutionFailedException)
             {
-                return this.fallback.GetServices(serviceType);
+                IEnumerable<object> services = this.fallback.GetServices(serviceType);
+
+                if (services != null)
+                {
+                    foreach (object service in services)
+                    {
+                        HydraEventSource.Log.MissingMapping(serviceType, service.GetType());
+                    }
+                }
+
+                return services;
             }
         }
     }
