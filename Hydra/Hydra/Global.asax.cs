@@ -9,8 +9,8 @@
     using Hydra.Configuration;
     using Hydra.Filters;
     using Hydra.Hosting;
-    using Hydra.Theme.Blue;
-    using Hydra.Theme.Green;
+    using Hydra.Theming.Blue;
+    using Hydra.Theming.Green;
     using Hydra.Unity;
     using Microsoft.Practices.Unity;
 

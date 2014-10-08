@@ -1,4 +1,4 @@
-﻿namespace Hydra.Theme.Green
+﻿namespace Hydra.Theming.Green
 {
     public class Green
     {

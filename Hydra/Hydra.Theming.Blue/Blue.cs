@@ -1,4 +1,4 @@
-﻿namespace Hydra.Theme.Blue
+﻿namespace Hydra.Theming.Blue
 {
     public class Blue
     {

@@ -2,7 +2,7 @@
 {
     using System.Reflection;
     using Hydra.Hosting;
-    using Hydra.Theme.Blue;
+    using Hydra.Theming.Blue;
     using Moq;
     using Xunit;
 
