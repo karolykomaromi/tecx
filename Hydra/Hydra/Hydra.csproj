@@ -278,13 +278,13 @@
       <Project>{da9f1b57-18bd-451f-a3fa-7d149849a8bd}</Project>
       <Name>Hydra.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hydra.Theme.Blue\Hydra.Theme.Blue.csproj">
-      <Project>{4DEDE7A4-387F-49D7-8C16-60C81CE68E6E}</Project>
-      <Name>Hydra.Theme.Blue</Name>
+    <ProjectReference Include="..\Hydra.Theming.Blue\Hydra.Theming.Blue.csproj">
+      <Project>{4dede7a4-387f-49d7-8c16-60c81ce68e6e}</Project>
+      <Name>Hydra.Theming.Blue</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hydra.Theme.Green\Hydra.Theme.Green.csproj">
+    <ProjectReference Include="..\Hydra.Theming.Green\Hydra.Theming.Green.csproj">
       <Project>{2516F964-664E-4093-ABAF-2AD588253A01}</Project>
-      <Name>Hydra.Theme.Green</Name>
+      <Name>Hydra.Theming.Green</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hydra.Unity\Hydra.Unity.csproj">
       <Project>{9ed80c67-f60f-4cd5-a1c8-df4b8913e69a}</Project>

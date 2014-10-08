@@ -19,15 +19,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Test", "Hydra.Test\Hydra.Test.csproj", "{3D90F012-58D9-4DC7-B72E-282E5859EE08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Theme.Blue", "Hydra.Theme.Blue\Hydra.Theme.Blue.csproj", "{4DEDE7A4-387F-49D7-8C16-60C81CE68E6E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99 Tests", "99 Tests", "{514BA452-29A0-46B4-83F0-C2308EFEAF24}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10 Application", "10 Application", "{AA32BD2B-218F-43A1-B556-ACD0E83CE105}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "50 Themes", "50 Themes", "{4F9CD390-11F1-4F07-A60C-8DB73817538F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Theme.Green", "Hydra.Theme.Green\Hydra.Theme.Green.csproj", "{2516F964-664E-4093-ABAF-2AD588253A01}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Theming.Blue", "Hydra.Theming.Blue\Hydra.Theming.Blue.csproj", "{4DEDE7A4-387F-49D7-8C16-60C81CE68E6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Theming.Green", "Hydra.Theming.Green\Hydra.Theming.Green.csproj", "{2516F964-664E-4093-ABAF-2AD588253A01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
