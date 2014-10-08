@@ -1,0 +1,35 @@
+<UserControl x:Class="Search.Views.SearchResultsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Search.ViewModels"
+    xmlns:t="clr-namespace:Infrastructure.Theming;assembly=Infrastructure.Client"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400"
+    d:DataContext="{d:DesignInstance d:Type=viewModels:SearchResultsViewModel}">
+    <UserControl.Resources>
+        <!-- The UI designer crashes without a reference to that dictionary. Will be removed by ThemeStyleAdapter when application starts -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Infrastructure.Client;component/Assets/Themes/DefaultTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border t:Theme.Style="{StaticResource TitleBorder}">
+            <TextBlock t:Theme.Style="{StaticResource TitleText}" Text="{Binding Title}"/>
+        </Border>
+        <ListBox  Grid.Row="1" ItemsSource="{Binding Results}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+    </Grid>
+</UserControl>

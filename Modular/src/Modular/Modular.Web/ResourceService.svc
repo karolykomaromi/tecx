@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Infrastructure.ResourceService" Factory="Modular.Web.Hosting.UnityServiceHostFactory" %>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="9216ff13-e761-4590-bf77-74522ee856cd" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/phone/project" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="project.xsd" MetadataType="Schema" ID="9b7169b5-abc0-4b1d-a75a-bc734cfda8f7" SourceId="1" SourceUrl="http://localhost/phone/project?xsd=xsd1" />
+    <MetadataFile FileName="project.disco" MetadataType="Disco" ID="369b234a-6fd1-49c6-9065-d3b7059bf372" SourceId="1" SourceUrl="http://localhost/phone/project?disco" />
+    <MetadataFile FileName="project1.xsd" MetadataType="Schema" ID="235bccaf-4f04-41c9-8629-ea777358a2b4" SourceId="1" SourceUrl="http://localhost/phone/project?xsd=xsd2" />
+    <MetadataFile FileName="ProjectService.wsdl" MetadataType="Wsdl" ID="b815bbae-feda-4d45-bb2e-1e3de655cebb" SourceId="1" SourceUrl="http://localhost/phone/project?wsdl" />
+    <MetadataFile FileName="project.wsdl" MetadataType="Wsdl" ID="71b3c6ea-da10-41b4-a24a-16ec5a646069" SourceId="1" SourceUrl="http://localhost/phone/project?wsdl=wsdl0" />
+    <MetadataFile FileName="project2.xsd" MetadataType="Schema" ID="b75b8ac3-d061-40d7-bc94-61e69341b239" SourceId="1" SourceUrl="http://localhost/phone/project?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

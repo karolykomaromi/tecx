@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/TecX.Agile.Phone.Service" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/TecX.Agile.Phone.Service" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/phone/project?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ProjectQueryResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Projects" nillable="true" type="tns:ArrayOfProject" />
+      <xs:element minOccurs="0" name="TotalResultCount" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProjectQueryResult" nillable="true" type="tns:ProjectQueryResult" />
+  <xs:complexType name="ArrayOfProject">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Project" nillable="true" type="tns:Project" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProject" nillable="true" type="tns:ArrayOfProject" />
+  <xs:complexType name="Project">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Project" nillable="true" type="tns:Project" />
+  <xs:complexType name="IterationQueryResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Iterations" nillable="true" type="tns:ArrayOfIteration" />
+      <xs:element minOccurs="0" name="TotalResultCount" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="IterationQueryResult" nillable="true" type="tns:IterationQueryResult" />
+  <xs:complexType name="ArrayOfIteration">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Iteration" nillable="true" type="tns:Iteration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfIteration" nillable="true" type="tns:ArrayOfIteration" />
+  <xs:complexType name="Iteration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProjectId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Iteration" nillable="true" type="tns:Iteration" />
+  <xs:complexType name="StoryQueryResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Stories" nillable="true" type="tns:ArrayOfStoryCard" />
+      <xs:element minOccurs="0" name="TotalResultCount" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StoryQueryResult" nillable="true" type="tns:StoryQueryResult" />
+  <xs:complexType name="ArrayOfStoryCard">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StoryCard" nillable="true" type="tns:StoryCard" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStoryCard" nillable="true" type="tns:ArrayOfStoryCard" />
+  <xs:complexType name="StoryCard">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="IterationId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StoryCard" nillable="true" type="tns:StoryCard" />
+</xs:schema>
