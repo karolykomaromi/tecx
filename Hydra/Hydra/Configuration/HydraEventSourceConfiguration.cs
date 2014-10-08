@@ -2,7 +2,6 @@
 {
     using System;
     using System.Diagnostics.Tracing;
-    using Hydra.Infrastructure;
     using Hydra.Infrastructure.Logging;
     using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
     using Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Formatters;

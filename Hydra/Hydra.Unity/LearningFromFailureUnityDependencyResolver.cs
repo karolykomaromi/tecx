@@ -1,5 +1,3 @@
-using Hydra.Infrastructure.Logging;
-
 namespace Hydra.Unity
 {
     using System;
@@ -7,6 +5,7 @@ namespace Hydra.Unity
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Web.Mvc;
+    using Hydra.Infrastructure.Logging;
     using Microsoft.Practices.Unity;
 
     public class LearningFromFailureUnityDependencyResolver : IDependencyResolver
