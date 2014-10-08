@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Theming.Blue", "Hydra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Theming.Green", "Hydra.Theming.Green\Hydra.Theming.Green.csproj", "{2516F964-664E-4093-ABAF-2AD588253A01}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Theming", "Hydra.Theming\Hydra.Theming.csproj", "{20A3F4CA-C09B-4FEC-ACB1-52011BF02EC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{2516F964-664E-4093-ABAF-2AD588253A01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2516F964-664E-4093-ABAF-2AD588253A01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2516F964-664E-4093-ABAF-2AD588253A01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20A3F4CA-C09B-4FEC-ACB1-52011BF02EC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20A3F4CA-C09B-4FEC-ACB1-52011BF02EC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20A3F4CA-C09B-4FEC-ACB1-52011BF02EC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20A3F4CA-C09B-4FEC-ACB1-52011BF02EC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +86,6 @@ Global
 		{12A3BC58-9915-496B-A9C5-D43DD56A1CF2} = {514BA452-29A0-46B4-83F0-C2308EFEAF24}
 		{4DEDE7A4-387F-49D7-8C16-60C81CE68E6E} = {4F9CD390-11F1-4F07-A60C-8DB73817538F}
 		{2516F964-664E-4093-ABAF-2AD588253A01} = {4F9CD390-11F1-4F07-A60C-8DB73817538F}
+		{20A3F4CA-C09B-4FEC-ACB1-52011BF02EC1} = {4F9CD390-11F1-4F07-A60C-8DB73817538F}
 	EndGlobalSection
 EndGlobal
