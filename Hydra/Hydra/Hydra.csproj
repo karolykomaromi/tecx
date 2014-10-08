@@ -217,6 +217,7 @@
     <Compile Include="Configuration\ErrorHandlingConfiguration.cs" />
     <Compile Include="Configuration\FubuConfiguration.cs" />
     <Compile Include="Configuration\HydraEventSourceConfiguration.cs" />
+    <Compile Include="Configuration\QueryConfiguration.cs" />
     <Compile Include="Configuration\RavenDBConfiguration.cs" />
     <Compile Include="Configuration\ResourcesConfiguration.cs" />
     <Compile Include="Configuration\UnityContainerConfiguration.cs" />
@@ -254,6 +255,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Queries\IMediator.cs" />
     <Compile Include="Queries\IQuery.cs" />
     <Compile Include="Queries\IQueryHandler.cs" />
   </ItemGroup>
