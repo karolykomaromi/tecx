@@ -1,3 +1,5 @@
+using Hydra.Infrastructure.Logging;
+
 namespace Hydra.Unity
 {
     using System;
@@ -63,6 +65,8 @@ namespace Hydra.Unity
 
                 Type implementationType = service.GetType();
 
+                HydraEventSource.Log.MissingMapping(serviceType, implementationType);
+
                 this.failedResolves[serviceType] = implementationType;
 
                 return service;
@@ -99,10 +103,15 @@ namespace Hydra.Unity
                 IEnumerable<Type> st;
                 if (this.failedResolveAlls.TryGetValue(serviceType, out st))
                 {
-                    implementationTypes = st.Union(implementationTypes).ToList();
+                    implementationTypes = st.Union(implementationTypes);
                 }
 
                 this.failedResolveAlls[serviceType] = implementationTypes.ToArray();
+
+                foreach (Type implementationType in implementationTypes)
+                {
+                    HydraEventSource.Log.MissingMapping(serviceType, implementationType);
+                }
 
                 return services;
             }

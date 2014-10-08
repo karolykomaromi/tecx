@@ -9,6 +9,8 @@
     using Hydra.Configuration;
     using Hydra.Filters;
     using Hydra.Hosting;
+    using Hydra.Infrastructure;
+    using Hydra.Infrastructure.Logging;
     using Hydra.Theming.Blue;
     using Hydra.Theming.Green;
     using Hydra.Unity;
@@ -18,6 +20,8 @@
     {
         protected void Application_Start()
         {
+            HydraEventSource.Log.Startup();
+
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
@@ -49,6 +53,8 @@
 
         protected void Application_End()
         {
+            HydraEventSource.Log.Shutdown();
+
             //// Logging ASP.NET Application Shutdown Events by ScottGu http://weblogs.asp.net/scottgu/433194
 
             IUnityContainer container = this.Application[Unity.Constants.ContainerKey] as IUnityContainer;
@@ -101,6 +107,7 @@
             this.Session["exception"] = ex; 
 
             // TODO weberse 2014-10-01 write exception to log
+            HydraEventSource.Log.Error(ex);
         }
     }
 }

@@ -64,6 +64,10 @@
       <Project>{4DEDE7A4-387F-49D7-8C16-60C81CE68E6E}</Project>
       <Name>Hydra.Theming.Blue</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hydra.Theming\Hydra.Theming.csproj">
+      <Project>{20A3F4CA-C09B-4FEC-ACB1-52011BF02EC1}</Project>
+      <Name>Hydra.Theming</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hydra\Hydra.csproj">
       <Project>{38E6867F-8C1C-4FBB-8E83-9F50A7F96E54}</Project>
       <Name>Hydra</Name>
