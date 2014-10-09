@@ -49,9 +49,9 @@ namespace Hydra.Unity
             {
                 return (IController)this.container.Resolve(controllerType);
             }
-            catch (ResolutionFailedException)
+            catch (ResolutionFailedException ex)
             {
-                HydraEventSource.Log.MissingMapping(controllerType, typeof(Missing));
+                HydraEventSource.Log.MissingMapping(ex.TypeRequested, typeof(Missing).Name);
                 throw;
             }
         }
