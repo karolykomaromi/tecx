@@ -1,11 +1,8 @@
-﻿using System.Linq;
-using Hydra.Infrastructure.Reflection;
-
-namespace Hydra.Configuration
+﻿namespace Hydra.Configuration
 {
     using System;
     using System.Diagnostics.Contracts;
-    using System.Reflection;
+    using System.Linq;
     using Hydra.Infrastructure.Logging;
     using Microsoft.Practices.Unity;
     using Quartz;
@@ -21,7 +18,7 @@ namespace Hydra.Configuration
                 _ => new[] { typeof(IJob) },
                 WithName.TypeName);
 
-            this.Container.RegisterType<IJobFactory, UnityJobFactory>(new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IJobFactory, UnityJobFactory>();
             this.Container.RegisterType<ISchedulerFactory, StdSchedulerFactory>(new ContainerControlledLifetimeManager(), new InjectionConstructor());
             this.Container.RegisterType<IScheduler>(
                 new InjectionFactory(c =>
@@ -48,6 +45,11 @@ namespace Hydra.Configuration
 
             public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
             {
+                Contract.Requires(bundle != null);
+                Contract.Requires(bundle.JobDetail != null);
+                Contract.Requires(bundle.JobDetail.JobType != null);
+                Contract.Ensures(Contract.Result<IJob>() != null);
+
                 Type jobType = bundle.JobDetail.JobType;
 
                 try
@@ -56,7 +58,7 @@ namespace Hydra.Configuration
                 }
                 catch (ResolutionFailedException ex)
                 {
-                    HydraEventSource.Log.MissingMapping(ex.TypeRequested, typeof(Missing).Name);
+                    HydraEventSource.Log.MissingMapping(ex.TypeRequested, ex.NameRequested);
 
                     throw;
                 }
@@ -64,7 +66,9 @@ namespace Hydra.Configuration
 
             public void ReturnJob(IJob job)
             {
-                throw new NotImplementedException();
+                Contract.Requires(job != null);
+
+                this.container.Teardown(job);
             }
         }
     }

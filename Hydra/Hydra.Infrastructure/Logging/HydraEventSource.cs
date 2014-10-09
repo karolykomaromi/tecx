@@ -68,12 +68,12 @@
             }
         }
 
-        [Event(7, Message = "Container is missing a type mapping from '{0}' to '{1}'.", Keywords = Keywords.Container, Task = Tasks.Container, Level = EventLevel.Informational)]
-        public void MissingMapping(string fromType, string toType)
+        [Event(7, Message = "Container is missing a type mapping from '{0}' with name '{1}'.", Keywords = Keywords.Container, Task = Tasks.Container, Level = EventLevel.Informational)]
+        public void MissingMapping(string fromType, string mappingName)
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(7, fromType, toType);
+                this.WriteEvent(7, fromType, mappingName);
             }
         }
 
