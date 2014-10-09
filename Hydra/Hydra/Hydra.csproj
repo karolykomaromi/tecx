@@ -45,6 +45,9 @@
     <Reference Include="Bottles">
       <HintPath>..\packages\Bottles.1.0.0.441\lib\Bottles.dll</HintPath>
     </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="FluentValidation, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentValidation.5.1.0.0\lib\Net40\FluentValidation.dll</HintPath>
@@ -115,6 +118,9 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz">
+      <HintPath>..\packages\Quartz.2.2.4\lib\net40\Quartz.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Abstractions">
       <HintPath>..\packages\RavenDB.Client.2.5.2935\lib\net45\Raven.Abstractions.dll</HintPath>
@@ -192,6 +198,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </Content>
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -218,11 +227,13 @@
     <Compile Include="Configuration\FubuConfiguration.cs" />
     <Compile Include="Configuration\HydraEventSourceConfiguration.cs" />
     <Compile Include="Configuration\QueryConfiguration.cs" />
+    <Compile Include="Configuration\QuartzConfiguration.cs" />
     <Compile Include="Configuration\RavenDBConfiguration.cs" />
     <Compile Include="Configuration\ResourcesConfiguration.cs" />
     <Compile Include="Configuration\UnityContainerConfiguration.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JobsController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="ErrorHandlingActionInvoker.cs" />
     <Compile Include="Filters\ValidatorActionFilter.cs" />
@@ -269,6 +280,7 @@
     <Content Include="Views\Registration\Register.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
     <Content Include="Views\Books\IndexAsync.cshtml" />
+    <Content Include="Views\Jobs\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -279,6 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Jobs\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj">

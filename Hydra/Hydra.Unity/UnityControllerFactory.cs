@@ -2,6 +2,7 @@ namespace Hydra.Unity
 {
     using System;
     using System.Diagnostics.Contracts;
+    using System.Reflection;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Hydra.Infrastructure.Logging;
@@ -44,7 +45,15 @@ namespace Hydra.Unity
 
             HydraEventSource.Log.PageStart(url);
 
-            return (IController)this.container.Resolve(controllerType);
+            try
+            {
+                return (IController)this.container.Resolve(controllerType);
+            }
+            catch (ResolutionFailedException ex)
+            {
+                HydraEventSource.Log.MissingMapping(ex.TypeRequested, typeof(Missing).Name);
+                throw;
+            }
         }
     }
 }
