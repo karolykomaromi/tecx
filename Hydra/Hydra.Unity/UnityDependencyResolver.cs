@@ -29,14 +29,12 @@ namespace Hydra.Unity
 
                 return o;
             }
-            catch (ResolutionFailedException)
+            catch (ResolutionFailedException ex)
             {
-                object service = this.fallback.GetService(serviceType);
+                HydraEventSource.Log.MissingMapping(ex.TypeRequested, ex.NameRequested);
+                HydraEventSource.Log.Error(ex);
 
-                if (service != null)
-                {
-                    HydraEventSource.Log.MissingMapping(serviceType, service.GetType());
-                }
+                object service = this.fallback.GetService(serviceType);
 
                 return service;
             }
@@ -50,17 +48,12 @@ namespace Hydra.Unity
 
                 return all;
             }
-            catch (ResolutionFailedException)
+            catch (ResolutionFailedException ex)
             {
-                IEnumerable<object> services = this.fallback.GetServices(serviceType);
+                HydraEventSource.Log.MissingMapping(ex.TypeRequested, ex.NameRequested);
+                HydraEventSource.Log.Error(ex);
 
-                if (services != null)
-                {
-                    foreach (object service in services)
-                    {
-                        HydraEventSource.Log.MissingMapping(serviceType, service.GetType());
-                    }
-                }
+                IEnumerable<object> services = this.fallback.GetServices(serviceType);
 
                 return services;
             }

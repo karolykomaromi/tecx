@@ -257,7 +257,9 @@
     <Compile Include="Hosting\EmbeddedVisitor.cs" />
     <Compile Include="Hosting\IVirtualPathUtility.cs" />
     <Compile Include="Hosting\VirtualPathUtilityWrapper.cs" />
+    <Compile Include="Jobs\SendEmails.cs" />
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\JobInfo.cs" />
     <Compile Include="Models\Registration.cs" />
     <Compile Include="Models\RegistrationValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -266,6 +268,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Queries\AvailableJobs.cs" />
     <Compile Include="Queries\IMediator.cs" />
     <Compile Include="Queries\IQuery.cs" />
     <Compile Include="Queries\IQueryHandler.cs" />
@@ -281,6 +284,7 @@
     <Content Include="Views\Books\Index.cshtml" />
     <Content Include="Views\Books\IndexAsync.cshtml" />
     <Content Include="Views\Jobs\Index.cshtml" />
+    <Content Include="Views\Jobs\Schedule.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -291,7 +295,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Jobs\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj">

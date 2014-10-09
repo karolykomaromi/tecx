@@ -56,9 +56,44 @@ namespace Hydra.Properties
             }
         }
 
+        public static string AvailableJobs
+        {
+            get { return Resources.ResourceManager.GetString("AvailableJobs", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string Book_Title
         {
             get { return Resources.ResourceManager.GetString("Book_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string Create
+        {
+            get { return Resources.ResourceManager.GetString("Create", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string Delete
+        {
+            get { return Resources.ResourceManager.GetString("Delete", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string Edit
+        {
+            get { return Resources.ResourceManager.GetString("Edit", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string JobInfo_Description
+        {
+            get { return Resources.ResourceManager.GetString("JobInfo_Description", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string JobInfo_Name
+        {
+            get { return Resources.ResourceManager.GetString("JobInfo_Name", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string Schedule
+        {
+            get { return Resources.ResourceManager.GetString("Schedule", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
     }
 }

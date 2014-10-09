@@ -21,13 +21,12 @@
             log.Critical(exception.ToString());
         }
 
-        public static void MissingMapping(this HydraEventSource log, Type from, Type to)
+        public static void MissingMapping(this HydraEventSource log, Type from, string name)
         {
             Contract.Requires(log != null);
             Contract.Requires(from != null);
-            Contract.Requires(to != null);
 
-            log.MissingMapping(from.AssemblyQualifiedName, to.AssemblyQualifiedName);
+            log.MissingMapping(from.AssemblyQualifiedName, name);
         }
     }
 }
