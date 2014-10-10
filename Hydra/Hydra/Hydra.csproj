@@ -198,7 +198,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </Content>
-    <None Include="job_scheduling_data_2_0.xsd">
+    <None Include="Jobs\job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -260,7 +260,6 @@
     <Compile Include="Hosting\VirtualPathUtilityWrapper.cs" />
     <Compile Include="Jobs\SendEmails.cs" />
     <Compile Include="Models\Book.cs" />
-    <Compile Include="Models\JobInfo.cs" />
     <Compile Include="Models\Registration.cs" />
     <Compile Include="Models\RegistrationValidator.cs" />
     <Compile Include="Models\ScheduleNewJob.cs" />
@@ -270,6 +269,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Queries\LazyMediator.cs" />
+    <Compile Include="Queries\LazyQueryHandler.cs" />
     <Compile Include="Queries\ScheduledJobs.cs" />
     <Compile Include="Queries\IMediator.cs" />
     <Compile Include="Queries\IQuery.cs" />

@@ -1,10 +1,20 @@
 namespace Hydra.FubuConventions
 {
+    using System.Diagnostics.Contracts;
     using FubuMVC.Core.UI.Elements;
     using Hydra.Queries;
 
     public class EnitityDropDownModifier : IElementModifier
     {
+        private readonly IMediator mediator;
+
+        public EnitityDropDownModifier(IMediator mediator)
+        {
+            Contract.Requires(mediator != null);
+
+            this.mediator = mediator;
+        }
+
         public bool Matches(ElementRequest token)
         {
             // TODO weberse 2014-10-10 check wether there is a query matching the (pluralized?) property name (with parameterless ctor?). cache result.
@@ -18,7 +28,6 @@ namespace Hydra.FubuConventions
         {
             // TODO weberse 2014-10-10 use the mediator to create 
 
-            IMediator mediator = request.Get<IMediator>();
             ////request.CurrentTag.RemoveAttr("type");
             ////request.CurrentTag.TagName("select");
             ////request.CurrentTag.Append(new HtmlTag("option"));

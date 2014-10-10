@@ -1,4 +1,4 @@
-﻿@model Hydra.Models.JobInfo
+﻿@model Hydra.Models.ScheduleNewJob
 @using Hydra.FubuConventions
 
 @{
@@ -7,6 +7,11 @@
 
 <h2>Schedule</h2>
 
-@Html.Label(x => x.Name)
-@Html.Display(x => x.Name)
+@Html.Label(x => x.Interval)
+@Html.Input(x => x.Interval)
+
+<br/>
+
+@Html.Label(x => x.IntervalUnit)
+@Html.Input(x => x.IntervalUnit)
 

@@ -8,12 +8,13 @@ namespace Hydra.FubuConventions
     using FubuMVC.Core.UI.Elements;
     using HtmlTags.Conventions;
     using Hydra.Infrastructure.I18n;
+    using Hydra.Queries;
 
     public class OverrideHtmlConventions : DefaultHtmlConventions
     {
         private readonly ResourceAccessorCache cache;
 
-        public OverrideHtmlConventions()
+        public OverrideHtmlConventions(IMediator mediator)
         {
             this.cache = new ResourceAccessorCache();
 
@@ -71,7 +72,8 @@ namespace Hydra.FubuConventions
             // DropDowns
             this.Editors.Modifier<EnumDropDownModifier>();
             this.Editors.Modifier<EnumerationDropDownModifier>();
-            this.Editors.Modifier<EnitityDropDownModifier>();
+
+            this.Editors.Add(new EnitityDropDownModifier(mediator));
         }
 
         protected ElementCategoryExpression Validators
