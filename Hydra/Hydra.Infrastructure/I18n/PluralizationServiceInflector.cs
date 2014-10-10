@@ -1,5 +1,7 @@
 ﻿namespace Hydra.Infrastructure.I18n
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Data.Entity.Design.PluralizationServices;
     using System.Diagnostics.Contracts;
     using System.Globalization;
@@ -8,9 +10,20 @@
     {
         private readonly PluralizationService pluralizationService;
 
+        private readonly CultureInfo english;
+
         public PluralizationServiceInflector()
         {
-            this.pluralizationService = PluralizationService.CreateService(CultureInfo.CreateSpecificCulture("en-US"));
+            this.english = CultureInfo.CreateSpecificCulture("en-US");
+            this.pluralizationService = PluralizationService.CreateService(this.english);
+        }
+
+        public IReadOnlyCollection<CultureInfo> SupportedCultures
+        {
+            get
+            {
+                return new ReadOnlyCollection<CultureInfo>(new[] { this.english });
+            }
         }
 
         public string Pluralize(string word)

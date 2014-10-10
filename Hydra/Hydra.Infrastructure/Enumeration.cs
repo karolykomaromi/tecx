@@ -13,9 +13,9 @@
     {
         protected const int CompositeSortKey = int.MaxValue;
 
-        private static readonly ResourceAccessorCache ResourceAccessorCache = new ResourceAccessorCache();
-
         protected static readonly SortedList<int, T> EnumerationValues = new SortedList<int, T>();
+        
+        private static readonly ResourceAccessorCache ResourceAccessorCache = new ResourceAccessorCache();
 
         private static readonly Lazy<bool> IsInitializedField = new Lazy<bool>(Initialize);
 

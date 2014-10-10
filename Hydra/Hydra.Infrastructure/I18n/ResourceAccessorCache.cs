@@ -7,6 +7,7 @@
     using System.Diagnostics.Contracts;
     using System.Linq.Expressions;
     using System.Reflection;
+    using Hydra.Infrastructure.Logging;
     using Hydra.Infrastructure.Reflection;
 
     [DebuggerDisplay("Count={accessors.Count}")]
@@ -49,12 +50,15 @@
             {
                 Assembly assembly = modelType.Assembly;
 
-                Type resourceType = assembly.GetType(assembly.GetName().Name + ".Properties.Resources", false);
+                string resourceTypeName = assembly.GetName().Name + ".Properties.Resources";
+
+                Type resourceType = assembly.GetType(resourceTypeName, false);
 
                 if (resourceType == null)
                 {
                     accessor = ResourceAccessorCache.EmptyAccessor;
                     this.accessors[accessorName] = accessor;
+                    HydraEventSource.Log.ResourceTypeNotFound(assembly, resourceTypeName);
                     return accessor;
                 }
 
@@ -64,6 +68,7 @@
                 {
                     accessor = ResourceAccessorCache.EmptyAccessor;
                     this.accessors[accessorName] = accessor;
+                    HydraEventSource.Log.ResourcePropertyNotFound(assembly, resourceType, propertyName);
                     return accessor;
                 }
 

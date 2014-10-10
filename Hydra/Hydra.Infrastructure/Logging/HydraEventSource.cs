@@ -68,12 +68,30 @@
             }
         }
 
-        [Event(7, Message = "Container is missing a type mapping from '{0}' with name '{1}'.", Keywords = Keywords.Container, Task = Tasks.Container, Level = EventLevel.Informational)]
+        [Event(7, Message = "Container is missing a type mapping from '{0}' with name '{1}'.", Keywords = Keywords.Container, Task = Tasks.Resolution, Level = EventLevel.Informational)]
         public void MissingMapping(string fromType, string mappingName)
         {
             if (this.IsEnabled())
             {
                 this.WriteEvent(7, fromType, mappingName);
+            }
+        }
+
+        [Event(8, Message = "Could not find resource type '{1}' in assembly '{0}'.", Keywords = Keywords.Diagnostic | Keywords.Resources, Level = EventLevel.Informational)]
+        public void ResourceTypeNotFound(string assemblyName, string resourceTypeName)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(8, assemblyName, resourceTypeName);
+            }
+        }
+
+        [Event(9, Message = "Could not find public static property '{2}' on resource type '{1}' in assembly '{0}'.", Keywords = Keywords.Diagnostic | Keywords.Resources, Level = EventLevel.Informational)]
+        public void ResourcePropertyNotFound(string assemblyName, string resourceTypeName, string propertyName)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(9, assemblyName, resourceTypeName, propertyName);
             }
         }
 
@@ -90,15 +108,17 @@
             public const EventKeywords Error = (EventKeywords)16;
 
             public const EventKeywords Container = (EventKeywords)32;
+
+            public const EventKeywords Resources = (EventKeywords)64;
         }
 
         public class Tasks
         {
             public const EventTask Page = (EventTask)1;
 
-            public const EventTask DBQuery = (EventTask)2;
+            public const EventTask Query = (EventTask)2;
 
-            public const EventTask Container = (EventTask)3;
+            public const EventTask Resolution = (EventTask)3;
         }
     }
 }
