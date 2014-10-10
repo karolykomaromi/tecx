@@ -3,11 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Quartz;
 
     public class ScheduleNewJob
     {
-        public Type SelectedJobType { get; set; }
+        public int Interval { get; set; }
 
-        public IEnumerable<Type> JobTypes { get; set; }
+        public IntervalUnit IntervalUnit { get; set; }
     }
 }

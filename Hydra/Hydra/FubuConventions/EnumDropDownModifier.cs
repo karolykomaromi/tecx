@@ -24,6 +24,7 @@ namespace Hydra.FubuConventions
 
             foreach (var value in Enum.GetValues(enumType))
             {
+                // TODO weberse 2014-10-10 try to find a translation in the resources. which resources should be used? enum might be 3rd party
                 var optionTag = new HtmlTag("option")
                     .Value(value.ToString())
                     .Text(Enum.GetName(enumType, value));

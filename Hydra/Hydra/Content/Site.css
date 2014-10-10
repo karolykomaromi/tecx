@@ -15,6 +15,11 @@ input[type="password"] {
     max-width: 280px;
 }
 
+/* 2014-10-10 weberse same max width as input elements */
+select {
+    max-width: 280px;
+}
+
 /* styles for validation helpers */
 .field-validation-error {
     color: #b94a48;

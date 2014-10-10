@@ -1,3 +1,5 @@
+using Hydra.Queries;
+
 namespace Hydra.Configuration
 {
     using System;
@@ -22,8 +24,10 @@ namespace Hydra.Configuration
     {
         protected override void Initialize()
         {
+            IMediator mediator = new LazyMediator(() => this.Container.Resolve<IMediator>());
+
             HtmlConventionLibrary htmlConventionLibrary = new HtmlConventionLibrary();
-            htmlConventionLibrary.Import(new OverrideHtmlConventions().Library);
+            htmlConventionLibrary.Import(new OverrideHtmlConventions(mediator).Library);
 
             this.Container.RegisterInstance<HtmlConventionLibrary>(htmlConventionLibrary);
 
