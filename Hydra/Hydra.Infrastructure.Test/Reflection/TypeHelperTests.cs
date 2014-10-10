@@ -1,5 +1,7 @@
 namespace Hydra.Infrastructure.Test.Reflection
 {
+    using System;
+    using System.Collections.Generic;
     using Hydra.Infrastructure.Reflection;
     using Xunit;
 
@@ -35,6 +37,22 @@ namespace Hydra.Infrastructure.Test.Reflection
         public void Should_Get_Static_Field_Name()
         {
             Assert.Equal("Field", TypeHelper.GetPropertyName(() => Foo.Field));
+        }
+
+        [Fact]
+        public void Should_Get_All_Base_Types()
+        {
+            IEnumerable<Type> expected = new[]
+                {
+                    typeof(Colors),
+                    typeof(Flags<Colors>), 
+                    typeof(Enumeration<Colors>), 
+                    typeof(object)
+                };
+
+            IEnumerable<Type> actual = TypeHelper.GetInheritanceHierarchy(typeof(Colors));
+
+            Assert.Equal(expected, actual);
         }
     }
 }

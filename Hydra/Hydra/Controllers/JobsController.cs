@@ -1,4 +1,6 @@
-﻿namespace Hydra.Controllers
+﻿using System;
+
+namespace Hydra.Controllers
 {
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
@@ -23,14 +25,33 @@
 
         public ActionResult Index()
         {
-            IEnumerable<JobInfo> availableJobs = this.mediator.Request(new AvailableJobs());
+            IEnumerable<IJobDetail> scheduledJobs = this.mediator.Request(new ScheduledJobs());
 
-            return this.View(availableJobs);
+            return this.View(scheduledJobs);
         }
 
-        public ActionResult Schedule(JobInfo info)
+        public ActionResult Delete(JobKey key)
         {
-            return this.View(info);
+            return this.RedirectToAction("Index");
+        }
+
+        public ActionResult Schedule()
+        {
+            ////IJobDetail job = JobBuilder.Create<SendEmails>().WithIdentity("foobar").WithDescription(info.Description).Build();
+
+            ////ITrigger trigger = TriggerBuilder.Create().ForJob(job).WithCalendarIntervalSchedule(c => c.)
+
+            ////this.scheduler.ScheduleJob(job);
+
+            ScheduleNewJob newJob = new ScheduleNewJob { };
+
+            return this.View(newJob);
+        }
+
+        [HttpPost]
+        public ActionResult Schedule(ScheduleNewJob scheduleNewJob)
+        {
+            return this.View();
         }
     }
 }

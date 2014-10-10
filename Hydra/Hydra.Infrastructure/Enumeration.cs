@@ -7,10 +7,13 @@
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
+    using Hydra.Infrastructure.I18n;
 
     public abstract class Enumeration<T> : IComparable<T>, IEquatable<T> where T : Enumeration<T>
     {
         protected const int CompositeSortKey = int.MaxValue;
+
+        private static readonly ResourceAccessorCache ResourceAccessorCache = new ResourceAccessorCache();
 
         protected static readonly SortedList<int, T> EnumerationValues = new SortedList<int, T>();
 
@@ -108,6 +111,13 @@
             return new ReadOnlyCollection<string>(Enumeration<T>.EnumerationValues.Values.Select(v => v.Name).ToList());
         }
 
+        public static explicit operator int(Enumeration<T> enumeration)
+        {
+            Contract.Requires(enumeration != null);
+
+            return enumeration.Value;
+        }
+
         public static bool IsDefined(string name)
         {
             return GetNames().Contains(name, StringComparer.OrdinalIgnoreCase);
@@ -124,7 +134,14 @@
 
         public override string ToString()
         {
-            return this.Name;
+            Func<string> accessor = Enumeration<T>.ResourceAccessorCache.GetAccessor(this.GetType(), this.Name);
+
+            if (accessor != ResourceAccessorCache.EmptyAccessor)
+            {
+                return accessor();
+            }
+
+            return StringHelper.SplitCamelCase(this.Name);
         }
 
         public override int GetHashCode()

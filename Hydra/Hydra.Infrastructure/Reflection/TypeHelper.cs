@@ -44,5 +44,16 @@ namespace Hydra.Infrastructure.Reflection
 
             return property.Member.Name;
         }
+
+        public static IEnumerable<Type> GetInheritanceHierarchy(Type type)
+        {
+            Type current = type;
+            while (current != null)
+            {
+                yield return current;
+
+                current = current.BaseType;
+            }
+        }
     }
 }

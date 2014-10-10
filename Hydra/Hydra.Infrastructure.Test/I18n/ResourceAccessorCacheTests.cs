@@ -24,5 +24,13 @@
 
             Assert.Same(a1, a2);
         }
+
+        [Fact]
+        public void Should_Return_Accessor_For_Type_Full_Named_Resource()
+        {
+            var sut = new ResourceAccessorCache();
+
+            Assert.Equal("I'm a full type named resource.", sut.GetAccessor(typeof(Foo), "FullTypeNamedResourceExpected")());
+        }
     }
 }

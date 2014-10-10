@@ -64,7 +64,15 @@
     <Compile Include="HttpStatusCode.cs" />
     <Compile Include="HttpStatusCodes.cs" />
     <Compile Include="I18n\CachingResourceManager.cs" />
+    <Compile Include="I18n\CompositeConvention.cs" />
+    <Compile Include="I18n\FindByTypeFullName.cs" />
+    <Compile Include="I18n\FindByTypeName.cs" />
+    <Compile Include="I18n\IFindPropertyConvention.cs" />
+    <Compile Include="I18n\IInflector.cs" />
+    <Compile Include="I18n\Inflector.cs" />
+    <Compile Include="I18n\InflectorWrapper.cs" />
     <Compile Include="I18n\IResourceManager.cs" />
+    <Compile Include="I18n\NullInflector.cs" />
     <Compile Include="I18n\ResourceAccessorCache.cs" />
     <Compile Include="I18n\ResourceManagerBase.cs" />
     <Compile Include="I18n\ResourceManagerWrapper.cs" />
