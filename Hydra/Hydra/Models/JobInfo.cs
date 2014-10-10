@@ -8,6 +8,6 @@
 
         public string Description { get; set; }
 
-        public Type Type { get; set; }
+        public Type JobType { get; set; }
     }
 }

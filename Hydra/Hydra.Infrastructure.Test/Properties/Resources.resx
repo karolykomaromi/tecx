@@ -120,4 +120,7 @@
   <data name="Foo_Bar" xml:space="preserve">
     <value>My Internationalized Property Name</value>
   </data>
+  <data name="Hydra_Infrastructure_Test_Reflection_Foo_FullTypeNamedResourceExpected" xml:space="preserve">
+    <value>I'm a full type named resource.</value>
+  </data>
 </root>

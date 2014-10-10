@@ -70,6 +70,7 @@ namespace Hydra.FubuConventions
 
             // DropDowns
             this.Editors.Modifier<EnumDropDownModifier>();
+            this.Editors.Modifier<EnumerationDropDownModifier>();
             this.Editors.Modifier<EnitityDropDownModifier>();
         }
 

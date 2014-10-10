@@ -1,17 +1,24 @@
 namespace Hydra.FubuConventions
 {
     using FubuMVC.Core.UI.Elements;
+    using Hydra.Queries;
 
     public class EnitityDropDownModifier : IElementModifier
     {
         public bool Matches(ElementRequest token)
         {
-            // return typeof(Entity).IsAssignableFrom(token.Accessor.PropertyType);
+            // TODO weberse 2014-10-10 check wether there is a query matching the (pluralized?) property name (with parameterless ctor?). cache result.
+
+            ////return typeof(Entity).IsAssignableFrom(token.Accessor.PropertyType);
             return false;
+            ////return true;
         }
 
         public void Modify(ElementRequest request)
         {
+            // TODO weberse 2014-10-10 use the mediator to create 
+
+            IMediator mediator = request.Get<IMediator>();
             ////request.CurrentTag.RemoveAttr("type");
             ////request.CurrentTag.TagName("select");
             ////request.CurrentTag.Append(new HtmlTag("option"));

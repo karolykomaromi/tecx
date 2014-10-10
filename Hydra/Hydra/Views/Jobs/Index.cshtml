@@ -1,6 +1,7 @@
 ﻿@using Hydra.Models
 @using Hydra.FubuConventions
-@model IEnumerable<Hydra.Models.JobInfo>
+@using Quartz
+@model IEnumerable<IJobDetail>
 
 @{
     ViewBag.Title = Hydra.Properties.Resources.AvailableJobs;
@@ -8,19 +9,21 @@
 
 <h2>@Hydra.Properties.Resources.AvailableJobs</h2>
 
-    <table>
-        <tr>
-            <th>@Hydra.Properties.Resources.JobInfo_Name</th>
-            <th>@Hydra.Properties.Resources.JobInfo_Description</th>
-            <th/>
-        </tr>
+<table>
+    <tr>
+        <th>@Hydra.Properties.Resources.JobInfo_Name</th>
+        <th>@Hydra.Properties.Resources.JobInfo_Description</th>
+        <th/>
+    </tr>
 
-        @foreach (JobInfo info in Model)
-        {
-            <tr>
-                <td>@info.Name</td>
-                <td>@info.Description</td>
-                <td>@Html.ActionLink(Hydra.Properties.Resources.Schedule, "Schedule", info)</td>
-            </tr>
-        }
-    </table>
+    @foreach (IJobDetail job in Model)
+    {
+        <tr>
+            <td>@job.Key.Name</td>
+            <td>@job.Description</td>
+            <td>@Html.ActionLink(Hydra.Properties.Resources.Delete, "Delete", job.Key)</td>
+        </tr>
+    }
+</table>
+
+@Html.ActionLink(Hydra.Properties.Resources.Schedule, "Schedule")

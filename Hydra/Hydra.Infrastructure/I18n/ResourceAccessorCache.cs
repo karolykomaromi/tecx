@@ -7,6 +7,7 @@
     using System.Diagnostics.Contracts;
     using System.Linq.Expressions;
     using System.Reflection;
+    using Hydra.Infrastructure.Reflection;
 
     [DebuggerDisplay("Count={accessors.Count}")]
     public class ResourceAccessorCache
@@ -15,8 +16,18 @@
 
         private readonly IDictionary<string, Func<string>> accessors;
 
+        private readonly IFindPropertyConvention convention;
+
         public ResourceAccessorCache()
+            : this(new CompositeConvention(new FindByTypeName(), new FindByTypeFullName()))
         {
+        }
+
+        public ResourceAccessorCache(IFindPropertyConvention convention)
+        {
+            Contract.Requires(convention != null);
+
+            this.convention = convention;
             this.accessors = new Dictionary<string, Func<string>>(StringComparer.OrdinalIgnoreCase);
         }
 
@@ -47,9 +58,9 @@
                     return accessor;
                 }
 
-                PropertyInfo property = resourceType.GetProperty(modelType.Name + "_" + propertyName, BindingFlags.Public | BindingFlags.Static);
+                PropertyInfo property = this.convention.Find(resourceType, modelType, propertyName);
 
-                if (property == null)
+                if (property == Property.Null)
                 {
                     accessor = ResourceAccessorCache.EmptyAccessor;
                     this.accessors[accessorName] = accessor;
