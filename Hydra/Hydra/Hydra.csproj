@@ -275,6 +275,7 @@
     <Compile Include="Queries\IMediator.cs" />
     <Compile Include="Queries\IQuery.cs" />
     <Compile Include="Queries\IQueryHandler.cs" />
+    <Compile Include="Queries\ScheduledJobsHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

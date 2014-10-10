@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Hydra.Test.Configuration
+﻿namespace Hydra.Test.Configuration
 {
+    using System.Linq;
     using System.Threading;
     using Hydra.Configuration;
     using Hydra.Queries;

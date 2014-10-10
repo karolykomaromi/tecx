@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Hydra.Infrastructure.Reflection;
-
-namespace Hydra.Infrastructure.I18n
+﻿namespace Hydra.Infrastructure.I18n
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using Hydra.Infrastructure.Reflection;
+
     public class CompositeConvention : IFindPropertyConvention
     {
         private readonly HashSet<IFindPropertyConvention> conventions;

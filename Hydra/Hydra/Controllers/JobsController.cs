@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Hydra.Controllers
+﻿namespace Hydra.Controllers
 {
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;

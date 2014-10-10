@@ -1,5 +1,3 @@
-using Hydra.Queries;
-
 namespace Hydra.Configuration
 {
     using System;
@@ -18,6 +16,7 @@ namespace Hydra.Configuration
     using FubuMVC.Core.UI.Security;
     using HtmlTags.Conventions;
     using Hydra.FubuConventions;
+    using Hydra.Queries;
     using Microsoft.Practices.Unity;
 
     public class FubuConfiguration : UnityContainerExtension
