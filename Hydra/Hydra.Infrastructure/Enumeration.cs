@@ -7,6 +7,7 @@
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
+    using System.Runtime.Caching;
     using Hydra.Infrastructure.I18n;
 
     public abstract class Enumeration<T> : IComparable<T>, IEquatable<T> where T : Enumeration<T>
@@ -14,8 +15,9 @@
         protected const int CompositeSortKey = int.MaxValue;
 
         protected static readonly SortedList<int, T> EnumerationValues = new SortedList<int, T>();
-        
-        private static readonly ResourceAccessorCache ResourceAccessorCache = new ResourceAccessorCache();
+
+        private static readonly ResourceAccessorCache ResourceAccessorCache = 
+            new ResourceAccessorCache(new CompositeConvention(new FindByTypeName(), new FindByTypeFullName()), MemoryCache.Default);
 
         private static readonly Lazy<bool> IsInitializedField = new Lazy<bool>(Initialize);
 

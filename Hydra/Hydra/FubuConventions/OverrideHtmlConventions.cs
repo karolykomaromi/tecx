@@ -2,6 +2,7 @@ namespace Hydra.FubuConventions
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.Diagnostics.Contracts;
     using System.Drawing;
     using System.Web.Mvc;
     using FubuMVC.Core.UI;
@@ -14,9 +15,12 @@ namespace Hydra.FubuConventions
     {
         private readonly ResourceAccessorCache cache;
 
-        public OverrideHtmlConventions(IMediator mediator)
+        public OverrideHtmlConventions(IMediator mediator, ResourceAccessorCache cache)
         {
-            this.cache = new ResourceAccessorCache();
+            Contract.Requires(mediator != null);
+            Contract.Requires(cache != null);
+
+            this.cache = cache;
 
             this.Validators.Always.BuildBy<SpanValidatorBuilder>();
 

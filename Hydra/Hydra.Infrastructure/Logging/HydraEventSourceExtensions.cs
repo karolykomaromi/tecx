@@ -6,6 +6,14 @@
 
     public static class HydraEventSourceExtensions
     {
+        public static void Warning(this HydraEventSource log, Exception exception)
+        {
+            Contract.Requires(log != null);
+            Contract.Requires(exception != null);
+
+            log.Warning(exception.ToString());
+        }
+
         public static void Error(this HydraEventSource log, Exception exception)
         {
             Contract.Requires(log != null);

@@ -16,6 +16,7 @@ namespace Hydra.Configuration
     using FubuMVC.Core.UI.Security;
     using HtmlTags.Conventions;
     using Hydra.FubuConventions;
+    using Hydra.Infrastructure.I18n;
     using Hydra.Queries;
     using Microsoft.Practices.Unity;
 
@@ -23,12 +24,15 @@ namespace Hydra.Configuration
     {
         protected override void Initialize()
         {
-            IMediator mediator = new LazyMediator(() => this.Container.Resolve<IMediator>());
+            this.Container.RegisterType<HtmlConventionLibrary>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionFactory(c => 
+                    {
+                        HtmlConventionLibrary htmlConventionLibrary = new HtmlConventionLibrary();
+                        htmlConventionLibrary.Import(new OverrideHtmlConventions(c.Resolve<IMediator>(), c.Resolve<ResourceAccessorCache>()).Library);
 
-            HtmlConventionLibrary htmlConventionLibrary = new HtmlConventionLibrary();
-            htmlConventionLibrary.Import(new OverrideHtmlConventions(mediator).Library);
-
-            this.Container.RegisterInstance<HtmlConventionLibrary>(htmlConventionLibrary);
+                        return htmlConventionLibrary;
+                    }));
 
             this.Container.RegisterType<IValueSource, RequestPropertyValueSource>("RequestPropertyValueSource");
 

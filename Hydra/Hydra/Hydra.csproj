@@ -223,6 +223,7 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Configuration\CachingConfiguration.cs" />
     <Compile Include="Configuration\ErrorHandlingConfiguration.cs" />
     <Compile Include="Configuration\FubuConfiguration.cs" />
     <Compile Include="Configuration\HydraEventSourceConfiguration.cs" />

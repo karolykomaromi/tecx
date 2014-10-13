@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.Contracts;
+    using Hydra.Infrastructure.Logging;
 
     public class CacheItemInvalidationToken : IDisposable
     {
@@ -12,12 +13,20 @@
         public CacheItemInvalidationToken(ExternallyControlledChangeMonitor changeMonitor)
         {
             Contract.Requires(changeMonitor != null);
+
             this.changeMonitor = changeMonitor;
         }
 
         public void Dispose()
         {
-            this.changeMonitor.Invalidate();
+            try
+            {
+                this.changeMonitor.Invalidate();
+            }
+            catch (Exception ex)
+            {
+                HydraEventSource.Log.Warning(ex);
+            }
         }
 
         private class NullCacheItemInvalidationToken : IDisposable
