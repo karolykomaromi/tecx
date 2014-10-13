@@ -68,7 +68,7 @@
     <Compile Include="I18n\CompositeConvention.cs" />
     <Compile Include="I18n\FindByTypeFullName.cs" />
     <Compile Include="I18n\FindByTypeName.cs" />
-    <Compile Include="I18n\IFindPropertyConvention.cs" />
+    <Compile Include="I18n\IResxPropertyConvention.cs" />
     <Compile Include="I18n\IInflector.cs" />
     <Compile Include="I18n\Inflector.cs" />
     <Compile Include="I18n\InflectorWrapper.cs" />

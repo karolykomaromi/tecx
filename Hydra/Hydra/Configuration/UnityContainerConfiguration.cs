@@ -17,14 +17,6 @@ namespace Hydra.Configuration
 
                 this.Container.AddExtension(configuration);
             }
-
-            ////this.Container.AddNewExtension<ResourcesConfiguration>();
-
-            ////this.Container.AddNewExtension<FubuConfiguration>();
-
-            ////this.Container.AddNewExtension<ErrorHandlingConfiguration>();
-
-            ////this.Container.AddNewExtension<RavenDBConfiguration>();
         }
 
         private bool IsContainerConfiguration(Type t)

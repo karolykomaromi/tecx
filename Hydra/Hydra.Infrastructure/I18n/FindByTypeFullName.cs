@@ -4,9 +4,9 @@
     using System.Reflection;
     using Hydra.Infrastructure.Reflection;
 
-    public class FindByTypeFullName : IFindPropertyConvention
+    public class FindByTypeFullName : IResxPropertyConvention
     {
-        public PropertyInfo Find(Type resourceType, Type modelType, string propertyName)
+        public PropertyInfo FindProperty(Type resourceType, Type modelType, string propertyName)
         {
             PropertyInfo property = resourceType.GetProperty(modelType.FullName.Replace(".", "_") + "_" + propertyName, BindingFlags.Public | BindingFlags.Static);
 

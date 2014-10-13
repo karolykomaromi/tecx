@@ -11,6 +11,9 @@
     {
         protected override void Initialize()
         {
+            this.Container.RegisterType<IResxPropertyConvention>(
+                new InjectionFactory(_ => new CompositeConvention(new FindByTypeName(), new FindByTypeFullName())));
+
             foreach (Type resourceFile in AllClasses.FromLoadedAssemblies().Where(IsResourceFile))
             {
                 PropertyInfo property = GetResourceManagerProperty(resourceFile);
