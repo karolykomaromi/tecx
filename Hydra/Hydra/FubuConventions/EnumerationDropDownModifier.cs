@@ -1,6 +1,7 @@
 namespace Hydra.FubuConventions
 {
     using System;
+    using System.ComponentModel;
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
@@ -30,10 +31,16 @@ namespace Hydra.FubuConventions
             request.CurrentTag.TagName("select");
             request.CurrentTag.Append(new HtmlTag("option"));
 
+            TypeConverter converter = TypeDescriptor.GetConverter(enumeration);
+
             foreach (object value in enumeration.GetTypeInfo().DeclaredFields.Where(f => f.IsPublic && f.IsStatic).Select(f => f.GetValue(null)))
             {
+                object converted = converter.ConvertTo(value, typeof(int));
+
+                int v = converted == null || !(converted is int) ? (int)converted : default(int);
+
                 var optionTag = new HtmlTag("option")
-                    .Value(((int)value).ToString(CultureInfo.CurrentCulture))
+                    .Value(v.ToString(CultureInfo.CurrentCulture))
                     .Text(value.ToString());
 
                 request.CurrentTag.Append(optionTag);

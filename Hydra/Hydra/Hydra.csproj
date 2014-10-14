@@ -259,6 +259,7 @@
     <Compile Include="Hosting\EmbeddedVisitor.cs" />
     <Compile Include="Hosting\IVirtualPathUtility.cs" />
     <Compile Include="Hosting\VirtualPathUtilityWrapper.cs" />
+    <Compile Include="Jobs\JobSchedule.cs" />
     <Compile Include="Jobs\SendEmails.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Registration.cs" />

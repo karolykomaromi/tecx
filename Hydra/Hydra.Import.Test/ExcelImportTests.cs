@@ -5,7 +5,7 @@
     using DocumentFormat.OpenXml.Spreadsheet;
     using Xunit;
 
-    public class ExcelImportTest
+    public class ExcelImportTests
     {
         [Fact]
         public void Should_Read_Xlsx()

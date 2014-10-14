@@ -90,6 +90,7 @@
     <Compile Include="Caching\ExternallyControlledChangeMonitorTests.cs" />
     <Compile Include="Caching\ObjectCacheExtensionsTests.cs" />
     <Compile Include="EnumerationConverterTests.cs" />
+    <Compile Include="EnumerationTests.cs" />
     <Compile Include="FlagsConverterTests.cs" />
     <Compile Include="FlagsTests.cs" />
     <Compile Include="I18n\CachingResourceManagerTests.cs" />
