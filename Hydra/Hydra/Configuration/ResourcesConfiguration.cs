@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Reflection;
     using System.Resources;
+    using Hydra.Infrastructure;
     using Hydra.Infrastructure.I18n;
     using Microsoft.Practices.Unity;
 
@@ -13,6 +14,10 @@
         {
             this.Container.RegisterType<IResxPropertyConvention>(
                 new InjectionFactory(_ => new CompositeConvention(new FindByTypeName(), new FindByTypeFullName())));
+
+            this.Container.RegisterType<IResourceAccessorCache, ResourceAccessorCache>();
+
+            Enumeration.SetResourceAccessorCache(new LazyResourceAccessorCache(() => this.Container.Resolve<IResourceAccessorCache>()));
 
             foreach (Type resourceFile in AllClasses.FromLoadedAssemblies().Where(IsResourceFile))
             {

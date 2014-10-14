@@ -4,20 +4,52 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
     using System.Runtime.Caching;
     using Hydra.Infrastructure.I18n;
+    using Hydra.Infrastructure.Logging;
 
-    public abstract class Enumeration<T> : IComparable<T>, IEquatable<T> where T : Enumeration<T>
+    public class Enumeration
+    {
+        private static IResourceAccessorCache resourceAccessorCache;
+
+        static Enumeration()
+        {
+            Enumeration.resourceAccessorCache = new NullResourceAccessorCache();
+        }
+
+        public static void SetResourceAccessorCache(IResourceAccessorCache cache)
+        {
+            Contract.Requires(cache != null);
+
+            Enumeration.resourceAccessorCache = cache;
+        }
+
+        internal static string ToString(IEnumeration enumeration)
+        {
+            Contract.Requires(enumeration != null);
+            Contract.Ensures(Contract.Result<string>() != null);
+
+            Func<string> accessor = Enumeration.resourceAccessorCache.GetAccessor(enumeration.GetType(), enumeration.Name);
+
+            if (accessor != ResourceAccessorCache.EmptyAccessor)
+            {
+                return accessor();
+            }
+
+            return StringHelper.SplitCamelCase(enumeration.Name);
+        }
+    }
+
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Reviewed. Suppression is OK here.")]
+    public abstract class Enumeration<T> : IComparable<T>, IEquatable<T>, IEnumeration where T : Enumeration<T>
     {
         protected const int CompositeSortKey = int.MaxValue;
 
         protected static readonly SortedList<int, T> EnumerationValues = new SortedList<int, T>();
-
-        private static readonly ResourceAccessorCache ResourceAccessorCache = 
-            new ResourceAccessorCache(new CompositeConvention(new FindByTypeName(), new FindByTypeFullName()), MemoryCache.Default);
 
         private static readonly Lazy<bool> IsInitializedField = new Lazy<bool>(Initialize);
 
@@ -52,9 +84,9 @@
         {
             get
             {
-                if (!IsInitialized)
+                if (!Enumeration<T>.IsInitialized)
                 {
-                    throw new EnumerationInitializationException();
+                    throw new EnumerationInitializationFailedException();
                 }
 
                 return Enumeration<T>.EnumerationValues.Values.First();
@@ -93,9 +125,9 @@
         {
             Contract.Ensures(Contract.Result<IReadOnlyCollection<T>>() != null);
 
-            if (!IsInitialized)
+            if (!Enumeration<T>.IsInitialized)
             {
-                throw new EnumerationInitializationException();
+                throw new EnumerationInitializationFailedException();
             }
 
             return new ReadOnlyCollection<T>(Enumeration<T>.EnumerationValues.Values);
@@ -105,9 +137,9 @@
         {
             Contract.Ensures(Contract.Result<IReadOnlyCollection<string>>() != null);
 
-            if (!IsInitialized)
+            if (!Enumeration<T>.IsInitialized)
             {
-                throw new EnumerationInitializationException();
+                throw new EnumerationInitializationFailedException();
             }
 
             return new ReadOnlyCollection<string>(Enumeration<T>.EnumerationValues.Values.Select(v => v.Name).ToList());
@@ -122,12 +154,12 @@
 
         public static bool IsDefined(string name)
         {
-            return GetNames().Contains(name, StringComparer.OrdinalIgnoreCase);
+            return Enumeration<T>.GetNames().Contains(name, StringComparer.OrdinalIgnoreCase);
         }
 
         public static bool IsDefined(int value)
         {
-            IEnumerable<int> definedValues = GetValues().Select(v => v.Value);
+            IEnumerable<int> definedValues = Enumeration<T>.GetValues().Select(v => v.Value);
 
             bool isDefined = definedValues.Contains(value);
 
@@ -136,14 +168,7 @@
 
         public override string ToString()
         {
-            Func<string> accessor = Enumeration<T>.ResourceAccessorCache.GetAccessor(this.GetType(), this.Name);
-
-            if (accessor != ResourceAccessorCache.EmptyAccessor)
-            {
-                return accessor();
-            }
-
-            return StringHelper.SplitCamelCase(this.Name);
+            return Enumeration.ToString(this);
         }
 
         public override int GetHashCode()
@@ -194,15 +219,28 @@
         {
             try
             {
-                var fields = typeof(T).GetFields(BindingFlags.Public | BindingFlags.Static);
+                FieldInfo[] values = typeof(T).GetFields(BindingFlags.Public | BindingFlags.Static);
 
-                foreach (var field in fields)
+                foreach (FieldInfo field in values)
                 {
                     field.GetValue(null);
                 }
+
+                if (values.Length == 0)
+                {
+                    string message = string.Format(Properties.Resources.EnumerationDoesNotDeclareAnyFields, typeof(T).AssemblyQualifiedName);
+
+                    throw new InvalidEnumerationException(message);
+                }
             }
-            catch
+            catch (InvalidEnumerationException)
             {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                HydraEventSource.Log.Warning(ex);
+
                 return false;
             }
 

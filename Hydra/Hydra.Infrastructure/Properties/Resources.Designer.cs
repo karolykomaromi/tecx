@@ -55,5 +55,15 @@ namespace Hydra.Infrastructure.Properties
                 resourceCulture = value;
             }
         }
+
+        public static string EnumerationDoesNotDeclareAnyFields
+        {
+            get { return Resources.ResourceManager.GetString("EnumerationDoesNotDeclareAnyFields", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string InitializationOfEnumerationFailed
+        {
+            get { return Resources.ResourceManager.GetString("InitializationOfEnumerationFailed", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
     }
 }

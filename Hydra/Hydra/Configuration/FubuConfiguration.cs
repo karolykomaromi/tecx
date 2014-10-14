@@ -29,7 +29,7 @@ namespace Hydra.Configuration
                 new InjectionFactory(c => 
                     {
                         HtmlConventionLibrary htmlConventionLibrary = new HtmlConventionLibrary();
-                        htmlConventionLibrary.Import(new OverrideHtmlConventions(c.Resolve<IMediator>(), c.Resolve<ResourceAccessorCache>()).Library);
+                        htmlConventionLibrary.Import(new OverrideHtmlConventions(c.Resolve<IMediator>(), c.Resolve<IResourceAccessorCache>()).Library);
 
                         return htmlConventionLibrary;
                     }));

@@ -56,7 +56,11 @@
     <Compile Include="DefaultTimeProvider.cs" />
     <Compile Include="Enumeration.cs" />
     <Compile Include="EnumerationConverter.cs" />
-    <Compile Include="EnumerationInitializationException.cs" />
+    <Compile Include="EnumerationInitializationFailedException.cs" />
+    <Compile Include="I18n\IResourceAccessorCache.cs" />
+    <Compile Include="I18n\LazyResourceAccessorCache.cs" />
+    <Compile Include="I18n\NullResourceAccessorCache.cs" />
+    <Compile Include="InvalidEnumerationException.cs" />
     <Compile Include="Flags.cs" />
     <Compile Include="FlagsConverter.cs" />
     <Compile Include="FrozenTimeProvider.cs" />
@@ -78,6 +82,7 @@
     <Compile Include="I18n\ResourceAccessorCache.cs" />
     <Compile Include="I18n\ResourceManagerBase.cs" />
     <Compile Include="I18n\ResourceManagerWrapper.cs" />
+    <Compile Include="IEnumeration.cs" />
     <Compile Include="Logging\DebugLog.cs" />
     <Compile Include="Logging\DebugSink.cs" />
     <Compile Include="Logging\HydraEventSource.cs" />
