@@ -56,6 +56,11 @@ namespace Hydra.Properties
             }
         }
 
+        public static string ApplicationName
+        {
+            get { return Resources.ResourceManager.GetString("ApplicationName", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string AvailableJobs
         {
             get { return Resources.ResourceManager.GetString("AvailableJobs", resourceCulture ?? CultureInfo.CurrentUICulture); }
