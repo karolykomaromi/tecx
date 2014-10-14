@@ -1,7 +1,5 @@
 ﻿namespace Hydra.Test.Configuration
 {
-    using System.Linq;
-    using System.Threading;
     using Hydra.Configuration;
     using Hydra.Queries;
     using Microsoft.Practices.Unity;
@@ -36,33 +34,5 @@
 
             Assert.Equal("987654321", actual.Bar);
         }
-    }
-
-    public class MyLongRunningHandler : IQueryHandler<MyQuery, MyResponse>
-    {
-        public MyResponse Handle(MyQuery query)
-        {
-            Thread.Sleep(50);
-
-            return new MyResponse { Bar = new string(query.Foo.Reverse().ToArray()) };
-        }
-    }
-
-    public class MyQueryHandler : IQueryHandler<MyQuery, MyResponse>
-    {
-        public MyResponse Handle(MyQuery query)
-        {
-            return new MyResponse { Bar = new string(query.Foo.Reverse().ToArray()) };
-        }
-    }
-
-    public class MyQuery : IQuery<MyResponse>
-    {
-        public string Foo { get; set; }
-    }
-
-    public class MyResponse
-    {
-        public string Bar { get; set; }
     }
 }

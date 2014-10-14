@@ -60,6 +60,10 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Configuration\MyLongRunningHandler.cs" />
+    <Compile Include="Configuration\MyQuery.cs" />
+    <Compile Include="Configuration\MyQueryHandler.cs" />
+    <Compile Include="Configuration\MyResponse.cs" />
     <Compile Include="Configuration\QueryConfigurationTests.cs" />
     <Compile Include="Hosting\EmbeddedDirectoryTests.cs" />
     <Compile Include="Hosting\EmbeddedFileTests.cs" />

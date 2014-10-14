@@ -12,7 +12,7 @@
     using Hydra.Infrastructure.Reflection;
 
     [DebuggerDisplay("Count={cacheItemInvalidationTokens.Count}")]
-    public class ResourceAccessorCache : IDisposable
+    public class ResourceAccessorCache : IDisposable, IResourceAccessorCache
     {
         public static readonly Func<string> EmptyAccessor = () => string.Empty;
         
@@ -32,10 +32,6 @@
 
         public Func<string> GetAccessor(Type modelType, string propertyName)
         {
-            Contract.Requires(modelType != null);
-            Contract.Requires(!string.IsNullOrWhiteSpace(propertyName));
-            Contract.Ensures(Contract.Result<Func<string>>() != null);
-
             string accessorName = modelType.FullName.Replace('.', '_') + "_" + propertyName;
 
             Func<string> accessor;

@@ -13,9 +13,9 @@ namespace Hydra.FubuConventions
 
     public class OverrideHtmlConventions : DefaultHtmlConventions
     {
-        private readonly ResourceAccessorCache cache;
+        private readonly IResourceAccessorCache cache;
 
-        public OverrideHtmlConventions(IMediator mediator, ResourceAccessorCache cache)
+        public OverrideHtmlConventions(IMediator mediator, IResourceAccessorCache cache)
         {
             Contract.Requires(mediator != null);
             Contract.Requires(cache != null);
