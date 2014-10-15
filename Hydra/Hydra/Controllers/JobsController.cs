@@ -23,7 +23,7 @@
 
         public ActionResult Index()
         {
-            IEnumerable<IJobDetail> scheduledJobs = this.mediator.Request(new ScheduledJobsQuery());
+            IEnumerable<IJobDetail> scheduledJobs = this.mediator.Query(new ScheduledJobsQuery());
 
             return this.View(scheduledJobs);
         }

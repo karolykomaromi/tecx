@@ -20,14 +20,14 @@
 
         public async Task<ActionResult> IndexAsync()
         {
-            var t = this.mediator.RequestAsync(new AllBooksQuery());
+            var t = this.mediator.QueryAsync(new AllBooksQuery());
 
             return this.View(await t);
         }
 
         public ActionResult Index()
         {
-            IEnumerable<BookViewModel> books = this.mediator.Request(new AllBooksQuery());
+            IEnumerable<BookViewModel> books = this.mediator.Query(new AllBooksQuery());
 
             return this.View(books);
         }
