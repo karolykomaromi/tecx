@@ -1,4 +1,4 @@
-﻿namespace Hydra.Models
+namespace Hydra.Features.Registration
 {
     using FluentValidation.Attributes;
 

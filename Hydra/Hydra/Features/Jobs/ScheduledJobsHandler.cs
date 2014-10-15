@@ -1,9 +1,10 @@
-﻿namespace Hydra.Queries
-{
-    using System;
-    using System.Collections.Generic;
-    using Quartz;
+using System;
+using System.Collections.Generic;
+using Hydra.Queries;
+using Quartz;
 
+namespace Hydra.Features.Jobs
+{
     public class ScheduledJobsHandler : IQueryHandler<ScheduledJobs, IEnumerable<IJobDetail>>
     {
         public IEnumerable<IJobDetail> Handle(ScheduledJobs query)

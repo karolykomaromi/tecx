@@ -1,11 +1,12 @@
-﻿namespace Hydra.Controllers
+﻿using Hydra.Features.Books;
+
+namespace Hydra.Controllers
 {
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Hydra.Models;
     using Raven.Client;
 
     public class BooksController : Controller

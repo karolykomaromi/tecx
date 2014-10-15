@@ -1,11 +1,11 @@
-﻿namespace Hydra.Jobs
-{
-    using System;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-    using Hydra.Infrastructure;
-    using Quartz;
+using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Hydra.Infrastructure;
+using Quartz;
 
+namespace Hydra.Features.Jobs
+{
     [TypeConverter(typeof(EnumerationConverter<JobSchedule>))]
     public abstract class JobSchedule : Enumeration<JobSchedule>
     {

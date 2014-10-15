@@ -1,0 +1,12 @@
+@using Hydra.FubuConventions
+@model Hydra.Features.Books.Book
+
+@{
+    ViewBag.Title = @Hydra.Properties.Resources.Books_Index_Title;
+}
+
+<h2>@Hydra.Properties.Resources.Books_Index_Title</h2>
+
+@Html.FormBlock(x => x.Title)
+@Html.FormBlock(x => x.ASIN)
+
