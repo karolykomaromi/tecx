@@ -3,7 +3,7 @@ namespace Hydra.Features.Registration
     using FluentValidation.Attributes;
 
     [Validator(typeof(RegistrationValidator))]
-    public class Registration
+    public class RegistrationViewModel
     {
         public string Email { get; set; }
 

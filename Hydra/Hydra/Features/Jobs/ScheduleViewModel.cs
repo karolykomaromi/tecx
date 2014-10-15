@@ -1,7 +1,7 @@
-using Quartz;
-
 namespace Hydra.Features.Jobs
 {
+    using Quartz;
+
     public class ScheduleViewModel
     {
         public int Interval { get; set; }

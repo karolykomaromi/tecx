@@ -1,8 +1,8 @@
-using FluentValidation;
-
 namespace Hydra.Features.Registration
 {
-    public class RegistrationValidator : AbstractValidator<Registration>
+    using FluentValidation;
+
+    public class RegistrationValidator : AbstractValidator<RegistrationViewModel>
     {
         public RegistrationValidator()
         {

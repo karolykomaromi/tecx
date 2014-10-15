@@ -1,5 +1,6 @@
 ﻿namespace Hydra.Filters
 {
+    using System;
     using System.Web.Mvc;
     using Hydra.Infrastructure;
     using Newtonsoft.Json;
@@ -43,6 +44,13 @@
             RedirectToRouteResult redirect = filterContext.Result as RedirectToRouteResult;
 
             if (redirect == null)
+            {
+                return;
+            }
+
+            // this kind of validation messes up file uploads. checking for 'multipart/form-data' in the content type allows us to
+            // leave those actions alone
+            if (filterContext.HttpContext.Request.ContentType.IndexOf(HttpContentTypes.Multipart.Value, StringComparison.OrdinalIgnoreCase) > -1)
             {
                 return;
             }
