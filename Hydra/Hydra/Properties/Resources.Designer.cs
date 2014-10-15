@@ -61,6 +61,11 @@ namespace Hydra.Properties
             get { return Resources.ResourceManager.GetString("ApplicationName", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
+        public static string Books_Enter_Title
+        {
+            get { return Resources.ResourceManager.GetString("Books_Enter_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string Books_IndexAsync_Title
         {
             get { return Resources.ResourceManager.GetString("Books_IndexAsync_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
@@ -71,9 +76,9 @@ namespace Hydra.Properties
             get { return Resources.ResourceManager.GetString("Books_Index_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
-        public static string Book_Title
+        public static string BookViewModel_Title
         {
-            get { return Resources.ResourceManager.GetString("Book_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
+            get { return Resources.ResourceManager.GetString("BookViewModel_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string Create
@@ -124,6 +129,21 @@ namespace Hydra.Properties
         public static string Schedule
         {
             get { return Resources.ResourceManager.GetString("Schedule", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string Enter
+        {
+            get { return Resources.ResourceManager.GetString("Enter", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string Register
+        {
+            get { return Resources.ResourceManager.GetString("Register", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string BookViewModel_ASIN
+        {
+            get { return Resources.ResourceManager.GetString("BookViewModel_ASIN", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
     }
 }

@@ -1,14 +1,13 @@
-﻿using Hydra.Features.Registration;
-
-namespace Hydra.Controllers
+﻿namespace Hydra.Controllers
 {
     using System.Web.Mvc;
+    using Hydra.Features.Registration;
 
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            Registration model = new Registration { Email = "foo@bar.local" };
+            RegistrationViewModel model = new RegistrationViewModel { Email = "foo@bar.local" };
 
             return this.View(model);
         }

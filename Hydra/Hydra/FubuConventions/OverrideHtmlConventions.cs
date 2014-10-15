@@ -1,3 +1,5 @@
+using System.Web;
+
 namespace Hydra.FubuConventions
 {
     using System;
@@ -48,6 +50,10 @@ namespace Hydra.FubuConventions
             // Color
             this.Editors.IfPropertyIs<Color>().Attr("type", "color");
 
+            // Files
+            this.Editors.IfPropertyIs<HttpPostedFileBase>().Attr("type", "file");
+            this.Editors.IfPropertyIs<HttpPostedFile>().Attr("type", "file");
+
             //// Date/Time/DateTime/Local DateTime (NodaTime)
             //// Editors.IfPropertyIs<LocalDate>().Attr("type", "date");
             //// Editors.IfPropertyIs<LocalTime>().Attr("type", "time");
@@ -76,7 +82,6 @@ namespace Hydra.FubuConventions
             // DropDowns
             this.Editors.Modifier<EnumDropDownModifier>();
             this.Editors.Modifier<EnumerationDropDownModifier>();
-
             this.Editors.Add(new EnitityDropDownModifier(mediator));
         }
 

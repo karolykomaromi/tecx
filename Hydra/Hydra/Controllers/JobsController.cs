@@ -1,10 +1,9 @@
-﻿using Hydra.Features.Jobs;
-
-namespace Hydra.Controllers
+﻿namespace Hydra.Controllers
 {
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Web.Mvc;
+    using Hydra.Features.Jobs;
     using Hydra.Queries;
     using Quartz;
 
@@ -24,7 +23,7 @@ namespace Hydra.Controllers
 
         public ActionResult Index()
         {
-            IEnumerable<IJobDetail> scheduledJobs = this.mediator.Request(new ScheduledJobs());
+            IEnumerable<IJobDetail> scheduledJobs = this.mediator.Request(new ScheduledJobsQuery());
 
             return this.View(scheduledJobs);
         }

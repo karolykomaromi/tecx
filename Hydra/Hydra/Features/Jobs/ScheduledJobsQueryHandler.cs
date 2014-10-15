@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using Hydra.Queries;
-using Quartz;
-
 namespace Hydra.Features.Jobs
 {
-    public class ScheduledJobsHandler : IQueryHandler<ScheduledJobs, IEnumerable<IJobDetail>>
+    using System;
+    using System.Collections.Generic;
+    using Hydra.Queries;
+    using Quartz;
+
+    public class ScheduledJobsQueryHandler : IQueryHandler<ScheduledJobsQuery, IEnumerable<IJobDetail>>
     {
-        public IEnumerable<IJobDetail> Handle(ScheduledJobs query)
+        public IEnumerable<IJobDetail> Handle(ScheduledJobsQuery query)
         {
             return new[]
                    {
