@@ -1,18 +1,18 @@
-﻿@using Hydra.Models
+@using System.Web.Mvc.Html
 @using Hydra.FubuConventions
 @using Quartz
 @model IEnumerable<IJobDetail>
 
 @{
-    ViewBag.Title = Hydra.Properties.Resources.AvailableJobs;
+    ViewBag.Title = Hydra.Properties.Resources.Jobs_Index_Title;
 }
 
-<h2>@Hydra.Properties.Resources.AvailableJobs</h2>
+<h2>@Hydra.Properties.Resources.Jobs_Index_Title</h2>
 
 <table>
     <tr>
-        <th>@Hydra.Properties.Resources.JobInfo_Name</th>
-        <th>@Hydra.Properties.Resources.JobInfo_Description</th>
+        <th>@Hydra.Properties.Resources.IJobDetail_Name</th>
+        <th>@Hydra.Properties.Resources.IJobDetail_Description</th>
         <th/>
     </tr>
 

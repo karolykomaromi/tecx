@@ -184,23 +184,32 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\company_logo.png" />
     <Content Include="Content\Images\favicon.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Error.html" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Properties\Resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Resources.resx</DependentUpon>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </Content>
-    <None Include="Jobs\job_scheduling_data_2_0.xsd">
+    <Content Include="Features\Jobs\Index.cshtml" />
+    <Content Include="Features\Books\Index.cshtml" />
+    <Content Include="Features\Books\IndexAsync.cshtml" />
+    <Content Include="Features\Home\Index.cshtml" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Features\Jobs\job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Features\Jobs\Schedule.cshtml" />
+    <Content Include="Features\Registration\Register.cshtml" />
+    <Content Include="Features\Shared\_Layout.cshtml" />
+    <Content Include="Features\_ViewStart.cshtml" />
+    <Content Include="Features\web.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -223,6 +232,15 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Features\Books\Book.cs" />
+    <Compile Include="Features\Jobs\JobSchedule.cs" />
+    <Compile Include="Features\Jobs\ScheduledJobs.cs" />
+    <Compile Include="Features\Jobs\ScheduledJobsHandler.cs" />
+    <Compile Include="Features\Jobs\ScheduleViewModel.cs" />
+    <Compile Include="Features\Jobs\SendEmails.cs" />
+    <Compile Include="Features\Registration\Registration.cs" />
+    <Compile Include="Features\Registration\RegistrationValidator.cs" />
+    <Compile Include="FeatureViewLocationRazorViewEngine.cs" />
     <Compile Include="Configuration\CachingConfiguration.cs" />
     <Compile Include="Configuration\ErrorHandlingConfiguration.cs" />
     <Compile Include="Configuration\FubuConfiguration.cs" />
@@ -259,12 +277,6 @@
     <Compile Include="Hosting\EmbeddedVisitor.cs" />
     <Compile Include="Hosting\IVirtualPathUtility.cs" />
     <Compile Include="Hosting\VirtualPathUtilityWrapper.cs" />
-    <Compile Include="Jobs\JobSchedule.cs" />
-    <Compile Include="Jobs\SendEmails.cs" />
-    <Compile Include="Models\Book.cs" />
-    <Compile Include="Models\Registration.cs" />
-    <Compile Include="Models\RegistrationValidator.cs" />
-    <Compile Include="Models\ScheduleNewJob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.tt</DependentUpon>
@@ -273,24 +285,13 @@
     </Compile>
     <Compile Include="Queries\LazyMediator.cs" />
     <Compile Include="Queries\LazyQueryHandler.cs" />
-    <Compile Include="Queries\ScheduledJobs.cs" />
     <Compile Include="Queries\IMediator.cs" />
     <Compile Include="Queries\IQuery.cs" />
     <Compile Include="Queries\IQueryHandler.cs" />
-    <Compile Include="Queries\ScheduledJobsHandler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Registration\Register.cshtml" />
-    <Content Include="Views\Books\Index.cshtml" />
-    <Content Include="Views\Books\IndexAsync.cshtml" />
-    <Content Include="Views\Jobs\Index.cshtml" />
-    <Content Include="Views\Jobs\Schedule.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

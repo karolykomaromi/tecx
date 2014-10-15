@@ -1,11 +1,12 @@
-﻿@using Hydra.FubuConventions
-@model Hydra.Models.Registration
+@using System.Web.Mvc.Html
+@using Hydra.FubuConventions
+@model Hydra.Features.Registration.Registration
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = Hydra.Properties.Resources.Registration_Register_Title;
 }
 
-<h2>Register</h2>
+<h2>@Hydra.Properties.Resources.Registration_Register_Title</h2>
 
 <form method="POST">
 

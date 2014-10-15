@@ -1,7 +1,8 @@
-﻿namespace Hydra.Controllers
+﻿using Hydra.Features.Registration;
+
+namespace Hydra.Controllers
 {
     using System.Web.Mvc;
-    using Hydra.Models;
 
     public class RegistrationController : Controller
     {

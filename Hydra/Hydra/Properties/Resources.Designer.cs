@@ -61,9 +61,14 @@ namespace Hydra.Properties
             get { return Resources.ResourceManager.GetString("ApplicationName", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
-        public static string AvailableJobs
+        public static string Books_IndexAsync_Title
         {
-            get { return Resources.ResourceManager.GetString("AvailableJobs", resourceCulture ?? CultureInfo.CurrentUICulture); }
+            get { return Resources.ResourceManager.GetString("Books_IndexAsync_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string Books_Index_Title
+        {
+            get { return Resources.ResourceManager.GetString("Books_Index_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string Book_Title
@@ -86,14 +91,34 @@ namespace Hydra.Properties
             get { return Resources.ResourceManager.GetString("Edit", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
-        public static string JobInfo_Description
+        public static string Home_Index_Title
         {
-            get { return Resources.ResourceManager.GetString("JobInfo_Description", resourceCulture ?? CultureInfo.CurrentUICulture); }
+            get { return Resources.ResourceManager.GetString("Home_Index_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
-        public static string JobInfo_Name
+        public static string IJobDetail_Description
         {
-            get { return Resources.ResourceManager.GetString("JobInfo_Name", resourceCulture ?? CultureInfo.CurrentUICulture); }
+            get { return Resources.ResourceManager.GetString("IJobDetail_Description", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string IJobDetail_Name
+        {
+            get { return Resources.ResourceManager.GetString("IJobDetail_Name", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string Jobs_Index_Title
+        {
+            get { return Resources.ResourceManager.GetString("Jobs_Index_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string Jobs_Schedule_Title
+        {
+            get { return Resources.ResourceManager.GetString("Jobs_Schedule_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string Registration_Register_Title
+        {
+            get { return Resources.ResourceManager.GetString("Registration_Register_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string Schedule

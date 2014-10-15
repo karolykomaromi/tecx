@@ -21,6 +21,9 @@
         {
             HydraEventSource.Log.Startup();
 
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new FeatureViewLocationRazorViewEngine());
+
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 

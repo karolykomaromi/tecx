@@ -1,11 +1,11 @@
-﻿@model Hydra.Models.ScheduleNewJob
+@model Hydra.Features.Jobs.ScheduleViewModel
 @using Hydra.FubuConventions
 
 @{
-    ViewBag.Title = "Schedule";
+    ViewBag.Title = Hydra.Properties.Resources.Jobs_Schedule_Title;
 }
 
-<h2>Schedule</h2>
+<h2>@Hydra.Properties.Resources.Jobs_Schedule_Title</h2>
 
 @Html.Label(x => x.Interval)
 @Html.Input(x => x.Interval)

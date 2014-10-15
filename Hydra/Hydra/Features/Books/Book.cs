@@ -1,4 +1,4 @@
-﻿namespace Hydra.Models
+namespace Hydra.Features.Books
 {
     public class Book
     {

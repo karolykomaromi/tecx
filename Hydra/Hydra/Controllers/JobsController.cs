@@ -1,9 +1,10 @@
-﻿namespace Hydra.Controllers
+﻿using Hydra.Features.Jobs;
+
+namespace Hydra.Controllers
 {
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Web.Mvc;
-    using Hydra.Models;
     using Hydra.Queries;
     using Quartz;
 
@@ -41,13 +42,13 @@
 
             ////this.scheduler.ScheduleJob(job);
 
-            ScheduleNewJob newJob = new ScheduleNewJob { };
+            ScheduleViewModel newJob = new ScheduleViewModel { };
 
             return this.View(newJob);
         }
 
         [HttpPost]
-        public ActionResult Schedule(ScheduleNewJob scheduleNewJob)
+        public ActionResult Schedule(ScheduleViewModel scheduleNewJob)
         {
             return this.View();
         }
