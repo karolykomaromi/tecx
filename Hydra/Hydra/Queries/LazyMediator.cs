@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics.Contracts;
     using System.Threading.Tasks;
+    using Hydra.Commands;
 
     public class LazyMediator : IMediator
     {
@@ -15,14 +16,24 @@
             this.instance = new Lazy<IMediator>(factory);
         }
 
-        public TResponse Request<TResponse>(IQuery<TResponse> query)
+        public TResult Query<TResult>(IQuery<TResult> query)
         {
-            return this.instance.Value.Request(query);
+            return this.instance.Value.Query(query);
         }
 
-        public Task<TResponse> RequestAsync<TResponse>(IQuery<TResponse> query)
+        public Task<TResult> QueryAsync<TResult>(IQuery<TResult> query)
         {
-            return this.instance.Value.RequestAsync(query);
+            return this.instance.Value.QueryAsync(query);
+        }
+
+        public TResult Command<TResult>(ICommand<TResult> command)
+        {
+            return this.instance.Value.Command(command);
+        }
+
+        public Task<TResult> CommandAsync<TResult>(ICommand<TResult> command)
+        {
+            return this.instance.Value.CommandAsync(command);
         }
     }
 }

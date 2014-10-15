@@ -1,8 +1,5 @@
 $('form').on('submit', function () {
 
-    if (this.enctype == 'multipart/form-data')
-        return true;
-
     var request,
         $page = $('body'),
         $form = $(this),

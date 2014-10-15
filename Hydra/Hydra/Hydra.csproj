@@ -233,6 +233,8 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ICommandHandler.cs" />
     <Compile Include="Features\Books\AllBooksQueryHandler.cs" />
     <Compile Include="Features\Books\BookViewModel.cs" />
     <Compile Include="Features\Books\AllBooksQuery.cs" />
@@ -249,7 +251,7 @@
     <Compile Include="Configuration\ErrorHandlingConfiguration.cs" />
     <Compile Include="Configuration\FubuConfiguration.cs" />
     <Compile Include="Configuration\HydraEventSourceConfiguration.cs" />
-    <Compile Include="Configuration\QueryConfiguration.cs" />
+    <Compile Include="Configuration\CommandQueryConfiguration.cs" />
     <Compile Include="Configuration\QuartzConfiguration.cs" />
     <Compile Include="Configuration\RavenDBConfiguration.cs" />
     <Compile Include="Configuration\ResourcesConfiguration.cs" />
