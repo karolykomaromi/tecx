@@ -6,12 +6,12 @@
     using System.Text;
     using Xunit;
 
-    public class ICSBuilderTests
+    public class AppointmentBuilderTests
     {
         [Fact]
         public void Should_Never_Return_Null()
         {
-            var builder = new ICSBuilder();
+            var builder = new AppointmentBuilder();
 
             Assert.NotNull(builder.Build());
         }
@@ -19,7 +19,7 @@
         [Fact]
         public void Should()
         {
-            var builder = new ICSBuilder();
+            var builder = new AppointmentBuilder();
 
             string ics = builder
                 .StartsAt(TimeProvider.Now.Date.AddDays(1))
@@ -33,7 +33,20 @@
         }
     }
 
-    public class ICSBuilder
+    public abstract class Builder<T>
+        where T : class
+    {
+        public static implicit operator T(Builder<T> builder)
+        {
+            Contract.Requires(builder != null);
+
+            return builder.Build();
+        }
+
+        public abstract T Build();
+    }
+
+    public class AppointmentBuilder : Builder<string>
     {
         private readonly StringBuilder sb;
         private readonly List<string> reminders;
@@ -46,7 +59,7 @@
         private string summary;
         private string organizerMailAddress;
 
-        public ICSBuilder()
+        public AppointmentBuilder()
         {
             this.sb = new StringBuilder(100);
             this.reminders = new List<string>();
@@ -62,15 +75,7 @@
             this.endsAt = this.startsAt.AddHours(1);
         }
 
-        public static implicit operator string(ICSBuilder builder)
-        {
-            Contract.Requires(builder != null);
-            Contract.Ensures(Contract.Result<string>() != null);
-
-            return builder.Build();
-        }
-
-        public ICSBuilder WithProdId(string prodId)
+        public AppointmentBuilder WithProdId(string prodId)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(prodId));
 
@@ -79,7 +84,7 @@
             return this;
         }
 
-        public ICSBuilder StartsAt(DateTime start)
+        public AppointmentBuilder StartsAt(DateTime start)
         {
             this.startsAt = start;
 
@@ -88,7 +93,7 @@
             return this;
         }
 
-        public ICSBuilder EndsAt(DateTime end)
+        public AppointmentBuilder EndsAt(DateTime end)
         {
             Contract.Requires(end > this.startsAt);
 
@@ -97,7 +102,7 @@
             return this;
         }
 
-        public ICSBuilder AtLocation(string location)
+        public AppointmentBuilder AtLocation(string location)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(location));
 
@@ -106,7 +111,7 @@
             return this;
         }
 
-        public ICSBuilder WithDescription(string description)
+        public AppointmentBuilder WithDescription(string description)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(description));
 
@@ -115,7 +120,7 @@
             return this;
         }
 
-        public ICSBuilder WithSummary(string summary)
+        public AppointmentBuilder WithSummary(string summary)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(summary));
 
@@ -124,7 +129,7 @@
             return this;
         }
 
-        public ICSBuilder OrganizedBy(string mailTo)
+        public AppointmentBuilder OrganizedBy(string mailTo)
         {
             // TODO weberse 2014-10-15 validate for email address
             this.organizerMailAddress = mailTo;
@@ -132,7 +137,7 @@
             return this;
         }
 
-        public ICSBuilder WithReminder(Action<ReminderBuilder> action)
+        public AppointmentBuilder WithReminder(Action<ReminderBuilder> action)
         {
             ReminderBuilder builder = new ReminderBuilder();
 
@@ -143,7 +148,7 @@
             return this;
         }
 
-        public ICSBuilder WithAttendee(Action<AttendeeBuilder> action)
+        public AppointmentBuilder WithAttendee(Action<AttendeeBuilder> action)
         {
             AttendeeBuilder builder = new AttendeeBuilder();
 
@@ -154,7 +159,7 @@
             return this;
         }
 
-        public string Build()
+        public override string Build()
         {
             Contract.Ensures(Contract.Result<string>() != null);
 
@@ -198,51 +203,9 @@
 
             return this.sb.ToString() ?? string.Empty;
         }
-
-        public void Doit()
-        {
-            ////SmtpClient sc = new SmtpClient();
-            ////MailMessage msg = new MailMessage();
-            ////msg.From = new MailAddress("ahmed_dagga_84@hotmail.com", "Ahmed Abu Dagga");
-            ////msg.To.Add(new MailAddress("youremail@host.com", "Your Name"));
-            ////msg.Subject = "Send Calendar Appointment Email";
-            ////msg.Body = "Here is the Body Content";
-
-            ////StringBuilder str = new StringBuilder();
-            ////str.AppendLine("BEGIN:VCALENDAR");
-            ////str.AppendLine("PRODID:-//Ahmed Abu Dagga Blog");
-            ////str.AppendLine("VERSION:2.0");
-            ////str.AppendLine("METHOD:REQUEST");
-            ////str.AppendLine("BEGIN:VEVENT");
-            ////str.AppendLine(string.Format("DTSTART:{0:yyyyMMddTHHmmssZ}", startTime));
-            ////str.AppendLine(string.Format("DTSTAMP:{0:yyyyMMddTHHmmssZ}", DateTime.UtcNow));
-            ////str.AppendLine(string.Format("DTEND:{0:yyyyMMddTHHmmssZ}", endTime));
-            ////str.AppendLine("LOCATION: Dubai");
-            ////str.AppendLine(string.Format("UID:{0}", Guid.NewGuid()));
-            ////str.AppendLine(string.Format("DESCRIPTION:{0}", msg.Body));
-            ////str.AppendLine(string.Format("X-ALT-DESC;FMTTYPE=text/html:{0}", msg.Body));
-            ////str.AppendLine(string.Format("SUMMARY:{0}", msg.Subject));
-            ////str.AppendLine(string.Format("ORGANIZER:MAILTO:{0}", msg.From.Address));
-
-            ////str.AppendLine(string.Format("ATTENDEE;CN=\"{0}\";RSVP=TRUE:mailto:{1}", msg.To[0].DisplayName, msg.To[0].Address));
-
-            ////str.AppendLine("BEGIN:VALARM");
-            ////str.AppendLine("TRIGGER:-PT15M");
-            ////str.AppendLine("ACTION:DISPLAY");
-            ////str.AppendLine("DESCRIPTION:Reminder");
-            ////str.AppendLine("END:VALARM");
-            ////str.AppendLine("END:VEVENT");
-            ////str.AppendLine("END:VCALENDAR");
-            ////System.Net.Mime.ContentType ct = new System.Net.Mime.ContentType("text/calendar");
-            ////ct.Parameters.Add("method", "REQUEST");
-            ////AlternateView avCal = AlternateView.CreateAlternateViewFromString(str.ToString(), ct);
-            ////msg.AlternateViews.Add(avCal);
-
-            ////sc.Send(msg);
-        }
     }
 
-    public class AttendeeBuilder
+    public class AttendeeBuilder : Builder<string>
     {
         private readonly StringBuilder sb;
 
@@ -261,13 +224,6 @@
             this.mailTo = "donotreply@mail.invalid";
 
             this.sb = new StringBuilder(100);
-        }
-
-        public static implicit operator string(AttendeeBuilder builder)
-        {
-            Contract.Requires(builder != null);
-
-            return builder.Build();
         }
 
         public AttendeeBuilder WithName(string name)
@@ -302,7 +258,7 @@
             return this;
         }
 
-        public string Build()
+        public override string Build()
         {
             this.sb.Append("ATTENDEE;");
 
@@ -325,7 +281,7 @@
         }
     }
 
-    public class ReminderBuilder
+    public class ReminderBuilder : Builder<string>
     {
         private readonly StringBuilder sb;
 
@@ -344,13 +300,6 @@
             this.trigger = "TRIGGER:-PT15M";
 
             this.action = "ACTION:DISPLAY";
-        }
-
-        public static implicit operator string(ReminderBuilder builder)
-        {
-            Contract.Requires(builder != null);
-
-            return builder.Build();
         }
 
         public ReminderBuilder RemindBefore(TimeSpan before)
@@ -380,7 +329,7 @@
             return this;
         }
 
-        public string Build()
+        public override string Build()
         {
             this.sb.AppendLine("BEGIN:VALARM");
 

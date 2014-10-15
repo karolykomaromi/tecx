@@ -1,11 +1,10 @@
-using System.Web;
-
 namespace Hydra.FubuConventions
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Diagnostics.Contracts;
     using System.Drawing;
+    using System.Web;
     using System.Web.Mvc;
     using FubuMVC.Core.UI;
     using FubuMVC.Core.UI.Elements;
