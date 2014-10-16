@@ -123,7 +123,4 @@
   <data name="Hydra_Infrastructure_Test_Reflection_Foo_FullTypeNamedResourceExpected" xml:space="preserve">
     <value>I'm a full type named resource.</value>
   </data>
-  <data name="Reminder" xml:space="preserve">
-    <value>Reminder</value>
-  </data>
 </root>

@@ -56,6 +56,11 @@ namespace Hydra.Infrastructure.Properties
             }
         }
 
+        public static string AppointmentCreatedWith
+        {
+            get { return Resources.ResourceManager.GetString("AppointmentCreatedWith", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string EnumerationDoesNotDeclareAnyFields
         {
             get { return Resources.ResourceManager.GetString("EnumerationDoesNotDeclareAnyFields", resourceCulture ?? CultureInfo.CurrentUICulture); }
@@ -64,6 +69,16 @@ namespace Hydra.Infrastructure.Properties
         public static string InitializationOfEnumerationFailed
         {
             get { return Resources.ResourceManager.GetString("InitializationOfEnumerationFailed", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string Reminder
+        {
+            get { return Resources.ResourceManager.GetString("Reminder", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string ValidMailAddressRequired
+        {
+            get { return Resources.ResourceManager.GetString("ValidMailAddressRequired", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
     }
 }

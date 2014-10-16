@@ -117,10 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppointmentCreatedWith" xml:space="preserve">
+    <value>Hydra</value>
+  </data>
   <data name="EnumerationDoesNotDeclareAnyFields" xml:space="preserve">
     <value>Enumeration of Type '{0}' does not declare any public static fields.</value>
   </data>
   <data name="InitializationOfEnumerationFailed" xml:space="preserve">
     <value>Initialization of Enumeration failed.</value>
+  </data>
+  <data name="Reminder" xml:space="preserve">
+    <value>Reminder</value>
+  </data>
+  <data name="ValidMailAddressRequired" xml:space="preserve">
+    <value>This operation requires a valid email address.</value>
   </data>
 </root>

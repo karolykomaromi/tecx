@@ -53,6 +53,12 @@
     <Compile Include="Caching\CacheItemInvalidationToken.cs" />
     <Compile Include="Caching\ExternallyControlledChangeMonitor.cs" />
     <Compile Include="Caching\ObjectCacheExtensions.cs" />
+    <Compile Include="Calendaring\AppointmentBuilder.cs" />
+    <Compile Include="Calendaring\AttendeeBuilder.cs" />
+    <Compile Include="Calendaring\Builder.cs" />
+    <Compile Include="Calendaring\DurationBuilder.cs" />
+    <Compile Include="Calendaring\ReminderBuilder.cs" />
+    <Compile Include="Calendaring\TriggerBuilder.cs" />
     <Compile Include="DefaultTimeProvider.cs" />
     <Compile Include="Enumeration.cs" />
     <Compile Include="EnumerationConverter.cs" />
