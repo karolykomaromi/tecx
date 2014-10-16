@@ -89,13 +89,17 @@
     </Compile>
     <Compile Include="Caching\ExternallyControlledChangeMonitorTests.cs" />
     <Compile Include="Caching\ObjectCacheExtensionsTests.cs" />
+    <Compile Include="Calendaring\AppointmentBuilderTests.cs" />
+    <Compile Include="Calendaring\AttendeeBuilderTests.cs" />
+    <Compile Include="Calendaring\DurationBuilderTests.cs" />
+    <Compile Include="Calendaring\ReminderBuilderTests.cs" />
+    <Compile Include="Calendaring\TriggerBuilderTests.cs" />
     <Compile Include="EnumerationConverterTests.cs" />
     <Compile Include="EnumerationTests.cs" />
     <Compile Include="FlagsConverterTests.cs" />
     <Compile Include="FlagsTests.cs" />
     <Compile Include="I18n\CachingResourceManagerTests.cs" />
     <Compile Include="I18n\ResourceAccessorCacheTests.cs" />
-    <Compile Include="AppointmentBuilderTests.cs" />
     <Compile Include="Logging\HydraEventSourceTests.cs" />
     <Compile Include="Numbers.cs" />
     <Compile Include="Colors.cs" />
