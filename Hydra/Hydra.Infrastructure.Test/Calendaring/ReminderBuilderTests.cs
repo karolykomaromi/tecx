@@ -28,10 +28,10 @@
             string actual = sut.RemindAt(x => x.Duration(2.Hours()));
 
             string expected = "BEGIN:VALARM" + Environment.NewLine +
-                  "TRIGGER:PT2H" + Environment.NewLine +
-                  "ACTION:DISPLAY" + Environment.NewLine +
-                  "DESCRIPTION:Reminder" + Environment.NewLine +
-                  "END:VALARM";
+                              "TRIGGER:PT2H" + Environment.NewLine +
+                              "ACTION:DISPLAY" + Environment.NewLine +
+                              "DESCRIPTION:Reminder" + Environment.NewLine +
+                              "END:VALARM";
 
             Assert.Equal(expected, actual);
         }
@@ -42,10 +42,10 @@
             string actual = sut.RemindAt(x => x.Duration(-1.5.Hours()));
 
             string expected = "BEGIN:VALARM" + Environment.NewLine +
-                  "TRIGGER:-PT1H30M" + Environment.NewLine +
-                  "ACTION:DISPLAY" + Environment.NewLine +
-                  "DESCRIPTION:Reminder" + Environment.NewLine +
-                  "END:VALARM";
+                              "TRIGGER:-PT1H30M" + Environment.NewLine +
+                              "ACTION:DISPLAY" + Environment.NewLine +
+                              "DESCRIPTION:Reminder" + Environment.NewLine +
+                              "END:VALARM";
 
             Assert.Equal(expected, actual);
         }

@@ -7,12 +7,15 @@
     using Microsoft.Practices.Unity;
     using Quartz;
     using Quartz.Impl;
+    using Quartz.Simpl;
     using Quartz.Spi;
 
     public class QuartzConfiguration : UnityContainerExtension
     {
         protected override void Initialize()
         {
+            this.Container.RegisterType<IJobStore, RAMJobStore>(new ContainerControlledLifetimeManager());
+
             this.Container.RegisterTypes(
                 AllClasses.FromAssemblies(typeof(QuartzConfiguration).Assembly).Where(t => typeof(IJob).IsAssignableFrom(t)),
                 _ => new[] { typeof(IJob) },

@@ -53,5 +53,12 @@
         {
             return TimeSpan.FromDays(days);
         }
+
+        public static void Pass(this TimeSpan ts)
+        {
+            DateTime previousTime = TimeProvider.UtcNow;
+
+            (previousTime + ts).Freeze();
+        }
     }
 }
