@@ -92,6 +92,8 @@
     <Compile Include="Calendaring\AppointmentBuilderTests.cs" />
     <Compile Include="Calendaring\AttendeeBuilderTests.cs" />
     <Compile Include="Calendaring\DurationBuilderTests.cs" />
+    <Compile Include="Calendaring\MailAddressBuilder.cs" />
+    <Compile Include="Calendaring\MailAddressBuilderExtensions.cs" />
     <Compile Include="Calendaring\ReminderBuilderTests.cs" />
     <Compile Include="Calendaring\TriggerBuilderTests.cs" />
     <Compile Include="EnumerationConverterTests.cs" />

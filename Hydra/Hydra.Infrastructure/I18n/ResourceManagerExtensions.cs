@@ -8,12 +8,10 @@
 
     public static class ResourceManagerExtensions
     {
-        public static string GetString(
-            this IResourceManager resourceManager,
-            Expression<Func<string>> propertySelector,
-            CultureInfo culture)
+        public static string GetString(this IResourceManager resourceManager, Expression<Func<string>> propertySelector, CultureInfo culture)
         {
             Contract.Requires(resourceManager != null);
+            Contract.Requires(propertySelector != null);
 
             string propertyName = TypeHelper.GetPropertyName(propertySelector);
 

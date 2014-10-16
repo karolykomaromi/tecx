@@ -2,6 +2,9 @@
 {
     using System.Web.Mvc;
 
+    /// <summary>
+    /// <seealso cref="http://timgthomas.com/2013/10/feature-folders-in-asp-net-mvc/"/>
+    /// </summary>
     public class FeatureViewLocationRazorViewEngine : RazorViewEngine
     {
         public FeatureViewLocationRazorViewEngine()
