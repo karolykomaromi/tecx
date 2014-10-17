@@ -1,6 +1,8 @@
 namespace Hydra.TestTools
 {
+    using System;
     using System.Diagnostics.Contracts;
+    using System.Linq;
     using System.Net.Mail;
     using Hydra.Infrastructure;
 
@@ -23,7 +25,11 @@ namespace Hydra.TestTools
 
         public override MailAddress Build()
         {
-            return new MailAddress(this.first.ToLowerInvariant() + "." + this.last.ToLowerInvariant() + "@" + this.domain, this.first + " " + this.last);
+            string f = this.first.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).First().ToLowerInvariant();
+
+            string n = this.last.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Last().ToLowerInvariant();
+
+            return new MailAddress(f + "." + n + "@" + this.domain, this.first + " " + this.last);
         }
 
         public MailAddressBuilder WithFirstName(string firstName)
