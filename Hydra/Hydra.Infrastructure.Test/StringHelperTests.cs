@@ -1,5 +1,7 @@
 ﻿namespace Hydra.Infrastructure.Test
 {
+    using System.IO;
+    using System.Text;
     using Xunit;
 
     public class StringHelperTests
@@ -22,6 +24,26 @@
             string expected = "Product ID";
 
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void Should_Write_String_To_File()
+        {
+            string expected = "Should_Write_String_To_File";
+
+            string fileName = "Should_Write_String_To_File.txt";
+
+            expected.SaveToFile(fileName);
+
+            using (Stream stream = File.OpenRead(fileName))
+            {
+                using (TextReader reader = new StreamReader(stream, Encoding.UTF8))
+                {
+                    string actual = reader.ReadToEnd();
+
+                    Assert.Equal(expected, actual);
+                }
+            }
         }
     }
 }

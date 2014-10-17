@@ -1,4 +1,4 @@
-﻿namespace Hydra.Infrastructure.Test.Calendaring
+namespace Hydra.TestTools
 {
     using System.Diagnostics.Contracts;
 

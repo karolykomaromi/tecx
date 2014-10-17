@@ -1,6 +1,5 @@
 namespace Hydra.Unity.Test.Tracking
 {
-    using Hydra.Unity.Test.Utility;
     using Hydra.Unity.Tracking;
     using Microsoft.Practices.Unity;
     using Xunit;

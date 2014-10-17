@@ -2,7 +2,6 @@
 {
     using System;
     using Hydra.Infrastructure.Calendaring;
-    using Hydra.Infrastructure.Test.Utility;
     using Xunit;
     using Xunit.Extensions;
 
