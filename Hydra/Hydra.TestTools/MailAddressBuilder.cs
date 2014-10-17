@@ -1,8 +1,8 @@
-﻿namespace Hydra.Infrastructure.Test.Calendaring
+namespace Hydra.TestTools
 {
     using System.Diagnostics.Contracts;
     using System.Net.Mail;
-    using Hydra.Infrastructure.Calendaring;
+    using Hydra.Infrastructure;
 
     public class MailAddressBuilder : Builder<MailAddress>
     {

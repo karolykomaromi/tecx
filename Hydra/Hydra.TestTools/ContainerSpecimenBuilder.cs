@@ -1,15 +1,15 @@
-namespace Hydra.Unity.Test.Utility
+namespace Hydra.TestTools
 {
     using System;
     using System.Diagnostics.Contracts;
     using Microsoft.Practices.Unity;
     using Ploeh.AutoFixture.Kernel;
 
-    public class ChildContainerSpecimenBuilder : ISpecimenBuilder
+    public class ContainerSpecimenBuilder : ISpecimenBuilder
     {
         private readonly IUnityContainer container;
 
-        public ChildContainerSpecimenBuilder(IUnityContainer container)
+        public ContainerSpecimenBuilder(IUnityContainer container)
         {
             Contract.Requires(container != null);
 
@@ -20,12 +20,12 @@ namespace Hydra.Unity.Test.Utility
         {
             Type type = request as Type;
 
-            if (type == null || type != typeof(IUnityContainer))
+            if (type == null)
             {
                 return new NoSpecimen();
             }
 
-            return this.container.CreateChildContainer();
+            return this.container.Resolve(type);
         }
     }
 }

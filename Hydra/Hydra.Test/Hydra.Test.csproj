@@ -76,6 +76,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hydra.TestTools\Hydra.TestTools.csproj">
+      <Project>{f026b613-38eb-4caa-9909-042f2364d258}</Project>
+      <Name>Hydra.TestTools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hydra.Theming.Blue\Hydra.Theming.Blue.csproj">
       <Project>{4DEDE7A4-387F-49D7-8C16-60C81CE68E6E}</Project>
       <Name>Hydra.Theming.Blue</Name>

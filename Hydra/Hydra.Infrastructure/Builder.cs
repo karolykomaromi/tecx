@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace Hydra.Infrastructure.Calendaring
+﻿namespace Hydra.Infrastructure
 {
+    using System.Diagnostics.Contracts;
+
     public abstract class Builder<T>
         where T : class
     {

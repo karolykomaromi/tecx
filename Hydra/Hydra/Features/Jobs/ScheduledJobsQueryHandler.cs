@@ -1,13 +1,12 @@
-using System.Linq;
-using Quartz.Impl.Matchers;
-
 namespace Hydra.Features.Jobs
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
+    using System.Linq;
     using Hydra.Queries;
     using Quartz;
+    using Quartz.Impl.Matchers;
     using Quartz.Spi;
 
     public class ScheduledJobsQueryHandler : IQueryHandler<ScheduledJobsQuery, IEnumerable<IJobDetail>>
@@ -24,9 +23,7 @@ namespace Hydra.Features.Jobs
         public IEnumerable<IJobDetail> Handle(ScheduledJobsQuery query)
         {
             var jobKeysAndTriggers = this.store.GetJobKeys(GroupMatcher<JobKey>.AnyGroup()).Select(key => new { JobKey = key, Triggers = this.store.GetTriggersForJob(key) });
-
-
-
+            
             return new[]
                    {
                        new DummyJobDetails("Foo", "Daily"),

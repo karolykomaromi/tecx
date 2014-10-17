@@ -1,4 +1,4 @@
-namespace Hydra.Unity.Test.Utility
+namespace Hydra.TestTools
 {
     using System.Diagnostics.Contracts;
     using Microsoft.Practices.Unity;

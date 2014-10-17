@@ -1,5 +1,6 @@
-namespace Hydra.Unity.Test.Utility
+namespace Hydra.Unity.Test
 {
+    using Hydra.TestTools;
     using Hydra.Unity.Tracking;
     using Microsoft.Practices.Unity;
     using Ploeh.AutoFixture;

@@ -1,8 +1,8 @@
-﻿namespace Hydra.Infrastructure.Test.Utility
+namespace Hydra.Infrastructure.Test
 {
     using System.Runtime.Caching;
     using Hydra.Infrastructure.I18n;
-    using Hydra.Unity.Test.Utility;
+    using Hydra.TestTools;
     using Microsoft.Practices.Unity;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit;

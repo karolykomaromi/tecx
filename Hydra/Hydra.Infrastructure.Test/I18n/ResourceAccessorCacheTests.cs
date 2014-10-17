@@ -2,7 +2,6 @@
 {
     using Hydra.Infrastructure.I18n;
     using Hydra.Infrastructure.Test.Reflection;
-    using Hydra.Infrastructure.Test.Utility;
     using Xunit;
     using Xunit.Extensions;
 
