@@ -59,6 +59,7 @@
     <Compile Include="Calendaring\DurationBuilder.cs" />
     <Compile Include="Calendaring\ReminderBuilder.cs" />
     <Compile Include="Calendaring\TriggerBuilder.cs" />
+    <Compile Include="ConvertHelper.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="DefaultTimeProvider.cs" />
     <Compile Include="Enumeration.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Reflection\CustomAttributeProvider.cs" />
     <Compile Include="Reflection\Method.cs" />
     <Compile Include="Reflection\Property.cs" />
+    <Compile Include="Reflection\PropertyNotFoundException.cs" />
     <Compile Include="Reflection\TypeHelper.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="TimeProvider.cs" />

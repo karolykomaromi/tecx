@@ -47,14 +47,20 @@
             log.ResourceTypeNotFound(assembly.GetName().FullName, resourceTypeName);
         }
 
-        public static void ResourcePropertyNotFound(this HydraEventSource log, Assembly assembly, Type resourceType, string propertyName)
+        public static void ResourcePropertyNotFound(this HydraEventSource log, Type resourceType, string propertyName)
         {
             Contract.Requires(log != null);
-            Contract.Requires(assembly != null);
             Contract.Requires(resourceType != null);
             Contract.Requires(!string.IsNullOrWhiteSpace(propertyName));
 
-            log.ResourcePropertyNotFound(assembly.GetName().FullName, resourceType.FullName, propertyName);
+            log.ResourcePropertyNotFound(resourceType.AssemblyQualifiedName, propertyName);
+        }
+
+        public static void PropertyNotFound(this HydraEventSource log, Type type, string propertyName)
+        {
+            Contract.Requires(log != null);
+
+            log.PropertyNotFound(type.AssemblyQualifiedName, propertyName);
         }
     }
 }

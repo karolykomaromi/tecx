@@ -35,7 +35,7 @@
                 new InjectionProperty("JobFactory"));
         }
 
-        private class UnityJobFactory : IJobFactory
+        private sealed class UnityJobFactory : PropertySettingJobFactory
         {
             private readonly IUnityContainer container;
 
@@ -43,10 +43,14 @@
             {
                 Contract.Requires(container != null);
 
+                this.ThrowIfPropertyNotFound = false;
+
+                this.WarnIfPropertyNotFound = true;
+
                 this.container = container;
             }
 
-            public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
+            public override IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
             {
                 Contract.Requires(bundle != null);
                 Contract.Requires(bundle.JobDetail != null);
@@ -57,7 +61,16 @@
 
                 try
                 {
-                    return (IJob)this.container.Resolve(jobType);
+                    IJob job = (IJob)this.container.Resolve(jobType);
+
+                    JobDataMap data = new JobDataMap();
+                    data.PutAll(scheduler.Context);
+                    data.PutAll(bundle.JobDetail.JobDataMap);
+                    data.PutAll(bundle.Trigger.JobDataMap);
+
+                    this.SetObjectProperties((object)job, data);
+
+                    return job;
                 }
                 catch (ResolutionFailedException ex)
                 {
@@ -67,7 +80,7 @@
                 }
             }
 
-            public void ReturnJob(IJob job)
+            public override void ReturnJob(IJob job)
             {
                 Contract.Requires(job != null);
 

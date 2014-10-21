@@ -18,7 +18,7 @@
                 return s;
             }
 
-            string splitCamelCase = StringHelper.CamelHumps.Replace(s, " $1").Trim();
+            string splitCamelCase = CamelHumps.Replace(s, " $1").Trim();
 
             return splitCamelCase;
         }
@@ -36,6 +36,21 @@
                     writer.Flush();
                 }
             }
+        }
+
+        public static string CapitalizeFirstLetter(string s)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+            {
+                return string.Empty;
+            }
+
+            if (s.Length == 1)
+            {
+                return s.ToUpperInvariant();
+            }
+
+            return s.Substring(0, 1).ToUpperInvariant() + s.Substring(1);
         }
     }
 }
