@@ -45,5 +45,25 @@
                 }
             }
         }
+
+        [Fact]
+        public void Should_Convert_First_Character_To_UpperCase()
+        {
+            Assert.Equal("Upper", StringHelper.CapitalizeFirstLetter("upper"));
+        }
+
+        [Fact]
+        public void Should_Convert_Single_Character_To_UpperCase()
+        {
+            Assert.Equal("U", StringHelper.CapitalizeFirstLetter("u"));
+        }
+
+        [Fact]
+        public void Should_Never_Return_Null()
+        {
+            Assert.Equal(string.Empty, StringHelper.CapitalizeFirstLetter("    "));
+            Assert.Equal(string.Empty, StringHelper.CapitalizeFirstLetter(string.Empty));
+            Assert.Equal(string.Empty, StringHelper.CapitalizeFirstLetter(null));
+        }
     }
 }

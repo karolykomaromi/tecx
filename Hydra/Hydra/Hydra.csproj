@@ -244,6 +244,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandHandler.cs" />
+    <Compile Include="Configuration\NHibernateConfiguration.cs" />
     <Compile Include="Features\Books\AllBooksQueryHandler.cs" />
     <Compile Include="Features\Books\BookViewModel.cs" />
     <Compile Include="Features\Books\AllBooksQuery.cs" />
