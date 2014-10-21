@@ -31,7 +31,7 @@
             FluentValidationModelValidatorProvider.Configure();
 
             // create application master container
-            IUnityContainer container = new UnityContainer().AddNewExtension<UnityContainerConfiguration>();
+            IUnityContainer container = new UnityContainer().AddNewExtension<CompositionRoot>();
             this.Application[Unity.Constants.ContainerKey] = container;
 
             // unity backed controller factory
