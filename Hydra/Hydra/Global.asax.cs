@@ -10,7 +10,6 @@
     using Hydra.Filters;
     using Hydra.Hosting;
     using Hydra.Infrastructure.Logging;
-    using Hydra.Theming.Blue;
     using Hydra.Theming.Green;
     using Hydra.Unity;
     using Microsoft.Practices.Unity;
@@ -55,9 +54,8 @@
 
         protected void Application_End()
         {
-            HydraEventSource.Log.Shutdown();
-
             //// Logging ASP.NET Application Shutdown Events by ScottGu http://weblogs.asp.net/scottgu/433194
+            HydraEventSource.Log.Shutdown();
 
             IUnityContainer container = this.Application[Unity.Constants.ContainerKey] as IUnityContainer;
 
@@ -74,7 +72,9 @@
             // pulled from the container.
             IUnityContainer container = (IUnityContainer)this.Application[Unity.Constants.ContainerKey];
 
-            this.Context.Items[Unity.Constants.ContainerKey] = container.CreateChildContainer();
+            IUnityContainer childContainer = container.CreateChildContainer();
+
+            this.Context.Items[Unity.Constants.ContainerKey] = childContainer;
         }
 
         protected void Application_EndRequest()
