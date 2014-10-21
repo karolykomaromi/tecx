@@ -107,6 +107,7 @@
     <Compile Include="Reflection\PropertyNotFoundException.cs" />
     <Compile Include="Reflection\TypeHelper.cs" />
     <Compile Include="StringHelper.cs" />
+    <Compile Include="Theming\Theme.cs" />
     <Compile Include="TimeProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimespanExtensions.cs" />

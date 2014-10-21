@@ -5,7 +5,7 @@ namespace Hydra.Configuration
     using Hydra.Unity.Collections;
     using Microsoft.Practices.Unity;
 
-    public class UnityContainerConfiguration : UnityContainerExtension
+    public class CompositionRoot : UnityContainerExtension
     {
         protected override void Initialize()
         {
@@ -21,7 +21,7 @@ namespace Hydra.Configuration
 
         private bool IsContainerConfiguration(Type t)
         {
-            bool isContainerConfiguration = t != typeof(UnityContainerConfiguration) &&
+            bool isContainerConfiguration = t != typeof(CompositionRoot) &&
                 (t.Namespace ?? string.Empty).IndexOf("Configuration", StringComparison.Ordinal) > -1 &&
                 typeof(UnityContainerExtension).IsAssignableFrom(t) &&
                 t.Name.EndsWith("Configuration");
