@@ -57,7 +57,7 @@
                 {
                     accessor = ResourceAccessorCache.EmptyAccessor;
                     this.cacheItemInvalidationTokens.Add(this.cache.Add(accessorName, accessor));
-                    HydraEventSource.Log.ResourcePropertyNotFound(assembly, resourceType, propertyName);
+                    HydraEventSource.Log.ResourcePropertyNotFound(resourceType, propertyName);
                     return accessor;
                 }
 

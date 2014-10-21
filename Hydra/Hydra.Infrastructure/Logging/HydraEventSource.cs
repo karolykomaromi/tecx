@@ -86,12 +86,21 @@
             }
         }
 
-        [Event(9, Message = "Could not find public static property '{2}' on resource type '{1}' in assembly '{0}'.", Keywords = Keywords.Diagnostic | Keywords.Resources, Level = EventLevel.Informational)]
-        public void ResourcePropertyNotFound(string assemblyName, string resourceTypeName, string propertyName)
+        [Event(9, Message = "Could not find public static property '{1}' on resource Type '{0}'.", Keywords = Keywords.Diagnostic | Keywords.Resources, Level = EventLevel.Informational)]
+        public void ResourcePropertyNotFound(string assemblyQualifiedResourceTypeName, string propertyName)
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(9, assemblyName, resourceTypeName, propertyName);
+                this.WriteEvent(9, assemblyQualifiedResourceTypeName, propertyName);
+            }
+        }
+
+        [Event(10, Message = "Could not find property '{1}' on Type '{0}'.", Keywords = Keywords.Diagnostic, Level = EventLevel.Informational)]
+        public void PropertyNotFound(string assemblyQualifiedTypeName, string propertyName)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(10, assemblyQualifiedTypeName, propertyName);
             }
         }
 
