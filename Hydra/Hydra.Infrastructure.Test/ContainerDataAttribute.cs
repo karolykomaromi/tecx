@@ -1,5 +1,6 @@
 namespace Hydra.Infrastructure.Test
 {
+    using System;
     using System.Runtime.Caching;
     using Hydra.Infrastructure.I18n;
     using Hydra.TestTools;
@@ -7,6 +8,7 @@ namespace Hydra.Infrastructure.Test
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit;
 
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class ContainerDataAttribute : AutoDataAttribute
     {
         public ContainerDataAttribute()

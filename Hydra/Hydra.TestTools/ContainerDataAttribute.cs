@@ -1,9 +1,11 @@
 ﻿namespace Hydra.TestTools
 {
+    using System;
     using Microsoft.Practices.Unity;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit;
 
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class ContainerDataAttribute : AutoDataAttribute
     {
         public ContainerDataAttribute()

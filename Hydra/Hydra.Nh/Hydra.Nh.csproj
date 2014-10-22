@@ -64,6 +64,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.tt</DependentUpon>
     </Compile>
+    <Compile Include="Quartz\QuartzBlobsForTriggers.cs" />
+    <Compile Include="Quartz\QuartzBlobsForTriggersMap.cs" />
+    <Compile Include="Quartz\QuartzCalendar.cs" />
+    <Compile Include="Quartz\QuartzCalendarMap.cs" />
+    <Compile Include="Quartz\QuartzCronTrigger.cs" />
+    <Compile Include="Quartz\QuartzCronTriggerMap.cs" />
+    <Compile Include="Quartz\QuartzFiredTrigger.cs" />
+    <Compile Include="Quartz\QuartzFiredTriggerMap.cs" />
+    <Compile Include="Quartz\QuartzJobDetails.cs" />
+    <Compile Include="Quartz\QuartzJobDetailsMap.cs" />
+    <Compile Include="Quartz\QuartzLock.cs" />
+    <Compile Include="Quartz\QuartzLockMap.cs" />
+    <Compile Include="Quartz\QuartzPausedTriggerGroup.cs" />
+    <Compile Include="Quartz\QuartzPausedTriggerGroupMap.cs" />
+    <Compile Include="Quartz\QuartzSchedulerState.cs" />
+    <Compile Include="Quartz\QuartzSchedulerStateMap.cs" />
+    <Compile Include="Quartz\QuartzSimplePropertiesForTriggers.cs" />
+    <Compile Include="Quartz\QuartzSimplePropertiesForTriggersMap.cs" />
+    <Compile Include="Quartz\QuartzSimpleTrigger.cs" />
+    <Compile Include="Quartz\QuartzSimpleTriggerMap.cs" />
+    <Compile Include="Quartz\QuartzTrigger.cs" />
+    <Compile Include="Quartz\QuartzTriggerMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
