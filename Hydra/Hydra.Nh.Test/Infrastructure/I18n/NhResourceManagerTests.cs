@@ -11,7 +11,8 @@
 
     public class NhResourceManagerTests
     {
-        [Theory, ContainerData, Trait("Category", "Integration")]
+        [Theory, ContainerData]
+        [Trait("Category", "Integration")]
         public void Should_Find_ResourceItem_By_Name_And_Culture(ISession session)
         {
             using (session)
@@ -24,7 +25,6 @@
                         new ResourceItemBuilder().FromType(typeof(Properties.Resources)).UseCulture(culture);
 
                     ResourceItem r1 = builder.ForProperty(() => Properties.Resources.Foo).WithValue("1");
-
                     ResourceItem r2 = builder.ForProperty(() => Properties.Resources.Bar).WithValue("2");
 
                     session.Save(r1);
@@ -40,7 +40,8 @@
             }
         }
 
-        [Theory, ContainerData, Trait("Category", "Integration")]
+        [Theory, ContainerData]
+        [Trait("Category", "Integration")]
         public void Should_Find_All_ResourceItems_For_Given_Base_Name_And_Culture(ISession session)
         {
             using (session)
@@ -53,7 +54,6 @@
                         new ResourceItemBuilder().FromType(typeof(Properties.Resources)).UseCulture(culture);
 
                     ResourceItem r1 = builder.ForProperty(() => Properties.Resources.Foo).WithValue("1");
-
                     ResourceItem r2 = builder.ForProperty(() => Properties.Resources.Bar).WithValue("2");
 
                     long id1 = (long)session.Save(r1);
