@@ -58,9 +58,9 @@
     <EmbeddedResource Include="Content\Images\favicon.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hydra.Theming\Hydra.Theming.csproj">
-      <Project>{20A3F4CA-C09B-4FEC-ACB1-52011BF02EC1}</Project>
-      <Name>Hydra.Theming</Name>
+    <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj">
+      <Project>{DA9F1B57-18BD-451F-A3FA-7D149849A8BD}</Project>
+      <Name>Hydra.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
