@@ -285,3 +285,8 @@ Hydra/Hydra.Import/bin
 Hydra/Hydra.Import/obj
 Hydra/Hydra.TestTools/bin
 Hydra/Hydra.TestTools/obj
+Hydra/Hydra.Nh.Test/bin
+Hydra/Hydra.Nh.Test/obj
+Hydra/Hydra.Nh/bin
+Hydra/Hydra.Nh.Tests/obj
+Hydra/Hydra.Nh/obj
