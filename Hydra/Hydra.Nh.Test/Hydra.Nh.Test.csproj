@@ -94,6 +94,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.tt</DependentUpon>
     </Compile>
+    <Compile Include="Quartz\QuartzTableCreationScriptsTests.cs" />
     <Compile Include="Quartz\QuartzTests.cs" />
   </ItemGroup>
   <ItemGroup>
