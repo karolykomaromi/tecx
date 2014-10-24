@@ -96,6 +96,7 @@
     <Compile Include="FlagsTests.cs" />
     <Compile Include="I18n\CachingResourceManagerTests.cs" />
     <Compile Include="I18n\ResourceAccessorCacheTests.cs" />
+    <Compile Include="Input\CmdLineParameterParserTests.cs" />
     <Compile Include="Logging\HydraEventSourceTests.cs" />
     <Compile Include="Numbers.cs" />
     <Compile Include="Colors.cs" />

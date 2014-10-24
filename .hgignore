@@ -290,3 +290,5 @@ Hydra/Hydra.Nh.Test/obj
 Hydra/Hydra.Nh/bin
 Hydra/Hydra.Nh.Tests/obj
 Hydra/Hydra.Nh/obj
+Hydra/Hydra.JobHost/bin
+Hydra/Hydra.JobHost/obj

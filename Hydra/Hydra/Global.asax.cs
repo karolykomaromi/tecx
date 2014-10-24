@@ -6,7 +6,6 @@
     using System.Web.Mvc;
     using System.Web.Routing;
     using FluentValidation.Mvc;
-    using Hydra.Configuration;
     using Hydra.Filters;
     using Hydra.Hosting;
     using Hydra.Infrastructure.Logging;
@@ -31,8 +30,8 @@
             FluentValidationModelValidatorProvider.Configure();
 
             // create application master container
-            IUnityContainer container = new UnityContainer().AddNewExtension<CompositionRoot>();
-            this.Application[Unity.Constants.ContainerKey] = container;
+            IUnityContainer container = new UnityContainer().AddExtension(new CompositionRoot(this.GetType().Assembly));
+            this.Application[Constants.ContainerKey] = container;
 
             // unity backed controller factory
             IControllerFactory factory = new UnityControllerFactory(new ContainerPerRequestAdapter());

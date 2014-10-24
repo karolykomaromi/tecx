@@ -231,7 +231,6 @@
     <Compile Include="Configuration\QuartzConfiguration.cs" />
     <Compile Include="Configuration\RavenDBConfiguration.cs" />
     <Compile Include="Configuration\ResourcesConfiguration.cs" />
-    <Compile Include="Configuration\CompositionRoot.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobsController.cs" />
