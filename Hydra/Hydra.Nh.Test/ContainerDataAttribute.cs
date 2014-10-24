@@ -1,6 +1,4 @@
-﻿using NHibernate.Cfg;
-
-namespace Hydra.Nh.Test
+﻿namespace Hydra.Nh.Test
 {
     using System;
     using FluentNHibernate.Cfg;
@@ -9,6 +7,7 @@ namespace Hydra.Nh.Test
     using Hydra.TestTools;
     using Microsoft.Practices.Unity;
     using NHibernate;
+    using NHibernate.Cfg;
     using NHibernate.Tool.hbm2ddl;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit;

@@ -2,46 +2,33 @@
 {
     using System;
     using System.Diagnostics.Contracts;
-    using System.Text;
 
-    public class ReminderBuilder : Builder<string>
+    public class ReminderBuilder : Builder<Reminder>
     {
-        private readonly StringBuilder sb;
-
-        private string description;
-
-        private string trigger;
-
-        private string action;
+        private readonly Reminder reminder;
 
         public ReminderBuilder()
         {
-            this.sb = new StringBuilder(100);
-
-            this.description = Properties.Resources.Reminder;
-
-            this.trigger = new DurationBuilder();
-
-            this.action = Constants.Actions.Display;
+            this.reminder = new Reminder { Action = Constants.Actions.Display };
         }
 
         public ReminderBuilder AlertByDisplayingNotification()
         {
-            this.action = Constants.Actions.Display;
+            this.reminder.Action = Constants.Actions.Display;
 
             return this;
         }
 
         public ReminderBuilder AlertByPlayingSound()
         {
-            this.action = Constants.Actions.Audio;
+            this.reminder.Action = Constants.Actions.Audio;
 
             return this;
         }
 
         public ReminderBuilder AlertByEmail()
         {
-            this.action = Constants.Actions.Email;
+            this.reminder.Action = Constants.Actions.Email;
 
             return this;
         }
@@ -54,7 +41,7 @@
 
             action(builder);
 
-            this.trigger = builder;
+            this.reminder.Trigger = builder;
 
             return this;
         }
@@ -63,24 +50,14 @@
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(description));
 
-            this.description = description;
+            this.reminder.Description = description;
 
             return this;
         }
 
-        public override string Build()
+        public override Reminder Build()
         {
-            this.sb.AppendLine("BEGIN:VALARM");
-
-            this.sb.Append("TRIGGER:").AppendLine(this.trigger);
-
-            this.sb.Append("ACTION:").AppendLine(this.action);
-
-            this.sb.Append("DESCRIPTION:").AppendLine(this.description);
-
-            this.sb.Append("END:VALARM");
-
-            return this.sb.ToString();
+            return this.reminder.Clone();
         }
 
         private static class Constants

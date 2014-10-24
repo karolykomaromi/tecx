@@ -24,7 +24,7 @@
         [Theory, ContainerData]
         public void Should_Set_Correct_Time_After_Event(ReminderBuilder sut)
         {
-            string actual = sut.RemindAt(x => x.Duration(2.Hours()));
+            string actual = sut.RemindAt(x => x.Duration(2.Hours())).Build();
 
             string expected = "BEGIN:VALARM" + Environment.NewLine +
                               "TRIGGER:PT2H" + Environment.NewLine +
@@ -38,7 +38,7 @@
         [Theory, ContainerData]
         public void Should_Set_Correct_Time_Before_Event(ReminderBuilder sut)
         {
-            string actual = sut.RemindAt(x => x.Duration(-1.5.Hours()));
+            string actual = sut.RemindAt(x => x.Duration(-1.5.Hours())).Build();
 
             string expected = "BEGIN:VALARM" + Environment.NewLine +
                               "TRIGGER:-PT1H30M" + Environment.NewLine +
