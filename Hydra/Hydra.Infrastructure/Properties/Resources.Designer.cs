@@ -61,6 +61,11 @@ namespace Hydra.Infrastructure.Properties
             get { return Resources.ResourceManager.GetString("AppointmentCreatedWith", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
+        public static string ConnectionStringNotFound
+        {
+            get { return Resources.ResourceManager.GetString("ConnectionStringNotFound", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string ConversionNotSupported
         {
             get { return Resources.ResourceManager.GetString("ConversionNotSupported", resourceCulture ?? CultureInfo.CurrentUICulture); }

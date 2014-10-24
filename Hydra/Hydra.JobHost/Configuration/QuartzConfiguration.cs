@@ -15,8 +15,6 @@
     {
         protected override void Initialize()
         {
-            Common.Logging.LogManager.Adapter = new Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter { Level = Common.Logging.LogLevel.Info };
-
             ConnectionStringSettings mysql = ConfigurationManager.ConnectionStrings["mysql"];
 
             string connectionString;
@@ -27,22 +25,29 @@
             }
             else
             {
-                string msg = string.Format(Properties.Resources.ConnectionStringNotFound, "mysql");
+                string msg = string.Format(Infrastructure.Properties.Resources.ConnectionStringNotFound, "mysql");
                 throw new ConfigurationErrorsException(msg);
             }
 
             NameValueCollection props = new NameValueCollection(StringComparer.OrdinalIgnoreCase)
                 {
-                    { "quartz.scheduler.instanceName", "MyScheduler" },
+                    { "quartz.jobStore.clustered", "true" },
                     { "quartz.threadPool.threadCount", "3" },
                     { "quartz.jobStore.type", "Quartz.Impl.AdoJobStore.JobStoreTX, Quartz" },
                     { "quartz.jobStore.driverDelegateType", "Quartz.Impl.AdoJobStore.MySQLDelegate, Quartz" },
                     { "quartz.jobStore.dataSource", "myDS" },
                     { "quartz.dataSource.myDS.connectionString", connectionString },
                     { "quartz.dataSource.myDS.provider", "MySql-65" },
-                    { "quartz.jobStore.useProperties", "true" }
+                    { "quartz.jobStore.useProperties", "true" },
+                    //// TODO weberse 2014-10-24 copied from Quartz Server config
+                    { "quartz.scheduler.instanceName", "ServerScheduler" },
+                    { "quartz.scheduler.exporter.type", "Quartz.Simpl.RemotingSchedulerExporter, Quartz" },
+                    { "quartz.scheduler.exporter.port", "555" },
+                    { "quartz.scheduler.exporter.bindName", "QuartzScheduler" },
+                    { "quartz.scheduler.exporter.channelType", "tcp" },
+                    { "quartz.scheduler.exporter.channelName", "httpQuartz" }
                 };
-            
+
             ISchedulerFactory factory = new StdSchedulerFactory(props);
 
             this.Container.RegisterInstance<ISchedulerFactory>(factory);
