@@ -54,10 +54,16 @@
     <Compile Include="Caching\CacheItemInvalidationToken.cs" />
     <Compile Include="Caching\ExternallyControlledChangeMonitor.cs" />
     <Compile Include="Caching\ObjectCacheExtensions.cs" />
+    <Compile Include="Calendaring\Appointment.cs" />
     <Compile Include="Calendaring\AppointmentBuilder.cs" />
+    <Compile Include="Calendaring\Attendee.cs" />
     <Compile Include="Calendaring\AttendeeBuilder.cs" />
+    <Compile Include="Calendaring\CalendarItem.cs" />
+    <Compile Include="Calendaring\Duration.cs" />
     <Compile Include="Calendaring\DurationBuilder.cs" />
+    <Compile Include="Calendaring\Reminder.cs" />
     <Compile Include="Calendaring\ReminderBuilder.cs" />
+    <Compile Include="Calendaring\Trigger.cs" />
     <Compile Include="Calendaring\TriggerBuilder.cs" />
     <Compile Include="ConvertHelper.cs" />
     <Compile Include="DateTimeExtensions.cs" />
@@ -69,6 +75,7 @@
     <Compile Include="I18n\LazyResourceAccessorCache.cs" />
     <Compile Include="I18n\NullResourceAccessorCache.cs" />
     <Compile Include="I18n\ResourceManagerExtensions.cs" />
+    <Compile Include="ICloneable.cs" />
     <Compile Include="Input\CmdLineParameter.cs" />
     <Compile Include="Input\CmdLineParameterParser.cs" />
     <Compile Include="Input\ICmdLineParameterVisitor.cs" />

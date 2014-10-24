@@ -1,60 +1,41 @@
 ﻿namespace Hydra.Infrastructure.Calendaring
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Net.Mail;
-    using System.Text;
 
-    public class AppointmentBuilder : Builder<string>
+    public class AppointmentBuilder : Builder<Appointment>
     {
-        private readonly List<string> reminders;
-        private readonly List<string> attendees;
-        private string productId;
-        private DateTime startsAt;
-        private DateTime endsAt;
-        private string location;
-        private string description;
-        private string summary;
-        private MailAddress organizer;
+        private readonly Appointment appointment;
 
         public AppointmentBuilder()
         {
-            this.reminders = new List<string>();
-            this.attendees = new List<string>();
-
-            this.productId = Properties.Resources.AppointmentCreatedWith;
-            this.location = string.Empty;
-            this.description = string.Empty;
-            this.summary = string.Empty;
-
-            this.startsAt = TimeProvider.Now;
-            this.endsAt = this.startsAt.AddHours(1);
+            this.appointment = new Appointment { ProductId = Properties.Resources.AppointmentCreatedWith };
         }
 
         public AppointmentBuilder CreatedWith(string productId)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(productId));
 
-            this.productId = productId;
+            this.appointment.ProductId = productId;
 
             return this;
         }
 
         public AppointmentBuilder StartsAt(DateTime start)
         {
-            this.startsAt = start;
+            this.appointment.StartsAt = start;
 
-            this.endsAt = this.startsAt.AddHours(1);
+            this.appointment.EndsAt = this.appointment.StartsAt.AddHours(1);
 
             return this;
         }
 
         public AppointmentBuilder EndsAt(DateTime end)
         {
-            Contract.Requires(end > this.startsAt);
+            Contract.Requires(end > this.appointment.StartsAt);
 
-            this.endsAt = end;
+            this.appointment.EndsAt = end;
 
             return this;
         }
@@ -63,7 +44,7 @@
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(location));
 
-            this.location = location;
+            this.appointment.Location = location;
 
             return this;
         }
@@ -72,7 +53,7 @@
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(description));
 
-            this.description = description;
+            this.appointment.Description = description;
 
             return this;
         }
@@ -81,7 +62,7 @@
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(summary));
 
-            this.summary = summary;
+            this.appointment.Summary = summary;
 
             return this;
         }
@@ -90,7 +71,7 @@
         {
             Contract.Requires(organizer != null);
 
-            this.organizer = organizer;
+            this.appointment.Organizer = organizer;
 
             return this;
         }
@@ -101,7 +82,7 @@
 
             action(builder);
 
-            this.reminders.Add(builder);
+            this.appointment.Reminders.Add(builder);
 
             return this;
         }
@@ -112,61 +93,14 @@
 
             action(builder);
 
-            this.attendees.Add(builder);
+            this.appointment.Attendees.Add(builder);
 
             return this;
         }
 
-        public override string Build()
+        public override Appointment Build()
         {
-            Contract.Ensures(Contract.Result<string>() != null);
-
-            if (this.organizer == null)
-            {
-                throw new InvalidOperationException(Properties.Resources.ValidMailAddressRequired);
-            }
-
-            StringBuilder sb = new StringBuilder(100);
-
-            sb.AppendLine("BEGIN:VCALENDAR");
-
-            sb.AppendLine("VERSION:2.0");
-
-            sb.AppendFormat("PRODID:{0}", this.productId).AppendLine();
-
-            sb.AppendLine("METHOD:REQUEST");
-
-            sb.AppendLine("BEGIN:VEVENT");
-
-            sb.AppendLine(string.Format("DTSTART:{0:yyyyMMddTHHmmssZ}", this.startsAt));
-            sb.AppendLine(string.Format("DTSTAMP:{0:yyyyMMddTHHmmssZ}", TimeProvider.UtcNow));
-            sb.AppendLine(string.Format("DTEND:{0:yyyyMMddTHHmmssZ}", this.endsAt));
-
-            sb.AppendFormat("LOCATION:{0}", this.location).AppendLine();
-
-            sb.AppendFormat("UID:{0:D}", Guid.NewGuid()).AppendLine();
-
-            sb.AppendFormat("DESCRIPTION:{0}", this.description).AppendLine();
-
-            sb.AppendFormat("SUMMARY:{0}", this.summary).AppendLine();
-
-            sb.AppendFormat("ORGANIZER:MAILTO:{0}", this.organizer.Address).AppendLine();
-
-            foreach (string attendee in this.attendees)
-            {
-                sb.AppendLine(attendee);
-            }
-
-            foreach (string reminder in this.reminders)
-            {
-                sb.AppendLine(reminder);
-            }
-
-            sb.AppendLine("END:VEVENT");
-
-            sb.AppendLine("END:VCALENDAR");
-
-            return sb.ToString();
+            return this.appointment.Clone();
         }
     }
 }

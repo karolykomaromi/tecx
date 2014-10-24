@@ -24,7 +24,8 @@
                 .WithSummary("This is the summary.")
                 .WithAttendee(attendee => attendee.Invite(mailTo.ClintEastwood()))
                 .WithReminder(reminder => reminder.RemindAt(d => d.Duration(-45.Minutes())).WithDescription("Before"))
-                .WithReminder(reminder => reminder.RemindAt(d => d.Duration(2.Hours())).WithDescription("After"));
+                .WithReminder(reminder => reminder.RemindAt(d => d.Duration(2.Hours())).WithDescription("After"))
+                .Build();
         }
     }
 }

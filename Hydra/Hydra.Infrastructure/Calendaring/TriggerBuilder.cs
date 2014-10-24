@@ -1,20 +1,14 @@
 ﻿namespace Hydra.Infrastructure.Calendaring
 {
     using System;
-    using System.Text;
 
-    public class TriggerBuilder : Builder<string>
+    public class TriggerBuilder : Builder<Trigger>
     {
-        private string duration;
-
-        private DateTime absolute;
-
-        private bool afterEnd;
+        private readonly Trigger trigger;
 
         public TriggerBuilder()
         {
-            this.absolute = DateTime.MinValue;
-            this.duration = new DurationBuilder();
+            this.trigger = new Trigger();
         }
 
         public TriggerBuilder FromDuration(Action<DurationBuilder> action)
@@ -23,46 +17,26 @@
 
             action(builder);
 
-            this.duration = builder;
+            this.trigger.Duration = builder;
 
             return this;
         }
 
         public TriggerBuilder Absolute(DateTime absolute)
         {
-            this.absolute = absolute;
+            this.trigger.Absolute = absolute;
 
             return this;
         }
 
-        public override string Build()
+        public override Trigger Build()
         {
-            StringBuilder sb = new StringBuilder(50);
-
-            sb.Append("TRIGGER");
-
-            if (this.afterEnd)
-            {
-                sb.Append(";RELATED=END:").Append(this.duration);
-
-                return sb.ToString();
-            }
-
-            if (this.absolute > DateTime.MinValue)
-            {
-                sb.Append(";VALUE=DATE-TIME:").AppendFormat("{0:yyyyMMddTHHmmssZ}", this.absolute);
-
-                return sb.ToString();
-            }
-
-            sb.Append(":").Append(this.duration);
-
-            return sb.ToString();
+            return this.trigger.Clone();
         }
 
         public TriggerBuilder AfterEnd()
         {
-            this.afterEnd = true;
+            this.trigger.AfterEnd = true;
 
             return this;
         }

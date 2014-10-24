@@ -9,7 +9,7 @@
         [Theory, ContainerData]
         public void Should_Build_15_Minutes_Before(DurationBuilder sut)
         {
-            string actual = sut.Duration(-15.Minutes());
+            string actual = sut.Duration(-15.Minutes()).Build();
 
             string expected = "-PT15M";
 
@@ -19,7 +19,7 @@
         [Theory, ContainerData]
         public void Should_Build_15_Days_5_Hours_20_Seconds(DurationBuilder sut)
         {
-            string actual = sut.Duration(15.Days() + 5.Hours() + 20.Seconds());
+            string actual = sut.Duration(15.Days() + 5.Hours() + 20.Seconds()).Build();
 
             string expected = "P15DT5H20S";
 
@@ -29,7 +29,7 @@
         [Theory, ContainerData]
         public void Should_Build_7_Weeks(DurationBuilder sut)
         {
-            string actual = sut.Weeks(7);
+            string actual = sut.Weeks(7).Build();
 
             string expected = "P7W";
             
@@ -39,7 +39,7 @@
         [Theory, ContainerData]
         public void Should_Build_7_Weeks_Before(DurationBuilder sut)
         {
-            string actual = sut.Weeks(-7);
+            string actual = sut.Weeks(-7).Build();
 
             string expected = "-P7W";
 
