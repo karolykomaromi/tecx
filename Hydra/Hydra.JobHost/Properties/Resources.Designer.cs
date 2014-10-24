@@ -56,11 +56,6 @@ namespace Hydra.JobHost.Properties
             }
         }
 
-        public static string ConnectionStringNotFound
-        {
-            get { return Resources.ResourceManager.GetString("ConnectionStringNotFound", resourceCulture ?? CultureInfo.CurrentUICulture); }
-        }
-
         public static string ServiceContinueError
         {
             get { return Resources.ResourceManager.GetString("ServiceContinueError", resourceCulture ?? CultureInfo.CurrentUICulture); }
