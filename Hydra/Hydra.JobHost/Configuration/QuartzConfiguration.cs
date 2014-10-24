@@ -1,13 +1,13 @@
-﻿namespace Hydra.Configuration
+﻿namespace Hydra.JobHost.Configuration
 {
     using System;
+    using System.Collections.Specialized;
+    using System.Configuration;
     using System.Diagnostics.Contracts;
-    using System.Linq;
     using Hydra.Infrastructure.Logging;
     using Microsoft.Practices.Unity;
     using Quartz;
     using Quartz.Impl;
-    using Quartz.Impl.AdoJobStore;
     using Quartz.Simpl;
     using Quartz.Spi;
 
@@ -15,15 +15,40 @@
     {
         protected override void Initialize()
         {
-            this.Container.RegisterType<IJobStore, JobStoreCMT>(new ContainerControlledLifetimeManager());
+            Common.Logging.LogManager.Adapter = new Common.Logging.Simple.ConsoleOutLoggerFactoryAdapter { Level = Common.Logging.LogLevel.Info };
 
-            this.Container.RegisterTypes(
-                AllClasses.FromAssemblies(typeof(QuartzConfiguration).Assembly).Where(t => typeof(IJob).IsAssignableFrom(t)),
-                _ => new[] { typeof(IJob) },
-                WithName.TypeName);
+            ConnectionStringSettings mysql = ConfigurationManager.ConnectionStrings["mysql"];
+
+            string connectionString;
+
+            if (mysql != null)
+            {
+                connectionString = mysql.ConnectionString;
+            }
+            else
+            {
+                string msg = string.Format(Properties.Resources.ConnectionStringNotFound, "mysql");
+                throw new ConfigurationErrorsException(msg);
+            }
+
+            NameValueCollection props = new NameValueCollection(StringComparer.OrdinalIgnoreCase)
+                {
+                    { "quartz.scheduler.instanceName", "MyScheduler" },
+                    { "quartz.threadPool.threadCount", "3" },
+                    { "quartz.jobStore.type", "Quartz.Impl.AdoJobStore.JobStoreTX, Quartz" },
+                    { "quartz.jobStore.driverDelegateType", "Quartz.Impl.AdoJobStore.MySQLDelegate, Quartz" },
+                    { "quartz.jobStore.dataSource", "myDS" },
+                    { "quartz.dataSource.myDS.connectionString", connectionString },
+                    { "quartz.dataSource.myDS.provider", "MySql-65" },
+                    { "quartz.jobStore.useProperties", "true" }
+                };
+            
+            ISchedulerFactory factory = new StdSchedulerFactory(props);
+
+            this.Container.RegisterInstance<ISchedulerFactory>(factory);
 
             this.Container.RegisterType<IJobFactory, UnityJobFactory>();
-            this.Container.RegisterType<ISchedulerFactory, StdSchedulerFactory>(new ContainerControlledLifetimeManager(), new InjectionConstructor());
+
             this.Container.RegisterType<IScheduler>(
                 new InjectionFactory(c =>
                     {

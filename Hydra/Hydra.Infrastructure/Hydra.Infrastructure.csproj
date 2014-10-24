@@ -69,6 +69,11 @@
     <Compile Include="I18n\LazyResourceAccessorCache.cs" />
     <Compile Include="I18n\NullResourceAccessorCache.cs" />
     <Compile Include="I18n\ResourceManagerExtensions.cs" />
+    <Compile Include="Input\CmdLineParameter.cs" />
+    <Compile Include="Input\CmdLineParameterParser.cs" />
+    <Compile Include="Input\ICmdLineParameterVisitor.cs" />
+    <Compile Include="Input\MultiValueCmdLineParameter.cs" />
+    <Compile Include="Input\NoValueCmdLineParameter.cs" />
     <Compile Include="InvalidEnumerationException.cs" />
     <Compile Include="Flags.cs" />
     <Compile Include="FlagsConverter.cs" />
