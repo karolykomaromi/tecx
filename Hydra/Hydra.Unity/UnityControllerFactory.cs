@@ -47,7 +47,9 @@ namespace Hydra.Unity
 
             try
             {
-                return (IController)this.container.Resolve(controllerType);
+                object o = this.container.Resolve(controllerType);
+
+                return (IController)o;
             }
             catch (ResolutionFailedException ex)
             {

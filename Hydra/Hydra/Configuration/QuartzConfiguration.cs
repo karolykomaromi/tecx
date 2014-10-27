@@ -32,7 +32,7 @@
                 throw new ConfigurationErrorsException(msg);
             }
 
-            string address = "tcp://localhost:555/QuartzScheduler";
+            string address = "tcp://localhost:5555/QuartzScheduler";
 
             // I want to be able to schedule jobs via my web interface but want them to be executed by a scheduler
             // that runs as a windows service.
@@ -45,12 +45,12 @@
                     { "quartz.scheduler.proxy.address", address },
                     //// TODO weberse 2014-10-24 maybe use this thread pool type instead of setting pool size to zero
                     //// { "quartz.threadPool.type", "Quartz.Simpl.ZeroSizeThreadPool, Quartz" },
-                    { "quartz.jobStore.type", "Quartz.Impl.AdoJobStore.JobStoreTX, Quartz" },
-                    { "quartz.jobStore.driverDelegateType", "Quartz.Impl.AdoJobStore.MySQLDelegate, Quartz" },
-                    { "quartz.jobStore.dataSource", "myDS" },
-                    { "quartz.dataSource.myDS.connectionString", connectionString },
-                    { "quartz.dataSource.myDS.provider", "MySql-65" },
-                    { "quartz.jobStore.useProperties", "true" }
+                    //// { "quartz.jobStore.type", "Quartz.Impl.AdoJobStore.JobStoreTX, Quartz" },
+                    //// { "quartz.jobStore.driverDelegateType", "Quartz.Impl.AdoJobStore.MySQLDelegate, Quartz" },
+                    //// { "quartz.jobStore.dataSource", "myDS" },
+                    //// { "quartz.dataSource.myDS.connectionString", connectionString },
+                    //// { "quartz.dataSource.myDS.provider", "MySql-65" },
+                    //// { "quartz.jobStore.useProperties", "true" }
                 };
 
             ISchedulerFactory factory = new StdSchedulerFactory(props);

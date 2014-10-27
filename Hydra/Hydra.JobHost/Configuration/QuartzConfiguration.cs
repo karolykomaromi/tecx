@@ -39,10 +39,11 @@
                     { "quartz.dataSource.myDS.connectionString", connectionString },
                     { "quartz.dataSource.myDS.provider", "MySql-65" },
                     { "quartz.jobStore.useProperties", "true" },
+
                     //// TODO weberse 2014-10-24 copied from Quartz Server config
                     { "quartz.scheduler.instanceName", "ServerScheduler" },
                     { "quartz.scheduler.exporter.type", "Quartz.Simpl.RemotingSchedulerExporter, Quartz" },
-                    { "quartz.scheduler.exporter.port", "555" },
+                    { "quartz.scheduler.exporter.port", "5555" },
                     { "quartz.scheduler.exporter.bindName", "QuartzScheduler" },
                     { "quartz.scheduler.exporter.channelType", "tcp" },
                     { "quartz.scheduler.exporter.channelName", "httpQuartz" }
