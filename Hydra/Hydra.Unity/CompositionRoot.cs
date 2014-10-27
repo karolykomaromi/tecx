@@ -22,7 +22,9 @@ namespace Hydra.Unity
             this.Container.AddNewExtension<CollectionResolutionExtension>();
             this.Container.AddExtension(new DisposableExtension());
 
-            foreach (Type configurationType in this.assemblies.SelectMany(a => a.GetTypes().Where(this.IsContainerConfiguration)))
+            IEnumerable<Type> configurationTypes = this.assemblies.SelectMany(a => a.GetTypes().Where(this.IsContainerConfiguration));
+
+            foreach (Type configurationType in configurationTypes)
             {
                 UnityContainerExtension configuration = (UnityContainerExtension)this.Container.Resolve(configurationType);
 

@@ -1,4 +1,6 @@
-﻿namespace Hydra
+﻿using Hydra.Configuration;
+
+namespace Hydra
 {
     using System;
     using System.Web;
@@ -30,7 +32,7 @@
             FluentValidationModelValidatorProvider.Configure();
 
             // create application master container
-            IUnityContainer container = new UnityContainer().AddExtension(new CompositionRoot(this.GetType().Assembly));
+            IUnityContainer container = new UnityContainer().AddExtension(new CompositionRoot(typeof(CachingConfiguration).Assembly));
             this.Application[Constants.ContainerKey] = container;
 
             // unity backed controller factory
