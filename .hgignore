@@ -292,3 +292,11 @@ Hydra/Hydra.Nh.Tests/obj
 Hydra/Hydra.Nh/obj
 Hydra/Hydra.JobHost/bin
 Hydra/Hydra.JobHost/obj
+Hydra/Hydra.Jobs.Client/obj
+Hydra/Hydra.Jobs.Client/bin
+Hydra/Hydra.Jobs.Server/bin
+Hydra/Hydra.Jobs.Server/obj
+Hydra/Hydra.Jobs.Test/bin
+Hydra/Hydra.Jobs.Test/obj
+Hydra/Hydra.Jobs/bin
+Hydra/Hydra.Jobs/obj

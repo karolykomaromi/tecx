@@ -38,7 +38,6 @@
             // that runs as a windows service.
             NameValueCollection props = new NameValueCollection(StringComparer.OrdinalIgnoreCase)
                 {
-
                     { "quartz.scheduler.instanceName", "ServerScheduler" },
                     { "quartz.scheduler.proxy",  "true" },
                     { "quartz.threadPool.threadCount", "0" },
