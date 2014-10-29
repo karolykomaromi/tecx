@@ -119,6 +119,8 @@
     <Compile Include="Reflection\PropertyNotFoundException.cs" />
     <Compile Include="Reflection\TypeHelper.cs" />
     <Compile Include="StringHelper.cs" />
+    <Compile Include="Switch.cs" />
+    <Compile Include="SwitchExtensions.cs" />
     <Compile Include="Theming\Theme.cs" />
     <Compile Include="TimeProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
