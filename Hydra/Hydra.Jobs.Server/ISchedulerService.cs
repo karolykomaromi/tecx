@@ -137,23 +137,32 @@ namespace Hydra.Jobs.Server
     [DataContract]
     public class JobDetail
     {
+        [DataMember]
         public JobKey Key { get; set; }
 
+        [DataMember]
         public string Description { get; set; }
 
+        [DataMember]
         public Type JobType { get; set; }
 
+        [DataMember]
         public bool Durable { get; set; }
 
+        [DataMember]
         public bool PersistJobDataAfterExecution { get; set; }
 
+        [DataMember]
         public bool ConcurrentExecutionDisallowed { get; set; }
 
+        [DataMember]
         public bool RequestsRecovery { get; set; }
 
         public static JobDetail FromQuartz(IJobDetail jobDetail)
         {
-            throw new NotImplementedException();
+            JobDetail jd = Mapper.Map<JobDetail>(jobDetail);
+
+            return jd;
         }
 
         public IJobDetail ToQuartz()
@@ -243,7 +252,9 @@ namespace Hydra.Jobs.Server
 
         public static SchedulerMetaData FromQuartz(Quartz.SchedulerMetaData schedulerMetaData)
         {
-            throw new NotImplementedException();
+            SchedulerMetaData smd = Mapper.Map<SchedulerMetaData>(schedulerMetaData);
+
+            return smd;
         }
     }
 
