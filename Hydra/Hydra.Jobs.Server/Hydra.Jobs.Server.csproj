@@ -60,11 +60,8 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="CalendarIntervalTrigger.cs" />
     <Compile Include="CronTrigger.cs" />
     <Compile Include="ISchedulerService.cs" />
-    <Compile Include="JobDetail.cs" />
-    <Compile Include="JobKey.cs" />
     <Compile Include="JobsProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -72,12 +69,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.tt</DependentUpon>
     </Compile>
-    <Compile Include="SchedulerMetaData.cs" />
     <Compile Include="SchedulerService.cs" />
     <Compile Include="SchedulerServiceExtensions.cs" />
-    <Compile Include="SimpleTrigger.cs" />
-    <Compile Include="Trigger.cs" />
-    <Compile Include="TriggerKey.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx" />
@@ -101,6 +94,10 @@
     <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj">
       <Project>{da9f1b57-18bd-451f-a3fa-7d149849a8bd}</Project>
       <Name>Hydra.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hydra.Jobs\Hydra.Jobs.csproj">
+      <Project>{80DAA91F-9C90-42FC-B60A-D584AF31DB65}</Project>
+      <Name>Hydra.Jobs</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

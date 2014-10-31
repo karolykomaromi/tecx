@@ -86,6 +86,10 @@
       <Project>{da9f1b57-18bd-451f-a3fa-7d149849a8bd}</Project>
       <Name>Hydra.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hydra.Jobs\Hydra.Jobs.csproj">
+      <Project>{80daa91f-9c90-42fc-b60a-d584af31db65}</Project>
+      <Name>Hydra.Jobs</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\CommonFiles\Hydra.targets" Condition="Exists('$(SolutionDir)\CommonFiles\Hydra.targets')" />

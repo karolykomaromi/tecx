@@ -1,6 +1,7 @@
 ﻿namespace Hydra.Jobs.Server
 {
     using AutoMapper;
+    using Hydra.Jobs.Transfer;
 
     public class JobsProfile : Profile
     {

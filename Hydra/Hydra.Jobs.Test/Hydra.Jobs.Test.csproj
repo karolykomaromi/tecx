@@ -94,6 +94,10 @@
       <Project>{7566E165-F577-437B-9FC1-D4E5C1770075}</Project>
       <Name>Hydra.Jobs.Server</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hydra.Jobs\Hydra.Jobs.csproj">
+      <Project>{80daa91f-9c90-42fc-b60a-d584af31db65}</Project>
+      <Name>Hydra.Jobs</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets')" />

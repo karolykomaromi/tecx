@@ -1,4 +1,4 @@
-namespace Hydra.Jobs.Server
+namespace Hydra.Jobs.Transfer
 {
     using System.Runtime.Serialization;
 

@@ -23,9 +23,9 @@
 
                 using (var client = new SchedulerClient(new BasicHttpBinding(), new EndpointAddress("http://localhost:12345/scheduler")))
                 {
-                    //bool exists = await client.CheckExists(new Client.JobKey());
+                    ////bool exists = await client.CheckExists(new Client.JobKey());
 
-                    //Assert.True(exists);
+                    ////Assert.True(exists);
 
                     await client.Start(10.Seconds());
                 }
@@ -35,11 +35,11 @@
         [Fact]
         public void Should_Map()
         {
-           Mapper.AddProfile(new JobsProfile());
+            Mapper.AddProfile(new JobsProfile());
 
             ICalendarIntervalTrigger source = TriggerBuilder.Create().WithCalendarIntervalSchedule(b => b.WithIntervalInDays(3)).Build() as ICalendarIntervalTrigger;
 
-            CalendarIntervalTrigger destination = Mapper.Map<CalendarIntervalTrigger>(source);
+            Transfer.CalendarIntervalTrigger destination = Mapper.Map<Transfer.CalendarIntervalTrigger>(source);
 
             Assert.NotNull(source);
             Assert.Equal(source.RepeatInterval, destination.RepeatInterval);

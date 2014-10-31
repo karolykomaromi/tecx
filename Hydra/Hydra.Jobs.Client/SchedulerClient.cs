@@ -4,7 +4,7 @@
     using System.ServiceModel;
     using System.ServiceModel.Channels;
     using System.Threading.Tasks;
-    using Quartz;
+    using Hydra.Jobs.Transfer;
 
     public class SchedulerClient : ClientBase<ISchedulerClient>, ISchedulerClient
     {
@@ -123,7 +123,7 @@
             return await this.Channel.GetTrigger(triggerKey);
         }
 
-        public async Task<TriggerState> GetTriggerState(TriggerKey triggerKey)
+        public async Task<Quartz.TriggerState> GetTriggerState(TriggerKey triggerKey)
         {
             return await this.Channel.GetTriggerState(triggerKey);
         }

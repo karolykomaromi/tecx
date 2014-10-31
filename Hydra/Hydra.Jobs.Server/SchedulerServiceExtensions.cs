@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.Contracts;
+    using Hydra.Jobs.Transfer;
 
     public static class SchedulerServiceExtensions
     {
