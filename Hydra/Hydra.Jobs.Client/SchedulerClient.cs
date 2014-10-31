@@ -4,6 +4,7 @@
     using System.ServiceModel;
     using System.ServiceModel.Channels;
     using System.Threading.Tasks;
+    using Quartz;
 
     public class SchedulerClient : ClientBase<ISchedulerClient>, ISchedulerClient
     {

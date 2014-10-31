@@ -1,286 +1,12 @@
-﻿using AutoMapper;
-
-namespace Hydra.Jobs.Server
+﻿namespace Hydra.Jobs.Server
 {
     using System;
-    using System.Runtime.Serialization;
+    using System.Diagnostics.Contracts;
     using System.ServiceModel;
-    using Hydra.Infrastructure;
     using Quartz;
 
-    // ISimpleTrigger
-    // ICalendarIntervalTrigger
-    // ICronTrigger
-    // IDailyTimeIntervalTrigger
-
-    [DataContract]
-    public abstract class Trigger
-    {
-        [DataMember]
-        public TriggerKey Key { get; set; }
-
-        [DataMember]
-        public JobKey JobKey { get; set; }
-
-        [DataMember]
-        public string Description { get; set; }
-
-        [DataMember]
-        public string CalendarName { get; set; }
-
-        [DataMember]
-        public DateTimeOffset? FinalFireTimeUtc { get; set; }
-
-        [DataMember]
-        public int MisfireInstruction { get; set; }
-
-        [DataMember]
-        public DateTimeOffset? EndTimeUtc { get; set; }
-
-        [DataMember]
-        public DateTimeOffset StartTimeUtc { get; set; }
-
-        [DataMember]
-        public int Priority { get; set; }
-
-        [DataMember]
-        public bool HasMillisecondPrecision { get; set; }
-
-        public static Trigger FromQuartz(ITrigger trigger)
-        {
-            Trigger t = null;
-
-            new Switch(trigger)
-                .Case<ISimpleTrigger>(simple =>
-                    {
-                        t = Mapper.Map<SimpleTrigger>(simple);
-                    })
-                .Case<ICalendarIntervalTrigger>(interval =>
-                    {
-                        t = Mapper.Map<CalendarIntervalTrigger>(interval);
-                    })
-                .Case<ICronTrigger>(cron =>
-                    {
-                        t = Mapper.Map<CronTrigger>(cron);
-                    })
-                .Default(o =>
-                    {
-                        throw new NotSupportedException();
-                    });
-
-            return t;
-        }
-
-        public abstract ITrigger ToQuartz();
-    }
-
-    [DataContract]
-    public class SimpleTrigger : Trigger
-    {
-        [DataMember]
-        public int RepeatCount { get; set; }
-
-        [DataMember]
-        public TimeSpan RepeatInterval { get; set; }
-
-        [DataMember]
-        public int TimesTriggered { get; set; }
-
-        public override ITrigger ToQuartz()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    [DataContract]
-    public class CronTrigger : Trigger
-    {
-        [DataMember]
-        public string CronExpressionString { get; set; }
-
-        [DataMember]
-        public TimeZoneInfo TimeZone { get; set; }
-
-        public override ITrigger ToQuartz()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    [DataContract]
-    public class CalendarIntervalTrigger : Trigger
-    {
-        [DataMember]
-        public IntervalUnit RepeatIntervalUnit { get; set; }
-
-        [DataMember]
-        public int RepeatInterval { get; set; }
-
-        [DataMember]
-        public int TimesTriggered { get; set; }
-
-        [DataMember]
-        public TimeZoneInfo TimeZone { get; set; }
-
-        [DataMember]
-        public bool PreserveHourOfDayAcrossDaylightSavings { get; set; }
-
-        [DataMember]
-        public bool SkipDayIfHourDoesNotExist { get; set; }
-
-        public override ITrigger ToQuartz()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    [DataContract]
-    public class JobDetail
-    {
-        [DataMember]
-        public JobKey Key { get; set; }
-
-        [DataMember]
-        public string Description { get; set; }
-
-        [DataMember]
-        public Type JobType { get; set; }
-
-        [DataMember]
-        public bool Durable { get; set; }
-
-        [DataMember]
-        public bool PersistJobDataAfterExecution { get; set; }
-
-        [DataMember]
-        public bool ConcurrentExecutionDisallowed { get; set; }
-
-        [DataMember]
-        public bool RequestsRecovery { get; set; }
-
-        public static JobDetail FromQuartz(IJobDetail jobDetail)
-        {
-            JobDetail jd = Mapper.Map<JobDetail>(jobDetail);
-
-            return jd;
-        }
-
-        public IJobDetail ToQuartz()
-        {
-            // JobDetailImpl
-            throw new NotImplementedException();
-        }
-    }
-
-    [DataContract]
-    public class TriggerKey
-    {
-        [DataMember]
-        public string Name { get; set; }
-
-        [DataMember]
-        public string Group { get; set; }
-
-        public Quartz.TriggerKey ToQuartz()
-        {
-            return new Quartz.TriggerKey(this.Name, this.Group);
-        }
-    }
-
-    [DataContract]
-    public class JobKey
-    {
-        [DataMember]
-        public string Name { get; set; }
-
-        [DataMember]
-        public string Group { get; set; }
-
-        public Quartz.JobKey ToQuartz()
-        {
-            return new Quartz.JobKey(this.Name, this.Group);
-        }
-    }
-
-    [DataContract]
-    public class SchedulerMetaData
-    {
-        [DataMember]
-        public string SchedulerName { get; set; }
-
-        [DataMember]
-        public string SchedulerInstanceId { get; set; }
-
-        [DataMember]
-        public Type SchedulerType { get; set; }
-
-        [DataMember]
-        public bool SchedulerRemote { get; set; }
-
-        [DataMember]
-        public bool Started { get; set; }
-
-        [DataMember]
-        public bool InStandbyMode { get; set; }
-
-        [DataMember]
-        public bool Shutdown { get; set; }
-
-        [DataMember]
-        public Type JobStoreType { get; set; }
-
-        [DataMember]
-        public Type ThreadPoolType { get; set; }
-
-        [DataMember]
-        public int ThreadPoolSize { get; set; }
-
-        [DataMember]
-        public string Version { get; set; }
-
-        [DataMember]
-        public DateTimeOffset? RunningSince { get; set; }
-
-        [DataMember]
-        public int NumberOfJobsExecuted { get; set; }
-
-        [DataMember]
-        public bool JobStoreSupportsPersistence { get; set; }
-
-        [DataMember]
-        public bool JobStoreClustered { get; set; }
-
-        public static SchedulerMetaData FromQuartz(Quartz.SchedulerMetaData schedulerMetaData)
-        {
-            SchedulerMetaData smd = Mapper.Map<SchedulerMetaData>(schedulerMetaData);
-
-            return smd;
-        }
-    }
-
-    [DataContract]
-    public enum TriggerState
-    {
-        [EnumMember]
-        Normal,
-
-        [EnumMember]
-        Paused,
-
-        [EnumMember]
-        Complete,
-
-        [EnumMember]
-        Error,
-
-        [EnumMember]
-        Blocked,
-
-        [EnumMember]
-        None,
-    }
-
     [ServiceContract]
+    [ContractClass(typeof(SchedulerServiceContract))]
     public interface ISchedulerService
     {
         [OperationContract]
@@ -360,5 +86,173 @@ namespace Hydra.Jobs.Server
 
         [OperationContract(Name = "CheckTriggerExists")]
         bool CheckExists(TriggerKey triggerKey);
+    }
+
+    [ContractClassFor(typeof(ISchedulerService))]
+    internal abstract class SchedulerServiceContract : ISchedulerService
+    {
+        public bool IsJobGroupPaused(string groupName)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(groupName));
+
+            return false;
+        }
+
+        public bool IsTriggerGroupPaused(string groupName)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(groupName));
+
+            return false;
+        }
+
+        public SchedulerMetaData GetMetaData()
+        {
+            Contract.Ensures(Contract.Result<SchedulerMetaData>() != null);
+
+            return default(SchedulerMetaData);
+        }
+
+        public string[] GetJobGroupNames()
+        {
+            Contract.Ensures(Contract.Result<string[]>() != null);
+
+            return new string[0];
+        }
+
+        public string[] GetTriggerGroupNames()
+        {
+            Contract.Ensures(Contract.Result<string[]>() != null);
+
+            return new string[0];
+        }
+
+        public string[] GetPausedTriggerGroups()
+        {
+            Contract.Ensures(Contract.Result<string[]>() != null);
+
+            return new string[0];
+        }
+
+        public void Start(TimeSpan delay)
+        {
+        }
+
+        public void Standby()
+        {
+        }
+
+        public void Shutdown(bool waitForJobsToComplete)
+        {
+        }
+
+        public DateTimeOffset ScheduleJob(JobDetail jobDetail, Trigger trigger)
+        {
+            Contract.Requires(jobDetail != null);
+            Contract.Requires(trigger != null);
+
+            return default(DateTimeOffset);
+        }
+
+        public bool UnscheduleJobs(TriggerKey[] triggerKeys)
+        {
+            Contract.Requires(triggerKeys != null);
+
+            return false;
+        }
+
+        public DateTimeOffset? RescheduleJob(TriggerKey triggerKey, Trigger newTrigger)
+        {
+            Contract.Requires(triggerKey != null);
+            Contract.Requires(newTrigger != null);
+
+            return default(DateTimeOffset?);
+        }
+
+        public void AddJob(JobDetail jobDetail, bool replace, bool storeNonDurableWhileAwaitingScheduling)
+        {
+            Contract.Requires(jobDetail != null);
+        }
+
+        public bool DeleteJobs(JobKey[] jobKeys)
+        {
+            Contract.Requires(jobKeys != null);
+
+            return false;
+        }
+
+        public void TriggerJob(JobKey jobKey)
+        {
+            Contract.Requires(jobKey != null);
+        }
+
+        public void PauseJob(JobKey jobKey)
+        {
+            Contract.Requires(jobKey != null);
+        }
+
+        public void PauseTrigger(TriggerKey triggerKey)
+        {
+            Contract.Requires(triggerKey != null);
+        }
+
+        public void ResumeJob(JobKey jobKey)
+        {
+            Contract.Requires(jobKey != null);
+        }
+
+        public void ResumeTrigger(TriggerKey triggerKey)
+        {
+            Contract.Requires(triggerKey != null);
+        }
+
+        public Trigger[] GetTriggersOfJob(JobKey jobKey)
+        {
+            Contract.Requires(jobKey != null);
+            Contract.Ensures(Contract.Result<Trigger[]>() != null);
+
+            return new Trigger[0];
+        }
+
+        public JobDetail GetJobDetail(JobKey jobKey)
+        {
+            Contract.Requires(jobKey != null);
+
+            return default(JobDetail);
+        }
+
+        public Trigger GetTrigger(TriggerKey triggerKey)
+        {
+            Contract.Requires(triggerKey != null);
+
+            return default(Trigger);
+        }
+
+        public TriggerState GetTriggerState(TriggerKey triggerKey)
+        {
+            Contract.Requires(triggerKey != null);
+
+            return default(TriggerState);
+        }
+
+        public bool Interrupt(JobKey jobKey)
+        {
+            Contract.Requires(jobKey != null);
+
+            return false;
+        }
+
+        public bool CheckExists(JobKey jobKey)
+        {
+            Contract.Requires(jobKey != null);
+
+            return false;
+        }
+
+        public bool CheckExists(TriggerKey triggerKey)
+        {
+            Contract.Requires(triggerKey != null);
+
+            return false;
+        }
     }
 }
