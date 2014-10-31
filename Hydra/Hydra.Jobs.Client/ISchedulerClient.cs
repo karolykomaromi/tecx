@@ -1,9 +1,11 @@
 ﻿namespace Hydra.Jobs.Client
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Runtime.Serialization;
     using System.ServiceModel;
     using System.Threading.Tasks;
+    using Quartz;
 
     [DataContract]
     public class Trigger
@@ -28,28 +30,6 @@
     [DataContract]
     public class SchedulerMetaData
     {
-    }
-
-    [DataContract]
-    public enum TriggerState
-    {
-        [EnumMember]
-        Normal,
-
-        [EnumMember]
-        Paused,
-
-        [EnumMember]
-        Complete,
-
-        [EnumMember]
-        Error,
-
-        [EnumMember]
-        Blocked,
-
-        [EnumMember]
-        None,
     }
 
     [ServiceContract(Name = "ISchedulerService")]
@@ -132,5 +112,181 @@
 
         [OperationContract(Name = "CheckTriggerExists")]
         Task<bool> CheckExists(TriggerKey triggerKey);
+    }
+
+    [ContractClassFor(typeof(ISchedulerClient))]
+    internal abstract class SchedulerClientContract : ISchedulerClient
+    {
+        public Task<bool> IsJobGroupPaused(string groupName)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(groupName));
+
+            return default(Task<bool>);
+        }
+
+        public Task<bool> IsTriggerGroupPaused(string groupName)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(groupName));
+
+            return default(Task<bool>);
+        }
+
+        public Task<SchedulerMetaData> GetMetaData()
+        {
+            Contract.Ensures(Contract.Result<SchedulerMetaData>() != null);
+
+            return default(Task<SchedulerMetaData>);
+        }
+
+        public Task<string[]> GetJobGroupNames()
+        {
+            return default(Task<string[]>);
+        }
+
+        public Task<string[]> GetTriggerGroupNames()
+        {
+            return default(Task<string[]>);
+        }
+
+        public Task<string[]> GetPausedTriggerGroups()
+        {
+            return default(Task<string[]>);
+        }
+
+        public Task Start(TimeSpan delay)
+        {
+            return default(Task);
+        }
+
+        public Task Standby()
+        {
+            return default(Task);
+        }
+
+        public Task Shutdown(bool waitForJobsToComplete)
+        {
+            return default(Task);
+        }
+
+        public Task<DateTimeOffset> ScheduleJob(JobDetail jobDetail, Trigger trigger)
+        {
+            Contract.Requires(jobDetail != null);
+            Contract.Requires(trigger != null);
+
+            return default(Task<DateTimeOffset>);
+        }
+
+        public Task<bool> UnscheduleJobs(TriggerKey[] triggerKeys)
+        {
+            Contract.Requires(triggerKeys != null);
+
+            return default(Task<bool>);
+        }
+
+        public Task<DateTimeOffset?> RescheduleJob(TriggerKey triggerKey, Trigger newTrigger)
+        {
+            Contract.Requires(triggerKey != null);
+            Contract.Requires(newTrigger != null);
+
+            return default(Task<DateTimeOffset?>);
+        }
+
+        public Task AddJob(JobDetail jobDetail, bool replace, bool storeNonDurableWhileAwaitingScheduling)
+        {
+            Contract.Requires(jobDetail != null);
+
+            return default(Task);
+        }
+
+        public Task<bool> DeleteJobs(JobKey[] jobKeys)
+        {
+            Contract.Requires(jobKeys != null);
+
+            return default(Task<bool>);
+        }
+
+        public Task TriggerJob(JobKey jobKey)
+        {
+            Contract.Requires(jobKey != null);
+
+            return default(Task);
+        }
+
+        public Task PauseJob(JobKey jobKey)
+        {
+            Contract.Requires(jobKey != null);
+
+            return default(Task);
+        }
+
+        public Task PauseTrigger(TriggerKey triggerKey)
+        {
+            Contract.Requires(triggerKey != null);
+
+            return default(Task);
+        }
+
+        public Task ResumeJob(JobKey jobKey)
+        {
+            Contract.Requires(jobKey != null);
+
+            return default(Task);
+        }
+
+        public Task ResumeTrigger(TriggerKey triggerKey)
+        {
+            Contract.Requires(triggerKey != null);
+
+            return default(Task);
+        }
+
+        public Task<Trigger[]> GetTriggersOfJob(JobKey jobKey)
+        {
+            Contract.Requires(jobKey != null);
+
+            return default(Task<Trigger[]>);
+        }
+
+        public Task<JobDetail> GetJobDetail(JobKey jobKey)
+        {
+            Contract.Requires(jobKey != null);
+
+            return default(Task<JobDetail>);
+        }
+
+        public Task<Trigger> GetTrigger(TriggerKey triggerKey)
+        {
+            Contract.Requires(triggerKey != null);
+
+            return default(Task<Trigger>);
+        }
+
+        public Task<TriggerState> GetTriggerState(TriggerKey triggerKey)
+        {
+            Contract.Requires(triggerKey != null);
+
+            return default(Task<TriggerState>);
+        }
+
+        public Task<bool> Interrupt(JobKey jobKey)
+        {
+            Contract.Requires(jobKey != null);
+
+            return default(Task<bool>);
+        }
+
+        public Task<bool> CheckExists(JobKey jobKey)
+        {
+            Contract.Requires(jobKey != null);
+
+            return default(Task<bool>);
+        }
+
+        public Task<bool> CheckExists(TriggerKey triggerKey)
+        {
+            Contract.Requires(triggerKey != null);
+
+            return default(Task<bool>);
+        }
     }
 }

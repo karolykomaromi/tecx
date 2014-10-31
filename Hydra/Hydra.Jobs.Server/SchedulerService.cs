@@ -1,53 +1,63 @@
 ﻿namespace Hydra.Jobs.Server
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Linq;
+    using AutoMapper;
     using Quartz;
 
     public class SchedulerService : ISchedulerService
     {
         private readonly IScheduler scheduler;
 
-        public SchedulerService(IScheduler scheduler)
+        private readonly IMappingEngine mapper;
+
+        public SchedulerService(IScheduler scheduler, IMappingEngine mapper)
         {
             Contract.Requires(scheduler != null);
+            Contract.Requires(mapper != null);
 
             this.scheduler = scheduler;
+            this.mapper = mapper;
         }
 
         public bool IsJobGroupPaused(string groupName)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(groupName));
-
             return this.scheduler.IsJobGroupPaused(groupName);
         }
 
         public bool IsTriggerGroupPaused(string groupName)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(groupName));
-
             return this.scheduler.IsTriggerGroupPaused(groupName);
         }
 
         public SchedulerMetaData GetMetaData()
         {
-            return SchedulerMetaData.FromQuartz(this.scheduler.GetMetaData());
+            SchedulerMetaData meta = this.mapper.Map<Quartz.SchedulerMetaData, SchedulerMetaData>(this.scheduler.GetMetaData());
+
+            return meta;
         }
 
         public string[] GetJobGroupNames()
         {
-            return this.scheduler.GetJobGroupNames().ToArray();
+            IList<string> jobGroupNames = this.scheduler.GetJobGroupNames() ?? new List<string>();
+
+            return jobGroupNames.ToArray();
         }
 
         public string[] GetTriggerGroupNames()
         {
-            return this.scheduler.GetTriggerGroupNames().ToArray();
+            IList<string> triggerGroupNames = this.scheduler.GetTriggerGroupNames() ?? new List<string>();
+
+            return triggerGroupNames.ToArray();
         }
 
         public string[] GetPausedTriggerGroups()
         {
-            return this.scheduler.GetPausedTriggerGroups().ToArray();
+            IEnumerable<string> pausedTriggerGroups = this.scheduler.GetPausedTriggerGroups() ?? Enumerable.Empty<string>();
+
+            return pausedTriggerGroups.ToArray();
         }
 
         public void Start(TimeSpan delay)
@@ -74,141 +84,140 @@
 
         public DateTimeOffset ScheduleJob(JobDetail jobDetail, Trigger trigger)
         {
-            Contract.Requires(jobDetail != null);
-            Contract.Requires(trigger != null);
+            IJobDetail jd = this.mapper.Map<JobDetail, Quartz.IJobDetail>(jobDetail);
+            ITrigger t = this.mapper.Map<Trigger, ITrigger>(trigger);
 
-            return this.scheduler.ScheduleJob(jobDetail.ToQuartz(), trigger.ToQuartz());
+            return this.scheduler.ScheduleJob(jd, t);
         }
 
         public bool UnscheduleJobs(TriggerKey[] triggerKeys)
         {
-            Contract.Requires(triggerKeys != null);
-
-            return this.scheduler.UnscheduleJobs(triggerKeys.Select(tk => tk.ToQuartz()).ToList());
+            return this.scheduler.UnscheduleJobs(triggerKeys.Select(this.mapper.Map<TriggerKey, Quartz.TriggerKey>).ToList());
         }
 
         public DateTimeOffset? RescheduleJob(TriggerKey triggerKey, Trigger newTrigger)
         {
-            Contract.Requires(triggerKey != null);
-            Contract.Requires(newTrigger != null);
+            ITrigger nt = this.mapper.Map<Trigger, ITrigger>(newTrigger);
 
-            return this.scheduler.RescheduleJob(triggerKey.ToQuartz(), newTrigger.ToQuartz());
+            Quartz.TriggerKey tk = this.mapper.Map<TriggerKey, Quartz.TriggerKey>(triggerKey);
+
+            DateTimeOffset? rescheduledTo = this.scheduler.RescheduleJob(tk, nt);
+
+            return rescheduledTo;
         }
 
         public void AddJob(JobDetail jobDetail, bool replace, bool storeNonDurableWhileAwaitingScheduling)
         {
-            Contract.Requires(jobDetail != null);
+            IJobDetail jd = this.mapper.Map<JobDetail, Quartz.IJobDetail>(jobDetail);
 
-            this.scheduler.AddJob(jobDetail.ToQuartz(), replace, storeNonDurableWhileAwaitingScheduling);
+            this.scheduler.AddJob(jd, replace, storeNonDurableWhileAwaitingScheduling);
         }
 
         public bool DeleteJobs(JobKey[] jobKeys)
         {
-            Contract.Requires(jobKeys != null);
+            List<Quartz.JobKey> jks = jobKeys.Select(this.mapper.Map<JobKey, Quartz.JobKey>).ToList();
 
-            return this.scheduler.DeleteJobs(jobKeys.Select(jk => jk.ToQuartz()).ToList());
+            return this.scheduler.DeleteJobs(jks);
         }
 
         public void TriggerJob(JobKey jobKey)
         {
-            Contract.Requires(jobKey != null);
+            Quartz.JobKey jk = this.mapper.Map<JobKey, Quartz.JobKey>(jobKey);
 
-            this.scheduler.TriggerJob(jobKey.ToQuartz());
+            this.scheduler.TriggerJob(jk);
         }
 
         public void PauseJob(JobKey jobKey)
         {
-            Contract.Requires(jobKey != null);
+            Quartz.JobKey jk = this.mapper.Map<JobKey, Quartz.JobKey>(jobKey);
 
-            this.scheduler.PauseJob(jobKey.ToQuartz());
+            this.scheduler.PauseJob(jk);
         }
 
         public void PauseTrigger(TriggerKey triggerKey)
         {
-            Contract.Requires(triggerKey != null);
+            Quartz.TriggerKey tk = this.mapper.Map<TriggerKey, Quartz.TriggerKey>(triggerKey);
 
-            this.scheduler.PauseTrigger(triggerKey.ToQuartz());
+            this.scheduler.PauseTrigger(tk);
         }
 
         public void ResumeJob(JobKey jobKey)
         {
-            Contract.Requires(jobKey != null);
+            Quartz.JobKey jk = this.mapper.Map<JobKey, Quartz.JobKey>(jobKey);
 
-            this.scheduler.ResumeJob(jobKey.ToQuartz());
+            this.scheduler.ResumeJob(jk);
         }
 
         public void ResumeTrigger(TriggerKey triggerKey)
         {
-            Contract.Requires(triggerKey != null);
+            Quartz.TriggerKey tk = this.mapper.Map<TriggerKey, Quartz.TriggerKey>(triggerKey);
 
-            this.scheduler.ResumeTrigger(triggerKey.ToQuartz());
+            this.scheduler.ResumeTrigger(tk);
         }
 
         public Trigger[] GetTriggersOfJob(JobKey jobKey)
         {
-            Contract.Requires(jobKey != null);
+            Quartz.JobKey jk = this.mapper.Map<JobKey, Quartz.JobKey>(jobKey);
 
-            return this.scheduler.GetTriggersOfJob(jobKey.ToQuartz())
-                .Select(Trigger.FromQuartz)
+            IList<ITrigger> triggersOfJob = this.scheduler.GetTriggersOfJob(jk) ?? new List<ITrigger>();
+
+            return triggersOfJob
+                .Select(this.mapper.Map<ITrigger, Trigger>)
                 .ToArray();
         }
 
         public JobDetail GetJobDetail(JobKey jobKey)
         {
-            Contract.Requires(jobKey != null);
+            Quartz.JobKey jk = this.mapper.Map<JobKey, Quartz.JobKey>(jobKey);
 
-            return JobDetail.FromQuartz(this.scheduler.GetJobDetail(jobKey.ToQuartz()));
+            JobDetail jd = this.mapper.Map<IJobDetail, JobDetail>(this.scheduler.GetJobDetail(jk));
+
+            return jd;
         }
 
         public Trigger GetTrigger(TriggerKey triggerKey)
         {
-            Contract.Requires(triggerKey != null);
+            Quartz.TriggerKey tk = this.mapper.Map<TriggerKey, Quartz.TriggerKey>(triggerKey);
 
-            return Trigger.FromQuartz(this.scheduler.GetTrigger(triggerKey.ToQuartz()));
+            Trigger t = this.mapper.Map<ITrigger, Trigger>(this.scheduler.GetTrigger(tk));
+
+            return t;
         }
 
         public TriggerState GetTriggerState(TriggerKey triggerKey)
         {
-            Quartz.TriggerState ts = this.scheduler.GetTriggerState(triggerKey.ToQuartz());
+            Quartz.TriggerKey tk = this.mapper.Map<TriggerKey, Quartz.TriggerKey>(triggerKey);
 
-            switch (ts)
-            {
-                case Quartz.TriggerState.Normal:
-                    return TriggerState.Normal;
-                case Quartz.TriggerState.Paused:
-                    return TriggerState.Paused;
-                case Quartz.TriggerState.Complete:
-                    return TriggerState.Complete;
-                case Quartz.TriggerState.Error:
-                    return TriggerState.Error;
-                case Quartz.TriggerState.Blocked:
-                    return TriggerState.Blocked;
-                case Quartz.TriggerState.None:
-                    return TriggerState.None;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            TriggerState ts = this.scheduler.GetTriggerState(tk);
+
+            return ts;
         }
 
         public bool Interrupt(JobKey jobKey)
         {
-            Contract.Requires(jobKey != null);
+            Quartz.JobKey jk = this.mapper.Map<JobKey, Quartz.JobKey>(jobKey);
 
-            return this.scheduler.Interrupt(jobKey.ToQuartz());
+            bool interrupted = this.scheduler.Interrupt(jk);
+
+            return interrupted;
         }
 
         public bool CheckExists(JobKey jobKey)
         {
-            Contract.Requires(jobKey != null);
+            Quartz.JobKey jk = this.mapper.Map<JobKey, Quartz.JobKey>(jobKey);
 
-            return this.scheduler.CheckExists(jobKey.ToQuartz());
+            bool exists = this.scheduler.CheckExists(jk);
+
+            return exists;
         }
 
         public bool CheckExists(TriggerKey triggerKey)
         {
-            Contract.Requires(triggerKey != null);
+            Quartz.TriggerKey tk = this.mapper.Map<TriggerKey, Quartz.TriggerKey>(triggerKey);
 
-            return this.scheduler.CheckExists(triggerKey.ToQuartz());
+            bool exists = this.scheduler.CheckExists(tk);
+
+            return exists;
         }
     }
 }
