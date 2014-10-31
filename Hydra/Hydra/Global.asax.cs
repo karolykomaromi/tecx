@@ -1,6 +1,4 @@
-﻿using Hydra.Configuration;
-
-namespace Hydra
+﻿namespace Hydra
 {
     using System;
     using System.Web;
@@ -8,6 +6,7 @@ namespace Hydra
     using System.Web.Mvc;
     using System.Web.Routing;
     using FluentValidation.Mvc;
+    using Hydra.Configuration;
     using Hydra.Filters;
     using Hydra.Hosting;
     using Hydra.Infrastructure.Logging;

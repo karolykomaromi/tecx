@@ -5,15 +5,15 @@
     using System.Diagnostics.Contracts;
     using System.Linq;
     using AutoMapper;
-    using Quartz;
+    using Hydra.Jobs.Transfer;
 
     public class SchedulerService : ISchedulerService
     {
-        private readonly IScheduler scheduler;
+        private readonly Quartz.IScheduler scheduler;
 
         private readonly IMappingEngine mapper;
 
-        public SchedulerService(IScheduler scheduler, IMappingEngine mapper)
+        public SchedulerService(Quartz.IScheduler scheduler, IMappingEngine mapper)
         {
             Contract.Requires(scheduler != null);
             Contract.Requires(mapper != null);
@@ -84,8 +84,8 @@
 
         public DateTimeOffset ScheduleJob(JobDetail jobDetail, Trigger trigger)
         {
-            IJobDetail jd = this.mapper.Map<JobDetail, Quartz.IJobDetail>(jobDetail);
-            ITrigger t = this.mapper.Map<Trigger, ITrigger>(trigger);
+            Quartz.IJobDetail jd = this.mapper.Map<JobDetail, Quartz.IJobDetail>(jobDetail);
+            Quartz.ITrigger t = this.mapper.Map<Trigger, Quartz.ITrigger>(trigger);
 
             return this.scheduler.ScheduleJob(jd, t);
         }
@@ -97,7 +97,7 @@
 
         public DateTimeOffset? RescheduleJob(TriggerKey triggerKey, Trigger newTrigger)
         {
-            ITrigger nt = this.mapper.Map<Trigger, ITrigger>(newTrigger);
+            Quartz.ITrigger nt = this.mapper.Map<Trigger, Quartz.ITrigger>(newTrigger);
 
             Quartz.TriggerKey tk = this.mapper.Map<TriggerKey, Quartz.TriggerKey>(triggerKey);
 
@@ -108,7 +108,7 @@
 
         public void AddJob(JobDetail jobDetail, bool replace, bool storeNonDurableWhileAwaitingScheduling)
         {
-            IJobDetail jd = this.mapper.Map<JobDetail, Quartz.IJobDetail>(jobDetail);
+            Quartz.IJobDetail jd = this.mapper.Map<JobDetail, Quartz.IJobDetail>(jobDetail);
 
             this.scheduler.AddJob(jd, replace, storeNonDurableWhileAwaitingScheduling);
         }
@@ -159,10 +159,10 @@
         {
             Quartz.JobKey jk = this.mapper.Map<JobKey, Quartz.JobKey>(jobKey);
 
-            IList<ITrigger> triggersOfJob = this.scheduler.GetTriggersOfJob(jk) ?? new List<ITrigger>();
+            IList<Quartz.ITrigger> triggersOfJob = this.scheduler.GetTriggersOfJob(jk) ?? new List<Quartz.ITrigger>();
 
             return triggersOfJob
-                .Select(this.mapper.Map<ITrigger, Trigger>)
+                .Select(this.mapper.Map<Quartz.ITrigger, Trigger>)
                 .ToArray();
         }
 
@@ -170,7 +170,7 @@
         {
             Quartz.JobKey jk = this.mapper.Map<JobKey, Quartz.JobKey>(jobKey);
 
-            JobDetail jd = this.mapper.Map<IJobDetail, JobDetail>(this.scheduler.GetJobDetail(jk));
+            JobDetail jd = this.mapper.Map<Quartz.IJobDetail, JobDetail>(this.scheduler.GetJobDetail(jk));
 
             return jd;
         }
@@ -179,16 +179,16 @@
         {
             Quartz.TriggerKey tk = this.mapper.Map<TriggerKey, Quartz.TriggerKey>(triggerKey);
 
-            Trigger t = this.mapper.Map<ITrigger, Trigger>(this.scheduler.GetTrigger(tk));
+            Trigger t = this.mapper.Map<Quartz.ITrigger, Trigger>(this.scheduler.GetTrigger(tk));
 
             return t;
         }
 
-        public TriggerState GetTriggerState(TriggerKey triggerKey)
+        public Quartz.TriggerState GetTriggerState(TriggerKey triggerKey)
         {
             Quartz.TriggerKey tk = this.mapper.Map<TriggerKey, Quartz.TriggerKey>(triggerKey);
 
-            TriggerState ts = this.scheduler.GetTriggerState(tk);
+            Quartz.TriggerState ts = this.scheduler.GetTriggerState(tk);
 
             return ts;
         }

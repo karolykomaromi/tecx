@@ -56,7 +56,6 @@
 
             this.Container.RegisterInstance<ISchedulerFactory>(factory);
 
-
             this.Container.RegisterType<IJobStore, JobStoreCMT>(new ContainerControlledLifetimeManager());
 
             this.Container.RegisterTypes(

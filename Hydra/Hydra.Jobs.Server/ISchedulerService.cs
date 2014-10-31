@@ -3,7 +3,7 @@
     using System;
     using System.Diagnostics.Contracts;
     using System.ServiceModel;
-    using Quartz;
+    using Hydra.Jobs.Transfer;
 
     [ServiceContract]
     [ContractClass(typeof(SchedulerServiceContract))]
@@ -76,7 +76,7 @@
         Trigger GetTrigger(TriggerKey triggerKey);
 
         [OperationContract]
-        TriggerState GetTriggerState(TriggerKey triggerKey);
+        Quartz.TriggerState GetTriggerState(TriggerKey triggerKey);
 
         [OperationContract]
         bool Interrupt(JobKey jobKey);
@@ -227,11 +227,11 @@
             return default(Trigger);
         }
 
-        public TriggerState GetTriggerState(TriggerKey triggerKey)
+        public Quartz.TriggerState GetTriggerState(TriggerKey triggerKey)
         {
             Contract.Requires(triggerKey != null);
 
-            return default(TriggerState);
+            return default(Quartz.TriggerState);
         }
 
         public bool Interrupt(JobKey jobKey)

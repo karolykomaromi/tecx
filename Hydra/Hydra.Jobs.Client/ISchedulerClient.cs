@@ -2,35 +2,9 @@
 {
     using System;
     using System.Diagnostics.Contracts;
-    using System.Runtime.Serialization;
     using System.ServiceModel;
     using System.Threading.Tasks;
-    using Quartz;
-
-    [DataContract]
-    public class Trigger
-    {
-    }
-
-    [DataContract]
-    public class JobDetail
-    {
-    }
-
-    [DataContract]
-    public class TriggerKey
-    {
-    }
-
-    [DataContract]
-    public class JobKey
-    {
-    }
-
-    [DataContract]
-    public class SchedulerMetaData
-    {
-    }
+    using Hydra.Jobs.Transfer;
 
     [ServiceContract(Name = "ISchedulerService")]
     public interface ISchedulerClient
@@ -102,7 +76,7 @@
         Task<Trigger> GetTrigger(TriggerKey triggerKey);
 
         [OperationContract]
-        Task<TriggerState> GetTriggerState(TriggerKey triggerKey);
+        Task<Quartz.TriggerState> GetTriggerState(TriggerKey triggerKey);
 
         [OperationContract]
         Task<bool> Interrupt(JobKey jobKey);
@@ -261,11 +235,11 @@
             return default(Task<Trigger>);
         }
 
-        public Task<TriggerState> GetTriggerState(TriggerKey triggerKey)
+        public Task<Quartz.TriggerState> GetTriggerState(TriggerKey triggerKey)
         {
             Contract.Requires(triggerKey != null);
 
-            return default(Task<TriggerState>);
+            return default(Task<Quartz.TriggerState>);
         }
 
         public Task<bool> Interrupt(JobKey jobKey)
