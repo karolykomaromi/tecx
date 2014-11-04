@@ -1,9 +1,8 @@
-namespace Hydra.Jobs.Server
-{
-    using System;
-    using System.Runtime.Serialization;
-    using Hydra.Jobs.Transfer;
+using System;
+using System.Runtime.Serialization;
 
+namespace Hydra.Jobs.Transfer
+{
     [DataContract]
     public class CronTrigger : Trigger
     {

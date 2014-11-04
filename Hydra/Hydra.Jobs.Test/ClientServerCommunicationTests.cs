@@ -7,6 +7,7 @@
     using Hydra.Infrastructure;
     using Hydra.Jobs.Client;
     using Hydra.Jobs.Server;
+    using Hydra.Jobs.Transfer;
     using Quartz;
     using Xunit;
 
@@ -39,7 +40,7 @@
 
             ICalendarIntervalTrigger source = TriggerBuilder.Create().WithCalendarIntervalSchedule(b => b.WithIntervalInDays(3)).Build() as ICalendarIntervalTrigger;
 
-            Transfer.CalendarIntervalTrigger destination = Mapper.Map<Transfer.CalendarIntervalTrigger>(source);
+            CalendarIntervalTrigger destination = Mapper.Map<CalendarIntervalTrigger>(source);
 
             Assert.NotNull(source);
             Assert.Equal(source.RepeatInterval, destination.RepeatInterval);
