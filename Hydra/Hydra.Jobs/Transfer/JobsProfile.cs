@@ -13,25 +13,21 @@ namespace Hydra.Jobs.Transfer
 
             this.CreateMap<Quartz.IJobDetail, JobDetail>().ReverseMap();
 
-            this.CreateMap<Quartz.ICalendarIntervalTrigger, CalendarIntervalTrigger>();
+            this.CreateMap<CalendarIntervalTriggerImpl, CalendarIntervalTrigger>();
 
             this.CreateMap<CalendarIntervalTrigger, CalendarIntervalTriggerImpl>()
-                .ForMember(impl => impl.Name, x => x.Ignore())
-                .ForMember(impl => impl.Group, x => x.Ignore())
-                .ForMember(impl => impl.JobName, x => x.Ignore())
-                .ForMember(impl => impl.JobGroup, x => x.Ignore())
+                .ForMember(impl => impl.Key, x => x.Ignore())
+                .ForMember(impl => impl.JobKey, x => x.Ignore())
                 .As<Quartz.ICalendarIntervalTrigger>();
 
             this.CreateMap<SimpleTrigger, SimpleTriggerImpl>()
-                .ForMember(impl => impl.Name, x => x.Ignore())
-                .ForMember(impl => impl.Group, x => x.Ignore())
-                .ForMember(impl => impl.JobName, x => x.Ignore())
-                .ForMember(impl => impl.JobGroup, x => x.Ignore())
+                .ForMember(impl => impl.Key, x => x.Ignore())
+                .ForMember(impl => impl.JobKey, x => x.Ignore())
                 .As<Quartz.ISimpleTrigger>();
 
-            this.CreateMap<Quartz.ICronTrigger, CronTrigger>();
+            this.CreateMap<CronTriggerImpl, CronTrigger>();
 
-            this.CreateMap<Quartz.ISimpleTrigger, SimpleTrigger>();
+            this.CreateMap<SimpleTriggerImpl, SimpleTrigger>();
 
             this.CreateMap<Trigger, Quartz.ITrigger>()
                 .Include<CalendarIntervalTrigger, Quartz.ICalendarIntervalTrigger>()

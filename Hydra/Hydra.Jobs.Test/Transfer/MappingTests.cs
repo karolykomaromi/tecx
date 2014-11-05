@@ -13,7 +13,7 @@
         [Theory, ContainerData]
         public void Should_Map_CalendarIntervalTrigger_From_Quartz(IMappingEngine mapper)
         {
-            ITrigger source = TriggerBuilder.Create().WithCalendarIntervalSchedule(
+            ITrigger source = TriggerBuilder.Create().WithIdentity("Foo", "Bar").WithCalendarIntervalSchedule(
                 x => x.WithIntervalInDays(2).SkipDayIfHourDoesNotExist(true).WithMisfireHandlingInstructionDoNothing()).Build();
 
             Trigger destination = mapper.Map<ITrigger, Trigger>(source);
@@ -21,6 +21,8 @@
             CalendarIntervalTrigger t = Assert.IsType<CalendarIntervalTrigger>(destination);
 
             Assert.Equal(2, t.RepeatInterval);
+            Assert.Equal("Foo", t.Name);
+            Assert.Equal("Bar", t.Group);
             Assert.Equal(IntervalUnit.Day, t.RepeatIntervalUnit);
             Assert.True(t.SkipDayIfHourDoesNotExist);
             Assert.Equal(MisfireInstruction.CalendarIntervalTrigger.DoNothing, t.MisfireInstruction);
@@ -62,12 +64,15 @@
 
             Trigger source = new CalendarIntervalTrigger
                 {
-                    Key = new Jobs.Transfer.TriggerKey { Name = "Foo", Group = string.Empty },
+                    Name = "Foo", 
+                    Group = "Bar",
+                    JobName = "Foo2",
+                    JobGroup = "Bar2",
                     StartTimeUtc = startTimeUtc,
                     EndTimeUtc = endTimeUtc,
                 };
 
-            ITrigger destination = mapper.Map<Trigger, Quartz.ITrigger>(source);
+            ITrigger destination = mapper.Map<Trigger, ITrigger>(source);
 
             ICalendarIntervalTrigger t = Assert.IsAssignableFrom<ICalendarIntervalTrigger>(destination);
 
@@ -82,12 +87,15 @@
 
             Trigger source = new SimpleTrigger
                 {
-                    Key = new Jobs.Transfer.TriggerKey { Name = "Foo", Group = string.Empty },
+                    Name = "Foo", 
+                    Group = "Bar",
+                    JobName = "Foo2",
+                    JobGroup = "Bar2",
                     StartTimeUtc = startTimeUtc,
                     EndTimeUtc = endTimeUtc,
                 };
 
-            ITrigger destination = mapper.Map<Trigger, Quartz.ITrigger>(source);
+            ITrigger destination = mapper.Map<Trigger, ITrigger>(source);
 
             ISimpleTrigger t = Assert.IsAssignableFrom<ISimpleTrigger>(destination);
 

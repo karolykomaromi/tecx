@@ -7,11 +7,17 @@ namespace Hydra.Jobs.Transfer
     public abstract class Trigger
     {
         [DataMember]
-        public TriggerKey Key { get; set; }
+        public string Name { get; set; }
 
         [DataMember]
-        public JobKey JobKey { get; set; }
+        public string Group { get; set; }
 
+        [DataMember]
+        public string JobName { get; set; }
+
+        [DataMember]
+        public string JobGroup { get; set; }
+        
         [DataMember]
         public string Description { get; set; }
 
