@@ -123,6 +123,10 @@
       <Project>{F026B613-38EB-4CAA-9909-042F2364D258}</Project>
       <Name>Hydra.TestTools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hydra.Unity\Hydra.Unity.csproj">
+      <Project>{9ED80C67-F60F-4CD5-A1C8-DF4B8913E69A}</Project>
+      <Name>Hydra.Unity</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx" />
