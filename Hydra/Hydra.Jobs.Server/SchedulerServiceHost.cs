@@ -1,29 +1,34 @@
-﻿namespace Hydra.JobHost
+namespace Hydra.Jobs.Server
 {
     using System;
     using System.Diagnostics.Contracts;
+    using System.ServiceModel;
     using Common.Logging;
     using Quartz;
 
-    public class QuartzSchedulerService
+    public class SchedulerServiceHost
     {
+        private readonly ILog log;
+        private readonly ServiceHost host;
+
         private readonly IScheduler scheduler;
 
-        private readonly ILog log;
-
-        public QuartzSchedulerService(IScheduler scheduler, ILog log)
+        public SchedulerServiceHost(IScheduler scheduler, ILog log, params Uri[] baseAddresses)
         {
             Contract.Requires(scheduler != null);
             Contract.Requires(log != null);
 
             this.scheduler = scheduler;
             this.log = log;
+            this.host = new ServiceHost(scheduler, baseAddresses);
         }
 
         public bool Start()
         {
             try
             {
+                this.host.Open();
+
                 this.scheduler.Start();
 
                 return true;
@@ -40,6 +45,8 @@
         {
             try
             {
+                this.host.Close();
+
                 this.scheduler.Standby();
 
                 return true;

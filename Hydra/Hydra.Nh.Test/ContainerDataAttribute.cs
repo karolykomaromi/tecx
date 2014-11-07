@@ -37,6 +37,8 @@
 
             update.Execute(false, true);
 
+            ////NHibernate.Cfg.Environment.BytecodeProvider
+
             if (update.Exceptions != null && update.Exceptions.Count > 0)
             {
                 throw new AggregateException(update.Exceptions);
