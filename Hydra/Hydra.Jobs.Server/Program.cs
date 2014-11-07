@@ -1,4 +1,4 @@
-﻿namespace Hydra.JobHost
+namespace Hydra.Jobs.Server
 {
     using System.Collections.Generic;
     using System.Collections.Specialized;
@@ -32,9 +32,9 @@
 
             HostFactory.Run(x =>
                 {
-                    x.Service<QuartzSchedulerService>(s =>
+                    x.Service<SchedulerServiceHost>(s =>
                         {
-                            s.ConstructUsing(name => container.Resolve<QuartzSchedulerService>());
+                            s.ConstructUsing(name => container.Resolve<SchedulerServiceHost>());
                             s.WhenStarted((svc, _) => svc.Start());
                             s.WhenStopped((svc, _) => svc.Stop());
                             s.WhenPaused((svc, _) => svc.Pause());

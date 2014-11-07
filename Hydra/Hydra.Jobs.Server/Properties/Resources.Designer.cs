@@ -55,5 +55,35 @@ namespace Hydra.Jobs.Server.Properties
                 resourceCulture = value;
             }
         }
+
+        public static string ServiceContinueError
+        {
+            get { return Resources.ResourceManager.GetString("ServiceContinueError", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string ServiceDisplayName
+        {
+            get { return Resources.ResourceManager.GetString("ServiceDisplayName", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string ServicePauseError
+        {
+            get { return Resources.ResourceManager.GetString("ServicePauseError", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string ServiceShutdownError
+        {
+            get { return Resources.ResourceManager.GetString("ServiceShutdownError", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string ServiceStartupError
+        {
+            get { return Resources.ResourceManager.GetString("ServiceStartupError", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string ServiceStopError
+        {
+            get { return Resources.ResourceManager.GetString("ServiceStopError", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
     }
 }

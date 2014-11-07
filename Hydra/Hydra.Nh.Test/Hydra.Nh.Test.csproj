@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="Quartz\QuartzTableCreationScriptsTests.cs" />
     <Compile Include="Quartz\QuartzTests.cs" />
+    <Compile Include="UnityObjectFactoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
