@@ -31,7 +31,7 @@
         {
             Contract.Requires(this.type != typeof(Missing));
             Contract.Requires(!string.IsNullOrWhiteSpace(this.propertyName));
-            Contract.Requires(this.culture != CultureInfo.InvariantCulture);
+            Contract.Requires(!object.Equals(this.culture, CultureInfo.InvariantCulture));
             Contract.Requires(!string.IsNullOrWhiteSpace(this.value));
 
             ResourceItem ri = new ResourceItem

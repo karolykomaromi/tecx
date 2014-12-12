@@ -47,6 +47,7 @@
         {
             Contract.Requires(cell != null);
             Contract.Requires(!string.IsNullOrWhiteSpace(cell.CellReference));
+            Contract.Ensures(Contract.Result<string>() != null);
 
             return ExcelHelper.GetColumnName(cell.CellReference.Value);
         }
@@ -54,6 +55,7 @@
         public static string GetColumnName(string cellReference)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(cellReference));
+            Contract.Ensures(Contract.Result<string>() != null);
 
             Match match = ExcelHelper.LettersOnly.Match(cellReference);
 
