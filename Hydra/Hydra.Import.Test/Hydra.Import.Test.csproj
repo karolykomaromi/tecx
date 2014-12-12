@@ -38,6 +38,12 @@
     <Reference Include="DocumentFormat.OpenXml">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.4.0.1.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="Ploeh.AutoFixture, Version=3.21.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AutoFixture.3.21.0\lib\net40\Ploeh.AutoFixture.dll</HintPath>
@@ -61,7 +67,7 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="ExcelHelperTests.cs" />
-    <Compile Include="ExcelImportTests.cs" />
+    <Compile Include="ExcelImportReaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -73,6 +79,14 @@
     <ProjectReference Include="..\Hydra.Import\Hydra.Import.csproj">
       <Project>{1a25f022-39ac-44ab-bea7-58821d4369ac}</Project>
       <Name>Hydra.Import</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj">
+      <Project>{DA9F1B57-18BD-451F-A3FA-7D149849A8BD}</Project>
+      <Name>Hydra.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hydra.Nh\Hydra.Nh.csproj">
+      <Project>{12824BA8-891A-4CA2-953D-6C98052F8BC3}</Project>
+      <Name>Hydra.Nh</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hydra.TestTools\Hydra.TestTools.csproj">
       <Project>{f026b613-38eb-4caa-9909-042f2364d258}</Project>

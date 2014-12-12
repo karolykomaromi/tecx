@@ -1,6 +1,14 @@
 ﻿namespace Hydra.Import
 {
-    public class ImportResult
+    public abstract class ImportResult
+    {
+    }
+
+    public class ImportFailed : ImportResult
+    {
+    }
+
+    public class ImportSucceeded : ImportResult
     {
     }
 }

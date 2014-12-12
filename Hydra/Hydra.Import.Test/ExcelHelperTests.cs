@@ -47,7 +47,7 @@
                     Sheet sheet = document.WorkbookPart.Workbook.Descendants<Sheet>()
                         .First(s => string.Equals("Testzellen", s.Name, StringComparison.Ordinal));
 
-                    var worksheetPart = (WorksheetPart)document.WorkbookPart.GetPartById(sheet.Id);
+                    WorksheetPart worksheetPart = (WorksheetPart)document.WorkbookPart.GetPartById(sheet.Id);
 
                     Cell zelleMitZeilenUmbruch = worksheetPart.Worksheet.Descendants<Cell>()
                         .First(c => c.CellReference != null && string.Equals("A1", c.CellReference.Value, StringComparison.OrdinalIgnoreCase));
