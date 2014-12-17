@@ -2,10 +2,12 @@ namespace Hydra.Import
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
     using Hydra.Infrastructure;
+    using Hydra.Infrastructure.Reflection;
 
     public class ValueWriterCollectionBuilder<T> : Builder<ValueWriterCollection>
     {
@@ -18,9 +20,17 @@ namespace Hydra.Import
 
         public static Func<IValueWriter> GetWriterFactory(PropertyInfo property)
         {
+            Contract.Requires(property != null);
+            Contract.Ensures(Contract.Result<Func<IValueWriter>>() != null);
+
             if (property.PropertyType == typeof(string))
             {
                 return () => new StringValueWriter(property);
+            }
+
+            if (property.PropertyType == typeof (DateTime))
+            {
+                return () => new DateTimeWriter(property);
             }
 
             return () => ValueWriter.Null;
@@ -28,9 +38,9 @@ namespace Hydra.Import
 
         public ValueWriterCollectionBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> propertySelector)
         {
-            MemberExpression expression = (MemberExpression)propertySelector.Body;
+            Contract.Requires(propertySelector != null);
 
-            PropertyInfo property = (PropertyInfo)expression.Member;
+            PropertyInfo property = Property.Get(propertySelector);
 
             Func<IValueWriter> writerFactory = GetWriterFactory(property);
 
@@ -47,7 +57,7 @@ namespace Hydra.Import
             {
                 PropertyInfo p = property;
 
-                Func<IValueWriter> writerFactory = GetWriterFactory(property);
+                Func<IValueWriter> writerFactory = GetWriterFactory(p);
 
                 this.writerFactories.Add(writerFactory);
             }
