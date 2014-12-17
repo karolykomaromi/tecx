@@ -38,6 +38,12 @@
     <Reference Include="DocumentFormat.OpenXml">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.4.0.1.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -45,16 +51,31 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="DateTimeWriter.cs" />
     <Compile Include="ExcelHelper.cs" />
+    <Compile Include="ExcelImportReader.cs" />
+    <Compile Include="IImportReader.cs" />
+    <Compile Include="IImportWriter.cs" />
     <Compile Include="ImportResult.cs" />
+    <Compile Include="IValueWriter.cs" />
+    <Compile Include="NhBulkImportWriter.cs" />
+    <Compile Include="NullImportReader.cs" />
+    <Compile Include="NullValueWriter.cs" />
+    <Compile Include="NullImportWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.tt</DependentUpon>
     </Compile>
+    <Compile Include="PropertyValueWriter.cs" />
+    <Compile Include="StringValueWriter.cs" />
+    <Compile Include="ValueWriter.cs" />
+    <Compile Include="ValueWriterCollection.cs" />
+    <Compile Include="ValueWriterCollectionBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
