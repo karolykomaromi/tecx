@@ -2,11 +2,38 @@
 {
     using System;
     using System.Globalization;
+    using System.Linq.Expressions;
     using System.Reflection;
 
-    public class Property
+    public static class Property
     {
         public static readonly PropertyInfo Null = new NullPropertyInfo();
+
+        public static PropertyInfo Get<TProperty>(Expression<Func<TProperty>> propertySelector)
+        {
+            MemberExpression property = propertySelector.Body as MemberExpression;
+
+            PropertyInfo info;
+            if (property != null && (info = property.Member as PropertyInfo) != null)
+            {
+                return info;
+            }
+
+            return Property.Null;
+        }
+
+        public static PropertyInfo Get<T, TProperty>(Expression<Func<T, TProperty>> propertySelector)
+        {
+            MemberExpression property = propertySelector.Body as MemberExpression;
+
+            PropertyInfo info;
+            if (property != null && (info = property.Member as PropertyInfo) != null)
+            {
+                return info;
+            }
+
+            return Property.Null;
+        }
 
         private class NullPropertyInfo : PropertyInfo
         {
