@@ -1,5 +1,8 @@
 namespace Hydra.Nh.Infrastructure.I18n
 {
+    using System.Diagnostics;
+
+    [DebuggerDisplay("Name={Name} Language={TwoLetterISOLanguageName} Value={Value}")]
     public class ResourceItem
     {
         public virtual long Id { get; set; }

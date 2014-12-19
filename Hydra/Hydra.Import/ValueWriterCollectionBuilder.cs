@@ -12,7 +12,7 @@ namespace Hydra.Import
     public class ValueWriterCollectionBuilder<T> : Builder<ValueWriterCollection>
     {
         private readonly List<Func<IValueWriter>> writerFactories;
-        
+
         public ValueWriterCollectionBuilder()
         {
             this.writerFactories = new List<Func<IValueWriter>>();
@@ -28,7 +28,7 @@ namespace Hydra.Import
                 return () => new StringValueWriter(property);
             }
 
-            if (property.PropertyType == typeof (DateTime))
+            if (property.PropertyType == typeof(DateTime))
             {
                 return () => new DateTimeWriter(property);
             }

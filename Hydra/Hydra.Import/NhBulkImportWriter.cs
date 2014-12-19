@@ -35,7 +35,7 @@ namespace Hydra.Import
             {
                 HydraEventSource.Log.Error(ex);
 
-                return new ImportFailed();
+                return new ImportFailed(ex);
             }
         }
     }

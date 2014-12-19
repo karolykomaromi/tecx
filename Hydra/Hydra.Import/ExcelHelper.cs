@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.Contracts;
+    using System.Globalization;
     using System.Linq;
     using System.Text.RegularExpressions;
     using DocumentFormat.OpenXml.Packaging;
@@ -28,6 +29,13 @@
                 int.TryParse(value, out sharedStringIndex))
             {
                 value = sharedStringTable.ElementAt(sharedStringIndex).InnerText ?? string.Empty;
+            }
+
+            double oadate;
+            if (((cell.DataType != null && cell.DataType.Value == CellValues.Date) || (cell.DataType == null)) &&
+                double.TryParse(value, NumberStyles.Float, CultureInfo.CurrentCulture, out oadate))
+            {
+                value = DateTime.FromOADate(oadate).ToString("o", CultureInfo.InvariantCulture);
             }
 
             if (value.StartsWith("'", StringComparison.Ordinal))

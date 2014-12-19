@@ -14,21 +14,24 @@ namespace Hydra.Import
         private readonly Worksheet worksheet;
         private readonly SharedStringTable sharedStringTable;
         private readonly ValueWriterCollection writers;
+        private readonly IExcelImportSettings settings;
 
-        public ExcelImportReader(Worksheet worksheet, SharedStringTable sharedStringTable, ValueWriterCollection writers)
+        public ExcelImportReader(Worksheet worksheet, SharedStringTable sharedStringTable, ValueWriterCollection writers, IExcelImportSettings settings)
         {
             Contract.Requires(worksheet != null);
             Contract.Requires(sharedStringTable != null);
             Contract.Requires(writers != null);
+            Contract.Requires(settings != null);
 
             this.worksheet = worksheet;
             this.sharedStringTable = sharedStringTable;
             this.writers = writers;
+            this.settings = settings;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            Row rowWithPropertyNames = this.worksheet.Descendants<Row>().FirstOrDefault(r => r.RowIndex == 1);
+            Row rowWithPropertyNames = this.worksheet.Descendants<Row>().FirstOrDefault(r => r.RowIndex == this.settings.PropertyNamesRowIndex);
 
             if (rowWithPropertyNames == null)
             {
@@ -43,7 +46,7 @@ namespace Hydra.Import
                 })
                 .ToDictionary(x => x.ColumnName, x => x.PropertyName, StringComparer.OrdinalIgnoreCase);
 
-            foreach (Row row in this.worksheet.Descendants<Row>().SkipWhile(r => r.RowIndex <= 1))
+            foreach (Row row in this.worksheet.Descendants<Row>().SkipWhile(r => r.RowIndex <= this.settings.PropertyNamesRowIndex))
             {
                 T item = new T();
 
