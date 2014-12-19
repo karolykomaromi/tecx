@@ -15,9 +15,10 @@
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class ContainerDataAttribute : AutoDataAttribute
     {
-        private static readonly IUnityContainer Container = new UnityContainer().RegisterType<ISessionFactory>(
+        private static readonly IUnityContainer Container = new UnityContainer()
+            .RegisterType<ISessionFactory>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionFactory(_ => Fluently.Configure()
+                new InjectionFactory(_ => (object)Fluently.Configure()
                     .Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey("mysql")))
                     .Mappings(m => m.FluentMappings.AddFromAssemblyOf<ResourceItemMap>())
                     .ExposeConfiguration(BuildSchema)

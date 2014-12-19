@@ -28,7 +28,9 @@
 
                     ValueWriterCollection writers = new ValueWriterCollectionBuilder<ResourceItem>().ForAll();
 
-                    IImportReader<ResourceItem> items = new ExcelImportReader<ResourceItem>(worksheet, sharedStringTable, writers);
+                    IExcelImportSettings settings = new ExcelImportSettings();
+
+                    IImportReader<ResourceItem> items = new ExcelImportReader<ResourceItem>(worksheet, sharedStringTable, writers, settings);
 
                     ResourceItem[] actual = items.ToArray();
 

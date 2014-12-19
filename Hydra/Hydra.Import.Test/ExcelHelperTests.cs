@@ -45,7 +45,7 @@
                     SharedStringTable sharedStringTable = document.WorkbookPart.SharedStringTablePart.SharedStringTable;
 
                     Sheet sheet = document.WorkbookPart.Workbook.Descendants<Sheet>()
-                        .First(s => string.Equals("Testzellen", s.Name, StringComparison.Ordinal));
+                        .First(s => string.Equals("Cells", s.Name, StringComparison.Ordinal));
 
                     WorksheetPart worksheetPart = (WorksheetPart)document.WorkbookPart.GetPartById(sheet.Id);
 
@@ -54,7 +54,7 @@
 
                     string actual = ExcelHelper.GetCellValue(zelleMitZeilenUmbruch, sharedStringTable);
 
-                    string expected = "Erste Zeile,\r\n\r\nZweite Zeile";
+                    string expected = "First line,\r\n\r\nsecond line";
 
                     Assert.Equal(expected, actual);
                 }
@@ -71,16 +71,68 @@
                     SharedStringTable sharedStringTable = document.WorkbookPart.SharedStringTablePart.SharedStringTable;
 
                     Sheet sheet = document.WorkbookPart.Workbook.Descendants<Sheet>()
-                        .First(s => string.Equals("Testzellen", s.Name, StringComparison.Ordinal));
+                        .First(s => string.Equals("Cells", s.Name, StringComparison.Ordinal));
 
                     var worksheetPart = (WorksheetPart)document.WorkbookPart.GetPartById(sheet.Id);
 
-                    Cell zelleMitZeilenUmbruch = worksheetPart.Worksheet.Descendants<Cell>()
+                    Cell cellWithLineBreak = worksheetPart.Worksheet.Descendants<Cell>()
                         .First(c => c.CellReference != null && string.Equals("A2", c.CellReference.Value, StringComparison.OrdinalIgnoreCase));
 
-                    string actual = ExcelHelper.GetCellValue(zelleMitZeilenUmbruch, sharedStringTable);
+                    string actual = ExcelHelper.GetCellValue(cellWithLineBreak, sharedStringTable);
 
-                    string expected = "Eins\r\n\r\nZwei";
+                    string expected = "One\r\n\r\nTwo";
+
+                    Assert.Equal(expected, actual);
+                }
+            }
+        }
+
+        [Fact]
+        public void Should_Read_Cell_With_German_DateTime()
+        {
+            using (Stream stream = new MemoryStream(Properties.Resources.ExcelHelper))
+            {
+                using (var document = SpreadsheetDocument.Open(stream, false))
+                {
+                    SharedStringTable sharedStringTable = document.WorkbookPart.SharedStringTablePart.SharedStringTable;
+
+                    Sheet sheet = document.WorkbookPart.Workbook.Descendants<Sheet>()
+                        .First(s => string.Equals("Cells", s.Name, StringComparison.Ordinal));
+
+                    var worksheetPart = (WorksheetPart)document.WorkbookPart.GetPartById(sheet.Id);
+
+                    Cell cellWithGermanDateTime = worksheetPart.Worksheet.Descendants<Cell>()
+                        .First(c => c.CellReference != null && string.Equals("B1", c.CellReference, StringComparison.OrdinalIgnoreCase));
+
+                    string actual = ExcelHelper.GetCellValue(cellWithGermanDateTime, sharedStringTable);
+
+                    string expected = "2014-12-18T00:00:00.0000000";
+
+                    Assert.Equal(expected, actual);
+                }
+            }
+        }
+
+        [Fact]
+        public void Should_Read_Cell_With_US_DateTime()
+        {
+            using (Stream stream = new MemoryStream(Properties.Resources.ExcelHelper))
+            {
+                using (var document = SpreadsheetDocument.Open(stream, false))
+                {
+                    SharedStringTable sharedStringTable = document.WorkbookPart.SharedStringTablePart.SharedStringTable;
+
+                    Sheet sheet = document.WorkbookPart.Workbook.Descendants<Sheet>()
+                        .First(s => string.Equals("Cells", s.Name, StringComparison.Ordinal));
+
+                    var worksheetPart = (WorksheetPart)document.WorkbookPart.GetPartById(sheet.Id);
+
+                    Cell cellWithGermanDateTime = worksheetPart.Worksheet.Descendants<Cell>()
+                        .First(c => c.CellReference != null && string.Equals("B2", c.CellReference, StringComparison.OrdinalIgnoreCase));
+
+                    string actual = ExcelHelper.GetCellValue(cellWithGermanDateTime, sharedStringTable);
+
+                    string expected = "2014-12-18T00:00:00.0000000";
 
                     Assert.Equal(expected, actual);
                 }
