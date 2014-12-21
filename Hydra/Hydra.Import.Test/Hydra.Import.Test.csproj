@@ -80,8 +80,11 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="DateTimeValueWriterTests.cs" />
+    <Compile Include="DecimalValueWriterTests.cs" />
+    <Compile Include="DoubleValueWriterTests.cs" />
     <Compile Include="ExcelHelperTests.cs" />
     <Compile Include="ExcelImportReaderTests.cs" />
+    <Compile Include="FloatValueWriterTests.cs" />
     <Compile Include="NhBulkImportWriterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -89,6 +92,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ValueWriterCollectionBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hydra.Import\Hydra.Import.csproj">

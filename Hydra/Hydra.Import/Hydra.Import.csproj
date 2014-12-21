@@ -57,9 +57,11 @@
     <Compile Include="ExcelImportReader.cs" />
     <Compile Include="IImportReader.cs" />
     <Compile Include="IExcelImportSettings.cs" />
+    <Compile Include="IImportSettings.cs" />
     <Compile Include="IImportWriter.cs" />
     <Compile Include="ImportResult.cs" />
     <Compile Include="ExcelImportSettings.cs" />
+    <Compile Include="ImportSettings.cs" />
     <Compile Include="IValueWriter.cs" />
     <Compile Include="NhBulkImportWriter.cs" />
     <Compile Include="NullImportReader.cs" />

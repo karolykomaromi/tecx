@@ -11,60 +11,59 @@
         [Fact]
         public void Should_Be_Able_To_Write_German_DateTime()
         {
-            string s = "17.12.2014 13:54";
+            string value = "17.12.2014 13:54";
 
-            var foo = new Foo();
+            var instance = new ValueWriterTestObject();
 
-            PropertyInfo property = Property.Get((Foo f) => f.Timestamp);
+            PropertyInfo property = Property.Get((ValueWriterTestObject x) => x.DateTime);
 
-            IValueWriter writer = new DateTimeWriter(property);
+            IValueWriter sut = new DateTimeWriter(property);
 
-            CultureInfo german = CultureInfo.CreateSpecificCulture("de-DE");
+            CultureInfo source = CultureInfo.CreateSpecificCulture("de-DE");
 
-            writer.Write(foo, s, german, CultureInfo.InvariantCulture);
+            CultureInfo target = CultureInfo.InvariantCulture;
 
-            Assert.Equal(new DateTime(2014, 12, 17, 13, 54, 0), foo.Timestamp);
+            sut.Write(instance, value, source, target);
+
+            Assert.Equal(new DateTime(2014, 12, 17, 13, 54, 0), instance.DateTime);
         }
 
         [Fact]
         public void Should_Be_Able_To_Write_Us_DateTime()
         {
-            string s = "12/17/2014 13:54";
+            string value = "12/17/2014 13:54";
 
-            var foo = new Foo();
+            var instance = new ValueWriterTestObject();
 
-            PropertyInfo property = Property.Get((Foo f) => f.Timestamp);
+            PropertyInfo property = Property.Get((ValueWriterTestObject x) => x.DateTime);
 
-            IValueWriter writer = new DateTimeWriter(property);
+            IValueWriter sut = new DateTimeWriter(property);
 
-            CultureInfo us = CultureInfo.CreateSpecificCulture("en-US");
+            CultureInfo source = CultureInfo.CreateSpecificCulture("en-US");
 
-            writer.Write(foo, s, us, CultureInfo.InvariantCulture);
+            CultureInfo target = CultureInfo.InvariantCulture;
 
-            Assert.Equal(new DateTime(2014, 12, 17, 13, 54, 0), foo.Timestamp);
+            sut.Write(instance, value, source, target);
+
+            Assert.Equal(new DateTime(2014, 12, 17, 13, 54, 0), instance.DateTime);
         }
 
         [Fact]
         public void Should_Be_Able_To_Write_Roundtrip_DateTime()
         {
-            string s = "2014-12-17T13:54:00.0000000";
+            string value = "2014-12-17T13:54:00.0000000";
 
-            var foo = new Foo();
+            var foo = new ValueWriterTestObject();
 
-            PropertyInfo property = Property.Get((Foo f) => f.Timestamp);
+            PropertyInfo property = Property.Get((ValueWriterTestObject f) => f.DateTime);
 
             IValueWriter writer = new DateTimeWriter(property);
 
             CultureInfo german = CultureInfo.CreateSpecificCulture("de-DE");
 
-            writer.Write(foo, s, german, CultureInfo.InvariantCulture);
+            writer.Write(foo, value, german, CultureInfo.InvariantCulture);
 
-            Assert.Equal(new DateTime(2014, 12, 17, 13, 54, 0), foo.Timestamp);
+            Assert.Equal(new DateTime(2014, 12, 17, 13, 54, 0), foo.DateTime);
         }
-    }
-
-    public class Foo
-    {
-        public DateTime Timestamp { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace Hydra.Infrastructure.Test
 {
+    using System.Globalization;
     using System.IO;
     using System.Text;
     using Xunit;
@@ -64,6 +65,18 @@
             Assert.Equal(string.Empty, StringHelper.CapitalizeFirstLetter("    "));
             Assert.Equal(string.Empty, StringHelper.CapitalizeFirstLetter(string.Empty));
             Assert.Equal(string.Empty, StringHelper.CapitalizeFirstLetter(null));
+        }
+
+        [Fact]
+        public void Should_Generate_Valid_Property_Name()
+        {
+            CultureInfo culture = new CultureInfo(47); // 47   1071
+
+            string actual = StringHelper.ToValidPropertyName(culture.EnglishName);
+
+            string expected = "Macedonian_Former_Yugoslav_Republic_of_Macedonia";
+
+            Assert.Equal(expected, actual);
         }
     }
 }

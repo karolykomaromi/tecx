@@ -1,6 +1,6 @@
 namespace Hydra.Import
 {
-    public class ExcelImportSettings : IExcelImportSettings
+    public class ExcelImportSettings : ImportSettings, IExcelImportSettings
     {
         public ExcelImportSettings()
         {
