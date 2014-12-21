@@ -13,7 +13,7 @@
         {
             this.Container.RegisterType<ISessionFactory>(
                 new ContainerControlledLifetimeManager(),
-                new InjectionFactory(_ => Fluently.Configure()
+                new InjectionFactory(_ => (object)Fluently.Configure()
                     .Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey("mysql")))
                     .Mappings(m => m.FluentMappings.Add<ResourceItemMap>())
                     .BuildSessionFactory()));

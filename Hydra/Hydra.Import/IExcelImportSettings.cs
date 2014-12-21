@@ -1,6 +1,6 @@
 namespace Hydra.Import
 {
-    public interface IExcelImportSettings
+    public interface IExcelImportSettings : IImportSettings
     {
         uint PropertyNamesRowIndex { get; }
     }
