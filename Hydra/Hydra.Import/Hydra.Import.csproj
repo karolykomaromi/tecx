@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="PropertyValueWriter.cs" />
     <Compile Include="StringValueWriter.cs" />
+    <Compile Include="TypeValueWriter.cs" />
     <Compile Include="ValueWriter.cs" />
     <Compile Include="ValueWriterCollection.cs" />
     <Compile Include="ValueWriterCollectionBuilder.cs" />

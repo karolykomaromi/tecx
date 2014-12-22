@@ -48,6 +48,11 @@ namespace Hydra.Import
 
             foreach (Row row in this.worksheet.Descendants<Row>().SkipWhile(r => r.RowIndex <= this.settings.PropertyNamesRowIndex))
             {
+                if (row.Descendants<Cell>().All(c => string.IsNullOrWhiteSpace(c.InnerText)))
+                {
+                    continue;
+                }
+
                 T item = new T();
 
                 foreach (Cell cell in row.Descendants<Cell>())

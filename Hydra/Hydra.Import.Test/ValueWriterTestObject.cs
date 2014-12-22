@@ -17,5 +17,7 @@
         public float Float { get; set; }
 
         public DateTime DateTime { get; set; }
+
+        public Type Type { get; set; }
     }
 }

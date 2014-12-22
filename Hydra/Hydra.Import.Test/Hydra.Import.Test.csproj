@@ -96,6 +96,7 @@
     <Compile Include="DoubleValueWriterTests.cs" />
     <Compile Include="ExcelHelperTests.cs" />
     <Compile Include="ExcelImportReaderTests.cs" />
+    <Compile Include="ExcelImportTests.cs" />
     <Compile Include="FloatValueWriterTests.cs" />
     <Compile Include="Int32ValueWriterTests.cs" />
     <Compile Include="Int64ValueWriterTests.cs" />
@@ -106,6 +107,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TypeValueWriterTests.cs" />
     <Compile Include="ValueWriterCollectionBuilderTests.cs" />
     <Compile Include="ValueWriterTestObject.cs" />
   </ItemGroup>
