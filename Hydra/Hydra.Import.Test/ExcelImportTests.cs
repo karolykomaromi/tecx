@@ -5,6 +5,7 @@
     using System.IO;
     using DocumentFormat.OpenXml.Packaging;
     using DocumentFormat.OpenXml.Spreadsheet;
+    using NHibernate;
     using Xunit;
 
     public class ExcelImportTests
@@ -22,17 +23,37 @@
 
                     ValueWriterCollection writers = new ValueWriterCollectionBuilder<SheetToTypeMapping>().ForAll();
 
+                    IExcelImportSettings metaImportSettings = new ExcelImportSettings();
+
+                    IImportReader<SheetToTypeMapping> metaReader = new ExcelImportReader<SheetToTypeMapping>(meta, sharedStringTable, writers, metaImportSettings);
+
                     IExcelImportSettings settings = new ExcelImportSettings();
 
-                    IImportReader<SheetToTypeMapping> metaReader = new ExcelImportReader<SheetToTypeMapping>(meta, sharedStringTable, writers, settings);
+                    IStatelessSession session = null;
 
                     foreach (SheetToTypeMapping mapping in metaReader)
                     {
-                        
+                        Type readerType = typeof(ExcelImportReader<>).MakeGenericType(mapping.Type);
+
+                        Worksheet worksheet = document.GetWorksheetByName(mapping.Sheet);
+
+                        if (worksheet == null)
+                        {
+                            continue;
+                        }
                     }
                 }
             }
         }
+
+        //public static IImportWriter<T> GetReaderWriterPipeline<T>(Worksheet sheet, SharedStringTable sharedStringTable, IExcelImportSettings settings)
+        //{
+        //    ValueWriterCollection writers = new ValueWriterCollectionBuilder<T>().ForAll();
+
+        //    IImportReader<T> reader = new ExcelImportReader<T>(sheet, sharedStringTable, writers, settings);
+
+        //    return reader;
+        //}
     }
 
     [DebuggerDisplay("Sheet={Sheet} Type={Type.AssemblyQualifiedName}")]
