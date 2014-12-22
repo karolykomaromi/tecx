@@ -1,4 +1,4 @@
-﻿namespace Hydra.Nh.Test
+﻿namespace Hydra.Import.Test
 {
     using System;
     using FluentNHibernate.Cfg;

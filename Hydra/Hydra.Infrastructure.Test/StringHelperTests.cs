@@ -70,7 +70,7 @@
         [Fact]
         public void Should_Generate_Valid_Property_Name()
         {
-            CultureInfo culture = new CultureInfo(47); // 47   1071
+            CultureInfo culture = new CultureInfo(1071); // 47   1071
 
             string actual = StringHelper.ToValidPropertyName(culture.EnglishName);
 

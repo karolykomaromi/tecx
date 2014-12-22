@@ -10,19 +10,19 @@
     {
         private readonly PluralizationService pluralizationService;
 
-        private readonly CultureInfo english;
+        private readonly CultureInfo culture;
 
         public PluralizationServiceInflector()
         {
-            this.english = CultureInfo.CreateSpecificCulture("en-US");
-            this.pluralizationService = PluralizationService.CreateService(this.english);
+            this.culture = Cultures.EnglishUnitedStates;
+            this.pluralizationService = PluralizationService.CreateService(this.culture);
         }
 
         public IReadOnlyCollection<CultureInfo> SupportedCultures
         {
             get
             {
-                return new ReadOnlyCollection<CultureInfo>(new[] { this.english });
+                return new ReadOnlyCollection<CultureInfo>(new[] { this.culture });
             }
         }
 

@@ -1,6 +1,7 @@
 namespace Hydra.Import.Test
 {
     using System.Globalization;
+    using Hydra.Infrastructure.I18n;
     using Hydra.Infrastructure.Reflection;
     using Xunit;
 
@@ -9,11 +10,11 @@ namespace Hydra.Import.Test
         [Fact]
         public void Should_Write_German_Dobule()
         {
-            CultureInfo source = CultureInfo.CreateSpecificCulture("de-DE");
+            CultureInfo source = Cultures.GermanGermany;
 
             CultureInfo target = CultureInfo.InvariantCulture;
 
-            IValueWriter sut = new DoubleValueWriter(Property.Get((ValueWriterTestObject x) => x.Double));
+            IValueWriter sut = new DoubleValueWriter(TypeHelper.GetProperty((ValueWriterTestObject x) => x.Double));
 
             string value = "123,456";
 
@@ -27,11 +28,11 @@ namespace Hydra.Import.Test
         [Fact]
         public void Should_Write_English_Dobule()
         {
-            CultureInfo source = CultureInfo.CreateSpecificCulture("en-US");
+            CultureInfo source = Cultures.EnglishUnitedStates;
 
             CultureInfo target = CultureInfo.InvariantCulture;
 
-            IValueWriter sut = new DoubleValueWriter(Property.Get((ValueWriterTestObject x) => x.Double));
+            IValueWriter sut = new DoubleValueWriter(TypeHelper.GetProperty((ValueWriterTestObject x) => x.Double));
 
             string value = "123.456";
 

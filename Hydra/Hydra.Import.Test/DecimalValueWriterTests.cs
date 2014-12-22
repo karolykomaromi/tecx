@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Hydra.Import.Test
+﻿namespace Hydra.Import.Test
 {
     using System.Globalization;
+    using Hydra.Infrastructure.I18n;
     using Hydra.Infrastructure.Reflection;
     using Xunit;
 
@@ -15,11 +10,11 @@ namespace Hydra.Import.Test
         [Fact]
         public void Should_Write_German_Decimal()
         {
-            CultureInfo source = CultureInfo.CreateSpecificCulture("de-DE");
+            CultureInfo source = Cultures.GermanGermany;
 
             CultureInfo target = CultureInfo.InvariantCulture;
 
-            IValueWriter sut = new DecimalValueWriter(Property.Get((ValueWriterTestObject x) => x.Decimal));
+            IValueWriter sut = new DecimalValueWriter(TypeHelper.GetProperty((ValueWriterTestObject x) => x.Decimal));
 
             string value = "123,456";
 
@@ -33,11 +28,11 @@ namespace Hydra.Import.Test
         [Fact]
         public void Should_Write_English_Decimal()
         {
-            CultureInfo source = CultureInfo.CreateSpecificCulture("en-US");
+            CultureInfo source = Cultures.EnglishUnitedStates;
 
             CultureInfo target = CultureInfo.InvariantCulture;
 
-            IValueWriter sut = new DecimalValueWriter(Property.Get((ValueWriterTestObject x) => x.Decimal));
+            IValueWriter sut = new DecimalValueWriter(TypeHelper.GetProperty((ValueWriterTestObject x) => x.Decimal));
 
             string value = "123.456";
 
@@ -47,16 +42,5 @@ namespace Hydra.Import.Test
 
             Assert.Equal(123.456m, instance.Decimal);
         }
-    }
-
-    public class ValueWriterTestObject
-    {
-        public decimal Decimal { get; set; }
-
-        public double Double { get; set; }
-
-        public float Float { get; set; }
-
-        public DateTime DateTime { get; set; }
     }
 }

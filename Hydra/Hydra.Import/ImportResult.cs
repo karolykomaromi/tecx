@@ -6,17 +6,11 @@
 
     public abstract class ImportResult
     {
-    }
-
-    public class ImportFailed : ImportResult
-    {
         private readonly List<Exception> errors;
 
-        public ImportFailed(Exception exception)
+        protected ImportResult()
         {
-            Contract.Requires(exception != null);
-
-            this.errors = new List<Exception> { exception };
+            this.errors = new List<Exception>();
         }
 
         public IEnumerable<Exception> Errors
@@ -24,7 +18,7 @@
             get { return errors; }
         }
 
-        public ImportFailed AddError(Exception exception)
+        public ImportResult AddError(Exception exception)
         {
             Contract.Requires(exception != null);
 
@@ -32,6 +26,10 @@
             
             return this;
         }
+    }
+
+    public class ImportFailed : ImportResult
+    {
     }
 
     public class ImportSucceeded : ImportResult

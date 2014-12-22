@@ -1,12 +1,11 @@
 namespace Hydra.Import
 {
-    using System;
     using System.Globalization;
     using System.Reflection;
 
-    public class DateTimeWriter : PropertyValueWriter
+    public class FloatValueWriter : PropertyValueWriter
     {
-        public DateTimeWriter(PropertyInfo property) 
+        public FloatValueWriter(PropertyInfo property)
             : base(property)
         {
         }
@@ -18,10 +17,10 @@ namespace Hydra.Import
                 return;
             }
 
-            DateTime dt;
-            if (DateTime.TryParse(value, source, DateTimeStyles.None, out dt))
+            float f;
+            if (float.TryParse(value, NumberStyles.Float, source, out f))
             {
-                this.Property.SetValue(instance, dt);
+                this.Property.SetValue(instance, f);
             }
         }
     }

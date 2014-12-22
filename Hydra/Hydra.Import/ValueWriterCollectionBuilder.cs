@@ -30,7 +30,27 @@ namespace Hydra.Import
 
             if (property.PropertyType == typeof(DateTime))
             {
-                return () => new DateTimeWriter(property);
+                return () => new DateTimeValueWriter(property);
+            }
+
+            if (property.PropertyType == typeof(int))
+            {
+                return () => new Int32ValueWriter(property);
+            }
+
+            if (property.PropertyType == typeof(decimal))
+            {
+                return () => new DecimalValueWriter(property);
+            }
+
+            if (property.PropertyType == typeof(double))
+            {
+                return () => new DoubleValueWriter(property);
+            }
+
+            if (property.PropertyType == typeof(float))
+            {
+                return () => new FloatValueWriter(property);
             }
 
             return () => ValueWriter.Null;
@@ -40,7 +60,7 @@ namespace Hydra.Import
         {
             Contract.Requires(propertySelector != null);
 
-            PropertyInfo property = Property.Get(propertySelector);
+            PropertyInfo property = TypeHelper.GetProperty(propertySelector);
 
             Func<IValueWriter> writerFactory = GetWriterFactory(property);
 

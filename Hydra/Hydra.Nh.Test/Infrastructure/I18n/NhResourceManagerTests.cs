@@ -19,7 +19,7 @@
             {
                 using (var tx = session.BeginTransaction())
                 {
-                    CultureInfo culture = CultureInfo.CreateSpecificCulture("en-GB");
+                    CultureInfo culture = Cultures.EnglishGreatBritain;
 
                     ResourceItemBuilder builder =
                         new ResourceItemBuilder().FromType(typeof(Properties.Resources)).UseCulture(culture);
@@ -48,7 +48,7 @@
             {
                 using (var tx = session.BeginTransaction())
                 {
-                    CultureInfo culture = CultureInfo.CreateSpecificCulture("en-GB");
+                    CultureInfo culture = Cultures.EnglishGreatBritain;
 
                     ResourceItemBuilder builder =
                         new ResourceItemBuilder().FromType(typeof(Properties.Resources)).UseCulture(culture);

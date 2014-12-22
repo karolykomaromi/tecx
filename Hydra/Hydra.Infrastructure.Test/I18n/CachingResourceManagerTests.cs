@@ -12,7 +12,7 @@
         {
             ObjectCache cache = new MemoryCache("TESTS");
 
-            CultureInfo culture = CultureInfo.CreateSpecificCulture("de-DE");
+            CultureInfo culture = Cultures.GermanGermany;
 
             string s1, s2;
 

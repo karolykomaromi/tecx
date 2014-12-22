@@ -1,6 +1,5 @@
 ﻿namespace Hydra.Infrastructure
 {
-    using System;
     using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.IO;
@@ -21,7 +20,7 @@
         {
             Contract.Requires(s != null);
 
-            if (String.IsNullOrWhiteSpace(s))
+            if (string.IsNullOrWhiteSpace(s))
             {
                 return s;
             }
@@ -33,8 +32,8 @@
 
         public static void SaveToFile(this string s, string path)
         {
-            Contract.Requires(!String.IsNullOrEmpty(s));
-            Contract.Requires(!String.IsNullOrWhiteSpace(path));
+            Contract.Requires(!string.IsNullOrEmpty(s));
+            Contract.Requires(!string.IsNullOrWhiteSpace(path));
 
             using (Stream stream = File.Create(path))
             {
@@ -48,9 +47,9 @@
 
         public static string CapitalizeFirstLetter(string s)
         {
-            if (String.IsNullOrWhiteSpace(s))
+            if (string.IsNullOrWhiteSpace(s))
             {
-                return String.Empty;
+                return string.Empty;
             }
 
             if (s.Length == 1)
@@ -63,8 +62,8 @@
 
         public static string ToValidPropertyName(string s)
         {
-            Contract.Requires(!String.IsNullOrWhiteSpace(s));
-            Contract.Ensures(!String.IsNullOrWhiteSpace(Contract.Result<string>()));
+            Contract.Requires(!string.IsNullOrWhiteSpace(s));
+            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
 
             string validPropertyName = TrailingUnderscores.Replace(
                 MultipleUnderscores.Replace(

@@ -1,6 +1,5 @@
 ﻿namespace Hydra.Import.Test
 {
-    using System;
     using Hydra.Infrastructure.Reflection;
     using Xunit;
 
@@ -9,26 +8,14 @@
         [Fact]
         public void Should_Create_Writers_For_All_Public_Writable_Properties()
         {
-            ValueWriterCollection collection = new ValueWriterCollectionBuilder<HasLotsOfProperties>().ForAll().Build();
+            ValueWriterCollection collection = new ValueWriterCollectionBuilder<ValueWriterTestObject>().ForAll().Build();
 
-            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((HasLotsOfProperties x) => x.Timestamp)]);
-            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((HasLotsOfProperties x) => x.Description)]);
-            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((HasLotsOfProperties x) => x.Price)]);
-            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((HasLotsOfProperties x) => x.Quantity)]);
-            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((HasLotsOfProperties x) => x.Length)]);
+            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.DateTime)]);
+            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.String)]);
+            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.Int32)]);
+            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.Decimal)]);
+            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.Double)]);
+            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.Float)]);
         }
-    }
-
-    public class HasLotsOfProperties
-    {
-        public DateTime Timestamp { get; set; }
-
-        public string Description { get; set; }
-
-        public decimal Price { get; set; }
-
-        public int Quantity { get; set; }
-
-        public double Length { get; set; }
     }
 }

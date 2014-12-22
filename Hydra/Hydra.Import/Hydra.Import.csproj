@@ -52,9 +52,12 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="DateTimeWriter.cs" />
+    <Compile Include="DateTimeValueWriter.cs" />
+    <Compile Include="DecimalValueWriter.cs" />
+    <Compile Include="DoubleValueWriter.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="ExcelImportReader.cs" />
+    <Compile Include="FloatValueWriter.cs" />
     <Compile Include="IImportReader.cs" />
     <Compile Include="IExcelImportSettings.cs" />
     <Compile Include="IImportSettings.cs" />
@@ -62,6 +65,7 @@
     <Compile Include="ImportResult.cs" />
     <Compile Include="ExcelImportSettings.cs" />
     <Compile Include="ImportSettings.cs" />
+    <Compile Include="Int32ValueWriter.cs" />
     <Compile Include="IValueWriter.cs" />
     <Compile Include="NhBulkImportWriter.cs" />
     <Compile Include="NullImportReader.cs" />

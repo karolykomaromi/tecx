@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel;
     using System.Globalization;
+    using Hydra.Infrastructure.I18n;
     using Xunit;
 
     public class ConvertHelperTests
@@ -11,13 +12,13 @@
         public void Should_Return_False_If_Conversion_Not_Possible()
         {
             object converted;
-            Assert.False(ConvertHelper.TryConvert(new D(), typeof(string), CultureInfo.CreateSpecificCulture("de-DE"), out converted));
+            Assert.False(ConvertHelper.TryConvert(new D(), typeof(string), Cultures.GermanGermany, out converted));
         }
 
         [Fact]
         public void Should_Throw_If_Conversion_Not_Possible()
         {
-            Assert.Throws<NotSupportedException>(() => ConvertHelper.Convert(new D(), typeof(string), CultureInfo.CreateSpecificCulture("de-DE")));
+            Assert.Throws<NotSupportedException>(() => ConvertHelper.Convert(new D(), typeof(string), Cultures.GermanGermany));
         }
 
         [Fact]
@@ -27,7 +28,7 @@
 
             string s = now.ToString("o");
 
-            C actual = (C)ConvertHelper.Convert(s, typeof(C), CultureInfo.CreateSpecificCulture("de-DE"));
+            C actual = (C)ConvertHelper.Convert(s, typeof(C), Cultures.GermanGermany);
 
             Assert.Equal(now, actual.Timestamp);
         }
@@ -39,7 +40,7 @@
 
             A f = new A { Timestamp = now };
 
-            B actual = (B)ConvertHelper.Convert(f, typeof(B), CultureInfo.CreateSpecificCulture("de-DE"));
+            B actual = (B)ConvertHelper.Convert(f, typeof(B), Cultures.GermanGermany);
 
             Assert.Equal(f.Timestamp, actual.Timestamp);
         }
