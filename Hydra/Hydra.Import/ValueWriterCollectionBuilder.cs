@@ -33,7 +33,7 @@ namespace Hydra.Import
                 return () => new DateTimeValueWriter(property);
             }
 
-            if (property.PropertyType == typeof (long))
+            if (property.PropertyType == typeof(long))
             {
                 return () => new Int64ValueWriter(property);
             }
@@ -56,6 +56,11 @@ namespace Hydra.Import
             if (property.PropertyType == typeof(float))
             {
                 return () => new FloatValueWriter(property);
+            }
+
+            if (property.PropertyType == typeof(Type))
+            {
+                return () => new TypeValueWriter(property);
             }
 
             return () => ValueWriter.Null;
