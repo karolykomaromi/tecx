@@ -6,6 +6,8 @@
     {
         public int Int32 { get; set; }
 
+        public long Int64 { get; set; }
+
         public string String { get; set; }
 
         public decimal Decimal { get; set; }

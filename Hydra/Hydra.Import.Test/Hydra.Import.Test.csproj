@@ -97,6 +97,8 @@
     <Compile Include="ExcelHelperTests.cs" />
     <Compile Include="ExcelImportReaderTests.cs" />
     <Compile Include="FloatValueWriterTests.cs" />
+    <Compile Include="Int32ValueWriterTests.cs" />
+    <Compile Include="Int64ValueWriterTests.cs" />
     <Compile Include="NhBulkImportWriterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

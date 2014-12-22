@@ -18,7 +18,7 @@ namespace Hydra.Import
             }
 
             int i;
-            if (int.TryParse(value, NumberStyles.Integer, source, out i))
+            if (int.TryParse(value, NumberStyles.Number | NumberStyles.Integer, source, out i))
             {
                 this.Property.SetValue(instance, i);
             }

@@ -3,9 +3,9 @@ namespace Hydra.Import
     using System.Globalization;
     using System.Reflection;
 
-    public class DecimalValueWriter : PropertyValueWriter
+    public class Int64ValueWriter : PropertyValueWriter
     {
-        public DecimalValueWriter(PropertyInfo property)
+        public Int64ValueWriter(PropertyInfo property)
             : base(property)
         {
         }
@@ -17,10 +17,10 @@ namespace Hydra.Import
                 return;
             }
 
-            decimal d;
-            if (decimal.TryParse(value, NumberStyles.Float | NumberStyles.Number, source, out d))
+            long l;
+            if (long.TryParse(value, NumberStyles.Number | NumberStyles.Integer, source, out l))
             {
-                this.Property.SetValue(instance, d);
+                this.Property.SetValue(instance, l);
             }
         }
     }
