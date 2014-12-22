@@ -129,11 +129,19 @@
         public static Worksheet GetMetaDataWorksheet(this SpreadsheetDocument document)
         {
             Contract.Requires(document != null);
+
+            return document.GetWorksheetByName("Meta");
+        }
+
+        public static Worksheet GetWorksheetByName(this SpreadsheetDocument document, string sheetName)
+        {
+            Contract.Requires(document != null);
             Contract.Requires(document.WorkbookPart != null);
             Contract.Requires(document.WorkbookPart.Workbook != null);
+            Contract.Requires(!string.IsNullOrWhiteSpace(sheetName));
 
             Sheet sheet = document.WorkbookPart.Workbook.Descendants<Sheet>()
-                .FirstOrDefault(s => string.Equals("Meta", s.Name, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefault(s => string.Equals(sheetName, s.Name, StringComparison.OrdinalIgnoreCase));
 
             if (sheet == null)
             {
