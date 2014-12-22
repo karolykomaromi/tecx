@@ -33,6 +33,11 @@ namespace Hydra.Import
                 return () => new DateTimeValueWriter(property);
             }
 
+            if (property.PropertyType == typeof (long))
+            {
+                return () => new Int64ValueWriter(property);
+            }
+
             if (property.PropertyType == typeof(int))
             {
                 return () => new Int32ValueWriter(property);

@@ -66,6 +66,7 @@
     <Compile Include="ExcelImportSettings.cs" />
     <Compile Include="ImportSettings.cs" />
     <Compile Include="Int32ValueWriter.cs" />
+    <Compile Include="Int64ValueWriter.cs" />
     <Compile Include="IValueWriter.cs" />
     <Compile Include="NhBulkImportWriter.cs" />
     <Compile Include="NullImportReader.cs" />
