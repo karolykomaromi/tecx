@@ -5,6 +5,7 @@ namespace Hydra.Infrastructure.Reflection
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection;
 
     public static class TypeHelper
     {
@@ -54,6 +55,38 @@ namespace Hydra.Infrastructure.Reflection
 
                 current = current.BaseType;
             }
+        }
+
+        public static PropertyInfo GetProperty<TProperty>(Expression<Func<TProperty>> propertySelector)
+        {
+            Contract.Requires(propertySelector != null);
+            Contract.Ensures(Contract.Result<PropertyInfo>() != null);
+
+            MemberExpression property = propertySelector.Body as MemberExpression;
+
+            PropertyInfo info;
+            if (property != null && (info = property.Member as PropertyInfo) != null)
+            {
+                return info;
+            }
+
+            return Property.Null;
+        }
+
+        public static PropertyInfo GetProperty<T, TProperty>(Expression<Func<T, TProperty>> propertySelector)
+        {
+            Contract.Requires(propertySelector != null);
+            Contract.Ensures(Contract.Result<PropertyInfo>() != null);
+
+            MemberExpression property = propertySelector.Body as MemberExpression;
+
+            PropertyInfo info;
+            if (property != null && (info = property.Member as PropertyInfo) != null)
+            {
+                return info;
+            }
+
+            return Property.Null;
         }
     }
 }

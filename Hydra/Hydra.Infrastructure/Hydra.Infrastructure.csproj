@@ -71,11 +71,7 @@
     <Compile Include="Enumeration.cs" />
     <Compile Include="EnumerationConverter.cs" />
     <Compile Include="EnumerationInitializationFailedException.cs" />
-    <Compile Include="I18n\Cultures.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Cultures.tt</DependentUpon>
-    </Compile>
+    <Compile Include="I18n\Cultures.cs" />
     <Compile Include="I18n\IResourceAccessorCache.cs" />
     <Compile Include="I18n\LazyResourceAccessorCache.cs" />
     <Compile Include="I18n\NullResourceAccessorCache.cs" />
@@ -126,7 +122,6 @@
     <Compile Include="StringHelper.cs" />
     <Compile Include="Switch.cs" />
     <Compile Include="SwitchExtensions.cs" />
-    <Compile Include="Templating\TextTemplateHelper.cs" />
     <Compile Include="Theming\Theme.cs" />
     <Compile Include="TimeProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,10 +129,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="I18n\Cultures.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Cultures.Designer.cs</LastGenOutput>
-    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

@@ -6,18 +6,18 @@
 
     public class InflectorWrapper : IInflector
     {
-        private readonly CultureInfo english;
+        private readonly CultureInfo culture;
 
         public InflectorWrapper()
         {
-            this.english = CultureInfo.CreateSpecificCulture("en-US");
+            this.culture = Cultures.EnglishUnitedStates;
         }
 
         public IReadOnlyCollection<CultureInfo> SupportedCultures
         {
             get
             {
-                return new ReadOnlyCollection<CultureInfo>(new[] { this.english });
+                return new ReadOnlyCollection<CultureInfo>(new[] { this.culture });
             }
         }
 

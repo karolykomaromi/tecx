@@ -2,11 +2,14 @@ namespace Hydra.Infrastructure.Test.Reflection
 {
     using System;
     using System.Collections.Generic;
+    using System.Reflection;
     using Hydra.Infrastructure.Reflection;
     using Xunit;
 
     public class TypeHelperTests
     {
+        private string Foo { get; set; }
+
         [Fact]
         public void Should_Recognize_Implemented_Open_Generic_Interface()
         {
@@ -30,13 +33,13 @@ namespace Hydra.Infrastructure.Test.Reflection
         [Fact]
         public void Should_Get_Static_Property_Name()
         {
-            Assert.Equal("Bar", TypeHelper.GetPropertyName(() => Foo.Bar));
+            Assert.Equal("Bar", TypeHelper.GetPropertyName(() => Reflection.Foo.Bar));
         }
 
         [Fact]
         public void Should_Get_Static_Field_Name()
         {
-            Assert.Equal("Field", TypeHelper.GetPropertyName(() => Foo.Field));
+            Assert.Equal("Field", TypeHelper.GetPropertyName(() => Reflection.Foo.Field));
         }
 
         [Fact]
@@ -53,6 +56,22 @@ namespace Hydra.Infrastructure.Test.Reflection
             IEnumerable<Type> actual = TypeHelper.GetInheritanceHierarchy(typeof(Colors));
 
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void Should_Get_Property_By_Expression()
+        {
+            PropertyInfo property = TypeHelper.GetProperty(() => this.Foo);
+
+            Assert.Equal("Foo", property.Name);
+        }
+
+        [Fact]
+        public void Should_Get_Property_From_Instance_By_Expression()
+        {
+            PropertyInfo property = TypeHelper.GetProperty((TypeHelperTests t) => t.Foo);
+
+            Assert.Equal("Foo", property.Name);
         }
     }
 }

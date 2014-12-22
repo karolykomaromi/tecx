@@ -110,7 +110,6 @@
     <Compile Include="Reflection\Foo.cs" />
     <Compile Include="Reflection\IGenericInterface.cs" />
     <Compile Include="Reflection\ImplementsGenericInterface.cs" />
-    <Compile Include="Reflection\PropertyTests.cs" />
     <Compile Include="Reflection\TypeHelperTests.cs" />
     <Compile Include="StringHelperTests.cs" />
   </ItemGroup>

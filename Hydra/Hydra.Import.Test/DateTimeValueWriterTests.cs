@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
     using System.Reflection;
+    using Hydra.Infrastructure.I18n;
     using Hydra.Infrastructure.Reflection;
     using Xunit;
 
@@ -15,11 +16,11 @@
 
             var instance = new ValueWriterTestObject();
 
-            PropertyInfo property = Property.Get((ValueWriterTestObject x) => x.DateTime);
+            PropertyInfo property = TypeHelper.GetProperty((ValueWriterTestObject x) => x.DateTime);
 
-            IValueWriter sut = new DateTimeWriter(property);
+            IValueWriter sut = new DateTimeValueWriter(property);
 
-            CultureInfo source = CultureInfo.CreateSpecificCulture("de-DE");
+            CultureInfo source = Cultures.GermanGermany;
 
             CultureInfo target = CultureInfo.InvariantCulture;
 
@@ -35,11 +36,11 @@
 
             var instance = new ValueWriterTestObject();
 
-            PropertyInfo property = Property.Get((ValueWriterTestObject x) => x.DateTime);
+            PropertyInfo property = TypeHelper.GetProperty((ValueWriterTestObject x) => x.DateTime);
 
-            IValueWriter sut = new DateTimeWriter(property);
+            IValueWriter sut = new DateTimeValueWriter(property);
 
-            CultureInfo source = CultureInfo.CreateSpecificCulture("en-US");
+            CultureInfo source = Cultures.EnglishUnitedStates;
 
             CultureInfo target = CultureInfo.InvariantCulture;
 
@@ -55,11 +56,11 @@
 
             var foo = new ValueWriterTestObject();
 
-            PropertyInfo property = Property.Get((ValueWriterTestObject f) => f.DateTime);
+            PropertyInfo property = TypeHelper.GetProperty((ValueWriterTestObject f) => f.DateTime);
 
-            IValueWriter writer = new DateTimeWriter(property);
+            IValueWriter writer = new DateTimeValueWriter(property);
 
-            CultureInfo german = CultureInfo.CreateSpecificCulture("de-DE");
+            CultureInfo german = Cultures.GermanGermany;
 
             writer.Write(foo, value, german, CultureInfo.InvariantCulture);
 

@@ -15,7 +15,7 @@ namespace Hydra.Import
         {
             Contract.Requires(instance != null);
 
-            this.Property.SetValue(instance, value);
+            this.Property.SetValue(instance, value.ToString(target));
         }
     }
 }
