@@ -3,6 +3,7 @@ namespace Hydra.Import
     using System;
     using System.Globalization;
     using System.Reflection;
+    using Hydra.Infrastructure.Logging;
 
     public class TypeValueWriter : PropertyValueWriter
     {
@@ -11,25 +12,32 @@ namespace Hydra.Import
         {
         }
 
-        public override void Write(object instance, string value, CultureInfo source, CultureInfo target)
+        public override ImportMessage Write(object instance, string value, CultureInfo source, CultureInfo target)
         {
-            Type t;
-
             if (string.IsNullOrWhiteSpace(value))
             {
-                t = typeof (Missing);
+                return ImportMessage.Empty;
             }
-            else
-            {
-                t = Type.GetType(value, false, true);
-            }
+
+            Type t = Type.GetType(value, false, true);
 
             if (t == null)
             {
-                return;
+                return new Warning(string.Format(Properties.Resources.CouldNotParseValue, value, typeof(Type).FullName));
             }
 
-            this.Property.SetValue(instance, t);
+            try
+            {
+                this.Property.SetValue(instance, t);
+            }
+            catch (Exception ex)
+            {
+                HydraEventSource.Log.Error(ex);
+
+                return new Error(string.Format(Properties.Resources.ErrorWritingValue, t.AssemblyQualifiedName, this.Property.Name));
+            }
+
+            return ImportMessage.Empty;
         }
     }
 }

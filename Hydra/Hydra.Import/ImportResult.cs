@@ -13,9 +13,11 @@
             this.errors = new List<Exception>();
         }
 
-        public IEnumerable<Exception> Errors
+        public abstract string Summary { get; }
+
+        public virtual IEnumerable<Exception> Errors
         {
-            get { return errors; }
+            get { return this.errors; }
         }
 
         public ImportResult AddError(Exception exception)
@@ -23,16 +25,8 @@
             Contract.Requires(exception != null);
 
             this.errors.Add(exception);
-            
+
             return this;
         }
-    }
-
-    public class ImportFailed : ImportResult
-    {
-    }
-
-    public class ImportSucceeded : ImportResult
-    {
     }
 }

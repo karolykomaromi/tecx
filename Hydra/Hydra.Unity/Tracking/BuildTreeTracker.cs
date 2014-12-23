@@ -158,13 +158,22 @@ namespace Hydra.Unity.Tracking
 
         public void Dispose()
         {
-            using (new UpgradeableReadLock(ReaderWriterLock))
-            {
-                for (int index = this.BuildTrees.Count - 1; index >= 0; index--)
-                {
-                    BuildTreeItemNode buildTree = this.BuildTrees[index];
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-                    this.DisposeItemsAndRemoveTree(buildTree);
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                using (new UpgradeableReadLock(ReaderWriterLock))
+                {
+                    for (int index = this.BuildTrees.Count - 1; index >= 0; index--)
+                    {
+                        BuildTreeItemNode buildTree = this.BuildTrees[index];
+
+                        this.DisposeItemsAndRemoveTree(buildTree);
+                    }
                 }
             }
         }

@@ -5,6 +5,11 @@ namespace Hydra.Import
 
     public class NullImportReader<T> : IImportReader<T>
     {
+        public ImportMessages Messages
+        {
+            get { return new ImportMessages(); }
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             yield break;

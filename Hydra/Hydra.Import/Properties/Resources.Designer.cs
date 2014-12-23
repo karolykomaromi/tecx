@@ -55,5 +55,35 @@ namespace Hydra.Import.Properties
                 resourceCulture = value;
             }
         }
+
+        public static string CouldNotParseValue
+        {
+            get { return Resources.ResourceManager.GetString("CouldNotParseValue", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string ErrorWritingValue
+        {
+            get { return Resources.ResourceManager.GetString("ErrorWritingValue", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string ImportFailed
+        {
+            get { return Resources.ResourceManager.GetString("ImportFailed", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string ImportPartiallyFailed
+        {
+            get { return Resources.ResourceManager.GetString("ImportPartiallyFailed", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string ImportSuccessful
+        {
+            get { return Resources.ResourceManager.GetString("ImportSuccessful", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string ImportSuccessfulWithErrors
+        {
+            get { return Resources.ResourceManager.GetString("ImportSuccessfulWithErrors", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
     }
 }

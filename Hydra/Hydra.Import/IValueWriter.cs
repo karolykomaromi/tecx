@@ -8,7 +8,7 @@ namespace Hydra.Import
     {
         string PropertyName { get; }
 
-        void Write(object instance, string value, CultureInfo source, CultureInfo target);
+        ImportMessage Write(object instance, string value, CultureInfo source, CultureInfo target);
     }
 
     [ContractClassFor(typeof(IValueWriter))]
@@ -24,11 +24,14 @@ namespace Hydra.Import
             }
         }
 
-        public void Write(object instance, string value, CultureInfo source, CultureInfo target)
+        public ImportMessage Write(object instance, string value, CultureInfo source, CultureInfo target)
         {
             Contract.Requires(instance != null);
             Contract.Requires(source != null);
             Contract.Requires(target != null);
+            Contract.Ensures(Contract.Result<ImportMessage>() != null);
+
+            return ImportMessage.Empty;
         }
     }
 }
