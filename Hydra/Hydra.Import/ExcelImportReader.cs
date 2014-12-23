@@ -15,6 +15,7 @@ namespace Hydra.Import
         private readonly SharedStringTable sharedStringTable;
         private readonly ValueWriterCollection writers;
         private readonly IExcelImportSettings settings;
+        private readonly ImportMessages messages;
 
         public ExcelImportReader(Worksheet worksheet, SharedStringTable sharedStringTable, ValueWriterCollection writers, IExcelImportSettings settings)
         {
@@ -27,6 +28,12 @@ namespace Hydra.Import
             this.sharedStringTable = sharedStringTable;
             this.writers = writers;
             this.settings = settings;
+            this.messages = new ImportMessages();
+        }
+
+        public ImportMessages Messages
+        {
+            get { return this.messages; }
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -39,15 +46,14 @@ namespace Hydra.Import
             }
 
             var properties = rowWithPropertyNames.Descendants<Cell>()
-                .Select(cell => new
-                {
-                    PropertyName = ExcelHelper.GetCellValue(cell, this.sharedStringTable),
-                    ColumnName = ExcelHelper.GetColumnName(cell)
-                })
-                .ToDictionary(x => x.ColumnName, x => x.PropertyName, StringComparer.OrdinalIgnoreCase);
+                .ToDictionary(
+                    ExcelHelper.GetColumnName, 
+                    c => ExcelHelper.GetCellValue(c, this.sharedStringTable), 
+                    StringComparer.OrdinalIgnoreCase);
 
             foreach (Row row in this.worksheet.Descendants<Row>().SkipWhile(r => r.RowIndex <= this.settings.PropertyNamesRowIndex))
             {
+                // skip empty rows
                 if (row.Descendants<Cell>().All(c => string.IsNullOrWhiteSpace(c.InnerText)))
                 {
                     continue;

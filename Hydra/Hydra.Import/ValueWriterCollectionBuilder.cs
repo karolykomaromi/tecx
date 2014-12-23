@@ -4,12 +4,10 @@ namespace Hydra.Import
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Linq;
-    using System.Linq.Expressions;
     using System.Reflection;
     using Hydra.Infrastructure;
-    using Hydra.Infrastructure.Reflection;
 
-    public class ValueWriterCollectionBuilder<T> : Builder<ValueWriterCollection>
+    public class ValueWriterCollectionBuilder : Builder<ValueWriterCollection>
     {
         private readonly List<Func<IValueWriter>> writerFactories;
 
@@ -66,33 +64,28 @@ namespace Hydra.Import
             return () => ValueWriter.Null;
         }
 
-        public ValueWriterCollectionBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> propertySelector)
+        public static ValueWriterCollectionBuilder ForAllPropertiesOf<T>()
         {
-            Contract.Requires(propertySelector != null);
-
-            PropertyInfo property = TypeHelper.GetProperty(propertySelector);
-
-            Func<IValueWriter> writerFactory = GetWriterFactory(property);
-
-            this.writerFactories.Add(writerFactory);
-
-            return this;
+            return ValueWriterCollectionBuilder.ForAllPropertiesOf(typeof(T));
         }
 
-        public ValueWriterCollectionBuilder<T> ForAll()
+        public static ValueWriterCollectionBuilder ForAllPropertiesOf(Type type)
         {
-            var properties = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(p => p.CanWrite);
+            Contract.Requires(type != null);
+            Contract.Ensures(Contract.Result<ValueWriterCollectionBuilder>() != null);
+
+            var builder = new ValueWriterCollectionBuilder();
+
+            var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(p => p.CanWrite);
 
             foreach (PropertyInfo property in properties)
             {
-                PropertyInfo p = property;
+                Func<IValueWriter> writerFactory = ValueWriterCollectionBuilder.GetWriterFactory(property);
 
-                Func<IValueWriter> writerFactory = GetWriterFactory(p);
-
-                this.writerFactories.Add(writerFactory);
+                builder.writerFactories.Add(writerFactory);
             }
 
-            return this;
+            return builder;
         }
 
         public override ValueWriterCollection Build()

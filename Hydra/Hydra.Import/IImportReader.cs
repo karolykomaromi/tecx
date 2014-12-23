@@ -4,5 +4,6 @@ namespace Hydra.Import
 
     public interface IImportReader<out T> : IEnumerable<T>
     {
+        ImportMessages Messages { get; }
     }
 }

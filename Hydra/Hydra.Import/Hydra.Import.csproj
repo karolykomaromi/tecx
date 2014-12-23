@@ -52,9 +52,12 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="CompositeImportResult.cs" />
     <Compile Include="DateTimeValueWriter.cs" />
     <Compile Include="DecimalValueWriter.cs" />
     <Compile Include="DoubleValueWriter.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="ExcelBulkImport.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="ExcelImportReader.cs" />
     <Compile Include="FloatValueWriter.cs" />
@@ -62,9 +65,14 @@
     <Compile Include="IExcelImportSettings.cs" />
     <Compile Include="IImportSettings.cs" />
     <Compile Include="IImportWriter.cs" />
+    <Compile Include="ImportFailed.cs" />
+    <Compile Include="ImportMessage.cs" />
+    <Compile Include="ImportMessages.cs" />
     <Compile Include="ImportResult.cs" />
     <Compile Include="ExcelImportSettings.cs" />
     <Compile Include="ImportSettings.cs" />
+    <Compile Include="ImportSucceeded.cs" />
+    <Compile Include="Info.cs" />
     <Compile Include="Int32ValueWriter.cs" />
     <Compile Include="Int64ValueWriter.cs" />
     <Compile Include="IValueWriter.cs" />
@@ -79,11 +87,13 @@
       <DependentUpon>Resources.tt</DependentUpon>
     </Compile>
     <Compile Include="PropertyValueWriter.cs" />
+    <Compile Include="SheetToTypeMapping.cs" />
     <Compile Include="StringValueWriter.cs" />
     <Compile Include="TypeValueWriter.cs" />
     <Compile Include="ValueWriter.cs" />
     <Compile Include="ValueWriterCollection.cs" />
     <Compile Include="ValueWriterCollectionBuilder.cs" />
+    <Compile Include="Warning.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

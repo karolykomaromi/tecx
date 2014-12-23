@@ -1,10 +1,8 @@
 ﻿namespace Hydra.Import.Test
 {
-    using System;
-    using System.Diagnostics;
     using System.IO;
     using DocumentFormat.OpenXml.Packaging;
-    using DocumentFormat.OpenXml.Spreadsheet;
+    using Moq;
     using NHibernate;
     using Xunit;
 
@@ -17,50 +15,13 @@
             {
                 using (SpreadsheetDocument document = SpreadsheetDocument.Open(stream, false))
                 {
-                    Worksheet meta = document.GetMetaDataWorksheet();
+                    var session = new Mock<IStatelessSession>();
 
-                    SharedStringTable sharedStringTable = document.GetSharedStringTable();
+                    var import = new ExcelBulkImport(session.Object, document);
 
-                    ValueWriterCollection writers = new ValueWriterCollectionBuilder<SheetToTypeMapping>().ForAll();
-
-                    IExcelImportSettings metaImportSettings = new ExcelImportSettings();
-
-                    IImportReader<SheetToTypeMapping> metaReader = new ExcelImportReader<SheetToTypeMapping>(meta, sharedStringTable, writers, metaImportSettings);
-
-                    IExcelImportSettings settings = new ExcelImportSettings();
-
-                    IStatelessSession session = null;
-
-                    foreach (SheetToTypeMapping mapping in metaReader)
-                    {
-                        Type readerType = typeof(ExcelImportReader<>).MakeGenericType(mapping.Type);
-
-                        Worksheet worksheet = document.GetWorksheetByName(mapping.Sheet);
-
-                        if (worksheet == null)
-                        {
-                            continue;
-                        }
-                    }
+                    ImportResult result = import.StartImport();
                 }
             }
         }
-
-        //public static IImportWriter<T> GetReaderWriterPipeline<T>(Worksheet sheet, SharedStringTable sharedStringTable, IExcelImportSettings settings)
-        //{
-        //    ValueWriterCollection writers = new ValueWriterCollectionBuilder<T>().ForAll();
-
-        //    IImportReader<T> reader = new ExcelImportReader<T>(sheet, sharedStringTable, writers, settings);
-
-        //    return reader;
-        //}
-    }
-
-    [DebuggerDisplay("Sheet={Sheet} Type={Type.AssemblyQualifiedName}")]
-    public class SheetToTypeMapping
-    {
-        public string Sheet { get; set; }
-
-        public Type Type { get; set; }
     }
 }

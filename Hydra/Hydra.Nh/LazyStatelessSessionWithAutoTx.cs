@@ -31,6 +31,26 @@
             get { return this.instance.Value; }
         }
 
+        public IDbConnection Connection
+        {
+            get { return this.Instance.Connection; }
+        }
+
+        public ITransaction Transaction
+        {
+            get { return this.Instance.Transaction; }
+        }
+
+        public bool IsOpen
+        {
+            get { return this.Instance.IsOpen; }
+        }
+
+        public bool IsConnected
+        {
+            get { return this.Instance.IsConnected; }
+        }
+
         public void Dispose()
         {
             try
@@ -138,7 +158,7 @@
 
         public ICriteria CreateCriteria<T>() where T : class
         {
-            return Instance.CreateCriteria<T>();
+            return this.Instance.CreateCriteria<T>();
         }
 
         public ICriteria CreateCriteria<T>(string alias) where T : class
@@ -194,26 +214,6 @@
         public IStatelessSession SetBatchSize(int batchSize)
         {
             return this.Instance.SetBatchSize(batchSize);
-        }
-
-        public IDbConnection Connection
-        {
-            get { return this.Instance.Connection; }
-        }
-
-        public ITransaction Transaction
-        {
-            get { return this.Instance.Transaction; }
-        }
-
-        public bool IsOpen
-        {
-            get { return this.Instance.IsOpen; }
-        }
-
-        public bool IsConnected
-        {
-            get { return this.Instance.IsConnected; }
         }
     }
 }

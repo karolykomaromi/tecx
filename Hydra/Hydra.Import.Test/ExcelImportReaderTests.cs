@@ -26,7 +26,7 @@
 
                     Worksheet worksheet = part.Worksheet;
 
-                    ValueWriterCollection writers = new ValueWriterCollectionBuilder<ResourceItem>().ForAll();
+                    ValueWriterCollection writers = ValueWriterCollectionBuilder.ForAllPropertiesOf<ResourceItem>();
 
                     IExcelImportSettings settings = new ExcelImportSettings();
 

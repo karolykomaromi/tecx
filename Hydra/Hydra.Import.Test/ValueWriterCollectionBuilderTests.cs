@@ -8,7 +8,7 @@
         [Fact]
         public void Should_Create_Writers_For_All_Public_Writable_Properties()
         {
-            ValueWriterCollection collection = new ValueWriterCollectionBuilder<ValueWriterTestObject>().ForAll().Build();
+            ValueWriterCollection collection = ValueWriterCollectionBuilder.ForAllPropertiesOf<ValueWriterTestObject>().Build();
 
             Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.DateTime)]);
             Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.String)]);
