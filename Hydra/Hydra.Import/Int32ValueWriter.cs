@@ -12,7 +12,7 @@ namespace Hydra.Import
         {
         }
 
-        public override ImportMessage Write(object instance, string value, CultureInfo source, CultureInfo target)
+        public override ImportMessage Write(object target, string value, CultureInfo sourceCulture, CultureInfo targetCulture)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -20,11 +20,11 @@ namespace Hydra.Import
             }
 
             int i;
-            if (int.TryParse(value, NumberStyles.Number | NumberStyles.Integer, source, out i))
+            if (int.TryParse(value, NumberStyles.Number | NumberStyles.Integer, sourceCulture, out i))
             {
                 try
                 {
-                    this.Property.SetValue(instance, i);
+                    this.Property.SetValue(target, i);
 
                     return ImportMessage.Empty;
                 }

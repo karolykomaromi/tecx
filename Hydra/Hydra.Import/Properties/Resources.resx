@@ -120,6 +120,9 @@
   <data name="CouldNotParseValue" xml:space="preserve">
     <value>Could not parse value '{0}' as '{1}'.</value>
   </data>
+  <data name="ErrorDuringBulkInsert" xml:space="preserve">
+    <value>An error occured while bulk inserting items of Type '{0}'.</value>
+  </data>
   <data name="ErrorWritingValue" xml:space="preserve">
     <value>An error occured while writing the value '{0}' to property '{1}'.</value>
   </data>

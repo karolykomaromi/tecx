@@ -2,7 +2,7 @@ namespace Hydra.Import
 {
     using System.Collections.Generic;
 
-    public class NullImportWriter<T> : IImportWriter<T>
+    public class NullDataWriter<T> : IDataWriter<T>
     {
         public ImportResult Write(IEnumerable<T> items)
         {

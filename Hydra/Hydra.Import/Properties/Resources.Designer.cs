@@ -61,6 +61,11 @@ namespace Hydra.Import.Properties
             get { return Resources.ResourceManager.GetString("CouldNotParseValue", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
+        public static string ErrorDuringBulkInsert
+        {
+            get { return Resources.ResourceManager.GetString("ErrorDuringBulkInsert", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string ErrorWritingValue
         {
             get { return Resources.ResourceManager.GetString("ErrorWritingValue", resourceCulture ?? CultureInfo.CurrentUICulture); }

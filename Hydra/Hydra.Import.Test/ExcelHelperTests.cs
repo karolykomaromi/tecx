@@ -6,6 +6,7 @@
     using DocumentFormat.OpenXml.Packaging;
     using DocumentFormat.OpenXml.Spreadsheet;
     using Xunit;
+    using Xunit.Extensions;
 
     public class ExcelHelperTests
     {
@@ -139,32 +140,31 @@
             }
         }
 
-        [Fact]
-        public void Should_Get_Correct_Row_Index()
+        [Theory]
+        [InlineData("A1", 1u)]
+        [InlineData("B129", 129u)]
+        [InlineData("BX1", 1u)]
+        public void Should_Get_Correct_Row_Index(string cellReference, uint rowIndex)
         {
-            var c1 = new Cell { CellReference = "A1" };
-
-            Assert.Equal(1u, ExcelHelper.GetRowIndex(c1));
-
-            var c2 = new Cell { CellReference = "B129" };
-
-            Assert.Equal(129u, ExcelHelper.GetRowIndex(c2));
+            Assert.Equal(rowIndex, ExcelHelper.GetRowIndex(cellReference));
         }
 
-        [Fact]
-        public void Should_Get_Correct_Column_Index()
+        [Theory]
+        [InlineData("A1", 1)]
+        [InlineData("B129", 2)]
+        [InlineData("BX1", 76)]
+        public void Should_Get_Correct_Column_Index(string cellReference, int columnIndex)
         {
-            var c1 = new Cell { CellReference = "A1" };
+            Assert.Equal(columnIndex, ExcelHelper.GetColumnIndex(cellReference));
+        }
 
-            Assert.Equal(1, ExcelHelper.GetColumnIndex(c1));
-
-            var c2 = new Cell { CellReference = "B129" };
-
-            Assert.Equal(2, ExcelHelper.GetColumnIndex(c2));
-
-            var c3 = new Cell { CellReference = "BX1" };
-
-            Assert.Equal(76, ExcelHelper.GetColumnIndex(c3));
+        [Theory]
+        [InlineData("A", 1)]
+        [InlineData("B", 2)]
+        [InlineData("BX", 76)]
+        public void Should_Get_Correct_Column_Name(string columnName, int columnIndex)
+        {
+            Assert.Equal(columnName, ExcelHelper.GetColumnName(columnIndex));
         }
     }
 }

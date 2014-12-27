@@ -10,9 +10,13 @@ namespace Hydra.Import
     {
         private readonly HashSet<ImportResult> results;
 
+        private readonly CompositeImportMessages messages;
+
         public CompositeImportResult(params ImportResult[] results)
         {
             this.results = new HashSet<ImportResult>(results ?? new ImportResult[0]);
+
+            this.messages = new CompositeImportMessages(this);
         }
 
         public override string Summary
@@ -33,9 +37,9 @@ namespace Hydra.Import
             }
         }
 
-        public override IEnumerable<Exception> Errors
+        public override ImportMessages Messages
         {
-            get { return this.results.SelectMany(r => r.Errors); }
+            get { return this.messages; }
         }
 
         public CompositeImportResult Add(ImportResult result)
@@ -56,6 +60,47 @@ namespace Hydra.Import
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+
+        private class CompositeImportMessages : ImportMessages
+        {
+            private readonly CompositeImportResult result;
+
+            public CompositeImportMessages(CompositeImportResult result)
+            {
+                Contract.Requires(result != null);
+
+                this.result = result;
+            }
+
+            public override int Count
+            {
+                get
+                {
+                    return this.result.results.Sum(r => r.Messages.Count);
+                }
+            }
+
+            public override IEnumerable<Error> Errors
+            {
+                get { return this.result.results.SelectMany(r => r.Messages.Errors); }
+            }
+
+            public override IEnumerable<Warning> Warnings
+            {
+                get { return this.result.results.SelectMany(r => r.Messages.Warnings); }
+            }
+
+            public override IEnumerable<Info> Infos
+            {
+                get { return this.result.results.SelectMany(r => r.Messages.Infos); }
+            }
+
+            public override ImportMessages Add(ImportMessage message)
+            {
+                throw new InvalidOperationException();
+            }
         }
     }
 }

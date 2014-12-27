@@ -20,6 +20,8 @@
                     var import = new ExcelBulkImport(session.Object, document);
 
                     ImportResult result = import.StartImport();
+
+                    Assert.Equal(0, result.Messages.Count);
                 }
             }
         }

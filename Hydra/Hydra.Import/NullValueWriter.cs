@@ -9,7 +9,7 @@ namespace Hydra.Import
             get { return string.Empty; }
         }
 
-        public ImportMessage Write(object instance, string value, CultureInfo source, CultureInfo target)
+        public ImportMessage Write(object target, string value, CultureInfo sourceCulture, CultureInfo targetCulture)
         {
             return ImportMessage.Empty;
         }

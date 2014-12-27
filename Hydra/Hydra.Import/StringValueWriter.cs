@@ -12,7 +12,7 @@ namespace Hydra.Import
         {
         }
 
-        public override ImportMessage Write(object instance, string value, CultureInfo source, CultureInfo target)
+        public override ImportMessage Write(object target, string value, CultureInfo sourceCulture, CultureInfo targetCulture)
         {
             if (value == null)
             {
@@ -21,13 +21,13 @@ namespace Hydra.Import
 
             try
             {
-                this.Property.SetValue(instance, value.ToString(target));
+                this.Property.SetValue(target, value.ToString(targetCulture));
             }
             catch (Exception ex)
             {
                 HydraEventSource.Log.Error(ex);
 
-                return new Error(string.Format(Properties.Resources.ErrorWritingValue, value.ToString(target), this.Property.Name));
+                return new Error(string.Format(Properties.Resources.ErrorWritingValue, value.ToString(targetCulture), this.Property.Name));
             }
 
             return ImportMessage.Empty;

@@ -70,6 +70,21 @@
             return match.Value;
         }
 
+        public static string GetColumnName(int columnIndex)
+        {
+            int dividend = columnIndex;
+            string columnName = string.Empty;
+
+            while (dividend > 0)
+            {
+                int modulo = (dividend - 1) % 26;
+                columnName = Convert.ToChar(65 + modulo) + columnName;
+                dividend = (dividend - modulo) / 26;
+            }
+
+            return columnName;
+        }
+
         public static uint GetRowIndex(Cell cell)
         {
             Contract.Requires(cell != null);

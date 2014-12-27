@@ -13,27 +13,35 @@ namespace Hydra.Import
             this.messages = new HashSet<ImportMessage>(messages ?? new ImportMessage[0]);
         }
 
-        public IEnumerable<Error> Errors
+        public virtual IEnumerable<Error> Errors
         {
             get { return this.messages.OfType<Error>(); }
         }
 
-        public IEnumerable<Warning> Warnings
+        public virtual IEnumerable<Warning> Warnings
         {
             get { return this.messages.OfType<Warning>(); }
         }
 
-        public IEnumerable<Info> Infos
+        public virtual IEnumerable<Info> Infos
         {
             get { return this.messages.OfType<Info>(); }
         }
 
-        public ImportMessages Add(ImportMessage message)
+        public virtual int Count
+        {
+            get { return this.messages.Count; }
+        }
+
+        public virtual ImportMessages Add(ImportMessage message)
         {
             Contract.Requires(message != null);
             Contract.Ensures(Contract.Result<ImportMessages>() != null);
 
-            this.messages.Add(message);
+            if (message != ImportMessage.Empty)
+            {
+                this.messages.Add(message);
+            }
 
             return this;
         }

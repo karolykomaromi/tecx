@@ -6,11 +6,11 @@ namespace Hydra.Import
     using Hydra.Infrastructure.Logging;
     using NHibernate;
 
-    public class NhBulkImportWriter<T> : IImportWriter<T>
+    public class NhBulkDataWriter<T> : IDataWriter<T>
     {
         private readonly IStatelessSession session;
 
-        public NhBulkImportWriter(IStatelessSession session)
+        public NhBulkDataWriter(IStatelessSession session)
         {
             Contract.Requires(session != null);
 
@@ -35,7 +35,13 @@ namespace Hydra.Import
             {
                 HydraEventSource.Log.Error(ex);
 
-                return new ImportFailed().AddError(ex);
+                ImportFailed failed = new ImportFailed();
+
+                string msg = string.Format(Properties.Resources.ErrorDuringBulkInsert, typeof(T).AssemblyQualifiedName);
+
+                failed.Messages.Add(new Error(msg));
+
+                return failed;
             }
         }
     }
