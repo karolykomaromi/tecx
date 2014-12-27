@@ -7,7 +7,7 @@
     using Xunit;
     using Xunit.Extensions;
 
-    public class NhBulkImportWriterTests
+    public class NhBulkDataWriterTests
     {
         [Theory, ContainerData]
         [Trait("Category", "Integration")]
@@ -17,7 +17,7 @@
             {
                 using (ITransaction tx = session.BeginTransaction())
                 {
-                    IImportWriter<ResourceItem> writer = new NhBulkImportWriter<ResourceItem>(session);
+                    IDataWriter<ResourceItem> writer = new NhBulkDataWriter<ResourceItem>(session);
 
                     var resx = new[]
                     {

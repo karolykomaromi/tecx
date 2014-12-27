@@ -8,7 +8,7 @@
     using Hydra.Nh.Infrastructure.I18n;
     using Xunit;
 
-    public class ExcelImportReaderTests
+    public class ExcelDataReaderTests
     {
         [Fact]
         public void Should_Read_ResourceItems_From_Excel_Sheet()
@@ -30,7 +30,7 @@
 
                     IExcelImportSettings settings = new ExcelImportSettings();
 
-                    IImportReader<ResourceItem> items = new ExcelImportReader<ResourceItem>(worksheet, sharedStringTable, writers, settings);
+                    IDataReader<ResourceItem> items = new ExcelDataReader<ResourceItem>(worksheet, sharedStringTable, writers, settings);
 
                     ResourceItem[] actual = items.ToArray();
 

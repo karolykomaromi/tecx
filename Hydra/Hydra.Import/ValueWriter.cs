@@ -9,7 +9,7 @@ namespace Hydra.Import
 
         public abstract string PropertyName { get; }
 
-        public abstract ImportMessage Write(object instance, string value, CultureInfo source, CultureInfo target);
+        public abstract ImportMessage Write(object target, string value, CultureInfo sourceCulture, CultureInfo targetCulture);
 
         public virtual bool Equals(IValueWriter other)
         {

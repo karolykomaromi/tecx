@@ -8,7 +8,7 @@ namespace Hydra.Import
     using System.Linq;
     using DocumentFormat.OpenXml.Spreadsheet;
 
-    public class ExcelImportReader<T> : IImportReader<T>
+    public class ExcelDataReader<T> : IDataReader<T>
         where T : new()
     {
         private readonly Worksheet worksheet;
@@ -17,7 +17,7 @@ namespace Hydra.Import
         private readonly IExcelImportSettings settings;
         private readonly ImportMessages messages;
 
-        public ExcelImportReader(Worksheet worksheet, SharedStringTable sharedStringTable, ValueWriterCollection writers, IExcelImportSettings settings)
+        public ExcelDataReader(Worksheet worksheet, SharedStringTable sharedStringTable, ValueWriterCollection writers, IExcelImportSettings settings)
         {
             Contract.Requires(worksheet != null);
             Contract.Requires(sharedStringTable != null);
@@ -72,7 +72,9 @@ namespace Hydra.Import
 
                         string value = ExcelHelper.GetCellValue(cell, this.sharedStringTable);
 
-                        writer.Write(item, value, CultureInfo.InvariantCulture, CultureInfo.InvariantCulture);
+                        ImportMessage message = writer.Write(item, value, CultureInfo.InvariantCulture, CultureInfo.InvariantCulture);
+
+                        this.Messages.Add(message);
                     }
                 }
 

@@ -8,7 +8,7 @@ namespace Hydra.Import
         {
             get
             {
-                if (this.Errors.Any())
+                if (this.Messages.Errors.Any())
                 {
                     return Properties.Resources.ImportSuccessfulWithErrors;
                 }

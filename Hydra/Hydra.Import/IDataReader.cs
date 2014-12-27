@@ -2,7 +2,7 @@ namespace Hydra.Import
 {
     using System.Collections.Generic;
 
-    public interface IImportReader<out T> : IEnumerable<T>
+    public interface IDataReader<out T> : IEnumerable<T>
     {
         ImportMessages Messages { get; }
     }

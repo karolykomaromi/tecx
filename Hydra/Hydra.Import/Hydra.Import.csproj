@@ -59,12 +59,13 @@
     <Compile Include="Error.cs" />
     <Compile Include="ExcelBulkImport.cs" />
     <Compile Include="ExcelHelper.cs" />
-    <Compile Include="ExcelImportReader.cs" />
+    <Compile Include="ExcelDataReader.cs" />
     <Compile Include="FloatValueWriter.cs" />
-    <Compile Include="IImportReader.cs" />
+    <Compile Include="IDataReader.cs" />
+    <Compile Include="IExcelCellValueWriter.cs" />
     <Compile Include="IExcelImportSettings.cs" />
     <Compile Include="IImportSettings.cs" />
-    <Compile Include="IImportWriter.cs" />
+    <Compile Include="IDataWriter.cs" />
     <Compile Include="ImportFailed.cs" />
     <Compile Include="ImportMessage.cs" />
     <Compile Include="ImportMessages.cs" />
@@ -76,10 +77,10 @@
     <Compile Include="Int32ValueWriter.cs" />
     <Compile Include="Int64ValueWriter.cs" />
     <Compile Include="IValueWriter.cs" />
-    <Compile Include="NhBulkImportWriter.cs" />
-    <Compile Include="NullImportReader.cs" />
+    <Compile Include="NhBulkDataWriter.cs" />
+    <Compile Include="NullDataReader.cs" />
     <Compile Include="NullValueWriter.cs" />
-    <Compile Include="NullImportWriter.cs" />
+    <Compile Include="NullDataWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

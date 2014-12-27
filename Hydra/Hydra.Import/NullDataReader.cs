@@ -3,7 +3,7 @@ namespace Hydra.Import
     using System.Collections;
     using System.Collections.Generic;
 
-    public class NullImportReader<T> : IImportReader<T>
+    public class NullDataReader<T> : IDataReader<T>
     {
         public ImportMessages Messages
         {
