@@ -72,7 +72,7 @@ namespace Hydra.Import
 
                         string value = ExcelHelper.GetCellValue(cell, this.sharedStringTable);
 
-                        ImportMessage message = writer.Write(item, value, CultureInfo.InvariantCulture, CultureInfo.InvariantCulture);
+                        ImportMessage message = writer.Write(item, value, this.settings.SourceCulture, this.settings.TargetCulture);
 
                         this.Messages.Add(message);
                     }
