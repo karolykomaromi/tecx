@@ -53,11 +53,15 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="CompositeImportResult.cs" />
+    <Compile Include="DateTimeCellValueWriter.cs" />
     <Compile Include="DateTimeValueWriter.cs" />
     <Compile Include="DecimalValueWriter.cs" />
     <Compile Include="DoubleValueWriter.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="ExcelBulkImport.cs" />
+    <Compile Include="ExcelCellValueWriter.cs" />
+    <Compile Include="ExcelCellValueWriterCollection.cs" />
+    <Compile Include="ExcelDataWriter.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="ExcelDataReader.cs" />
     <Compile Include="FloatValueWriter.cs" />

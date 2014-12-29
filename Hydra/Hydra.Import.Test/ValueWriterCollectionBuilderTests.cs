@@ -10,12 +10,12 @@
         {
             ValueWriterCollection collection = ValueWriterCollectionBuilder.ForAllPropertiesOf<ValueWriterTestObject>().Build();
 
-            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.DateTime)]);
-            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.String)]);
-            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.Int32)]);
-            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.Decimal)]);
-            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.Double)]);
-            Assert.NotSame(ValueWriter.Null, collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.Float)]);
+            Assert.IsType<DateTimeValueWriter>(collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.DateTime)]);
+            Assert.IsType<StringValueWriter>(collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.String)]);
+            Assert.IsType<Int32ValueWriter>(collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.Int32)]);
+            Assert.IsType<DecimalValueWriter>(collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.Decimal)]);
+            Assert.IsType<DoubleValueWriter>(collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.Double)]);
+            Assert.IsType<FloatValueWriter>(collection[TypeHelper.GetPropertyName((ValueWriterTestObject x) => x.Float)]);
         }
     }
 }
