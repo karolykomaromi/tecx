@@ -55,7 +55,7 @@
 
         public ImportResult Write(IEnumerable<T> items)
         {
-            
+            return new ImportFailed();
         }
     }
 }

@@ -66,6 +66,11 @@ namespace Hydra.Import.Properties
             get { return Resources.ResourceManager.GetString("ErrorDuringBulkInsert", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
+        public static string ErrorValueIsOfWrongType
+        {
+            get { return Resources.ResourceManager.GetString("ErrorValueIsOfWrongType", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string ErrorWritingValue
         {
             get { return Resources.ResourceManager.GetString("ErrorWritingValue", resourceCulture ?? CultureInfo.CurrentUICulture); }
