@@ -112,12 +112,7 @@
     <Compile Include="I18n\FindByTypeFullName.cs" />
     <Compile Include="I18n\FindByTypeName.cs" />
     <Compile Include="I18n\IResxPropertyConvention.cs" />
-    <Compile Include="I18n\IInflector.cs" />
-    <Compile Include="I18n\Inflector.cs" />
-    <Compile Include="I18n\InflectorWrapper.cs" />
     <Compile Include="I18n\IResourceManager.cs" />
-    <Compile Include="I18n\NullInflector.cs" />
-    <Compile Include="I18n\PluralizationServiceInflector.cs" />
     <Compile Include="I18n\ResourceAccessorCache.cs" />
     <Compile Include="I18n\ResourceManagerBase.cs" />
     <Compile Include="I18n\ResourceManagerWrapper.cs" />
