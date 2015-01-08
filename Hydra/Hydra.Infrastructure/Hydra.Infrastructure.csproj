@@ -34,6 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\packages\FluentNHibernate.1.4.0.0\lib\net35\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.SemanticLogging">
       <HintPath>..\packages\EnterpriseLibrary.SemanticLogging.2.0.1406.1\lib\net45\Microsoft.Practices.EnterpriseLibrary.SemanticLogging.dll</HintPath>
     </Reference>
@@ -41,8 +47,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.4.0.2.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Runtime.Caching" />
   </ItemGroup>
@@ -75,7 +85,12 @@
     <Compile Include="I18n\IResourceAccessorCache.cs" />
     <Compile Include="I18n\LazyResourceAccessorCache.cs" />
     <Compile Include="I18n\MultiLanguageString.cs" />
+    <Compile Include="I18n\MultiLanguageStringUserType.cs" />
+    <Compile Include="I18n\MultiLanguageStringUserTypeConvention.cs" />
+    <Compile Include="I18n\NhResourceManager.cs" />
     <Compile Include="I18n\NullResourceAccessorCache.cs" />
+    <Compile Include="I18n\ResourceItem.cs" />
+    <Compile Include="I18n\ResourceItemMap.cs" />
     <Compile Include="I18n\ResourceManagerExtensions.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="IFreezable.cs" />
@@ -107,6 +122,8 @@
     <Compile Include="I18n\ResourceManagerBase.cs" />
     <Compile Include="I18n\ResourceManagerWrapper.cs" />
     <Compile Include="IEnumeration.cs" />
+    <Compile Include="LazySessionWithAutoTx.cs" />
+    <Compile Include="LazyStatelessSessionWithAutoTx.cs" />
     <Compile Include="Logging\DebugLog.cs" />
     <Compile Include="Logging\DebugSink.cs" />
     <Compile Include="Logging\HydraEventSource.cs" />

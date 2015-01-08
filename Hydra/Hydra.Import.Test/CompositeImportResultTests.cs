@@ -22,6 +22,7 @@
 
             Assert.Equal(1, sut.Messages.Infos.Count());
         }
+
         [Fact]
         public void Should_Properly_Compose_Warnings()
         {

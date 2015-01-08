@@ -126,10 +126,6 @@
       <Project>{DA9F1B57-18BD-451F-A3FA-7D149849A8BD}</Project>
       <Name>Hydra.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hydra.Nh\Hydra.Nh.csproj">
-      <Project>{12824BA8-891A-4CA2-953D-6C98052F8BC3}</Project>
-      <Name>Hydra.Nh</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Hydra.TestTools\Hydra.TestTools.csproj">
       <Project>{f026b613-38eb-4caa-9909-042f2364d258}</Project>
       <Name>Hydra.TestTools</Name>

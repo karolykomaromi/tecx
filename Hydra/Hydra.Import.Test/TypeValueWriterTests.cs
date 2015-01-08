@@ -1,8 +1,8 @@
 ﻿namespace Hydra.Import.Test
 {
     using System.Globalization;
+    using Hydra.Infrastructure.I18n;
     using Hydra.Infrastructure.Reflection;
-    using Hydra.Nh.Infrastructure.I18n;
     using Xunit;
 
     public class TypeValueWriterTests

@@ -2,9 +2,8 @@
 {
     using FluentNHibernate.Cfg;
     using FluentNHibernate.Cfg.Db;
-    using Hydra.Nh;
-    using Hydra.Nh.Infrastructure.I18n;
-    using Hydra.Nh.Mappings;
+    using Hydra.Infrastructure;
+    using Hydra.Infrastructure.I18n;
     using Microsoft.Practices.Unity;
     using NHibernate;
 

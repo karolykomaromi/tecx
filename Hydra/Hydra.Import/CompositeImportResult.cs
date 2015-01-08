@@ -62,7 +62,6 @@ namespace Hydra.Import
             return this.GetEnumerator();
         }
 
-
         private class CompositeImportMessages : ImportMessages
         {
             private readonly CompositeImportResult result;
