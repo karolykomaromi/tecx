@@ -135,6 +135,9 @@
   <data name="Reminder" xml:space="preserve">
     <value>Reminder</value>
   </data>
+  <data name="TranslationNotFound" xml:space="preserve">
+    <value>No translation found.</value>
+  </data>
   <data name="ValidMailAddressRequired" xml:space="preserve">
     <value>This operation requires a valid email address.</value>
   </data>

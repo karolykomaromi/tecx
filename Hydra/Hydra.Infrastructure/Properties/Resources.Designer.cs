@@ -86,6 +86,11 @@ namespace Hydra.Infrastructure.Properties
             get { return Resources.ResourceManager.GetString("Reminder", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
+        public static string TranslationNotFound
+        {
+            get { return Resources.ResourceManager.GetString("TranslationNotFound", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string ValidMailAddressRequired
         {
             get { return Resources.ResourceManager.GetString("ValidMailAddressRequired", resourceCulture ?? CultureInfo.CurrentUICulture); }
