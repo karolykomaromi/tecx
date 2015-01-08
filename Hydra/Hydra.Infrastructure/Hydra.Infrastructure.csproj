@@ -74,9 +74,11 @@
     <Compile Include="I18n\Cultures.cs" />
     <Compile Include="I18n\IResourceAccessorCache.cs" />
     <Compile Include="I18n\LazyResourceAccessorCache.cs" />
+    <Compile Include="I18n\MultiLanguageString.cs" />
     <Compile Include="I18n\NullResourceAccessorCache.cs" />
     <Compile Include="I18n\ResourceManagerExtensions.cs" />
     <Compile Include="ICloneable.cs" />
+    <Compile Include="IFreezable.cs" />
     <Compile Include="Input\CmdLineParameter.cs" />
     <Compile Include="Input\CmdLineParameterParser.cs" />
     <Compile Include="Input\ICmdLineParameterVisitor.cs" />

@@ -56,6 +56,8 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Infrastructure\I18n\MultiLanguageStringUserType.cs" />
+    <Compile Include="Infrastructure\I18n\MultiLanguageStringUserTypeConvention.cs" />
     <Compile Include="Infrastructure\I18n\NhResourceManager.cs" />
     <Compile Include="Infrastructure\I18n\ResourceItem.cs" />
     <Compile Include="LazySessionWithAutoTx.cs" />

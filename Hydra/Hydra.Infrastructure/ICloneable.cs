@@ -1,6 +1,6 @@
 ﻿namespace Hydra.Infrastructure
 {
-    public interface ICloneable<T>
+    public interface ICloneable<out T>
     {
         T Clone();
     }
