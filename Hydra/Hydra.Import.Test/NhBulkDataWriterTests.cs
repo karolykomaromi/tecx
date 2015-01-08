@@ -1,7 +1,7 @@
 ﻿namespace Hydra.Import.Test
 {
     using System.Linq;
-    using Hydra.Nh.Infrastructure.I18n;
+    using Hydra.Infrastructure.I18n;
     using NHibernate;
     using NHibernate.Linq;
     using Xunit;

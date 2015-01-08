@@ -1,8 +1,10 @@
 ﻿namespace Hydra.Import.Test
 {
+    using System.Collections.Generic;
     using System.IO;
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Packaging;
+    using DocumentFormat.OpenXml.Validation;
     using Hydra.Infrastructure;
     using Hydra.Infrastructure.Reflection;
     using Xunit;
@@ -12,8 +14,8 @@
         [Fact]
         public void Should_Write_Items_To_Excel_Sheet()
         {
+            ////using (Stream stream = new MemoryStream())
             using (Stream stream = new FileStream(@"d:\tmp\ExcelDataWriterTests.xlsx", FileMode.Create))
-            //using (Stream stream = new MemoryStream())
             {
                 using (SpreadsheetDocument document = SpreadsheetDocument.Create(stream, SpreadsheetDocumentType.Workbook))
                 {
@@ -24,6 +26,10 @@
                     var sut = new ExcelDataWriter<ValueWriterTestObject>(document, writers, settings);
 
                     var items = new[] { new ValueWriterTestObject { DateTime = TimeProvider.Now } };
+
+                    OpenXmlValidator validator = new OpenXmlValidator();
+
+                    IEnumerable<ValidationErrorInfo> validationErrorInfos = validator.Validate(document);
 
                     ImportResult result = sut.Write(items);
                 }

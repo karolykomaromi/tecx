@@ -3,7 +3,7 @@
     using System;
     using FluentNHibernate.Cfg;
     using FluentNHibernate.Cfg.Db;
-    using Hydra.Nh.Mappings;
+    using Hydra.Infrastructure.I18n;
     using Hydra.TestTools;
     using Microsoft.Practices.Unity;
     using NHibernate;

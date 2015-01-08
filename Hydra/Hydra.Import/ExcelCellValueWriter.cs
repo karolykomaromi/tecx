@@ -13,7 +13,10 @@ namespace Hydra.Import
 
         private class NullCellValueWriter : IExcelCellValueWriter
         {
-            public string PropertyName { get { return string.Empty; } }
+            public string PropertyName
+            {
+                get { return string.Empty; }
+            }
 
             public ImportMessage Write(Cell target, object value, CultureInfo sourceCulture, CultureInfo targetCulture)
             {

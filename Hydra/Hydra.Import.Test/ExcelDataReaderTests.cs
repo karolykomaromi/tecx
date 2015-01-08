@@ -5,7 +5,7 @@
     using System.Linq;
     using DocumentFormat.OpenXml.Packaging;
     using DocumentFormat.OpenXml.Spreadsheet;
-    using Hydra.Nh.Infrastructure.I18n;
+    using Hydra.Infrastructure.I18n;
     using Xunit;
 
     public class ExcelDataReaderTests

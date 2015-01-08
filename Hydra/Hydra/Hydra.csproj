@@ -293,10 +293,6 @@
       <Project>{da9f1b57-18bd-451f-a3fa-7d149849a8bd}</Project>
       <Name>Hydra.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hydra.Nh\Hydra.Nh.csproj">
-      <Project>{12824BA8-891A-4CA2-953D-6C98052F8BC3}</Project>
-      <Name>Hydra.Nh</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Hydra.Theming.Blue\Hydra.Theming.Blue.csproj">
       <Project>{4dede7a4-387f-49d7-8c16-60c81ce68e6e}</Project>
       <Name>Hydra.Theming.Blue</Name>
