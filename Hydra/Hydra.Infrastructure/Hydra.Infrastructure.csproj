@@ -53,8 +53,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
@@ -75,13 +75,18 @@
     <Compile Include="Calendaring\ReminderBuilder.cs" />
     <Compile Include="Calendaring\Trigger.cs" />
     <Compile Include="Calendaring\TriggerBuilder.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="ConvertHelper.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="DefaultTimeProvider.cs" />
     <Compile Include="Enumeration.cs" />
     <Compile Include="EnumerationConverter.cs" />
     <Compile Include="EnumerationInitializationFailedException.cs" />
+    <Compile Include="HttpHeaders.cs" />
+    <Compile Include="I18n\CachingSupportedCulturesProvider.cs" />
+    <Compile Include="I18n\CultureHelper.cs" />
     <Compile Include="I18n\Cultures.cs" />
+    <Compile Include="I18n\InMemorySupportedCulturesProvider.cs" />
     <Compile Include="I18n\IResourceAccessorCache.cs" />
     <Compile Include="I18n\LazyResourceAccessorCache.cs" />
     <Compile Include="I18n\MultiLanguageString.cs" />
@@ -92,6 +97,8 @@
     <Compile Include="I18n\ResourceItem.cs" />
     <Compile Include="I18n\ResourceItemMap.cs" />
     <Compile Include="I18n\ResourceManagerExtensions.cs" />
+    <Compile Include="I18n\SupportedCulturesProvider.cs" />
+    <Compile Include="I18n\WeightedLanguage.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="IFreezable.cs" />
     <Compile Include="Input\CmdLineParameter.cs" />

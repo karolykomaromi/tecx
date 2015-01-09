@@ -10,8 +10,10 @@
 
         public static readonly CultureInfo EnglishNeutral = new CultureInfo("en");
 
+        public static readonly CultureInfo EnglishGreatBritain = new CultureInfo("en-GB");
+
         public static readonly CultureInfo EnglishUnitedStates = new CultureInfo("en-US");
 
-        public static readonly CultureInfo EnglishGreatBritain = new CultureInfo("en-GB");
+        public static readonly CultureInfo FrenchFrance = new CultureInfo("fr-FR");
     }
 }

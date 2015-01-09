@@ -83,6 +83,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Reflection.Context" />
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web" />
     <Reference Include="xunit">
       <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
     </Reference>
@@ -108,6 +109,7 @@
     <Compile Include="FlagsConverterTests.cs" />
     <Compile Include="FlagsTests.cs" />
     <Compile Include="I18n\CachingResourceManagerTests.cs" />
+    <Compile Include="I18n\CultureHelperTests.cs" />
     <Compile Include="I18n\MultiLanguageStringTests.cs" />
     <Compile Include="I18n\NhResourceManagerTests.cs" />
     <Compile Include="I18n\ResourceAccessorCacheTests.cs" />
