@@ -9,6 +9,7 @@
     using Hydra.Configuration;
     using Hydra.Filters;
     using Hydra.Hosting;
+    using Hydra.Infrastructure.I18n;
     using Hydra.Infrastructure.Logging;
     using Hydra.Theming.Green;
     using Hydra.Unity;
@@ -32,7 +33,7 @@
 
             // create application master container
             IUnityContainer container = new UnityContainer().AddExtension(new CompositionRoot(typeof(CachingConfiguration).Assembly));
-            this.Application[Constants.ContainerKey] = container;
+            this.Application[Unity.Constants.ContainerKey] = container;
 
             // unity backed controller factory
             IControllerFactory factory = new UnityControllerFactory(new ContainerPerRequestAdapter());
@@ -75,6 +76,8 @@
             IUnityContainer childContainer = container.CreateChildContainer();
 
             this.Context.Items[Unity.Constants.ContainerKey] = childContainer;
+
+            CultureHelper.ApplyUserCulture(this.Request.Headers, this.Request.Cookies);
         }
 
         protected void Application_EndRequest()
@@ -98,7 +101,7 @@
                 ex = ex.InnerException;
             }
 
-            this.Session["exception"] = ex; 
+            this.Session["exception"] = ex;
 
             // TODO weberse 2014-10-01 write exception to log
             HydraEventSource.Log.Error(ex);

@@ -4,9 +4,11 @@
 
     public static class DateTimeExtensions
     {
-        public static void Freeze(this DateTime dt)
+        public static DateTime Freeze(this DateTime dt)
         {
             TimeProvider.Current = new FrozenTimeProvider(dt);
+
+            return dt;
         }
     }
 }

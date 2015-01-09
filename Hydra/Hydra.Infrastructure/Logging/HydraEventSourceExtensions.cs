@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.Contracts;
+    using System.Globalization;
     using System.Reflection;
 
     public static class HydraEventSourceExtensions
@@ -61,6 +62,13 @@
             Contract.Requires(log != null);
 
             log.PropertyNotFound(type.AssemblyQualifiedName, propertyName);
+        }
+
+        public static void CultureChanged(this HydraEventSource log, CultureInfo culture)
+        {
+            Contract.Requires(log != null);
+
+            log.CultureChanged(culture.ToString());
         }
     }
 }

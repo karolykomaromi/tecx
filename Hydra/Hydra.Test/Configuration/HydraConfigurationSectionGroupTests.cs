@@ -6,12 +6,14 @@
     using Hydra.Infrastructure.I18n;
     using Xunit;
 
-    public class HydraConfigurationSectionTests
+    public class HydraConfigurationSectionGroupTests
     {
         [Fact]
         public void Should_Read_Supported_Languages_From_Config_File()
         {
-            HydraConfigurationSectionGroup group = (HydraConfigurationSectionGroup)ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None).GetSectionGroup("hydra");
+            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+
+            HydraConfigurationSectionGroup group = HydraConfigurationSectionGroup.HydraConfiguration(configuration);
 
             Assert.NotNull(group);
             Assert.NotNull(group.ApplicationSettings);

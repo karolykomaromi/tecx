@@ -104,6 +104,15 @@
             }
         }
 
+        [Event(11, Message = "Culture changed to '{0}'", Keywords = Keywords.Diagnostic, Level = EventLevel.Informational)]
+        public void CultureChanged(string culture)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(11, culture);
+            }
+        }
+
         public class Keywords
         {
             public const EventKeywords Page = (EventKeywords)1;
