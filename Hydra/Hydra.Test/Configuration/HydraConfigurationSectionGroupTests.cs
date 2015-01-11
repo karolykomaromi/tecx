@@ -2,7 +2,7 @@
 {
     using System.Configuration;
     using System.Linq;
-    using Hydra.Configuration;
+    using Hydra.Infrastructure.Configuration;
     using Hydra.Infrastructure.I18n;
     using Xunit;
 

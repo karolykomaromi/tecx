@@ -51,6 +51,7 @@
       <HintPath>..\packages\NHibernate.4.0.2.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Caching" />
@@ -75,6 +76,10 @@
     <Compile Include="Calendaring\ReminderBuilder.cs" />
     <Compile Include="Calendaring\Trigger.cs" />
     <Compile Include="Calendaring\TriggerBuilder.cs" />
+    <Compile Include="Configuration\HydraApplicationSettings.cs" />
+    <Compile Include="Configuration\HydraConfigurationSectionGroup.cs" />
+    <Compile Include="Configuration\SupportedLanguage.cs" />
+    <Compile Include="Configuration\SupportedLanguagesCollection.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ConvertHelper.cs" />
     <Compile Include="DateTimeExtensions.cs" />
@@ -83,7 +88,9 @@
     <Compile Include="EnumerationConverter.cs" />
     <Compile Include="EnumerationInitializationFailedException.cs" />
     <Compile Include="HttpHeaders.cs" />
+    <Compile Include="I18n\AppConfigSupportedCulturesProvider.cs" />
     <Compile Include="I18n\CachingSupportedCulturesProvider.cs" />
+    <Compile Include="I18n\ConfigFileSupportedCulturesProvider.cs" />
     <Compile Include="I18n\CultureHelper.cs" />
     <Compile Include="I18n\Cultures.cs" />
     <Compile Include="I18n\InMemorySupportedCulturesProvider.cs" />
@@ -98,6 +105,7 @@
     <Compile Include="I18n\ResourceItemMap.cs" />
     <Compile Include="I18n\ResourceManagerExtensions.cs" />
     <Compile Include="I18n\SupportedCulturesProvider.cs" />
+    <Compile Include="I18n\WebConfigSupportedCulturesProvider.cs" />
     <Compile Include="I18n\WeightedLanguage.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="IFreezable.cs" />

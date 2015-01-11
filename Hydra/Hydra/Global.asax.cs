@@ -6,7 +6,7 @@
     using System.Web.Mvc;
     using System.Web.Routing;
     using FluentValidation.Mvc;
-    using Hydra.Configuration;
+    using Hydra.Composition;
     using Hydra.Filters;
     using Hydra.Hosting;
     using Hydra.Infrastructure.I18n;
@@ -38,13 +38,13 @@
             // unity backed controller factory
             IControllerFactory factory = new UnityControllerFactory(new ContainerPerRequestAdapter());
             ControllerBuilder.Current.SetControllerFactory(factory);
-
+            
             // fubu conventions need container backed dependency resolver but we don't want to figure out the whole
             // configuration for all the other components so we use the default resolver as fallback.
             IDependencyResolver fallback = DependencyResolver.Current;
-            ////IDependencyResolver resolver = new UnityDependencyResolver(fallback, new ContainerPerRequestAdapter());
             IDependencyResolver resolver = new UnityDependencyResolver(fallback, new ContainerPerRequestAdapter());
             DependencyResolver.SetResolver(resolver);
+            container.RegisterInstance<IDependencyResolver>(resolver);
 
             // this alternative virtual path provider uses embedded resources instead of the file system. if no matching resource is found it will use
             // the default, file-based vpp as fallback. the ervpp enables theming by packaging all theme resources into an assembly that can

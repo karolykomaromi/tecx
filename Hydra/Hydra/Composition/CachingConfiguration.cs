@@ -1,4 +1,4 @@
-﻿namespace Hydra.Configuration
+﻿namespace Hydra.Composition
 {
     using System.Runtime.Caching;
     using Microsoft.Practices.Unity;

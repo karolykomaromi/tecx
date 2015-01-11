@@ -62,7 +62,7 @@ namespace Hydra.Unity.Tracking
 
             BuildTreeItemNode newTreeNode;
 
-            if (!nodeCreatedByContainer || context.Lifetime.OfType<LifetimeManager>().Any(lm => lm as TransientLifetimeManager == null))
+            if (!nodeCreatedByContainer || HasNonTransientLifetime(context))
             {
                 // This object was either not created by the container or is referenced by a LifetimeManager
                 // that will take care of disposing it when either this container or the parent container are disposed or whose
@@ -88,6 +88,11 @@ namespace Hydra.Unity.Tracking
             }
 
             this.CurrentBuildNode = newTreeNode;
+        }
+
+        private static bool HasNonTransientLifetime(IBuilderContext context)
+        {
+            return context.Lifetime != null && context.Lifetime.OfType<LifetimeManager>().Any(lm => !(lm is TransientLifetimeManager));
         }
 
         public override void PostBuildUp(IBuilderContext context)
