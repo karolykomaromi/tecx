@@ -1,4 +1,4 @@
-﻿namespace Hydra.Configuration
+﻿namespace Hydra.Composition
 {
     using FluentNHibernate.Cfg;
     using FluentNHibernate.Cfg.Db;

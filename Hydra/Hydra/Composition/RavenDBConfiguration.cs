@@ -1,6 +1,7 @@
-namespace Hydra.Configuration
+namespace Hydra.Composition
 {
     using Microsoft.Practices.Unity;
+
     ////using Raven.Client;
     ////using Raven.Client.Embedded;
     ////using Raven.Database.Server;

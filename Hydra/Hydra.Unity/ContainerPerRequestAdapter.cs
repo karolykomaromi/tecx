@@ -3,6 +3,7 @@ namespace Hydra.Unity
     using System;
     using System.Collections.Generic;
     using System.Web;
+    using Hydra.Infrastructure.Logging;
     using Hydra.Unity.Properties;
     using Microsoft.Practices.Unity;
 
@@ -86,14 +87,16 @@ namespace Hydra.Unity
         public object Resolve(Type t, string name, params ResolverOverride[] resolverOverrides)
         {
             // TODO weberse 2014-10-02 for as long as I'm just playing around with this returning null is OK
-            try
-            {
+            //try
+            //{
                 return this.Container.Resolve(t, name, resolverOverrides);
-            }
-            catch
-            {
-                return null;
-            }
+            //}
+            //catch(Exception ex)
+            //{
+            //    HydraEventSource.Log.Error(ex);
+
+            //    return null;
+            //}
         }
 
         public IEnumerable<object> ResolveAll(Type t, params ResolverOverride[] resolverOverrides)

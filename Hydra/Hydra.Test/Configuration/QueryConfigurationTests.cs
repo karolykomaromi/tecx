@@ -1,6 +1,6 @@
 ﻿namespace Hydra.Test.Configuration
 {
-    using Hydra.Configuration;
+    using Hydra.Composition;
     using Hydra.Queries;
     using Microsoft.Practices.Unity;
     using Xunit;

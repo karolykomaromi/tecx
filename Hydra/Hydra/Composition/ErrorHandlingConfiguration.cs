@@ -1,4 +1,4 @@
-namespace Hydra.Configuration
+namespace Hydra.Composition
 {
     using System.Linq;
     using System.Web.Mvc;

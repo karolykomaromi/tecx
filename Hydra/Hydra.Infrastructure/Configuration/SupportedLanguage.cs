@@ -1,4 +1,4 @@
-namespace Hydra.Configuration
+namespace Hydra.Infrastructure.Configuration
 {
     using System.ComponentModel;
     using System.Configuration;

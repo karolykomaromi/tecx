@@ -165,7 +165,7 @@
     <Content Include="Content\Images\company_logo.png" />
     <Content Include="Content\Images\favicon.png" />
     <Content Include="Content\Site.css" />
-    <Content Include="Error.html" />
+    <None Include="Features\Shared\Error.cshtml" />
     <Content Include="Global.asax" />
     <Content Include="Properties\Resources.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -212,11 +212,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandHandler.cs" />
-    <Compile Include="Configuration\HydraApplicationSettings.cs" />
-    <Compile Include="Configuration\HydraConfigurationSectionGroup.cs" />
-    <Compile Include="Configuration\NHibernateConfiguration.cs" />
-    <Compile Include="Configuration\SupportedLanguage.cs" />
-    <Compile Include="Configuration\SupportedLanguagesCollection.cs" />
+    <Compile Include="Composition\NHibernateConfiguration.cs" />
     <Compile Include="Features\Books\AllBooksQueryHandler.cs" />
     <Compile Include="Features\Books\BookViewModel.cs" />
     <Compile Include="Features\Books\AllBooksQuery.cs" />
@@ -229,14 +225,14 @@
     <Compile Include="Features\Registration\RegistrationViewModel.cs" />
     <Compile Include="Features\Registration\RegistrationValidator.cs" />
     <Compile Include="FeatureViewLocationRazorViewEngine.cs" />
-    <Compile Include="Configuration\CachingConfiguration.cs" />
-    <Compile Include="Configuration\ErrorHandlingConfiguration.cs" />
-    <Compile Include="Configuration\FubuConfiguration.cs" />
-    <Compile Include="Configuration\HydraEventSourceConfiguration.cs" />
-    <Compile Include="Configuration\CommandQueryConfiguration.cs" />
-    <Compile Include="Configuration\QuartzConfiguration.cs" />
-    <Compile Include="Configuration\RavenDBConfiguration.cs" />
-    <Compile Include="Configuration\ResourcesConfiguration.cs" />
+    <Compile Include="Composition\CachingConfiguration.cs" />
+    <Compile Include="Composition\ErrorHandlingConfiguration.cs" />
+    <Compile Include="Composition\FubuConfiguration.cs" />
+    <Compile Include="Composition\HydraEventSourceConfiguration.cs" />
+    <Compile Include="Composition\CommandQueryConfiguration.cs" />
+    <Compile Include="Composition\QuartzConfiguration.cs" />
+    <Compile Include="Composition\RavenDBConfiguration.cs" />
+    <Compile Include="Composition\ResourcesConfiguration.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobsController.cs" />
