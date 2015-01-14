@@ -64,6 +64,7 @@
     <Compile Include="ExcelDataWriter.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="ExcelDataReader.cs" />
+    <Compile Include="ExcelValidationError.cs" />
     <Compile Include="FloatValueWriter.cs" />
     <Compile Include="IDataReader.cs" />
     <Compile Include="IExcelCellValueWriter.cs" />

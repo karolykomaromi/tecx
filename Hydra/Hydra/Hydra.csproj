@@ -163,7 +163,17 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\company_logo.png" />
+    <Content Include="Content\Images\DE24x16.png" />
+    <Content Include="Content\Images\DE48x32.png" />
     <Content Include="Content\Images\favicon.png" />
+    <Content Include="Content\Images\FR24x16.png" />
+    <Content Include="Content\Images\FR48x32.png" />
+    <Content Include="Content\Images\NoCountry24x16.png" />
+    <Content Include="Content\Images\NoCountry48x32.png" />
+    <Content Include="Content\Images\GB24x16.png" />
+    <Content Include="Content\Images\GB48x32.png" />
+    <Content Include="Content\Images\US24x16.png" />
+    <Content Include="Content\Images\US48x32.png" />
     <Content Include="Content\Site.css" />
     <None Include="Features\Shared\Error.cshtml" />
     <Content Include="Global.asax" />

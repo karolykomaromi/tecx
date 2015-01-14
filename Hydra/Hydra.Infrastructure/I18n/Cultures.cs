@@ -14,6 +14,8 @@
 
         public static readonly CultureInfo EnglishUnitedStates = new CultureInfo("en-US");
 
+        public static readonly CultureInfo FrenchNeutral = new CultureInfo("fr");
+
         public static readonly CultureInfo FrenchFrance = new CultureInfo("fr-FR");
     }
 }
