@@ -10,7 +10,7 @@
         [Fact]
         public void Should_Write_Assembly_Qualified_Type_Name()
         {
-            string value = "Hydra.Nh.Infrastructure.I18n.ResourceItem, Hydra.Nh";
+            string value = "Hydra.Infrastructure.I18n.ResourceItem, Hydra.Infrastructure";
 
             IValueWriter writer = new TypeValueWriter(TypeHelper.GetProperty((ValueWriterTestObject x) => x.Type));
 

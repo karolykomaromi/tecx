@@ -11,15 +11,17 @@ namespace Hydra.Infrastructure.Test
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class ContainerDataAttribute : AutoDataAttribute
     {
+        private static readonly IUnityContainer Container = new UnityContainer()
+            .RegisterType<ObjectCache>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionFactory(_ => MemoryCache.Default))
+            .RegisterType<IResxPropertyConvention>(
+                new InjectionFactory(_ => new CompositeConvention(new FindByTypeName(), new FindByTypeFullName())))
+            .AddNewExtension<NhSupportConfiguration>();
+
         public ContainerDataAttribute()
             : base(new Fixture().Customize(
-                new ContainerCustomization(
-                    new UnityContainer()
-                        .RegisterType<ObjectCache>(
-                            new ContainerControlledLifetimeManager(), 
-                            new InjectionFactory(_ => MemoryCache.Default))
-                        .RegisterType<IResxPropertyConvention>(
-                        new InjectionFactory(_ => new CompositeConvention(new FindByTypeName(), new FindByTypeFullName()))))))
+                new ContainerCustomization(Container)))
         {
         }
     }

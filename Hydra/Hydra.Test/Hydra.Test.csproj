@@ -62,7 +62,6 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Configuration\HydraConfigurationSectionGroupTests.cs" />
     <Compile Include="Configuration\MyLongRunningHandler.cs" />
     <Compile Include="Configuration\MyQuery.cs" />
     <Compile Include="Configuration\MyQueryHandler.cs" />
