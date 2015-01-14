@@ -28,6 +28,8 @@
         [Fact]
         public void Should_Get_User_Culture_From_Header_And_Supported_Languages()
         {
+            SupportedCulturesProvider.Current = new InMemorySupportedCulturesProvider(Cultures.EnglishUnitedStates, Cultures.GermanGermany);
+
             NameValueCollection headers = new NameValueCollection();
 
             headers[HttpHeaders.AcceptLanguage] = "fr-FR , en;q=0.8 , en-us;q=0.5 , de;q=0.3";
