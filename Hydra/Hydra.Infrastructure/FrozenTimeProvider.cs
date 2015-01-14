@@ -9,7 +9,7 @@
         private readonly DateTime utcNow;
 
         public FrozenTimeProvider(DateTime now)
-            : this(now, now)
+            : this(now.ToLocalTime(), now.ToUniversalTime())
         {
         }
 

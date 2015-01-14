@@ -93,10 +93,8 @@ namespace Hydra.Infrastructure.I18n
                 };
 
             cookies.Set(cookie);
-
-            ////Debug.WriteLine("SetPreferredCulture: " + cultureName);
         }
-
+        
         private static CultureInfo GetMatchingCulture(CultureInfo[] acceptedCultures, CultureInfo[] supportedCultures)
         {
             Contract.Requires(acceptedCultures != null);
