@@ -46,14 +46,13 @@ namespace Hydra.Import
 
             DateTime dt = (DateTime)value;
 
-            ////target.DataType = CellValues.Date;
-
-            ////string dateString = dt.ToOADate().ToString("R", targetCulture);
             string dateString = dt.ToOADate().ToString(CultureInfo.InvariantCulture);
 
             CellValue cellValue = new CellValue(dateString);
 
             target.AppendChild(cellValue);
+
+            target.StyleIndex = FormatIndices.Date;
 
             return ImportMessage.Empty;
         }
