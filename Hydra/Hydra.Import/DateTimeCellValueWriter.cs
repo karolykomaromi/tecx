@@ -52,7 +52,7 @@ namespace Hydra.Import
 
             target.AppendChild(cellValue);
 
-            target.StyleIndex = FormatIndices.Date;
+            target.StyleIndex = CellFormatIndices.Date;
 
             return ImportMessage.Empty;
         }
