@@ -36,7 +36,7 @@
             ResourceItem ri = new ResourceItem
                 {
                     Name = (this.type.FullName + "." + this.propertyName).ToUpperInvariant(),
-                    TwoLetterISOLanguageName = this.culture.TwoLetterISOLanguageName.ToUpperInvariant(),
+                    Language = this.culture,
                     Value = this.value
                 };
 

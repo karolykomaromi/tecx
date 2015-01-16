@@ -35,11 +35,11 @@
                     ResourceItem[] actual = items.ToArray();
 
                     Assert.Equal("FOO", actual[0].Name);
-                    Assert.Equal("DE", actual[0].TwoLetterISOLanguageName);
+                    Assert.Equal(Cultures.GermanNeutral, actual[0].Language);
                     Assert.Equal("FOO_DE", actual[0].Value);
 
                     Assert.Equal("BAR.BAZ", actual[3].Name);
-                    Assert.Equal("EN", actual[3].TwoLetterISOLanguageName);
+                    Assert.Equal(Cultures.EnglishNeutral, actual[3].Language);
                     Assert.Equal("BAR.BAZ_EN", actual[3].Value);
                 }
             }

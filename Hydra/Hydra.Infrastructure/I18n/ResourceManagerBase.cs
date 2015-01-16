@@ -36,7 +36,7 @@
             Contract.Requires(culture != null);
             Contract.Ensures(Contract.Result<string>() != null);
 
-            return (this.baseName + "." + name + "_" + culture.TwoLetterISOLanguageName).ToUpperInvariant();
+            return (this.baseName + "." + name + "_" + culture.Name).ToUpperInvariant();
         }
 
         [DebuggerDisplay("BaseName={BaseName}")]

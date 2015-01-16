@@ -122,7 +122,7 @@ namespace Hydra.Import
 
             OpenXmlValidator validator = new OpenXmlValidator();
 
-            messages.AddRange(validator.Validate(document).Select(error => new ExcelValidationError(error.Description, error)));
+            messages.AddRange(validator.Validate(this.document).Select(error => new ExcelValidationError(error.Description, error)));
 
             if (messages.Count > 0)
             {
@@ -144,65 +144,61 @@ namespace Hydra.Import
 
             // Currency
             stylesheet.GetFirstChild<NumberingFormats>().InsertAt<NumberingFormat>(
-               new NumberingFormat()
-               {
-                   NumberFormatId = 164,
-                   FormatCode = "#.##0,00"
-                   + "\\ \"" + CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol + "\""
-               }, 0);
+                new NumberingFormat
+                    {
+                        NumberFormatId = 164,
+                        FormatCode = "#.##0,00"
+                        + "\\ \"" + CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol + "\""
+                    },
+                0);
 
             // Fonts (x:fonts)
             stylesheet.InsertAt<Fonts>(new Fonts(), 1);
             stylesheet.GetFirstChild<Fonts>().InsertAt<Font>(
-               new Font
-               {
-                   FontSize = new FontSize()
+                new Font
                    {
-                       Val = 11
+                       FontSize = new FontSize { Val = 11 },
+                       FontName = new FontName { Val = "Calibri" }
                    },
-                   FontName = new FontName()
-                   {
-                       Val = "Calibri"
-                   }
-               }, 0);
+                0);
 
             // Fills (x:fills)
             stylesheet.InsertAt<Fills>(new Fills(), 2);
             stylesheet.GetFirstChild<Fills>().InsertAt<Fill>(
-               new Fill
-               {
-                   PatternFill = new PatternFill()
-                   {
-                       PatternType = new EnumValue<PatternValues>()
-                       {
-                           Value = PatternValues.None
-                       }
-                   }
-               }, 0);
+                new Fill
+                    {
+                        PatternFill = new PatternFill
+                            {
+                                PatternType = new EnumValue<PatternValues> { Value = PatternValues.None }
+                            }
+                    },
+                0);
 
             // Borders (x:borders)
             stylesheet.InsertAt<Borders>(new Borders(), 3);
             stylesheet.GetFirstChild<Borders>().InsertAt<Border>(
-               new Border
-               {
-                   LeftBorder = new LeftBorder(),
-                   RightBorder = new RightBorder(),
-                   TopBorder = new TopBorder(),
-                   BottomBorder = new BottomBorder(),
-                   DiagonalBorder = new DiagonalBorder()
-               }, 0);
+                new Border
+                    {
+                        LeftBorder = new LeftBorder(),
+                        RightBorder = new RightBorder(),
+                        TopBorder = new TopBorder(),
+                        BottomBorder = new BottomBorder(),
+                        DiagonalBorder = new DiagonalBorder()
+                    },
+                0);
 
             // Cell style formats (x:CellStyleXfs)
             stylesheet.InsertAt<CellStyleFormats>(new CellStyleFormats(), 4);
 
             stylesheet.GetFirstChild<CellStyleFormats>().InsertAt<CellFormat>(
-               new CellFormat
-               {
-                   NumberFormatId = 0,
-                   FontId = 0,
-                   FillId = 0,
-                   BorderId = 0
-               }, 0);
+                new CellFormat
+                    {
+                        NumberFormatId = 0,
+                        FontId = 0,
+                        FillId = 0,
+                        BorderId = 0
+                    },
+                0);
 
             // Cell formats (x:CellXfs)
             stylesheet.InsertAt<CellFormats>(new CellFormats(), 5);
@@ -255,16 +251,5 @@ namespace Hydra.Import
                    },
                 CellFormatIndices.Percentage);
         }
-    }
-
-    public static class CellFormatIndices
-    {
-        public const int Text = 0;
-
-        public const int Date = 1;
-
-        public const int Currency = 2;
-
-        public const int Percentage = 3;
     }
 }
