@@ -56,6 +56,7 @@
     </Compile>
     <Compile Include="CellFormatIndices.cs" />
     <Compile Include="CompositeImportResult.cs" />
+    <Compile Include="CompositeResxFileDataWriter.cs" />
     <Compile Include="CultureInfoValueWriter.cs" />
     <Compile Include="DateTimeCellValueWriter.cs" />
     <Compile Include="DateTimeValueWriter.cs" />

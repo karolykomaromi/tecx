@@ -121,6 +121,7 @@
     <Compile Include="TypeValueWriterTests.cs" />
     <Compile Include="ValueWriterCollectionBuilderTests.cs" />
     <Compile Include="ValueWriterTestObject.cs" />
+    <Compile Include="ValueWriterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hydra.Import\Hydra.Import.csproj">

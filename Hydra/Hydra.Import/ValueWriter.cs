@@ -1,13 +1,25 @@
 namespace Hydra.Import
 {
     using System;
+    using System.Collections.Concurrent;
+    using System.Diagnostics.Contracts;
     using System.Globalization;
 
     public abstract class ValueWriter : IValueWriter, IEquatable<IValueWriter>
     {
-        public static readonly IValueWriter Null = new NullValueWriter();
+        private static readonly ConcurrentDictionary<string, IValueWriter> NullWriters = new ConcurrentDictionary<string, IValueWriter>();
 
         public abstract string PropertyName { get; }
+
+        public static IValueWriter Null(string propertyName)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(propertyName));
+            Contract.Ensures(Contract.Result<IValueWriter>() != null);
+
+            IValueWriter writer = NullWriters.GetOrAdd(propertyName, pn => new NullValueWriter(pn));
+
+            return writer;
+        }
 
         public abstract ImportMessage Write(object target, string value, CultureInfo sourceCulture, CultureInfo targetCulture);
 
@@ -18,7 +30,8 @@ namespace Hydra.Import
                 return false;
             }
 
-            if (this.GetType() == other.GetType())
+            if (this.GetType() == other.GetType() &&
+                string.Equals(this.PropertyName, other.PropertyName, StringComparison.Ordinal))
             {
                 return true;
             }

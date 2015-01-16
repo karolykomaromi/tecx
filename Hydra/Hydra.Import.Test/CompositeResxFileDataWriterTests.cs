@@ -13,7 +13,7 @@
             {
                 var resourceItems = new[]
                     {
-                        new ResourceItem { Name = "Foo", Value = "1", Language = Cultures.GermanNeutral} ,
+                        new ResourceItem { Name = "Foo", Value = "1", Language = Cultures.GermanNeutral },
                         new ResourceItem { Name = "Foo", Value = "2", Language = Cultures.EnglishNeutral }
                     };
 
