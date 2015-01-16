@@ -117,34 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CouldNotParseValue" xml:space="preserve">
-    <value>Could not parse value '{0}' as '{1}'.</value>
-  </data>
-  <data name="ErrorDuringBulkInsert" xml:space="preserve">
-    <value>An error occured while bulk inserting items of Type '{0}'.</value>
-  </data>
-  <data name="ErrorValueIsNotAKnownCulture" xml:space="preserve">
-    <value>Value '{0}' is not a known culture.</value>
-  </data>
-  <data name="ErrorValueIsOfWrongType" xml:space="preserve">
-    <value>Value should be of Type '{0}' but is of Type '{1}'.</value>
-  </data>
-  <data name="ErrorWritingResourceItemToResxFile" xml:space="preserve">
-    <value>Error writing ResourceItem to resx-file</value>
-  </data>
-  <data name="ErrorWritingValue" xml:space="preserve">
-    <value>An error occured while writing the value '{0}' to property '{1}'.</value>
-  </data>
-  <data name="ImportFailed" xml:space="preserve">
-    <value>Import failed.</value>
-  </data>
-  <data name="ImportPartiallyFailed" xml:space="preserve">
-    <value>Import partially failed.</value>
-  </data>
-  <data name="ImportSuccessful" xml:space="preserve">
-    <value>Import succeded.</value>
-  </data>
-  <data name="ImportSuccessfulWithErrors" xml:space="preserve">
-    <value>Import succeded with some errors.</value>
-  </data>
 </root>

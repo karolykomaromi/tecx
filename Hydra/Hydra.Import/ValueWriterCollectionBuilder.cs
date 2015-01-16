@@ -3,6 +3,7 @@ namespace Hydra.Import
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
+    using System.Globalization;
     using System.Linq;
     using System.Reflection;
     using Hydra.Infrastructure;
@@ -59,6 +60,11 @@ namespace Hydra.Import
             if (property.PropertyType == typeof(Type))
             {
                 return () => new TypeValueWriter(property);
+            }
+
+            if (property.PropertyType == typeof(CultureInfo))
+            {
+                return () => new CultureInfoValueWriter(property);
             }
 
             return () => ValueWriter.Null;

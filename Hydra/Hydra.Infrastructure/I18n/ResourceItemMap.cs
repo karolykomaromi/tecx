@@ -8,7 +8,7 @@ namespace Hydra.Infrastructure.I18n
         {
             this.Id(x => x.Id);
             this.Map(x => x.Name).Index("name_culture");
-            this.Map(x => x.TwoLetterISOLanguageName).Index("name_culture");
+            this.Map(x => x.Language).Index("name_culture");
             this.Map(x => x.Value);
         }
     }

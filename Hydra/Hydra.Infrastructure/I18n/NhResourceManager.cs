@@ -23,8 +23,8 @@
         {
             ResourceItem resourceItem = this.session.Query<ResourceItem>()
                 .FirstOrDefault(
-                    ri => ri.Name == (this.BaseName + "." + name).ToUpperInvariant() && 
-                    ri.TwoLetterISOLanguageName == culture.TwoLetterISOLanguageName.ToUpperInvariant());
+                    ri => ri.Name == (this.BaseName + "." + name).ToUpperInvariant() &&
+                          ri.Language == culture);
 
             if (resourceItem != null)
             {
@@ -40,8 +40,8 @@
 
             IEnumerable<ResourceItem> resourceItems = this.session.Query<ResourceItem>()
                 .Where(
-                    ri => ri.Name.StartsWith(this.BaseName.ToUpperInvariant()) && 
-                    ri.TwoLetterISOLanguageName == culture.TwoLetterISOLanguageName.ToUpperInvariant());
+                    ri => ri.Name.StartsWith(this.BaseName.ToUpperInvariant()) &&
+                          ri.Language == culture);
 
             return resourceItems;
         }

@@ -86,17 +86,7 @@ namespace Hydra.Unity
 
         public object Resolve(Type t, string name, params ResolverOverride[] resolverOverrides)
         {
-            // TODO weberse 2014-10-02 for as long as I'm just playing around with this returning null is OK
-            //try
-            //{
-                return this.Container.Resolve(t, name, resolverOverrides);
-            //}
-            //catch(Exception ex)
-            //{
-            //    HydraEventSource.Log.Error(ex);
-
-            //    return null;
-            //}
+            return this.Container.Resolve(t, name, resolverOverrides);
         }
 
         public IEnumerable<object> ResolveAll(Type t, params ResolverOverride[] resolverOverrides)

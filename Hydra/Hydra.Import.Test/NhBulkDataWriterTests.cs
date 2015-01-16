@@ -21,8 +21,8 @@
 
                     var resx = new[]
                     {
-                        new ResourceItem { Name = "Foo", TwoLetterISOLanguageName = "DE", Value = "Foo_DE" },
-                        new ResourceItem { Name = "Bar", TwoLetterISOLanguageName = "EN", Value = "Bar_EN" }
+                        new ResourceItem { Name = "Foo", Language = Cultures.GermanNeutral, Value = "Foo_DE" },
+                        new ResourceItem { Name = "Bar", Language = Cultures.EnglishNeutral, Value = "Bar_EN" }
                     };
 
                     writer.Write(resx);

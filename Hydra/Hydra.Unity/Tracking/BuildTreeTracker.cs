@@ -90,11 +90,6 @@ namespace Hydra.Unity.Tracking
             this.CurrentBuildNode = newTreeNode;
         }
 
-        private static bool HasNonTransientLifetime(IBuilderContext context)
-        {
-            return context.Lifetime != null && context.Lifetime.OfType<LifetimeManager>().Any(lm => !(lm is TransientLifetimeManager));
-        }
-
         public override void PostBuildUp(IBuilderContext context)
         {
             // We don't track extension lifecycles. They will be disposed when the container is disposed.
@@ -165,6 +160,11 @@ namespace Hydra.Unity.Tracking
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        private static bool HasNonTransientLifetime(IBuilderContext context)
+        {
+            return context.Lifetime != null && context.Lifetime.OfType<LifetimeManager>().Any(lm => !(lm is TransientLifetimeManager));
         }
 
         private void Dispose(bool disposing)

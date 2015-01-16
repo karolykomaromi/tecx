@@ -6,6 +6,11 @@ namespace Hydra.Infrastructure.Configuration
 
     public class SupportedLanguagesCollection : ConfigurationElementCollection, IEnumerable<SupportedLanguage>
     {
+        IEnumerator<SupportedLanguage> IEnumerable<SupportedLanguage>.GetEnumerator()
+        {
+            return this.OfType<SupportedLanguage>().GetEnumerator();
+        }
+
         protected override ConfigurationElement CreateNewElement()
         {
             return new SupportedLanguage();
@@ -14,11 +19,6 @@ namespace Hydra.Infrastructure.Configuration
         protected override object GetElementKey(ConfigurationElement element)
         {
             return ((SupportedLanguage)element).Culture.ToString();
-        }
-
-        IEnumerator<SupportedLanguage> IEnumerable<SupportedLanguage>.GetEnumerator()
-        {
-            return this.OfType<SupportedLanguage>().GetEnumerator();
         }
     }
 }
