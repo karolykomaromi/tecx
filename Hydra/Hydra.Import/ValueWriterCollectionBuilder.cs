@@ -67,7 +67,7 @@ namespace Hydra.Import
                 return () => new CultureInfoValueWriter(property);
             }
 
-            return () => ValueWriter.Null;
+            return () => ValueWriter.Null(property.Name);
         }
 
         public static ValueWriterCollectionBuilder ForAllPropertiesOf<T>()

@@ -31,7 +31,7 @@ namespace Hydra.Import
                     return writer;
                 }
 
-                return ValueWriter.Null;
+                return ValueWriter.Null(propertyName);
             }
         }
 

@@ -1,15 +1,25 @@
 namespace Hydra.Import
 {
+    using System.Diagnostics.Contracts;
     using System.Globalization;
 
-    public class NullValueWriter : IValueWriter
+    public class NullValueWriter : ValueWriter
     {
-        public string PropertyName
+        private readonly string propertyName;
+
+        public NullValueWriter(string propertyName)
         {
-            get { return string.Empty; }
+            Contract.Requires(!string.IsNullOrWhiteSpace(propertyName));
+
+            this.propertyName = propertyName;
         }
 
-        public ImportMessage Write(object target, string value, CultureInfo sourceCulture, CultureInfo targetCulture)
+        public override string PropertyName
+        {
+            get { return this.propertyName; }
+        }
+
+        public override ImportMessage Write(object target, string value, CultureInfo sourceCulture, CultureInfo targetCulture)
         {
             return ImportMessage.Empty;
         }
