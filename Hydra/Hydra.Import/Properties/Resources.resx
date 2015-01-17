@@ -129,7 +129,7 @@
   <data name="ErrorValueIsOfWrongType" xml:space="preserve">
     <value>Value should be of Type '{0}' but is of Type '{1}'.</value>
   </data>
-  <data name="ErrorWritingResourceItemToResxFile" xml:space="preserve">
+  <data name="ErrorWritingResourceItemToResXFile" xml:space="preserve">
     <value>Error writing ResourceItem to resx-file</value>
   </data>
   <data name="ErrorWritingValue" xml:space="preserve">

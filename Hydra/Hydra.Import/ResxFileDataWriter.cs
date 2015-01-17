@@ -8,11 +8,11 @@ namespace Hydra.Import
     using Hydra.Infrastructure.I18n;
     using Hydra.Infrastructure.Logging;
 
-    public class ResxFileDataWriter : IDataWriter<ResourceItem>
+    public class ResXFileDataWriter : IDataWriter<ResourceItem>
     {
         private readonly Stream stream;
 
-        public ResxFileDataWriter(Stream stream)
+        public ResXFileDataWriter(Stream stream)
         {
             Contract.Requires(stream != null);
 
@@ -44,7 +44,7 @@ namespace Hydra.Import
                 {
                     HydraEventSource.Log.Error(ex);
 
-                    messages.Add(new Error(Properties.Resources.ErrorWritingResourceItemToResxFile));
+                    messages.Add(new Error(Properties.Resources.ErrorWritingResourceItemToResXFile));
                 }
             }
 

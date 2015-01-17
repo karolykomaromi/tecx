@@ -15,7 +15,7 @@ namespace Hydra.Infrastructure.Test
             .RegisterType<ObjectCache>(
                 new ContainerControlledLifetimeManager(),
                 new InjectionFactory(_ => MemoryCache.Default))
-            .RegisterType<IResxPropertyConvention>(
+            .RegisterType<IResXPropertyConvention>(
                 new InjectionFactory(_ => new CompositeConvention(new FindByTypeName(), new FindByTypeFullName())))
             .AddNewExtension<NhSupportConfiguration>();
 
