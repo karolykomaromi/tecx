@@ -7,13 +7,13 @@ namespace Hydra.Import
     using System.Xml.Linq;
     using Hydra.Infrastructure.I18n;
 
-    public class ResXDataReader : DataReader<ResourceItem>
+    public class ResXFileDataReader : DataReader<ResourceItem>
     {
         private readonly Stream stream;
 
         private readonly CultureInfo culture;
 
-        public ResXDataReader(Stream stream, CultureInfo culture)
+        public ResXFileDataReader(Stream stream, CultureInfo culture)
         {
             Contract.Requires(stream != null);
             Contract.Requires(culture != null);

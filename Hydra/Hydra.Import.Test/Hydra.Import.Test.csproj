@@ -117,7 +117,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ResXDataReaderTests.cs" />
+    <Compile Include="ResXFileDataReaderTests.cs" />
     <Compile Include="ResXFileDataWriterTests.cs" />
     <Compile Include="TypeValueWriterTests.cs" />
     <Compile Include="ValueWriterCollectionBuilderTests.cs" />
