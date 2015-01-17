@@ -56,8 +56,9 @@
     </Compile>
     <Compile Include="CellFormatIndices.cs" />
     <Compile Include="CompositeImportResult.cs" />
-    <Compile Include="CompositeResxFileDataWriter.cs" />
+    <Compile Include="CompositeResXFileDataWriter.cs" />
     <Compile Include="CultureInfoValueWriter.cs" />
+    <Compile Include="DataReader.cs" />
     <Compile Include="DateTimeCellValueWriter.cs" />
     <Compile Include="DateTimeValueWriter.cs" />
     <Compile Include="DecimalValueWriter.cs" />
@@ -98,7 +99,8 @@
       <DependentUpon>Resources.tt</DependentUpon>
     </Compile>
     <Compile Include="PropertyValueWriter.cs" />
-    <Compile Include="ResxFileDataWriter.cs" />
+    <Compile Include="ResXDataReader.cs" />
+    <Compile Include="ResXFileDataWriter.cs" />
     <Compile Include="SheetToTypeMapping.cs" />
     <Compile Include="StringValueWriter.cs" />
     <Compile Include="TypeValueWriter.cs" />
@@ -119,7 +121,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

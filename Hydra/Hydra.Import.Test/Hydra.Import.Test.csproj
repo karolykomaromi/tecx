@@ -97,7 +97,7 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="CompositeImportResultTests.cs" />
-    <Compile Include="CompositeResxFileDataWriterTests.cs" />
+    <Compile Include="CompositeResXFileDataWriterTests.cs" />
     <Compile Include="ContainerDataAttribute.cs" />
     <Compile Include="DateTimeValueWriterTests.cs" />
     <Compile Include="DecimalValueWriterTests.cs" />
@@ -117,7 +117,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ResxFileDataWriterTests.cs" />
+    <Compile Include="ResXDataReaderTests.cs" />
+    <Compile Include="ResXFileDataWriterTests.cs" />
     <Compile Include="TypeValueWriterTests.cs" />
     <Compile Include="ValueWriterCollectionBuilderTests.cs" />
     <Compile Include="ValueWriterTestObject.cs" />

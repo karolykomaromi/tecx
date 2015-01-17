@@ -1,21 +1,18 @@
 namespace Hydra.Import
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
-    using System.Globalization;
     using System.Linq;
     using DocumentFormat.OpenXml.Spreadsheet;
 
-    public class ExcelDataReader<T> : IDataReader<T>
+    public class ExcelDataReader<T> : DataReader<T>
         where T : new()
     {
         private readonly Worksheet worksheet;
         private readonly SharedStringTable sharedStringTable;
         private readonly ValueWriterCollection writers;
         private readonly IExcelImportSettings settings;
-        private readonly ImportMessages messages;
 
         public ExcelDataReader(Worksheet worksheet, SharedStringTable sharedStringTable, ValueWriterCollection writers, IExcelImportSettings settings)
         {
@@ -28,15 +25,9 @@ namespace Hydra.Import
             this.sharedStringTable = sharedStringTable;
             this.writers = writers;
             this.settings = settings;
-            this.messages = new ImportMessages();
         }
 
-        public ImportMessages Messages
-        {
-            get { return this.messages; }
-        }
-
-        public IEnumerator<T> GetEnumerator()
+        public override IEnumerator<T> GetEnumerator()
         {
             Row rowWithPropertyNames = this.worksheet.Descendants<Row>().FirstOrDefault(r => r.RowIndex == this.settings.PropertyNamesRowIndex);
 
@@ -80,11 +71,6 @@ namespace Hydra.Import
 
                 yield return item;
             }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }

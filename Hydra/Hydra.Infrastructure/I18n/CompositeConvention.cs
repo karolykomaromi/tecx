@@ -5,18 +5,18 @@
     using System.Reflection;
     using Hydra.Infrastructure.Reflection;
 
-    public class CompositeConvention : IResxPropertyConvention
+    public class CompositeConvention : IResXPropertyConvention
     {
-        private readonly HashSet<IResxPropertyConvention> conventions;
+        private readonly HashSet<IResXPropertyConvention> conventions;
 
-        public CompositeConvention(params IResxPropertyConvention[] conventions)
+        public CompositeConvention(params IResXPropertyConvention[] conventions)
         {
-            this.conventions = new HashSet<IResxPropertyConvention>(conventions ?? new IResxPropertyConvention[0]);
+            this.conventions = new HashSet<IResXPropertyConvention>(conventions ?? new IResXPropertyConvention[0]);
         }
 
         public PropertyInfo FindProperty(Type resourceType, Type modelType, string propertyName)
         {
-            foreach (IResxPropertyConvention convention in this.conventions)
+            foreach (IResXPropertyConvention convention in this.conventions)
             {
                 PropertyInfo property;
                 if ((property = convention.FindProperty(resourceType, modelType, propertyName)) != Property.Null)

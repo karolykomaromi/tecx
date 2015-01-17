@@ -4,12 +4,12 @@
     using Hydra.Infrastructure.I18n;
     using Xunit;
 
-    public class CompositeResxFileDataWriterTests
+    public class CompositeResXFileDataWriterTests
     {
         [Fact]
         public void Should()
         {
-            using (var writer = new CompositeResxFileDataWriter("Hydra.Import.Test.CompositeResx", ".\\"))
+            using (var writer = new CompositeResXFileDataWriter("Hydra.Import.Test.CompositeResX", ".\\"))
             {
                 var resourceItems = new[]
                     {
@@ -20,7 +20,7 @@
                 writer.Write(resourceItems);
             }
 
-            var resourceManager = ResourceManager.CreateFileBasedResourceManager("Hydra.Import.Test.CompositeResx", ".\\", typeof(ResXResourceSet));
+            var resourceManager = ResourceManager.CreateFileBasedResourceManager("Hydra.Import.Test.CompositeResX", ".\\", typeof(ResXResourceSet));
 
             Assert.Equal("1", resourceManager.GetString("Foo", Cultures.GermanNeutral));
 

@@ -16,11 +16,11 @@
     {
         public static readonly Func<string> EmptyAccessor = () => string.Empty;
         
-        private readonly IResxPropertyConvention convention;
+        private readonly IResXPropertyConvention convention;
         private readonly ObjectCache cache;
         private readonly List<IDisposable> cacheItemInvalidationTokens;
 
-        public ResourceAccessorCache(IResxPropertyConvention convention, ObjectCache cache)
+        public ResourceAccessorCache(IResXPropertyConvention convention, ObjectCache cache)
         {
             Contract.Requires(convention != null);
             Contract.Requires(cache != null);

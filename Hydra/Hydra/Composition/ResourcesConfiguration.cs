@@ -12,7 +12,7 @@
     {
         protected override void Initialize()
         {
-            this.Container.RegisterType<IResxPropertyConvention>(
+            this.Container.RegisterType<IResXPropertyConvention>(
                 new InjectionFactory(_ => new CompositeConvention(new FindByTypeName(), new FindByTypeFullName())));
 
             this.Container.RegisterType<IResourceAccessorCache, ResourceAccessorCache>();

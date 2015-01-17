@@ -5,14 +5,14 @@
     using System.Reflection;
     using Hydra.Infrastructure.Reflection;
 
-    [ContractClass(typeof(ResxPropertyConventionContract))]
-    public interface IResxPropertyConvention
+    [ContractClass(typeof(ResXPropertyConventionContract))]
+    public interface IResXPropertyConvention
     {
         PropertyInfo FindProperty(Type resourceType, Type modelType, string propertyName);
     }
 
-    [ContractClassFor(typeof(IResxPropertyConvention))]
-    internal abstract class ResxPropertyConventionContract : IResxPropertyConvention
+    [ContractClassFor(typeof(IResXPropertyConvention))]
+    internal abstract class ResXPropertyConventionContract : IResXPropertyConvention
     {
         public PropertyInfo FindProperty(Type resourceType, Type modelType, string propertyName)
         {

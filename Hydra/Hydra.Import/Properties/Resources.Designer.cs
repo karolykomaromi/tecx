@@ -76,9 +76,9 @@ namespace Hydra.Import.Properties
             get { return Resources.ResourceManager.GetString("ErrorValueIsOfWrongType", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
-        public static string ErrorWritingResourceItemToResxFile
+        public static string ErrorWritingResourceItemToResXFile
         {
-            get { return Resources.ResourceManager.GetString("ErrorWritingResourceItemToResxFile", resourceCulture ?? CultureInfo.CurrentUICulture); }
+            get { return Resources.ResourceManager.GetString("ErrorWritingResourceItemToResXFile", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string ErrorWritingValue

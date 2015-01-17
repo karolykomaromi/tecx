@@ -8,25 +8,25 @@ namespace Hydra.Import
     using Hydra.Infrastructure.I18n;
     using Hydra.Infrastructure.Logging;
 
-    public class CompositeResxFileDataWriter : IDataWriter<ResourceItem>, IDisposable
+    public class CompositeResXFileDataWriter : IDataWriter<ResourceItem>, IDisposable
     {
         private readonly string baseName;
 
-        private readonly string directoryForResxFiles;
+        private readonly string directoryForResXFiles;
 
         private readonly HashSet<Stream> streams;
 
-        private readonly IDictionary<CultureInfo, ResxFileDataWriter> targetFiles;
+        private readonly IDictionary<CultureInfo, ResXFileDataWriter> targetFiles;
 
-        public CompositeResxFileDataWriter(string baseName, string directoryForResxFiles)
+        public CompositeResXFileDataWriter(string baseName, string directoryForResXFiles)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(baseName));
-            Contract.Requires(!string.IsNullOrWhiteSpace(directoryForResxFiles));
-            Contract.Requires(Directory.Exists(directoryForResxFiles));
+            Contract.Requires(!string.IsNullOrWhiteSpace(directoryForResXFiles));
+            Contract.Requires(Directory.Exists(directoryForResXFiles));
 
             this.baseName = baseName.EndsWith(".", StringComparison.Ordinal) ? baseName : baseName + ".";
-            this.directoryForResxFiles = directoryForResxFiles;
-            this.targetFiles = new Dictionary<CultureInfo, ResxFileDataWriter>();
+            this.directoryForResXFiles = directoryForResXFiles;
+            this.targetFiles = new Dictionary<CultureInfo, ResXFileDataWriter>();
             this.streams = new HashSet<Stream>();
         }
 
@@ -39,14 +39,14 @@ namespace Hydra.Import
                     continue;
                 }
 
-                ResxFileDataWriter writer;
+                ResXFileDataWriter writer;
                 if (!this.targetFiles.TryGetValue(ri.Language, out writer))
                 {
-                    string resxFilePath = Path.Combine(this.directoryForResxFiles, this.baseName + ri.Language.Name + ".resources");
+                    string resxFilePath = Path.Combine(this.directoryForResXFiles, this.baseName + ri.Language.Name + ".resources");
 
                     Stream stream = new FileStream(resxFilePath, FileMode.Create);
 
-                    writer = new ResxFileDataWriter(stream);
+                    writer = new ResXFileDataWriter(stream);
 
                     this.targetFiles.Add(ri.Language, writer);
 
