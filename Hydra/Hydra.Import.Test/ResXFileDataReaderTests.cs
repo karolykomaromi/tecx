@@ -6,14 +6,13 @@
     using Hydra.Infrastructure.I18n;
     using Xunit;
 
-    public class ResXDataReaderTests
+    public class ResXFileDataReaderTests
     {
         [Fact]
         public void Should_Read_ResourceItems_From_Stream()
         {
             using (Stream stream = new MemoryStream())
             {
-
                 XDocument document = new XDocument(
                     new XElement(
                         "root",
@@ -23,7 +22,7 @@
                 document.Save(stream);
                 stream.Position = 0;
 
-                IDataReader<ResourceItem> sut = new ResXDataReader(stream, Cultures.GermanGermany);
+                IDataReader<ResourceItem> sut = new ResXFileDataReader(stream, Cultures.GermanGermany);
 
                 var actual = sut.ToArray();
 

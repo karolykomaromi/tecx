@@ -99,7 +99,7 @@
       <DependentUpon>Resources.tt</DependentUpon>
     </Compile>
     <Compile Include="PropertyValueWriter.cs" />
-    <Compile Include="ResXDataReader.cs" />
+    <Compile Include="ResXFileDataReader.cs" />
     <Compile Include="ResXFileDataWriter.cs" />
     <Compile Include="SheetToTypeMapping.cs" />
     <Compile Include="StringValueWriter.cs" />
