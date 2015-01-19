@@ -10,11 +10,12 @@ namespace Hydra.Import
         where T : new()
     {
         private readonly Worksheet worksheet;
+        private readonly string sheetName;
         private readonly SharedStringTable sharedStringTable;
         private readonly ValueWriterCollection writers;
         private readonly IExcelImportSettings settings;
 
-        public ExcelDataReader(Worksheet worksheet, SharedStringTable sharedStringTable, ValueWriterCollection writers, IExcelImportSettings settings)
+        public ExcelDataReader(Worksheet worksheet, string sheetName, SharedStringTable sharedStringTable, ValueWriterCollection writers, IExcelImportSettings settings)
         {
             Contract.Requires(worksheet != null);
             Contract.Requires(sharedStringTable != null);
@@ -22,6 +23,7 @@ namespace Hydra.Import
             Contract.Requires(settings != null);
 
             this.worksheet = worksheet;
+            this.sheetName = sheetName;
             this.sharedStringTable = sharedStringTable;
             this.writers = writers;
             this.settings = settings;
@@ -64,6 +66,8 @@ namespace Hydra.Import
                         string value = ExcelHelper.GetCellValue(cell, this.sharedStringTable);
 
                         ImportMessage message = writer.Write(item, value, this.settings.SourceCulture, this.settings.TargetCulture);
+
+                        message.Location = new ExcelLocation(this.sheetName, cell.CellReference);
 
                         this.Messages.Add(message);
                     }

@@ -45,5 +45,18 @@ namespace Hydra.Import
 
             return this;
         }
+
+        public virtual ImportMessages Add(IEnumerable<ImportMessage> messages)
+        {
+            Contract.Requires(messages != null);
+            Contract.Ensures(Contract.Result<ImportMessages>() != null);
+
+            foreach (ImportMessage message in messages)
+            {
+                this.Add(message);
+            }
+
+            return this;
+        }
     }
 }

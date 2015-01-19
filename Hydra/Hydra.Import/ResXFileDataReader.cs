@@ -28,7 +28,7 @@ namespace Hydra.Import
 
             if (document.Root == null)
             {
-                this.Messages.Add(new Error("Stream does not contain valid .resx file. Root element is missing."));
+                this.Messages.Add(new Error(Properties.Resources.ErrorResxFileStreamMissingRootElement));
                 yield break;
             }
 

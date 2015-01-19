@@ -31,7 +31,7 @@ namespace Hydra.Import
 
             IExcelImportSettings metaImportSettings = new ExcelImportSettings();
 
-            IDataReader<SheetToTypeMapping> metaReader = new ExcelDataReader<SheetToTypeMapping>(metaSheet, sharedStringTable, writers, metaImportSettings);
+            IDataReader<SheetToTypeMapping> metaReader = new ExcelDataReader<SheetToTypeMapping>(metaSheet, "Meta", sharedStringTable, writers, metaImportSettings);
             
             IExcelImportSettings importSettings = new ExcelImportSettings();
 
@@ -50,7 +50,7 @@ namespace Hydra.Import
 
                 ValueWriterCollection w = ValueWriterCollectionBuilder.ForAllPropertiesOf(mapping.Type);
 
-                object reader = Activator.CreateInstance(readerType, worksheet, sharedStringTable, w, importSettings);
+                object reader = Activator.CreateInstance(readerType, worksheet, mapping.Sheet, sharedStringTable, w, importSettings);
 
                 Type writerType = typeof(NhBulkDataWriter<>).MakeGenericType(mapping.Type);
 
