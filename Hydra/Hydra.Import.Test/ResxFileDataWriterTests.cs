@@ -10,7 +10,7 @@
         [Fact]
         public void Should_Correctly_Write_ResourceItem_To_File()
         {
-            using (Stream stream = new FileStream(@".\Hydra.Import.Test.MyResX.de.resx", FileMode.Create))
+            using (Stream stream = new FileStream(@".\Hydra.Import.Test.MyResX.de.resources", FileMode.Create))
             {
                 var writer = new ResXFileDataWriter(stream);
 

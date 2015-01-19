@@ -54,10 +54,7 @@ namespace Hydra.Import
             {
                 ImportFailed fail = new ImportFailed();
 
-                foreach (ImportMessage message in messages)
-                {
-                    fail.Messages.Add(message);
-                }
+                fail.Messages.Add(messages);
 
                 return fail;
             }

@@ -30,7 +30,7 @@
 
                     IExcelImportSettings settings = new ExcelImportSettings();
 
-                    IDataReader<ResourceItem> items = new ExcelDataReader<ResourceItem>(worksheet, sharedStringTable, writers, settings);
+                    IDataReader<ResourceItem> items = new ExcelDataReader<ResourceItem>(worksheet, "Resources", sharedStringTable, writers, settings);
 
                     ResourceItem[] actual = items.ToArray();
 

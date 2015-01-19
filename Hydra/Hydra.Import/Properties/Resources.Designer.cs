@@ -56,6 +56,11 @@ namespace Hydra.Import.Properties
             }
         }
 
+        public static string ColumnName
+        {
+            get { return Resources.ResourceManager.GetString("ColumnName", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string CouldNotParseValue
         {
             get { return Resources.ResourceManager.GetString("CouldNotParseValue", resourceCulture ?? CultureInfo.CurrentUICulture); }
@@ -64,6 +69,11 @@ namespace Hydra.Import.Properties
         public static string ErrorDuringBulkInsert
         {
             get { return Resources.ResourceManager.GetString("ErrorDuringBulkInsert", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string ErrorResxFileStreamMissingRootElement
+        {
+            get { return Resources.ResourceManager.GetString("ErrorResxFileStreamMissingRootElement", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string ErrorValueIsNotAKnownCulture
@@ -104,6 +114,16 @@ namespace Hydra.Import.Properties
         public static string ImportSuccessfulWithErrors
         {
             get { return Resources.ResourceManager.GetString("ImportSuccessfulWithErrors", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string RowIndex
+        {
+            get { return Resources.ResourceManager.GetString("RowIndex", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string SheetName
+        {
+            get { return Resources.ResourceManager.GetString("SheetName", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
     }
 }

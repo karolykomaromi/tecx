@@ -70,6 +70,7 @@
     <Compile Include="ExcelDataWriter.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="ExcelDataReader.cs" />
+    <Compile Include="ExcelLocation.cs" />
     <Compile Include="ExcelValidationError.cs" />
     <Compile Include="FloatValueWriter.cs" />
     <Compile Include="IDataReader.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Int32ValueWriter.cs" />
     <Compile Include="Int64ValueWriter.cs" />
     <Compile Include="IValueWriter.cs" />
+    <Compile Include="Location.cs" />
     <Compile Include="NhBulkDataWriter.cs" />
     <Compile Include="NullDataReader.cs" />
     <Compile Include="NullValueWriter.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="ResXFileDataWriter.cs" />
     <Compile Include="SheetToTypeMapping.cs" />
     <Compile Include="StringValueWriter.cs" />
+    <Compile Include="StyleSheetBuilder.cs" />
     <Compile Include="TypeValueWriter.cs" />
     <Compile Include="ValueWriter.cs" />
     <Compile Include="ValueWriterCollection.cs" />
