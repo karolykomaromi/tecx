@@ -14,6 +14,11 @@ namespace Hydra.Infrastructure.Configuration
             this.settings = (settings ?? new Setting[0]).ToDictionary(s => s.Name);
         }
 
+        public int Count
+        {
+            get { return this.settings.Count; }
+        }
+
         public Setting this[SettingName name]
         {
             get
@@ -36,6 +41,26 @@ namespace Hydra.Infrastructure.Configuration
             Contract.Requires(setting != null);
 
             this.settings[setting.Name] = setting;
+        }
+
+        public SettingsCollection Merge(SettingsCollection winner)
+        {
+            Contract.Requires(winner != null);
+            Contract.Ensures(Contract.Result<SettingsCollection>() != null);
+
+            SettingsCollection merged = new SettingsCollection();
+
+            foreach (Setting setting in this)
+            {
+                merged.Add(setting);
+            }
+
+            foreach (Setting setting in winner)
+            {
+                merged.Add(setting);
+            }
+
+            return merged;
         }
 
         public IEnumerator<Setting> GetEnumerator()
