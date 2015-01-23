@@ -1,6 +1,7 @@
 ﻿namespace Hydra.Infrastructure.Configuration
 {
     using System.Diagnostics.Contracts;
+    using System.Linq;
     using NHibernate;
     using NHibernate.Linq;
 
