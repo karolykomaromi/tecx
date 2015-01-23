@@ -1,9 +1,11 @@
 ﻿namespace Hydra.Infrastructure.Configuration
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics.Contracts;
     using System.Linq;
 
+    [TypeConverter(typeof(SettingNameTypeConverter))]
     public class SettingName : IEquatable<SettingName>, IComparable<SettingName>, ICloneable<SettingName>
     {
         public static readonly SettingName Empty = new EmptySettingName();
@@ -63,7 +65,7 @@
             string group = string.Join(".", parts.Take(parts.Length - 1).Select(p => p.ToUpperInvariant()));
             string name = parts.Last().ToUpperInvariant();
 
-            settingName = new SettingName(group, name, group +"." + name);
+            settingName = new SettingName(group, name, group + "." + name);
             return true;
         }
 
