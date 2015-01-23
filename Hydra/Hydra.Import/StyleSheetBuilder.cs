@@ -1,16 +1,30 @@
 namespace Hydra.Import
 {
-    using System;
     using System.Diagnostics.Contracts;
     using System.Globalization;
-    using System.IO;
     using DocumentFormat.OpenXml;
-    using DocumentFormat.OpenXml.Packaging;
     using DocumentFormat.OpenXml.Spreadsheet;
     using Hydra.Infrastructure;
 
     public class StyleSheetBuilder : Builder<Stylesheet>
     {
+        private CultureInfo culture;
+
+        public StyleSheetBuilder()
+        {
+            this.culture = CultureInfo.CurrentCulture;
+        }
+
+        public StyleSheetBuilder WithCulture(CultureInfo culture)
+        {
+            Contract.Requires(culture != null);
+            Contract.Ensures(Contract.Result<StyleSheetBuilder>() != null);
+
+            this.culture = culture;
+
+            return this;
+        }
+
         public override Stylesheet Build()
         {
             Stylesheet stylesheet = new Stylesheet();
@@ -23,8 +37,7 @@ namespace Hydra.Import
                 new NumberingFormat
                 {
                     NumberFormatId = 164,
-                    FormatCode = "#.##0,00"
-                                 + "\\ \"" + CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol + "\""
+                    FormatCode = "#" + this.culture.NumberFormat.CurrencyGroupSeparator + "##0 " + this.culture.NumberFormat.CurrencyDecimalSeparator + "00" + "\\ \"" + this.culture.NumberFormat.CurrencySymbol + "\""
                 },
                 0);
 
