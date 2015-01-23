@@ -110,10 +110,15 @@
     <Compile Include="Calendaring\ReminderBuilderTests.cs" />
     <Compile Include="Calendaring\TriggerBuilderTests.cs" />
     <Compile Include="Configuration\HydraConfigurationSectionGroupTests.cs" />
+    <Compile Include="Configuration\SettingNameTests.cs" />
+    <Compile Include="Configuration\SettingsCollectionTests.cs" />
+    <Compile Include="Configuration\SettingTests.cs" />
     <Compile Include="ContainerDataAttribute.cs" />
     <Compile Include="ConvertHelperTests.cs" />
     <Compile Include="EnumerationConverterTests.cs" />
     <Compile Include="EnumerationTests.cs" />
+    <Compile Include="EqualityComparerAdapterTests.cs" />
+    <Compile Include="EqualityComparerTests.cs" />
     <Compile Include="FlagsConverterTests.cs" />
     <Compile Include="FlagsTests.cs" />
     <Compile Include="I18n\CachingResourceManagerTests.cs" />

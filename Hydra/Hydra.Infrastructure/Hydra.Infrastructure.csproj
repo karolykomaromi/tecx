@@ -78,6 +78,9 @@
     <Compile Include="Calendaring\TriggerBuilder.cs" />
     <Compile Include="Configuration\HydraApplicationSettings.cs" />
     <Compile Include="Configuration\HydraConfigurationSectionGroup.cs" />
+    <Compile Include="Configuration\Setting.cs" />
+    <Compile Include="Configuration\SettingName.cs" />
+    <Compile Include="Configuration\SettingsCollection.cs" />
     <Compile Include="Configuration\SupportedLanguage.cs" />
     <Compile Include="Configuration\SupportedLanguagesCollection.cs" />
     <Compile Include="Constants.cs" />
@@ -87,6 +90,8 @@
     <Compile Include="Enumeration.cs" />
     <Compile Include="EnumerationConverter.cs" />
     <Compile Include="EnumerationInitializationFailedException.cs" />
+    <Compile Include="EqualityComparer.cs" />
+    <Compile Include="EqualityComparerAdapter.cs" />
     <Compile Include="HttpHeaders.cs" />
     <Compile Include="I18n\AppConfigSupportedCulturesProvider.cs" />
     <Compile Include="I18n\CachingSupportedCulturesProvider.cs" />
