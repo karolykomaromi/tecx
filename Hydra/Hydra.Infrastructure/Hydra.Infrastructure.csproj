@@ -77,6 +77,7 @@
     <Compile Include="Calendaring\Trigger.cs" />
     <Compile Include="Calendaring\TriggerBuilder.cs" />
     <Compile Include="Configuration\CachingSettingsProvider.cs" />
+    <Compile Include="Configuration\CompositeSettingsProvider.cs" />
     <Compile Include="Configuration\HydraApplicationSettings.cs" />
     <Compile Include="Configuration\HydraConfigurationSectionGroup.cs" />
     <Compile Include="Configuration\InMemorySettingsProvider.cs" />
