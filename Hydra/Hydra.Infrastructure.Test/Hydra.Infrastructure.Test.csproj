@@ -109,6 +109,7 @@
     <Compile Include="Calendaring\DurationBuilderTests.cs" />
     <Compile Include="Calendaring\ReminderBuilderTests.cs" />
     <Compile Include="Calendaring\TriggerBuilderTests.cs" />
+    <Compile Include="Configuration\CompositeSettingsProviderTests.cs" />
     <Compile Include="Configuration\HydraConfigurationSectionGroupTests.cs" />
     <Compile Include="Configuration\NhSettingsProviderTests.cs" />
     <Compile Include="Configuration\SettingNameTests.cs" />
