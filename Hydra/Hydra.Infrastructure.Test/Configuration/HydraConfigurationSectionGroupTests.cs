@@ -22,5 +22,19 @@
             Assert.Equal(Cultures.GermanNeutral, group.ApplicationSettings.SupportedLanguages.First().Culture);
             Assert.Equal(Cultures.GermanGermany, group.ApplicationSettings.SupportedLanguages.ElementAt(1).Culture);
         }
+
+        [Fact]
+        public void Should_Write_Settings_To_Config_File()
+        {
+            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            HydraConfigurationSectionGroup group = HydraConfigurationSectionGroup.HydraConfiguration(configuration);
+
+            HydraApplicationSettings appSettings = group.ApplicationSettings;
+
+            Setting setting = appSettings.Settings[KnownSettingNames.Hydra.Import.Dummy];
+
+            Assert.Equal(KnownSettingNames.Hydra.Import.Dummy, setting.Name);
+        }
     }
 }

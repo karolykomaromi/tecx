@@ -2,6 +2,12 @@
 {
     using System.Diagnostics.Contracts;
 
+    [ContractClass(typeof(SettingsProviderContract))]
+    public interface ISettingsProvider
+    {
+        SettingsCollection GetSettings();
+    }
+
     [ContractClassFor(typeof(ISettingsProvider))]
     internal abstract class SettingsProviderContract : ISettingsProvider
     {
@@ -11,11 +17,5 @@
 
             return new SettingsCollection();
         }
-    }
-
-    [ContractClass(typeof(SettingsProviderContract))]
-    public interface ISettingsProvider
-    {
-        SettingsCollection GetSettings();
     }
 }

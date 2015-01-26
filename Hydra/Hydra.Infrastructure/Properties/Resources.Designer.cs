@@ -81,6 +81,11 @@ namespace Hydra.Infrastructure.Properties
             get { return Resources.ResourceManager.GetString("InitializationOfEnumerationFailed", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
+        public static string InvalidSettingName
+        {
+            get { return Resources.ResourceManager.GetString("InvalidSettingName", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string Reminder
         {
             get { return Resources.ResourceManager.GetString("Reminder", resourceCulture ?? CultureInfo.CurrentUICulture); }

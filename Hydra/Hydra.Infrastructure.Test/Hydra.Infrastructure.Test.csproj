@@ -130,6 +130,7 @@
     <Compile Include="I18n\ResourceAccessorCacheTests.cs" />
     <Compile Include="I18n\ResourceItemBuilder.cs" />
     <Compile Include="Input\CmdLineParameterParserTests.cs" />
+    <Compile Include="KnownSettingNamesTests.cs" />
     <Compile Include="Logging\HydraEventSourceTests.cs" />
     <Compile Include="Numbers.cs" />
     <Compile Include="Colors.cs" />

@@ -5,10 +5,10 @@ namespace Hydra.Infrastructure.Configuration
 
     public class HydraConfigurationSectionGroup : ConfigurationSectionGroup
     {
-        [ConfigurationProperty("applicationSettings", IsRequired = true)]
+        [ConfigurationProperty("hydra.settings", IsRequired = true)]
         public HydraApplicationSettings ApplicationSettings
         {
-            get { return (HydraApplicationSettings)this.Sections["applicationSettings"]; }
+            get { return (HydraApplicationSettings)this.Sections["hydra.settings"]; }
         }
 
         public static HydraConfigurationSectionGroup HydraConfiguration(Configuration configuration)
