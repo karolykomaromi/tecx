@@ -132,6 +132,9 @@
   <data name="InitializationOfEnumerationFailed" xml:space="preserve">
     <value>Initialization of Enumeration failed.</value>
   </data>
+  <data name="InvalidSettingName" xml:space="preserve">
+    <value>'{0}' is not a valid name for a setting.</value>
+  </data>
   <data name="Reminder" xml:space="preserve">
     <value>Reminder</value>
   </data>

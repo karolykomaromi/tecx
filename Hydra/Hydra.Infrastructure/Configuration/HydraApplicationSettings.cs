@@ -4,6 +4,12 @@ namespace Hydra.Infrastructure.Configuration
 
     public class HydraApplicationSettings : ConfigurationSection
     {
+        [ConfigurationProperty("", IsDefaultCollection = true)]
+        public SettingElementCollection Settings
+        {
+            get { return (SettingElementCollection)base[string.Empty]; }
+        }
+
         [ConfigurationProperty("supportedLanguages", IsRequired = true)]
         public SupportedLanguagesCollection SupportedLanguages
         {
