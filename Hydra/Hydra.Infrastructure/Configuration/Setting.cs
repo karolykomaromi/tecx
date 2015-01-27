@@ -1,7 +1,6 @@
 ﻿namespace Hydra.Infrastructure.Configuration
 {
     using System;
-    using System.Collections;
     using System.Diagnostics.Contracts;
     using System.Reflection;
 
@@ -43,6 +42,11 @@
 
         public bool Equals(Setting other)
         {
+            if (object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
             if (other == null)
             {
                 return false;
@@ -53,21 +57,7 @@
                 return false;
             }
 
-            if (this.Value == null && other.Value == null)
-            {
-                return true;
-            }
-
-            if (this.Value == null)
-            {
-                return false;
-            }
-
-            Type type = this.Value.GetType();
-
-            IEqualityComparer comparer = EqualityComparer.Default(type);
-
-            return comparer.Equals(this.Value, other.Value);
+            return EqualityComparer.Equals(this.Value, other.Value);
         }
 
         public override bool Equals(object obj)

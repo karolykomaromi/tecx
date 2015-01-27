@@ -1,14 +1,35 @@
 ﻿namespace Hydra.Infrastructure.Test.Configuration
 {
-    using System;
+    using System.Globalization;
+    using Hydra.Infrastructure.Configuration;
+    using NHibernate;
     using Xunit;
+    using Xunit.Extensions;
 
     public class NhSettingsProviderTests
     {
-        [Fact]
-        public void Should_Load_Settings_From_Session()
+        [Theory, ContainerData]
+        public void Should_Load_Settings_From_Session(ISession session)
         {
-            throw new NotImplementedException();
+            using (session)
+            {
+                using (var tx = session.BeginTransaction())
+                {
+                    Setting s = new Setting(KnownSettingNames.Hydra.Import.Dummy, 1);
+
+                    PersistentSetting ps = (PersistentSetting)ConvertHelper.Convert(s, typeof(PersistentSetting), CultureInfo.InvariantCulture);
+
+                    session.Save(ps);
+
+                    ISettingsProvider sut = new NhSettingsProvider(session);
+
+                    SettingsCollection actual = sut.GetSettings();
+
+                    Assert.Equal(1, actual.Count);
+
+                    Assert.Equal(s, actual[KnownSettingNames.Hydra.Import.Dummy]);
+                }
+            }
         }
     }
 }

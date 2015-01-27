@@ -3,6 +3,7 @@
     using FluentNHibernate.Cfg;
     using FluentNHibernate.Cfg.Db;
     using Hydra.Infrastructure;
+    using Hydra.Infrastructure.Configuration;
     using Hydra.Infrastructure.I18n;
     using Microsoft.Practices.Unity;
     using NHibernate;
@@ -17,8 +18,8 @@
                     .Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey("mysql")))
                     .Mappings(m =>
                         {
-                            m.FluentMappings.Add<ResourceItemMap>();
-                            m.FluentMappings.Conventions.Add<MultiLanguageStringUserTypeConvention>();
+                            m.FluentMappings.AddFromAssemblyOf<ResourceItemMap>();
+                            m.FluentMappings.Conventions.AddFromAssemblyOf<MultiLanguageStringUserTypeConvention>();
                         })
                     .BuildSessionFactory()));
 

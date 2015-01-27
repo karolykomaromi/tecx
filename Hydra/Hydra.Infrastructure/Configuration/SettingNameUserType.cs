@@ -1,12 +1,13 @@
-﻿namespace Hydra.Infrastructure.I18n
+namespace Hydra.Infrastructure.Configuration
 {
     using System;
     using System.Data;
+    using Hydra.Infrastructure.I18n;
     using NHibernate;
     using NHibernate.SqlTypes;
     using NHibernate.UserTypes;
 
-    public class MultiLanguageStringUserType : IUserType
+    public class SettingNameUserType : IUserType
     {
         SqlType[] IUserType.SqlTypes
         {
@@ -15,7 +16,7 @@
 
         Type IUserType.ReturnedType
         {
-            get { return typeof(MultiLanguageString); }
+            get { return typeof(SettingName); }
         }
 
         bool IUserType.IsMutable
@@ -47,13 +48,13 @@
                 return MultiLanguageString.Empty;
             }
 
-            MultiLanguageString mls;
-            if (MultiLanguageString.TryParse(s, out mls))
+            SettingName name;
+            if (SettingName.TryParse(s, out name))
             {
-                return mls;
+                return name;
             }
 
-            return MultiLanguageString.Empty;
+            return SettingName.Empty;
         }
 
         void IUserType.NullSafeSet(IDbCommand cmd, object value, int index)
@@ -72,14 +73,14 @@
 
         object IUserType.DeepCopy(object value)
         {
-            MultiLanguageString original = value as MultiLanguageString;
+            SettingName original = value as SettingName;
 
             if (original == null)
             {
                 return null;
             }
 
-            MultiLanguageString clone = original.Clone();
+            SettingName clone = original.Clone();
 
             return clone;
         }
