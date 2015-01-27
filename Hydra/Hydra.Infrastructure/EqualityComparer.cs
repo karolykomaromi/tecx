@@ -21,6 +21,25 @@ namespace Hydra.Infrastructure
             return comparer;
         }
 
+        public static new bool Equals(object x, object y)
+        {
+            if (x == y)
+            {
+                return true;
+            }
+
+            if (x == null || y == null)
+            {
+                return false;
+            }
+
+            Type type = x.GetType();
+
+            IEqualityComparer comparer = EqualityComparer.Default(type);
+
+            return comparer.Equals(x, y);
+        }
+
         private static IEqualityComparer GetComparerForType(Type type)
         {
             Type genericEqualityComparer = typeof(EqualityComparer<>).MakeGenericType(type);

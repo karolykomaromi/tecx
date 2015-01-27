@@ -4,13 +4,13 @@ namespace Hydra.Infrastructure.Configuration
     using System.Configuration;
     using System.Globalization;
 
-    public class SupportedLanguage : ConfigurationElement
+    public class SupportedLanguageElement : ConfigurationElement
     {
         private static readonly ConfigurationProperty LanguageProperty;
 
         private static readonly ConfigurationPropertyCollection ConfigProperties;
 
-        static SupportedLanguage()
+        static SupportedLanguageElement()
         {
             LanguageProperty = new ConfigurationProperty(
                 "lang",

@@ -112,6 +112,7 @@
     <Compile Include="Configuration\CompositeSettingsProviderTests.cs" />
     <Compile Include="Configuration\HydraConfigurationSectionGroupTests.cs" />
     <Compile Include="Configuration\NhSettingsProviderTests.cs" />
+    <Compile Include="Configuration\PersistentSettingTypeConverterTests.cs" />
     <Compile Include="Configuration\SettingNameTests.cs" />
     <Compile Include="Configuration\SettingsCollectionTests.cs" />
     <Compile Include="Configuration\SettingTests.cs" />

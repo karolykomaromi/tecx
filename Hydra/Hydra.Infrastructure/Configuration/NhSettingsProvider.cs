@@ -1,6 +1,7 @@
 ﻿namespace Hydra.Infrastructure.Configuration
 {
     using System.Diagnostics.Contracts;
+    using System.Globalization;
     using System.Linq;
     using NHibernate;
     using NHibernate.Linq;
@@ -18,7 +19,12 @@
 
         public SettingsCollection GetSettings()
         {
-            var settings = this.session.Query<Setting>().ToArray();
+            var x = this.session.Query<PersistentSetting>().ToArray();
+
+            var settings = x
+                .Select(ps => ConvertHelper.Convert(ps, typeof(Setting), CultureInfo.InvariantCulture))
+                .OfType<Setting>()
+                .ToArray();
 
             return new SettingsCollection(settings);
         }

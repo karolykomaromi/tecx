@@ -11,9 +11,9 @@ namespace Hydra.Infrastructure.Configuration
         }
 
         [ConfigurationProperty("supportedLanguages", IsRequired = true)]
-        public SupportedLanguagesCollection SupportedLanguages
+        public SupportedLanguageElementCollection SupportedLanguages
         {
-            get { return (SupportedLanguagesCollection)base["supportedLanguages"]; }
+            get { return (SupportedLanguageElementCollection)base["supportedLanguages"]; }
         }
     }
 }

@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel;
     using System.Globalization;
+    using Hydra.Infrastructure.Logging;
 
     public static class ConvertHelper
     {
@@ -20,16 +21,34 @@
 
                 if (converter1.CanConvertFrom(o.GetType()))
                 {
-                    converted = converter1.ConvertFrom(null, CultureInfo.InvariantCulture, o);
-                    return true;
+                    try
+                    {
+                        converted = converter1.ConvertFrom(null, culture, o);
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        HydraEventSource.Log.Error(ex);
+                        converted = null;
+                        return false;
+                    }
                 }
 
                 TypeConverter converter2 = TypeDescriptor.GetConverter(o);
 
                 if (converter2.CanConvertTo(destinationType))
                 {
-                    converted = converter2.ConvertTo(null, CultureInfo.InvariantCulture, o, destinationType);
-                    return true;
+                    try
+                    {
+                        converted = converter2.ConvertTo(null, culture, o, destinationType);
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        HydraEventSource.Log.Error(ex);
+                        converted = null;
+                        return false;
+                    }
                 }
 
                 if (destinationType == typeof(Type))
