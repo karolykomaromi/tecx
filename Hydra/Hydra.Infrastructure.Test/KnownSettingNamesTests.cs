@@ -8,7 +8,7 @@
         [Fact]
         public void Should_Get_Setting_Name_From_Expression()
         {
-            Assert.Equal("HYDRA.IMPORT.DUMMY", KnownSettingNames.Hydra.Import.Dummy.FullName);
+            Assert.Equal("HYDRA.INFRASTRUCTURE.CONFIGURATION.TEST", KnownSettingNames.Hydra.Infrastructure.Configuration.Test.FullName);
         }
     }
 }

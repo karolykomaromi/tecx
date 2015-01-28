@@ -5,7 +5,7 @@ namespace Hydra.Infrastructure.Configuration
     using System.Diagnostics.Contracts;
     using System.Linq;
 
-    public class SettingsCollection : IEnumerable<Setting>
+    public class SettingsCollection : IEnumerable<Setting>, IFreezable<SettingsCollection>
     {
         private readonly Dictionary<SettingName, Setting> settings;
 
@@ -17,6 +17,11 @@ namespace Hydra.Infrastructure.Configuration
         public int Count
         {
             get { return this.settings.Count; }
+        }
+
+        public virtual bool IsMutable
+        {
+            get { return true; }
         }
 
         public Setting this[SettingName name]
@@ -36,14 +41,14 @@ namespace Hydra.Infrastructure.Configuration
             }
         }
 
-        public void Add(Setting setting)
+        public virtual void Add(Setting setting)
         {
             Contract.Requires(setting != null);
 
             this.settings[setting.Name] = setting;
         }
 
-        public SettingsCollection Merge(SettingsCollection winner)
+        public virtual SettingsCollection Merge(SettingsCollection winner)
         {
             Contract.Requires(winner != null);
             Contract.Ensures(Contract.Result<SettingsCollection>() != null);
@@ -71,6 +76,11 @@ namespace Hydra.Infrastructure.Configuration
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+        
+        public virtual SettingsCollection Freeze()
+        {
+            return new ImmutableSettingsCollection(this);
         }
     }
 }

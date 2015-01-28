@@ -22,7 +22,7 @@
 
             PersistentSetting ps = new PersistentSetting
             {
-                Name = "Hydra.Foo",
+                Name = KnownSettingNames.Hydra.Infrastructure.Configuration.Test.FullName,
                 Value = blob
             };
 
@@ -33,14 +33,14 @@
             Setting actual = sut.ConvertTo(ps, typeof(Setting)) as Setting;
 
             Assert.NotNull(actual);
-            Assert.Equal("HYDRA.FOO", actual.Name.ToString());
+            Assert.Equal(KnownSettingNames.Hydra.Infrastructure.Configuration.Test, actual.Name);
             Assert.Equal(1, actual.Value);
         }
 
         [Fact]
         public void Should_Convert_Setting_To_PersistentSetting()
         {
-            Setting s = new Setting(KnownSettingNames.Hydra.Import.Dummy, 1);
+            Setting s = new Setting(KnownSettingNames.Hydra.Infrastructure.Configuration.Test, 1);
 
             TypeConverter sut = new PersistentSettingTypeConverter();
 
@@ -49,7 +49,7 @@
             PersistentSetting actual = sut.ConvertFrom(s) as PersistentSetting;
 
             Assert.NotNull(actual);
-            Assert.Equal("HYDRA.IMPORT.DUMMY", actual.Name);
+            Assert.Equal(KnownSettingNames.Hydra.Infrastructure.Configuration.Test.FullName, actual.Name);
 
             byte[] blob;
             using (MemoryStream stream = new MemoryStream())

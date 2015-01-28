@@ -31,9 +31,12 @@
 
         public static class Hydra
         {
-            public static class Import
+            public static class Infrastructure
             {
-                public static readonly SettingName Dummy = GetSettingName(() => Dummy);
+                public static class Configuration
+                {
+                    public static readonly SettingName Test = GetSettingName(() => Test);
+                }
             }
         }
     }
