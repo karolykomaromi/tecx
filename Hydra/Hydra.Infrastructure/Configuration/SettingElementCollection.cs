@@ -3,6 +3,7 @@ namespace Hydra.Infrastructure.Configuration
     using System.Collections.Generic;
     using System.Configuration;
     using System.Diagnostics.Contracts;
+    using System.Globalization;
     using System.Linq;
 
     public class SettingElementCollection : ConfigurationElementCollection, IEnumerable<SettingElement>
@@ -16,7 +17,9 @@ namespace Hydra.Infrastructure.Configuration
 
                 SettingElement element = this.FirstOrDefault(s => s.SettingName.Equals(name));
 
-                Setting setting = element != null ? element.ToSetting() : Setting.Empty;
+                Setting setting = element != null 
+                    ? (Setting)ConvertHelper.Convert(element, typeof(Setting), CultureInfo.InvariantCulture) ?? Setting.Empty
+                    : Setting.Empty;
 
                 return setting;
             }
