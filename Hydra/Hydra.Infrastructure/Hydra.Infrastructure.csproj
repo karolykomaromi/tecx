@@ -81,6 +81,7 @@
     <Compile Include="Configuration\CompositeSettingsProvider.cs" />
     <Compile Include="Configuration\HydraApplicationSettings.cs" />
     <Compile Include="Configuration\HydraConfigurationSectionGroup.cs" />
+    <Compile Include="Configuration\ImmutableSettingsCollection.cs" />
     <Compile Include="Configuration\InMemorySettingsProvider.cs" />
     <Compile Include="Configuration\ISettingsProvider.cs" />
     <Compile Include="Configuration\KnownSettingNames.cs" />

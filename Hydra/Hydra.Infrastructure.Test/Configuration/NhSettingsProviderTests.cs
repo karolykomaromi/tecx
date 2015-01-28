@@ -15,7 +15,7 @@
             {
                 using (var tx = session.BeginTransaction())
                 {
-                    Setting s = new Setting(KnownSettingNames.Hydra.Import.Dummy, 1);
+                    Setting s = new Setting(KnownSettingNames.Hydra.Infrastructure.Configuration.Test, 1);
 
                     PersistentSetting ps = (PersistentSetting)ConvertHelper.Convert(s, typeof(PersistentSetting), CultureInfo.InvariantCulture);
 
@@ -27,7 +27,7 @@
 
                     Assert.Equal(1, actual.Count);
 
-                    Assert.Equal(s, actual[KnownSettingNames.Hydra.Import.Dummy]);
+                    Assert.Equal(s, actual[KnownSettingNames.Hydra.Infrastructure.Configuration.Test]);
                 }
             }
         }

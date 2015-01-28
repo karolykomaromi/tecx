@@ -32,9 +32,9 @@
 
             HydraApplicationSettings appSettings = group.ApplicationSettings;
 
-            Setting setting = appSettings.Settings[KnownSettingNames.Hydra.Import.Dummy];
+            Setting setting = appSettings.Settings[KnownSettingNames.Hydra.Infrastructure.Configuration.Test];
 
-            Assert.Equal(KnownSettingNames.Hydra.Import.Dummy, setting.Name);
+            Assert.Equal(KnownSettingNames.Hydra.Infrastructure.Configuration.Test, setting.Name);
         }
     }
 }
