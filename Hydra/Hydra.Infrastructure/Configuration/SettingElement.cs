@@ -1,10 +1,11 @@
 namespace Hydra.Infrastructure.Configuration
 {
     using System;
+    using System.ComponentModel;
     using System.Configuration;
-    using System.Globalization;
     using System.Reflection;
 
+    [TypeConverter(typeof(SettingElementTypeConverter))]
     public class SettingElement : ConfigurationElement
     {
         private static readonly ConfigurationProperty SettingNameProperty;
@@ -68,21 +69,6 @@ namespace Hydra.Infrastructure.Configuration
             get { return (Type)base[TypeProperty]; }
 
             set { base[TypeProperty] = value; }
-        }
-
-        public Setting ToSetting()
-        {
-            CultureInfo culture = CultureInfo.CurrentCulture;
-
-            object value;
-            if (!ConvertHelper.TryConvert(this.Value, this.Type, culture, out value))
-            {
-                return Setting.Empty;
-            }
-
-            Setting setting = new Setting(this.SettingName, value);
-
-            return setting;
         }
 
         protected override ConfigurationPropertyCollection Properties

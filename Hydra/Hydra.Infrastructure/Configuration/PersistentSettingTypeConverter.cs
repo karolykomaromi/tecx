@@ -41,7 +41,7 @@ namespace Hydra.Infrastructure.Configuration
 
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            return sourceType == typeof (Setting);
+            return sourceType == typeof(Setting);
         }
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
