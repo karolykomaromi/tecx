@@ -18,7 +18,7 @@
             this.Container.RegisterType<ISettingsProvider, WebConfigSettingsProvider>("file");
 
             this.Container.RegisterType<ISettingsProvider, CompositeSettingsProvider>(
-                "composite", 
+                "composite",
                 new InjectionFactory(
                     c => new CompositeSettingsProvider(
                         c.Resolve<ISettingsProvider>("default"),
@@ -27,8 +27,8 @@
 
             this.Container.RegisterType<ISettingsProvider, CachingSettingsProvider>(
                 new InjectionConstructor(
-                    new ResolvedParameter<ISettingsProvider>("composite"), 
-                    typeof (ObjectCache)));
+                    new ResolvedParameter<ISettingsProvider>("composite"),
+                    typeof(ObjectCache)));
         }
     }
 }

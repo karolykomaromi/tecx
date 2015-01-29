@@ -9,7 +9,7 @@ namespace Hydra.TestTools
     using NHibernate.Cfg;
     using NHibernate.Tool.hbm2ddl;
 
-    public class NhSupportConfiguration : UnityContainerExtension
+    public class NhTestSupportConfiguration : UnityContainerExtension
     {
         protected override void Initialize()
         {
