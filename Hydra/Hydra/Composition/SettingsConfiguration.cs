@@ -27,8 +27,8 @@
 
             this.Container.RegisterType<ISettingsProvider, CachingSettingsProvider>(
                 new InjectionConstructor(
-                    new ResolvedParameter<ISettingsProvider>("composite"),
-                    typeof(ObjectCache)));
+                    typeof(ObjectCache),
+                    new ResolvedParameter<ISettingsProvider>("composite")));
         }
     }
 }

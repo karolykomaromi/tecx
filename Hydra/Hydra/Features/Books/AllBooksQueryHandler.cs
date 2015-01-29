@@ -7,7 +7,7 @@
     {
         public IEnumerable<BookViewModel> Handle(AllBooksQuery query)
         {
-            return new[] { new BookViewModel { Title = "Programming WCF service", ASIN = "B0043D2DUK" } };
+            return new[] { new BookViewModel { Title = "Programming WCF services", ASIN = "B0043D2DUK" } };
         }
     }
 }
