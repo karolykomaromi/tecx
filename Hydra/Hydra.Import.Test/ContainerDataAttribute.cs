@@ -9,7 +9,7 @@
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class ContainerDataAttribute : AutoDataAttribute
     {
-        private static readonly IUnityContainer Container = new UnityContainer().AddNewExtension<NhSupportConfiguration>();
+        private static readonly IUnityContainer Container = new UnityContainer().AddNewExtension<NhTestSupportConfiguration>();
 
         public ContainerDataAttribute()
             : base(new Fixture().Customize(

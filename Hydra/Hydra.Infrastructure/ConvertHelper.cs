@@ -3,10 +3,13 @@
     using System;
     using System.ComponentModel;
     using System.Globalization;
+    using System.Reflection;
     using Hydra.Infrastructure.Logging;
 
     public static class ConvertHelper
     {
+        private static readonly ITypeDescriptorContext EmptyTypeDescriptorContext = new DummyTypeDescriptorContext();
+
         public static bool TryConvert(object o, Type destinationType, CultureInfo culture, out object converted)
         {
             if (o != null)
@@ -23,7 +26,7 @@
                 {
                     try
                     {
-                        converted = converter1.ConvertFrom(null, culture, o);
+                        converted = converter1.ConvertFrom(ConvertHelper.EmptyTypeDescriptorContext, culture, o);
                         return true;
                     }
                     catch (Exception ex)
@@ -40,7 +43,7 @@
                 {
                     try
                     {
-                        converted = converter2.ConvertTo(null, culture, o, destinationType);
+                        converted = converter2.ConvertTo(ConvertHelper.EmptyTypeDescriptorContext, culture, o, destinationType);
                         return true;
                     }
                     catch (Exception ex)
@@ -92,6 +95,98 @@
         public static object ConvertInvariant(object o, Type destinationType)
         {
             return ConvertHelper.Convert(o, destinationType, CultureInfo.InvariantCulture);
+        }
+
+        private class DummyTypeDescriptorContext : ITypeDescriptorContext
+        {
+            private readonly IContainer container;
+
+            public DummyTypeDescriptorContext()
+            {
+                this.container = new NullContainer();
+            }
+
+            public IContainer Container
+            {
+                get { return this.container; }
+            }
+
+            public object Instance
+            {
+                get { return Missing.Value; }
+            }
+
+            public PropertyDescriptor PropertyDescriptor
+            {
+                get { return DummyTypeConverter.EmptyPropertyDescriptor; }
+            }
+
+            public object GetService(Type serviceType)
+            {
+                return null;
+            }
+
+            public bool OnComponentChanging()
+            {
+                return true;
+            }
+
+            public void OnComponentChanged()
+            {
+            }
+
+            private class NullContainer : IContainer
+            {
+                private readonly ComponentCollection components;
+
+                public NullContainer()
+                {
+                    this.components = new ComponentCollection(new IComponent[0]);
+                }
+
+                public ComponentCollection Components
+                {
+                    get { return this.components; }
+                }
+
+                public void Dispose()
+                {
+                }
+
+                public void Add(IComponent component)
+                {
+                }
+
+                public void Add(IComponent component, string name)
+                {
+                }
+
+                public void Remove(IComponent component)
+                {
+                }
+            }
+
+            private class DummyTypeConverter : TypeConverter
+            {
+                public static readonly PropertyDescriptor EmptyPropertyDescriptor = new DummyPropertyDescriptor();
+
+                protected class DummyPropertyDescriptor : SimplePropertyDescriptor
+                {
+                    public DummyPropertyDescriptor()
+                        : base(typeof(Missing), string.Empty, typeof(Missing))
+                    {
+                    }
+
+                    public override object GetValue(object component)
+                    {
+                        return null;
+                    }
+
+                    public override void SetValue(object component, object value)
+                    {
+                    }
+                }
+            }
         }
     }
 }

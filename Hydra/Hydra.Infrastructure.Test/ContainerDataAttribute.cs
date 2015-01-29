@@ -17,7 +17,7 @@ namespace Hydra.Infrastructure.Test
                 new InjectionFactory(_ => MemoryCache.Default))
             .RegisterType<IResXPropertyConvention>(
                 new InjectionFactory(_ => new CompositeConvention(new FindByTypeName(), new FindByTypeFullName())))
-            .AddNewExtension<NhSupportConfiguration>();
+            .AddNewExtension<NhTestSupportConfiguration>();
 
         public ContainerDataAttribute()
             : base(new Fixture().Customize(

@@ -17,7 +17,7 @@
                     Mapper.AddProfile<JobsProfile>();
                     return Mapper.Engine;
                 }))
-            .AddNewExtension<NhSupportConfiguration>();
+            .AddNewExtension<NhTestSupportConfiguration>();
 
         public ContainerDataAttribute()
             : base(new Fixture().Customize(

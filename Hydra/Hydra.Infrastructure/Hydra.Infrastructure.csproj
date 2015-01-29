@@ -73,6 +73,7 @@
     <Compile Include="Calendaring\CalendarItem.cs" />
     <Compile Include="Calendaring\Duration.cs" />
     <Compile Include="Calendaring\DurationBuilder.cs" />
+    <Compile Include="Calendaring\MailAddressBuilder.cs" />
     <Compile Include="Calendaring\Reminder.cs" />
     <Compile Include="Calendaring\ReminderBuilder.cs" />
     <Compile Include="Calendaring\Trigger.cs" />
