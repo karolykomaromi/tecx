@@ -10,7 +10,7 @@ namespace Hydra.Infrastructure.I18n
     {
         private readonly Configuration configuration;
 
-        public ConfigFileSupportedCulturesProvider(System.Configuration.Configuration configuration)
+        public ConfigFileSupportedCulturesProvider(Configuration configuration)
         {
             Contract.Requires(configuration != null);
 
