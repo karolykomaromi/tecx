@@ -77,11 +77,12 @@
     <Compile Include="Calendaring\ReminderBuilder.cs" />
     <Compile Include="Calendaring\Trigger.cs" />
     <Compile Include="Calendaring\TriggerBuilder.cs" />
+    <Compile Include="Configuration\AppConfigSettingsProvider.cs" />
     <Compile Include="Configuration\CachingSettingsProvider.cs" />
     <Compile Include="Configuration\CompositeSettingsProvider.cs" />
+    <Compile Include="Configuration\ConfigFileSettingsProvider.cs" />
     <Compile Include="Configuration\HydraApplicationSettings.cs" />
     <Compile Include="Configuration\HydraConfigurationSectionGroup.cs" />
-    <Compile Include="Configuration\ImmutableSettingsCollection.cs" />
     <Compile Include="Configuration\InMemorySettingsProvider.cs" />
     <Compile Include="Configuration\ISettingsProvider.cs" />
     <Compile Include="Configuration\KnownSettingNames.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Configuration\SupportedLanguageElement.cs" />
     <Compile Include="Configuration\SupportedLanguageElementCollection.cs" />
     <Compile Include="Configuration\TypeTypeConverter.cs" />
+    <Compile Include="Configuration\WebConfigSettingsProvider.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ConvertHelper.cs" />
     <Compile Include="DateTimeExtensions.cs" />
