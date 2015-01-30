@@ -116,6 +116,7 @@
     <Compile Include="HttpHeaders.cs" />
     <Compile Include="I18n\AppConfigSupportedCulturesProvider.cs" />
     <Compile Include="I18n\CachingSupportedCulturesProvider.cs" />
+    <Compile Include="I18n\CompositeSupportedCulturesProvider.cs" />
     <Compile Include="I18n\ConfigFileSupportedCulturesProvider.cs" />
     <Compile Include="I18n\CultureHelper.cs" />
     <Compile Include="I18n\Cultures.cs" />
