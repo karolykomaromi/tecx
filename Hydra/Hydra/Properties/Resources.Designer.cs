@@ -145,5 +145,25 @@ namespace Hydra.Properties
         {
             get { return Resources.ResourceManager.GetString("BookViewModel_ASIN", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
+
+        public static string Settings_Index_Title
+        {
+            get { return Resources.ResourceManager.GetString("Settings_Index_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string Settings_Edit_Title
+        {
+            get { return Resources.ResourceManager.GetString("Settings_Edit_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string Setting_Name
+        {
+            get { return Resources.ResourceManager.GetString("Setting_Name", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string Setting_Value
+        {
+            get { return Resources.ResourceManager.GetString("Setting_Value", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
     }
 }

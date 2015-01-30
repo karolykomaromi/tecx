@@ -27,6 +27,8 @@
 
                 property.SetValue(null, resourceManager);
             }
+
+            SupportedCulturesProvider.Current = new CompositeSupportedCulturesProvider(SupportedCulturesProvider.Current, new WebConfigSupportedCulturesProvider());
         }
 
         private static bool IsResourceFile(Type implementationType)
