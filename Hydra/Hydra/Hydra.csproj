@@ -118,6 +118,12 @@
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.94.0\lib\net451\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.94.1\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -175,6 +181,8 @@
     <Content Include="Content\Images\US24x16.png" />
     <Content Include="Content\Images\US48x32.png" />
     <Content Include="Content\Site.css" />
+    <Content Include="Features\Settings\Index.cshtml" />
+    <Content Include="Features\Settings\Edit.cshtml" />
     <None Include="Features\Shared\Error.cshtml" />
     <Content Include="Global.asax" />
     <Content Include="Properties\Resources.tt">
@@ -224,6 +232,7 @@
     <Compile Include="Commands\ICommandHandler.cs" />
     <Compile Include="Composition\NHibernateConfiguration.cs" />
     <Compile Include="Composition\SettingsConfiguration.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Features\Books\AllBooksQueryHandler.cs" />
     <Compile Include="Features\Books\BookViewModel.cs" />
     <Compile Include="Features\Books\AllBooksQuery.cs" />
@@ -357,8 +366,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.94.0\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.94.0\build\net451\System.Data.SQLite.Core.targets'))" />
   </Target>
   <Import Project="$(SolutionDir)\CommonFiles\Hydra.targets" Condition="Exists('$(SolutionDir)\CommonFiles\Hydra.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.94.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.94.0\build\net451\System.Data.SQLite.Core.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

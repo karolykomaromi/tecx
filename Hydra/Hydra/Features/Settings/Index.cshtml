@@ -1,0 +1,26 @@
+﻿@using System.Web.Mvc.Html
+@using Hydra.Infrastructure.Configuration
+@model SettingsCollection
+
+@{
+    ViewBag.Title = Hydra.Properties.Resources.Settings_Index_Title;
+}
+
+<h2>@Hydra.Properties.Resources.Settings_Index_Title</h2>
+
+<table class="table">
+    <tr>
+        <th>@Hydra.Properties.Resources.Setting_Name</th>
+        <th>@Hydra.Properties.Resources.Setting_Value</th>
+        <th />
+    </tr>
+
+    @foreach (Setting setting in Model)
+    {
+        <tr>
+            <td>@setting.Name</td>
+            <td>@setting.Value</td>
+            <td>@Html.ActionLink(Hydra.Properties.Resources.Edit, "Edit", new RouteValueDictionary { { "settingName", setting.Name.ToString() } })</td>
+        </tr>
+    }
+</table>
