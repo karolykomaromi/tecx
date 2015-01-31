@@ -14,6 +14,7 @@
         public Setting(SettingName name, object value)
         {
             Contract.Requires(name != null);
+            Contract.Requires(value != null);
 
             this.name = name;
             this.value = value;
@@ -30,7 +31,11 @@
 
         public object Value
         {
-            get { return this.value; }
+            get
+            {
+                Contract.Ensures(Contract.Result<object>() != null);
+                return this.value;
+            }
         }
 
         public int CompareTo(Setting other)
@@ -42,14 +47,14 @@
 
         public bool Equals(Setting other)
         {
-            if (object.ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
             if (other == null)
             {
                 return false;
+            }
+
+            if (object.ReferenceEquals(this, other))
+            {
+                return true;
             }
 
             if (!this.Name.Equals(other.Name))
@@ -69,14 +74,14 @@
 
         public override int GetHashCode()
         {
-            int hashCode = this.Name.GetHashCode() ^ (this.Value == null ? 0 : this.Value.GetHashCode());
+            int hashCode = this.Name.GetHashCode() ^ this.Value.GetHashCode();
 
             return hashCode;
         }
 
         public override string ToString()
         {
-            return this.Name + "='" + (this.Value != null ? this.Value.ToString() : string.Empty) + "'";
+            return string.Format("{0}='{1}'", this.Name, this.Value);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Hydra.Infrastructure.Configuration
                 return null;
             }
 
-            Type type = s.Value != null ? s.Value.GetType() : typeof(Missing);
+            Type type = s.Value.GetType();
 
             string v = SerializeValue(s.Value, type, culture);
 

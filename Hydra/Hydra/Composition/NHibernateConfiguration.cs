@@ -18,13 +18,13 @@
                 new ContainerControlledLifetimeManager(),
                 new InjectionFactory(_ => (object)Fluently.Configure()
                     .Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromConnectionStringWithKey("mysql")))
-                    //.Database(SQLiteConfiguration.Standard.InMemory())
+                    ////.Database(SQLiteConfiguration.Standard.InMemory())
                     .Mappings(m =>
                         {
                             m.FluentMappings.AddFromAssemblyOf<ResourceItemMap>();
                             m.FluentMappings.Conventions.AddFromAssemblyOf<MultiLanguageStringUserTypeConvention>();
                         })
-                    //.ExposeConfiguration(cfg => BuildSchema(this.Container, cfg))
+                    ////.ExposeConfiguration(cfg => BuildSchema(this.Container, cfg))
                     .BuildSessionFactory()));
 
             this.Container.RegisterType<ISession>(
