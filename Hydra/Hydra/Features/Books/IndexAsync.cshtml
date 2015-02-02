@@ -1,0 +1,28 @@
+@using Hydra.Features.Books
+@using Hydra.FubuConventions
+@model IEnumerable<BookViewModel>
+
+@{
+    ViewBag.Title = Hydra.Properties.Resources.Books_IndexAsync_Title;
+}
+
+<h2>@Hydra.Properties.Resources.Books_IndexAsync_Title</h2>
+
+<table class="table">
+    <tr>
+        <th>@Hydra.Properties.Resources.BookViewModel_Title</th>
+        <th>@Hydra.Properties.Resources.BookViewModel_ASIN</th>
+        <th/>
+    </tr>
+
+    @foreach (BookViewModel book in Model)
+    {
+        <tr>
+            <td>@book.Title</td>
+            <td>@book.ASIN</td>
+            <td>@Html.ActionLink(Hydra.Properties.Resources.Delete, "Delete", book.ASIN)</td>
+        </tr>
+    }
+</table>
+
+@Html.ActionLink(Hydra.Properties.Resources.Enter, "Enter")

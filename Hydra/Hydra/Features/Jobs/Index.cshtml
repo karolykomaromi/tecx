@@ -1,0 +1,29 @@
+@using System.Web.Mvc.Html
+@using Hydra.FubuConventions
+@using Quartz
+@model IEnumerable<IJobDetail>
+
+@{
+    ViewBag.Title = Hydra.Properties.Resources.Jobs_Index_Title;
+}
+
+<h2>@Hydra.Properties.Resources.Jobs_Index_Title</h2>
+
+<table class="table">
+    <tr>
+        <th>@Hydra.Properties.Resources.IJobDetail_Name</th>
+        <th>@Hydra.Properties.Resources.IJobDetail_Description</th>
+        <th/>
+    </tr>
+
+    @foreach (IJobDetail job in Model)
+    {
+        <tr>
+            <td>@job.Key.Name</td>
+            <td>@job.Description</td>
+            <td>@Html.ActionLink(Hydra.Properties.Resources.Delete, "Delete", job.Key)</td>
+        </tr>
+    }
+</table>
+
+@Html.ActionLink(Hydra.Properties.Resources.Schedule, "Schedule")

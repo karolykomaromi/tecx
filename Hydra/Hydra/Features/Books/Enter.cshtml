@@ -1,0 +1,27 @@
+﻿@using Hydra.FubuConventions
+@model Hydra.Features.Books.BookViewModel
+
+@{
+    ViewBag.Title = @Hydra.Properties.Resources.Books_Enter_Title;
+}
+
+<h2>@Hydra.Properties.Resources.Books_Enter_Title</h2>
+
+<form method="POST" enctype="multipart/form-data">
+
+    @Html.FormBlock(x => x.Title)
+    @Html.FormBlock(x => x.ASIN)
+    @Html.FormBlock(x => x.Cover)
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="@Hydra.Properties.Resources.Enter" />
+        </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="~/Scripts/vkbeautify.0.99.00.beta.js"></script>
+    @* Server side validation messes up file upload control *@
+    @*<script src="~/Scripts/validation.js"></script>*@
+</form>
+

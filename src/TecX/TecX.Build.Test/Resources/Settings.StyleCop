@@ -1,0 +1,8 @@
+<StyleCopSettings Version="4.7">
+  <GlobalSettings>
+    <StringProperty Name="MergeSettingsFiles">NoMerge</StringProperty>
+    <BooleanProperty Name="WriteCache">False</BooleanProperty>
+  </GlobalSettings>
+  <Analyzer AnalyzerId="TecX.Build.CodeQualityAnalyzer">
+  </Analyzer>
+</StyleCopSettings>
