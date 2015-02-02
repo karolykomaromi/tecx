@@ -8,7 +8,6 @@
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
-    using System.Runtime.Caching;
     using Hydra.Infrastructure.I18n;
     using Hydra.Infrastructure.Logging;
 

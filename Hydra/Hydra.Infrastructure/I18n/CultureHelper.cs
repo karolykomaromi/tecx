@@ -1,6 +1,7 @@
 namespace Hydra.Infrastructure.I18n
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Diagnostics.Contracts;
     using System.Globalization;
@@ -95,7 +96,7 @@ namespace Hydra.Infrastructure.I18n
             cookies.Set(cookie);
         }
         
-        private static CultureInfo GetMatchingCulture(CultureInfo[] acceptedCultures, CultureInfo[] supportedCultures)
+        private static CultureInfo GetMatchingCulture(CultureInfo[] acceptedCultures, IReadOnlyCollection<CultureInfo> supportedCultures)
         {
             Contract.Requires(acceptedCultures != null);
             Contract.Requires(supportedCultures != null);
@@ -115,7 +116,7 @@ namespace Hydra.Infrastructure.I18n
                 ?? GetMatch(acceptedCultures, supportedCultures, MatchesPartly);
         }
 
-        private static CultureInfo GetMatch(CultureInfo[] acceptedCultures, CultureInfo[] supportedCultures, Func<CultureInfo, CultureInfo, bool> predicate)
+        private static CultureInfo GetMatch(CultureInfo[] acceptedCultures, IReadOnlyCollection<CultureInfo> supportedCultures, Func<CultureInfo, CultureInfo, bool> predicate)
         {
             foreach (var acceptedCulture in acceptedCultures)
             {

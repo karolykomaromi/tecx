@@ -1,5 +1,6 @@
 namespace Hydra.Infrastructure.I18n
 {
+    using System.Collections.Generic;
     using System.Configuration;
     using System.Diagnostics.Contracts;
     using System.Globalization;
@@ -17,7 +18,7 @@ namespace Hydra.Infrastructure.I18n
             this.configuration = configuration;
         }
 
-        protected internal override CultureInfo[] GetSupportedCultures()
+        protected internal override IReadOnlyList<CultureInfo> GetSupportedCultures()
         {
             var config = HydraConfigurationSectionGroup.HydraConfiguration(this.configuration);
 

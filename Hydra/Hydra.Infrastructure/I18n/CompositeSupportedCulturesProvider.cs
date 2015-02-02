@@ -13,10 +13,11 @@
             this.providers = new HashSet<SupportedCulturesProvider>(providers ?? new SupportedCulturesProvider[0]);
         }
 
-        protected internal override CultureInfo[] GetSupportedCultures()
+        protected internal override IReadOnlyList<CultureInfo> GetSupportedCultures()
         {
             var supportedCultures = this.providers
                 .SelectMany(p => p.GetSupportedCultures())
+                .Distinct()
                 .OrderBy(ci => ci.Name)
                 .ToArray();
 

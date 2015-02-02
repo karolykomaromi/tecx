@@ -6,7 +6,7 @@ namespace Hydra.Infrastructure.Test
     using System.Linq;
     using System.Runtime.CompilerServices;
 
-    [TypeConverter(typeof(FlagsConverter<Colors>))]
+    [TypeConverter(typeof(FlagsTypeConverter<Colors>))]
     public class Colors : Flags<Colors>
     {
         public static readonly Colors None = new Colors();

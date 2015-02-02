@@ -4,7 +4,7 @@
     using System.ComponentModel;
     using System.Linq;
 
-    public class EnumerationConverter<T> : TypeConverter where T : Enumeration<T>
+    public class EnumerationTypeConverter<T> : TypeConverter where T : Enumeration<T>
     {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {

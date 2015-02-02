@@ -1,5 +1,6 @@
 namespace Hydra.Infrastructure.I18n
 {
+    using System.Collections.Generic;
     using System.Globalization;
 
     public class InMemorySupportedCulturesProvider : SupportedCulturesProvider
@@ -11,7 +12,7 @@ namespace Hydra.Infrastructure.I18n
             this.cultures = cultures ?? new CultureInfo[0];
         }
 
-        protected internal override CultureInfo[] GetSupportedCultures()
+        protected internal override IReadOnlyList<CultureInfo> GetSupportedCultures()
         {
             return this.cultures;
         }

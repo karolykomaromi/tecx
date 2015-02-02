@@ -5,6 +5,7 @@
     using System.Globalization;
     using System.Reflection;
     using Hydra.Infrastructure.Logging;
+    using Hydra.Infrastructure.Reflection;
 
     public static class ConvertHelper
     {
@@ -128,7 +129,7 @@
 
             public bool OnComponentChanging()
             {
-                return true;
+                return false;
             }
 
             public void OnComponentChanged()
@@ -173,7 +174,7 @@
                 protected class DummyPropertyDescriptor : SimplePropertyDescriptor
                 {
                     public DummyPropertyDescriptor()
-                        : base(typeof(Missing), string.Empty, typeof(Missing))
+                        : base(typeof(Missing), TypeHelper.GetPropertyName(() => Missing.Value), typeof(Missing))
                     {
                     }
 

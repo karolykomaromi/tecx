@@ -12,7 +12,7 @@
     using Hydra.Infrastructure.Reflection;
 
     [DebuggerDisplay("Count={cacheItemInvalidationTokens.Count}")]
-    public class ResourceAccessorCache : IDisposable, IResourceAccessorCache
+    public class ResourceAccessorCache : IResourceAccessorCache, IDisposable
     {
         public static readonly Func<string> EmptyAccessor = () => string.Empty;
         

@@ -1,6 +1,7 @@
 namespace Hydra.Infrastructure.I18n
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Runtime.Caching;
@@ -33,9 +34,9 @@ namespace Hydra.Infrastructure.I18n
             GC.SuppressFinalize(this);
         }
 
-        protected internal override CultureInfo[] GetSupportedCultures()
+        protected internal override IReadOnlyList<CultureInfo> GetSupportedCultures()
         {
-            CultureInfo[] supportedCultures = this.cache.Get(SupportedCulturesCacheKey) as CultureInfo[];
+            IReadOnlyList<CultureInfo> supportedCultures = this.cache.Get(SupportedCulturesCacheKey) as IReadOnlyList<CultureInfo>;
 
             if (supportedCultures == null)
             {

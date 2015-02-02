@@ -29,12 +29,12 @@
             SettingName sn;
             if (!SettingName.TryParse(settingName, out sn))
             {
-                
+                return this.Index();
             }
 
             Setting setting = this.settingsProvider.GetSettings()[sn];
 
             return this.View(setting);
         }
-	}
+    }
 }

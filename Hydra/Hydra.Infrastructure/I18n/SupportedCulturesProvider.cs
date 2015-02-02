@@ -1,5 +1,6 @@
 namespace Hydra.Infrastructure.I18n
 {
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Globalization;
 
@@ -22,12 +23,12 @@ namespace Hydra.Infrastructure.I18n
             }
         }
 
-        public static CultureInfo[] SupportedCultures
+        public static IReadOnlyList<CultureInfo> SupportedCultures
         {
             get { return Current.GetSupportedCultures(); }
         }
 
-        protected internal virtual CultureInfo[] GetSupportedCultures()
+        protected internal virtual IReadOnlyList<CultureInfo> GetSupportedCultures()
         {
             Contract.Ensures(Contract.Result<CultureInfo[]>() != null);
 

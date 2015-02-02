@@ -3,14 +3,14 @@ namespace Hydra.Infrastructure.Test
     using System.ComponentModel;
     using Xunit;
 
-    public class FlagsConverterTests
+    public class FlagsTypeConverterTests
     {
         [Fact]
-        public void Should_Use_FlagsConverter_To_Convert_Classes_Derived_From_Flags()
+        public void Should_Use_FlagsTypeConverter_To_Convert_Classes_Derived_From_Flags()
         {
             TypeConverter sut = TypeDescriptor.GetConverter(typeof(Colors));
 
-            Assert.IsType<FlagsConverter<Colors>>(sut);
+            Assert.IsType<FlagsTypeConverter<Colors>>(sut);
         }
 
         [Fact]

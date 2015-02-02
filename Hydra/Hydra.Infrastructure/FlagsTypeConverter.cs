@@ -6,7 +6,7 @@
     using System.Globalization;
     using System.Linq;
 
-    public class FlagsConverter<T> : TypeConverter where T : Flags<T>
+    public class FlagsTypeConverter<T> : TypeConverter where T : Flags<T>
     {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {

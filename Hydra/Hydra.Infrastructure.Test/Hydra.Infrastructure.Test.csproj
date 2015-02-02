@@ -120,11 +120,11 @@
     <Compile Include="Configuration\SettingTests.cs" />
     <Compile Include="ContainerDataAttribute.cs" />
     <Compile Include="ConvertHelperTests.cs" />
-    <Compile Include="EnumerationConverterTests.cs" />
+    <Compile Include="EnumerationTypeConverterTests.cs" />
     <Compile Include="EnumerationTests.cs" />
     <Compile Include="EqualityComparerAdapterTests.cs" />
     <Compile Include="EqualityComparerTests.cs" />
-    <Compile Include="FlagsConverterTests.cs" />
+    <Compile Include="FlagsTypeConverterTests.cs" />
     <Compile Include="FlagsTests.cs" />
     <Compile Include="I18n\CachingResourceManagerTests.cs" />
     <Compile Include="I18n\CultureHelperTests.cs" />

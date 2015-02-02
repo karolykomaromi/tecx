@@ -3,7 +3,7 @@
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
 
-    [TypeConverter(typeof(EnumerationConverter<Numbers>))]
+    [TypeConverter(typeof(EnumerationTypeConverter<Numbers>))]
     public class Numbers : Enumeration<Numbers>
     {
         public static readonly Numbers Zero = new Numbers();

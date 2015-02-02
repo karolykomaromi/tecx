@@ -6,7 +6,7 @@ namespace Hydra.Features.Jobs
     using Hydra.Infrastructure;
     using Quartz;
 
-    [TypeConverter(typeof(EnumerationConverter<JobSchedule>))]
+    [TypeConverter(typeof(EnumerationTypeConverter<JobSchedule>))]
     public abstract class JobSchedule : Enumeration<JobSchedule>
     {
         public static readonly JobSchedule Simple = new SimpleJobSchedule();

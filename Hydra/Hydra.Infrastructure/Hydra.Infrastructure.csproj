@@ -109,7 +109,7 @@
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="DefaultTimeProvider.cs" />
     <Compile Include="Enumeration.cs" />
-    <Compile Include="EnumerationConverter.cs" />
+    <Compile Include="EnumerationTypeConverter.cs" />
     <Compile Include="EnumerationInitializationFailedException.cs" />
     <Compile Include="EqualityComparer.cs" />
     <Compile Include="EqualityComparerAdapter.cs" />
@@ -143,7 +143,7 @@
     <Compile Include="Input\NoValueCmdLineParameter.cs" />
     <Compile Include="InvalidEnumerationException.cs" />
     <Compile Include="Flags.cs" />
-    <Compile Include="FlagsConverter.cs" />
+    <Compile Include="FlagsTypeConverter.cs" />
     <Compile Include="FrozenTimeProvider.cs" />
     <Compile Include="HttpContentType.cs" />
     <Compile Include="HttpContentTypes.cs" />

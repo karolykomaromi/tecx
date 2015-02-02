@@ -3,14 +3,14 @@
     using System.ComponentModel;
     using Xunit;
 
-    public class EnumerationConverterTests
+    public class EnumerationTypeConverterTests
     {
         [Fact]
-        public void Should_Use_EnumerationConverter_To_Convert_Classes_Derived_From_Enumeration()
+        public void Should_Use_EnumerationTypeConverter_To_Convert_Classes_Derived_From_Enumeration()
         {
             TypeConverter sut = TypeDescriptor.GetConverter(typeof(Numbers));
 
-            Assert.IsType<EnumerationConverter<Numbers>>(sut);
+            Assert.IsType<EnumerationTypeConverter<Numbers>>(sut);
         }
 
         [Fact]
