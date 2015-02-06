@@ -1,4 +1,6 @@
-﻿namespace Hydra.Infrastructure
+﻿using System.ComponentModel;
+
+namespace Hydra.Infrastructure
 {
     using System.Diagnostics.Contracts;
 
@@ -13,5 +15,23 @@
         }
 
         public abstract T Build();
+
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }
