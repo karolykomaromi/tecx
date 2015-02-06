@@ -1,7 +1,6 @@
-﻿using System.ComponentModel;
-
-namespace Hydra.Infrastructure
+﻿namespace Hydra.Infrastructure
 {
+    using System.ComponentModel;
     using System.Diagnostics.Contracts;
 
     public abstract class Builder<T>
