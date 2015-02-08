@@ -1,4 +1,4 @@
-namespace Hydra.Jobs.Server.Configuration
+namespace Hydra.Jobs.Server.Composition
 {
     using System;
     using System.Collections.Specialized;
