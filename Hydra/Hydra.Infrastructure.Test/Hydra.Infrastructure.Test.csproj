@@ -111,7 +111,9 @@
     <Compile Include="Calendaring\TriggerBuilderTests.cs" />
     <Compile Include="Configuration\CompositeSettingsProviderTests.cs" />
     <Compile Include="Configuration\ConfigFileSettingsProviderTests.cs" />
+    <Compile Include="Configuration\DefaultSettingsTests.cs" />
     <Compile Include="Configuration\HydraConfigurationSectionGroupTests.cs" />
+    <Compile Include="Configuration\KnownSettingNamesTests.cs" />
     <Compile Include="Configuration\NhSettingsProviderTests.cs" />
     <Compile Include="Configuration\PersistentSettingTypeConverterTests.cs" />
     <Compile Include="Configuration\SettingElementTypeConverterTests.cs" />
