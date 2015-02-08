@@ -63,6 +63,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Constants.cs" />
     <Compile Include="Data\QuartzBlobsForTriggers.cs" />
     <Compile Include="Data\QuartzBlobsForTriggersMap.cs" />
     <Compile Include="Data\QuartzCalendar.cs" />
@@ -92,15 +93,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.tt</DependentUpon>
     </Compile>
-    <Compile Include="Transfer\CalendarIntervalTrigger.cs" />
-    <Compile Include="Transfer\CronTrigger.cs" />
-    <Compile Include="Transfer\JobDetail.cs" />
-    <Compile Include="Transfer\JobKey.cs" />
-    <Compile Include="Transfer\JobsProfile.cs" />
-    <Compile Include="Transfer\SchedulerMetaData.cs" />
-    <Compile Include="Transfer\SimpleTrigger.cs" />
-    <Compile Include="Transfer\Trigger.cs" />
-    <Compile Include="Transfer\TriggerKey.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx" />
