@@ -1,5 +1,6 @@
 ﻿namespace Hydra.Composition
 {
+    using System.Linq;
     using System.Runtime.Caching;
     using Hydra.Infrastructure.Configuration;
     using Microsoft.Practices.Unity;
@@ -8,10 +9,7 @@
     {
         protected override void Initialize()
         {
-            ISettingsProvider defaultSettings =
-                new InMemorySettingsProvider(new Setting(KnownSettingNames.Hydra.Infrastructure.Configuration.Test, 1));
-
-            this.Container.RegisterInstance<ISettingsProvider>("default", defaultSettings);
+            this.Container.RegisterInstance<ISettingsProvider>("default", new InMemorySettingsProvider(DefaultSettings.All().ToArray()));
 
             this.Container.RegisterType<ISettingsProvider, NhSettingsProvider>("database");
 
