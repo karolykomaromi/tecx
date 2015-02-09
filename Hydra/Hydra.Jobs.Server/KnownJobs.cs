@@ -5,6 +5,7 @@
     using System.Diagnostics.Contracts;
     using System.Runtime.CompilerServices;
     using Hydra.Infrastructure;
+    using Hydra.Jobs.Server.Jobs;
     using Quartz;
 
     [Serializable]
@@ -13,7 +14,9 @@
     {
         private readonly Type jobType;
 
-        public static readonly KnownJobs Noop = new KnownJobs(typeof(NoOp));
+        public static readonly KnownJobs NoOp = new KnownJobs(typeof(NoOp));
+
+        public static readonly KnownJobs Heartbeat = new KnownJobs(typeof(Heartbeat));
 
         private KnownJobs(Type jobType, [CallerMemberName] string name = "", [CallerLineNumber] int key = -1)
             : base(name, key)

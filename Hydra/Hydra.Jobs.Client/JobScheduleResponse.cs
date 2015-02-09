@@ -6,6 +6,8 @@ namespace Hydra.Jobs.Client
     [DataContract(Namespace = Constants.ServiceNamespace)]
     public class JobScheduleResponse : IExtensibleDataObject
     {
+        public static readonly JobScheduleResponse Empty = new JobScheduleResponse();
+
         [DataMember]
         public DateTimeOffset NextExecutionAt { get; set; }
 

@@ -125,6 +125,7 @@
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.94.1\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -241,7 +242,6 @@
     <Compile Include="Features\Jobs\ScheduledJobsQuery.cs" />
     <Compile Include="Features\Jobs\ScheduledJobsQueryHandler.cs" />
     <Compile Include="Features\Jobs\ScheduleViewModel.cs" />
-    <Compile Include="Features\Jobs\SendEmails.cs" />
     <Compile Include="Features\Registration\RegistrationViewModel.cs" />
     <Compile Include="Features\Registration\RegistrationValidator.cs" />
     <Compile Include="FeatureViewLocationRazorViewEngine.cs" />
@@ -312,6 +312,10 @@
     <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj">
       <Project>{da9f1b57-18bd-451f-a3fa-7d149849a8bd}</Project>
       <Name>Hydra.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hydra.Jobs.Client\Hydra.Jobs.Client.csproj">
+      <Project>{142991E5-4D24-42E8-BF52-14DA01764D2A}</Project>
+      <Name>Hydra.Jobs.Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hydra.Theming.Blue\Hydra.Theming.Blue.csproj">
       <Project>{4dede7a4-387f-49d7-8c16-60c81ce68e6e}</Project>
