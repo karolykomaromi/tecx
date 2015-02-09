@@ -1,11 +1,12 @@
-namespace Hydra.Features.Jobs
+﻿namespace Hydra.Jobs.Server.Jobs
 {
     using Quartz;
 
-    public class SendEmails : IJob
+    public class NoOp : IJob
     {
         public void Execute(IJobExecutionContext context)
         {
+            /* intentionally left blank */
         }
     }
 }

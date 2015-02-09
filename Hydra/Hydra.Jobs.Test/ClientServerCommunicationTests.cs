@@ -38,7 +38,7 @@
                     Client.SimpleJobScheduleRequest request = new Client.SimpleJobScheduleRequest
                     {
                         StartAt = DateTimeOffset.Now, 
-                        Job = Client.KnownJobs.Noop
+                        Job = Client.KnownJobs.NoOp
                     };
 
                     Client.JobScheduleResponse response = await client.Schedule(request);

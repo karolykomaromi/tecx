@@ -1,13 +1,9 @@
 namespace Hydra.Features.Jobs
 {
-    using Quartz;
+    using Hydra.Jobs.Client;
 
     public class ScheduleViewModel
     {
-        public int Interval { get; set; }
-
-        public IntervalUnit IntervalUnit { get; set; }
-
-        public JobSchedule Schedule { get; set; }
+        public KnownJobs Job { get; set; }
     }
 }

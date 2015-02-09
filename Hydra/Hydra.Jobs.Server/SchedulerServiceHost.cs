@@ -6,7 +6,7 @@ namespace Hydra.Jobs.Server
     using Common.Logging;
     using Quartz;
 
-    public class SchedulerServiceHost
+    public class SchedulerServiceHost : IDisposable
     {
         private readonly ILog log;
         private readonly ServiceHost host;
@@ -19,17 +19,28 @@ namespace Hydra.Jobs.Server
 
             this.scheduler = scheduler;
             this.log = log;
+
             this.host = new ServiceHost(new SchedulerService(scheduler), baseAddresses);
+            this.host.Closed += this.OnHostClosed;
+            this.host.Closing += this.OnHostClosing;
+            this.host.Faulted += this.OnHostFaulted;
+            this.host.Opened += this.OnHostOpened;
+            this.host.Opening += this.OnHostOpening;
+            this.host.UnknownMessageReceived += this.OnHostUnkownMessageReceived;
             this.host.Description.Behaviors.Find<ServiceBehaviorAttribute>().InstanceContextMode = InstanceContextMode.Single;
+            this.host.AddServiceEndpoint(
+                typeof (ISchedulerService),
+                new NetTcpBinding(SecurityMode.None),
+                new Uri("net.pipe://localhost/scheduler"));
         }
 
         public bool Start()
         {
             try
             {
-                this.host.Open();
-
                 this.scheduler.Start();
+
+                this.host.Open();
 
                 return true;
             }
@@ -63,6 +74,7 @@ namespace Hydra.Jobs.Server
         {
             try
             {
+                this.host.Close();
                 this.scheduler.Shutdown();
             }
             catch (Exception ex)
@@ -101,6 +113,45 @@ namespace Hydra.Jobs.Server
 
                 return false;
             }
+        }
+
+        public void Dispose()
+        {
+            if (this.host != null)
+            {
+                this.host.Close();
+
+                this.host.Closed -= this.OnHostClosed;
+                this.host.Closing -= this.OnHostClosing;
+                this.host.Faulted -= this.OnHostFaulted;
+                this.host.Opened -= this.OnHostOpened;
+                this.host.Opening -= this.OnHostOpening;
+                this.host.UnknownMessageReceived -= this.OnHostUnkownMessageReceived;
+            }
+        }
+
+        private void OnHostOpening(object sender, EventArgs e)
+        {
+        }
+
+        private void OnHostOpened(object sender, EventArgs e)
+        {
+        }
+
+        private void OnHostClosing(object sender, EventArgs e)
+        {
+        }
+
+        private void OnHostClosed(object sender, EventArgs e)
+        {
+        }
+
+        private void OnHostFaulted(object sender, EventArgs e)
+        {
+        }
+
+        private void OnHostUnkownMessageReceived(object sender, UnknownMessageReceivedEventArgs e)
+        {
         }
     }
 }
