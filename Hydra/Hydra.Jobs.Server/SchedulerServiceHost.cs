@@ -10,7 +10,6 @@ namespace Hydra.Jobs.Server
     {
         private readonly ILog log;
         private readonly ServiceHost host;
-
         private readonly IScheduler scheduler;
 
         public SchedulerServiceHost(IScheduler scheduler, ILog log, params Uri[] baseAddresses)
@@ -20,7 +19,8 @@ namespace Hydra.Jobs.Server
 
             this.scheduler = scheduler;
             this.log = log;
-            this.host = new ServiceHost(scheduler, baseAddresses);
+            this.host = new ServiceHost(new SchedulerService(scheduler), baseAddresses);
+            this.host.Description.Behaviors.Find<ServiceBehaviorAttribute>().InstanceContextMode = InstanceContextMode.Single;
         }
 
         public bool Start()

@@ -1,5 +1,6 @@
 namespace Hydra.Jobs.Client
 {
+    using System;
     using System.Runtime.Serialization;
 
     [DataContract(Namespace = Constants.ServiceNamespace)]
@@ -9,15 +10,15 @@ namespace Hydra.Jobs.Client
         public bool RequestRecovery { get; set; }
 
         [DataMember]
-        public bool StoryDurably { get; set; }
+        public bool StoreDurably { get; set; }
 
         [DataMember]
         public long IntervalInTicks { get; set; }
 
         [DataMember]
-        public long StartAtInTicks { get; set; }
+        public DateTimeOffset StartAt { get; set; }
 
         [DataMember]
-        public long StartAtOffsetInTicks { get; set; }
+        public KnownJobs Job { get; set; }
     }
 }
