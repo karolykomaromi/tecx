@@ -27,6 +27,26 @@
             Enumeration.resourceAccessorCache = cache;
         }
 
+        public static bool TryParse(Type enumType, string s, out object value)
+        {
+            Contract.Requires(enumType != null);
+            Contract.Requires(!string.IsNullOrWhiteSpace(s));
+
+            if (typeof(IEnumeration).IsAssignableFrom(enumType))
+            {
+                FieldInfo field = enumType.GetField(s, BindingFlags.Public | BindingFlags.Static | BindingFlags.IgnoreCase);
+
+                if (field != null)
+                {
+                    value = field.GetValue(null);
+                    return true;
+                }
+            }
+
+            value = Missing.Value;
+            return false;
+        }
+
         internal static string ToString(IEnumeration enumeration)
         {
             Contract.Requires(enumeration != null);

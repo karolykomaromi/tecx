@@ -55,6 +55,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -176,6 +178,10 @@
     <Compile Include="Reflection\Property.cs" />
     <Compile Include="Reflection\PropertyNotFoundException.cs" />
     <Compile Include="Reflection\TypeHelper.cs" />
+    <Compile Include="ServiceModel\EnumerationClassesSurrogate.cs" />
+    <Compile Include="ServiceModel\EnumerationParseException.cs" />
+    <Compile Include="ServiceModel\EnumGenerator.cs" />
+    <Compile Include="ServiceModel\HideEnumerationClassesBehavior.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="Switch.cs" />
     <Compile Include="SwitchExtensions.cs" />
