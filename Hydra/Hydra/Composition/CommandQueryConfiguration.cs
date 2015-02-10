@@ -1,6 +1,7 @@
 ﻿namespace Hydra.Composition
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Threading.Tasks;
@@ -24,6 +25,8 @@
             this.Container.RegisterType<IMediator, UnityMediator>(new ContainerControlledLifetimeManager());
         }
 
+        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
+            Justification = "StyleCop does not recognize await plus cast operator.")]
         private class UnityMediator : IMediator
         {
             private readonly IUnityContainer container;
@@ -35,7 +38,7 @@
                 this.container = container;
             }
 
-            public TResult Query<TResult>(IQuery<TResult> query)
+            public async Task<TResult> Query<TResult>(IQuery<TResult> query)
             {
                 Type handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
 
@@ -43,19 +46,10 @@
 
                 dynamic q = query;
 
-                TResult result = (TResult)handler.Handle(q);
-
-                return result;
+                return await (Task<TResult>)handler.Handle(q);
             }
 
-            public async Task<TResult> QueryAsync<TResult>(IQuery<TResult> query)
-            {
-                Task<TResult> t = Task<TResult>.Factory.StartNew(() => this.Query<TResult>(query));
-
-                return await t;
-            }
-
-            public TResult Command<TResult>(ICommand<TResult> command)
+            public async Task<TResult> Send<TResult>(ICommand<TResult> command)
             {
                 Type handlerType = typeof(ICommandHandler<,>).MakeGenericType(command.GetType(), typeof(TResult));
 
@@ -63,16 +57,7 @@
 
                 dynamic c = command;
 
-                TResult result = (TResult)handler.Handle(c);
-
-                return result;
-            }
-
-            public async Task<TResult> CommandAsync<TResult>(ICommand<TResult> command)
-            {
-                Task<TResult> t = Task<TResult>.Factory.StartNew(() => this.Command<TResult>(command));
-
-                return await t;
+                return await (Task<TResult>)handler.Handle(c);
             }
         }
     }

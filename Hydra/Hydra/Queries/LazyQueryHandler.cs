@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.Contracts;
+    using System.Threading.Tasks;
 
     public class LazyQueryHandler<TQuery, TResponse> : IQueryHandler<TQuery, TResponse> 
         where TQuery : class, IQuery<TResponse>
@@ -15,9 +16,9 @@
             this.instance = new Lazy<IQueryHandler<TQuery, TResponse>>(factory);
         }
 
-        public TResponse Handle(TQuery query)
+        public async Task<TResponse> Handle(TQuery query)
         {
-            return this.instance.Value.Handle(query);
+            return await this.instance.Value.Handle(query);
         }
     }
 }

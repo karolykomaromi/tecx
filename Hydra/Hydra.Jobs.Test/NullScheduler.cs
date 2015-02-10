@@ -50,6 +50,7 @@ namespace Hydra.Jobs.Test
         {
             get { return false; }
         }
+
         public bool IsJobGroupPaused(string groupName)
         {
             return true;

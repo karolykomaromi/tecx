@@ -29,7 +29,7 @@ namespace Hydra.Jobs.Server
             this.host.UnknownMessageReceived += this.OnHostUnkownMessageReceived;
             this.host.Description.Behaviors.Find<ServiceBehaviorAttribute>().InstanceContextMode = InstanceContextMode.Single;
             this.host.AddServiceEndpoint(
-                typeof (ISchedulerService),
+                typeof(ISchedulerService),
                 new NetTcpBinding(SecurityMode.None),
                 new Uri("net.pipe://localhost/scheduler"));
         }

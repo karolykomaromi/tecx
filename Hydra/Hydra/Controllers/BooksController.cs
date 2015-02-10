@@ -18,16 +18,9 @@
             this.mediator = mediator;
         }
 
-        public async Task<ActionResult> IndexAsync()
+        public async Task<ActionResult> Index()
         {
-            var t = this.mediator.QueryAsync(new AllBooksQuery());
-
-            return this.View(await t);
-        }
-
-        public ActionResult Index()
-        {
-            IEnumerable<BookViewModel> books = this.mediator.Query(new AllBooksQuery());
+            IEnumerable<BookViewModel> books = await this.mediator.Query(new AllBooksQuery());
 
             return this.View(books);
         }

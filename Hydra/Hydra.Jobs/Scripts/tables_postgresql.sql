@@ -16,14 +16,14 @@ DROP TABLE IF EXISTS qrtz_calendars;
 CREATE TABLE qrtz_job_details
   (
     sched_name VARCHAR(100) NOT NULL,
-	job_name  VARCHAR(200) NOT NULL,
+    job_name  VARCHAR(200) NOT NULL,
     job_group VARCHAR(200) NOT NULL,
     description VARCHAR(250) NULL,
     job_class_name   VARCHAR(250) NOT NULL, 
     is_durable BOOL NOT NULL,
     is_nonconcurrent BOOL NOT NULL,
     is_update_data BOOL NOT NULL,
-	requests_recovery BOOL NOT NULL,
+    requests_recovery BOOL NOT NULL,
     job_data BYTEA NULL,
     PRIMARY KEY (sched_name,job_name,job_group)
 );
@@ -31,7 +31,7 @@ CREATE TABLE qrtz_job_details
 CREATE TABLE qrtz_triggers
   (
     sched_name VARCHAR(100) NOT NULL,
-	trigger_name VARCHAR(150) NOT NULL,
+    trigger_name VARCHAR(150) NOT NULL,
     trigger_group VARCHAR(150) NOT NULL,
     job_name  VARCHAR(200) NOT NULL, 
     job_group VARCHAR(200) NOT NULL,
@@ -48,20 +48,20 @@ CREATE TABLE qrtz_triggers
     job_data BYTEA NULL,
     PRIMARY KEY (sched_name,trigger_name,trigger_group),
     FOREIGN KEY (sched_name,job_name,job_group) 
-		REFERENCES qrtz_job_details(sched_name,job_name,job_group) 
+        REFERENCES qrtz_job_details(sched_name,job_name,job_group) 
 );
 
 CREATE TABLE qrtz_simple_triggers
   (
     sched_name VARCHAR(100) NOT NULL,
-	trigger_name VARCHAR(150) NOT NULL,
+    trigger_name VARCHAR(150) NOT NULL,
     trigger_group VARCHAR(150) NOT NULL,
     repeat_count BIGINT NOT NULL,
     repeat_interval BIGINT NOT NULL,
     times_triggered BIGINT NOT NULL,
     PRIMARY KEY (sched_name,trigger_name,trigger_group),
     FOREIGN KEY (sched_name,trigger_name,trigger_group) 
-		REFERENCES qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
+        REFERENCES qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
 );
 
 CREATE TABLE QRTZ_SIMPROP_TRIGGERS 
@@ -80,9 +80,9 @@ CREATE TABLE QRTZ_SIMPROP_TRIGGERS
     dec_prop_2 NUMERIC NULL,
     bool_prop_1 BOOL NULL,
     bool_prop_2 BOOL NULL,
-	PRIMARY KEY (sched_name,trigger_name,trigger_group),
+    PRIMARY KEY (sched_name,trigger_name,trigger_group),
     FOREIGN KEY (sched_name,trigger_name,trigger_group) 
-		REFERENCES qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
+        REFERENCES qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
 );
 
 CREATE TABLE qrtz_cron_triggers
@@ -94,7 +94,7 @@ CREATE TABLE qrtz_cron_triggers
     time_zone_id VARCHAR(80),
     PRIMARY KEY (sched_name,trigger_name,trigger_group),
     FOREIGN KEY (sched_name,trigger_name,trigger_group) 
-		REFERENCES qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
+        REFERENCES qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
 );
 
 CREATE TABLE qrtz_blob_triggers
@@ -105,7 +105,7 @@ CREATE TABLE qrtz_blob_triggers
     blob_data BYTEA NULL,
     PRIMARY KEY (sched_name,trigger_name,trigger_group),
     FOREIGN KEY (sched_name,trigger_name,trigger_group) 
-		REFERENCES qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
+        REFERENCES qrtz_triggers(sched_name,trigger_name,trigger_group) ON DELETE CASCADE
 );
 
 CREATE TABLE qrtz_calendars
@@ -131,7 +131,7 @@ CREATE TABLE qrtz_fired_triggers
     trigger_group VARCHAR(150) NOT NULL,
     instance_name VARCHAR(200) NOT NULL,
     fired_time BIGINT NOT NULL,
-	sched_time BIGINT NOT NULL,
+    sched_time BIGINT NOT NULL,
     priority INTEGER NOT NULL,
     state VARCHAR(16) NOT NULL,
     job_name VARCHAR(200) NULL,

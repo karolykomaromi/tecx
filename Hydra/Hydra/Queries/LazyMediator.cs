@@ -16,24 +16,14 @@
             this.instance = new Lazy<IMediator>(factory);
         }
 
-        public TResult Query<TResult>(IQuery<TResult> query)
+        public Task<TResult> Query<TResult>(IQuery<TResult> query)
         {
             return this.instance.Value.Query(query);
         }
 
-        public Task<TResult> QueryAsync<TResult>(IQuery<TResult> query)
+        public Task<TResult> Send<TResult>(ICommand<TResult> command)
         {
-            return this.instance.Value.QueryAsync(query);
-        }
-
-        public TResult Command<TResult>(ICommand<TResult> command)
-        {
-            return this.instance.Value.Command(command);
-        }
-
-        public Task<TResult> CommandAsync<TResult>(ICommand<TResult> command)
-        {
-            return this.instance.Value.CommandAsync(command);
+            return this.instance.Value.Send(command);
         }
     }
 }
