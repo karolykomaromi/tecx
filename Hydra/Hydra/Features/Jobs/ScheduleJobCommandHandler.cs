@@ -5,7 +5,7 @@ namespace Hydra.Features.Jobs
     using Hydra.Commands;
     using Hydra.Jobs.Client;
 
-    public class ScheduleJobCommandHandler : ICommandHandler<ScheduleJobCommand, object>
+    public class ScheduleJobCommandHandler : ICommandHandler<ScheduleJobCommand, JobScheduleResponse>
     {
         private readonly ISchedulerClient scheduler;
 
@@ -16,7 +16,7 @@ namespace Hydra.Features.Jobs
             this.scheduler = scheduler;
         }
 
-        public async Task<object> Handle(ScheduleJobCommand command)
+        public async Task<JobScheduleResponse> Handle(ScheduleJobCommand command)
         {
             SimpleJobScheduleRequest request = new SimpleJobScheduleRequest { Job = command.Job };
 

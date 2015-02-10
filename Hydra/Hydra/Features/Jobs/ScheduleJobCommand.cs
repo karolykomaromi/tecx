@@ -3,7 +3,7 @@
     using Hydra.Commands;
     using Hydra.Jobs.Client;
 
-    public class ScheduleJobCommand : ICommand<object>
+    public class ScheduleJobCommand : ICommand<JobScheduleResponse>
     {
         public KnownJobs Job { get; set; }
     }
