@@ -12,11 +12,11 @@
     [TypeConverter(typeof(EnumerationTypeConverter<KnownJobs>))]
     public class KnownJobs : Enumeration<KnownJobs>
     {
-        private readonly Type jobType;
-
         public static readonly KnownJobs NoOp = new KnownJobs(typeof(NoOp));
 
         public static readonly KnownJobs Heartbeat = new KnownJobs(typeof(Heartbeat));
+
+        private readonly Type jobType;
 
         private KnownJobs(Type jobType, [CallerMemberName] string name = "", [CallerLineNumber] int key = -1)
             : base(name, key)

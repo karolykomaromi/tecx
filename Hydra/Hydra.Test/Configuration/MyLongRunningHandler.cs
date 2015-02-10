@@ -2,15 +2,19 @@
 {
     using System.Linq;
     using System.Threading;
+    using System.Threading.Tasks;
     using Hydra.Queries;
 
     public class MyLongRunningHandler : IQueryHandler<MyQuery, MyResponse>
     {
-        public MyResponse Handle(MyQuery query)
+        public Task<MyResponse> Handle(MyQuery query)
         {
-            Thread.Sleep(50);
+            return Task<MyResponse>.Factory.StartNew(() =>
+            {
+                Thread.Sleep(50);
 
-            return new MyResponse { Bar = new string(query.Foo.Reverse().ToArray()) };
+                return new MyResponse { Bar = new string(query.Foo.Reverse().ToArray()) };
+            });
         }
     }
 }

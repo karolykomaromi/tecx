@@ -5,27 +5,23 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using Hydra.Features.Jobs;
-    using Hydra.Jobs.Client;
     using Hydra.Queries;
     using Quartz;
 
     public class JobsController : Controller
     {
         private readonly IMediator mediator;
-        private readonly ISchedulerClient proxy;
 
-        public JobsController(IMediator mediator, ISchedulerClient proxy)
+        public JobsController(IMediator mediator)
         {
             Contract.Requires(mediator != null);
-            Contract.Requires(proxy != null);
 
             this.mediator = mediator;
-            this.proxy = proxy;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            IEnumerable<IJobDetail> scheduledJobs = this.mediator.Query(new ScheduledJobsQuery());
+            IEnumerable<IJobDetail> scheduledJobs = await this.mediator.Query(new ScheduledJobsQuery());
 
             return this.View(scheduledJobs);
         }
@@ -45,9 +41,7 @@
         [HttpPost]
         public async Task<ActionResult> Schedule(ScheduleViewModel scheduleNewJob)
         {
-            SimpleJobScheduleRequest request = new SimpleJobScheduleRequest();
-
-            JobScheduleResponse response = await this.proxy.Schedule(request);
+            var result = await this.mediator.Send(new ScheduleJobCommand { Job = scheduleNewJob.Job });
 
             return this.View();
         }

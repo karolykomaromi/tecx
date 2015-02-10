@@ -7,4 +7,24 @@
 
 <h2>@Hydra.Properties.Resources.Jobs_Schedule_Title</h2>
 
-@Html.FormBlock(x => x.Job)
+<form method="POST">
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <fieldset>
+        <legend>Schedule Details</legend>
+        @Html.FormBlock(x => x.Job)
+    </fieldset>
+
+    <br />
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="@Hydra.Properties.Resources.Schedule" />
+        </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="~/Scripts/vkbeautify.0.99.00.beta.js"></script>
+    <script src="~/Scripts/validation.js"></script>
+</form>

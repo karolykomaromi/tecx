@@ -1,23 +1,24 @@
 ﻿namespace Hydra.Commands
 {
     using System.Diagnostics.Contracts;
+    using System.Threading.Tasks;
 
     [ContractClass(typeof(CommandHandlerContract<,>))]
-    public interface ICommandHandler<in TCommand, out TResult> 
+    public interface ICommandHandler<in TCommand, TResult> 
         where TCommand : class, ICommand<TResult>
     {
-        TResult Handle(TCommand command);
+        Task<TResult> Handle(TCommand command);
     }
 
     [ContractClassFor(typeof(ICommandHandler<,>))]
     internal abstract class CommandHandlerContract<TCommand, TResult> : ICommandHandler<TCommand, TResult> 
         where TCommand : class, ICommand<TResult>
     {
-        public TResult Handle(TCommand command)
+        public Task<TResult> Handle(TCommand command)
         {
             Contract.Requires(command != null);
 
-            return default(TResult);
+            return default(Task<TResult>);
         }
     }
 }

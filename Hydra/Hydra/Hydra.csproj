@@ -193,7 +193,6 @@
     </Content>
     <Content Include="Features\Jobs\Index.cshtml" />
     <Content Include="Features\Books\Index.cshtml" />
-    <Content Include="Features\Books\IndexAsync.cshtml" />
     <Content Include="Features\Home\Index.cshtml" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
@@ -238,9 +237,10 @@
     <Compile Include="Features\Books\BookViewModel.cs" />
     <Compile Include="Features\Books\AllBooksQuery.cs" />
     <Compile Include="Features\Books\EnterBookCommand.cs" />
-    <Compile Include="Features\Jobs\JobSchedule.cs" />
     <Compile Include="Features\Jobs\ScheduledJobsQuery.cs" />
     <Compile Include="Features\Jobs\ScheduledJobsQueryHandler.cs" />
+    <Compile Include="Features\Jobs\ScheduleJobCommand.cs" />
+    <Compile Include="Features\Jobs\ScheduleJobCommandHandler.cs" />
     <Compile Include="Features\Jobs\ScheduleViewModel.cs" />
     <Compile Include="Features\Registration\RegistrationViewModel.cs" />
     <Compile Include="Features\Registration\RegistrationValidator.cs" />
