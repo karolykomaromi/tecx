@@ -244,6 +244,9 @@
     <Compile Include="Features\Jobs\ScheduleViewModel.cs" />
     <Compile Include="Features\Registration\RegistrationViewModel.cs" />
     <Compile Include="Features\Registration\RegistrationValidator.cs" />
+    <Compile Include="Features\Settings\AllSettingsQuery.cs" />
+    <Compile Include="Features\Settings\SettingByNameQuery.cs" />
+    <Compile Include="Features\Settings\SettingsQueryHandler.cs" />
     <Compile Include="FeatureViewLocationRazorViewEngine.cs" />
     <Compile Include="Composition\CachingConfiguration.cs" />
     <Compile Include="Composition\ErrorHandlingConfiguration.cs" />

@@ -1,38 +1,41 @@
 ﻿namespace Hydra.Controllers
 {
     using System.Diagnostics.Contracts;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Hydra.Features.Settings;
     using Hydra.Infrastructure.Configuration;
+    using Hydra.Queries;
 
     public class SettingsController : Controller
     {
-        private readonly ISettingsProvider settingsProvider;
+        private readonly IMediator mediator;
 
-        public SettingsController(ISettingsProvider settingsProvider)
+        public SettingsController(IMediator mediator)
         {
-            Contract.Requires(settingsProvider != null);
+            Contract.Requires(mediator != null);
 
-            this.settingsProvider = settingsProvider;
+            this.mediator = mediator;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var settings = this.settingsProvider.GetSettings();
+            SettingsCollection settings = await this.mediator.Query(new AllSettingsQuery());
 
             return this.View(settings);
         }
 
-        public ActionResult Edit(string settingName)
+        public async Task<ActionResult> Edit(string settingName)
         {
             Contract.Requires(settingName != null);
 
             SettingName sn;
             if (!SettingName.TryParse(settingName, out sn))
             {
-                return this.Index();
+                return await this.Index();
             }
 
-            Setting setting = this.settingsProvider.GetSettings()[sn];
+            Setting setting = await this.mediator.Query(new SettingByNameQuery { Name = sn });
 
             return this.View(setting);
         }
