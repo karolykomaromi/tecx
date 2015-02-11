@@ -89,7 +89,7 @@
         }
 
         [Fact]
-        public void Should_Read_Cell_With_German_DateTime()
+        public void Should_Read_Cell_With_DateTime_Value()
         {
             using (Stream stream = new MemoryStream(Properties.Resources.ExcelHelper))
             {
@@ -104,32 +104,6 @@
 
                     Cell cellWithGermanDateTime = worksheetPart.Worksheet.Descendants<Cell>()
                         .First(c => c.CellReference != null && string.Equals("B1", c.CellReference, StringComparison.OrdinalIgnoreCase));
-
-                    string actual = ExcelHelper.GetCellValue(cellWithGermanDateTime, sharedStringTable);
-
-                    string expected = "2014-12-18T00:00:00.0000000";
-
-                    Assert.Equal(expected, actual);
-                }
-            }
-        }
-
-        [Fact]
-        public void Should_Read_Cell_With_US_DateTime()
-        {
-            using (Stream stream = new MemoryStream(Properties.Resources.ExcelHelper))
-            {
-                using (var document = SpreadsheetDocument.Open(stream, false))
-                {
-                    SharedStringTable sharedStringTable = document.WorkbookPart.SharedStringTablePart.SharedStringTable;
-
-                    Sheet sheet = document.WorkbookPart.Workbook.Descendants<Sheet>()
-                        .First(s => string.Equals("Cells", s.Name, StringComparison.Ordinal));
-
-                    var worksheetPart = (WorksheetPart)document.WorkbookPart.GetPartById(sheet.Id);
-
-                    Cell cellWithGermanDateTime = worksheetPart.Worksheet.Descendants<Cell>()
-                        .First(c => c.CellReference != null && string.Equals("B2", c.CellReference, StringComparison.OrdinalIgnoreCase));
 
                     string actual = ExcelHelper.GetCellValue(cellWithGermanDateTime, sharedStringTable);
 
