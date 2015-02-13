@@ -12,8 +12,11 @@
         [Fact]
         public void Should_Write_Items_To_Excel_Sheet()
         {
-            ////using (Stream stream = new MemoryStream())
+#if DEBUG
             using (Stream stream = new FileStream(@"d:\tmp\ExcelDataWriterTests.xlsx", FileMode.Create))
+#else
+            using (Stream stream = new MemoryStream())
+#endif
             {
                 using (SpreadsheetDocument document = SpreadsheetDocument.Create(stream, SpreadsheetDocumentType.Workbook))
                 {
@@ -25,7 +28,7 @@
 
                     var items = new[] { new ValueWriterTestObject { DateTime = TimeProvider.Now } };
 
-                    ImportResult result = sut.Write(items);
+                    ImportSucceeded result = Assert.IsType<ImportSucceeded>(sut.Write(items));
                 }
             }
         }
