@@ -11,6 +11,11 @@ namespace Hydra.Infrastructure.Test.Reflection
             this.adaptee = adaptee;
         }
 
+        public int NotImplementedProperty
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public int Foo
         {
             get
@@ -45,6 +50,11 @@ namespace Hydra.Infrastructure.Test.Reflection
         public int TheAnswer()
         {
             return this.adaptee.TheAnswer();
+        }
+
+        public void NotImplementedMethod()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -120,6 +120,7 @@ namespace Hydra.Infrastructure.Reflection
 
                 MethodInfo targetMethodOnAdaptee = this.Adaptee.GetMethod(method.Name, parameterTypes);
 
+                // weberse 2015-02-13 check wether the target method exists. for non-existent counter-parts throw NotImplementedException
                 MethodBuilder methodBuilder = typeBuilder.DefineMethod(
                     method.Name,
                     Constants.Attributes.Method,
@@ -178,13 +179,18 @@ namespace Hydra.Infrastructure.Reflection
 
                 PropertyInfo targetPropertyOnAdaptee = this.Adaptee.GetProperty(property.Name, BindingFlags.Instance | BindingFlags.Public);
 
+                // weberse 2015-02-13 check wether the target property exists. check if getter and setter exist. for non-existent counter-parts
+                // throw NotImplementedException
                 MethodBuilder getter = this.GenerateGetMethod(typeBuilder, adapteeField, property, targetPropertyOnAdaptee);
 
                 propertyBuilder.SetGetMethod(getter);
 
-                MethodBuilder setMethod = this.GenerateSetMethod(typeBuilder, adapteeField, property, targetPropertyOnAdaptee);
+                if (property.CanWrite && property.GetSetMethod().IsPublic)
+                {
+                    MethodBuilder setMethod = this.GenerateSetMethod(typeBuilder, adapteeField, property, targetPropertyOnAdaptee);
 
-                propertyBuilder.SetSetMethod(setMethod);
+                    propertyBuilder.SetSetMethod(setMethod);
+                }
             }
         }
 
