@@ -5,41 +5,25 @@ namespace Hydra.Infrastructure.Reflection
     using System.Reflection;
     using System.Reflection.Emit;
 
-    public class AdapterProxyBuilder
+    public class AdapterProxyBuilder : ProxyBuilder
     {
-        private readonly ModuleBuilder moduleBuilder;
-        private readonly Type contract;
+        private static readonly ConstructorInfo NotImplementedConstructor = typeof(NotImplementedException).GetConstructor(new Type[0]);
+
         private readonly Type adaptee;
 
-        public AdapterProxyBuilder(Type contract, Type adaptee, ModuleBuilder moduleBuilder)
+        public AdapterProxyBuilder(ModuleBuilder moduleBuilder, Type contract, Type adaptee)
+            : base(moduleBuilder, contract)
         {
-            System.Diagnostics.Contracts.Contract.Requires(contract != null);
             System.Diagnostics.Contracts.Contract.Requires(adaptee != null);
-            System.Diagnostics.Contracts.Contract.Requires(moduleBuilder != null);
-
-            AssertIsInterface(contract);
-
-            this.contract = contract;
             this.adaptee = adaptee;
-            this.moduleBuilder = moduleBuilder;
         }
 
-        protected ModuleBuilder ModuleBuilder
-        {
-            get { return this.moduleBuilder; }
-        }
-
-        protected Type Contract
-        {
-            get { return this.contract; }
-        }
-
-        protected Type Adaptee
+        private Type Adaptee
         {
             get { return this.adaptee; }
         }
 
-        public Type Build()
+        public override Type Build()
         {
             TypeBuilder typeBuilder = this.CreateTypeBuilder();
 
@@ -56,15 +40,16 @@ namespace Hydra.Infrastructure.Reflection
             return adapterType;
         }
 
-        private static void AssertIsInterface(Type type)
+        private static void ThrowNotImplementedException(ILGenerator il)
         {
-            if (!type.IsInterface)
-            {
-                throw new ArgumentException(string.Format("Type {0} is not an interface", type.FullName));
-            }
+            il.Emit(OpCodes.Nop);
+
+            il.Emit(OpCodes.Newobj, NotImplementedConstructor);
+
+            il.Emit(OpCodes.Throw);
         }
 
-        private TypeBuilder CreateTypeBuilder()
+        protected override TypeBuilder CreateTypeBuilder()
         {
             string name = this.Adaptee.Name + "To" + this.Contract.Name + "Adapter";
 
@@ -117,9 +102,7 @@ namespace Hydra.Infrastructure.Reflection
                 ParameterInfo[] parameters = method.GetParameters();
 
                 Type[] parameterTypes = parameters.Select(p => p.ParameterType).ToArray();
-
-                MethodInfo targetMethodOnAdaptee = this.Adaptee.GetMethod(method.Name, parameterTypes);
-
+                
                 // weberse 2015-02-13 check wether the target method exists. for non-existent counter-parts throw NotImplementedException
                 MethodBuilder methodBuilder = typeBuilder.DefineMethod(
                     method.Name,
@@ -133,7 +116,16 @@ namespace Hydra.Infrastructure.Reflection
                     methodBuilder.DefineParameter(i + 1, ParameterAttributes.None, parameters[i].Name);
                 }
 
+                MethodInfo targetMethodOnAdaptee = this.Adaptee.GetMethod(method.Name, parameterTypes);
+
                 ILGenerator il = methodBuilder.GetILGenerator();
+
+                if (targetMethodOnAdaptee == null)
+                {
+                    ThrowNotImplementedException(il);
+
+                    continue;
+                }
 
                 if (method.ReturnType != typeof(void))
                 {
@@ -164,7 +156,7 @@ namespace Hydra.Infrastructure.Reflection
                 il.Emit(OpCodes.Ret);
             }
         }
-
+        
         private void GenerateDelegatingProperties(TypeBuilder typeBuilder, FieldBuilder adapteeField)
         {
             PropertyInfo[] properties = this.Contract.GetProperties(BindingFlags.Instance | BindingFlags.Public);
@@ -179,8 +171,22 @@ namespace Hydra.Infrastructure.Reflection
 
                 PropertyInfo targetPropertyOnAdaptee = this.Adaptee.GetProperty(property.Name, BindingFlags.Instance | BindingFlags.Public);
 
-                // weberse 2015-02-13 check wether the target property exists. check if getter and setter exist. for non-existent counter-parts
-                // throw NotImplementedException
+                if (targetPropertyOnAdaptee == null)
+                {
+                    MethodBuilder notImplementedGetter = this.GenerateNotImplementedGetMethod(typeBuilder, property);
+
+                    propertyBuilder.SetGetMethod(notImplementedGetter);
+
+                    if (property.CanWrite && property.GetSetMethod().IsPublic)
+                    {
+                        MethodBuilder notImplementedSetMethod = this.GenerateNotImplementedSetMethod(typeBuilder, property);
+
+                        propertyBuilder.SetSetMethod(notImplementedSetMethod);
+                    }
+
+                    continue;
+                }
+
                 MethodBuilder getter = this.GenerateGetMethod(typeBuilder, adapteeField, property, targetPropertyOnAdaptee);
 
                 propertyBuilder.SetGetMethod(getter);
@@ -192,6 +198,40 @@ namespace Hydra.Infrastructure.Reflection
                     propertyBuilder.SetSetMethod(setMethod);
                 }
             }
+        }
+
+        private MethodBuilder GenerateNotImplementedSetMethod(TypeBuilder typeBuilder, PropertyInfo property)
+        {
+            string name = "set_" + property.Name;
+
+            MethodBuilder setMethod = typeBuilder.DefineMethod(
+                name,
+                Constants.Attributes.GetSetFromInterface,
+                null,
+                new[] { property.PropertyType });
+
+            ILGenerator il = setMethod.GetILGenerator();
+
+            ThrowNotImplementedException(il);
+
+            return setMethod;
+        }
+
+        private MethodBuilder GenerateNotImplementedGetMethod(TypeBuilder typeBuilder, PropertyInfo property)
+        {
+            string name = "get_" + property.Name;
+
+            MethodBuilder getMethod = typeBuilder.DefineMethod(
+                name,
+                Constants.Attributes.GetSetFromInterface,
+                property.PropertyType,
+                Type.EmptyTypes);
+
+            ILGenerator il = getMethod.GetILGenerator();
+            
+            ThrowNotImplementedException(il);
+
+            return getMethod;
         }
 
         private MethodBuilder GenerateGetMethod(TypeBuilder typeBuilder, FieldBuilder adapteeField, PropertyInfo property, PropertyInfo targetPropertyOnAdaptee)

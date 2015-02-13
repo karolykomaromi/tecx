@@ -181,6 +181,7 @@
     <Compile Include="Reflection\Method.cs" />
     <Compile Include="Reflection\Property.cs" />
     <Compile Include="Reflection\PropertyNotFoundException.cs" />
+    <Compile Include="Reflection\ProxyBuilder.cs" />
     <Compile Include="Reflection\ProxyGenerator.cs" />
     <Compile Include="Reflection\TypeHelper.cs" />
     <Compile Include="ServiceModel\EnumerationClassesSurrogate.cs" />

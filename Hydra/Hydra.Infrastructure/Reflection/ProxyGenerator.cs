@@ -29,7 +29,7 @@ namespace Hydra.Infrastructure.Reflection
             Contract.Requires(contract != null);
             Contract.Requires(adaptee != null);
 
-            var builder = new AdapterProxyBuilder(contract, adaptee, this.moduleBuilder);
+            var builder = new AdapterProxyBuilder(this.moduleBuilder, contract, adaptee);
 
             var proxyType = builder.Build();
 
