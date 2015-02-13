@@ -31,6 +31,19 @@ namespace Hydra.Infrastructure.Reflection
 
         public abstract Type Build();
 
-        protected abstract TypeBuilder CreateTypeBuilder();
+        protected virtual TypeBuilder CreateTypeBuilder()
+        {
+            string name = this.GetTypeName();
+
+            TypeBuilder typeBuilder = this.ModuleBuilder.DefineType(
+                name,
+                Constants.Attributes.GeneratedType,
+                typeof(object),
+                new[] { this.Contract });
+
+            return typeBuilder;
+        }
+
+        protected abstract string GetTypeName();
     }
 }
