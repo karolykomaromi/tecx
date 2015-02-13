@@ -1,5 +1,6 @@
 namespace Hydra.Infrastructure.Reflection
 {
+    using System;
     using System.Reflection;
 
     public static class Constants
@@ -33,6 +34,17 @@ namespace Hydra.Infrastructure.Reflection
                                                    MethodAttributes.HideBySig |
                                                    MethodAttributes.NewSlot |
                                                    MethodAttributes.Virtual;
+
+            public const MethodAttributes Ctor = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName;
+
+            public const FieldAttributes ReadonlyField = FieldAttributes.Private | FieldAttributes.InitOnly;
+        }
+
+        public static class Constructors
+        {
+            public static readonly ConstructorInfo NotImplementedException = typeof(NotImplementedException).GetConstructor(new Type[0]);
+
+            public static readonly ConstructorInfo Object = typeof(object).GetConstructor(new Type[0]);
         }
 
         public static class Names
@@ -46,6 +58,10 @@ namespace Hydra.Infrastructure.Reflection
             /// GeneratedProxies.dll
             /// </summary>
             public const string AssemblyFileName = AssemblyName + ".dll";
+
+            public const string SetterPrefix = "set_";
+
+            public const string GetterPrefix = "get_";
         }
     }
 }
