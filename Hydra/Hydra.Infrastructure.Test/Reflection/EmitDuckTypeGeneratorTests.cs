@@ -29,5 +29,29 @@
 
             Assert.Equal(x.TheAnswer(), actual.TheAnswer());
         }
+
+        [Fact]
+        public void Should_Throw_On_Not_Implemented_Method()
+        {
+            IDuckTypeGenerator sut = new EmitDuckTypeGenerator();
+
+            DuckButNot x = new DuckButNot();
+
+            IDuck actual = sut.Duck<IDuck>(x);
+
+            Assert.Throws<NotImplementedException>(() => actual.NotImplementedMethod());
+        }
+
+        [Fact]
+        public void Should_Throw_On_Not_Implemented_Property()
+        {
+            IDuckTypeGenerator sut = new EmitDuckTypeGenerator();
+
+            DuckButNot x = new DuckButNot();
+
+            IDuck actual = sut.Duck<IDuck>(x);
+
+            Assert.Throws<NotImplementedException>(() => actual.NotImplementedProperty);
+        }
     }
 }
