@@ -4,6 +4,8 @@ namespace Hydra.Unity.Test.Infrastructure.Reflection
 
     public interface IDuck
     {
+        int NotImplementedProperty { get; }
+
         int Foo { get; set; }
 
         string Bar { get; set; }
@@ -11,5 +13,7 @@ namespace Hydra.Unity.Test.Infrastructure.Reflection
         void Baz(object sender, EventArgs args);
 
         int TheAnswer();
+
+        void NotImplementedMethod();
     }
 }

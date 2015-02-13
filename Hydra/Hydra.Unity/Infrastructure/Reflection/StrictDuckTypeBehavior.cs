@@ -53,7 +53,7 @@ namespace Hydra.Unity.Infrastructure.Reflection
                 }
             }
 
-            return input.CreateExceptionMethodReturn(new NotSupportedException());
+            return input.CreateExceptionMethodReturn(new NotImplementedException());
         }
 
         public IEnumerable<Type> GetRequiredInterfaces()
