@@ -230,11 +230,15 @@ namespace Hydra.Infrastructure.Reflection
 
                     propertyBuilder.SetGetMethod(notImplementedGetter);
 
+                    typeBuilder.DefineMethodOverride(notImplementedGetter, getterOnContract);
+
                     if (PropertyIsPubliclyWritable(setterOnContract))
                     {
-                        MethodBuilder notImplementedSetMethod = this.GenerateNotImplementedSetMethod(typeBuilder, propertyOnContract);
+                        MethodBuilder notImplementedSetter = this.GenerateNotImplementedSetMethod(typeBuilder, propertyOnContract);
 
-                        propertyBuilder.SetSetMethod(notImplementedSetMethod);
+                        propertyBuilder.SetSetMethod(notImplementedSetter);
+
+                        typeBuilder.DefineMethodOverride(notImplementedSetter, setterOnContract);
                     }
 
                     continue;
@@ -244,11 +248,15 @@ namespace Hydra.Infrastructure.Reflection
 
                 propertyBuilder.SetGetMethod(getter);
 
+                typeBuilder.DefineMethodOverride(getter, getterOnContract);
+
                 if (PropertyIsPubliclyWritable(setterOnContract))
                 {
-                    MethodBuilder setMethod = this.GenerateSetMethod(typeBuilder, adapteeField, propertyOnContract, targetPropertyOnAdaptee);
+                    MethodBuilder setter = this.GenerateSetMethod(typeBuilder, adapteeField, propertyOnContract, targetPropertyOnAdaptee);
 
-                    propertyBuilder.SetSetMethod(setMethod);
+                    propertyBuilder.SetSetMethod(setter);
+
+                    typeBuilder.DefineMethodOverride(setter, setterOnContract);
                 }
             }
         }

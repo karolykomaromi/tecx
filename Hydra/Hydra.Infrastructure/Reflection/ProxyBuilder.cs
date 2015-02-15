@@ -49,14 +49,14 @@ namespace Hydra.Infrastructure.Reflection
 
         protected virtual string GetGetMethodName(MethodInfo getterOnContract)
         {
-            //return this.Contract.FullName + "." + getterOnContract.Name;
-            return getterOnContract.Name;
+            return this.Contract.FullName + "." + getterOnContract.Name;
+            //return getterOnContract.Name;
         }
 
         protected virtual string GetSetMethodName(MethodInfo setterOnContract)
         {
-            //return this.Contract.FullName + "." + setterOnContract.Name;
-            return setterOnContract.Name;
+            return this.Contract.FullName + "." + setterOnContract.Name;
+            //return setterOnContract.Name;
         }
 
         protected virtual string GetMethodName(MethodInfo methodOnContract)
