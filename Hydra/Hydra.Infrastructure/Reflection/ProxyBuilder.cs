@@ -10,14 +10,18 @@ namespace Hydra.Infrastructure.Reflection
 
         private readonly Type contract;
 
-        protected ProxyBuilder(ModuleBuilder moduleBuilder, Type contract)
+        private readonly Type target;
+
+        protected ProxyBuilder(ModuleBuilder moduleBuilder, Type contract, Type target)
         {
             System.Diagnostics.Contracts.Contract.Requires(moduleBuilder != null);
             System.Diagnostics.Contracts.Contract.Requires(contract != null);
             System.Diagnostics.Contracts.Contract.Requires(contract.IsInterface);
+            System.Diagnostics.Contracts.Contract.Requires(target != null);
 
             this.moduleBuilder = moduleBuilder;
             this.contract = contract;
+            this.target = target;
         }
 
         protected ModuleBuilder ModuleBuilder
@@ -28,6 +32,11 @@ namespace Hydra.Infrastructure.Reflection
         protected Type Contract
         {
             get { return this.contract; }
+        }
+
+        protected Type Target
+        {
+            get { return this.target; }
         }
 
         public abstract Type Build();

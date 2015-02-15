@@ -15,12 +15,12 @@ namespace Hydra.Infrastructure.Reflection
                                                    MethodAttributes.SpecialName |
                                                    MethodAttributes.HideBySig;
 
-            public const MethodAttributes GetSetFromInterface = MethodAttributes.Private | 
-                                                                MethodAttributes.Final | 
-                                                                MethodAttributes.HideBySig | 
-                                                                MethodAttributes.SpecialName | 
-                                                                MethodAttributes.NewSlot | 
-                                                                MethodAttributes.Virtual;
+            public const MethodAttributes ExplicitGetSetFromInterface = MethodAttributes.Private |
+                                                                        MethodAttributes.Final |
+                                                                        MethodAttributes.HideBySig | 
+                                                                        MethodAttributes.SpecialName | 
+                                                                        MethodAttributes.NewSlot | 
+                                                                        MethodAttributes.Virtual;
 
             public const TypeAttributes GeneratedType = TypeAttributes.Public |
                                                         TypeAttributes.Class |
@@ -35,9 +35,12 @@ namespace Hydra.Infrastructure.Reflection
                                                            MethodAttributes.NewSlot |
                                                            MethodAttributes.Virtual;
 
-            public const MethodAttributes Ctor = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName;
+            public const MethodAttributes Ctor = MethodAttributes.Public | 
+                                                 MethodAttributes.SpecialName | 
+                                                 MethodAttributes.RTSpecialName;
 
-            public const FieldAttributes ReadonlyField = FieldAttributes.Private | FieldAttributes.InitOnly;
+            public const FieldAttributes ReadonlyField = FieldAttributes.Private | 
+                                                         FieldAttributes.InitOnly;
         }
 
         public static class Constructors
@@ -64,6 +67,8 @@ namespace Hydra.Infrastructure.Reflection
             public const string GetterPrefix = "get_";
 
             public const string TargetField = "target";
+
+            public const string TargetProperty = "Target";
         }
     }
 }
