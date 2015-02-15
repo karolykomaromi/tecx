@@ -4,11 +4,19 @@ namespace Hydra.Infrastructure.Test.Reflection
 
     public class DuckButNotToIDuckAdapter : IDuck
     {
-        private readonly DuckButNot adaptee;
+        private readonly DuckButNot target;
 
-        public DuckButNotToIDuckAdapter(DuckButNot adaptee)
+        public DuckButNotToIDuckAdapter(DuckButNot target)
         {
-            this.adaptee = adaptee;
+            this.target = target;
+        }
+
+        public DuckButNot Target
+        {
+            get
+            {
+                return this.target;
+            }
         }
 
         public int NotImplementedProperty
@@ -20,12 +28,12 @@ namespace Hydra.Infrastructure.Test.Reflection
         {
             get
             {
-                return this.adaptee.Foo;
+                return this.Target.Foo;
             }
 
             set
             {
-                this.adaptee.Foo = value;
+                this.Target.Foo = value;
             }
         }
 
@@ -33,23 +41,23 @@ namespace Hydra.Infrastructure.Test.Reflection
         {
             get
             {
-                return this.adaptee.Bar;
+                return this.Target.Bar;
             }
 
             set
             {
-                this.adaptee.Bar = value;
+                this.Target.Bar = value;
             }
         }
 
         public void Baz(object sender, EventArgs args)
         {
-            this.adaptee.Baz(sender, args);
+            this.Target.Baz(sender, args);
         }
 
         public int TheAnswer()
         {
-            return this.adaptee.TheAnswer();
+            return this.Target.TheAnswer();
         }
 
         public void NotImplementedMethod()
