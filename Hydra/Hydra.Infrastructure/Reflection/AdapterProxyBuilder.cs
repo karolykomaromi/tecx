@@ -20,40 +20,15 @@ namespace Hydra.Infrastructure.Reflection
 
             this.GenerateConstructor(typeBuilder, targetField);
 
-            MethodInfo targetGetter = this.GenerateTargetProperty(typeBuilder, targetField);
+            MethodBuilder targetGetter = this.GenerateTargetProperty(typeBuilder, targetField);
 
-            this.GenerateDelegatingProperties(typeBuilder, targetField);
+            this.GenerateDelegatingProperties(typeBuilder, targetGetter);
 
-            this.GenerateDelegatingMethods(typeBuilder, targetField);
+            this.GenerateDelegatingMethods(typeBuilder, targetGetter);
 
             Type adapterType = typeBuilder.CreateType();
 
             return adapterType;
-        }
-
-        private MethodInfo GenerateTargetProperty(TypeBuilder typeBuilder, FieldBuilder targetField)
-        {
-            PropertyBuilder propertyBuilder = typeBuilder.DefineProperty(
-                Constants.Names.TargetProperty,
-                PropertyAttributes.None,
-                this.Target,
-                Type.EmptyTypes);
-
-            MethodBuilder targetGetter = typeBuilder.DefineMethod(
-                Constants.Names.GetterPrefix + Constants.Names.TargetProperty,
-                Constants.Attributes.GetSet,
-                this.Target,
-                Type.EmptyTypes);
-
-            ILGenerator il = targetGetter.GetILGenerator();
-
-            il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Ldfld, targetField);
-            il.Emit(OpCodes.Ret);
-
-            propertyBuilder.SetGetMethod(targetGetter);
-
-            return targetGetter;
         }
 
         protected override string GetTypeName()
@@ -116,8 +91,33 @@ namespace Hydra.Infrastructure.Reflection
             il.Emit(OpCodes.Stfld, targetField);
             il.Emit(OpCodes.Ret);
         }
+        
+        private MethodBuilder GenerateTargetProperty(TypeBuilder typeBuilder, FieldBuilder targetField)
+        {
+            PropertyBuilder propertyBuilder = typeBuilder.DefineProperty(
+                Constants.Names.TargetProperty,
+                PropertyAttributes.None,
+                this.Target,
+                Type.EmptyTypes);
 
-        private void GenerateDelegatingMethods(TypeBuilder typeBuilder, FieldBuilder adapteeField)
+            MethodBuilder targetGetter = typeBuilder.DefineMethod(
+                Constants.Names.GetterPrefix + Constants.Names.TargetProperty,
+                Constants.Attributes.GetSet,
+                this.Target,
+                Type.EmptyTypes);
+
+            ILGenerator il = targetGetter.GetILGenerator();
+
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Ldfld, targetField);
+            il.Emit(OpCodes.Ret);
+
+            propertyBuilder.SetGetMethod(targetGetter);
+
+            return targetGetter;
+        }
+
+        private void GenerateDelegatingMethods(TypeBuilder typeBuilder, MethodBuilder targetGetter)
         {
             var methods = this.Contract.GetMethods(BindingFlags.Public | BindingFlags.Instance)
                 .Where(MethodIsNeitherGetterNorSetter)
@@ -165,7 +165,7 @@ namespace Hydra.Infrastructure.Reflection
                 // access the field with the target instance
                 il.Emit(OpCodes.Nop);
                 il.Emit(OpCodes.Ldarg_0);
-                il.Emit(OpCodes.Ldfld, adapteeField);
+                il.Emit(OpCodes.Call, targetGetter);
 
                 // load all method parameters so you can hand them down to the method of the target
                 for (int i = 1; i <= parameters.Length; i++)
@@ -197,7 +197,7 @@ namespace Hydra.Infrastructure.Reflection
             }
         }
 
-        private void GenerateDelegatingProperties(TypeBuilder typeBuilder, FieldBuilder targetField)
+        private void GenerateDelegatingProperties(TypeBuilder typeBuilder, MethodBuilder targetGetter)
         {
             var properties = this.Contract.GetProperties(BindingFlags.Instance | BindingFlags.Public).OrderBy(p => p.Name, StringComparer.Ordinal);
 
@@ -241,7 +241,7 @@ namespace Hydra.Infrastructure.Reflection
 
                 MethodInfo setterOnTarget = propertyOnAdaptee.GetSetMethod();
 
-                MethodBuilder getter = this.GenerateGetMethod(typeBuilder, targetField, getterOnContract, getterOnTarget, propertyType);
+                MethodBuilder getter = this.GenerateGetMethod(typeBuilder, targetGetter, getterOnContract, getterOnTarget, propertyType);
 
                 propertyBuilder.SetGetMethod(getter);
 
@@ -249,7 +249,7 @@ namespace Hydra.Infrastructure.Reflection
 
                 if (PropertyIsPubliclyWritable(setterOnContract))
                 {
-                    MethodBuilder setter = this.GenerateSetMethod(typeBuilder, targetField, setterOnContract, setterOnTarget, propertyType);
+                    MethodBuilder setter = this.GenerateSetMethod(typeBuilder, targetGetter, setterOnContract, setterOnTarget, propertyType);
 
                     propertyBuilder.SetSetMethod(setter);
 
@@ -258,7 +258,7 @@ namespace Hydra.Infrastructure.Reflection
             }
         }
 
-        private MethodBuilder GenerateGetMethod(TypeBuilder typeBuilder, FieldBuilder targetField, MethodInfo getterOnContract, MethodInfo getterOnTarget, Type propertyType)
+        private MethodBuilder GenerateGetMethod(TypeBuilder typeBuilder, MethodBuilder targetGetter, MethodInfo getterOnContract, MethodInfo getterOnTarget, Type propertyType)
         {
             MethodBuilder getMethod = this.DefineGetMethod(typeBuilder, getterOnContract, propertyType);
 
@@ -272,7 +272,7 @@ namespace Hydra.Infrastructure.Reflection
             // access the field with the target instance
             il.Emit(OpCodes.Nop);
             il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Ldfld, targetField);
+            il.Emit(OpCodes.Call, targetGetter);
 
             // call the property on the target
             il.Emit(OpCodes.Callvirt, getterOnTarget);
@@ -301,7 +301,7 @@ namespace Hydra.Infrastructure.Reflection
             return getMethod;
         }
 
-        private MethodBuilder GenerateSetMethod(TypeBuilder typeBuilder, FieldBuilder targetField, MethodInfo setterOnContract, MethodInfo setterOnTarget, Type propertyType)
+        private MethodBuilder GenerateSetMethod(TypeBuilder typeBuilder, MethodBuilder targetGetter, MethodInfo setterOnContract, MethodInfo setterOnTarget, Type propertyType)
         {
             MethodBuilder setMethod = this.DefineSetMethod(typeBuilder, setterOnContract, propertyType);
 
@@ -309,7 +309,7 @@ namespace Hydra.Infrastructure.Reflection
 
             // access the field with the target instance
             il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Ldfld, targetField);
+            il.Emit(OpCodes.Call, targetGetter);
 
             // store the value using the setter of the target property
             il.Emit(OpCodes.Ldarg_1);
