@@ -61,32 +61,40 @@ namespace Hydra.Infrastructure.Reflection
             return member == null;
         }
 
-        private static bool PropertyIsPubliclyWritable(PropertyInfo property)
+        private static bool MethodIsNeitherGetterNorSetter(MethodInfo method)
         {
-            return property.CanWrite && property.GetSetMethod().IsPublic;
+            return !method.Name.StartsWith(Constants.Names.GetterPrefix, StringComparison.OrdinalIgnoreCase) &&
+                !method.Name.StartsWith(Constants.Names.SetterPrefix, StringComparison.OrdinalIgnoreCase);
         }
 
-        private static MethodBuilder DefineGetMethod(TypeBuilder typeBuilder, PropertyInfo property)
+        private static bool PropertyIsPubliclyWritable(MethodInfo setterOnContract)
         {
-            string name = Constants.Names.GetterPrefix + property.Name;
+            return setterOnContract != null;
+        }
+
+        private MethodBuilder DefineGetMethod(TypeBuilder typeBuilder, MethodInfo getterOnContract, Type propertyType)
+        {
+            string name = this.GetGetMethodName(getterOnContract);
 
             MethodBuilder getMethod = typeBuilder.DefineMethod(
                 name,
                 Constants.Attributes.GetSetFromInterface,
-                property.PropertyType,
+                propertyType,
                 Type.EmptyTypes);
+
             return getMethod;
         }
 
-        private static MethodBuilder DefineSetMethod(TypeBuilder typeBuilder, PropertyInfo property)
+        private MethodBuilder DefineSetMethod(TypeBuilder typeBuilder, MethodInfo setterOnContract, Type propertyType)
         {
-            string name = Constants.Names.SetterPrefix + property.Name;
+            string name = this.GetSetMethodName(setterOnContract);
 
             MethodBuilder setMethod = typeBuilder.DefineMethod(
                 name,
                 Constants.Attributes.GetSetFromInterface,
                 null,
-                new[] { property.PropertyType });
+                new[] { propertyType });
+
             return setMethod;
         }
 
@@ -120,19 +128,23 @@ namespace Hydra.Infrastructure.Reflection
 
         private void GenerateDelegatingMethods(TypeBuilder typeBuilder, FieldBuilder adapteeField)
         {
-            var methods = this.Contract.GetMethods(BindingFlags.Public | BindingFlags.Instance);
+            var methods = this.Contract.GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                .Where(MethodIsNeitherGetterNorSetter)
+                .OrderBy(m => m.Name, StringComparer.Ordinal);
 
-            foreach (MethodInfo method in methods)
+            foreach (MethodInfo methodOnContract in methods)
             {
-                ParameterInfo[] parameters = method.GetParameters();
+                ParameterInfo[] parameters = methodOnContract.GetParameters();
 
                 Type[] parameterTypes = parameters.Select(p => p.ParameterType).ToArray();
 
+                string name = this.GetMethodName(methodOnContract);
+
                 MethodBuilder methodBuilder = typeBuilder.DefineMethod(
-                    method.Name,
-                    Constants.Attributes.Method,
+                    name,
+                    Constants.Attributes.ExplicitMethod,
                     CallingConventions.HasThis,
-                    method.ReturnType,
+                    methodOnContract.ReturnType,
                     parameterTypes);
 
                 for (int i = 0; i < parameters.Length; i++)
@@ -140,7 +152,7 @@ namespace Hydra.Infrastructure.Reflection
                     methodBuilder.DefineParameter(i + 1, ParameterAttributes.None, parameters[i].Name);
                 }
 
-                MethodInfo targetMethodOnAdaptee = this.Adaptee.GetMethod(method.Name, parameterTypes);
+                MethodInfo targetMethodOnAdaptee = this.Adaptee.GetMethod(methodOnContract.Name, parameterTypes);
 
                 ILGenerator il = methodBuilder.GetILGenerator();
 
@@ -148,13 +160,15 @@ namespace Hydra.Infrastructure.Reflection
                 {
                     ThrowNotImplementedException(il);
 
+                    typeBuilder.DefineMethodOverride(methodBuilder, methodOnContract);
+
                     continue;
                 }
 
-                if (MethodHasReturnValue(method))
+                if (MethodHasReturnValue(methodOnContract))
                 {
                     // prepare a field to store the return value
-                    il.DeclareLocal(method.ReturnType);
+                    il.DeclareLocal(methodOnContract.ReturnType);
                 }
 
                 // access the field with the adaptee instance
@@ -171,14 +185,14 @@ namespace Hydra.Infrastructure.Reflection
                 // call the method on the adaptee
                 il.Emit(OpCodes.Callvirt, targetMethodOnAdaptee);
 
-                if (MethodHasReturnValue(method))
+                if (MethodHasReturnValue(methodOnContract))
                 {
                     // store the result of the method call to the prepared field
                     // and jump to the end of the method
                     il.Emit(OpCodes.Stloc_0);
-                    var local = il.DefineLabel();
-                    il.Emit(OpCodes.Br_S, local);
-                    il.MarkLabel(local);
+                    Label ret = il.DefineLabel();
+                    il.Emit(OpCodes.Br_S, ret);
+                    il.MarkLabel(ret);
 
                     // load the result value on the stack. will be used as the return value when the method returns
                     il.Emit(OpCodes.Ldloc_0);
@@ -187,32 +201,38 @@ namespace Hydra.Infrastructure.Reflection
                 // end of method. any result stored at this point will be returned
                 il.Emit(OpCodes.Nop);
                 il.Emit(OpCodes.Ret);
+
+                typeBuilder.DefineMethodOverride(methodBuilder, methodOnContract);
             }
         }
 
         private void GenerateDelegatingProperties(TypeBuilder typeBuilder, FieldBuilder adapteeField)
         {
-            PropertyInfo[] properties = this.Contract.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            var properties = this.Contract.GetProperties(BindingFlags.Instance | BindingFlags.Public).OrderBy(p => p.Name, StringComparer.Ordinal);
 
-            foreach (PropertyInfo property in properties)
+            foreach (PropertyInfo propertyOnContract in properties)
             {
                 PropertyBuilder propertyBuilder = typeBuilder.DefineProperty(
-                    property.Name,
+                    propertyOnContract.Name,
                     PropertyAttributes.None,
-                    property.PropertyType,
+                    propertyOnContract.PropertyType,
                     Type.EmptyTypes);
 
-                PropertyInfo targetPropertyOnAdaptee = this.Adaptee.GetProperty(property.Name, BindingFlags.Instance | BindingFlags.Public);
+                PropertyInfo targetPropertyOnAdaptee = this.Adaptee.GetProperty(propertyOnContract.Name, BindingFlags.Instance | BindingFlags.Public);
+
+                MethodInfo getterOnContract = propertyOnContract.GetGetMethod();
+
+                MethodInfo setterOnContract = propertyOnContract.GetSetMethod();
 
                 if (MemberDoesNotExist(targetPropertyOnAdaptee))
                 {
-                    MethodBuilder notImplementedGetter = this.GenerateNotImplementedGetMethod(typeBuilder, property);
+                    MethodBuilder notImplementedGetter = this.GenerateNotImplementedGetMethod(typeBuilder, getterOnContract, propertyOnContract.PropertyType);
 
                     propertyBuilder.SetGetMethod(notImplementedGetter);
 
-                    if (PropertyIsPubliclyWritable(property))
+                    if (PropertyIsPubliclyWritable(setterOnContract))
                     {
-                        MethodBuilder notImplementedSetMethod = this.GenerateNotImplementedSetMethod(typeBuilder, property);
+                        MethodBuilder notImplementedSetMethod = this.GenerateNotImplementedSetMethod(typeBuilder, propertyOnContract);
 
                         propertyBuilder.SetSetMethod(notImplementedSetMethod);
                     }
@@ -220,13 +240,13 @@ namespace Hydra.Infrastructure.Reflection
                     continue;
                 }
 
-                MethodBuilder getter = this.GenerateGetMethod(typeBuilder, adapteeField, property, targetPropertyOnAdaptee);
+                MethodBuilder getter = this.GenerateGetMethod(typeBuilder, adapteeField, propertyOnContract, targetPropertyOnAdaptee);
 
                 propertyBuilder.SetGetMethod(getter);
 
-                if (PropertyIsPubliclyWritable(property))
+                if (PropertyIsPubliclyWritable(setterOnContract))
                 {
-                    MethodBuilder setMethod = this.GenerateSetMethod(typeBuilder, adapteeField, property, targetPropertyOnAdaptee);
+                    MethodBuilder setMethod = this.GenerateSetMethod(typeBuilder, adapteeField, propertyOnContract, targetPropertyOnAdaptee);
 
                     propertyBuilder.SetSetMethod(setMethod);
                 }
@@ -235,7 +255,7 @@ namespace Hydra.Infrastructure.Reflection
 
         private MethodBuilder GenerateGetMethod(TypeBuilder typeBuilder, FieldBuilder adapteeField, PropertyInfo property, PropertyInfo targetPropertyOnAdaptee)
         {
-            MethodBuilder getMethod = DefineGetMethod(typeBuilder, property);
+            MethodBuilder getMethod = this.DefineGetMethod(typeBuilder, property.GetGetMethod(), property.PropertyType);
 
             ILGenerator il = getMethod.GetILGenerator();
 
@@ -265,9 +285,9 @@ namespace Hydra.Infrastructure.Reflection
             return getMethod;
         }
 
-        private MethodBuilder GenerateNotImplementedGetMethod(TypeBuilder typeBuilder, PropertyInfo property)
+        private MethodBuilder GenerateNotImplementedGetMethod(TypeBuilder typeBuilder, MethodInfo getterOnContract, Type propertyType)
         {
-            MethodBuilder getMethod = DefineGetMethod(typeBuilder, property);
+            MethodBuilder getMethod = this.DefineGetMethod(typeBuilder, getterOnContract, propertyType);
 
             ILGenerator il = getMethod.GetILGenerator();
 
@@ -278,7 +298,7 @@ namespace Hydra.Infrastructure.Reflection
 
         private MethodBuilder GenerateSetMethod(TypeBuilder typeBuilder, FieldBuilder adapteeField, PropertyInfo property, PropertyInfo targetPropertyOnAdaptee)
         {
-            MethodBuilder setMethod = DefineSetMethod(typeBuilder, property);
+            MethodBuilder setMethod = this.DefineSetMethod(typeBuilder, property.GetSetMethod(), property.PropertyType);
 
             ILGenerator il = setMethod.GetILGenerator();
 
@@ -296,7 +316,7 @@ namespace Hydra.Infrastructure.Reflection
 
         private MethodBuilder GenerateNotImplementedSetMethod(TypeBuilder typeBuilder, PropertyInfo property)
         {
-            MethodBuilder setMethod = DefineSetMethod(typeBuilder, property);
+            MethodBuilder setMethod = DefineSetMethod(typeBuilder, property.GetSetMethod(), property.PropertyType);
 
             ILGenerator il = setMethod.GetILGenerator();
 

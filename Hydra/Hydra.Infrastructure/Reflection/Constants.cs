@@ -29,11 +29,11 @@ namespace Hydra.Infrastructure.Reflection
                                                         TypeAttributes.BeforeFieldInit |
                                                         TypeAttributes.AutoLayout;
 
-            public const MethodAttributes Method = MethodAttributes.Public |
-                                                   MethodAttributes.Final |
-                                                   MethodAttributes.HideBySig |
-                                                   MethodAttributes.NewSlot |
-                                                   MethodAttributes.Virtual;
+            public const MethodAttributes ExplicitMethod = MethodAttributes.Private |
+                                                           MethodAttributes.Final |
+                                                           MethodAttributes.HideBySig |
+                                                           MethodAttributes.NewSlot |
+                                                           MethodAttributes.Virtual;
 
             public const MethodAttributes Ctor = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName;
 

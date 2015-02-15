@@ -1,6 +1,7 @@
 namespace Hydra.Infrastructure.Reflection
 {
     using System;
+    using System.Reflection;
     using System.Reflection.Emit;
 
     public abstract class ProxyBuilder
@@ -45,5 +46,22 @@ namespace Hydra.Infrastructure.Reflection
         }
 
         protected abstract string GetTypeName();
+
+        protected virtual string GetGetMethodName(MethodInfo getterOnContract)
+        {
+            //return this.Contract.FullName + "." + getterOnContract.Name;
+            return getterOnContract.Name;
+        }
+
+        protected virtual string GetSetMethodName(MethodInfo setterOnContract)
+        {
+            //return this.Contract.FullName + "." + setterOnContract.Name;
+            return setterOnContract.Name;
+        }
+
+        protected virtual string GetMethodName(MethodInfo methodOnContract)
+        {
+            return this.Contract.FullName + "." + methodOnContract.Name;
+        }
     }
 }
