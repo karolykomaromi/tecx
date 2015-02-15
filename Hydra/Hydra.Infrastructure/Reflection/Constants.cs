@@ -15,7 +15,7 @@ namespace Hydra.Infrastructure.Reflection
                                                    MethodAttributes.SpecialName |
                                                    MethodAttributes.HideBySig;
 
-            public const MethodAttributes GetSetFromInterface = MethodAttributes.Public | 
+            public const MethodAttributes GetSetFromInterface = MethodAttributes.Private | 
                                                                 MethodAttributes.Final | 
                                                                 MethodAttributes.HideBySig | 
                                                                 MethodAttributes.SpecialName | 
