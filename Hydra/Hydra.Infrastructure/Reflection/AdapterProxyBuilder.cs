@@ -7,41 +7,58 @@ namespace Hydra.Infrastructure.Reflection
 
     public class AdapterProxyBuilder : ProxyBuilder
     {
-        private readonly Type adaptee;
-
-        public AdapterProxyBuilder(ModuleBuilder moduleBuilder, Type contract, Type adaptee)
-            : base(moduleBuilder, contract)
+        public AdapterProxyBuilder(ModuleBuilder moduleBuilder, Type contract, Type target)
+            : base(moduleBuilder, contract, target)
         {
-            System.Diagnostics.Contracts.Contract.Requires(adaptee != null);
-
-            this.adaptee = adaptee;
-        }
-
-        private Type Adaptee
-        {
-            get { return this.adaptee; }
         }
 
         public override Type Build()
         {
             TypeBuilder typeBuilder = this.CreateTypeBuilder();
 
-            FieldBuilder adapteeField = this.GenerateAdapteeField(typeBuilder);
+            FieldBuilder targetField = this.GenerateTargetField(typeBuilder);
 
-            this.GenerateConstructor(typeBuilder, adapteeField);
+            this.GenerateConstructor(typeBuilder, targetField);
 
-            this.GenerateDelegatingProperties(typeBuilder, adapteeField);
+            MethodInfo targetGetter = this.GenerateTargetProperty(typeBuilder, targetField);
 
-            this.GenerateDelegatingMethods(typeBuilder, adapteeField);
+            this.GenerateDelegatingProperties(typeBuilder, targetField);
+
+            this.GenerateDelegatingMethods(typeBuilder, targetField);
 
             Type adapterType = typeBuilder.CreateType();
 
             return adapterType;
         }
 
+        private MethodInfo GenerateTargetProperty(TypeBuilder typeBuilder, FieldBuilder targetField)
+        {
+            PropertyBuilder propertyBuilder = typeBuilder.DefineProperty(
+                Constants.Names.TargetProperty,
+                PropertyAttributes.None,
+                this.Target,
+                Type.EmptyTypes);
+
+            MethodBuilder targetGetter = typeBuilder.DefineMethod(
+                Constants.Names.GetterPrefix + Constants.Names.TargetProperty,
+                Constants.Attributes.GetSet,
+                this.Target,
+                Type.EmptyTypes);
+
+            ILGenerator il = targetGetter.GetILGenerator();
+
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Ldfld, targetField);
+            il.Emit(OpCodes.Ret);
+
+            propertyBuilder.SetGetMethod(targetGetter);
+
+            return targetGetter;
+        }
+
         protected override string GetTypeName()
         {
-            return string.Format("{0}To{1}Adapter", this.Adaptee.Name, this.Contract.Name);
+            return string.Format("{0}To{1}Adapter", this.Target.Name, this.Contract.Name);
         }
 
         private static bool MethodHasReturnValue(MethodInfo method)
@@ -72,31 +89,31 @@ namespace Hydra.Infrastructure.Reflection
             return setterOnContract != null;
         }
 
-        private FieldBuilder GenerateAdapteeField(TypeBuilder typeBuilder)
+        private FieldBuilder GenerateTargetField(TypeBuilder typeBuilder)
         {
-            FieldBuilder adapteeField = typeBuilder.DefineField("adaptee", this.Adaptee, Constants.Attributes.ReadonlyField);
+            FieldBuilder adapteeField = typeBuilder.DefineField("target", this.Target, Constants.Attributes.ReadonlyField);
 
             return adapteeField;
         }
 
-        private void GenerateConstructor(TypeBuilder typeBuilder, FieldBuilder adapteeField)
+        private void GenerateConstructor(TypeBuilder typeBuilder, FieldBuilder targetField)
         {
             ConstructorBuilder constructor = typeBuilder.DefineConstructor(
                 Constants.Attributes.Ctor,
                 CallingConventions.Standard,
-                new[] { this.adaptee });
+                new[] { this.Target });
 
-            constructor.DefineParameter(1, ParameterAttributes.None, "adaptee");
+            constructor.DefineParameter(1, ParameterAttributes.None, Constants.Names.TargetField);
 
             // call the parameterless constructor of the base class (must be done explicitely otherwise the IL code won't be valid)
             ILGenerator il = constructor.GetILGenerator();
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Call, Constants.Constructors.Object);
 
-            // store the adaptee parameter in the matching private field
+            // store the target parameter in the matching private field
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ldarg_1);
-            il.Emit(OpCodes.Stfld, adapteeField);
+            il.Emit(OpCodes.Stfld, targetField);
             il.Emit(OpCodes.Ret);
         }
 
@@ -126,7 +143,7 @@ namespace Hydra.Infrastructure.Reflection
                     methodBuilder.DefineParameter(i + 1, ParameterAttributes.None, parameters[i].Name);
                 }
 
-                MethodInfo targetMethodOnAdaptee = this.Adaptee.GetMethod(methodOnContract.Name, parameterTypes);
+                MethodInfo targetMethodOnAdaptee = this.Target.GetMethod(methodOnContract.Name, parameterTypes);
 
                 ILGenerator il = methodBuilder.GetILGenerator();
 
@@ -145,18 +162,18 @@ namespace Hydra.Infrastructure.Reflection
                     il.DeclareLocal(methodOnContract.ReturnType);
                 }
 
-                // access the field with the adaptee instance
+                // access the field with the target instance
                 il.Emit(OpCodes.Nop);
                 il.Emit(OpCodes.Ldarg_0);
                 il.Emit(OpCodes.Ldfld, adapteeField);
 
-                // load all method parameters so you can hand them down to the method of the adaptee
+                // load all method parameters so you can hand them down to the method of the target
                 for (int i = 1; i <= parameters.Length; i++)
                 {
                     il.Emit(OpCodes.Ldarg, i);
                 }
 
-                // call the method on the adaptee
+                // call the method on the target
                 il.Emit(OpCodes.Callvirt, targetMethodOnAdaptee);
 
                 if (MethodHasReturnValue(methodOnContract))
@@ -198,7 +215,7 @@ namespace Hydra.Infrastructure.Reflection
                     propertyType,
                     Type.EmptyTypes);
 
-                PropertyInfo propertyOnAdaptee = this.Adaptee.GetProperty(propertyOnContract.Name, BindingFlags.Instance | BindingFlags.Public);
+                PropertyInfo propertyOnAdaptee = this.Target.GetProperty(propertyOnContract.Name, BindingFlags.Instance | BindingFlags.Public);
 
                 if (MemberDoesNotExist(propertyOnAdaptee))
                 {
@@ -252,12 +269,12 @@ namespace Hydra.Infrastructure.Reflection
             // prepare a field to store the return value
             il.DeclareLocal(propertyType);
 
-            // access the field with the adaptee instance
+            // access the field with the target instance
             il.Emit(OpCodes.Nop);
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ldfld, targetField);
 
-            // call the property on the adaptee
+            // call the property on the target
             il.Emit(OpCodes.Callvirt, getterOnTarget);
 
             // store the result of the property call to the prepared field
@@ -290,11 +307,11 @@ namespace Hydra.Infrastructure.Reflection
 
             ILGenerator il = setMethod.GetILGenerator();
 
-            // access the field with the adaptee instance
+            // access the field with the target instance
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ldfld, targetField);
 
-            // store the value using the setter of the adaptee property
+            // store the value using the setter of the target property
             il.Emit(OpCodes.Ldarg_1);
             il.Emit(OpCodes.Callvirt, setterOnTarget);
             il.Emit(OpCodes.Ret);
@@ -304,7 +321,7 @@ namespace Hydra.Infrastructure.Reflection
 
         private MethodBuilder GenerateNotImplementedSetMethod(TypeBuilder typeBuilder, MethodInfo setterOnContract, Type propertyType)
         {
-            MethodBuilder setMethod = DefineSetMethod(typeBuilder, setterOnContract, propertyType);
+            MethodBuilder setMethod = this.DefineSetMethod(typeBuilder, setterOnContract, propertyType);
 
             ILGenerator il = setMethod.GetILGenerator();
 
@@ -319,7 +336,7 @@ namespace Hydra.Infrastructure.Reflection
 
             MethodBuilder getMethod = typeBuilder.DefineMethod(
                 name,
-                Constants.Attributes.GetSetFromInterface,
+                Constants.Attributes.ExplicitGetSetFromInterface,
                 propertyType,
                 Type.EmptyTypes);
 
@@ -332,7 +349,7 @@ namespace Hydra.Infrastructure.Reflection
 
             MethodBuilder setMethod = typeBuilder.DefineMethod(
                 name,
-                Constants.Attributes.GetSetFromInterface,
+                Constants.Attributes.ExplicitGetSetFromInterface,
                 null,
                 new[] { propertyType });
 
