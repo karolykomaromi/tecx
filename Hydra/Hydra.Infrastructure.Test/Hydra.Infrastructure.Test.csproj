@@ -153,6 +153,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Reflection\DecoraptorProxyBuilderTests.cs" />
     <Compile Include="Reflection\Duck.cs" />
     <Compile Include="Reflection\DuckButNot.cs" />
     <Compile Include="Reflection\DuckButNotToIDuckAdapter.cs" />

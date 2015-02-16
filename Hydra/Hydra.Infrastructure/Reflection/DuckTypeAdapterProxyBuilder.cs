@@ -40,14 +40,10 @@ namespace Hydra.Infrastructure.Reflection
 
             // call the parameterless constructor of the base class (must be done explicitely otherwise the IL code won't be valid)
             ILGenerator il = constructor.GetILGenerator();
-            il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Call, Constants.Constructors.Object);
 
-            // store the target parameter in the matching private field
-            il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Ldarg_1);
-            il.Emit(OpCodes.Stfld, targetField);
-            il.Emit(OpCodes.Ret);
+            CallParameterlessCtorOfObject(il);
+
+            StoreCtorParameterInField(il, targetField);
         }
 
         protected override MethodBuilder GenerateTargetProperty(TypeBuilder typeBuilder, FieldBuilder targetField)

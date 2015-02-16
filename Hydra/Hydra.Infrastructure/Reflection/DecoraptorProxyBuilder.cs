@@ -4,38 +4,33 @@
     using System.Reflection;
     using System.Reflection.Emit;
 
-    public class LazyProxyBuilder : ProxyBuilder
+    public class DecoraptorProxyBuilder : ProxyBuilder
     {
-        private const string LazyPrefix = "Lazy";
+        private const string DecoraptorPostfix = "Decoraptor";
 
-        private const string InstanceFieldName = "instance";
+        private const string CreateFieldName = "create";
 
-        private const string InstancePropertyName = "Instance";
+        private const string CreatePropertyName = "Create";
 
-        public LazyProxyBuilder(ModuleBuilder moduleBuilder, Type contract)
+        public DecoraptorProxyBuilder(ModuleBuilder moduleBuilder, Type contract)
             : base(moduleBuilder, contract, contract)
         {
         }
 
         protected override string GetTypeName()
         {
-            string name = LazyPrefix;
+            string name = this.Contract.Name.StartsWith("I", StringComparison.Ordinal)
+                ? this.Contract.Name.Substring(1)
+                : this.Contract.Name;
 
-            if (this.Contract.Name.StartsWith("I", StringComparison.Ordinal))
-            {
-                name += this.Contract.Name.Substring(1);
-            }
-            else
-            {
-                name += this.Contract.Name;
-            }
+            name += DecoraptorPostfix;
 
             return name;
         }
 
         protected override FieldBuilder GenerateTargetField(TypeBuilder typeBuilder)
         {
-            FieldBuilder targetField = typeBuilder.DefineField(InstanceFieldName, typeof(Lazy<>).MakeGenericType(this.Target), Constants.Attributes.ReadonlyField);
+            FieldBuilder targetField = typeBuilder.DefineField(CreateFieldName, typeof(Func<>).MakeGenericType(this.Target), Constants.Attributes.ReadonlyField);
 
             return targetField;
         }
@@ -51,34 +46,23 @@
 
             constructor.DefineParameter(1, ParameterAttributes.None, "factory");
 
-            // call the parameterless constructor of the base class (must be done explicitely otherwise the IL code won't be valid)
             ILGenerator il = constructor.GetILGenerator();
 
             CallParameterlessCtorOfObject(il);
 
-            il.Emit(OpCodes.Nop);
-            il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Ldarg_1);
-
-            // new Lazy<T>(Func<T>)
-            ConstructorInfo lazyCtor = typeof(Lazy<>).MakeGenericType(this.Target).GetConstructor(new[] { factory });
-            il.Emit(OpCodes.Newobj, lazyCtor);
-
-            il.Emit(OpCodes.Stfld, targetField);
-            il.Emit(OpCodes.Nop);
-            il.Emit(OpCodes.Ret);
+            StoreCtorParameterInField(il, targetField);
         }
 
         protected override MethodBuilder GenerateTargetProperty(TypeBuilder typeBuilder, FieldBuilder targetField)
         {
             PropertyBuilder propertyBuilder = typeBuilder.DefineProperty(
-                InstancePropertyName,
+                CreatePropertyName,
                 PropertyAttributes.None,
                 this.Target,
                 Type.EmptyTypes);
 
             MethodBuilder targetGetter = typeBuilder.DefineMethod(
-                Constants.Names.GetterPrefix + InstancePropertyName,
+                Constants.Names.GetterPrefix + CreatePropertyName,
                 Constants.Attributes.GetSet,
                 this.Target,
                 Type.EmptyTypes);
@@ -89,9 +73,9 @@
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ldfld, targetField);
 
-            MethodInfo valueGetter = typeof(Lazy<>).MakeGenericType(this.Target).GetProperty("Value").GetGetMethod();
+            MethodInfo invoke = typeof(Func<>).MakeGenericType(this.Target).GetMethod("Invoke");
 
-            il.Emit(OpCodes.Callvirt, valueGetter);
+            il.Emit(OpCodes.Callvirt, invoke);
 
             PutPropertyValueOnStackAndReturn(il);
 

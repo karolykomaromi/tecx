@@ -6,7 +6,7 @@ namespace Hydra.Infrastructure.Reflection
     using System.Reflection;
     using System.Reflection.Emit;
 
-    public abstract class ProxyBuilder
+    public abstract class ProxyBuilder : Builder<Type>
     {
         private readonly ModuleBuilder moduleBuilder;
 
@@ -41,7 +41,7 @@ namespace Hydra.Infrastructure.Reflection
             get { return this.target; }
         }
 
-        public virtual Type Build()
+        public override Type Build()
         {
             TypeBuilder typeBuilder = this.CreateTypeBuilder();
 
@@ -58,6 +58,30 @@ namespace Hydra.Infrastructure.Reflection
             Type adapterType = typeBuilder.CreateType();
 
             return adapterType;
+        }
+
+        protected static void CallParameterlessCtorOfObject(ILGenerator il)
+        {
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Call, Constants.Constructors.Object);
+        }
+
+        protected static void StoreCtorParameterInField(ILGenerator il, FieldBuilder targetField)
+        {
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Ldarg_1);
+            il.Emit(OpCodes.Stfld, targetField);
+            il.Emit(OpCodes.Ret);
+        }
+
+        protected static void PutPropertyValueOnStackAndReturn(ILGenerator il)
+        {
+            Label ret = il.DefineLabel();
+            il.Emit(OpCodes.Stloc_0);
+            il.Emit(OpCodes.Br_S, ret);
+            il.MarkLabel(ret);
+            il.Emit(OpCodes.Ldloc_0);
+            il.Emit(OpCodes.Ret);
         }
 
         protected virtual TypeBuilder CreateTypeBuilder()
