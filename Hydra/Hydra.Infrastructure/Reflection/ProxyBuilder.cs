@@ -95,6 +95,11 @@ namespace Hydra.Infrastructure.Reflection
             il.Emit(OpCodes.Ret);
         }
 
+        protected static bool MethodHasReturnValue(MethodInfo method)
+        {
+            return method.ReturnType != typeof(void);
+        }
+
         protected virtual TypeBuilder CreateTypeBuilder()
         {
             string name = this.GetTypeName();
@@ -199,7 +204,7 @@ namespace Hydra.Infrastructure.Reflection
                 }
                 else
                 {
-                    CallMethodOnTarget(il, ctx.TargetGetter, targetMethodOnAdaptee, methodOnContract, parameters);
+                    CallMethodOnTarget(il, ctx, targetMethodOnAdaptee, methodOnContract, parameters);
                 }
 
                 ctx.TypeBuilder.DefineMethodOverride(methodBuilder, methodOnContract);
@@ -338,13 +343,8 @@ namespace Hydra.Infrastructure.Reflection
 
             return setMethod;
         }
-        
-        private static bool MethodHasReturnValue(MethodInfo method)
-        {
-            return method.ReturnType != typeof(void);
-        }
 
-        private static void CallMethodOnTarget(ILGenerator il, MethodBuilder targetGetter, MethodInfo methodOnTarget, MethodInfo methodOnContract, ICollection<ParameterInfo> parameters)
+        protected virtual void CallMethodOnTarget(ILGenerator il, TBuilderContext ctx, MethodInfo methodOnTarget, MethodInfo methodOnContract, ICollection<ParameterInfo> parameters)
         {
             if (MethodHasReturnValue(methodOnContract))
             {
@@ -355,7 +355,7 @@ namespace Hydra.Infrastructure.Reflection
             // access the field with the target instance
             il.Emit(OpCodes.Nop);
             il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Call, targetGetter);
+            il.Emit(OpCodes.Call, ctx.TargetGetter);
 
             // load all method parameters so you can hand them down to the method of the target
             for (int i = 1; i <= parameters.Count; i++)

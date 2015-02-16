@@ -1,6 +1,7 @@
 namespace Hydra.Infrastructure.Reflection
 {
     using System;
+    using System.Collections.Generic;
     using System.Reflection;
     using System.Reflection.Emit;
     using System.Runtime.InteropServices.ComTypes;
@@ -161,6 +162,53 @@ namespace Hydra.Infrastructure.Reflection
             propertyBuilder.SetGetMethod(targetGetter);
 
             return targetGetter;
+        }
+
+        protected override void CallMethodOnTarget(ILGenerator il, DecomissioningDecoraptorBuilderContext ctx, MethodInfo methodOnTarget,
+            MethodInfo methodOnContract, ICollection<ParameterInfo> parameters)
+        {
+            il.DeclareLocal(this.Target);
+
+            if (MethodHasReturnValue(methodOnContract))
+            {
+                il.DeclareLocal(methodOnContract.ReturnType);
+            }
+
+            il.Emit(OpCodes.Ldnull);
+            il.Emit(OpCodes.Stloc_0);
+            
+            il.BeginExceptionBlock();
+
+            il.Emit(OpCodes.Nop);
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Call, ctx.TargetGetter);
+            il.Emit(OpCodes.Stloc_0);
+            il.Emit(OpCodes.Ldloc_0);
+
+            // load all method parameters so you can hand them down to the method of the target
+            for (int i = 1; i <= parameters.Count; i++)
+            {
+                il.Emit(OpCodes.Ldarg, i);
+            }
+
+            // call the method on the target
+            il.Emit(OpCodes.Callvirt, methodOnTarget);
+
+            if (MethodHasReturnValue(methodOnContract))
+            {
+                il.Emit(OpCodes.Stloc_1);
+            }
+
+            il.BeginFinallyBlock();
+
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Ldloc_0);
+            il.Emit(OpCodes.Call, ctx.ReleaseMethod);
+
+            il.EndExceptionBlock();
+
+            il.Emit(OpCodes.Ldloc_1);
+            il.Emit(OpCodes.Ret);
         }
     }
 }
