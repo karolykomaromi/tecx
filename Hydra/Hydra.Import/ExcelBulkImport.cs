@@ -5,6 +5,10 @@ namespace Hydra.Import
     using System.Reflection;
     using DocumentFormat.OpenXml.Packaging;
     using DocumentFormat.OpenXml.Spreadsheet;
+    using Hydra.Import.Data;
+    using Hydra.Import.Results;
+    using Hydra.Import.Settings;
+    using Hydra.Import.ValueWriters;
     using NHibernate;
 
     public class ExcelBulkImport
