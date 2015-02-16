@@ -30,9 +30,9 @@ namespace Hydra.Infrastructure.Reflection
             Contract.Requires(adaptee != null);
             Contract.Ensures(Contract.Result<Type>() != null);
 
-            var builder = new DuckTypeAdapterProxyBuilder(this.moduleBuilder, contract, adaptee);
+            ProxyBuilder builder = new DuckTypeAdapterProxyBuilder(this.moduleBuilder, contract, adaptee);
 
-            var proxyType = builder.Build();
+            Type proxyType = builder.Build();
 
             this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
 
@@ -44,9 +44,23 @@ namespace Hydra.Infrastructure.Reflection
             Contract.Requires(contract != null);
             Contract.Ensures(Contract.Result<Type>() != null);
 
-            var builder = new LazyProxyBuilder(this.moduleBuilder, contract);
+            ProxyBuilder builder = new LazyProxyBuilder(this.moduleBuilder, contract);
 
-            var proxyType = builder.Build();
+            Type proxyType = builder.Build();
+
+            this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
+
+            return proxyType;
+        }
+
+        public Type CreateDecoraptorProxy(Type contract)
+        {
+            Contract.Requires(contract != null);
+            Contract.Ensures(Contract.Result<Type>() != null);
+
+            ProxyBuilder builder = new DecoraptorProxyBuilder(this.moduleBuilder, contract);
+
+            Type proxyType = builder.Build();
 
             this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
 

@@ -69,69 +69,33 @@ namespace Hydra.Infrastructure.Test.Reflection
     public class DuckDecoraptor
     {
         private readonly Func<IDuck> create;
-        private readonly Action<IDuck> release;
 
-        public DuckDecoraptor(Func<IDuck> create, Action<IDuck> release)
+        public DuckDecoraptor(Func<IDuck> create)
         {
             this.create = create;
-            this.release = release;
         }
 
         public int Foo
         {
             get
             {
-                IDuck instance = null;
-                try
-                {
-                    instance = this.create();
-
-                    return instance.Foo;
-                }
-                finally
-                {
-                    if (instance != null)
-                    {
-                        this.release(instance);
-                    }
-                }
+                return this.Create.Foo;
             }
 
             set
             {
-                IDuck instance = null;
-                try
-                {
-                    instance = this.create();
-
-                    instance.Foo = value;
-                }
-                finally
-                {
-                    if (instance != null)
-                    {
-                        this.release(instance);
-                    }
-                }
+                this.Create.Foo = value;
             }
+        }
+
+        public IDuck Create
+        {
+            get { return this.create(); }
         }
 
         public int TheAnswer()
         {
-            IDuck instance = null;
-            try
-            {
-                instance = this.create();
-
-                return instance.TheAnswer();
-            }
-            finally
-            {
-                if (instance != null)
-                {
-                    this.release(instance);
-                }
-            }
+            return this.Create.TheAnswer();
         }
     }
 }
