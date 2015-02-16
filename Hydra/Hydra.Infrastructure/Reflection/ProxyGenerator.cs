@@ -24,12 +24,27 @@ namespace Hydra.Infrastructure.Reflection
                 this.assemblyBuilder.GetName().Name, Constants.Names.AssemblyFileName);
         }
 
-        public Type CreateAdapterType(Type contract, Type adaptee)
+        public Type CreateDuckTypeProxy(Type contract, Type adaptee)
         {
             Contract.Requires(contract != null);
             Contract.Requires(adaptee != null);
+            Contract.Ensures(Contract.Result<Type>() != null);
 
-            var builder = new AdapterProxyBuilder(this.moduleBuilder, contract, adaptee);
+            var builder = new DuckTypeAdapterProxyBuilder(this.moduleBuilder, contract, adaptee);
+
+            var proxyType = builder.Build();
+
+            this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
+
+            return proxyType;
+        }
+
+        public Type CreateLazyProxy(Type contract)
+        {
+            Contract.Requires(contract != null);
+            Contract.Ensures(Contract.Result<Type>() != null);
+
+            var builder = new LazyProxyBuilder(this.moduleBuilder, contract);
 
             var proxyType = builder.Build();
 

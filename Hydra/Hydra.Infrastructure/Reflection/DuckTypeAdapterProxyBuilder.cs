@@ -6,23 +6,27 @@ namespace Hydra.Infrastructure.Reflection
     using System.Reflection;
     using System.Reflection.Emit;
 
-    public class AdapterProxyBuilder : ProxyBuilder
+    public class DuckTypeAdapterProxyBuilder : ProxyBuilder
     {
-        public AdapterProxyBuilder(ModuleBuilder moduleBuilder, Type contract, Type target)
+        private const string TargetFieldName = "target";
+
+        private const string TargetPropertyName = "Target";
+
+        public DuckTypeAdapterProxyBuilder(ModuleBuilder moduleBuilder, Type contract, Type target)
             : base(moduleBuilder, contract, target)
         {
         }
         
         protected override string GetTypeName()
         {
-            return string.Format("{0}To{1}Adapter", this.Target.Name, this.Contract.Name);
+            return String.Format("{0}To{1}Adapter", this.Target.Name, this.Contract.Name);
         }
 
         protected override FieldBuilder GenerateTargetField(TypeBuilder typeBuilder)
         {
-            FieldBuilder adapteeField = typeBuilder.DefineField("target", this.Target, Constants.Attributes.ReadonlyField);
+            FieldBuilder targetField = typeBuilder.DefineField(TargetFieldName, this.Target, Constants.Attributes.ReadonlyField);
 
-            return adapteeField;
+            return targetField;
         }
 
         protected override void GenerateConstructor(TypeBuilder typeBuilder, FieldBuilder targetField)
@@ -32,7 +36,7 @@ namespace Hydra.Infrastructure.Reflection
                 CallingConventions.Standard,
                 new[] { this.Target });
 
-            constructor.DefineParameter(1, ParameterAttributes.None, Constants.Names.TargetField);
+            constructor.DefineParameter(1, ParameterAttributes.None, TargetFieldName);
 
             // call the parameterless constructor of the base class (must be done explicitely otherwise the IL code won't be valid)
             ILGenerator il = constructor.GetILGenerator();
@@ -49,13 +53,13 @@ namespace Hydra.Infrastructure.Reflection
         protected override MethodBuilder GenerateTargetProperty(TypeBuilder typeBuilder, FieldBuilder targetField)
         {
             PropertyBuilder propertyBuilder = typeBuilder.DefineProperty(
-                Constants.Names.TargetProperty,
+                TargetPropertyName,
                 PropertyAttributes.None,
                 this.Target,
                 Type.EmptyTypes);
 
             MethodBuilder targetGetter = typeBuilder.DefineMethod(
-                Constants.Names.GetterPrefix + Constants.Names.TargetProperty,
+                Constants.Names.GetterPrefix + TargetPropertyName,
                 Constants.Attributes.GetSet,
                 this.Target,
                 Type.EmptyTypes);

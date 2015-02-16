@@ -65,10 +65,6 @@ namespace Hydra.Infrastructure.Reflection
             public const string SetterPrefix = "set_";
 
             public const string GetterPrefix = "get_";
-
-            public const string TargetField = "target";
-
-            public const string TargetProperty = "Target";
         }
     }
 }
