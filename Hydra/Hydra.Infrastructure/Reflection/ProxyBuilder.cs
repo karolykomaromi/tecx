@@ -67,11 +67,6 @@ namespace Hydra.Infrastructure.Reflection
             return adapterType;
         }
 
-        protected virtual TBuilderContext CreateContext()
-        {
-            return new TBuilderContext();
-        }
-
         protected static void CallParameterlessCtorOfObject(ILGenerator il)
         {
             il.Emit(OpCodes.Ldarg_0);
@@ -111,6 +106,11 @@ namespace Hydra.Infrastructure.Reflection
                 new[] { this.Contract });
 
             return typeBuilder;
+        }
+
+        protected virtual TBuilderContext CreateContext()
+        {
+            return new TBuilderContext();
         }
 
         protected abstract string GetTypeName();
@@ -204,7 +204,7 @@ namespace Hydra.Infrastructure.Reflection
                 }
                 else
                 {
-                    CallMethodOnTarget(il, ctx, targetMethodOnAdaptee, methodOnContract, parameters);
+                    this.CallMethodOnTarget(il, ctx, targetMethodOnAdaptee, methodOnContract, parameters);
                 }
 
                 ctx.TypeBuilder.DefineMethodOverride(methodBuilder, methodOnContract);

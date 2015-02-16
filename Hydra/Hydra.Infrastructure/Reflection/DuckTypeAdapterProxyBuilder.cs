@@ -19,7 +19,7 @@ namespace Hydra.Infrastructure.Reflection
         
         protected override string GetTypeName()
         {
-            return String.Format("{0}To{1}Adapter", this.Target.Name, this.Contract.Name);
+            return string.Format("{0}To{1}Adapter", this.Target.Name, this.Contract.Name);
         }
 
         protected override FieldBuilder GenerateTargetField(TypeBuilder typeBuilder)
@@ -41,9 +41,9 @@ namespace Hydra.Infrastructure.Reflection
             // call the parameterless constructor of the base class (must be done explicitely otherwise the IL code won't be valid)
             ILGenerator il = constructor.GetILGenerator();
 
-            CallParameterlessCtorOfObject(il);
+            DuckTypeAdapterProxyBuilder.CallParameterlessCtorOfObject(il);
 
-            StoreCtorParameterInField(il, 1, ctx.TargetField);
+            DuckTypeAdapterProxyBuilder.StoreCtorParameterInField(il, 1, ctx.TargetField);
 
             il.Emit(OpCodes.Ret);
         }

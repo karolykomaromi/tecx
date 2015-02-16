@@ -71,44 +71,6 @@ namespace Hydra.Infrastructure.Reflection
             return targetField;
         }
 
-        private FieldBuilder GenerateReleaseField(TypeBuilder typeBuilder)
-        {
-            FieldBuilder releaseField = typeBuilder.DefineField(ReleaseFieldName, typeof(Action<>).MakeGenericType(this.Target), Constants.Attributes.ReadonlyField);
-
-            return releaseField;
-        }
-
-        private MethodBuilder GenerateReleaseMethod(TypeBuilder typeBuilder, FieldBuilder releaseField)
-        {
-            MethodBuilder release = typeBuilder.DefineMethod(
-                ReleaseMethodName, 
-                Constants.Attributes.Method, 
-                null,
-                new[] {this.Target});
-
-            ILGenerator il = release.GetILGenerator();
-
-            Label ret = il.DefineLabel();
-            il.DeclareLocal(typeof (bool));
-            il.Emit(OpCodes.Ldarg_1);
-            il.Emit(OpCodes.Ldnull);
-            il.Emit(OpCodes.Ceq);
-            il.Emit(OpCodes.Stloc_0);
-            il.Emit(OpCodes.Ldloc_0);
-            il.Emit(OpCodes.Brtrue, ret);
-
-            il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Ldfld, releaseField);
-            il.Emit(OpCodes.Ldarg_1);
-            MethodInfo invoke = typeof (Action<>).MakeGenericType(this.Target).GetMethod("Invoke", new[] {this.Target});
-            il.Emit(OpCodes.Callvirt, invoke);
-
-            il.MarkLabel(ret);
-            il.Emit(OpCodes.Ret);
-
-            return release;
-        }
-
         protected override void GenerateConstructor(DecomissioningDecoraptorBuilderContext ctx)
         {
             Type create = typeof(Func<>).MakeGenericType(this.Target);
@@ -124,10 +86,10 @@ namespace Hydra.Infrastructure.Reflection
 
             ILGenerator il = constructor.GetILGenerator();
 
-            CallParameterlessCtorOfObject(il);
+            DecomissioningDecoraptorProxyBuilder.CallParameterlessCtorOfObject(il);
 
-            StoreCtorParameterInField(il, 1, ctx.TargetField);
-            StoreCtorParameterInField(il, 2, ctx.ReleaseField);
+            DecomissioningDecoraptorProxyBuilder.StoreCtorParameterInField(il, 1, ctx.TargetField);
+            DecomissioningDecoraptorProxyBuilder.StoreCtorParameterInField(il, 2, ctx.ReleaseField);
 
             il.Emit(OpCodes.Ret);
         }
@@ -156,7 +118,7 @@ namespace Hydra.Infrastructure.Reflection
 
             il.Emit(OpCodes.Callvirt, invoke);
 
-            PutPropertyValueOnStackAndReturn(il);
+            DecomissioningDecoraptorProxyBuilder.PutPropertyValueOnStackAndReturn(il);
 
             propertyBuilder.SetGetMethod(targetGetter);
 
@@ -167,7 +129,7 @@ namespace Hydra.Infrastructure.Reflection
         {
             il.DeclareLocal(this.Target);
 
-            if (MethodHasReturnValue(methodOnContract))
+            if (DecomissioningDecoraptorProxyBuilder.MethodHasReturnValue(methodOnContract))
             {
                 il.DeclareLocal(methodOnContract.ReturnType);
             }
@@ -192,7 +154,7 @@ namespace Hydra.Infrastructure.Reflection
             // call the method on the target
             il.Emit(OpCodes.Callvirt, methodOnTarget);
 
-            if (MethodHasReturnValue(methodOnContract))
+            if (DecomissioningDecoraptorProxyBuilder.MethodHasReturnValue(methodOnContract))
             {
                 il.Emit(OpCodes.Stloc_1);
             }
@@ -274,6 +236,44 @@ namespace Hydra.Infrastructure.Reflection
             il.Emit(OpCodes.Ret);
 
             return setMethod;
+        }
+
+        private FieldBuilder GenerateReleaseField(TypeBuilder typeBuilder)
+        {
+            FieldBuilder releaseField = typeBuilder.DefineField(ReleaseFieldName, typeof(Action<>).MakeGenericType(this.Target), Constants.Attributes.ReadonlyField);
+
+            return releaseField;
+        }
+
+        private MethodBuilder GenerateReleaseMethod(TypeBuilder typeBuilder, FieldBuilder releaseField)
+        {
+            MethodBuilder release = typeBuilder.DefineMethod(
+                ReleaseMethodName,
+                Constants.Attributes.Method,
+                null,
+                new[] { this.Target });
+
+            ILGenerator il = release.GetILGenerator();
+
+            Label ret = il.DefineLabel();
+            il.DeclareLocal(typeof(bool));
+            il.Emit(OpCodes.Ldarg_1);
+            il.Emit(OpCodes.Ldnull);
+            il.Emit(OpCodes.Ceq);
+            il.Emit(OpCodes.Stloc_0);
+            il.Emit(OpCodes.Ldloc_0);
+            il.Emit(OpCodes.Brtrue, ret);
+
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Ldfld, releaseField);
+            il.Emit(OpCodes.Ldarg_1);
+            MethodInfo invoke = typeof(Action<>).MakeGenericType(this.Target).GetMethod("Invoke", new[] { this.Target });
+            il.Emit(OpCodes.Callvirt, invoke);
+
+            il.MarkLabel(ret);
+            il.Emit(OpCodes.Ret);
+
+            return release;
         }
     }
 }

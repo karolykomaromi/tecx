@@ -1,6 +1,7 @@
 namespace Hydra.Infrastructure.Reflection
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Diagnostics.Contracts;
     using System.Reflection;
     using System.Reflection.Emit;
@@ -12,6 +13,14 @@ namespace Hydra.Infrastructure.Reflection
 
         private readonly ModuleBuilder moduleBuilder;
 
+        private readonly ConcurrentDictionary<Tuple<Type, Type>, Type> ducks;
+
+        private readonly ConcurrentDictionary<Type, Type> lazies;
+
+        private readonly ConcurrentDictionary<Type, Type> decoraptors;
+
+        private readonly ConcurrentDictionary<Type, Type> decomissioningDecoraptors;
+
         public ProxyGenerator()
         {
             AssemblyName assemblyName = new AssemblyName { Name = Constants.Names.AssemblyName };
@@ -22,6 +31,14 @@ namespace Hydra.Infrastructure.Reflection
 
             this.moduleBuilder = this.assemblyBuilder.DefineDynamicModule(
                 this.assemblyBuilder.GetName().Name, Constants.Names.AssemblyFileName);
+
+            this.ducks = new ConcurrentDictionary<Tuple<Type, Type>, Type>();
+
+            this.lazies = new ConcurrentDictionary<Type, Type>();
+
+            this.decoraptors = new ConcurrentDictionary<Type, Type>();
+
+            this.decomissioningDecoraptors = new ConcurrentDictionary<Type, Type>();
         }
 
         public Type CreateDuckTypeProxy(Type contract, Type adaptee)
@@ -30,11 +47,18 @@ namespace Hydra.Infrastructure.Reflection
             Contract.Requires(adaptee != null);
             Contract.Ensures(Contract.Result<Type>() != null);
 
-            var builder = new DuckTypeAdapterProxyBuilder(this.moduleBuilder, contract, adaptee);
+            Type proxyType = this.ducks.GetOrAdd(
+                new Tuple<Type, Type>(contract, adaptee),
+                t =>
+                {
+                    var builder = new DuckTypeAdapterProxyBuilder(this.moduleBuilder, t.Item1, t.Item2);
 
-            Type proxyType = builder.Build();
+                    Type pt = builder.Build();
 
-            this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
+                    this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
+
+                    return pt;
+                });
 
             return proxyType;
         }
@@ -44,11 +68,18 @@ namespace Hydra.Infrastructure.Reflection
             Contract.Requires(contract != null);
             Contract.Ensures(Contract.Result<Type>() != null);
 
-            var builder = new LazyProxyBuilder(this.moduleBuilder, contract);
+            Type proxyType = this.lazies.GetOrAdd(
+                contract, 
+                c =>
+                {
+                    var builder = new LazyProxyBuilder(this.moduleBuilder, c);
 
-            Type proxyType = builder.Build();
+                    Type pt = builder.Build();
 
-            this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
+                    this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
+
+                    return pt;
+                });
 
             return proxyType;
         }
@@ -58,11 +89,17 @@ namespace Hydra.Infrastructure.Reflection
             Contract.Requires(contract != null);
             Contract.Ensures(Contract.Result<Type>() != null);
 
-            var builder = new DecoraptorProxyBuilder(this.moduleBuilder, contract);
+            Type proxyType = this.decoraptors.GetOrAdd(
+                contract, 
+                c =>
+                {
+                    var builder = new DecoraptorProxyBuilder(this.moduleBuilder, c);
 
-            Type proxyType = builder.Build();
+                    Type pt = builder.Build();
 
-            this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
+                    this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
+                    return pt;
+                });
 
             return proxyType;
         }
@@ -72,11 +109,18 @@ namespace Hydra.Infrastructure.Reflection
             Contract.Requires(contract != null);
             Contract.Ensures(Contract.Result<Type>() != null);
 
-            var builder = new DecomissioningDecoraptorProxyBuilder(this.moduleBuilder, contract);
+            Type proxyType = this.decomissioningDecoraptors.GetOrAdd(
+                contract, 
+                c =>
+                {
+                    var builder = new DecomissioningDecoraptorProxyBuilder(this.moduleBuilder, c);
 
-            Type proxyType = builder.Build();
+                    Type pt = builder.Build();
 
-            this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
+                    this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
+
+                    return pt;
+                });
 
             return proxyType;
         }
