@@ -82,12 +82,32 @@ namespace Hydra.Infrastructure.Test.Reflection
         {
             get
             {
-                return this.Create.Foo;
+                IDuck instance = null;
+                try
+                {
+                    instance = this.Create;
+                        
+                    return instance.Foo;
+                }
+                finally
+                {
+                    this.Release(instance);
+                }
             }
 
             set
             {
-                this.Create.Foo = value;
+                IDuck instance = null;
+                try
+                {
+                    instance = this.Create;
+
+                    instance.Foo = value;
+                }
+                finally
+                {
+                    this.Release(instance);
+                }
             }
         }
 

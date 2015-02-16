@@ -4,7 +4,6 @@ namespace Hydra.Infrastructure.Reflection
     using System.Collections.Generic;
     using System.Reflection;
     using System.Reflection.Emit;
-    using System.Runtime.InteropServices.ComTypes;
 
     public class DecomissioningDecoraptorProxyBuilder : ProxyBuilder<DecomissioningDecoraptorBuilderContext>
     {
@@ -164,8 +163,7 @@ namespace Hydra.Infrastructure.Reflection
             return targetGetter;
         }
 
-        protected override void CallMethodOnTarget(ILGenerator il, DecomissioningDecoraptorBuilderContext ctx, MethodInfo methodOnTarget,
-            MethodInfo methodOnContract, ICollection<ParameterInfo> parameters)
+        protected override void CallMethodOnTarget(ILGenerator il, DecomissioningDecoraptorBuilderContext ctx, MethodInfo methodOnTarget, MethodInfo methodOnContract, ICollection<ParameterInfo> parameters)
         {
             il.DeclareLocal(this.Target);
 
@@ -209,6 +207,73 @@ namespace Hydra.Infrastructure.Reflection
 
             il.Emit(OpCodes.Ldloc_1);
             il.Emit(OpCodes.Ret);
+        }
+
+        protected override MethodBuilder GenerateGetMethod(DecomissioningDecoraptorBuilderContext ctx, MethodInfo getterOnContract, MethodInfo getterOnTarget, Type propertyType)
+        {
+            MethodBuilder getMethod = this.DefineGetMethod(ctx.TypeBuilder, getterOnContract, propertyType);
+
+            ILGenerator il = getMethod.GetILGenerator();
+
+            il.DeclareLocal(this.Target);
+            il.DeclareLocal(propertyType);
+
+            il.Emit(OpCodes.Ldnull);
+            il.Emit(OpCodes.Stloc_0);
+
+            il.BeginExceptionBlock();
+
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Call, ctx.TargetGetter);
+            il.Emit(OpCodes.Stloc_0);
+            il.Emit(OpCodes.Ldloc_0);
+
+            il.Emit(OpCodes.Callvirt, getterOnTarget);
+
+            il.Emit(OpCodes.Stloc_1);
+            il.BeginFinallyBlock();
+
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Ldloc_0);
+            il.Emit(OpCodes.Call, ctx.ReleaseMethod);
+
+            il.EndExceptionBlock();
+
+            // load the result value on the stack. will be used as the return value when the method returns
+            il.Emit(OpCodes.Ldloc_1);
+            il.Emit(OpCodes.Ret);
+
+            return getMethod;
+        }
+
+        protected override MethodBuilder GenerateSetMethod(DecomissioningDecoraptorBuilderContext ctx, MethodInfo setterOnContract, MethodInfo setterOnTarget, Type propertyType)
+        {
+            MethodBuilder setMethod = this.DefineSetMethod(ctx.TypeBuilder, setterOnContract, propertyType);
+
+            ILGenerator il = setMethod.GetILGenerator();
+
+            il.DeclareLocal(this.Target);
+            il.Emit(OpCodes.Ldnull);
+            il.Emit(OpCodes.Stloc_0);
+
+            il.BeginExceptionBlock();
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Call, ctx.TargetGetter);
+            il.Emit(OpCodes.Stloc_0);
+            il.Emit(OpCodes.Ldloc_0);
+            il.Emit(OpCodes.Ldarg_1);
+            il.Emit(OpCodes.Callvirt, setterOnTarget);
+
+            il.BeginFinallyBlock();
+
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Ldloc_0);
+            il.Emit(OpCodes.Call, ctx.ReleaseMethod);
+            il.EndExceptionBlock();
+
+            il.Emit(OpCodes.Ret);
+
+            return setMethod;
         }
     }
 }

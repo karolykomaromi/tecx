@@ -45,6 +45,11 @@ namespace Hydra.Infrastructure.Test.Reflection
 
             Assert.Equal(3, factoryCalledCounter);
             Assert.Equal(3, releaseCalledCounter);
+
+            proxy.Bar = "1";
+
+            Assert.Equal(4, factoryCalledCounter);
+            Assert.Equal(4, releaseCalledCounter);
         }
     }
 }
