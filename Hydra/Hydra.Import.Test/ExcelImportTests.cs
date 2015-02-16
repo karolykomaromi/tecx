@@ -2,6 +2,7 @@
 {
     using System.IO;
     using DocumentFormat.OpenXml.Packaging;
+    using Hydra.Import.Results;
     using Moq;
     using NHibernate;
     using Xunit;

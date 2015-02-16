@@ -303,3 +303,7 @@ Hydra/Hydra.Jobs/obj
 Hydra/Hydra.sln.metaproj
 Hydra/Hydra.sln.metaproj.tmp
 Hydra/Result.html
+Hydra/Hydra.CodeQuality/bin
+Hydra/Hydra.CodeQuality/obj
+Hydra/Hydra.CodeQuality.Test/obj
+Hydra/Hydra.CodeQuality.Test/bin
