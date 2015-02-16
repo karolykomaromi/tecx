@@ -6,7 +6,7 @@ namespace Hydra.Infrastructure.Reflection
     using System.Reflection;
     using System.Reflection.Emit;
 
-    public class DuckTypeAdapterProxyBuilder : ProxyBuilder
+    public class DuckTypeAdapterProxyBuilder : ProxyBuilder<BuilderContext>
     {
         private const string TargetFieldName = "target";
 
@@ -29,9 +29,9 @@ namespace Hydra.Infrastructure.Reflection
             return targetField;
         }
 
-        protected override void GenerateConstructor(TypeBuilder typeBuilder, FieldBuilder targetField)
+        protected override void GenerateConstructor(BuilderContext ctx)
         {
-            ConstructorBuilder constructor = typeBuilder.DefineConstructor(
+            ConstructorBuilder constructor = ctx.TypeBuilder.DefineConstructor(
                 Constants.Attributes.Ctor,
                 CallingConventions.Standard,
                 new[] { this.Target });
@@ -43,7 +43,9 @@ namespace Hydra.Infrastructure.Reflection
 
             CallParameterlessCtorOfObject(il);
 
-            StoreCtorParameterInField(il, targetField);
+            StoreCtorParameterInField(il, 1, ctx.TargetField);
+
+            il.Emit(OpCodes.Ret);
         }
 
         protected override MethodBuilder GenerateTargetProperty(TypeBuilder typeBuilder, FieldBuilder targetField)

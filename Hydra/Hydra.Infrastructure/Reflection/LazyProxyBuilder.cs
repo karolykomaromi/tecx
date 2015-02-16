@@ -4,7 +4,7 @@
     using System.Reflection;
     using System.Reflection.Emit;
 
-    public class LazyProxyBuilder : ProxyBuilder
+    public class LazyProxyBuilder : ProxyBuilder<BuilderContext>
     {
         private const string LazyPrefix = "Lazy";
 
@@ -40,11 +40,11 @@
             return targetField;
         }
 
-        protected override void GenerateConstructor(TypeBuilder typeBuilder, FieldBuilder targetField)
+        protected override void GenerateConstructor(BuilderContext ctx)
         {
             Type factory = typeof(Func<>).MakeGenericType(this.Target);
 
-            ConstructorBuilder constructor = typeBuilder.DefineConstructor(
+            ConstructorBuilder constructor = ctx.TypeBuilder.DefineConstructor(
                 Constants.Attributes.Ctor,
                 CallingConventions.Standard,
                 new[] { factory });
@@ -64,7 +64,7 @@
             ConstructorInfo lazyCtor = typeof(Lazy<>).MakeGenericType(this.Target).GetConstructor(new[] { factory });
             il.Emit(OpCodes.Newobj, lazyCtor);
 
-            il.Emit(OpCodes.Stfld, targetField);
+            il.Emit(OpCodes.Stfld, ctx.TargetField);
             il.Emit(OpCodes.Nop);
             il.Emit(OpCodes.Ret);
         }

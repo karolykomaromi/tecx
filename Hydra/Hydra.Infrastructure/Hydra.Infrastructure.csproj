@@ -173,6 +173,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Reflection\BuilderContext.cs" />
+    <Compile Include="Reflection\DecomissioningDecoraptorBuilderContext.cs" />
+    <Compile Include="Reflection\DecomissioningDecoraptorProxyBuilder.cs" />
     <Compile Include="Reflection\DecoraptorProxyBuilder.cs" />
     <Compile Include="Reflection\DuckTypeAdapterProxyBuilder.cs" />
     <Compile Include="Reflection\Constants.cs" />

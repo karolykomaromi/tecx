@@ -4,38 +4,47 @@ namespace Hydra.Infrastructure.Test.Reflection
     using Hydra.Infrastructure.Reflection;
     using Xunit;
 
-    public class DecoraptorProxyBuilderTests
+    public class DecomissioningDecoraptorProxyBuilderTests
     {
         [Fact]
-        public void Should_Create_Decoraptor()
+        public void Should_Create_Decomissioning_Decoraptor()
         {
             var generator = new ProxyGenerator();
 
-            Type lazyProxyType = generator.CreateDecoraptorProxy(typeof(IDuck));
+            Type lazyProxyType = generator.CreateDecomissioningDecoraptorProxy(typeof(IDuck));
 
             int factoryCalledCounter = 0;
+            int releaseCalledCounter = 0;
 
-            Func<IDuck> factory = () =>
+            Func<IDuck> create = () =>
             {
                 factoryCalledCounter++;
                 return new Duck();
             };
 
-            IDuck proxy = (IDuck)Activator.CreateInstance(lazyProxyType, factory);
+            Action<IDuck> release = duck =>
+            {
+                releaseCalledCounter++;
+            };
+
+            IDuck proxy = (IDuck)Activator.CreateInstance(lazyProxyType, create, release);
 
             Assert.Equal(0, factoryCalledCounter);
 
             Assert.Equal(42, proxy.TheAnswer());
 
             Assert.Equal(1, factoryCalledCounter);
+            Assert.Equal(1, releaseCalledCounter);
 
             Assert.Throws<NotImplementedException>(() => proxy.NotImplementedProperty);
 
             Assert.Equal(2, factoryCalledCounter);
+            Assert.Equal(2, releaseCalledCounter);
 
             Assert.Throws<NotImplementedException>(() => proxy.NotImplementedMethod());
 
             Assert.Equal(3, factoryCalledCounter);
+            Assert.Equal(3, releaseCalledCounter);
         }
     }
 }

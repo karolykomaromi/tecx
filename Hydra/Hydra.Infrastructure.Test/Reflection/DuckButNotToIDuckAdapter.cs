@@ -70,9 +70,12 @@ namespace Hydra.Infrastructure.Test.Reflection
     {
         private readonly Func<IDuck> create;
 
-        public DuckDecoraptor(Func<IDuck> create)
+        private readonly Action<IDuck> release;
+
+        public DuckDecoraptor(Func<IDuck> create, Action<IDuck> release)
         {
             this.create = create;
+            this.release = release;
         }
 
         public int Foo
@@ -95,7 +98,24 @@ namespace Hydra.Infrastructure.Test.Reflection
 
         public int TheAnswer()
         {
-            return this.Create.TheAnswer();
+            IDuck instance = null;
+            try
+            {
+                instance = this.Create;
+                return instance.TheAnswer();
+            }
+            finally
+            {
+                this.Release(instance);
+            }
+        }
+
+        private void Release(IDuck instance)
+        {
+            if (instance != null)
+            {
+                this.release(instance);
+            }
         }
     }
 }

@@ -4,7 +4,7 @@
     using System.Reflection;
     using System.Reflection.Emit;
 
-    public class DecoraptorProxyBuilder : ProxyBuilder
+    public class DecoraptorProxyBuilder : ProxyBuilder<BuilderContext>
     {
         private const string DecoraptorPostfix = "Decoraptor";
 
@@ -35,11 +35,11 @@
             return targetField;
         }
 
-        protected override void GenerateConstructor(TypeBuilder typeBuilder, FieldBuilder targetField)
+        protected override void GenerateConstructor(BuilderContext ctx)
         {
             Type factory = typeof(Func<>).MakeGenericType(this.Target);
 
-            ConstructorBuilder constructor = typeBuilder.DefineConstructor(
+            ConstructorBuilder constructor = ctx.TypeBuilder.DefineConstructor(
                 Constants.Attributes.Ctor,
                 CallingConventions.Standard,
                 new[] { factory });
@@ -50,7 +50,9 @@
 
             CallParameterlessCtorOfObject(il);
 
-            StoreCtorParameterInField(il, targetField);
+            StoreCtorParameterInField(il, 1, ctx.TargetField);
+
+            il.Emit(OpCodes.Ret);
         }
 
         protected override MethodBuilder GenerateTargetProperty(TypeBuilder typeBuilder, FieldBuilder targetField)
