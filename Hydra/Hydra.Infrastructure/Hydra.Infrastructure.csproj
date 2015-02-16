@@ -173,11 +173,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Reflection\AdapterProxyBuilder.cs" />
+    <Compile Include="Reflection\DuckTypeAdapterProxyBuilder.cs" />
     <Compile Include="Reflection\Constants.cs" />
     <Compile Include="Reflection\CustomAttributeProvider.cs" />
     <Compile Include="Reflection\EmitDuckTypeGenerator.cs" />
     <Compile Include="Reflection\IDuckTypeGenerator.cs" />
+    <Compile Include="Reflection\LazyProxyBuilder.cs" />
     <Compile Include="Reflection\Method.cs" />
     <Compile Include="Reflection\Property.cs" />
     <Compile Include="Reflection\PropertyNotFoundException.cs" />

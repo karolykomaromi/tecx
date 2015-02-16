@@ -153,6 +153,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Reflection\Duck.cs" />
     <Compile Include="Reflection\DuckButNot.cs" />
     <Compile Include="Reflection\DuckButNotToIDuckAdapter.cs" />
     <Compile Include="Reflection\IDuck.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Reflection\Foo.cs" />
     <Compile Include="Reflection\IGenericInterface.cs" />
     <Compile Include="Reflection\ImplementsGenericInterface.cs" />
+    <Compile Include="Reflection\LazyProxyBuilderTests.cs" />
     <Compile Include="Reflection\TypeHelperTests.cs" />
     <Compile Include="StringHelperTests.cs" />
   </ItemGroup>

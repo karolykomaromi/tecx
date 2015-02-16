@@ -8,7 +8,7 @@ namespace Hydra.Infrastructure.Reflection
         {
             var generator = new ProxyGenerator();
 
-            Type adapterType = generator.CreateAdapterType(typeof(T), duck.GetType());
+            Type adapterType = generator.CreateDuckTypeProxy(typeof(T), duck.GetType());
 
             return (T)Activator.CreateInstance(adapterType, duck);
         }
