@@ -157,7 +157,6 @@
     <Compile Include="Reflection\DecoraptorProxyBuilderTests.cs" />
     <Compile Include="Reflection\Duck.cs" />
     <Compile Include="Reflection\DuckButNot.cs" />
-    <Compile Include="Reflection\DuckButNotToIDuckAdapter.cs" />
     <Compile Include="Reflection\IDuck.cs" />
     <Compile Include="Reflection\EmitDuckTypeGeneratorTests.cs" />
     <Compile Include="Reflection\Foo.cs" />

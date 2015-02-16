@@ -48,9 +48,9 @@
 
             ILGenerator il = constructor.GetILGenerator();
 
-            CallParameterlessCtorOfObject(il);
+            DecoraptorProxyBuilder.CallParameterlessCtorOfObject(il);
 
-            StoreCtorParameterInField(il, 1, ctx.TargetField);
+            DecoraptorProxyBuilder.StoreCtorParameterInField(il, 1, ctx.TargetField);
 
             il.Emit(OpCodes.Ret);
         }
@@ -79,7 +79,7 @@
 
             il.Emit(OpCodes.Callvirt, invoke);
 
-            PutPropertyValueOnStackAndReturn(il);
+            DecoraptorProxyBuilder.PutPropertyValueOnStackAndReturn(il);
 
             propertyBuilder.SetGetMethod(targetGetter);
 

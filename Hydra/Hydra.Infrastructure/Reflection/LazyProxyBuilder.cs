@@ -54,7 +54,7 @@
             // call the parameterless constructor of the base class (must be done explicitely otherwise the IL code won't be valid)
             ILGenerator il = constructor.GetILGenerator();
 
-            CallParameterlessCtorOfObject(il);
+            LazyProxyBuilder.CallParameterlessCtorOfObject(il);
 
             il.Emit(OpCodes.Nop);
             il.Emit(OpCodes.Ldarg_0);
@@ -93,7 +93,7 @@
 
             il.Emit(OpCodes.Callvirt, valueGetter);
 
-            PutPropertyValueOnStackAndReturn(il);
+            LazyProxyBuilder.PutPropertyValueOnStackAndReturn(il);
 
             propertyBuilder.SetGetMethod(targetGetter);
 
