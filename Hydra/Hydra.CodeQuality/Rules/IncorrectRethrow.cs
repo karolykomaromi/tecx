@@ -39,11 +39,17 @@ namespace Hydra.CodeQuality.Rules
 
                             if (t1.CsTokenType == CsTokenType.Throw && t2.Text == exceptionParameterName)
                             {
+                                string methodSignature =
+                                    method.FullNamespaceName.Replace("Root.", string.Empty) +
+                                    "(" +
+                                    string.Join(", ", method.Parameters.Select(p => p.Type + " " + p.Name)) +
+                                    ")";
+
                                 this.SourceAnalyzer.AddViolation(
                                     method,
                                     method.Location,
                                     this.RuleName,
-                                    method.FullyQualifiedName.Replace("Root.", string.Empty),
+                                    methodSignature,
                                     exceptionParameterName);
                             }
                         }

@@ -20,6 +20,7 @@
 
             ICsElementVisitor visitor = new CompositeCsElementVisitor(
                 new ConstructorMustNotHaveMoreThanFourParameters(this),
+                new MethodMustNotHaveMoreThanFourParameters(this),
                 new IncorrectRethrow(this));
 
             csDocument.WalkDocument(visitor.Visit);

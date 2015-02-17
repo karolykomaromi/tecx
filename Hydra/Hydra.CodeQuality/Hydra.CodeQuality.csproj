@@ -60,6 +60,7 @@
     <Compile Include="Rules\ICsElementVisitor.cs" />
     <Compile Include="Rules\ICsTokenVisitor.cs" />
     <Compile Include="Rules\IncorrectRethrow.cs" />
+    <Compile Include="Rules\MethodMustNotHaveMoreThanFourParameters.cs" />
     <Compile Include="Rules\NullCsElementVisitor.cs" />
     <Compile Include="Rules\NullCsTokenVisitor.cs" />
     <Compile Include="Rules\Visitor.cs" />
