@@ -4,9 +4,12 @@
     <Rules>
         <RuleGroup Name="Hydra Code Quality Improvements">
             <Rule Name="ConstructorMustNotHaveMoreThanFourParameters" CheckId="HD1000">
-                <Context>The Type '{0}' has a constructor that takes {1} arguments. More than 4 arguments are considered a code smell.</Context>
+                <Context>The constructor '{0}' takes {1} arguments. More than 4 arguments are considered a code smell.</Context>
             </Rule>
-            <Rule Name="IncorrectRethrow" CheckId="HD1001">
+            <Rule Name="MethodMustNotHaveMoreThanFourParameters" CheckId="HD1001">
+                <Context>The method '{0}' takes {1} arguments. More than 4 arguments are considered a code smell.</Context>
+            </Rule>
+            <Rule Name="IncorrectRethrow" CheckId="HD1002">
                 <Context>Incorrect re-throw of an exception in method '{0}'. Replace 'throw {1};' with 'throw;'</Context>
             </Rule>
         </RuleGroup>

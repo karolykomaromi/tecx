@@ -1,5 +1,6 @@
 namespace Hydra.CodeQuality.Rules
 {
+    using System.Linq;
     using StyleCop;
     using StyleCop.CSharp;
 
@@ -17,11 +18,18 @@ namespace Hydra.CodeQuality.Rules
             if (ctor != null &&
                 ctor.Parameters.Count > 4)
             {
+
+                string ctorSignature =
+                    ctor.FullNamespaceName.Replace("Root.", string.Empty) +
+                    "(" +
+                    string.Join(", ", ctor.Parameters.Select(p => p.Type + " " + p.Name)) +
+                    ")";
+
                 this.SourceAnalyzer.AddViolation(
                     ctor,
                     ctor.Location,
                     this.RuleName,
-                    ctor.FindParentElement().FullyQualifiedName.Replace("Root.", string.Empty),
+                    ctorSignature,
                     ctor.Parameters.Count);
             }
 

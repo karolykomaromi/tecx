@@ -63,6 +63,7 @@
     </Compile>
     <Compile Include="ResourceBasedSourceCode.cs" />
     <Compile Include="RuleTests.cs" />
+    <EmbeddedResource Include="TestFiles\TooManyMethodArguments.cs" />
     <EmbeddedResource Include="TestFiles\IncorrectRethrow.cs" />
     <EmbeddedResource Include="TestFiles\TooManyConstructorArguments.cs" />
   </ItemGroup>

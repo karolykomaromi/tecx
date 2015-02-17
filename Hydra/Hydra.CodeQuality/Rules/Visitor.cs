@@ -51,7 +51,7 @@ namespace Hydra.CodeQuality.Rules
             {
                 XDocument xml = XDocument.Load(assembly.GetManifestResourceStream(resourceName));
 
-                XElement rule = xml.Root.Elements("Rule").FirstOrDefault(r =>
+                XElement rule = xml.Root.Element("Rules").Element("RuleGroup").Elements("Rule").FirstOrDefault(r =>
                 {
                     XAttribute name = r.Attribute("Name");
 
