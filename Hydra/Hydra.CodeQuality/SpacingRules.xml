@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SourceAnalyzer Name="SpacingRules">
+    <Description>Best practices for better coding.</Description>
+    <Rules>
+        <RuleGroup Name="Hydra Code Quality Improvements">
+        </RuleGroup>
+    </Rules>
+</SourceAnalyzer>
