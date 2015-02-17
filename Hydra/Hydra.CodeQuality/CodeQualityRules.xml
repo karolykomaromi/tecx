@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SourceAnalyzer Name="CodeQualityRules">
+    <Description>Best practices for better coding.</Description>
+    <Rules>
+        <RuleGroup Name="Hydra Code Quality Improvements">
+            <Rule Name="ConstructorMustNotHaveMoreThanFourParameters" CheckId="HD1000">
+                <Context>The Type '{0}' has a constructor that takes {1} arguments. More than 4 arguments are considered a code smell.</Context>
+            </Rule>
+            <Rule Name="IncorrectRethrow" CheckId="HD1001">
+                <Context>Incorrect re-throw of an exception in method '{0}'. Replace 'throw {1};' with 'throw;'</Context>
+            </Rule>
+        </RuleGroup>
+    </Rules>
+</SourceAnalyzer>
