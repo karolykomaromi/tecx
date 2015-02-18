@@ -41,6 +41,18 @@
 
         public static class Hydra
         {
+            public static class Mail
+            {
+                public static class Smtp
+                {
+                    public static readonly Setting Server = new Setting(KnownSettingNames.Hydra.Mail.Smtp.Server, new Uri("http://smtp.mail.invalid:8080", UriKind.Absolute));
+
+                    public static readonly Setting UserName = new Setting(KnownSettingNames.Hydra.Mail.Smtp.UserName, "john.wayne@mail.invalid");
+
+                    public static readonly Setting Password = new Setting(KnownSettingNames.Hydra.Mail.Smtp.Password, "not-a-password");
+                }
+            }
+
             public static class Infrastructure
             {
                 public static class Configuration
