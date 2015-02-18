@@ -94,6 +94,7 @@
     <Compile Include="JobScheduleResponse.cs" />
     <Compile Include="Jobs\Heartbeat.cs" />
     <Compile Include="Jobs\NoOp.cs" />
+    <Compile Include="Jobs\SendMail.cs" />
     <Compile Include="KnownJobs.cs" />
     <Compile Include="NullSchedulerService.cs" />
     <Compile Include="Program.cs" />
