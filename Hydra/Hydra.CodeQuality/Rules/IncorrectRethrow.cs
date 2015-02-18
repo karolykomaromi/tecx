@@ -22,7 +22,12 @@ namespace Hydra.CodeQuality.Rules
 
             foreach (CatchStatement catchStatement in method.ChildStatements.OfType<CatchStatement>())
             {
-                VariableDeclarationExpression catchExpression = (VariableDeclarationExpression)catchStatement.CatchExpression;
+                VariableDeclarationExpression catchExpression = catchStatement.CatchExpression as VariableDeclarationExpression;
+
+                if (catchExpression == null)
+                {
+                    return true;
+                }
 
                 VariableDeclaratorExpression @catch = catchExpression.Declarators.FirstOrDefault();
 

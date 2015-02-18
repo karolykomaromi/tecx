@@ -66,6 +66,18 @@
 
         public static class Hydra
         {
+            public static class Mail
+            {
+                public static class Smtp
+                {
+                    public static readonly SettingName Server = GetSettingName(() => Server);
+
+                    public static readonly SettingName UserName = GetSettingName(() => UserName);
+
+                    public static readonly SettingName Password = GetSettingName(() => Password);
+                }
+            }
+
             public static class Infrastructure
             {
                 public static class Configuration

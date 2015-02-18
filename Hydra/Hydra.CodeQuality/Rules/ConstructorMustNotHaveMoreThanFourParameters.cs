@@ -18,7 +18,6 @@ namespace Hydra.CodeQuality.Rules
             if (ctor != null &&
                 ctor.Parameters.Count > 4)
             {
-
                 string ctorSignature =
                     ctor.FullNamespaceName.Replace("Root.", string.Empty) +
                     "(" +
