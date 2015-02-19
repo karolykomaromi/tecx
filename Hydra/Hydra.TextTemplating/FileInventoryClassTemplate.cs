@@ -1,36 +1,10 @@
-﻿namespace Hydra.CodeQuality.Test
+﻿namespace Hydra.TextTemplating
 {
     using System;
     using System.Diagnostics.Contracts;
     using System.IO;
     using System.Linq;
     using System.Text;
-    using Xunit;
-
-    public class FileInventoryClassTemplateTests
-    {
-        [Fact]
-        public void Should_Generate_Constants_For_All_Files()
-        {
-            DirectoryInfo testFiles = new DirectoryInfo(@"D:\Evaluation\TecX\Hydra\Hydra.CodeQuality.Test\TestFiles");
-
-            FileInventoryClassTemplate sut = new FileInventoryClassTemplate();
-
-            sut.TakeStock(testFiles);
-
-            string actual = sut.ToString();
-
-            string[] manifestResourceNames = this.GetType().Assembly
-                .GetManifestResourceNames()
-                .Where(rn => !rn.EndsWith(".resources", StringComparison.Ordinal))
-                .ToArray();
-
-            foreach (string manifestResourceName in manifestResourceNames)
-            {
-                Assert.Contains(manifestResourceName, actual, StringComparison.Ordinal);
-            }
-        }
-    }
 
     public class FileInventoryClassTemplate
     {
@@ -58,9 +32,23 @@
                 this.sb.Append(indentation).Append("public static class ").AppendLine(directory.Name);
                 this.sb.Append(indentation).AppendLine("{");
 
-                foreach (FileInfo file in directory.GetFiles().OrderBy(f => f.Name))
+                FileInfo[] files = directory.GetFiles().OrderBy(f => f.Name).ToArray();
+
+                for (int index = 0; index < files.Length; index++)
                 {
+                    FileInfo file = files[index];
+
                     this.WriteConstantForFile(file, indentLevel + 1);
+
+                    if (index < files.Length - 1)
+                    {
+                        this.sb.AppendLine();
+                    }
+                }
+
+                if (files.Length > 0)
+                {
+                    this.sb.AppendLine();
                 }
 
                 foreach (DirectoryInfo subDirectory in directory.GetDirectories().OrderBy(d => d.Name))
@@ -81,7 +69,10 @@
         {
             int idx = file.FullName.IndexOf("Hydra", StringComparison.Ordinal);
 
-            string manifestResourceName = file.FullName.Substring(idx + 6).Replace(@"\", ".");
+            string manifestResourceName = file.FullName.Substring(idx + 6)
+                .Replace(@"\", ".")
+                .Replace("bin.Debug.", string.Empty)
+                .Replace("bin.Release.", string.Empty);
 
             return manifestResourceName;
         }
