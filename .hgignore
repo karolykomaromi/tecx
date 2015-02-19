@@ -307,3 +307,7 @@ Hydra/Hydra.CodeQuality/bin
 Hydra/Hydra.CodeQuality/obj
 Hydra/Hydra.CodeQuality.Test/obj
 Hydra/Hydra.CodeQuality.Test/bin
+Hydra/Hydra.TextTemplating.Test/bin
+Hydra/Hydra.TextTemplating/bin
+Hydra/Hydra.TextTemplating.Test/obj
+Hydra/Hydra.TextTemplating/obj
