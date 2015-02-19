@@ -1,4 +1,4 @@
-namespace Hydra.Infrastructure.Calendaring
+namespace Hydra.Infrastructure.Mail
 {
     using System;
     using System.Diagnostics.Contracts;

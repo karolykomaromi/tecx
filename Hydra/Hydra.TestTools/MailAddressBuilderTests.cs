@@ -2,6 +2,7 @@
 {
     using System.Net.Mail;
     using Hydra.Infrastructure.Calendaring;
+    using Hydra.Infrastructure.Mail;
     using Xunit;
     using Xunit.Extensions;
 

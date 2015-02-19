@@ -2,6 +2,7 @@ namespace Hydra.TestTools
 {
     using System.Diagnostics.Contracts;
     using Hydra.Infrastructure.Calendaring;
+    using Hydra.Infrastructure.Mail;
 
     public static class MailAddressBuilderExtensions
     {

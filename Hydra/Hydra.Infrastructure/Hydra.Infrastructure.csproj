@@ -75,7 +75,6 @@
     <Compile Include="Calendaring\CalendarItem.cs" />
     <Compile Include="Calendaring\Duration.cs" />
     <Compile Include="Calendaring\DurationBuilder.cs" />
-    <Compile Include="Calendaring\MailAddressBuilder.cs" />
     <Compile Include="Calendaring\Reminder.cs" />
     <Compile Include="Calendaring\ReminderBuilder.cs" />
     <Compile Include="Calendaring\Trigger.cs" />
@@ -168,6 +167,9 @@
     <Compile Include="Logging\DebugSink.cs" />
     <Compile Include="Logging\HydraEventSource.cs" />
     <Compile Include="Logging\HydraEventSourceExtensions.cs" />
+    <Compile Include="Mail\MailAddressBuilder.cs" />
+    <Compile Include="Mail\MailMessageBuilder.cs" />
+    <Compile Include="Mail\MailMessageExtensions.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.tt</DependentUpon>
       <AutoGen>True</AutoGen>

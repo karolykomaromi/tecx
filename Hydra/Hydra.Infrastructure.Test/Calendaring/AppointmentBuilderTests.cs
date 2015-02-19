@@ -1,6 +1,7 @@
 ﻿namespace Hydra.Infrastructure.Test.Calendaring
 {
     using Hydra.Infrastructure.Calendaring;
+    using Hydra.Infrastructure.Mail;
     using Hydra.TestTools;
     using Xunit;
     using Xunit.Extensions;
