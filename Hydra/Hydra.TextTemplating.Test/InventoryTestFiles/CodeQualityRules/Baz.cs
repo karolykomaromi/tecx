@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hydra.TextTemplating.InventoryTestFiles.CodeQualityRules
+namespace Hydra.TextTemplating.Test.InventoryTestFiles
 {
-    class Bar
+    class Baz
     {
     }
 }

@@ -18,7 +18,8 @@
             string actual = sut.ToString();
 
             Assert.Contains("Hydra.TextTemplating.Test.InventoryTestFiles.Foo.cs", actual, StringComparison.Ordinal);
-            Assert.Contains("Hydra.TextTemplating.Test.InventoryTestFiles.CodeQualityRules.Bar.cs", actual, StringComparison.Ordinal);
+            Assert.Contains("Hydra.TextTemplating.Test.InventoryTestFiles.Bar.cs", actual, StringComparison.Ordinal);
+            Assert.Contains("Hydra.TextTemplating.Test.InventoryTestFiles.CodeQualityRules.Baz.cs", actual, StringComparison.Ordinal);
         }
     }
 }
