@@ -46,12 +46,14 @@
                     }
                 }
 
-                if (files.Length > 0)
+                DirectoryInfo[] subDirectories = directory.GetDirectories().OrderBy(d => d.Name).ToArray();
+
+                if (files.Length > 0 && subDirectories.Length > 0)
                 {
                     this.sb.AppendLine();
                 }
 
-                foreach (DirectoryInfo subDirectory in directory.GetDirectories().OrderBy(d => d.Name))
+                foreach (DirectoryInfo subDirectory in subDirectories)
                 {
                     this.TakeStock(subDirectory, indentLevel + 1);
                 }
@@ -86,11 +88,17 @@
         {
             string indentation = this.Indentation(indentLevel);
 
+            string manifestResourceName = ConvertFileNameToManifestResourceName(file);
+
+            this.sb.Append(indentation).AppendLine(@"/// <summary>");
+            this.sb.Append(indentation).Append(@"/// ").AppendLine(manifestResourceName);
+            this.sb.Append(indentation).AppendLine(@"/// </summary>");
+
             this.sb.Append(indentation)
                 .Append("public const string ")
                 .Append(file.Name.Replace(file.Extension, string.Empty))
                 .Append(" = \"")
-                .Append(ConvertFileNameToManifestResourceName(file))
+                .Append(manifestResourceName)
                 .AppendLine("\";");
         }
     }

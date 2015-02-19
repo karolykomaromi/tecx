@@ -1,25 +1,25 @@
 ﻿<#@ template debug="false" hostspecific="true" language="C#" #>
 <#@ assembly name="System.Core" #>
-
+<#@ assembly name="$(SolutionDir)libs\Hydra.TextTemplating\Hydra.TextTemplating.dll" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-
+<#@ import namespace="Hydra.TextTemplating" #>
 <#@ output extension=".cs" #>
 namespace Hydra.CodeQuality.Test
 {
     public static class KnownTestFiles
     {
 <#
-    /*string testFileDirectoryPath = this.Host.TemplateFile.Replace("KnownTestFiles.tt", string.Empty) + @"\TestFiles";
+    string testFileDirectoryPath = this.Host.TemplateFile.Replace("KnownTestFiles.tt", string.Empty) + @"\TestFiles";
     DirectoryInfo testFileDirectory = new DirectoryInfo(testFileDirectoryPath);
 
     FileInventoryClassTemplate template = new FileInventoryClassTemplate();
 
     template.TakeStock(testFileDirectory, 2);
 
-    WriteLine(template.ToString());*/
+    Write(template.ToString());
 #>
     }
 }

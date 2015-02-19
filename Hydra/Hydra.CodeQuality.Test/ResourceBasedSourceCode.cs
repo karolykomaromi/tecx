@@ -4,7 +4,6 @@ namespace Hydra.CodeQuality.Test
     using System.Diagnostics.Contracts;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
     using System.Resources;
     using Hydra.CodeQuality.Test.Properties;
     using StyleCop;
@@ -13,21 +12,13 @@ namespace Hydra.CodeQuality.Test
     {
         private readonly string manifestResourceName;
 
-        private ResourceBasedSourceCode(string resourceName, CodeProject project, SourceParser parser)
+        private ResourceBasedSourceCode(string manifestResourceName, CodeProject project, SourceParser parser)
             : base(project, parser)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(resourceName));
+            Contract.Requires(!string.IsNullOrWhiteSpace(manifestResourceName));
+            Contract.Requires(typeof(ResourceBasedSourceCode).Assembly.GetManifestResourceNames().Contains(manifestResourceName, StringComparer.Ordinal));
 
-            Assembly assembly = typeof(ResourceBasedSourceCode).Assembly;
-
-            string fullResourceName = assembly.GetManifestResourceNames().FirstOrDefault(rn => rn.EndsWith("." + resourceName, StringComparison.OrdinalIgnoreCase));
-
-            if (string.IsNullOrEmpty(fullResourceName))
-            {
-                throw new ArgumentException(string.Format(Resources.NoResourceNameEndsWith, resourceName), "resourceName");
-            }
-
-            this.manifestResourceName = fullResourceName;
+            this.manifestResourceName = manifestResourceName;
         }
 
         public override bool Exists

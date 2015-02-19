@@ -48,10 +48,13 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="FileInventoryClassTemplateTests.cs" />
-    <Content Include="InventoryTestFiles\CodeQualityRules\Bar.cs">
+    <Content Include="InventoryTestFiles\Bar.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="InventoryTestFiles\Foo.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="InventoryTestFiles\CodeQualityRules\Baz.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="Properties\AssemblyInfo.cs" />

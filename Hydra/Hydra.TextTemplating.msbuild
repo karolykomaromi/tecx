@@ -1,0 +1,10 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask AssemblyFile=".\packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll" TaskName="Xunit.Runner.MSBuild.xunit"/>
+  <ItemGroup>
+    <TestAssemblies Include="**\bin\Release\*.Test.dll" />
+  </ItemGroup>
+  <Target Name="Build">
+    <MSBuild Projects="Hydra.sln" Targets="Build" Properties="Configuration=Release" />
+    <xunit Assemblies="@(TestAssemblies)" Html="Result.html"/>
+  </Target>
+</Project>
