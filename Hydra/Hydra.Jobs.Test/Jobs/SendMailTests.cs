@@ -1,8 +1,8 @@
 ﻿namespace Hydra.Jobs.Test.Jobs
 {
     using System.Net.Mail;
-    using Hydra.Infrastructure;
     using Hydra.Infrastructure.Calendaring;
+    using Hydra.Infrastructure.Mail;
     using Hydra.TestTools;
     using netDumbster.smtp;
     using Xunit;
@@ -35,14 +35,6 @@
                     server.Stop();
                 }
             }
-        }
-    }
-
-    public class MailMessageBuilder : Builder<MailMessage>
-    {
-        public override MailMessage Build()
-        {
-            return new MailMessage();
         }
     }
 }
