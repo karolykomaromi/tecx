@@ -91,7 +91,7 @@ namespace Hydra.TestTools
             Contract.Requires(builder != null);
             Contract.Ensures(Contract.Result<MailAddressBuilder>() != null);
 
-            return builder.WithFirstName("Do Not").WithLastName("Reply");
+            return builder.WithAddress("donotreply@mail.invalid").WithDisplayName("Do Not Reply");
         }
     }
 }
