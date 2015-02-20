@@ -186,6 +186,7 @@
     <Compile Include="Mail\MailMessageBuilder.cs" />
     <Compile Include="Mail\MailMessageExtensions.cs" />
     <Compile Include="Mail\MimeKitBasedMailSource.cs" />
+    <Compile Include="Mail\NullMailSink.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.tt</DependentUpon>
       <AutoGen>True</AutoGen>

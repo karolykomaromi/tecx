@@ -16,7 +16,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="Hydra.TextTemplating" #>
 <#@ output extension=".cs" #>
-namespace Hydra.CodeQuality.Test
+namespace Hydra.Jobs.Test
 {
     public static class KnownTestFiles
     {
