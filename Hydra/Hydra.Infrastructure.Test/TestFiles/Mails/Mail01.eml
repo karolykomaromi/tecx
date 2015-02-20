@@ -1,0 +1,13 @@
+X-Sender: "John Wayne" <john.wayne@mail.invalid>
+X-Receiver: "Clint Eastwood" <clint.eastwood@mail.invalid>
+X-Receiver: "Henry Fonda" <henry.fonda@mail.invalid>
+MIME-Version: 1.0
+From: "John Wayne" <john.wayne@mail.invalid>
+To: "Clint Eastwood" <clint.eastwood@mail.invalid>, "Henry Fonda"
+ <henry.fonda@mail.invalid>
+Date: 20 Feb 2015 10:51:23 +0100
+Subject: Foo
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+
+Bar!=0D=0A

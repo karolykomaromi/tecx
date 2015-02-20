@@ -1,6 +1,9 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <TransformOnBuild>true</TransformOnBuild>
-  </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v11.0\TextTemplating\Microsoft.TextTemplating.targets" />
+    <PropertyGroup>
+        <TransformOnBuild>true</TransformOnBuild>
+    </PropertyGroup>
+    <ItemGroup>
+        <T4ReferencePath Include="$(MSBuildProjectDirectory)\..\libs\Hydra.TextTemplating" />
+    </ItemGroup>
+    <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v11.0\TextTemplating\Microsoft.TextTemplating.targets" />
 </Project>

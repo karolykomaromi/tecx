@@ -4,7 +4,7 @@
     <TestAssemblies Include="**\bin\Release\*.Test.dll" />
   </ItemGroup>
   <Target Name="Build">
-    <MSBuild Projects="Hydra.sln" Targets="Build" Properties="Configuration=Release" />
+    <MSBuild Projects="Hydra.CodeQuality.sln" Targets="Build" Properties="Configuration=Release" />
     <xunit Assemblies="@(TestAssemblies)" Html="Result.html"/>
   </Target>
 </Project>

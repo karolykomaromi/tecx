@@ -25,24 +25,24 @@
 
                 var context = new Mock<IJobExecutionContext>();
 
-                //MailMessage message = new MailMessageBuilder()
-                //    .From(x => x.JohnWayne())
-                //    .Recipient(x => x.ClintEastwood())
-                //    .Recipient(x => x.HenryFonda())
-                //    .ReplyTo(x => x.DoNotReply())
-                //    .Subject("Foo")
-                //    .Body("Bar!");
+                ////MailMessage message = new MailMessageBuilder()
+                ////    .From(x => x.JohnWayne())
+                ////    .Recipient(x => x.ClintEastwood())
+                ////    .Recipient(x => x.HenryFonda())
+                ////    .ReplyTo(x => x.DoNotReply())
+                ////    .Subject("Foo")
+                ////    .Body("Bar!");
 
-                //IUnsentMailSource unsent = new InMemoryMailSource(message);
-                //ISentMailSink sent = new InMemoryMailSink();
+                ////IUnsentMailSource unsent = new InMemoryMailSource(message);
+                ////ISentMailSink sent = new InMemoryMailSink();
 
-                //DirectoryInfo unsentFolder = new DirectoryInfo(@".\Unsent");
-                //if (!unsentFolder.Exists)
-                //{
-                //    unsentFolder.Create();
-                //}
+                ////DirectoryInfo unsentFolder = new DirectoryInfo(@".\Unsent");
+                ////if (!unsentFolder.Exists)
+                ////{
+                ////    unsentFolder.Create();
+                ////}
 
-                //IUnsentMailSource unsent = new FileMailSource(unsentFolder);
+                ////IUnsentMailSource unsent = new FileMailSource(unsentFolder);
 
                 IUnsentMailSource unsent = new EmbeddedResourceMailSource(this.GetType().Assembly);
 
@@ -58,7 +58,7 @@
                 {
                     Host = "localhost",
                     Port = server.Port,
-                    Credentials = new NetworkCredential("user", "password")
+                    Credentials = new NetworkCredential("userName", "password")
                 };
 
                 IJob sut = new BatchMail(unsent, sent, settings);
@@ -67,10 +67,10 @@
 
                 Assert.Equal(1, server.ReceivedEmailCount);
 
-                //using (Stream stream = new FileStream(@".\message.eml", FileMode.Create))
-                //{
-                //    message.Save(stream);
-                //}
+                ////using (Stream stream = new FileStream(@".\message.eml", FileMode.Create))
+                ////{
+                ////    message.Save(stream);
+                ////}
             }
             finally
             {
@@ -86,7 +86,7 @@
         {
             MimeMessage msg;
 
-            using (Stream stream = new FileStream(@".\message.eml", FileMode.Open))
+            using (Stream stream = this.GetType().Assembly.GetManifestResourceStream(KnownTestFiles.TestFiles.Mails.Mail01))
             {
                 msg = MimeMessage.Load(stream);
             }
