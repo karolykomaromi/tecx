@@ -6,6 +6,7 @@
     using Hydra.Infrastructure.Mail;
     using Hydra.Jobs.Server.Jobs;
     using Hydra.TestTools;
+    using MimeKit;
     using Moq;
     using netDumbster.smtp;
     using Quartz;
@@ -24,17 +25,34 @@
 
                 var context = new Mock<IJobExecutionContext>();
 
-                MailMessage message = new MailMessageBuilder()
-                    .From(x => x.JohnWayne())
-                    .Recipient(x => x.ClintEastwood())
-                    .Recipient(x => x.HenryFonda())
-                    .ReplyTo(x => x.DoNotReply())
-                    .Subject("Foo")
-                    .Body("Bar!");
+                //MailMessage message = new MailMessageBuilder()
+                //    .From(x => x.JohnWayne())
+                //    .Recipient(x => x.ClintEastwood())
+                //    .Recipient(x => x.HenryFonda())
+                //    .ReplyTo(x => x.DoNotReply())
+                //    .Subject("Foo")
+                //    .Body("Bar!");
 
-                var unsent = new InMemoryMailSource(message);
+                //IUnsentMailSource unsent = new InMemoryMailSource(message);
+                //ISentMailSink sent = new InMemoryMailSink();
 
-                var sent = new InMemoryMailSink();
+                //DirectoryInfo unsentFolder = new DirectoryInfo(@".\Unsent");
+                //if (!unsentFolder.Exists)
+                //{
+                //    unsentFolder.Create();
+                //}
+
+                //IUnsentMailSource unsent = new FileMailSource(unsentFolder);
+
+                IUnsentMailSource unsent = new EmbeddedResourceMailSource(this.GetType().Assembly);
+
+                DirectoryInfo sentFolder = new DirectoryInfo(@".\Sent");
+                if (!sentFolder.Exists)
+                {
+                    sentFolder.Create();
+                }
+
+                ISentMailSink sent = new FileMailSink(sentFolder);
 
                 MailSettings settings = new MailSettings
                 {
@@ -47,13 +65,12 @@
 
                 sut.Execute(context.Object);
 
-                Assert.Same(message, sent.Messages[0]);
                 Assert.Equal(1, server.ReceivedEmailCount);
 
-                using (Stream stream = new FileStream(@".\message.eml", FileMode.Create))
-                {
-                    message.Save(stream);
-                }
+                //using (Stream stream = new FileStream(@".\message.eml", FileMode.Create))
+                //{
+                //    message.Save(stream);
+                //}
             }
             finally
             {
@@ -62,6 +79,19 @@
                     server.Stop();
                 }
             }
+        }
+
+        [Fact]
+        public void Should_Parse_Eml_File()
+        {
+            MimeMessage msg;
+
+            using (Stream stream = new FileStream(@".\message.eml", FileMode.Open))
+            {
+                msg = MimeMessage.Load(stream);
+            }
+
+            Assert.NotNull(msg);
         }
 
         [Fact]
