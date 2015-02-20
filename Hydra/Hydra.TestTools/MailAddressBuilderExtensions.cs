@@ -9,6 +9,7 @@ namespace Hydra.TestTools
         public static MailAddressBuilder JohnWayne(this MailAddressBuilder builder)
         {
             Contract.Requires(builder != null);
+            Contract.Ensures(Contract.Result<MailAddressBuilder>() != null);
 
             return builder.WithFirstName("John").WithLastName("Wayne");
         }
@@ -16,6 +17,7 @@ namespace Hydra.TestTools
         public static MailAddressBuilder ClintEastwood(this MailAddressBuilder builder)
         {
             Contract.Requires(builder != null);
+            Contract.Ensures(Contract.Result<MailAddressBuilder>() != null);
 
             return builder.WithFirstName("Clint").WithLastName("Eastwood");
         }
@@ -23,6 +25,7 @@ namespace Hydra.TestTools
         public static MailAddressBuilder LorneGreene(this MailAddressBuilder builder)
         {
             Contract.Requires(builder != null);
+            Contract.Ensures(Contract.Result<MailAddressBuilder>() != null);
 
             return builder.WithFirstName("Lorne").WithLastName("Greene");
         }
@@ -30,6 +33,7 @@ namespace Hydra.TestTools
         public static MailAddressBuilder PernellRoberts(this MailAddressBuilder builder)
         {
             Contract.Requires(builder != null);
+            Contract.Ensures(Contract.Result<MailAddressBuilder>() != null);
 
             return builder.WithFirstName("Pernell").WithLastName("Roberts");
         }
@@ -37,6 +41,7 @@ namespace Hydra.TestTools
         public static MailAddressBuilder DanBlocker(this MailAddressBuilder builder)
         {
             Contract.Requires(builder != null);
+            Contract.Ensures(Contract.Result<MailAddressBuilder>() != null);
 
             return builder.WithFirstName("Dan").WithLastName("Blocker");
         }
@@ -44,6 +49,7 @@ namespace Hydra.TestTools
         public static MailAddressBuilder MichaelLandon(this MailAddressBuilder builder)
         {
             Contract.Requires(builder != null);
+            Contract.Ensures(Contract.Result<MailAddressBuilder>() != null);
 
             return builder.WithFirstName("Michael").WithLastName("Landon");
         }
@@ -51,6 +57,7 @@ namespace Hydra.TestTools
         public static MailAddressBuilder VictorSenYung(this MailAddressBuilder builder)
         {
             Contract.Requires(builder != null);
+            Contract.Ensures(Contract.Result<MailAddressBuilder>() != null);
 
             return builder.WithFirstName("Victor").WithLastName("Sen Yung");
         }
@@ -58,6 +65,7 @@ namespace Hydra.TestTools
         public static MailAddressBuilder HenryFonda(this MailAddressBuilder builder)
         {
             Contract.Requires(builder != null);
+            Contract.Ensures(Contract.Result<MailAddressBuilder>() != null);
 
             return builder.WithFirstName("Henry").WithLastName("Fonda");
         }
@@ -65,6 +73,7 @@ namespace Hydra.TestTools
         public static MailAddressBuilder CharlesBronson(this MailAddressBuilder builder)
         {
             Contract.Requires(builder != null);
+            Contract.Ensures(Contract.Result<MailAddressBuilder>() != null);
 
             return builder.WithFirstName("Charles").WithLastName("Bronson");
         }
@@ -72,8 +81,17 @@ namespace Hydra.TestTools
         public static MailAddressBuilder JasonRobards(this MailAddressBuilder builder)
         {
             Contract.Requires(builder != null);
+            Contract.Ensures(Contract.Result<MailAddressBuilder>() != null);
 
             return builder.WithFirstName("Jason").WithLastName("Robards");
+        }
+
+        public static MailAddressBuilder DoNotReply(this MailAddressBuilder builder)
+        {
+            Contract.Requires(builder != null);
+            Contract.Ensures(Contract.Result<MailAddressBuilder>() != null);
+
+            return builder.WithFirstName("Do Not").WithLastName("Reply");
         }
     }
 }

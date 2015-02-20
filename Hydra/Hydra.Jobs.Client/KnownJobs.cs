@@ -6,9 +6,12 @@
     public enum KnownJobs
     {
         [EnumMember]
-        NoOp = 0,
+        Nop = 0,
 
         [EnumMember]
         Heartbeat = 1,
+
+        [EnumMember]
+        BatchMail = 2,
     }
 }

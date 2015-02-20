@@ -11,7 +11,7 @@
     using Quartz;
     using Xunit;
 
-    public class SendMailTests
+    public class BatchMailTests
     {
         [Fact]
         public void Should_Send_Mail_And_Place_In_Appropiate_Queue()
@@ -24,18 +24,17 @@
 
                 var context = new Mock<IJobExecutionContext>();
 
-                MailAddressBuilder address = new MailAddressBuilder();
-
                 MailMessage message = new MailMessageBuilder()
                     .From(x => x.JohnWayne())
-                    .WithRecipient(x => x.ClintEastwood())
-                    .WithRecipient(x => x.HenryFonda())
-                    .WithSubject("Foo")
-                    .WithBody("Bar!");
+                    .Recipient(x => x.ClintEastwood())
+                    .Recipient(x => x.HenryFonda())
+                    .ReplyTo(x => x.DoNotReply())
+                    .Subject("Foo")
+                    .Body("Bar!");
 
-                IUnsentMailQueue unsent = new InMemoryMailQueue(message);
+                var unsent = new InMemoryMailSource(message);
 
-                ISentMailQueue sent = new InMemoryMailQueue();
+                var sent = new InMemoryMailSink();
 
                 MailSettings settings = new MailSettings
                 {
@@ -44,11 +43,11 @@
                     Credentials = new NetworkCredential("user", "password")
                 };
 
-                IJob sut = new SendMail(unsent, sent, settings);
+                IJob sut = new BatchMail(unsent, sent, settings);
 
                 sut.Execute(context.Object);
 
-                Assert.Same(message, sent.Dequeue());
+                Assert.Same(message, sent.Messages[0]);
                 Assert.Equal(1, server.ReceivedEmailCount);
 
                 using (Stream stream = new FileStream(@".\message.eml", FileMode.Create))
@@ -76,10 +75,15 @@
 
                 using (var client = new SmtpClient("localhost", server.Port))
                 {
-                    string johnWayne = new MailAddressBuilder().JohnWayne().Build().ToString();
-                    string clintEastwood = new MailAddressBuilder().ClintEastwood().Build().ToString();
+                    MailMessage message = new MailMessageBuilder()
+                        .From(x => x.JohnWayne())
+                        .Recipient(x => x.ClintEastwood())
+                        .Recipient(x => x.HenryFonda())
+                        .ReplyTo(x => x.DoNotReply())
+                        .Subject("Foo")
+                        .Body("Bar!");
 
-                    await client.SendMailAsync(johnWayne, clintEastwood, "Foo!", "Bar");
+                    await client.SendMailAsync(message);
                 }
 
                 Assert.Equal(1, server.ReceivedEmailCount);

@@ -2,7 +2,7 @@
 {
     using Quartz;
 
-    public class NoOp : IJob
+    public class Nop : IJob
     {
         public void Execute(IJobExecutionContext context)
         {
