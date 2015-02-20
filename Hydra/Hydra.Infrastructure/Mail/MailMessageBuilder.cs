@@ -119,7 +119,7 @@ namespace Hydra.Infrastructure.Mail
             return this;
         }
 
-        public MailMessageBuilder WithRecipient(Action<MailAddressBuilder> action)
+        public MailMessageBuilder Recipient(Action<MailAddressBuilder> action)
         {
             Contract.Requires(action != null);
             Contract.Ensures(Contract.Result<MailMessageBuilder>() != null);
@@ -133,7 +133,7 @@ namespace Hydra.Infrastructure.Mail
             return this;
         }
 
-        public MailMessageBuilder WithCarbonCopy(Action<MailAddressBuilder> action)
+        public MailMessageBuilder Cc(Action<MailAddressBuilder> action)
         {
             Contract.Requires(action != null);
             Contract.Ensures(Contract.Result<MailMessageBuilder>() != null);
@@ -147,7 +147,7 @@ namespace Hydra.Infrastructure.Mail
             return this;
         }
 
-        public MailMessageBuilder WithBlindCarbonCopy(Action<MailAddressBuilder> action)
+        public MailMessageBuilder Bcc(Action<MailAddressBuilder> action)
         {
             Contract.Requires(action != null);
             Contract.Ensures(Contract.Result<MailMessageBuilder>() != null);
@@ -161,7 +161,7 @@ namespace Hydra.Infrastructure.Mail
             return this;
         }
 
-        public MailMessageBuilder WithSubject(string subject)
+        public MailMessageBuilder Subject(string subject)
         {
             Contract.Requires(subject != null);
             Contract.Ensures(Contract.Result<MailMessageBuilder>() != null);
@@ -171,7 +171,7 @@ namespace Hydra.Infrastructure.Mail
             return this;
         }
 
-        public MailMessageBuilder WithHeader(string headerName, string headerValue)
+        public MailMessageBuilder Header(string headerName, string headerValue)
         {
             Contract.Requires(headerName != null);
             Contract.Requires(headerValue != null);
@@ -182,7 +182,7 @@ namespace Hydra.Infrastructure.Mail
             return this;
         }
 
-        public MailMessageBuilder WithBody(string body)
+        public MailMessageBuilder Body(string body)
         {
             Contract.Requires(body != null);
             Contract.Ensures(Contract.Result<MailMessageBuilder>() != null);
@@ -192,7 +192,7 @@ namespace Hydra.Infrastructure.Mail
             return this;
         }
 
-        public MailMessageBuilder WithAttachment(Attachment attachment)
+        public MailMessageBuilder Attachment(Attachment attachment)
         {
             Contract.Requires(attachment != null);
             Contract.Ensures(Contract.Result<MailMessageBuilder>() != null);
@@ -202,7 +202,7 @@ namespace Hydra.Infrastructure.Mail
             return this;
         }
         
-        public MailMessageBuilder WithBodyEncoding(Encoding encoding)
+        public MailMessageBuilder BodyEncoding(Encoding encoding)
         {
             Contract.Requires(encoding != null);
             Contract.Ensures(Contract.Result<MailMessageBuilder>() != null);
@@ -212,7 +212,7 @@ namespace Hydra.Infrastructure.Mail
             return this;
         }
         
-        public MailMessageBuilder WithHeaderEncoding(Encoding encoding)
+        public MailMessageBuilder HeaderEncoding(Encoding encoding)
         {
             Contract.Requires(encoding != null);
             Contract.Ensures(Contract.Result<MailMessageBuilder>() != null);

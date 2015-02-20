@@ -12,9 +12,11 @@
     [TypeConverter(typeof(EnumerationTypeConverter<KnownJobs>))]
     public class KnownJobs : Enumeration<KnownJobs>
     {
-        public static readonly KnownJobs NoOp = new KnownJobs(typeof(NoOp));
+        public static readonly KnownJobs Nop = new KnownJobs(typeof(Nop));
 
         public static readonly KnownJobs Heartbeat = new KnownJobs(typeof(Heartbeat));
+
+        public static readonly KnownJobs BatchMail = new KnownJobs(typeof(BatchMail));
 
         private readonly Type jobType;
 
