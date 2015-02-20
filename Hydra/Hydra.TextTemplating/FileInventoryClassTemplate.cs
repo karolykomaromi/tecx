@@ -53,9 +53,16 @@
                     this.sb.AppendLine();
                 }
 
-                foreach (DirectoryInfo subDirectory in subDirectories)
+                for (int index = 0; index < subDirectories.Length; index++)
                 {
+                    DirectoryInfo subDirectory = subDirectories[index];
+
                     this.TakeStock(subDirectory, indentLevel + 1);
+
+                    if (index < subDirectories.Length - 1)
+                    {
+                        this.sb.AppendLine();
+                    }
                 }
 
                 this.sb.Append(indentation).AppendLine("}");
