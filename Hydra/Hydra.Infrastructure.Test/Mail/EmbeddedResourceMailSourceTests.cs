@@ -15,7 +15,7 @@
 
             MailMessage actual = sut.Single();
 
-            MailAddress from = new MailAddressBuilder().ClintEastwood();
+            MailAddress from = new MailAddressBuilder().JohnWayne();
 
             Assert.Equal(from, actual.From);
         }
