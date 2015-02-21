@@ -11,9 +11,9 @@
     {
         private readonly IUnsentMailSource unsent;
         private readonly ISentMailSink sent;
-        private readonly MailSettings mailSettings;
+        private readonly IMailJobSettings mailSettings;
 
-        public BatchMail(IUnsentMailSource unsent, ISentMailSink sent, MailSettings mailSettings)
+        public BatchMail(IUnsentMailSource unsent, ISentMailSink sent, IMailJobSettings mailSettings)
         {
             this.unsent = unsent;
             this.sent = sent;
@@ -26,7 +26,7 @@
             {
                 client.Connect(this.mailSettings.Host, this.mailSettings.Port);
 
-                if (this.mailSettings.NeedsAuthentication)
+                if (this.mailSettings.IsAuthenticationRequired)
                 {
                     client.Authenticate(this.mailSettings.Credentials);
                 }

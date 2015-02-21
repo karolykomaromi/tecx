@@ -70,11 +70,15 @@
             {
                 public static class Smtp
                 {
-                    public static readonly SettingName Server = GetSettingName(() => Server);
+                    public static readonly SettingName Host = GetSettingName(() => Host);
+
+                    public static readonly SettingName Port = GetSettingName(() => Port);
 
                     public static readonly SettingName UserName = GetSettingName(() => UserName);
 
                     public static readonly SettingName Password = GetSettingName(() => Password);
+
+                    public static readonly SettingName IsAuthenticationRequired = GetSettingName(() => IsAuthenticationRequired);
                 }
             }
 
