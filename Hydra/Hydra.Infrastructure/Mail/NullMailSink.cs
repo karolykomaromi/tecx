@@ -1,10 +1,10 @@
 namespace Hydra.Infrastructure.Mail
 {
-    using System.Net.Mail;
+    using MimeKit;
 
     public class NullMailSink : ISentMailSink
     {
-        public void Drop(MailMessage message)
+        public void Drop(MimeMessage message)
         {
             /* intentionally not implemented */
         }

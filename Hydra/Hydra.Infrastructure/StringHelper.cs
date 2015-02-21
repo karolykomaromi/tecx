@@ -59,18 +59,5 @@
 
             return s.Substring(0, 1).ToUpperInvariant() + s.Substring(1);
         }
-
-        public static string ToValidPropertyName(string s)
-        {
-            Contract.Requires(!string.IsNullOrWhiteSpace(s));
-            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
-
-            string validPropertyName = TrailingUnderscores.Replace(
-                MultipleUnderscores.Replace(
-                    NoCharactersNumbersAndUnderscores.Replace(s, "_"), "_"),
-                    string.Empty);
-
-            return validPropertyName.ToString(CultureInfo.InvariantCulture);
-        }
     }
 }

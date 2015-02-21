@@ -2,22 +2,22 @@ namespace Hydra.Infrastructure.Mail
 {
     using System.Collections;
     using System.Collections.Generic;
-    using System.Net.Mail;
+    using MimeKit;
 
     public class InMemoryMailSource : IUnsentMailSource
     {
-        private readonly Queue<MailMessage> messages;
+        private readonly Queue<MimeMessage> messages;
 
-        public InMemoryMailSource(params MailMessage[] messages)
+        public InMemoryMailSource(params MimeMessage[] messages)
         {
-            this.messages = new Queue<MailMessage>(messages ?? new MailMessage[0]);
+            this.messages = new Queue<MimeMessage>(messages ?? new MimeMessage[0]);
         }
 
-        public IEnumerator<MailMessage> GetEnumerator()
+        public IEnumerator<MimeMessage> GetEnumerator()
         {
             while (this.messages.Count > 0)
             {
-                MailMessage msg = this.messages.Dequeue();
+                MimeMessage msg = this.messages.Dequeue();
 
                 yield return msg;
             }

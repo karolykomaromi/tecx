@@ -7,9 +7,9 @@ namespace Hydra.Infrastructure.Mail
 
     public class MailAddressBuilder : Builder<MailAddress>
     {
-        private string first;
+        private string firstName;
 
-        private string last;
+        private string lastName;
 
         private string displayName;
 
@@ -19,9 +19,9 @@ namespace Hydra.Infrastructure.Mail
 
         public MailAddressBuilder()
         {
-            this.first = string.Empty;
+            this.firstName = string.Empty;
 
-            this.last = string.Empty;
+            this.lastName = string.Empty;
 
             this.displayName = string.Empty;
 
@@ -35,7 +35,7 @@ namespace Hydra.Infrastructure.Mail
             string dn;
             if (string.IsNullOrWhiteSpace(this.displayName))
             {
-                dn = this.first + " " + this.last;
+                dn = this.firstName + " " + this.lastName;
             }
             else
             {
@@ -45,9 +45,9 @@ namespace Hydra.Infrastructure.Mail
             string adr;
             if (string.IsNullOrWhiteSpace(this.address))
             {
-                string f = this.first.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).First().ToLowerInvariant();
+                string f = this.firstName.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).First().ToLowerInvariant();
 
-                string n = this.last.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Last().ToLowerInvariant();
+                string n = this.lastName.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Last().ToLowerInvariant();
 
                 adr = f + "." + n + "@" + this.domain;
             }
@@ -64,7 +64,7 @@ namespace Hydra.Infrastructure.Mail
             Contract.Requires(!string.IsNullOrWhiteSpace(firstName));
             Contract.Ensures(Contract.Result<MailAddressBuilder>() != null);
 
-            this.first = this.CapitalizeFirstLetter(firstName);
+            this.firstName = StringHelper.CapitalizeFirstLetter(firstName);
 
             return this;
         }
@@ -74,7 +74,7 @@ namespace Hydra.Infrastructure.Mail
             Contract.Requires(!string.IsNullOrWhiteSpace(lastName));
             Contract.Ensures(Contract.Result<MailAddressBuilder>() != null);
 
-            this.last = this.CapitalizeFirstLetter(lastName);
+            this.lastName = StringHelper.CapitalizeFirstLetter(lastName);
 
             return this;
         }
@@ -107,11 +107,6 @@ namespace Hydra.Infrastructure.Mail
             this.displayName = displayName;
 
             return this;
-        }
-
-        private string CapitalizeFirstLetter(string s)
-        {
-            return (s.Substring(0, 1).ToUpperInvariant() + s.Substring(1)).Trim();
         }
     }
 }

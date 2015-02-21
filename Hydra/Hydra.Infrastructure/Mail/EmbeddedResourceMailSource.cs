@@ -1,15 +1,15 @@
 namespace Hydra.Infrastructure.Mail
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.IO;
     using System.Linq;
-    using System.Net.Mail;
     using System.Reflection;
     using MimeKit;
 
-    public class EmbeddedResourceMailSource : MimeKitBasedMailSource
+    public class EmbeddedResourceMailSource : IUnsentMailSource
     {
         private readonly Assembly assembly;
 
@@ -30,7 +30,7 @@ namespace Hydra.Infrastructure.Mail
             this.manifestResourceNames = new HashSet<string>(manifestResourceNames);
         }
 
-        public override IEnumerator<MailMessage> GetEnumerator()
+        public IEnumerator<MimeMessage> GetEnumerator()
         {
             foreach (string resourceName in this.manifestResourceNames)
             {
@@ -38,11 +38,14 @@ namespace Hydra.Infrastructure.Mail
                 {
                     MimeMessage mime = MimeMessage.Load(stream);
 
-                    MailMessage mail = this.ConvertToMailMessage(mime);
-
-                    yield return mail;
+                    yield return mime;
                 }
             }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

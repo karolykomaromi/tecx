@@ -1,9 +1,9 @@
 ﻿namespace Hydra.Infrastructure.Mail
 {
     using System.Collections.Generic;
-    using System.Net.Mail;
+    using MimeKit;
 
-    public interface IUnsentMailSource : IEnumerable<MailMessage>
+    public interface IUnsentMailSource : IEnumerable<MimeMessage>
     {
     }
 }

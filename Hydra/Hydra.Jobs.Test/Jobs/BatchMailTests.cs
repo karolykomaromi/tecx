@@ -1,5 +1,8 @@
 ﻿namespace Hydra.Jobs.Test.Jobs
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.IO;
     using System.Net;
     using System.Net.Mail;
@@ -9,6 +12,7 @@
     using MimeKit;
     using Moq;
     using netDumbster.smtp;
+    using NHibernate;
     using Quartz;
     using Xunit;
 
@@ -58,7 +62,8 @@
                 {
                     Host = "localhost",
                     Port = server.Port,
-                    Credentials = new NetworkCredential("userName", "password")
+                    Credentials = new NetworkCredential("userName", "password"),
+                    NeedsAuthentication = false
                 };
 
                 IJob sut = new BatchMail(unsent, sent, settings);
@@ -125,6 +130,36 @@
                     server.Stop();
                 }
             }
+        }
+    }
+
+    public class NhMailCycle : IUnsentMailSource, ISentMailSink
+    {
+        private readonly ISession session;
+
+        private readonly IDictionary<MimeMessage, long> mailMessageIdentityMap;
+
+        public NhMailCycle(ISession session)
+        {
+            Contract.Requires(session != null);
+
+            this.session = session;
+            this.mailMessageIdentityMap = new Dictionary<MimeMessage, long>();
+        }
+
+        public void Drop(MimeMessage message)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerator<MimeMessage> GetEnumerator()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

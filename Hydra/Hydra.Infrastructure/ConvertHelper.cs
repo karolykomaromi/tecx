@@ -5,11 +5,20 @@
     using System.Globalization;
     using System.Reflection;
     using Hydra.Infrastructure.Logging;
+    using Hydra.Infrastructure.Mail;
     using Hydra.Infrastructure.Reflection;
+    using MimeKit;
 
     public static class ConvertHelper
     {
         private static readonly ITypeDescriptorContext EmptyTypeDescriptorContext = new DummyTypeDescriptorContext();
+
+        static ConvertHelper()
+        {
+            // weberse 2015-02-20 we can't modify either class so we need to register our custom converters this way
+            // http://stackoverflow.com/a/606992/750065
+            TypeDescriptor.AddAttributes(typeof(MimeMessage), new TypeConverterAttribute(typeof(MimeMessageTypeConverter)));
+        }
 
         public static bool TryConvert(object o, Type destinationType, CultureInfo culture, out object converted)
         {
