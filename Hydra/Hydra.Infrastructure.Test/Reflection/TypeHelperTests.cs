@@ -73,5 +73,13 @@ namespace Hydra.Infrastructure.Test.Reflection
 
             Assert.Equal("Foo", property.Name);
         }
+
+        [Fact]
+        public void Should_Get_Caller_Member_Name()
+        {
+            string actual = TypeHelper.GetCallerMemberName();
+
+            Assert.Equal("Should_Get_Caller_Member_Name", actual);
+        }
     }
 }

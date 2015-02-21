@@ -6,6 +6,7 @@ namespace Hydra.Infrastructure.Reflection
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+    using System.Runtime.CompilerServices;
 
     public static class TypeHelper
     {
@@ -87,6 +88,11 @@ namespace Hydra.Infrastructure.Reflection
             }
 
             return Property.Null;
+        }
+
+        public static string GetCallerMemberName([CallerMemberName] string callerMemberName = "")
+        {
+            return callerMemberName;
         }
     }
 }

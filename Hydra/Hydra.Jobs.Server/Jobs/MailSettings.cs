@@ -4,10 +4,12 @@
 
     public class MailSettings
     {
-        public virtual ICredentialsByHost Credentials { get; set; }
+        public virtual ICredentials Credentials { get; set; }
 
         public virtual int Port { get; set; }
 
         public virtual string Host { get; set; }
+
+        public virtual bool NeedsAuthentication { get; set; }
     }
 }

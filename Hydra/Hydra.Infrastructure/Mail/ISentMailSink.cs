@@ -2,17 +2,18 @@ namespace Hydra.Infrastructure.Mail
 {
     using System.Diagnostics.Contracts;
     using System.Net.Mail;
+    using MimeKit;
 
     [ContractClass(typeof(SentMailSinkContract))]
     public interface ISentMailSink
     {
-        void Drop(MailMessage message);
+        void Drop(MimeMessage message);
     }
 
     [ContractClassFor(typeof(ISentMailSink))]
     internal abstract class SentMailSinkContract : ISentMailSink
     {
-        public void Drop(MailMessage message)
+        public void Drop(MimeMessage message)
         {
             Contract.Requires(message != null);
         }

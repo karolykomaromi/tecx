@@ -1,11 +1,10 @@
 ﻿namespace Hydra.Jobs.Server.Jobs
 {
     using System;
-    using System.Collections.ObjectModel;
-    using System.Linq;
-    using System.Net.Mail;
     using Hydra.Infrastructure.Logging;
     using Hydra.Infrastructure.Mail;
+    using MailKit.Net.Smtp;
+    using MimeKit;
     using Quartz;
 
     public class BatchMail : IJob
@@ -23,9 +22,16 @@
 
         public void Execute(IJobExecutionContext context)
         {
-            using (var client = new SmtpClient(this.mailSettings.Host, this.mailSettings.Port) { Credentials = this.mailSettings.Credentials })
+            using (SmtpClient client = new SmtpClient())
             {
-                foreach (MailMessage message in this.unsent)
+                client.Connect(this.mailSettings.Host, this.mailSettings.Port);
+
+                if (this.mailSettings.NeedsAuthentication)
+                {
+                    client.Authenticate(this.mailSettings.Credentials);
+                }
+
+                foreach (MimeMessage message in this.unsent)
                 {
                     try
                     {

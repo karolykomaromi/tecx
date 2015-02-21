@@ -1,12 +1,12 @@
 namespace Hydra.Infrastructure.Mail
 {
+    using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.IO;
-    using System.Net.Mail;
     using MimeKit;
 
-    public class FileMailSource : MimeKitBasedMailSource
+    public class FileMailSource : IUnsentMailSource
     {
         private readonly DirectoryInfo unsentMailFolder;
 
@@ -18,7 +18,7 @@ namespace Hydra.Infrastructure.Mail
             this.unsentMailFolder = unsentMailFolder;
         }
 
-        public override IEnumerator<MailMessage> GetEnumerator()
+        public IEnumerator<MimeMessage> GetEnumerator()
         {
             foreach (FileInfo mailFile in this.unsentMailFolder.GetFiles("*.eml"))
             {
@@ -26,13 +26,16 @@ namespace Hydra.Infrastructure.Mail
                 {
                     MimeMessage mime = MimeMessage.Load(stream);
 
-                    MailMessage mail = this.ConvertToMailMessage(mime);
-
-                    yield return mail;
+                    yield return mime;
                 }
 
                 mailFile.Delete();
             }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

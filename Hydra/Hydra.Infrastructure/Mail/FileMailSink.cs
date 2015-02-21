@@ -3,8 +3,8 @@ namespace Hydra.Infrastructure.Mail
     using System;
     using System.Diagnostics.Contracts;
     using System.IO;
-    using System.Net.Mail;
     using Hydra.Infrastructure.Logging;
+    using MimeKit;
 
     public class FileMailSink : ISentMailSink
     {
@@ -18,7 +18,7 @@ namespace Hydra.Infrastructure.Mail
             this.sentMailFolder = sentMailFolder;
         }
 
-        public void Drop(MailMessage message)
+        public void Drop(MimeMessage message)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace Hydra.Infrastructure.Mail
 
                 using (Stream stream = new FileStream(fileName, FileMode.Create))
                 {
-                    message.Save(stream);
+                    message.WriteTo(stream);
                 }
             }
             catch (Exception ex)

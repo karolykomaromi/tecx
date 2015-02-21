@@ -1,9 +1,9 @@
 ﻿namespace Hydra.Infrastructure.Test.Mail
 {
     using System.Linq;
-    using System.Net.Mail;
     using Hydra.Infrastructure.Mail;
     using Hydra.TestTools;
+    using MimeKit;
     using Xunit;
 
     public class EmbeddedResourceMailSourceTests
@@ -13,11 +13,11 @@
         {
             IUnsentMailSource sut = new EmbeddedResourceMailSource(this.GetType().Assembly, KnownTestFiles.TestFiles.Mails.Mail01);
 
-            MailMessage actual = sut.Single();
+            MimeMessage actual = sut.Single();
 
-            MailAddress from = new MailAddressBuilder().JohnWayne();
+            MailboxAddress from = new MailboxAddressBuilder().JohnWayne();
 
-            Assert.Equal(from, actual.From);
+            Assert.Equal(from, actual.From.OfType<MailboxAddress>().Single());
         }
     }
 }
