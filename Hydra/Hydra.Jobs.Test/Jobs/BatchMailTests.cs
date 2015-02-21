@@ -1,5 +1,6 @@
 ﻿namespace Hydra.Jobs.Test.Jobs
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
@@ -58,12 +59,12 @@
 
                 ISentMailSink sent = new FileMailSink(sentFolder);
 
-                MailSettings settings = new MailSettings
+                InMemoryMailJobSettings settings = new InMemoryMailJobSettings
                 {
                     Host = "localhost",
                     Port = server.Port,
                     Credentials = new NetworkCredential("userName", "password"),
-                    NeedsAuthentication = false
+                    IsAuthenticationRequired = false
                 };
 
                 IJob sut = new BatchMail(unsent, sent, settings);

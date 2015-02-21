@@ -107,8 +107,10 @@
     <Compile Include="ISchedulerService.cs" />
     <Compile Include="JobScheduleRequest.cs" />
     <Compile Include="JobScheduleResponse.cs" />
+    <Compile Include="Jobs\ApplicationMailSettings.cs" />
     <Compile Include="Jobs\Heartbeat.cs" />
-    <Compile Include="Jobs\MailSettings.cs" />
+    <Compile Include="Jobs\IMailJobSettings.cs" />
+    <Compile Include="Jobs\InMemoryMailJobSettings.cs" />
     <Compile Include="Jobs\Nop.cs" />
     <Compile Include="Jobs\BatchMail.cs" />
     <Compile Include="KnownJobs.cs" />

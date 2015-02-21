@@ -45,11 +45,15 @@
             {
                 public static class Smtp
                 {
-                    public static readonly Setting Server = new Setting(KnownSettingNames.Hydra.Mail.Smtp.Server, new Uri("http://smtp.mail.invalid:8080", UriKind.Absolute));
+                    public static readonly Setting Host = new Setting(KnownSettingNames.Hydra.Mail.Smtp.Host, "smtp.mail.invalid");
+
+                    public static readonly Setting Port = new Setting(KnownSettingNames.Hydra.Mail.Smtp.Port, 587);
 
                     public static readonly Setting UserName = new Setting(KnownSettingNames.Hydra.Mail.Smtp.UserName, "john.wayne@mail.invalid");
 
                     public static readonly Setting Password = new Setting(KnownSettingNames.Hydra.Mail.Smtp.Password, "not-a-password");
+
+                    public static readonly Setting IsAuthenticationRequired = new Setting(KnownSettingNames.Hydra.Mail.Smtp.IsAuthenticationRequired, false);
                 }
             }
 
