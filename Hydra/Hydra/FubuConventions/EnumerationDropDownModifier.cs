@@ -37,7 +37,7 @@ namespace Hydra.FubuConventions
             {
                 object converted = converter.ConvertTo(value, typeof(int));
 
-                int v = converted == null || !(converted is int) ? (int)converted : default(int);
+                int v = converted is int ? (int)converted : Default.Value<int>();
 
                 var optionTag = new HtmlTag("option")
                     .Value(v.ToString(CultureInfo.CurrentCulture))

@@ -2,6 +2,7 @@
 {
     using System.Diagnostics.Contracts;
     using System.Threading.Tasks;
+    using Hydra.Infrastructure;
 
     [ContractClass(typeof(CommandHandlerContract<,>))]
     public interface ICommandHandler<in TCommand, TResult> 
@@ -18,7 +19,7 @@
         {
             Contract.Requires(command != null);
 
-            return default(Task<TResult>);
+            return Default.Value<Task<TResult>>();
         }
     }
 }
