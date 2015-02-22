@@ -141,6 +141,7 @@
     <Compile Include="ContainerDataAttribute.cs" />
     <Compile Include="ConvertHelperTests.cs" />
     <Compile Include="DefaultTests.cs" />
+    <Compile Include="DictionaryTests.cs" />
     <Compile Include="EnumerationTypeConverterTests.cs" />
     <Compile Include="EnumerationTests.cs" />
     <Compile Include="EqualityComparerAdapterTests.cs" />

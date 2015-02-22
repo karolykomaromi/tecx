@@ -126,6 +126,9 @@
   <data name="ConversionNotSupported" xml:space="preserve">
     <value>'{0}' is not a supported value for a target of type '{1}'.</value>
   </data>
+  <data name="DuplicateKeyException" xml:space="preserve">
+    <value>An item with the key '{0}' has already been added.</value>
+  </data>
   <data name="EnumerationDoesNotDeclareAnyFields" xml:space="preserve">
     <value>Enumeration of Type '{0}' does not declare any public static fields.</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="InvalidSettingName" xml:space="preserve">
     <value>'{0}' is not a valid name for a setting.</value>
+  </data>
+  <data name="KeyNotFoundException" xml:space="preserve">
+    <value>The given key '{0}' was not present in the dictionary.</value>
   </data>
   <data name="Reminder" xml:space="preserve">
     <value>Reminder</value>
