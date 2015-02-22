@@ -2,6 +2,7 @@
 {
     using System.Diagnostics.Contracts;
     using System.Threading.Tasks;
+    using Hydra.Infrastructure;
 
     [ContractClass(typeof(QueryHandlerContract<,>))]
     public interface IQueryHandler<in TQuery, TResponse>
@@ -18,7 +19,7 @@
         {
             Contract.Requires(query != null);
 
-            return default(Task<TResponse>);
+            return Default.Value<Task<TResponse>>();
         }
     }
 }

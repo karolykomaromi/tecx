@@ -118,6 +118,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="ConvertHelper.cs" />
     <Compile Include="DateTimeExtensions.cs" />
+    <Compile Include="Default.cs" />
     <Compile Include="DefaultTimeProvider.cs" />
     <Compile Include="Enumeration.cs" />
     <Compile Include="EnumerationTypeConverter.cs" />

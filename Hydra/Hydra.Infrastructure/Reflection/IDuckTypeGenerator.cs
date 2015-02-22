@@ -16,7 +16,7 @@ namespace Hydra.Infrastructure.Reflection
             Contract.Requires(duck != null);
             Contract.Ensures(Contract.Result<T>() != null);
 
-            return default(T);
+            return Default.Value<T>();
         }
     }
 }

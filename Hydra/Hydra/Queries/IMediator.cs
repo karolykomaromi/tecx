@@ -3,6 +3,7 @@
     using System.Diagnostics.Contracts;
     using System.Threading.Tasks;
     using Hydra.Commands;
+    using Hydra.Infrastructure;
 
     [ContractClass(typeof(MediatorContract))]
     public interface IMediator
@@ -19,14 +20,14 @@
         {
             Contract.Requires(query != null);
 
-            return default(Task<TResult>);
+            return Default.Value<Task<TResult>>();
         }
 
         public Task<TResult> Send<TResult>(ICommand<TResult> command)
         {
             Contract.Requires(command != null);
 
-            return default(Task<TResult>);
+            return Default.Value<Task<TResult>>();
         }
     }
 }

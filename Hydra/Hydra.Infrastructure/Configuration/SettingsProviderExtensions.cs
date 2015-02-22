@@ -16,7 +16,7 @@
                 return (T)value;
             }
 
-            return default(T);
+            return Default.Value<T>();
         }
     }
 }
