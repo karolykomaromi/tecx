@@ -23,21 +23,21 @@ namespace Hydra.Jobs.Server.Jobs
 
             this.settingsProvider = settingsProvider;
 
-            this.isAuthenticationRequired = new Lazy<bool>(() => (bool)this.settingsProvider.GetSettings()[KnownSettingNames.Hydra.Mail.Smtp.IsAuthenticationRequired].Value);
+            this.isAuthenticationRequired = new Lazy<bool>(() => this.settingsProvider.GetValue<bool>(KnownSettingNames.Hydra.Mail.Smtp.IsAuthenticationRequired));
 
             this.credentials = new Lazy<ICredentials>(
                 () =>
                 {
-                        string userName = (string)this.settingsProvider.GetSettings()[KnownSettingNames.Hydra.Mail.Smtp.UserName].Value;
+                        string userName = this.settingsProvider.GetValue<string>(KnownSettingNames.Hydra.Mail.Smtp.UserName);
 
-                        string password = (string)this.settingsProvider.GetSettings()[KnownSettingNames.Hydra.Mail.Smtp.Password].Value;
+                        string password = this.settingsProvider.GetValue<string>(KnownSettingNames.Hydra.Mail.Smtp.Password);
 
                         return new NetworkCredential(userName, password);
                 });
 
-            this.port = new Lazy<int>(() => (int)this.settingsProvider.GetSettings()[KnownSettingNames.Hydra.Mail.Smtp.Port].Value);
+            this.port = new Lazy<int>(() => this.settingsProvider.GetValue<int>(KnownSettingNames.Hydra.Mail.Smtp.Port));
 
-            this.host = new Lazy<string>(() => (string)this.settingsProvider.GetSettings()[KnownSettingNames.Hydra.Mail.Smtp.Host].Value);
+            this.host = new Lazy<string>(() => this.settingsProvider.GetValue<string>(KnownSettingNames.Hydra.Mail.Smtp.Host));
         }
         
         public ICredentials Credentials

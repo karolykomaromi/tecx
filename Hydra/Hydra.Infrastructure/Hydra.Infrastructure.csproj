@@ -110,6 +110,7 @@
     <Compile Include="Configuration\SettingsCollection.cs" />
     <Compile Include="Configuration\SettingElementCollection.cs" />
     <Compile Include="Configuration\SettingNameUserTypeConvention.cs" />
+    <Compile Include="Configuration\SettingsProviderExtensions.cs" />
     <Compile Include="Configuration\SupportedLanguageElement.cs" />
     <Compile Include="Configuration\SupportedLanguageElementCollection.cs" />
     <Compile Include="Configuration\TypeTypeConverter.cs" />
