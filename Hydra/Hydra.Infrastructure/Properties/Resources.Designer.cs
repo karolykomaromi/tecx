@@ -71,6 +71,11 @@ namespace Hydra.Infrastructure.Properties
             get { return Resources.ResourceManager.GetString("ConversionNotSupported", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
+        public static string DuplicateKeyException
+        {
+            get { return Resources.ResourceManager.GetString("DuplicateKeyException", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string EnumerationDoesNotDeclareAnyFields
         {
             get { return Resources.ResourceManager.GetString("EnumerationDoesNotDeclareAnyFields", resourceCulture ?? CultureInfo.CurrentUICulture); }
@@ -84,6 +89,11 @@ namespace Hydra.Infrastructure.Properties
         public static string InvalidSettingName
         {
             get { return Resources.ResourceManager.GetString("InvalidSettingName", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string KeyNotFoundException
+        {
+            get { return Resources.ResourceManager.GetString("KeyNotFoundException", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
         public static string Reminder
