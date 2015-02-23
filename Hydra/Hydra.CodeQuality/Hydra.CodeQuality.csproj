@@ -54,23 +54,24 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\CompositeCsElementVisitor.cs" />
     <Compile Include="Rules\CompositeCsTokenVisitor.cs" />
+    <Compile Include="Rules\CompositeExpressionVisitor.cs" />
     <Compile Include="Rules\ConstructorMustNotHaveMoreThanFourParameters.cs" />
     <Compile Include="Rules\CsElementVisitor.cs" />
     <Compile Include="Rules\CsTokenVisitor.cs" />
+    <Compile Include="Rules\DontUseDefaultOperator.cs" />
+    <Compile Include="Rules\ExpressionVisitor.cs" />
     <Compile Include="Rules\ICsElementVisitor.cs" />
     <Compile Include="Rules\ICsTokenVisitor.cs" />
+    <Compile Include="Rules\IExpressionVisitor.cs" />
     <Compile Include="Rules\IncorrectRethrow.cs" />
     <Compile Include="Rules\MethodMustNotHaveMoreThanFourParameters.cs" />
     <Compile Include="Rules\NullCsElementVisitor.cs" />
     <Compile Include="Rules\NullCsTokenVisitor.cs" />
+    <Compile Include="Rules\NullExpressionVisitor.cs" />
     <Compile Include="Rules\Visitor.cs" />
-    <Compile Include="SpacingRules.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="SpacingRules.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CodeQualityRules.xml" />

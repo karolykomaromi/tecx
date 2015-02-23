@@ -12,6 +12,9 @@
             <Rule Name="IncorrectRethrow" CheckId="HD1002">
                 <Context>Incorrect re-throw of an exception in method '{0}'. Replace 'throw {1};' with 'throw;'</Context>
             </Rule>
+            <Rule Name="DontUseDefaultOperator" CheckId="HD1003">
+                <Context>Do not use 'default({0})'. Use 'Default.Value&lt;{0}&gt;()' instead.</Context>
+            </Rule>
         </RuleGroup>
     </Rules>
 </SourceAnalyzer>

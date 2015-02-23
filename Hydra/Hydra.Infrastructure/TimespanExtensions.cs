@@ -1,6 +1,7 @@
 ﻿namespace Hydra.Infrastructure
 {
     using System;
+    using Hydra.Infrastructure.Extensions;
 
     public static class TimeSpanExtensions
     {

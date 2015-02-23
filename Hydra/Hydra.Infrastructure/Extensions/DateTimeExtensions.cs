@@ -1,4 +1,4 @@
-﻿namespace Hydra.Infrastructure
+﻿namespace Hydra.Infrastructure.Extensions
 {
     using System;
 

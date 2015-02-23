@@ -1,7 +1,6 @@
 namespace Hydra.CodeQuality.Rules
 {
     using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
     using System.Linq;
     using StyleCop.CSharp;
 
@@ -11,8 +10,6 @@ namespace Hydra.CodeQuality.Rules
 
         public CompositeCsElementVisitor(params ICsElementVisitor[] visitors)
         {
-            Contract.Requires(visitors != null);
-
             this.visitors = new List<ICsElementVisitor>(visitors ?? new ICsElementVisitor[0]);
         }
 

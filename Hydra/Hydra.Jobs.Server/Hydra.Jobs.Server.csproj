@@ -130,7 +130,7 @@
     <EmbeddedResource Include="Properties\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="app.config" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
