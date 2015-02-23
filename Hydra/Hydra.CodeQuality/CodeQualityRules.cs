@@ -18,12 +18,52 @@
                 return;
             }
 
-            ICsElementVisitor visitor = new CompositeCsElementVisitor(
+            this.VisitElements(csDocument);
+
+            if (csDocument.RootElement == null ||
+                csDocument.RootElement.Generated)
+            {
+                return;
+            }
+
+            this.VisitTokens(csDocument);
+        }
+
+        private void VisitTokens(CsDocument document)
+        {
+            MasterList<CsToken> tokens = document.Tokens;
+
+            if (tokens.Count < 1)
+            {
+                return;
+            }
+
+            ICsTokenVisitor visitor = new NullCsTokenVisitor();
+
+            for (Node<CsToken> tokenNode = tokens.First; tokenNode != null; tokenNode = tokenNode.Next)
+            {
+                if (this.Cancel)
+                {
+                    break;
+                }
+
+                if (!tokenNode.Value.Generated)
+                {
+                    visitor.Visit(tokenNode, null);
+                }
+            }
+        }
+
+        private void VisitElements(CsDocument document)
+        {
+            ICsElementVisitor elementVisitor = new CompositeCsElementVisitor(
                 new ConstructorMustNotHaveMoreThanFourParameters(this),
                 new MethodMustNotHaveMoreThanFourParameters(this),
                 new IncorrectRethrow(this));
 
-            csDocument.WalkDocument(visitor.Visit);
+            IExpressionVisitor expressionVisitor = new DontUseDefaultOperator(this);
+
+            document.WalkDocument(elementVisitor.Visit, (CodeWalkerStatementVisitor<object>)null, expressionVisitor.Visit);
         }
     }
 }

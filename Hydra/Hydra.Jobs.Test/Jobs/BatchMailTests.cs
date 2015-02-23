@@ -5,8 +5,10 @@
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.IO;
+    using System.Linq;
     using System.Net;
     using System.Net.Mail;
+    using Hydra.Infrastructure;
     using Hydra.Infrastructure.Mail;
     using Hydra.Jobs.Server.Jobs;
     using Hydra.TestTools;
@@ -14,6 +16,7 @@
     using Moq;
     using netDumbster.smtp;
     using NHibernate;
+    using NHibernate.Linq;
     using Quartz;
     using Xunit;
 
@@ -136,31 +139,68 @@
 
     public class NhMailCycle : IUnsentMailSource, ISentMailSink
     {
+        private const int BatchSize = 1000;
+
         private readonly ISession session;
 
-        private readonly IDictionary<MimeMessage, long> mailMessageIdentityMap;
+        private readonly IDictionary<MimeMessage, PersistentMail> pending;
 
         public NhMailCycle(ISession session)
         {
             Contract.Requires(session != null);
 
             this.session = session;
-            this.mailMessageIdentityMap = new Dictionary<MimeMessage, long>();
+            this.pending = new Dictionary<MimeMessage, PersistentMail>();
         }
 
         public void Drop(MimeMessage message)
         {
-            throw new System.NotImplementedException();
+            PersistentMail mail;
+            if (this.pending.TryGetValue(message, out mail))
+            {
+                mail.SentAt = TimeProvider.UtcNow;
+                mail.IsSent = true;
+
+                this.session.Update(mail);
+                this.pending.Remove(message);
+            }
         }
 
         public IEnumerator<MimeMessage> GetEnumerator()
         {
-            throw new System.NotImplementedException();
+            var mails = this.session.Query<PersistentMail>()
+                .Where(m => m.IsSent == false)
+                .OrderBy(m => m.EnqueuedAt)
+                .Take(BatchSize)
+                .ToArray();
+
+            foreach (PersistentMail mail in mails)
+            {
+                this.pending[mail.Message] = mail;
+
+                yield return mail.Message;
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }
+    }
+
+    public class PersistentMail : Entity
+    {
+        public virtual MimeMessage Message { get; set; }
+
+        public virtual bool IsSent { get; set; }
+
+        public virtual DateTime EnqueuedAt { get; set; }
+
+        public virtual DateTime? SentAt { get; set; }
+    }
+
+    public abstract class Entity
+    {
+        public virtual long Id { get; set; }
     }
 }

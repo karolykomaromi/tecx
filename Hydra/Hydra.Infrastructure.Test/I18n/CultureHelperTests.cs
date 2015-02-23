@@ -4,6 +4,7 @@
     using System.Collections.Specialized;
     using System.Globalization;
     using System.Web;
+    using Hydra.Infrastructure.Extensions;
     using Hydra.Infrastructure.I18n;
     using Xunit;
 

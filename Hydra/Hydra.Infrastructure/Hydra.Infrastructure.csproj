@@ -117,7 +117,6 @@
     <Compile Include="Configuration\WebConfigSettingsProvider.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ConvertHelper.cs" />
-    <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Default.cs" />
     <Compile Include="DefaultTimeProvider.cs" />
     <Compile Include="Enumeration.cs" />
@@ -125,6 +124,12 @@
     <Compile Include="EnumerationInitializationFailedException.cs" />
     <Compile Include="EqualityComparer.cs" />
     <Compile Include="EqualityComparerAdapter.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\DictionaryEnhancements.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\DuplicateKeyException.cs" />
+    <Compile Include="Extensions\MissingKeyException.cs" />
+    <Compile Include="Extensions\ProtectDataExtensions.cs" />
     <Compile Include="HttpHeaders.cs" />
     <Compile Include="I18n\AppConfigSupportedCulturesProvider.cs" />
     <Compile Include="I18n\CachingSupportedCulturesProvider.cs" />

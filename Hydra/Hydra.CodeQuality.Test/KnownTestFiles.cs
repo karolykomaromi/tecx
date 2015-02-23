@@ -19,6 +19,11 @@ namespace Hydra.CodeQuality.Test
             public const string IncorrectRethrow = "Hydra.CodeQuality.Test.TestFiles.IncorrectRethrow.cs";
 
             /// <summary>
+            /// Hydra.CodeQuality.Test.TestFiles.ReturnsDefaultInt.cs
+            /// </summary>
+            public const string ReturnsDefaultInt = "Hydra.CodeQuality.Test.TestFiles.ReturnsDefaultInt.cs";
+
+            /// <summary>
             /// Hydra.CodeQuality.Test.TestFiles.TooManyConstructorArguments.cs
             /// </summary>
             public const string TooManyConstructorArguments = "Hydra.CodeQuality.Test.TestFiles.TooManyConstructorArguments.cs";

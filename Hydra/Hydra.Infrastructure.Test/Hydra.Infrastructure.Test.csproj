@@ -141,11 +141,12 @@
     <Compile Include="ContainerDataAttribute.cs" />
     <Compile Include="ConvertHelperTests.cs" />
     <Compile Include="DefaultTests.cs" />
-    <Compile Include="DictionaryTests.cs" />
     <Compile Include="EnumerationTypeConverterTests.cs" />
     <Compile Include="EnumerationTests.cs" />
     <Compile Include="EqualityComparerAdapterTests.cs" />
     <Compile Include="EqualityComparerTests.cs" />
+    <Compile Include="Extensions\DictionaryTests.cs" />
+    <Compile Include="Extensions\ProtectDataExtensionsTests.cs" />
     <Compile Include="FlagsTypeConverterTests.cs" />
     <Compile Include="FlagsTests.cs" />
     <Compile Include="I18n\CachingResourceManagerTests.cs" />
@@ -155,7 +156,6 @@
     <Compile Include="I18n\ResourceAccessorCacheTests.cs" />
     <Compile Include="I18n\ResourceItemBuilder.cs" />
     <Compile Include="Input\CmdLineParameterParserTests.cs" />
-    <Compile Include="KnownSettingNamesTests.cs" />
     <Compile Include="KnownTestFiles.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
