@@ -71,10 +71,13 @@
     <Compile Include="Rules\Visitor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CodeQualityRules.xml" />
+    <EmbeddedResource Include="CodeQualityRules.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\CommonFiles\Hydra.targets" Condition="Exists('$(SolutionDir)\CommonFiles\Hydra.targets')" />

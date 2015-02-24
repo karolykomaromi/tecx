@@ -74,6 +74,7 @@
     <EmbeddedResource Include="TestFiles\TooManyConstructorArguments.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="KnownTestFiles.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>KnownTestFiles.cs</LastGenOutput>

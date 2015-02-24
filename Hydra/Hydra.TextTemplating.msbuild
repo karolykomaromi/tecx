@@ -1,10 +1,22 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <UsingTask AssemblyFile=".\packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll" TaskName="Xunit.Runner.MSBuild.xunit"/>
+  <PropertyGroup>
+    <BuildDependsOn>
+      <Build/>
+      <CopyDll/>
+    </BuildDependsOn>
+  </PropertyGroup>
   <ItemGroup>
-    <TestAssemblies Include="**\bin\Release\*.Test.dll" />
+    <TestAssemblies Include="Hydra.TextTemplating.Test\bin\Release\Hydra.TextTemplating.Test.dll" />
   </ItemGroup>
+    <ItemGroup>
+        <MySourceFiles Include="Hydra.TextTemplating\bin\Release\Hydra.TextTemplating.dll;Hydra.TextTemplating\bin\Release\Hydra.TextTemplating.pdb"/>
+    </ItemGroup>
   <Target Name="Build">
     <MSBuild Projects="Hydra.TextTemplating.sln" Targets="Build" Properties="Configuration=Release" />
-    <xunit Assemblies="@(TestAssemblies)" Html="Result.html"/>
+    <xunit Assemblies="@(TestAssemblies)" Html="Hydra.TextTemplating.TestResults.html"/>
+  </Target>
+  <Target Name="CopyDll" AfterTargets="Build">
+      <Copy SourceFiles="@(MySourceFiles)" DestinationFolder="libs\Hydra.TextTemplating" />
   </Target>
 </Project>

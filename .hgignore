@@ -312,3 +312,5 @@ Hydra/Hydra.TextTemplating/bin
 Hydra/Hydra.TextTemplating.Test/obj
 Hydra/Hydra.TextTemplating/obj
 Hydra/Hydra.TextTemplating/CreateNugetPackage.bat
+Hydra/Hydra.CodeQuality.TestResults.html
+Hydra/Hydra.TextTemplating.TestResults.html
