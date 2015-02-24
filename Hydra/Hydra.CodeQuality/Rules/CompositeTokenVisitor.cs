@@ -5,20 +5,20 @@ namespace Hydra.CodeQuality.Rules
     using StyleCop;
     using StyleCop.CSharp;
 
-    public class CompositeCsTokenVisitor : ICsTokenVisitor
+    public class CompositeTokenVisitor : ITokenVisitor
     {
-        private readonly List<ICsTokenVisitor> visitors;
+        private readonly List<ITokenVisitor> visitors;
 
-        public CompositeCsTokenVisitor(params ICsTokenVisitor[] visitors)
+        public CompositeTokenVisitor(params ITokenVisitor[] visitors)
         {
             Contract.Requires(visitors != null);
 
-            this.visitors = new List<ICsTokenVisitor>(visitors ?? new ICsTokenVisitor[0]);
+            this.visitors = new List<ITokenVisitor>(visitors ?? new ITokenVisitor[0]);
         }
 
         public void Visit(Node<CsToken> tokenNode, Node<CsToken> parentTokenNode)
         {
-            foreach (ICsTokenVisitor visitor in this.visitors)
+            foreach (ITokenVisitor visitor in this.visitors)
             {
                 visitor.Visit(tokenNode, parentTokenNode);
             }

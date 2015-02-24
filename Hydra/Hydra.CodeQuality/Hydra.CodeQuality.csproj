@@ -52,21 +52,29 @@
     </Compile>
     <Compile Include="CodeQualityRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rules\CompositeCsElementVisitor.cs" />
-    <Compile Include="Rules\CompositeCsTokenVisitor.cs" />
+    <Compile Include="Rules\CompositeElementVisitor.cs" />
+    <Compile Include="Rules\CompositeQueryClauseVisitor.cs" />
+    <Compile Include="Rules\CompositeStatementVisitor.cs" />
+    <Compile Include="Rules\CompositeTokenVisitor.cs" />
     <Compile Include="Rules\CompositeExpressionVisitor.cs" />
     <Compile Include="Rules\ConstructorMustNotHaveMoreThanFourParameters.cs" />
-    <Compile Include="Rules\CsElementVisitor.cs" />
-    <Compile Include="Rules\CsTokenVisitor.cs" />
+    <Compile Include="Rules\ElementVisitor.cs" />
+    <Compile Include="Rules\IQueryClauseVisitor.cs" />
+    <Compile Include="Rules\IStatementVisitor.cs" />
+    <Compile Include="Rules\NullQueryClauseVisitor.cs" />
+    <Compile Include="Rules\NullStatementVisitor.cs" />
+    <Compile Include="Rules\QueryClauseVisitor.cs" />
+    <Compile Include="Rules\StatementVisitor.cs" />
+    <Compile Include="Rules\TokenVisitor.cs" />
     <Compile Include="Rules\DontUseDefaultOperator.cs" />
     <Compile Include="Rules\ExpressionVisitor.cs" />
-    <Compile Include="Rules\ICsElementVisitor.cs" />
-    <Compile Include="Rules\ICsTokenVisitor.cs" />
+    <Compile Include="Rules\IElementVisitor.cs" />
+    <Compile Include="Rules\ITokenVisitor.cs" />
     <Compile Include="Rules\IExpressionVisitor.cs" />
     <Compile Include="Rules\IncorrectRethrow.cs" />
     <Compile Include="Rules\MethodMustNotHaveMoreThanFourParameters.cs" />
-    <Compile Include="Rules\NullCsElementVisitor.cs" />
-    <Compile Include="Rules\NullCsTokenVisitor.cs" />
+    <Compile Include="Rules\NullElementVisitor.cs" />
+    <Compile Include="Rules\NullTokenVisitor.cs" />
     <Compile Include="Rules\NullExpressionVisitor.cs" />
     <Compile Include="Rules\Visitor.cs" />
   </ItemGroup>

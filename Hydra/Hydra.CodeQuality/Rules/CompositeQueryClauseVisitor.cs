@@ -3,26 +3,28 @@ namespace Hydra.CodeQuality.Rules
     using System.Collections.Generic;
     using StyleCop.CSharp;
 
-    public class CompositeExpressionVisitor : IExpressionVisitor
+    public class CompositeQueryClauseVisitor : IQueryClauseVisitor
     {
-        private readonly List<IExpressionVisitor> visitors;
+        private readonly List<IQueryClauseVisitor> visitors;
 
-        public CompositeExpressionVisitor(params IExpressionVisitor[] visitors)
+        public CompositeQueryClauseVisitor(params IQueryClauseVisitor[] visitors)
         {
-            this.visitors = new List<IExpressionVisitor>(visitors ?? new IExpressionVisitor[0]);
+            this.visitors = new List<IQueryClauseVisitor>(visitors ?? new IQueryClauseVisitor[0]);
         }
 
         public bool Visit(
-            Expression expression, 
+            QueryClause clause, 
+            QueryClause parentClause, 
             Expression parentExpression, 
-            Statement parentStatement, 
+            Statement parentStatement,
             CsElement parentElement, 
             object context)
         {
             bool b = true;
-            
+
             this.visitors.ForEach(visitor => b &= visitor.Visit(
-                expression, 
+                clause, 
+                parentClause, 
                 parentExpression, 
                 parentStatement, 
                 parentElement, 

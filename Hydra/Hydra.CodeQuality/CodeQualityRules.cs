@@ -18,7 +18,7 @@
                 return;
             }
 
-            this.VisitElements(csDocument);
+            this.WalkDocument(csDocument);
 
             if (csDocument.RootElement == null ||
                 csDocument.RootElement.Generated)
@@ -26,10 +26,10 @@
                 return;
             }
 
-            this.VisitTokens(csDocument);
+            this.WalkTokens(csDocument);
         }
 
-        private void VisitTokens(CsDocument document)
+        private void WalkTokens(CsDocument document)
         {
             MasterList<CsToken> tokens = document.Tokens;
 
@@ -38,7 +38,7 @@
                 return;
             }
 
-            ICsTokenVisitor visitor = new NullCsTokenVisitor();
+            ITokenVisitor visitor = TokenVisitor.Null;
 
             for (Node<CsToken> tokenNode = tokens.First; tokenNode != null; tokenNode = tokenNode.Next)
             {
@@ -54,16 +54,20 @@
             }
         }
 
-        private void VisitElements(CsDocument document)
+        private void WalkDocument(CsDocument document)
         {
-            ICsElementVisitor elementVisitor = new CompositeCsElementVisitor(
+            IElementVisitor elementVisitor = new CompositeElementVisitor(
                 new ConstructorMustNotHaveMoreThanFourParameters(this),
                 new MethodMustNotHaveMoreThanFourParameters(this),
                 new IncorrectRethrow(this));
 
+            IStatementVisitor statementVisitor = StatementVisitor.Null;
+
             IExpressionVisitor expressionVisitor = new DontUseDefaultOperator(this);
 
-            document.WalkDocument(elementVisitor.Visit, (CodeWalkerStatementVisitor<object>)null, expressionVisitor.Visit);
+            IQueryClauseVisitor queryClauseVisitor = QueryClauseVisitor.Null;
+
+            document.WalkDocument(elementVisitor.Visit, statementVisitor.Visit, expressionVisitor.Visit, queryClauseVisitor.Visit);
         }
     }
 }
