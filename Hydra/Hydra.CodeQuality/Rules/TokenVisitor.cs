@@ -3,11 +3,11 @@ namespace Hydra.CodeQuality.Rules
     using StyleCop;
     using StyleCop.CSharp;
 
-    public abstract class CsTokenVisitor : Visitor, ICsTokenVisitor
+    public abstract class TokenVisitor : Visitor, ITokenVisitor
     {
-        public static readonly ICsTokenVisitor Null = new NullCsTokenVisitor();
+        public static readonly ITokenVisitor Null = new NullTokenVisitor();
 
-        protected CsTokenVisitor(SourceAnalyzer sourceAnalyzer)
+        protected TokenVisitor(SourceAnalyzer sourceAnalyzer)
             : base(sourceAnalyzer)
         {
         }

@@ -2,10 +2,10 @@ namespace Hydra.CodeQuality.Rules
 {
     using StyleCop.CSharp;
 
-    public class NullExpressionVisitor : IExpressionVisitor
+    public class NullStatementVisitor : IStatementVisitor
     {
         public bool Visit(
-            Expression expression, 
+            Statement statement, 
             Expression parentExpression, 
             Statement parentStatement, 
             CsElement parentElement, 

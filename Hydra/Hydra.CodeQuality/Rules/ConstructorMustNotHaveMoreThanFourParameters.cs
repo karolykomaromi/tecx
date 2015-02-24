@@ -4,7 +4,7 @@ namespace Hydra.CodeQuality.Rules
     using StyleCop;
     using StyleCop.CSharp;
 
-    public class ConstructorMustNotHaveMoreThanFourParameters : CsElementVisitor
+    public class ConstructorMustNotHaveMoreThanFourParameters : ElementVisitor
     {
         public ConstructorMustNotHaveMoreThanFourParameters(SourceAnalyzer sourceAnalyzer)
             : base(sourceAnalyzer)

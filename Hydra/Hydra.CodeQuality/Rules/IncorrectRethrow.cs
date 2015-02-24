@@ -4,7 +4,7 @@ namespace Hydra.CodeQuality.Rules
     using StyleCop;
     using StyleCop.CSharp;
 
-    public class IncorrectRethrow : CsElementVisitor
+    public class IncorrectRethrow : ElementVisitor
     {
         public IncorrectRethrow(SourceAnalyzer sourceAnalyzer)
             : base(sourceAnalyzer)
