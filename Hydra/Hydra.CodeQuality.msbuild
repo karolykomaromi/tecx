@@ -1,10 +1,22 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <UsingTask AssemblyFile=".\packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll" TaskName="Xunit.Runner.MSBuild.xunit"/>
+  <PropertyGroup>
+    <BuildDependsOn>
+      <Build/>
+      <CopyDll/>
+    </BuildDependsOn>
+  </PropertyGroup>
   <ItemGroup>
-    <TestAssemblies Include="**\bin\Release\*.Test.dll" />
+    <TestAssemblies Include="Hydra.CodeQuality.Test\bin\Release\Hydra.CodeQuality.Test.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <MySourceFiles Include="Hydra.CodeQuality\bin\Release\Hydra.CodeQuality.dll;Hydra.CodeQuality\bin\Release\Hydra.CodeQuality.pdb"/>
   </ItemGroup>
   <Target Name="Build">
     <MSBuild Projects="Hydra.CodeQuality.sln" Targets="Build" Properties="Configuration=Release" />
-    <xunit Assemblies="@(TestAssemblies)" Html="Result.html"/>
+    <xunit Assemblies="@(TestAssemblies)" Html="Hydra.CodeQuality.TestResults.html"/>
+  </Target>
+  <Target Name="CopyDll" AfterTargets="Build">
+    <Copy SourceFiles="@(MySourceFiles)" DestinationFolder="libs\Hydra.CodeQuality" />
   </Target>
 </Project>

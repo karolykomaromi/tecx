@@ -20,6 +20,8 @@
             Assert.Contains("Hydra.TextTemplating.Test.InventoryTestFiles.Foo.cs", actual, StringComparison.Ordinal);
             Assert.Contains("Hydra.TextTemplating.Test.InventoryTestFiles.Bar.cs", actual, StringComparison.Ordinal);
             Assert.Contains("Hydra.TextTemplating.Test.InventoryTestFiles.CodeQualityRules.Baz.cs", actual, StringComparison.Ordinal);
+            Assert.Contains("Hydra.TextTemplating.Test.InventoryTestFiles.NamingRules.Chat.txt", actual, StringComparison.Ordinal);
+            Assert.Contains("Hydra.TextTemplating.Test.InventoryTestFiles.NamingRules.Chit.txt", actual, StringComparison.Ordinal);
         }
     }
 }
