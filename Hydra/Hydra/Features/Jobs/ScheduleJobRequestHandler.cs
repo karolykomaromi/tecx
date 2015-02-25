@@ -2,14 +2,14 @@ namespace Hydra.Features.Jobs
 {
     using System.Diagnostics.Contracts;
     using System.Threading.Tasks;
-    using Hydra.Commands;
+    using Hydra.Infrastructure.Mediator;
     using Hydra.Jobs.Client;
 
-    public class ScheduleJobCommandHandler : ICommandHandler<ScheduleJobCommand, JobScheduleResponse>
+    public class ScheduleJobRequestHandler : IRequestHandler<ScheduleJobCommand, JobScheduleResponse>
     {
         private readonly ISchedulerClient scheduler;
 
-        public ScheduleJobCommandHandler(ISchedulerClient scheduler)
+        public ScheduleJobRequestHandler(ISchedulerClient scheduler)
         {
             Contract.Requires(scheduler != null);
 
@@ -20,9 +20,7 @@ namespace Hydra.Features.Jobs
         {
             SimpleJobScheduleRequest request = new SimpleJobScheduleRequest { Job = command.Job };
 
-            JobScheduleResponse response = await this.scheduler.Schedule(request);
-
-            return response;
+            return await this.scheduler.Schedule(request);
         }
     }
 }

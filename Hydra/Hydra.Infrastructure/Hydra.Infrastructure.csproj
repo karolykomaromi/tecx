@@ -195,6 +195,12 @@
     <Compile Include="Mail\MailMessageExtensions.cs" />
     <Compile Include="Mail\MimeMessageTypeConverter.cs" />
     <Compile Include="Mail\NullMailSink.cs" />
+    <Compile Include="Mediator\INotificationHandler.cs" />
+    <Compile Include="Mediator\IMediator.cs" />
+    <Compile Include="Mediator\IRequest.cs" />
+    <Compile Include="Mediator\IRequestHandler.cs" />
+    <Compile Include="Mediator\LazyMediator.cs" />
+    <Compile Include="Mediator\LazyRequestHandler.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.tt</DependentUpon>
       <AutoGen>True</AutoGen>

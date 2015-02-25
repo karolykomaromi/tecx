@@ -1,8 +1,8 @@
 ﻿namespace Hydra.Test.Configuration
 {
-    using Hydra.Queries;
+    using Hydra.Infrastructure.Mediator;
 
-    public class MyQuery : IQuery<MyResponse>
+    public class MyRequest : IRequest<MyResponse>
     {
         public string Foo { get; set; }
     }

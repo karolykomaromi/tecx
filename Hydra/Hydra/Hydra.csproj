@@ -228,25 +228,23 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\ICommandHandler.cs" />
     <Compile Include="Composition\NHibernateConfiguration.cs" />
     <Compile Include="Composition\SettingsConfiguration.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
-    <Compile Include="Features\Books\AllBooksQueryHandler.cs" />
+    <Compile Include="Features\Books\AllBooksRequestHandler.cs" />
     <Compile Include="Features\Books\BookViewModel.cs" />
-    <Compile Include="Features\Books\AllBooksQuery.cs" />
+    <Compile Include="Features\Books\AllBooksRequest.cs" />
     <Compile Include="Features\Books\EnterBookCommand.cs" />
-    <Compile Include="Features\Jobs\ScheduledJobsQuery.cs" />
-    <Compile Include="Features\Jobs\ScheduledJobsQueryHandler.cs" />
+    <Compile Include="Features\Jobs\ScheduledJobsRequest.cs" />
+    <Compile Include="Features\Jobs\ScheduledJobsRequestHandler.cs" />
     <Compile Include="Features\Jobs\ScheduleJobCommand.cs" />
-    <Compile Include="Features\Jobs\ScheduleJobCommandHandler.cs" />
+    <Compile Include="Features\Jobs\ScheduleJobRequestHandler.cs" />
     <Compile Include="Features\Jobs\ScheduleViewModel.cs" />
     <Compile Include="Features\Registration\RegistrationViewModel.cs" />
     <Compile Include="Features\Registration\RegistrationValidator.cs" />
-    <Compile Include="Features\Settings\AllSettingsQuery.cs" />
-    <Compile Include="Features\Settings\SettingByNameQuery.cs" />
-    <Compile Include="Features\Settings\SettingsQueryHandler.cs" />
+    <Compile Include="Features\Settings\AllSettingsRequest.cs" />
+    <Compile Include="Features\Settings\SettingByNameRequest.cs" />
+    <Compile Include="Features\Settings\SettingsRequestHandler.cs" />
     <Compile Include="FeatureViewLocationRazorViewEngine.cs" />
     <Compile Include="Composition\CachingConfiguration.cs" />
     <Compile Include="Composition\ErrorHandlingConfiguration.cs" />
@@ -289,11 +287,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Queries\LazyMediator.cs" />
-    <Compile Include="Queries\LazyQueryHandler.cs" />
-    <Compile Include="Queries\IMediator.cs" />
-    <Compile Include="Queries\IQuery.cs" />
-    <Compile Include="Queries\IQueryHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

@@ -1,9 +1,8 @@
-﻿namespace Hydra.Queries
+﻿namespace Hydra.Infrastructure.Mediator
 {
     using System;
     using System.Diagnostics.Contracts;
     using System.Threading.Tasks;
-    using Hydra.Commands;
 
     public class LazyMediator : IMediator
     {
@@ -16,14 +15,14 @@
             this.instance = new Lazy<IMediator>(factory);
         }
 
-        public Task<TResult> Query<TResult>(IQuery<TResult> query)
+        public async Task<TResponse> Send<TResponse>(IRequest<TResponse> request)
         {
-            return this.instance.Value.Query(query);
+            return await this.instance.Value.Send(request);
         }
 
-        public Task<TResult> Send<TResult>(ICommand<TResult> command)
+        public async Task Publish<TNotification>(TNotification notification) where TNotification : class
         {
-            return this.instance.Value.Send(command);
+            await this.instance.Value.Publish(notification);
         }
     }
 }

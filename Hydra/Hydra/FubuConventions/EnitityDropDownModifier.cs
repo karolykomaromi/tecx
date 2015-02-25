@@ -2,7 +2,7 @@ namespace Hydra.FubuConventions
 {
     using System.Diagnostics.Contracts;
     using FubuMVC.Core.UI.Elements;
-    using Hydra.Queries;
+    using Hydra.Infrastructure.Mediator;
 
     public class EnitityDropDownModifier : IElementModifier
     {

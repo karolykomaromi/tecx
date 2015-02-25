@@ -17,7 +17,7 @@ namespace Hydra.Composition
     using HtmlTags.Conventions;
     using Hydra.FubuConventions;
     using Hydra.Infrastructure.I18n;
-    using Hydra.Queries;
+    using Hydra.Infrastructure.Mediator;
     using Microsoft.Practices.Unity;
 
     public class FubuConfiguration : UnityContainerExtension
