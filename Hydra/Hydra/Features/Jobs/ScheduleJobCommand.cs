@@ -1,9 +1,9 @@
 ﻿namespace Hydra.Features.Jobs
 {
-    using Hydra.Commands;
+    using Hydra.Infrastructure.Mediator;
     using Hydra.Jobs.Client;
 
-    public class ScheduleJobCommand : ICommand<JobScheduleResponse>
+    public class ScheduleJobCommand : IRequest<JobScheduleResponse>
     {
         public KnownJobs Job { get; set; }
     }

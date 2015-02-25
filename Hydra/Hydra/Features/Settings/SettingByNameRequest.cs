@@ -1,9 +1,9 @@
 namespace Hydra.Features.Settings
 {
     using Hydra.Infrastructure.Configuration;
-    using Hydra.Queries;
+    using Hydra.Infrastructure.Mediator;
 
-    public class SettingByNameQuery : IQuery<Setting>
+    public class SettingByNameRequest : IRequest<Setting>
     {
         public SettingName Name { get; set; }
     }

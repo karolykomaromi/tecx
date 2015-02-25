@@ -1,7 +1,7 @@
 ﻿namespace Hydra.Test.Configuration
 {
     using Hydra.Composition;
-    using Hydra.Queries;
+    using Hydra.Infrastructure.Mediator;
     using Microsoft.Practices.Unity;
     using Xunit;
 
@@ -12,11 +12,11 @@
         {
             var container =
                 new UnityContainer().AddNewExtension<CommandQueryConfiguration>()
-                    .RegisterType<IQueryHandler<MyQuery, MyResponse>, MyQueryHandler>();
+                    .RegisterType<IRequestHandler<MyRequest, MyResponse>, MyRequestHandler>();
 
             IMediator sut = container.Resolve<IMediator>();
 
-            MyResponse actual = await sut.Query(new MyQuery { Foo = "123456789" });
+            MyResponse actual = await sut.Send(new MyRequest { Foo = "123456789" });
 
             Assert.Equal("987654321", actual.Bar);
         }

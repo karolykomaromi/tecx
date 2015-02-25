@@ -7,11 +7,9 @@
     using System.IO;
     using System.Linq;
     using System.Net;
-    using System.Net.Mail;
     using Hydra.Infrastructure;
     using Hydra.Infrastructure.Mail;
     using Hydra.Jobs.Server.Jobs;
-    using Hydra.TestTools;
     using MimeKit;
     using Moq;
     using netDumbster.smtp;
@@ -80,52 +78,6 @@
                 ////{
                 ////    message.Save(stream);
                 ////}
-            }
-            finally
-            {
-                if (server != null)
-                {
-                    server.Stop();
-                }
-            }
-        }
-
-        [Fact]
-        public void Should_Parse_Eml_File()
-        {
-            MimeMessage msg;
-
-            using (Stream stream = this.GetType().Assembly.GetManifestResourceStream(KnownTestFiles.TestFiles.Mails.Mail01))
-            {
-                msg = MimeMessage.Load(stream);
-            }
-
-            Assert.NotNull(msg);
-        }
-
-        [Fact]
-        public async void Should_Send_Mail()
-        {
-            SimpleSmtpServer server = null;
-
-            try
-            {
-                server = SimpleSmtpServer.Start();
-
-                using (var client = new SmtpClient("localhost", server.Port))
-                {
-                    MailMessage message = new MailMessageBuilder()
-                        .From(x => x.JohnWayne())
-                        .Recipient(x => x.ClintEastwood())
-                        .Recipient(x => x.HenryFonda())
-                        .ReplyTo(x => x.DoNotReply())
-                        .Subject("Foo")
-                        .Body("Bar!");
-
-                    await client.SendMailAsync(message);
-                }
-
-                Assert.Equal(1, server.ReceivedEmailCount);
             }
             finally
             {

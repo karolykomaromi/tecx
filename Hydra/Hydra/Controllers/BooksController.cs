@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using Hydra.Features.Books;
-    using Hydra.Queries;
+    using Hydra.Infrastructure.Mediator;
 
     public class BooksController : Controller
     {
@@ -20,7 +20,7 @@
 
         public async Task<ActionResult> Index()
         {
-            IEnumerable<BookViewModel> books = await this.mediator.Query(new AllBooksQuery());
+            IEnumerable<BookViewModel> books = await this.mediator.Send(new AllBooksRequest());
 
             return this.View(books);
         }

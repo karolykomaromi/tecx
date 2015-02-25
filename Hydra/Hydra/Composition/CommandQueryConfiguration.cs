@@ -5,9 +5,8 @@
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Threading.Tasks;
-    using Hydra.Commands;
+    using Hydra.Infrastructure.Mediator;
     using Hydra.Infrastructure.Reflection;
-    using Hydra.Queries;
     using Microsoft.Practices.Unity;
 
     public class CommandQueryConfiguration : UnityContainerExtension
@@ -15,11 +14,11 @@
         protected override void Initialize()
         {
             this.Container.RegisterTypes(
-                AllClasses.FromAssemblies(typeof(IQuery<>).Assembly).Where(t => TypeHelper.ImplementsOpenGenericInterface(t, typeof(IQueryHandler<,>))),
+                AllClasses.FromLoadedAssemblies().Where(t => TypeHelper.ImplementsOpenGenericInterface(t, typeof(IRequestHandler<,>))),
                 WithMappings.FromAllInterfaces);
 
             this.Container.RegisterTypes(
-                AllClasses.FromAssemblies(typeof(ICommand<>).Assembly).Where(t => TypeHelper.ImplementsOpenGenericInterface(t, typeof(ICommandHandler<,>))),
+                AllClasses.FromLoadedAssemblies().Where(t => TypeHelper.ImplementsOpenGenericInterface(t, typeof(INotificationHandler<>))),
                 WithMappings.FromAllInterfaces);
 
             this.Container.RegisterType<IMediator, UnityMediator>(new ContainerControlledLifetimeManager());
@@ -38,26 +37,26 @@
                 this.container = container;
             }
 
-            public async Task<TResult> Query<TResult>(IQuery<TResult> query)
+            public async Task<TResult> Send<TResult>(IRequest<TResult> request)
             {
-                Type handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
+                Type handlerType = typeof(IRequestHandler<,>).MakeGenericType(request.GetType(), typeof(TResult));
 
                 dynamic handler = this.container.Resolve(handlerType);
 
-                dynamic q = query;
+                dynamic q = request;
 
                 return await (Task<TResult>)handler.Handle(q);
             }
 
-            public async Task<TResult> Send<TResult>(ICommand<TResult> command)
+            public async Task Publish<TNotification>(TNotification notification) where TNotification : class
             {
-                Type handlerType = typeof(ICommandHandler<,>).MakeGenericType(command.GetType(), typeof(TResult));
+                Type handlerType = typeof(INotificationHandler<>).MakeGenericType(typeof(TNotification));
 
                 dynamic handler = this.container.Resolve(handlerType);
 
-                dynamic c = command;
+                dynamic c = notification;
 
-                return await (Task<TResult>)handler.Handle(c);
+                await (Task)handler.Handle(c);
             }
         }
     }

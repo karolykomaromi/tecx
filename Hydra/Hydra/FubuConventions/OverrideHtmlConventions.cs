@@ -10,7 +10,7 @@ namespace Hydra.FubuConventions
     using FubuMVC.Core.UI.Elements;
     using HtmlTags.Conventions;
     using Hydra.Infrastructure.I18n;
-    using Hydra.Queries;
+    using Hydra.Infrastructure.Mediator;
 
     public class OverrideHtmlConventions : DefaultHtmlConventions
     {

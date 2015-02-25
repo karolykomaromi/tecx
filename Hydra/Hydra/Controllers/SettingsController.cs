@@ -5,7 +5,7 @@
     using System.Web.Mvc;
     using Hydra.Features.Settings;
     using Hydra.Infrastructure.Configuration;
-    using Hydra.Queries;
+    using Hydra.Infrastructure.Mediator;
 
     public class SettingsController : Controller
     {
@@ -20,7 +20,7 @@
 
         public async Task<ActionResult> Index()
         {
-            SettingsCollection settings = await this.mediator.Query(new AllSettingsQuery());
+            SettingsCollection settings = await this.mediator.Send(new AllSettingsRequest());
 
             return this.View(settings);
         }
@@ -35,7 +35,7 @@
                 return await this.Index();
             }
 
-            Setting setting = await this.mediator.Query(new SettingByNameQuery { Name = sn });
+            Setting setting = await this.mediator.Send(new SettingByNameRequest { Name = sn });
 
             return this.View(setting);
         }
