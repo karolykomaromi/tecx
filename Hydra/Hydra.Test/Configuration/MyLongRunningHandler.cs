@@ -7,9 +7,9 @@
 
     public class MyLongRunningHandler : IRequestHandler<MyRequest, MyResponse>
     {
-        public Task<MyResponse> Handle(MyRequest request)
+        public async Task<MyResponse> Handle(MyRequest request)
         {
-            return Task<MyResponse>.Factory.StartNew(() =>
+            return await Task<MyResponse>.Factory.StartNew(() =>
             {
                 Thread.Sleep(50);
 

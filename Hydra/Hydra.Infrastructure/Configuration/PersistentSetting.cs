@@ -5,10 +5,8 @@ namespace Hydra.Infrastructure.Configuration
 
     [TypeConverter(typeof(PersistentSettingTypeConverter))]
     [DebuggerDisplay("Id={Id} Name={Name}")]
-    public class PersistentSetting
+    public class PersistentSetting : Entity
     {
-        public virtual long Id { get; set; }
-
         public virtual string Name { get; set; }
 
         public virtual byte[] Value { get; set; }

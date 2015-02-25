@@ -4,10 +4,8 @@ namespace Hydra.Infrastructure.I18n
     using System.Globalization;
 
     [DebuggerDisplay("Name={Name} Language={Language} Value={Value}")]
-    public class ResourceItem
+    public class ResourceItem : Entity
     {
-        public virtual long Id { get; set; }
-
         public virtual string Name { get; set; }
 
         public virtual CultureInfo Language { get; set; }

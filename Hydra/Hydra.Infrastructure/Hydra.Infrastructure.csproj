@@ -41,6 +41,9 @@
     <Reference Include="FluentNHibernate">
       <HintPath>..\packages\FluentNHibernate.1.4.0.0\lib\net35\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.5.1.0.0\lib\Net40\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
@@ -119,6 +122,7 @@
     <Compile Include="ConvertHelper.cs" />
     <Compile Include="Default.cs" />
     <Compile Include="DefaultTimeProvider.cs" />
+    <Compile Include="Entity.cs" />
     <Compile Include="Enumeration.cs" />
     <Compile Include="EnumerationTypeConverter.cs" />
     <Compile Include="EnumerationInitializationFailedException.cs" />
@@ -194,13 +198,22 @@
     <Compile Include="Mail\MailMessageBuilder.cs" />
     <Compile Include="Mail\MailMessageExtensions.cs" />
     <Compile Include="Mail\MimeMessageTypeConverter.cs" />
+    <Compile Include="Mail\MimeMessageUserType.cs" />
+    <Compile Include="Mail\MimeMessageUserTypeConvention.cs" />
+    <Compile Include="Mail\NhMailCycle.cs" />
     <Compile Include="Mail\NullMailSink.cs" />
+    <Compile Include="Mail\PersistentMail.cs" />
+    <Compile Include="Mail\PersistentMailMap.cs" />
     <Compile Include="Mediator\INotificationHandler.cs" />
     <Compile Include="Mediator\IMediator.cs" />
+    <Compile Include="Mediator\IPostRequestHandler.cs" />
+    <Compile Include="Mediator\IPreRequestHandler.cs" />
     <Compile Include="Mediator\IRequest.cs" />
     <Compile Include="Mediator\IRequestHandler.cs" />
     <Compile Include="Mediator\LazyMediator.cs" />
     <Compile Include="Mediator\LazyRequestHandler.cs" />
+    <Compile Include="Mediator\RequestPipeline.cs" />
+    <Compile Include="Mediator\ValidationHandler.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.tt</DependentUpon>
       <AutoGen>True</AutoGen>
