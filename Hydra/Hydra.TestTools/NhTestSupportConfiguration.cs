@@ -25,7 +25,11 @@ namespace Hydra.TestTools
         {
             return Fluently.Configure()
                 .Database(SQLiteConfiguration.Standard.InMemory())
-                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<ResourceItemMap>())
+                .Mappings(m =>
+                {
+                    m.FluentMappings.AddFromAssemblyOf<ResourceItemMap>();
+                    m.FluentMappings.Conventions.AddFromAssemblyOf<MultiLanguageStringUserTypeConvention>();
+                })
                 .ExposeConfiguration(cfg => BuildSchema(container, cfg))
                 .BuildSessionFactory();
         }
