@@ -11,9 +11,13 @@ namespace Hydra.Unity.Mediator
     {
         public override IEnumerable<Type> GetTypes()
         {
-            return AllTypes.FromHydraAssemblies()
+            Type[] types = AllTypes
+                .FromHydraAssemblies()
                 .Where(t => TypeHelper.ImplementsOpenGenericInterface(t, typeof(INotificationHandler<>)) &&
-                            !TypeHelper.IsOpenGeneric(t));
+                            !TypeHelper.IsOpenGeneric(t))
+                .ToArray();
+
+            return types;
         }
 
         public override Func<Type, IEnumerable<Type>> GetFromTypes()
