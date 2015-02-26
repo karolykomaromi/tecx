@@ -94,5 +94,17 @@ namespace Hydra.Infrastructure.Reflection
         {
             return callerMemberName;
         }
+
+        public static bool IsOpenGeneric(Type type)
+        {
+            Contract.Requires(type != null);
+
+            if (!type.IsGenericTypeDefinition)
+            {
+                return type.ContainsGenericParameters;
+            }
+
+            return true;
+        }
     }
 }

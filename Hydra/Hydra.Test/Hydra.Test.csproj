@@ -65,10 +65,12 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Configuration\MyLongRunningHandler.cs" />
+    <Compile Include="Configuration\MyLongRunningRequestHandler.cs" />
     <Compile Include="Configuration\MyRequest.cs" />
+    <Compile Include="Configuration\MyLongRunningRequest.cs" />
     <Compile Include="Configuration\MyRequestHandler.cs" />
     <Compile Include="Configuration\MyResponse.cs" />
+    <Compile Include="Configuration\MyLongRunningResponse.cs" />
     <Compile Include="Configuration\QueryConfigurationTests.cs" />
     <Compile Include="Hosting\EmbeddedDirectoryTests.cs" />
     <Compile Include="Hosting\EmbeddedFileTests.cs" />
