@@ -213,7 +213,7 @@
     <Compile Include="Mediator\LazyMediator.cs" />
     <Compile Include="Mediator\LazyRequestHandler.cs" />
     <Compile Include="Mediator\RequestPipeline.cs" />
-    <Compile Include="Mediator\ValidationHandler.cs" />
+    <Compile Include="Mediator\ValidationRequestHandler.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.tt</DependentUpon>
       <AutoGen>True</AutoGen>

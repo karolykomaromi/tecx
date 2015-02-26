@@ -1,5 +1,6 @@
 ﻿namespace Hydra.Test.Configuration
 {
+    using System.Threading.Tasks;
     using Hydra.Composition;
     using Hydra.Infrastructure.Mediator;
     using Microsoft.Practices.Unity;
@@ -8,11 +9,10 @@
     public class QueryConfigurationTests
     {
         [Fact]
-        public async void Should_Use_Mediator_To_Resolve_Correct_Handler()
+        public async Task Should_Use_Mediator_To_Resolve_Correct_Handler()
         {
             var container =
-                new UnityContainer().AddNewExtension<CommandQueryConfiguration>()
-                    .RegisterType<IRequestHandler<MyRequest, MyResponse>, MyRequestHandler>();
+                new UnityContainer().AddNewExtension<CommandQueryConfiguration>();
 
             IMediator sut = container.Resolve<IMediator>();
 
