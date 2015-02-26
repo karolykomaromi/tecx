@@ -3,7 +3,6 @@ namespace Hydra.Unity.Mediator
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using Hydra.Infrastructure.Mediator;
     using Hydra.Infrastructure.Reflection;
     using Microsoft.Practices.Unity;
@@ -12,10 +11,13 @@ namespace Hydra.Unity.Mediator
     {
         public override IEnumerable<Type> GetTypes()
         {
-            return AllTypes
+            Type[] types = AllTypes
                 .FromHydraAssemblies()
                 .Where(t => TypeHelper.ImplementsOpenGenericInterface(t, typeof(IRequestHandler<,>)) &&
-                            !TypeHelper.IsOpenGeneric(t));
+                            !TypeHelper.IsOpenGeneric(t))
+                .ToArray();
+
+            return types;
         }
 
         public override Func<Type, IEnumerable<Type>> GetFromTypes()
@@ -25,7 +27,9 @@ namespace Hydra.Unity.Mediator
 
         public override Func<Type, string> GetName()
         {
-            return t => t.Name.Replace("Request", string.Empty).Replace("Handler", string.Empty);
+            // weberse 2015-02-26 there should be exactly one handler per request type and response. more than one implementation
+            // should cause an exception
+            return _ => string.Empty;
         }
 
         public override Func<Type, LifetimeManager> GetLifetimeManager()
