@@ -2,13 +2,17 @@ namespace Hydra.Infrastructure.Mediator
 {
     using System.Threading.Tasks;
 
-    public class RequestPipeline<TRequest, TResponse> : IRequestHandler<TRequest, TResponse> where TRequest : class, IRequest<TResponse>
+    public class RequestHandlerPipeline<TRequest, TResponse> : IRequestHandler<TRequest, TResponse> 
+        where TRequest : class, IRequest<TResponse>
     {
         private readonly IRequestHandler<TRequest, TResponse> inner;
         private readonly IPreRequestHandler<TRequest>[] preRequestHandlers;
         private readonly IPostRequestHandler<TRequest, TResponse>[] postRequestHandlers;
 
-        public RequestPipeline(IRequestHandler<TRequest, TResponse> inner, IPreRequestHandler<TRequest>[] preRequestHandlers, IPostRequestHandler<TRequest, TResponse>[] postRequestHandlers)
+        public RequestHandlerPipeline(
+            IRequestHandler<TRequest, TResponse> inner, 
+            IPreRequestHandler<TRequest>[] preRequestHandlers, 
+            IPostRequestHandler<TRequest, TResponse>[] postRequestHandlers)
         {
             this.inner = inner;
             this.preRequestHandlers = preRequestHandlers;

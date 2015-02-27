@@ -76,6 +76,13 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="ContainerDataAttribute.cs" />
+    <Compile Include="Decoration\DecoratorExtensionTests.cs" />
+    <Compile Include="Decoration\DecoratorForGenericInterface.cs" />
+    <Compile Include="Decoration\DecoratorForNonGenericInterface.cs" />
+    <Compile Include="Decoration\IGenericInterface.cs" />
+    <Compile Include="Decoration\ImplementationOfGenericInterface.cs" />
+    <Compile Include="Decoration\ImplementationOfNonGenericInterface.cs" />
+    <Compile Include="Decoration\INonGenericInterface.cs" />
     <Compile Include="Infrastructure\Reflection\DuckButNot.cs" />
     <Compile Include="Infrastructure\Reflection\IDuck.cs" />
     <Compile Include="Infrastructure\Reflection\UnityDuckTypeGeneratorTests.cs" />
