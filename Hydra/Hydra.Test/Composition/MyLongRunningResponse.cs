@@ -1,4 +1,4 @@
-﻿namespace Hydra.Test.Configuration
+﻿namespace Hydra.Test.Composition
 {
     public class MyLongRunningResponse
     {

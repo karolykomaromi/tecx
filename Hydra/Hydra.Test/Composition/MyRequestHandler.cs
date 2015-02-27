@@ -1,4 +1,4 @@
-﻿namespace Hydra.Test.Configuration
+﻿namespace Hydra.Test.Composition
 {
     using System.Linq;
     using System.Threading.Tasks;

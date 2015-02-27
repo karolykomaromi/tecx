@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FluentValidation.5.1.0.0\lib\Net40\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="Hydra.TextTemplating">
       <HintPath>..\libs\Hydra.TextTemplating\Hydra.TextTemplating.dll</HintPath>
     </Reference>
@@ -77,13 +81,14 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Configuration\MyLongRunningRequestHandler.cs" />
-    <Compile Include="Configuration\MyRequest.cs" />
-    <Compile Include="Configuration\MyLongRunningRequest.cs" />
-    <Compile Include="Configuration\MyRequestHandler.cs" />
-    <Compile Include="Configuration\MyResponse.cs" />
-    <Compile Include="Configuration\MyLongRunningResponse.cs" />
-    <Compile Include="Configuration\MediatorConfigurationTests.cs" />
+    <Compile Include="Composition\FluentValidationConfigurationTests.cs" />
+    <Compile Include="Composition\MediatorConfigurationTests.cs" />
+    <Compile Include="Composition\MyLongRunningRequest.cs" />
+    <Compile Include="Composition\MyLongRunningRequestHandler.cs" />
+    <Compile Include="Composition\MyLongRunningResponse.cs" />
+    <Compile Include="Composition\MyRequest.cs" />
+    <Compile Include="Composition\MyRequestHandler.cs" />
+    <Compile Include="Composition\MyResponse.cs" />
     <Compile Include="ContainerDataAttribute.cs" />
     <Compile Include="Hosting\EmbeddedDirectoryTests.cs" />
     <Compile Include="Hosting\EmbeddedFileTests.cs" />

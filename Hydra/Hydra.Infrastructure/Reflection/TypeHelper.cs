@@ -17,12 +17,21 @@ namespace Hydra.Infrastructure.Reflection
             Contract.Requires(openGenericInterface.IsInterface);
             Contract.Requires(openGenericInterface.IsGenericType);
             Contract.Requires(openGenericInterface.IsGenericTypeDefinition);
-            Contract.Ensures(Contract.Result<IEnumerable<Type>>() != null);
 
             bool implementsOpenGenericInterface =
                 implementationType.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == openGenericInterface);
 
             return implementsOpenGenericInterface;
+        }
+
+        public static bool IsClosedVersionOfOpenGeneric(Type type, Type openGenericType)
+        {
+            Contract.Requires(type != null);
+            Contract.Requires(openGenericType != null);
+            Contract.Requires(openGenericType.IsGenericType);
+            Contract.Requires(openGenericType.IsGenericTypeDefinition);
+
+            return type.IsGenericType && type.GetGenericTypeDefinition() == openGenericType;
         }
 
         public static string GetPropertyName<TProperty>(Expression<Func<TProperty>> propertySelector)

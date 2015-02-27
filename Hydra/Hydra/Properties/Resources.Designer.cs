@@ -165,5 +165,10 @@ namespace Hydra.Properties
         {
             get { return Resources.ResourceManager.GetString("Setting_Value", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
+
+        public static string PasswordNotEqual
+        {
+            get { return Resources.ResourceManager.GetString("PasswordNotEqual", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
     }
 }
