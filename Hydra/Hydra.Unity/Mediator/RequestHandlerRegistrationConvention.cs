@@ -30,7 +30,7 @@ namespace Hydra.Unity.Mediator
             {
                 yield return handler;
 
-                foreach (Type openGenericDecorator in decorators)
+                foreach (Type openGenericDecorator in this.decorators)
                 {
                     Type concreteDecorator = MakeConcreteDecoratorType(handler, openGenericDecorator);
 

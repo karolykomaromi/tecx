@@ -1,6 +1,5 @@
 ﻿namespace Hydra.Composition
 {
-    using System;
     using Hydra.Infrastructure.Mediator;
     using Hydra.Unity.Decoration;
     using Hydra.Unity.Mediator;

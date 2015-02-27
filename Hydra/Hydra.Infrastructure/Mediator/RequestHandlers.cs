@@ -5,7 +5,7 @@ namespace Hydra.Infrastructure.Mediator
 
     public static class RequestHandlers
     {
-        public static readonly IReadOnlyCollection<Type> Pipeline = new []{ typeof(RequestHandlerPipeline<,>), typeof(ValidationRequestHandler<,>) };
+        public static readonly IReadOnlyCollection<Type> Pipeline = new[] { typeof(RequestHandlerPipeline<,>), typeof(ValidationRequestHandler<,>) };
 
         public static readonly IReadOnlyCollection<Type> None = Type.EmptyTypes;
 
