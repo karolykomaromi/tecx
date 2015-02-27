@@ -4,13 +4,13 @@
     using System.Threading.Tasks;
     using FluentValidation;
 
-    public class ValidationHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
+    public class ValidationRequestHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
         where TRequest : class, IRequest<TResponse>
     {
         private readonly IRequestHandler<TRequest, TResponse> inner;
         private readonly IValidator<TRequest>[] validators;
 
-        public ValidationHandler(IRequestHandler<TRequest, TResponse> inner, IValidator<TRequest>[] validators)
+        public ValidationRequestHandler(IRequestHandler<TRequest, TResponse> inner, IValidator<TRequest>[] validators)
         {
             this.inner = inner;
             this.validators = validators;
