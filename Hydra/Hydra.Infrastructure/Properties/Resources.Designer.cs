@@ -101,6 +101,11 @@ namespace Hydra.Infrastructure.Properties
             get { return Resources.ResourceManager.GetString("Reminder", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
+        public static string StringNotEncrypted
+        {
+            get { return Resources.ResourceManager.GetString("StringNotEncrypted", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string TranslationNotFound
         {
             get { return Resources.ResourceManager.GetString("TranslationNotFound", resourceCulture ?? CultureInfo.CurrentUICulture); }

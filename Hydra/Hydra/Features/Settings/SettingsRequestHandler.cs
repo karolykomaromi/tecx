@@ -18,16 +18,11 @@ namespace Hydra.Features.Settings
 
         public async Task<SettingsCollection> Handle(AllSettingsRequest request)
         {
-            Contract.Requires(request != null);
-
             return await Task<SettingsCollection>.Factory.StartNew(() => this.settingsProvider.GetSettings());
         }
 
         public async Task<Setting> Handle(SettingByNameRequest request)
         {
-            Contract.Requires(request != null);
-            Contract.Requires(request.Name != null);
-
             return await Task<Setting>.Factory.StartNew(() => this.settingsProvider.GetSettings()[request.Name]);
         }
     }

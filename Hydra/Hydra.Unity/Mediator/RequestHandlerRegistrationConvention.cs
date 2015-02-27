@@ -29,7 +29,7 @@ namespace Hydra.Unity.Mediator
         {
             // weberse 2015-02-26 there should be exactly one handler per request type and response. more than one implementation
             // should cause an exception
-            return _ => string.Empty;
+            return WithName.Default;
         }
 
         public override Func<Type, LifetimeManager> GetLifetimeManager()
@@ -39,7 +39,7 @@ namespace Hydra.Unity.Mediator
 
         public override Func<Type, IEnumerable<InjectionMember>> GetInjectionMembers()
         {
-            return t => new InjectionMember[0];
+            return WithInjectionMembers.None;
         }
     }
 }

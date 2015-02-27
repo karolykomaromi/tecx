@@ -1,33 +1,29 @@
-namespace Hydra.Unity.Mediator
+﻿namespace Hydra.Unity.Validation
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Hydra.Infrastructure.Mediator;
+    using FluentValidation;
     using Hydra.Infrastructure.Reflection;
+    using Hydra.Unity.Mediator;
     using Microsoft.Practices.Unity;
 
-    public class NotificationHandlerRegistrationConvention : RegistrationConvention
+    public class ValidatorRegistrationConvention : RegistrationConvention
     {
         public override IEnumerable<Type> GetTypes()
         {
-            Type[] types = AllTypes
-                .FromHydraAssemblies()
-                .Where(t => TypeHelper.ImplementsOpenGenericInterface(t, typeof(INotificationHandler<>)) &&
-                            !TypeHelper.IsOpenGeneric(t))
-                .ToArray();
-
-            return types;
+            return AllTypes.FromHydraAssemblies()
+                .Where(t => TypeHelper.ImplementsOpenGenericInterface(t, typeof(IValidator<>)));
         }
 
         public override Func<Type, IEnumerable<Type>> GetFromTypes()
         {
-            return WithMappings.FromAllInterfaces;
+            return type => type.GetInterfaces().Where(i => TypeHelper.IsClosedVersionOfOpenGeneric(i, typeof(IValidator<>)));
         }
 
         public override Func<Type, string> GetName()
         {
-            return t => t.Name.Replace("Notification", string.Empty).Replace("Handler", string.Empty);
+            return WithName.Default;
         }
 
         public override Func<Type, LifetimeManager> GetLifetimeManager()

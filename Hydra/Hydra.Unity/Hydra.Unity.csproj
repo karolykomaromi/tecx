@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FluentValidation.5.1.0.0\lib\Net40\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
@@ -112,6 +116,9 @@
     <Compile Include="UnityObjectsFactory.cs" />
     <Compile Include="UnityReflectionOptimizer.cs" />
     <Compile Include="UseOnceParameterValue.cs" />
+    <Compile Include="Validation\UnityValidatorFactory.cs" />
+    <Compile Include="Validation\ValidatorRegistrationConvention.cs" />
+    <Compile Include="WithInjectionMembers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

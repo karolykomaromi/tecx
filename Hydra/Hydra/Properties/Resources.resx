@@ -183,4 +183,7 @@
   <data name="Setting_Value" xml:space="preserve">
     <value>Value</value>
   </data>
+  <data name="PasswordNotEqual" xml:space="preserve">
+    <value>Password and confirmation are not equal.</value>
+  </data>
 </root>

@@ -144,6 +144,9 @@
   <data name="Reminder" xml:space="preserve">
     <value>Reminder</value>
   </data>
+  <data name="StringNotEncrypted" xml:space="preserve">
+    <value>The string is not encrypted. Replace with '{0}'.</value>
+  </data>
   <data name="TranslationNotFound" xml:space="preserve">
     <value>No translation found.</value>
   </data>

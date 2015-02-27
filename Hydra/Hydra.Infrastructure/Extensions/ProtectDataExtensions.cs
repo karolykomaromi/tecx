@@ -29,9 +29,9 @@ namespace Hydra.Infrastructure.Extensions
         public static string Unprotect(this string encryptedText)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(encryptedText));
-            Contract.Requires(encryptedText.StartsWith("enc$", StringComparison.Ordinal));
+            Contract.Requires(encryptedText.StartsWith("enc$", StringComparison.Ordinal), string.Format(Properties.Resources.StringNotEncrypted, encryptedText.Protect()));
             Contract.Ensures(Contract.Result<string>() != null);
-
+            
             byte[] encryptedTextBytes = Convert.FromBase64String(encryptedText.Substring(4));
 
             byte[] decryptedTextBytes = ProtectedData.Unprotect(encryptedTextBytes, OptionalEntropy, DataProtectionScope.LocalMachine);

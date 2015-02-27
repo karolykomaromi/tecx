@@ -237,6 +237,7 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Composition\FluentValidationConfiguration.cs" />
     <Compile Include="Composition\NHibernateConfiguration.cs" />
     <Compile Include="Composition\SettingsConfiguration.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
@@ -250,9 +251,10 @@
     <Compile Include="Features\Jobs\ScheduleJobRequestHandler.cs" />
     <Compile Include="Features\Jobs\ScheduleViewModel.cs" />
     <Compile Include="Features\Registration\RegistrationViewModel.cs" />
-    <Compile Include="Features\Registration\RegistrationValidator.cs" />
+    <Compile Include="Features\Registration\RegistrationViewModelValidator.cs" />
     <Compile Include="Features\Settings\AllSettingsRequest.cs" />
     <Compile Include="Features\Settings\SettingByNameRequest.cs" />
+    <Compile Include="Features\Settings\SettingByNameRequestValidator.cs" />
     <Compile Include="Features\Settings\SettingsRequestHandler.cs" />
     <Compile Include="FeatureViewLocationRazorViewEngine.cs" />
     <Compile Include="Composition\CachingConfiguration.cs" />
@@ -337,9 +339,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx" />

@@ -5,9 +5,7 @@
     using System.Web.Hosting;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using FluentValidation.Mvc;
     using Hydra.Composition;
-    using Hydra.Filters;
     using Hydra.Hosting;
     using Hydra.Infrastructure.I18n;
     using Hydra.Infrastructure.Logging;
@@ -26,11 +24,7 @@
 
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
-            // setup fluent validation
-            GlobalFilters.Filters.Add(new ValidatorActionFilter());
-            FluentValidationModelValidatorProvider.Configure();
-
+            
             // create application master container
             IUnityContainer container = new UnityContainer().AddExtension(new CompositionRoot(typeof(CachingConfiguration).Assembly));
             this.Application[Unity.Constants.ContainerKey] = container;
@@ -55,7 +49,7 @@
 
         protected void Application_End()
         {
-            //// Logging ASP.NET Application Shutdown Events by ScottGu http://weblogs.asp.net/scottgu/433194
+            // Logging ASP.NET Application Shutdown Events by ScottGu http://weblogs.asp.net/scottgu/433194
             HydraEventSource.Log.Shutdown();
 
             IUnityContainer container = this.Application[Unity.Constants.ContainerKey] as IUnityContainer;

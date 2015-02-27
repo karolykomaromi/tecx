@@ -81,5 +81,11 @@ namespace Hydra.Infrastructure.Test.Reflection
 
             Assert.Equal("Should_Get_Caller_Member_Name", actual);
         }
+
+        [Fact]
+        public void Should_Recognize_IList_Of_Int_Closes_IList()
+        {
+            Assert.True(TypeHelper.IsClosedVersionOfOpenGeneric(typeof(IList<int>), typeof(IList<>)));
+        }
     }
 }
