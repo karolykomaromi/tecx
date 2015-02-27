@@ -10,6 +10,12 @@
     {
         private IDisposable subscription;
 
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
         protected override void Initialize()
         {
             var observer = Observable.FromEventPattern<RegisterEventArgs>(
@@ -34,12 +40,6 @@
             bool isMappedFromInterface = e.EventArgs.TypeFrom != null && e.EventArgs.TypeFrom.IsInterface;
 
             return isMappedFromInterface;
-        }
-
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         private void Dispose(bool disposing)

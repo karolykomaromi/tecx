@@ -86,6 +86,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="AllTypes.cs" />
     <Compile Include="Collections\CollectionResolutionExtension.cs" />
     <Compile Include="Collections\CollectionResolutionStrategy.cs" />
     <Compile Include="Collections\CoupledToImplementationDetailsOverrideExtractor.cs" />
@@ -99,7 +100,6 @@
     <Compile Include="HydraDefaultExtensions.cs" />
     <Compile Include="Infrastructure\Reflection\StrictDuckTypeBehavior.cs" />
     <Compile Include="Infrastructure\Reflection\UnityDuckTypeGenerator.cs" />
-    <Compile Include="Mediator\AllTypes.cs" />
     <Compile Include="Mediator\NotificationHandlerRegistrationConvention.cs" />
     <Compile Include="Mediator\RequestHandlerRegistrationConvention.cs" />
     <Compile Include="Mediator\UnityMediator.cs" />
