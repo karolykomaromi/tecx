@@ -54,7 +54,56 @@ namespace Hydra.Infrastructure
                 return EmptyArray(typeof(object));
             }
 
+            FieldInfo field;
+            if ((field = Field(type, "Null")) != null)
+            {
+                return ValueOfField(field);
+            }
+
+            if ((field = Field(type, "Empty")) != null)
+            {
+                return ValueOfField(field);
+            }
+
             return FrameworkDefault(type);
+        }
+
+        private static Func<object> ValueOfField(FieldInfo field)
+        {
+            MemberExpression member = Expression.Field(null, field);
+
+            UnaryExpression cast = Expression.Convert(member, typeof(object));
+
+            var lambda = Expression.Lambda<Func<object>>(cast);
+
+            Func<object> factory = lambda.Compile();
+
+            return factory;
+        }
+
+        private static FieldInfo Field(Type type, string fieldName)
+        {
+            if (type.IsInterface)
+            {
+                if (type.Name.StartsWith("I", StringComparison.Ordinal))
+                {
+                    string implementationName = type.FullName.Substring(0, type.FullName.Length - type.Name.Length)
+                                                + type.Name.Substring(1);
+
+                    Type implementationType = type.Assembly.GetType(implementationName, false);
+
+                    if (implementationType != null)
+                    {
+                        return implementationType.GetField(fieldName, BindingFlags.Static | BindingFlags.Public);
+                    }
+                }
+            }
+            else
+            {
+                return type.GetField(fieldName, BindingFlags.Static | BindingFlags.Public);
+            }
+
+            return null;
         }
 
         private static Func<object> EmptyDictionary(Type type)

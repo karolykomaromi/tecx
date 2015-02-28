@@ -2,10 +2,36 @@
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
+    using Hydra.Infrastructure.Configuration;
     using Xunit;
 
     public class DefaultTests
     {
+        [Fact]
+        public void Should_Use_Null_Field_On_Class()
+        {
+            Assert.Same(Stream.Null, Default.Value<Stream>());
+        }
+
+        [Fact]
+        public void Should_Use_Empty_Field_On_Class()
+        {
+            Assert.Same(SettingName.Empty, Default.Value<SettingName>());
+        }
+
+        [Fact]
+        public void Should_Use_Null_Field_From_Class_By_Matching_Interface_Name()
+        {
+            Assert.Same(Bar.Null, Default.Value<IBar>());
+        }
+
+        [Fact]
+        public void Should_Use_Empty_Field_From_Class_By_Matching_Interface_Name()
+        {
+            Assert.Same(Foo.Empty, Default.Value<IFoo>());
+        }
+
         [Fact]
         public void Default_For_String_Should_Be_Empty_String()
         {
@@ -45,6 +71,24 @@
         {
             Assert.IsType<Dictionary<string, long>>(Default.Value<Dictionary<string, long>>());
             Assert.IsType<Dictionary<string, long>>(Default.Value<IDictionary<string, long>>());
+        }
+
+        private interface IFoo
+        {   
+        }
+
+        private class Foo : IFoo
+        {
+            public static readonly IFoo Empty = new Foo();
+        }
+
+        private interface IBar
+        {   
+        }
+
+        private class Bar : IBar
+        {
+            public static readonly IBar Null = new Bar();
         }
     }
 }
