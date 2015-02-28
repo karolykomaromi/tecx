@@ -8,6 +8,14 @@
 
     public class DefaultTests
     {
+        private interface IFoo
+        {
+        }
+
+        private interface IBar
+        {
+        }
+
         [Fact]
         public void Should_Use_Null_Field_On_Class()
         {
@@ -73,17 +81,9 @@
             Assert.IsType<Dictionary<string, long>>(Default.Value<IDictionary<string, long>>());
         }
 
-        private interface IFoo
-        {   
-        }
-
         private class Foo : IFoo
         {
             public static readonly IFoo Empty = new Foo();
-        }
-
-        private interface IBar
-        {   
         }
 
         private class Bar : IBar
