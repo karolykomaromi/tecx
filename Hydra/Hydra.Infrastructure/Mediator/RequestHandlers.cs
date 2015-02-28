@@ -8,9 +8,5 @@ namespace Hydra.Infrastructure.Mediator
         public static readonly IReadOnlyCollection<Type> Pipeline = new[] { typeof(RequestHandlerPipeline<,>), typeof(ValidationRequestHandler<,>) };
 
         public static readonly IReadOnlyCollection<Type> None = Type.EmptyTypes;
-
-        public static readonly IReadOnlyCollection<Type> Pre = new Type[0];
-
-        public static readonly IReadOnlyCollection<Type> Post = new Type[0];
     }
 }
