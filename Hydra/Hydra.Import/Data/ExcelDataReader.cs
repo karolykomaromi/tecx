@@ -21,6 +21,7 @@ namespace Hydra.Import.Data
         public ExcelDataReader(Worksheet worksheet, string sheetName, SharedStringTable sharedStringTable, ValueWriterCollection writers, IExcelImportSettings settings)
         {
             Contract.Requires(worksheet != null);
+            Contract.Requires(!string.IsNullOrWhiteSpace(sheetName));
             Contract.Requires(sharedStringTable != null);
             Contract.Requires(writers != null);
             Contract.Requires(settings != null);
