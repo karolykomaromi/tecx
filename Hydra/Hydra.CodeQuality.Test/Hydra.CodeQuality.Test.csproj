@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="ResourceBasedSourceCode.cs" />
     <Compile Include="RuleTests.cs" />
+    <EmbeddedResource Include="TestFiles\AsyncVoid.cs" />
     <EmbeddedResource Include="TestFiles\ReturnsDefaultInt.cs" />
     <EmbeddedResource Include="TestFiles\TooManyMethodArguments.cs" />
     <EmbeddedResource Include="TestFiles\IncorrectRethrow.cs" />

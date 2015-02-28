@@ -1,12 +1,11 @@
 namespace Hydra.CodeQuality.Rules
 {
-    using System.Linq;
     using StyleCop;
     using StyleCop.CSharp;
 
-    public class MethodMustNotHaveMoreThanFourParameters : ElementVisitor
+    public class AsyncMethodsMustReturnTask : ElementVisitor
     {
-        public MethodMustNotHaveMoreThanFourParameters(SourceAnalyzer sourceAnalyzer)
+        public AsyncMethodsMustReturnTask(SourceAnalyzer sourceAnalyzer)
             : base(sourceAnalyzer)
         {
         }
@@ -15,8 +14,7 @@ namespace Hydra.CodeQuality.Rules
         {
             Method method = element as Method;
 
-            if (method != null &&
-                method.Parameters.Count > 4)
+            if (method != null && IsAsyncVoidMethod(method))
             {
                 string methodSignature = MethodHelper.Signature(method);
 
@@ -24,11 +22,18 @@ namespace Hydra.CodeQuality.Rules
                     method,
                     method.Location,
                     this.RuleName,
-                    methodSignature,
-                    method.Parameters.Count);
+                    methodSignature);
             }
 
             return true;
+        }
+
+        private static bool IsAsyncVoidMethod(Method method)
+        {
+            return method.ReturnType != null &&
+                   method.ReturnType.Text == "void" && 
+                   method.Declaration != null &&
+                   method.Declaration.ContainsModifier(new[] { CsTokenType.Async });
         }
     }
 }

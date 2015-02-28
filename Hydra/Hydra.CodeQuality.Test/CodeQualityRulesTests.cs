@@ -11,6 +11,7 @@
         [InlineData(KnownTestFiles.TestFiles.TooManyMethodArguments, typeof(MethodMustNotHaveMoreThanFourParameters))]
         [InlineData(KnownTestFiles.TestFiles.IncorrectRethrow, typeof(IncorrectRethrow))]
         [InlineData(KnownTestFiles.TestFiles.ReturnsDefaultInt, typeof(DontUseDefaultOperator))]
+        [InlineData(KnownTestFiles.TestFiles.AsyncVoid, typeof(AsyncMethodsMustReturnTask))]
         public void Should_Flag_Violation_Of_Rule(string fileWithViolation, Type rule)
         {
             this.AssertCodeViolatesRule(fileWithViolation, rule);

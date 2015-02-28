@@ -1,6 +1,7 @@
 namespace Hydra.CodeQuality.Rules
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using StyleCop.CSharp;
 
     public class CompositeStatementVisitor : IStatementVisitor
@@ -12,6 +13,7 @@ namespace Hydra.CodeQuality.Rules
             this.visitors = new List<IStatementVisitor>(visitors ?? new IStatementVisitor[0]);
         }
 
+        [SuppressMessage("Hydra.CodeQuality.CodeQualityRules", "HD1001:MethodMustNotHaveMoreThanFourParameters", Justification = "Needed to work with StyleCop CodeWalkerStatementVisitor<T>")]
         public bool Visit(
             Statement statement,
             Expression parentExpression,
