@@ -1,6 +1,7 @@
 ﻿namespace Hydra.Infrastructure.Reflection
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Reflection;
 
@@ -55,11 +56,13 @@
                 return false;
             }
 
+            [SuppressMessage("Hydra.CodeQuality.CodeQualityRules", "HD1001:MethodMustNotHaveMoreThanFourParameters", Justification = "Implementing external API.")]
             public override object GetValue(object obj, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture)
             {
                 return new object();
             }
 
+            [SuppressMessage("Hydra.CodeQuality.CodeQualityRules", "HD1001:MethodMustNotHaveMoreThanFourParameters", Justification = "Implementing external API.")]
             public override void SetValue(object obj, object value, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture)
             {
             }

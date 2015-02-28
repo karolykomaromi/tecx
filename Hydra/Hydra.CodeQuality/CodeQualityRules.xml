@@ -15,6 +15,9 @@
             <Rule Name="DontUseDefaultOperator" CheckId="HD1003">
                 <Context>Do not use 'default({0})'. Use 'Default.Value&lt;{0}&gt;()' instead.</Context>
             </Rule>
+            <Rule Name="AsyncMethodsMustReturnTask" CheckId="HD1004">
+                <Context>The method '{0}' is asynchronous but does not return an awaitable. Make it return 'System.Threading.Tasks.Task'.</Context>
+            </Rule>
         </RuleGroup>
     </Rules>
 </SourceAnalyzer>

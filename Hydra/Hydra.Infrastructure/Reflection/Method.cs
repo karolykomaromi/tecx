@@ -1,6 +1,7 @@
 ﻿namespace Hydra.Infrastructure.Reflection
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Reflection;
 
@@ -60,6 +61,7 @@
                 return (MethodImplAttributes)0;
             }
 
+            [SuppressMessage("Hydra.CodeQuality.CodeQualityRules", "HD1001:MethodMustNotHaveMoreThanFourParameters", Justification = "Implementing external API.")]
             public override object Invoke(object obj, BindingFlags invokeAttr, Binder binder, object[] parameters, CultureInfo culture)
             {
                 return new object();

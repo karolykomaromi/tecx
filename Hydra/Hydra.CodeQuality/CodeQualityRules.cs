@@ -59,7 +59,8 @@
             IElementVisitor elementVisitor = new CompositeElementVisitor(
                 new ConstructorMustNotHaveMoreThanFourParameters(this),
                 new MethodMustNotHaveMoreThanFourParameters(this),
-                new IncorrectRethrow(this));
+                new IncorrectRethrow(this),
+                new AsyncMethodsMustReturnTask(this));
 
             IStatementVisitor statementVisitor = StatementVisitor.Null;
 

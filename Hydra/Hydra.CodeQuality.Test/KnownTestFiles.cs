@@ -14,6 +14,11 @@ namespace Hydra.CodeQuality.Test
         public static class TestFiles
         {
             /// <summary>
+            /// Hydra.CodeQuality.Test.TestFiles.AsyncVoid.cs
+            /// </summary>
+            public const string AsyncVoid = "Hydra.CodeQuality.Test.TestFiles.AsyncVoid.cs";
+
+            /// <summary>
             /// Hydra.CodeQuality.Test.TestFiles.IncorrectRethrow.cs
             /// </summary>
             public const string IncorrectRethrow = "Hydra.CodeQuality.Test.TestFiles.IncorrectRethrow.cs";

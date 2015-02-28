@@ -1,5 +1,6 @@
 namespace Hydra.CodeQuality.Rules
 {
+    using System.Diagnostics.CodeAnalysis;
     using StyleCop;
     using StyleCop.CSharp;
 
@@ -12,6 +13,7 @@ namespace Hydra.CodeQuality.Rules
         {
         }
 
+        [SuppressMessage("Hydra.CodeQuality.CodeQualityRules", "HD1001:MethodMustNotHaveMoreThanFourParameters", Justification = "Needed to work with StyleCop CodeWalkerElementVisitor<T>")]
         public abstract bool Visit(Expression expression, Expression parentExpression, Statement parentStatement, CsElement parentElement, object context);
     }
 }

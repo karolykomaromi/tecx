@@ -2,6 +2,7 @@ namespace Hydra.Unity
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using Hydra.Infrastructure.Logging;
     using Hydra.Unity.Properties;
@@ -54,6 +55,7 @@ namespace Hydra.Unity
             this.Container.Dispose();
         }
 
+        [SuppressMessage("Hydra.CodeQuality.CodeQualityRules", "HD1001:MethodMustNotHaveMoreThanFourParameters", Justification = "Implementing external API.")]
         public IUnityContainer RegisterType(Type @from, Type to, string name, LifetimeManager lifetimeManager, params InjectionMember[] injectionMembers)
         {
             throw new InvalidOperationException(Resources.ContainerConfigurationMustNotBeAltered);
