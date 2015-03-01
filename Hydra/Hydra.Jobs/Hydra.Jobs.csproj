@@ -69,35 +69,13 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Constants.cs" />
-    <Compile Include="Data\QuartzBlobsForTriggers.cs" />
-    <Compile Include="Data\QuartzBlobsForTriggersMap.cs" />
-    <Compile Include="Data\QuartzCalendar.cs" />
-    <Compile Include="Data\QuartzCalendarMap.cs" />
-    <Compile Include="Data\QuartzCronTrigger.cs" />
-    <Compile Include="Data\QuartzCronTriggerMap.cs" />
-    <Compile Include="Data\QuartzFiredTrigger.cs" />
-    <Compile Include="Data\QuartzFiredTriggerMap.cs" />
-    <Compile Include="Data\QuartzJobDetails.cs" />
-    <Compile Include="Data\QuartzJobDetailsMap.cs" />
-    <Compile Include="Data\QuartzLock.cs" />
-    <Compile Include="Data\QuartzLockMap.cs" />
-    <Compile Include="Data\QuartzPausedTriggerGroup.cs" />
-    <Compile Include="Data\QuartzPausedTriggerGroupMap.cs" />
-    <Compile Include="Data\QuartzSchedulerState.cs" />
-    <Compile Include="Data\QuartzSchedulerStateMap.cs" />
-    <Compile Include="Data\QuartzSimplePropertiesForTriggers.cs" />
-    <Compile Include="Data\QuartzSimplePropertiesForTriggersMap.cs" />
-    <Compile Include="Data\QuartzSimpleTrigger.cs" />
-    <Compile Include="Data\QuartzSimpleTriggerMap.cs" />
-    <Compile Include="Data\QuartzTableCreationScripts.cs" />
-    <Compile Include="Data\QuartzTrigger.cs" />
-    <Compile Include="Data\QuartzTriggerMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.tt</DependentUpon>
     </Compile>
+    <Compile Include="Scripts\QuartzTableCreationScripts.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx" />

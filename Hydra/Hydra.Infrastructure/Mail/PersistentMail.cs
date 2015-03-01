@@ -11,6 +11,10 @@ namespace Hydra.Infrastructure.Mail
 
         public virtual DateTime EnqueuedAt { get; set; }
 
+        public virtual string EnqueuedBy { get; set; }
+
         public virtual DateTime? SentAt { get; set; }
+
+        public virtual MailCharge Charge { get; set; }
     }
 }

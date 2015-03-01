@@ -1,7 +1,7 @@
 ﻿namespace Hydra.Jobs.Test
 {
     using System;
-    using Hydra.Jobs.Data;
+    using Hydra.Jobs.Scripts;
     using Xunit;
 
     public class QuartzTableCreationScriptsTests

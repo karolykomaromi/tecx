@@ -195,6 +195,9 @@
     <Compile Include="Mail\IUnsentMailSource.cs" />
     <Compile Include="Mail\MailAddressBuilder.cs" />
     <Compile Include="Mail\MailboxAddressBuilder.cs" />
+    <Compile Include="Mail\MailCharge.cs" />
+    <Compile Include="Mail\MailChargeUserType.cs" />
+    <Compile Include="Mail\MailChargeUserTypeConvention.cs" />
     <Compile Include="Mail\MailMessageBuilder.cs" />
     <Compile Include="Mail\MailMessageExtensions.cs" />
     <Compile Include="Mail\MimeMessageBuilder.cs" />

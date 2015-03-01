@@ -1,4 +1,4 @@
-﻿namespace Hydra.Jobs.Data
+﻿namespace Hydra.Jobs.Scripts
 {
     using System;
     using System.IO;

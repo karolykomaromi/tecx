@@ -8,9 +8,10 @@ namespace Hydra.Infrastructure.Mail
         {
             this.Id(x => x.Id);
             this.Map(x => x.EnqueuedAt);
-            this.Map(x => x.IsSent);
-            this.Map(x => x.Message);
+            this.Map(x => x.IsSent).Not.Nullable();
+            this.Map(x => x.Message).Not.Nullable();
             this.Map(x => x.SentAt);
+            this.Map(x => x.Charge).Not.Nullable();
         }
     }
 }
