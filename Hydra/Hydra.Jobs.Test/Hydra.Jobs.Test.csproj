@@ -126,7 +126,7 @@
     <Compile Include="NullScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuartzTableCreationScriptsTests.cs" />
-    <Compile Include="QuartzTests.cs" />
+    <Compile Include="TriggerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

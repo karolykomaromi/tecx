@@ -21,7 +21,7 @@ namespace Hydra.Infrastructure.Mail
 
         public static MimeMessageBuilder FromString(string s)
         {
-            Contract.Requires(!String.IsNullOrEmpty(s));
+            Contract.Requires(!string.IsNullOrEmpty(s));
 
             using (Stream stream = new MemoryStream())
             {
