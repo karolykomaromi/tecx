@@ -3,7 +3,6 @@ namespace Hydra.Infrastructure.Mail
     using System;
     using System.ComponentModel;
     using System.Globalization;
-    using System.IO;
     using MimeKit;
 
     public class MimeMessageTypeConverter : TypeConverter
@@ -22,20 +21,7 @@ namespace Hydra.Infrastructure.Mail
                 return value;
             }
 
-            using (Stream stream = new MemoryStream())
-            {
-                using (TextWriter writer = new StreamWriter(stream))
-                {
-                    writer.Write(s);
-                    writer.Flush();
-
-                    stream.Position = 0;
-
-                    MimeMessage message = MimeMessage.Load(stream);
-
-                    return message;
-                }
-            }
+            return MimeMessageBuilder.FromString(s).Build();
         }
 
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
@@ -52,19 +38,7 @@ namespace Hydra.Infrastructure.Mail
                 return value;
             }
 
-            using (Stream stream = new MemoryStream())
-            {
-                message.WriteTo(stream);
-
-                stream.Position = 0;
-
-                using (TextReader reader = new StreamReader(stream))
-                {
-                    string s = reader.ReadToEnd();
-
-                    return s;
-                }
-            }
+            return MimeMessageBuilder.ToString(message);
         }
     }
 }

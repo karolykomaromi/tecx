@@ -197,6 +197,7 @@
     <Compile Include="Mail\MailboxAddressBuilder.cs" />
     <Compile Include="Mail\MailMessageBuilder.cs" />
     <Compile Include="Mail\MailMessageExtensions.cs" />
+    <Compile Include="Mail\MimeMessageBuilder.cs" />
     <Compile Include="Mail\MimeMessageTypeConverter.cs" />
     <Compile Include="Mail\MimeMessageUserType.cs" />
     <Compile Include="Mail\MimeMessageUserTypeConvention.cs" />

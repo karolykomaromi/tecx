@@ -2,7 +2,6 @@ namespace Hydra.Infrastructure.Mail
 {
     using System;
     using System.Data;
-    using System.Globalization;
     using MimeKit;
     using NHibernate;
     using NHibernate.SqlTypes;
@@ -49,32 +48,28 @@ namespace Hydra.Infrastructure.Mail
                 return new MimeMessage();
             }
 
-            MimeMessage msg = (MimeMessage)ConvertHelper.Convert(s, typeof(MimeMessage), CultureInfo.InvariantCulture);
+            MimeMessage msg = MimeMessageBuilder.FromString(s);
 
             return msg;
         }
 
         public void NullSafeSet(IDbCommand cmd, object value, int index)
         {
-            if (value == null)
+            MimeMessage message = value as MimeMessage;
+
+            if (message == null)
             {
                 NHibernateUtil.String.NullSafeSet(cmd, null, index);
 
                 return;
             }
-
-            value = ConvertHelper.Convert(value, typeof(string), CultureInfo.InvariantCulture);
-
-            NHibernateUtil.String.NullSafeSet(cmd, value, index);
+            
+            NHibernateUtil.String.NullSafeSet(cmd, MimeMessageBuilder.ToString(message), index);
         }
 
         public object DeepCopy(object value)
         {
-            string s = (string)ConvertHelper.Convert(value, typeof(string), CultureInfo.InvariantCulture);
-
-            MimeMessage copy = (MimeMessage)ConvertHelper.Convert(s, typeof(MimeMessage), CultureInfo.InvariantCulture);
-
-            return copy;
+            return MimeMessageBuilder.Clone((MimeMessage)value);
         }
 
         public object Replace(object original, object target, object owner)
