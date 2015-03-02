@@ -115,6 +115,7 @@
     <Compile Include="JobScheduleRequest.cs" />
     <Compile Include="JobScheduleResponse.cs" />
     <Compile Include="Jobs\ApplicationMailSettings.cs" />
+    <Compile Include="Jobs\ExceptionHandlingDecorator.cs" />
     <Compile Include="Jobs\Heartbeat.cs" />
     <Compile Include="Jobs\IMailJobSettings.cs" />
     <Compile Include="Jobs\InMemoryMailJobSettings.cs" />
@@ -129,6 +130,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.tt</DependentUpon>
     </Compile>
+    <Compile Include="Retry\ExponentialBackoffRetryStrategy.cs" />
+    <Compile Include="Retry\InMemoryRetrySettings.cs" />
+    <Compile Include="Retry\IRetrySettings.cs" />
+    <Compile Include="Retry\IRetryStrategy.cs" />
+    <Compile Include="Retry\RetryJobListener.cs" />
     <Compile Include="SchedulerService.cs" />
     <Compile Include="SchedulerServiceHost.cs" />
     <Compile Include="SimpleJobScheduleRequest.cs" />
