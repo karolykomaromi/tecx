@@ -1,6 +1,7 @@
 namespace Hydra.Unity.Mediator
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
     using System.Threading.Tasks;
@@ -35,11 +36,14 @@ namespace Hydra.Unity.Mediator
         {
             Type handlerType = typeof(INotificationHandler<>).MakeGenericType(typeof(TNotification));
 
-            dynamic handler = this.container.ResolveAll(handlerType);
+            IEnumerable<object> handlers = this.container.ResolveAll(handlerType);
 
             dynamic c = notification;
 
-            await (Task)handler.Handle(c);
+            foreach (dynamic handler in handlers)
+            {
+                await (Task)handler.Handle(c);
+            }
         }
     }
 }
