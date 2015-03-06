@@ -1,19 +1,18 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask 
+    AssemblyFile="$(MSBuildProjectDirectory)\..\packages\MSBuild.Extension.Pack.1.5.0\tools\net40\MSBuild.ExtensionPack.dll"
+    TaskName="MSBuild.ExtensionPack.Framework.AssemblyInfo"/>
   <PropertyGroup>
     <TransformOnBuild>true</TransformOnBuild>
   </PropertyGroup>
-  
   <ItemGroup>
     <T4ReferencePath Include="$(MSBuildProjectDirectory)\..\libs\Hydra.TextTemplating" />
   </ItemGroup>
-  
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v11.0\TextTemplating\Microsoft.TextTemplating.targets" />
-  
-  <!--<UsingTask AssemblyFile=".\packages\MSBuild.Extension.Pack.1.5.0\tools\net40\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Framework.AssemblyInfo"/>-->
-  <UsingTask AssemblyFile="$(MSBuildProjectDirectory)\..\packages\MSBuild.Extension.Pack.1.5.0\tools\net40\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Framework.AssemblyInfo"/>
   <ItemGroup>
     <AssemblyInfoFiles Include="$(MSBuildProjectDirectory)\..\CommonFiles\GlobalAssemblyVersion.cs" />
   </ItemGroup>
+  <!-- Whenever we build the Hydra project we increase the AssemblyVersion and AssemblyFileVersion in the GlobalAssemblyInfo.cs file -->
   <Target Name="IncrementAssemblyVersion" BeforeTargets="Build" Condition="'$(MSBuildProjectName)' == 'Hydra'">
     <AssemblyInfo
       AssemblyInfoFiles="@(AssemblyInfoFiles)"
