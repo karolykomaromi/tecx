@@ -20,19 +20,33 @@
             }
         }
 
-        [Event(1, Message = "Starting up.", Keywords = Keywords.Perf, Level = EventLevel.Informational)]
+        [Event(
+            1, 
+            Message = "Starting up.", 
+            Keywords = Keywords.Perf, 
+            Level = EventLevel.Informational)]
         public void Startup()
         {
             this.WriteEvent(1);
         }
 
-        [Event(2, Message = "Shutting down.", Keywords = Keywords.Perf, Level = EventLevel.Informational)]
+        [Event(
+            2, 
+            Message = "Shutting down.", 
+            Keywords = Keywords.Perf, 
+            Level = EventLevel.Informational)]
         public void Shutdown()
         {
             this.WriteEvent(2);
         }
 
-        [Event(3, Message = "Loading page {0}", Opcode = EventOpcode.Start, Task = Tasks.Page, Keywords = Keywords.Page, Level = EventLevel.Informational)]
+        [Event(
+            3, 
+            Message = "Loading page {0}", 
+            Opcode = EventOpcode.Start, 
+            Task = Tasks.Page, 
+            Keywords = Keywords.Page, 
+            Level = EventLevel.Informational)]
         public void PageStart(string url)
         {
             if (this.IsEnabled())
@@ -41,7 +55,10 @@
             }
         }
 
-        [Event(4, Keywords = Keywords.Diagnostic, Level = EventLevel.Warning)]
+        [Event(
+            4, 
+            Keywords = Keywords.Diagnostic, 
+            Level = EventLevel.Warning)]
         public void Warning(string message)
         {
             if (this.IsEnabled())
@@ -50,7 +67,11 @@
             }
         }
 
-        [Event(5, Message = "An error occured.\r\n{0}", Keywords = Keywords.Error, Level = EventLevel.Error)]
+        [Event(
+            5, 
+            Message = "An error occured.\r\n{0}", 
+            Keywords = Keywords.Error, 
+            Level = EventLevel.Error)]
         public void Error(string message)
         {
             if (this.IsEnabled())
@@ -59,7 +80,11 @@
             }
         }
 
-        [Event(6, Message = "A critical error occured.\r\n{0}", Keywords = Keywords.Error, Level = EventLevel.Critical)]
+        [Event(
+            6, 
+            Message = "A critical error occured.\r\n{0}", 
+            Keywords = Keywords.Error, 
+            Level = EventLevel.Critical)]
         public void Critical(string message)
         {
             if (this.IsEnabled())
@@ -77,7 +102,11 @@
             }
         }
 
-        [Event(8, Message = "Could not find resource type '{1}' in assembly '{0}'.", Keywords = Keywords.Diagnostic | Keywords.Resources, Level = EventLevel.Informational)]
+        [Event(
+            8, 
+            Message = "Could not find resource type '{1}' in assembly '{0}'.", 
+            Keywords = Keywords.Diagnostic | Keywords.Resources, 
+            Level = EventLevel.Informational)]
         public void ResourceTypeNotFound(string assemblyName, string resourceTypeName)
         {
             if (this.IsEnabled())
@@ -86,7 +115,11 @@
             }
         }
 
-        [Event(9, Message = "Could not find public static property '{1}' on resource Type '{0}'.", Keywords = Keywords.Diagnostic | Keywords.Resources, Level = EventLevel.Informational)]
+        [Event(
+            9, 
+            Message = "Could not find public static property '{1}' on resource Type '{0}'.", 
+            Keywords = Keywords.Diagnostic | Keywords.Resources, 
+            Level = EventLevel.Informational)]
         public void ResourcePropertyNotFound(string assemblyQualifiedResourceTypeName, string propertyName)
         {
             if (this.IsEnabled())
@@ -95,7 +128,11 @@
             }
         }
 
-        [Event(10, Message = "Could not find property '{1}' on Type '{0}'.", Keywords = Keywords.Diagnostic, Level = EventLevel.Informational)]
+        [Event(
+            10, 
+            Message = "Could not find property '{1}' on Type '{0}'.", 
+            Keywords = Keywords.Diagnostic, 
+            Level = EventLevel.Informational)]
         public void PropertyNotFound(string assemblyQualifiedTypeName, string propertyName)
         {
             if (this.IsEnabled())
@@ -104,12 +141,44 @@
             }
         }
 
-        [Event(11, Message = "Culture changed to '{0}'", Keywords = Keywords.Diagnostic, Level = EventLevel.Informational)]
+        [Event(
+            11, 
+            Message = "Culture changed to '{0}'", 
+            Keywords = Keywords.Diagnostic, 
+            Level = EventLevel.Informational)]
         public void CultureChanged(string culture)
         {
             if (this.IsEnabled())
             {
                 this.WriteEvent(11, culture);
+            }
+        }
+
+        [Event(
+            12, 
+            Message = "Job '{0}' scheduled for retry with trigger '{1}' at '{2}'.", 
+            Task = Tasks.Job, 
+            Keywords = Keywords.Retry | Keywords.Diagnostic, 
+            Level = EventLevel.Informational)]
+        public void JobScheduledForRetry(string jobKey, string triggerKey, string nextRunAt)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(12, jobKey, triggerKey, nextRunAt);
+            }
+        }
+
+        [Event(
+            13, 
+            Message = "Job '{0}' finally failed.", 
+            Task = Tasks.Job,
+            Keywords = Keywords.Retry | Keywords.Diagnostic, 
+            Level = EventLevel.Warning)]
+        public void JobFinallyFailed(string jobKey)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(13, jobKey);
             }
         }
 
@@ -128,6 +197,8 @@
             public const EventKeywords Container = (EventKeywords)32;
 
             public const EventKeywords Resources = (EventKeywords)64;
+
+            public const EventKeywords Retry = (EventKeywords)128;
         }
 
         public class Tasks
@@ -137,6 +208,8 @@
             public const EventTask Query = (EventTask)2;
 
             public const EventTask Resolution = (EventTask)3;
+
+            public const EventTask Job = (EventTask)4;
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Hydra.Jobs.Test
 
     public class NullScheduler : IScheduler
     {
+        private static readonly SchedulerContext EmptyContext = new SchedulerContext();
+
         public string SchedulerName
         {
             get { return string.Empty; }
@@ -20,10 +22,7 @@ namespace Hydra.Jobs.Test
 
         public SchedulerContext Context
         {
-            get
-            {
-                return null;
-            }
+            get { return EmptyContext; }
         }
 
         public bool InStandbyMode

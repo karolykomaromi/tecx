@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="Composition\LoggingConfiguration.cs" />
     <Compile Include="Composition\QuartzConfiguration.cs" />
+    <Compile Include="HydraEventSourceExtensions.cs" />
     <Compile Include="ISchedulerService.cs" />
     <Compile Include="JobScheduleRequest.cs" />
     <Compile Include="JobScheduleResponse.cs" />
