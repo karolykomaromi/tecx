@@ -30,7 +30,8 @@ namespace Hydra.Infrastructure.Reflection
             this.assemblyBuilder = thisDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
 
             this.moduleBuilder = this.assemblyBuilder.DefineDynamicModule(
-                this.assemblyBuilder.GetName().Name, Constants.Names.AssemblyFileName);
+                this.assemblyBuilder.GetName().Name, 
+                Constants.Names.AssemblyFileName);
 
             this.ducks = new ConcurrentDictionary<Tuple<Type, Type>, Type>();
 
@@ -55,8 +56,6 @@ namespace Hydra.Infrastructure.Reflection
 
                     Type pt = builder.Build();
 
-                    this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
-
                     return pt;
                 });
 
@@ -75,8 +74,6 @@ namespace Hydra.Infrastructure.Reflection
                     var builder = new LazyProxyBuilder(this.moduleBuilder, c);
 
                     Type pt = builder.Build();
-
-                    this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
 
                     return pt;
                 });
@@ -97,7 +94,6 @@ namespace Hydra.Infrastructure.Reflection
 
                     Type pt = builder.Build();
 
-                    this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
                     return pt;
                 });
 
@@ -117,12 +113,15 @@ namespace Hydra.Infrastructure.Reflection
 
                     Type pt = builder.Build();
 
-                    this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
-
                     return pt;
                 });
 
             return proxyType;
+        }
+
+        public void Save()
+        {
+            this.assemblyBuilder.Save(Constants.Names.AssemblyFileName);
         }
     }
 }

@@ -139,7 +139,6 @@ namespace Hydra.Infrastructure.Reflection
             
             il.BeginExceptionBlock();
 
-            il.Emit(OpCodes.Nop);
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Call, ctx.TargetGetter);
             il.Emit(OpCodes.Stloc_0);
@@ -161,13 +160,18 @@ namespace Hydra.Infrastructure.Reflection
 
             il.BeginFinallyBlock();
 
+            il.Emit(OpCodes.Nop);
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ldloc_0);
             il.Emit(OpCodes.Call, ctx.ReleaseMethod);
 
             il.EndExceptionBlock();
 
-            il.Emit(OpCodes.Ldloc_1);
+            if (DecomissioningDecoraptorProxyBuilder.MethodHasReturnValue(methodOnContract))
+            {
+                il.Emit(OpCodes.Ldloc_1);
+            }
+
             il.Emit(OpCodes.Ret);
         }
 

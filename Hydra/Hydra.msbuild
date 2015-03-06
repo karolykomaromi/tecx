@@ -1,24 +1,12 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <UsingTask AssemblyFile=".\packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll" TaskName="Xunit.Runner.MSBuild.xunit"/>
-    <UsingTask AssemblyFile=".\packages\MSBuild.Extension.Pack.1.5.0\tools\net40\MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Framework.AssemblyInfo"/>
+  <UsingTask AssemblyFile=".\packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll" TaskName="Xunit.Runner.MSBuild.xunit"/>
+  <Target Name="Build">
+    <MSBuild Projects="Hydra.sln" Targets="Build" Properties="Configuration=Release" />
+  </Target>
+  <Target Name="Test" AfterTargets="Build">
     <ItemGroup>
-        <AssemblyInfoFiles Include=".\CommonFiles\GlobalAssemblyVersion.cs" />
+      <TestAssemblies Include="**\bin\Release\*.Test.dll" />
     </ItemGroup>
-    <Target Name="Build">
-        <AssemblyInfo 
-            AssemblyInfoFiles="@(AssemblyInfoFiles)"
-            AssemblyBuildNumberType="YearWeekDay"
-            AssemblyRevisionType="AutoIncrement"
-            AssemblyFileBuildNumberType="YearWeekDay"
-            AssemblyFileRevisionType="AutoIncrement"
-            FirstDayOfWeek="Monday" />
-        <MSBuild Projects="Hydra.sln" Targets="Build" Properties="Configuration=Release" />
-    </Target>
-    <Target Name="Test" AfterTargets="Build">
-        <ItemGroup>
-            <TestAssemblies Include="**\bin\Release\*.Test.dll" />
-        </ItemGroup>
-        <Message Text="@(TestAssemblies)" Importance="high" />
-        <xunit Assemblies="@(TestAssemblies)" Html="Result.html"/>
-    </Target>
+    <xunit Assemblies="@(TestAssemblies)" Html="Result.html"/>
+  </Target>
 </Project>
