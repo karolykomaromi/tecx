@@ -1,6 +1,8 @@
 namespace Hydra.Jobs.Server.Retry
 {
+    using System;
     using System.Diagnostics.Contracts;
+    using Hydra.Infrastructure.Logging;
     using Quartz;
     using Quartz.Listener;
 
@@ -30,9 +32,15 @@ namespace Hydra.Jobs.Server.Retry
             {
                 ITrigger trigger = this.retryStrategy.GetTrigger(context);
 
-                context.Scheduler.UnscheduleJob(context.Trigger.Key);
+                bool unscheduled = context.Scheduler.UnscheduleJob(context.Trigger.Key);
 
-                context.Scheduler.ScheduleJob(context.JobDetail, trigger);
+                DateTimeOffset nextRunAt = context.Scheduler.ScheduleJob(context.JobDetail, trigger);
+
+                HydraEventSource.Log.JobScheduledForRetry(context.JobDetail.Key, context.Trigger.Key, nextRunAt);
+            }
+            else
+            {
+                HydraEventSource.Log.JobFinallyFailed(context.JobDetail.Key);
             }
         }
 

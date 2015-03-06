@@ -27,17 +27,6 @@ namespace Hydra.Jobs.Server.Retry
             return retries < this.settings.MaxRetries;
         }
 
-        private static int GetAlreadyPerformedRetries(IJobExecutionContext context)
-        {
-            int retries = 0;
-            object o;
-            if (context.JobDetail.JobDataMap.TryGetValue(Retries, out o) && o is int)
-            {
-                retries = (int)o;
-            }
-            return retries;
-        }
-
         public ITrigger GetTrigger(IJobExecutionContext context)
         {
             int retries = GetAlreadyPerformedRetries(context);
@@ -56,6 +45,18 @@ namespace Hydra.Jobs.Server.Retry
             context.JobDetail.JobDataMap[Retries] = ++retries;
 
             return trigger;
+        }
+
+        private static int GetAlreadyPerformedRetries(IJobExecutionContext context)
+        {
+            int retries = 0;
+            object o;
+            if (context.JobDetail.JobDataMap.TryGetValue(Retries, out o) && o is int)
+            {
+                retries = (int)o;
+            }
+
+            return retries;
         }
     }
 }
