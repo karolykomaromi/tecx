@@ -35,7 +35,7 @@
 
             this.listener.EnableEvents(HydraEventSource.Log, EventLevel.Verbose, Keywords.All);
 
-            var sinkSubscription = this.listener.LogToDebug(new JsonEventTextFormatter(EventTextFormatting.Indented, "o"));
+            SinkSubscription<DebugSink> sinkSubscription = this.listener.LogToDebug(new JsonEventTextFormatter(EventTextFormatting.Indented, "o"));
 
             this.subscription = sinkSubscription.Subscription;
         }
