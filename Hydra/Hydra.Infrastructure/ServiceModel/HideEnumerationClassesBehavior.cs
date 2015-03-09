@@ -20,10 +20,6 @@ namespace Hydra.Infrastructure.ServiceModel
 
         void IServiceBehavior.ApplyDispatchBehavior(ServiceDescription serviceDescription, ServiceHostBase host)
         {
-            Contract.Requires(serviceDescription != null);
-            Contract.Requires(serviceDescription.Endpoints != null);
-            Contract.Requires(host != null);
-
             foreach (ServiceEndpoint endpoint in serviceDescription.Endpoints)
             {
                 foreach (OperationDescription operation in endpoint.Contract.Operations)
@@ -48,8 +44,6 @@ namespace Hydra.Infrastructure.ServiceModel
 
         void IWsdlExportExtension.ExportContract(WsdlExporter exporter, WsdlContractConversionContext context)
         {
-            Contract.Requires(context != null);
-
             this.ReplaceEnumerationClassParametersWithEnums(context);
         }
 

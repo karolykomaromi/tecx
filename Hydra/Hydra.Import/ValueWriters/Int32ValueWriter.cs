@@ -1,6 +1,7 @@
 namespace Hydra.Import.ValueWriters
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Reflection;
     using Hydra.Import.Messages;
@@ -11,6 +12,7 @@ namespace Hydra.Import.ValueWriters
         public Int32ValueWriter(PropertyInfo property)
             : base(property)
         {
+            Contract.Requires(property != null);
         }
 
         public override ImportMessage Write(object target, string value, CultureInfo sourceCulture, CultureInfo targetCulture)

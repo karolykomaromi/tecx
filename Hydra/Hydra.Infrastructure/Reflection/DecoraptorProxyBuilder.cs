@@ -15,6 +15,8 @@
         public DecoraptorProxyBuilder(ModuleBuilder moduleBuilder, Type contract)
             : base(moduleBuilder, contract, contract)
         {
+            System.Diagnostics.Contracts.Contract.Requires(moduleBuilder != null);
+            System.Diagnostics.Contracts.Contract.Requires(contract != null);
         }
 
         protected override string GetTypeName()

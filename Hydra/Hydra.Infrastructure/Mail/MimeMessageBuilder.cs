@@ -43,7 +43,7 @@ namespace Hydra.Infrastructure.Mail
         public static string ToString(MimeMessage message)
         {
             Contract.Requires(message != null);
-            Contract.Ensures(Contract.Result<MimeMessage>() != null);
+            Contract.Ensures(Contract.Result<string>() != null);
 
             using (Stream stream = new MemoryStream())
             {

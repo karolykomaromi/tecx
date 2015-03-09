@@ -11,7 +11,7 @@
         public MultiValueCmdLineParameter(string name, params string[] values)
             : base(name, string.Join(" ", values ?? new string[0]))
         {
-            Contract.Requires(values != null);
+            Contract.Requires(!string.IsNullOrWhiteSpace(name));
 
             this.values = new ReadOnlyCollection<string>(values ?? new string[0]);
         }
@@ -28,8 +28,6 @@
 
         public override void Accept(ICmdLineParameterVisitor visitor)
         {
-            Contract.Requires(visitor != null);
-
             visitor.Visit(this);
         }
     }

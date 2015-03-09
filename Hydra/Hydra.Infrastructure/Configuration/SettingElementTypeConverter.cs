@@ -55,9 +55,14 @@ namespace Hydra.Infrastructure.Configuration
 
             object v = DeserializeValue(se.Value, se.Type, culture);
 
-            Setting setting = new Setting(se.SettingName, v);
+            if (v != null)
+            {
+                Setting setting = new Setting(se.SettingName, v);
 
-            return setting;
+                return setting;
+            }
+
+            return Setting.Empty;
         }
 
         private static object DeserializeValue(string value, Type type, CultureInfo culture)

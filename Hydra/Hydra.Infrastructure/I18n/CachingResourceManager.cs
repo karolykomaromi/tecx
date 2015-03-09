@@ -25,6 +25,7 @@
         public CachingResourceManager(string baseName, ObjectCache cache)
             : this(baseName, cache, ResourceManagerBase.Null(baseName))
         {
+            Contract.Requires(cache != null);
         }
 
         public CachingResourceManager(string baseName, ObjectCache cache, IResourceManager readThrough)

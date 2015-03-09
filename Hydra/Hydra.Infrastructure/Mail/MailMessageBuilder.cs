@@ -37,9 +37,6 @@ namespace Hydra.Infrastructure.Mail
 
         public override MailMessage Build()
         {
-            Contract.Requires(this.sender != null);
-            Contract.Requires(this.recipients.Count > 0);
-
             MailMessage message = new MailMessage
             {
                 From = this.sender,

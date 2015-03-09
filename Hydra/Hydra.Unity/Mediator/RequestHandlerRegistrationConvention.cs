@@ -74,6 +74,8 @@ namespace Hydra.Unity.Mediator
             // weberse 2015-02-27 all handler types implement 'IRequestHandler<,>' thus 'First' is OK
             Type[] genericArguments = handler.FindInterfaces(IsHandlerInterface, null).First().GenericTypeArguments;
 
+            Contract.Assume(genericArguments.Length == 2);
+
             Type request = genericArguments[0];
             Type response = genericArguments[1];
 

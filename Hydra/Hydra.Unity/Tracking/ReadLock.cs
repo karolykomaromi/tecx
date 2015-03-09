@@ -1,6 +1,7 @@
 namespace Hydra.Unity.Tracking
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Threading;
 
     public class ReadLock : IDisposable
@@ -12,10 +13,13 @@ namespace Hydra.Unity.Tracking
         public ReadLock(ReaderWriterLockSlim rws, int timeoutInMilliseconds = 500)
             : this(rws, TimeSpan.FromMilliseconds(timeoutInMilliseconds))
         {
+            Contract.Requires(rws != null);
         }
 
         public ReadLock(ReaderWriterLockSlim rws, TimeSpan timeout)
         {
+            Contract.Requires(rws != null);
+
             this.rws = rws;
 
             if (!rws.TryEnterReadLock(timeout))

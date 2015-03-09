@@ -5,6 +5,7 @@ namespace Hydra.Unity.Tracking
     using System.Diagnostics.Contracts;
     using Microsoft.Practices.ObjectBuilder2;
 
+    [ContractClass(typeof(BuildTreeItemNodeContract))]
     public abstract class BuildTreeItemNode : IDisposable
     {
         private readonly List<BuildTreeItemNode> children;
@@ -49,5 +50,19 @@ namespace Hydra.Unity.Tracking
         }
 
         protected abstract void Dispose(bool disposing);
+    }
+
+    [ContractClassFor(typeof(BuildTreeItemNode))]
+    internal abstract class BuildTreeItemNodeContract : BuildTreeItemNode
+    {
+        protected BuildTreeItemNodeContract(NamedTypeBuildKey buildKey, BuildTreeItemNode parentNode = null)
+            : base(buildKey, parentNode)
+        {
+        }
+
+        public override void Accept(ITreeItemVisitor visitor)
+        {
+            Contract.Requires(visitor != null);
+        }
     }
 }

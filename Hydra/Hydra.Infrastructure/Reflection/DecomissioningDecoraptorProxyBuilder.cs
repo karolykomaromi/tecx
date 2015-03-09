@@ -20,6 +20,8 @@ namespace Hydra.Infrastructure.Reflection
         public DecomissioningDecoraptorProxyBuilder(ModuleBuilder moduleBuilder, Type contract)
             : base(moduleBuilder, contract, contract)
         {
+            System.Diagnostics.Contracts.Contract.Requires(moduleBuilder != null);
+            System.Diagnostics.Contracts.Contract.Requires(contract != null);
         }
 
         public override Type Build()

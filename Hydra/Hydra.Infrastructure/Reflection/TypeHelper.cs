@@ -38,7 +38,6 @@ namespace Hydra.Infrastructure.Reflection
         {
             Contract.Requires(propertySelector != null);
             Contract.Requires(propertySelector.Body is MemberExpression);
-            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
 
             MemberExpression property = (MemberExpression)propertySelector.Body;
 
@@ -49,7 +48,6 @@ namespace Hydra.Infrastructure.Reflection
         {
             Contract.Requires(propertySelector != null);
             Contract.Requires(propertySelector.Body is MemberExpression);
-            Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
 
             MemberExpression property = (MemberExpression)propertySelector.Body;
 

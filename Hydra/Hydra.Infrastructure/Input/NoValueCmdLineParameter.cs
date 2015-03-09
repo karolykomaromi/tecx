@@ -7,12 +7,11 @@
         public NoValueCmdLineParameter(string name)
             : base(name, string.Empty)
         {
+            Contract.Requires(!string.IsNullOrWhiteSpace(name));
         }
 
         public override void Accept(ICmdLineParameterVisitor visitor)
         {
-            Contract.Requires(visitor != null);
-
             visitor.Visit(this);
         }
     }

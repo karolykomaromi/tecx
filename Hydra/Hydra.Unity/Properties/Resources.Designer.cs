@@ -70,5 +70,15 @@ namespace Hydra.Unity.Properties
         {
             get { return Resources.ResourceManager.GetString("HttpContextNotFound", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
+
+        public static string InstanceAlreadyAssigned
+        {
+            get { return Resources.ResourceManager.GetString("InstanceAlreadyAssigned", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
+        public static string InstanceNotDisposable
+        {
+            get { return Resources.ResourceManager.GetString("InstanceNotDisposable", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
     }
 }

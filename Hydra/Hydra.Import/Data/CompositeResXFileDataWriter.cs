@@ -23,10 +23,9 @@ namespace Hydra.Import.Data
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(baseName));
             Contract.Requires(!string.IsNullOrWhiteSpace(directoryForResXFiles));
-            Contract.Requires(Directory.Exists(directoryForResXFiles));
 
             this.baseName = baseName.EndsWith(".", StringComparison.Ordinal) ? baseName : baseName + ".";
-            this.directoryForResXFiles = directoryForResXFiles;
+            this.directoryForResXFiles = Path.GetFullPath(directoryForResXFiles);
             this.targetFiles = new Dictionary<CultureInfo, ResXFileDataWriter>();
             this.streams = new HashSet<Stream>();
         }
@@ -54,7 +53,10 @@ namespace Hydra.Import.Data
                     this.streams.Add(stream);
                 }
 
-                writer.Write(new[] { ri });
+                if (writer != null)
+                {
+                    writer.Write(new[] { ri });
+                }
             }
 
             return new ImportFailed();

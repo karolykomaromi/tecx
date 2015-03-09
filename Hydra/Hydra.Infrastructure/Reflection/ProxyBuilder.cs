@@ -69,12 +69,16 @@ namespace Hydra.Infrastructure.Reflection
 
         protected static void CallParameterlessCtorOfObject(ILGenerator il)
         {
+            System.Diagnostics.Contracts.Contract.Requires(il != null);
+
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Call, Constants.Constructors.Object);
         }
 
         protected static void StoreCtorParameterInField(ILGenerator il, int idx, FieldBuilder field)
         {
+            System.Diagnostics.Contracts.Contract.Requires(il != null);
+
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ldarg, idx);
             il.Emit(OpCodes.Stfld, field);
@@ -82,6 +86,8 @@ namespace Hydra.Infrastructure.Reflection
 
         protected static void PutPropertyValueOnStackAndReturn(ILGenerator il)
         {
+            System.Diagnostics.Contracts.Contract.Requires(il != null);
+
             Label ret = il.DefineLabel();
             il.Emit(OpCodes.Stloc_0);
             il.Emit(OpCodes.Br_S, ret);
@@ -92,6 +98,8 @@ namespace Hydra.Infrastructure.Reflection
 
         protected static bool MethodHasReturnValue(MethodInfo method)
         {
+            System.Diagnostics.Contracts.Contract.Requires(method != null);
+
             return method.ReturnType != typeof(void);
         }
 
@@ -123,6 +131,9 @@ namespace Hydra.Infrastructure.Reflection
 
         protected virtual MethodBuilder DefineMethod(TypeBuilder typeBuilder, MethodInfo methodOnContract, Type[] parameterTypes)
         {
+            System.Diagnostics.Contracts.Contract.Requires(typeBuilder != null);
+            System.Diagnostics.Contracts.Contract.Requires(methodOnContract != null);
+
             string name = this.GetMethodName(methodOnContract);
 
             MethodBuilder methodBuilder = typeBuilder.DefineMethod(
@@ -136,11 +147,16 @@ namespace Hydra.Infrastructure.Reflection
 
         protected virtual string GetMethodName(MethodInfo methodOnContract)
         {
+            System.Diagnostics.Contracts.Contract.Requires(methodOnContract != null);
+
             return this.Contract.FullName + "." + methodOnContract.Name;
         }
 
         protected virtual MethodBuilder DefineGetMethod(TypeBuilder typeBuilder, MethodInfo getterOnContract, Type propertyType)
         {
+            System.Diagnostics.Contracts.Contract.Requires(typeBuilder != null);
+            System.Diagnostics.Contracts.Contract.Requires(getterOnContract != null);
+
             string name = this.GetGetMethodName(getterOnContract);
 
             MethodBuilder getMethod = typeBuilder.DefineMethod(
@@ -154,11 +170,16 @@ namespace Hydra.Infrastructure.Reflection
 
         protected virtual string GetGetMethodName(MethodInfo getterOnContract)
         {
+            System.Diagnostics.Contracts.Contract.Requires(getterOnContract != null);
+
             return this.Contract.FullName + "." + getterOnContract.Name;
         }
 
         protected virtual MethodBuilder DefineSetMethod(TypeBuilder typeBuilder, MethodInfo setterOnContract, Type propertyType)
         {
+            System.Diagnostics.Contracts.Contract.Requires(typeBuilder != null);
+            System.Diagnostics.Contracts.Contract.Requires(setterOnContract != null);
+
             string name = this.GetSetMethodName(setterOnContract);
 
             MethodBuilder setMethod = typeBuilder.DefineMethod(
@@ -172,6 +193,8 @@ namespace Hydra.Infrastructure.Reflection
 
         protected virtual string GetSetMethodName(MethodInfo setterOnContract)
         {
+            System.Diagnostics.Contracts.Contract.Requires(setterOnContract != null);
+
             return this.Contract.FullName + "." + setterOnContract.Name;
         }
 
@@ -229,9 +252,9 @@ namespace Hydra.Infrastructure.Reflection
                     propertyType,
                     Type.EmptyTypes);
 
-                PropertyInfo propertyOnAdaptee = this.Target.GetProperty(propertyOnContract.Name, BindingFlags.Instance | BindingFlags.Public);
+                PropertyInfo propertyOnTarget = this.Target.GetProperty(propertyOnContract.Name, BindingFlags.Instance | BindingFlags.Public);
 
-                if (MemberDoesNotExist(propertyOnAdaptee))
+                if (MemberDoesNotExist(propertyOnTarget))
                 {
                     MethodBuilder notImplementedGetter = this.GenerateNotImplementedGetMethod(ctx.TypeBuilder, getterOnContract, propertyType);
 
@@ -251,9 +274,9 @@ namespace Hydra.Infrastructure.Reflection
                     continue;
                 }
 
-                MethodInfo getterOnTarget = propertyOnAdaptee.GetGetMethod();
+                MethodInfo getterOnTarget = propertyOnTarget.GetGetMethod();
 
-                MethodInfo setterOnTarget = propertyOnAdaptee.GetSetMethod();
+                MethodInfo setterOnTarget = propertyOnTarget.GetSetMethod();
 
                 MethodBuilder getter = this.GenerateGetMethod(ctx, getterOnContract, getterOnTarget, propertyType);
 
@@ -274,6 +297,8 @@ namespace Hydra.Infrastructure.Reflection
 
         protected virtual MethodBuilder GenerateGetMethod(TBuilderContext ctx, MethodInfo getterOnContract, MethodInfo getterOnTarget, Type propertyType)
         {
+            System.Diagnostics.Contracts.Contract.Requires(getterOnContract != null);
+
             MethodBuilder getMethod = this.DefineGetMethod(ctx.TypeBuilder, getterOnContract, propertyType);
 
             ILGenerator il = getMethod.GetILGenerator();
@@ -306,6 +331,9 @@ namespace Hydra.Infrastructure.Reflection
 
         protected virtual MethodBuilder GenerateNotImplementedGetMethod(TypeBuilder typeBuilder, MethodInfo getterOnContract, Type propertyType)
         {
+            System.Diagnostics.Contracts.Contract.Requires(typeBuilder != null);
+            System.Diagnostics.Contracts.Contract.Requires(getterOnContract != null);
+
             MethodBuilder getMethod = this.DefineGetMethod(typeBuilder, getterOnContract, propertyType);
 
             ILGenerator il = getMethod.GetILGenerator();
@@ -317,6 +345,8 @@ namespace Hydra.Infrastructure.Reflection
 
         protected virtual MethodBuilder GenerateSetMethod(TBuilderContext ctx, MethodInfo setterOnContract, MethodInfo setterOnTarget, Type propertyType)
         {
+            System.Diagnostics.Contracts.Contract.Requires(setterOnContract != null);
+
             MethodBuilder setMethod = this.DefineSetMethod(ctx.TypeBuilder, setterOnContract, propertyType);
 
             ILGenerator il = setMethod.GetILGenerator();
@@ -335,6 +365,9 @@ namespace Hydra.Infrastructure.Reflection
 
         protected virtual MethodBuilder GenerateNotImplementedSetMethod(TypeBuilder typeBuilder, MethodInfo setterOnContract, Type propertyType)
         {
+            System.Diagnostics.Contracts.Contract.Requires(typeBuilder != null);
+            System.Diagnostics.Contracts.Contract.Requires(setterOnContract != null);
+
             MethodBuilder setMethod = this.DefineSetMethod(typeBuilder, setterOnContract, propertyType);
 
             ILGenerator il = setMethod.GetILGenerator();
@@ -346,6 +379,10 @@ namespace Hydra.Infrastructure.Reflection
 
         protected virtual void CallMethodOnTarget(ILGenerator il, TBuilderContext ctx, MethodInfo methodOnTarget, MethodInfo methodOnContract, ICollection<ParameterInfo> parameters)
         {
+            System.Diagnostics.Contracts.Contract.Requires(il != null);
+            System.Diagnostics.Contracts.Contract.Requires(methodOnContract != null);
+            System.Diagnostics.Contracts.Contract.Requires(parameters != null);
+
             if (MethodHasReturnValue(methodOnContract))
             {
                 // prepare a field to store the return value

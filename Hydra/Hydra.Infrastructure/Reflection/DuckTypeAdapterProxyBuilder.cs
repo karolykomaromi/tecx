@@ -15,6 +15,9 @@ namespace Hydra.Infrastructure.Reflection
         public DuckTypeAdapterProxyBuilder(ModuleBuilder moduleBuilder, Type contract, Type target)
             : base(moduleBuilder, contract, target)
         {
+            System.Diagnostics.Contracts.Contract.Requires(moduleBuilder != null);
+            System.Diagnostics.Contracts.Contract.Requires(contract != null);
+            System.Diagnostics.Contracts.Contract.Requires(target != null);
         }
         
         protected override string GetTypeName()

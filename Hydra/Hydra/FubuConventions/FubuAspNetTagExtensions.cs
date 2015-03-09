@@ -1,6 +1,7 @@
 namespace Hydra.FubuConventions
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Web.Mvc;
@@ -14,6 +15,8 @@ namespace Hydra.FubuConventions
         public static HtmlTag Input<T>(this HtmlHelper<T> helper, Expression<Func<T, object>> expression)
             where T : class
         {
+            Contract.Requires(helper != null);
+
             var generator = FubuAspNetTagExtensions.GetGenerator<T>();
 
             return generator.InputFor(expression, model: helper.ViewData.Model);
@@ -22,6 +25,8 @@ namespace Hydra.FubuConventions
         public static HtmlTag Label<T>(this HtmlHelper<T> helper, Expression<Func<T, object>> expression)
             where T : class
         {
+            Contract.Requires(helper != null);
+
             var generator = FubuAspNetTagExtensions.GetGenerator<T>();
 
             return generator.LabelFor(expression, model: helper.ViewData.Model);
@@ -30,6 +35,8 @@ namespace Hydra.FubuConventions
         public static HtmlTag Display<T>(this HtmlHelper<T> helper, Expression<Func<T, object>> expression)
             where T : class
         {
+            Contract.Requires(helper != null);
+
             var generator = FubuAspNetTagExtensions.GetGenerator<T>();
 
             return generator.DisplayFor(expression, model: helper.ViewData.Model);
@@ -38,6 +45,8 @@ namespace Hydra.FubuConventions
         public static HtmlTag Validator<T>(this HtmlHelper<T> helper, Expression<Func<T, object>> expression)
             where T : class
         {
+            Contract.Requires(helper != null);
+
             //// MVC code don't ask me I just copied
             string expressionText = ExpressionHelper.GetExpressionText(expression);
 
@@ -82,6 +91,8 @@ namespace Hydra.FubuConventions
         public static HtmlTag InputBlock<T>(this HtmlHelper<T> helper, Expression<Func<T, object>> expression, Action<HtmlTag> inputModifier = null, Action<HtmlTag> validatorModifier = null) 
             where T : class
         {
+            Contract.Requires(helper != null);
+
             inputModifier = inputModifier ?? (_ => { });
             validatorModifier = validatorModifier ?? (_ => { });
 
@@ -109,6 +120,8 @@ namespace Hydra.FubuConventions
             Action<HtmlTag> validatorModifier = null)
             where T : class
         {
+            Contract.Requires(helper != null);
+
             labelModifier = labelModifier ?? (_ => { });
             inputBlockModifier = inputBlockModifier ?? (_ => { });
 
@@ -133,6 +146,8 @@ namespace Hydra.FubuConventions
 
         public static HtmlTag RemoveClasses(this HtmlTag tag)
         {
+            Contract.Requires(tag != null);
+
             foreach (string className in tag.GetClasses())
             {
                 tag.RemoveClass(className);

@@ -19,6 +19,8 @@
         public static string GetCellValue(Cell cell, SharedStringTable sharedStringTable)
         {
             Contract.Requires(cell != null);
+            Contract.Requires(cell.CellReference != null);
+            Contract.Requires(!string.IsNullOrWhiteSpace(cell.CellReference.Value));
             Contract.Requires(sharedStringTable != null);
 
             string value = cell.InnerText ?? string.Empty;
@@ -54,7 +56,8 @@
         public static string GetColumnName(Cell cell)
         {
             Contract.Requires(cell != null);
-            Contract.Requires(!string.IsNullOrWhiteSpace(cell.CellReference));
+            Contract.Requires(cell.CellReference != null);
+            Contract.Requires(!string.IsNullOrWhiteSpace(cell.CellReference.Value));
             Contract.Ensures(Contract.Result<string>() != null);
 
             return ExcelHelper.GetColumnName(cell.CellReference.Value);
@@ -108,6 +111,7 @@
         {
             Contract.Requires(cell != null);
             Contract.Requires(!string.IsNullOrWhiteSpace(cell.CellReference));
+            Contract.Requires(!string.IsNullOrWhiteSpace(cell.CellReference.Value));
 
             return ExcelHelper.GetColumnIndex(cell.CellReference.Value);
         }

@@ -40,13 +40,14 @@
 
         public override bool FileExists(string virtualPath)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(virtualPath));
-
-            string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualPath);
-
-            if (this.filesByAppRelativePath.ContainsKey(appRelativePath))
+            if (!string.IsNullOrWhiteSpace(virtualPath))
             {
-                return true;
+                string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualPath);
+
+                if (this.filesByAppRelativePath.ContainsKey(appRelativePath))
+                {
+                    return true;
+                }
             }
 
             bool fileExists = base.FileExists(virtualPath);
@@ -56,14 +57,15 @@
 
         public override VirtualFile GetFile(string virtualPath)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(virtualPath));
-
-            string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualPath);
-
-            EmbeddedFile file;
-            if (this.filesByAppRelativePath.TryGetValue(appRelativePath, out file))
+            if (!string.IsNullOrWhiteSpace(virtualPath))
             {
-                return file;
+                string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualPath);
+
+                EmbeddedFile file;
+                if (this.filesByAppRelativePath.TryGetValue(appRelativePath, out file))
+                {
+                    return file;
+                }
             }
 
             VirtualFile virtualFile = base.GetFile(virtualPath);
@@ -73,13 +75,14 @@
 
         public override bool DirectoryExists(string virtualDir)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(virtualDir));
-
-            string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualDir);
-
-            if (this.directoriesByAppRelativePath.ContainsKey(appRelativePath))
+            if (!string.IsNullOrWhiteSpace(virtualDir))
             {
-                return true;
+                string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualDir);
+
+                if (this.directoriesByAppRelativePath.ContainsKey(appRelativePath))
+                {
+                    return true;
+                }
             }
 
             bool directoryExists = base.DirectoryExists(virtualDir);
@@ -89,14 +92,15 @@
 
         public override VirtualDirectory GetDirectory(string virtualDir)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(virtualDir));
-
-            string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualDir);
-
-            EmbeddedDirectory dir;
-            if (this.directoriesByAppRelativePath.TryGetValue(appRelativePath, out dir))
+            if (!string.IsNullOrWhiteSpace(virtualDir))
             {
-                return dir;
+                string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualDir);
+
+                EmbeddedDirectory dir;
+                if (this.directoriesByAppRelativePath.TryGetValue(appRelativePath, out dir))
+                {
+                    return dir;
+                }
             }
 
             VirtualDirectory virtualDirectory = base.GetDirectory(virtualDir);
@@ -106,14 +110,15 @@
 
         public override CacheDependency GetCacheDependency(string virtualPath, IEnumerable virtualPathDependencies, DateTime utcStart)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(virtualPath));
-
-            string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualPath);
-
-            if (this.filesByAppRelativePath.ContainsKey(appRelativePath) ||
-                this.directoriesByAppRelativePath.ContainsKey(appRelativePath))
+            if (!string.IsNullOrWhiteSpace(virtualPath))
             {
-                return null;
+                string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualPath);
+
+                if (this.filesByAppRelativePath.ContainsKey(appRelativePath) ||
+                    this.directoriesByAppRelativePath.ContainsKey(appRelativePath))
+                {
+                    return null;
+                }
             }
 
             CacheDependency cacheDependency = base.GetCacheDependency(virtualPath, virtualPathDependencies, utcStart);

@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Reflection;
     using Hydra.Infrastructure.Logging;
@@ -22,6 +23,8 @@
 
         public static bool TryConvert(object o, Type destinationType, CultureInfo culture, out object converted)
         {
+            Contract.Requires(destinationType != null);
+
             if (o != null)
             {
                 if (destinationType.IsInstanceOfType(o))
@@ -87,6 +90,8 @@
 
         public static object Convert(object o, Type destinationType, CultureInfo culture)
         {
+            Contract.Requires(destinationType != null);
+
             object converted;
             if (!ConvertHelper.TryConvert(o, destinationType, culture, out converted))
             {
@@ -99,11 +104,15 @@
 
         public static bool TryConvertInvariant(object o, Type destinationType, out object converted)
         {
+            Contract.Requires(destinationType != null);
+
             return ConvertHelper.TryConvert(o, destinationType, CultureInfo.InvariantCulture, out converted);
         }
 
         public static object ConvertInvariant(object o, Type destinationType)
         {
+            Contract.Requires(destinationType != null);
+
             return ConvertHelper.Convert(o, destinationType, CultureInfo.InvariantCulture);
         }
 

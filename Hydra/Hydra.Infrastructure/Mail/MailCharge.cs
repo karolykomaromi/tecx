@@ -80,31 +80,32 @@ namespace Hydra.Infrastructure.Mail
 
         public int CompareTo(MailCharge other)
         {
-            Contract.Requires(other != null);
+            if (other == null)
+            {
+                return 1;
+            }
 
             return this.Timestamp.CompareTo(other.Timestamp);
         }
 
         public bool Equals(MailCharge other)
         {
-            Contract.Requires(other != null);
+            if (other == null)
+            {
+                return false;
+            }
+
+            if (object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
 
             return this.Timestamp.Equals(other.Timestamp);
         }
 
         public override bool Equals(object obj)
         {
-            if (object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-
             MailCharge other = obj as MailCharge;
-
-            if (other == null)
-            {
-                return false;
-            }
 
             return this.Equals(other);
         }

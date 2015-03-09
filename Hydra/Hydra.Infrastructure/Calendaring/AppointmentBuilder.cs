@@ -33,8 +33,6 @@
 
         public AppointmentBuilder EndsAt(DateTime end)
         {
-            Contract.Requires(end > this.appointment.StartsAt);
-
             this.appointment.EndsAt = end;
 
             return this;
@@ -78,6 +76,8 @@
 
         public AppointmentBuilder WithReminder(Action<ReminderBuilder> action)
         {
+            Contract.Requires(action != null);
+
             ReminderBuilder builder = new ReminderBuilder();
 
             action(builder);
@@ -89,6 +89,8 @@
 
         public AppointmentBuilder WithAttendee(Action<AttendeeBuilder> action)
         {
+            Contract.Requires(action != null);
+
             AttendeeBuilder builder = new AttendeeBuilder();
 
             action(builder);

@@ -10,12 +10,11 @@ namespace Hydra.Unity.Tracking
         public SomeoneElsesProblem(NamedTypeBuildKey buildKey, BuildTreeItemNode parentNode = null)
             : base(buildKey, parentNode)
         {
+            Contract.Requires(buildKey != null);
         }
 
         public override void Accept(ITreeItemVisitor visitor)
         {
-            Contract.Requires(visitor != null);
-
             visitor.Visit(this);
         }
     }

@@ -1,6 +1,7 @@
 ﻿namespace Hydra.Infrastructure.Calendaring
 {
     using System;
+    using System.Diagnostics.Contracts;
 
     public class TriggerBuilder : Builder<Trigger>
     {
@@ -13,6 +14,8 @@
 
         public TriggerBuilder FromDuration(Action<DurationBuilder> action)
         {
+            Contract.Requires(action != null);
+
             DurationBuilder builder = new DurationBuilder();
 
             action(builder);
