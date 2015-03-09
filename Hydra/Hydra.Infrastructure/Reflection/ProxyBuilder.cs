@@ -221,7 +221,7 @@ namespace Hydra.Infrastructure.Reflection
 
                 ILGenerator il = methodBuilder.GetILGenerator();
 
-                if (MemberDoesNotExist(targetMethodOnAdaptee))
+                if (MethodDoesNotExist(targetMethodOnAdaptee))
                 {
                     ThrowNotImplementedException(il);
                 }
@@ -242,55 +242,58 @@ namespace Hydra.Infrastructure.Reflection
             {
                 Type propertyType = propertyOnContract.PropertyType;
 
-                MethodInfo getterOnContract = propertyOnContract.GetGetMethod();
-
-                MethodInfo setterOnContract = propertyOnContract.GetSetMethod();
-
-                PropertyBuilder propertyBuilder = ctx.TypeBuilder.DefineProperty(
+                PropertyBuilder propertyOnProxy = ctx.TypeBuilder.DefineProperty(
                     propertyOnContract.Name,
                     PropertyAttributes.None,
                     propertyType,
                     Type.EmptyTypes);
 
-                PropertyInfo propertyOnTarget = this.Target.GetProperty(propertyOnContract.Name, BindingFlags.Instance | BindingFlags.Public);
+                MethodInfo getterOnContract = propertyOnContract.GetGetMethod();
 
-                if (MemberDoesNotExist(propertyOnTarget))
+                if (getterOnContract != null)
                 {
-                    MethodBuilder notImplementedGetter = this.GenerateNotImplementedGetMethod(ctx.TypeBuilder, getterOnContract, propertyType);
+                    MethodInfo getterOnTarget = this.Target.GetMethod(getterOnContract.Name);
 
-                    propertyBuilder.SetGetMethod(notImplementedGetter);
+                    if (getterOnTarget == null)
+                    {
+                        MethodBuilder notImplementedGetter = this.GenerateNotImplementedGetMethod(ctx.TypeBuilder, getterOnContract, propertyType);
 
-                    ctx.TypeBuilder.DefineMethodOverride(notImplementedGetter, getterOnContract);
+                        propertyOnProxy.SetGetMethod(notImplementedGetter);
 
-                    if (PropertyIsPubliclyWritable(setterOnContract))
+                        ctx.TypeBuilder.DefineMethodOverride(notImplementedGetter, getterOnContract);
+                    }
+                    else
+                    {
+                        MethodBuilder getter = this.GenerateGetMethod(ctx, getterOnContract, getterOnTarget, propertyType);
+
+                        propertyOnProxy.SetGetMethod(getter);
+
+                        ctx.TypeBuilder.DefineMethodOverride(getter, getterOnContract);
+                    }
+                }
+
+                MethodInfo setterOnContract = propertyOnContract.GetSetMethod();
+
+                if (setterOnContract != null)
+                {
+                    MethodInfo setterOnTarget = this.Target.GetMethod(setterOnContract.Name);
+
+                    if (setterOnTarget == null)
                     {
                         MethodBuilder notImplementedSetter = this.GenerateNotImplementedSetMethod(ctx.TypeBuilder, setterOnContract, propertyType);
 
-                        propertyBuilder.SetSetMethod(notImplementedSetter);
+                        propertyOnProxy.SetSetMethod(notImplementedSetter);
 
                         ctx.TypeBuilder.DefineMethodOverride(notImplementedSetter, setterOnContract);
                     }
+                    else
+                    {
+                        MethodBuilder setter = this.GenerateSetMethod(ctx, setterOnContract, setterOnTarget, propertyType);
 
-                    continue;
-                }
+                        propertyOnProxy.SetSetMethod(setter);
 
-                MethodInfo getterOnTarget = propertyOnTarget.GetGetMethod();
-
-                MethodInfo setterOnTarget = propertyOnTarget.GetSetMethod();
-
-                MethodBuilder getter = this.GenerateGetMethod(ctx, getterOnContract, getterOnTarget, propertyType);
-
-                propertyBuilder.SetGetMethod(getter);
-
-                ctx.TypeBuilder.DefineMethodOverride(getter, getterOnContract);
-
-                if (PropertyIsPubliclyWritable(setterOnContract))
-                {
-                    MethodBuilder setter = this.GenerateSetMethod(ctx, setterOnContract, setterOnTarget, propertyType);
-
-                    propertyBuilder.SetSetMethod(setter);
-
-                    ctx.TypeBuilder.DefineMethodOverride(setter, setterOnContract);
+                        ctx.TypeBuilder.DefineMethodOverride(setter, setterOnContract);
+                    }
                 }
             }
         }
@@ -428,7 +431,7 @@ namespace Hydra.Infrastructure.Reflection
             il.Emit(OpCodes.Throw);
         }
 
-        private static bool MemberDoesNotExist(MemberInfo member)
+        private static bool MethodDoesNotExist(MemberInfo member)
         {
             return member == null;
         }
@@ -437,11 +440,6 @@ namespace Hydra.Infrastructure.Reflection
         {
             return !method.Name.StartsWith(Constants.Names.GetterPrefix, StringComparison.OrdinalIgnoreCase) &&
                    !method.Name.StartsWith(Constants.Names.SetterPrefix, StringComparison.OrdinalIgnoreCase);
-        }
-
-        private static bool PropertyIsPubliclyWritable(MethodInfo setterOnContract)
-        {
-            return setterOnContract != null;
         }
     }
 }
