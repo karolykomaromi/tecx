@@ -60,7 +60,8 @@
                 new ConstructorMustNotHaveMoreThanFourParameters(this),
                 new MethodMustNotHaveMoreThanFourParameters(this),
                 new IncorrectRethrow(this),
-                new AsyncMethodsMustReturnTask(this));
+                new AsyncMethodsMustReturnTask(this),
+                new DontDeclareSetOnlyProperties(this));
 
             IStatementVisitor statementVisitor = StatementVisitor.Null;
 

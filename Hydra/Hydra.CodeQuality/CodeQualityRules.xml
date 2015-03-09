@@ -18,6 +18,9 @@
             <Rule Name="AsyncMethodsMustReturnTask" CheckId="HD1004">
                 <Context>The method '{0}' is asynchronous but does not return an awaitable. Make it return 'System.Threading.Tasks.Task'.</Context>
             </Rule>
+            <Rule Name="DontDeclareSetOnlyProperties" CheckId="HD1005">
+                <Context>Do not declare set-only properties. Either add a getter or switch to a dedicated set-method ('{0} void Set{1}({2})').</Context>
+            </Rule>
         </RuleGroup>
     </Rules>
 </SourceAnalyzer>

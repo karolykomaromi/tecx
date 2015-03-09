@@ -59,6 +59,7 @@
     <Compile Include="Rules\CompositeTokenVisitor.cs" />
     <Compile Include="Rules\CompositeExpressionVisitor.cs" />
     <Compile Include="Rules\ConstructorMustNotHaveMoreThanFourParameters.cs" />
+    <Compile Include="Rules\DontDeclareSetOnlyProperties.cs" />
     <Compile Include="Rules\ElementVisitor.cs" />
     <Compile Include="Rules\IQueryClauseVisitor.cs" />
     <Compile Include="Rules\IStatementVisitor.cs" />
