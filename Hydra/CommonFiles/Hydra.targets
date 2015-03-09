@@ -1,7 +1,4 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <UsingTask 
-    AssemblyFile="$(MSBuildProjectDirectory)\..\packages\MSBuild.Extension.Pack.1.5.0\tools\net40\MSBuild.ExtensionPack.dll"
-    TaskName="MSBuild.ExtensionPack.Framework.AssemblyInfo"/>
   <PropertyGroup>
     <TransformOnBuild>true</TransformOnBuild>
   </PropertyGroup>
@@ -9,17 +6,4 @@
     <T4ReferencePath Include="$(MSBuildProjectDirectory)\..\libs\Hydra.TextTemplating" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v11.0\TextTemplating\Microsoft.TextTemplating.targets" />
-  <ItemGroup>
-    <AssemblyInfoFiles Include="$(MSBuildProjectDirectory)\..\CommonFiles\GlobalAssemblyVersion.cs" />
-  </ItemGroup>
-  <!-- Whenever we build the Hydra project we increase the AssemblyVersion and AssemblyFileVersion in the GlobalAssemblyInfo.cs file -->
-  <Target Name="IncrementAssemblyVersion" BeforeTargets="Build" Condition="'$(MSBuildProjectName)' == 'Hydra'">
-    <AssemblyInfo
-      AssemblyInfoFiles="@(AssemblyInfoFiles)"
-      AssemblyBuildNumberType="YearWeekDay"
-      AssemblyRevisionType="AutoIncrement"
-      AssemblyFileBuildNumberType="YearWeekDay"
-      AssemblyFileRevisionType="AutoIncrement"
-      FirstDayOfWeek="Monday" />
-  </Target>
 </Project>

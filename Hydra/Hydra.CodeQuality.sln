@@ -6,6 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CommonFiles\GlobalAssemblyVersion.cs = CommonFiles\GlobalAssemblyVersion.cs
 		Hydra.CodeQuality.msbuild = Hydra.CodeQuality.msbuild
 		CommonFiles\Hydra.targets = CommonFiles\Hydra.targets
+		CommonFiles\Hydra.Versioning.targets = CommonFiles\Hydra.Versioning.targets
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.CodeQuality", "Hydra.CodeQuality\Hydra.CodeQuality.csproj", "{0090C9D6-998B-4375-ADF1-60CC4F590A6B}"
