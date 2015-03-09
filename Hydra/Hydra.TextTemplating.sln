@@ -6,6 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CommonFiles\GlobalAssemblyVersion.cs = CommonFiles\GlobalAssemblyVersion.cs
 		CommonFiles\Hydra.targets = CommonFiles\Hydra.targets
 		Hydra.TextTemplating.msbuild = Hydra.TextTemplating.msbuild
+		CommonFiles\Hydra.Versioning.targets = CommonFiles\Hydra.Versioning.targets
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.TextTemplating", "Hydra.TextTemplating\Hydra.TextTemplating.csproj", "{D3513536-9ED4-42EF-BE4E-23AA69DA894F}"
