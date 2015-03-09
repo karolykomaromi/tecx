@@ -29,6 +29,11 @@ namespace Hydra.CodeQuality.Test
             public const string ReturnsDefaultInt = "Hydra.CodeQuality.Test.TestFiles.ReturnsDefaultInt.cs";
 
             /// <summary>
+            /// Hydra.CodeQuality.Test.TestFiles.SetOnlyProperty.cs
+            /// </summary>
+            public const string SetOnlyProperty = "Hydra.CodeQuality.Test.TestFiles.SetOnlyProperty.cs";
+
+            /// <summary>
             /// Hydra.CodeQuality.Test.TestFiles.TooManyConstructorArguments.cs
             /// </summary>
             public const string TooManyConstructorArguments = "Hydra.CodeQuality.Test.TestFiles.TooManyConstructorArguments.cs";

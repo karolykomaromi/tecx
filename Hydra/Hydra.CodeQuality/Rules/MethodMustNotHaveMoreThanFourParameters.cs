@@ -1,6 +1,5 @@
 namespace Hydra.CodeQuality.Rules
 {
-    using System.Linq;
     using StyleCop;
     using StyleCop.CSharp;
 
