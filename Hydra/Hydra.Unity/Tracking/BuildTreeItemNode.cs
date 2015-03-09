@@ -2,9 +2,11 @@ namespace Hydra.Unity.Tracking
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
     using Microsoft.Practices.ObjectBuilder2;
 
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Second class contains contracts.")]
     [ContractClass(typeof(BuildTreeItemNodeContract))]
     public abstract class BuildTreeItemNode : IDisposable
     {

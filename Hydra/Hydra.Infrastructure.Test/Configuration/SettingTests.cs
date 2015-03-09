@@ -8,8 +8,7 @@
         [Fact]
         public void Should_Equal_When_Names_And_Values_Are_Equal()
         {
-            SettingName sn;
-            Assert.True(SettingName.TryParse("Hydra.Foo", out sn));
+            SettingName sn = KnownSettingNames.Hydra.Infrastructure.Configuration.Test;
 
             Setting s1 = new Setting(sn, 1);
             Setting s2 = new Setting(sn, 1);
