@@ -42,6 +42,11 @@ namespace Hydra.Infrastructure
                 return EmptyDictionary(type);
             }
 
+            if (IsGenericStack(type))
+            {
+                return EmptyStack(type);
+            }
+
             if (IsGenericCollectionInterface(type))
             {
                 Type genericArgument = type.GetGenericArguments()[0];
@@ -106,6 +111,21 @@ namespace Hydra.Infrastructure
             return null;
         }
 
+        private static Func<object> EmptyStack(Type type)
+        {
+            ConstructorInfo ctor = type.GetConstructor(Type.EmptyTypes);
+
+            NewExpression @new = Expression.New(ctor);
+
+            UnaryExpression cast = Expression.Convert(@new, typeof(object));
+
+            var lambda = Expression.Lambda<Func<object>>(cast);
+
+            Func<object> factory = lambda.Compile();
+
+            return factory;
+        }
+
         private static Func<object> EmptyDictionary(Type type)
         {
             Type[] genericArguments = type.GetGenericArguments();
@@ -122,13 +142,6 @@ namespace Hydra.Infrastructure
             Func<object> factory = lambda.Compile();
 
             return factory;
-        }
-
-        private static bool IsGenericDictionaryOrInterface(Type type)
-        {
-            return type.IsGenericType &&
-                   (type.GetGenericTypeDefinition() == typeof(Dictionary<,>) ||
-                    type.GetGenericTypeDefinition() == typeof(IDictionary<,>));
         }
 
         private static Func<object> EmptyList(Type type)
@@ -177,6 +190,13 @@ namespace Hydra.Infrastructure
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>);
         }
 
+        private static bool IsGenericDictionaryOrInterface(Type type)
+        {
+            return type.IsGenericType &&
+                   (type.GetGenericTypeDefinition() == typeof(Dictionary<,>) ||
+                    type.GetGenericTypeDefinition() == typeof(IDictionary<,>));
+        }
+
         private static bool IsGenericCollectionInterface(Type type)
         {
             return type.IsGenericType &&
@@ -190,6 +210,11 @@ namespace Hydra.Infrastructure
             return type == typeof(IList) ||
                    type == typeof(ICollection) ||
                    type == typeof(IEnumerable);
+        }
+
+        private static bool IsGenericStack(Type type)
+        {
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Stack<>);
         }
     }
 }
