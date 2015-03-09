@@ -126,4 +126,10 @@
   <data name="HttpContextNotFound" xml:space="preserve">
     <value>HttpContext not found.</value>
   </data>
+  <data name="InstanceAlreadyAssigned" xml:space="preserve">
+    <value>Instance is already assigned.</value>
+  </data>
+  <data name="InstanceNotDisposable" xml:space="preserve">
+    <value>Instance does not implement 'System.IDisposable'. Only disposable instances are allowed for this type of node.</value>
+  </data>
 </root>

@@ -55,6 +55,8 @@
 
         public void Accept(EmbeddedVisitor visitor)
         {
+            Contract.Requires(visitor != null);
+
             visitor.Visit(this);
         }
 

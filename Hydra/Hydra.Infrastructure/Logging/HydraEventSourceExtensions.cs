@@ -60,6 +60,7 @@
         public static void PropertyNotFound(this HydraEventSource log, Type type, string propertyName)
         {
             Contract.Requires(log != null);
+            Contract.Requires(type != null);
 
             log.PropertyNotFound(type.AssemblyQualifiedName, propertyName);
         }
@@ -67,6 +68,7 @@
         public static void CultureChanged(this HydraEventSource log, CultureInfo culture)
         {
             Contract.Requires(log != null);
+            Contract.Requires(culture != null);
 
             log.CultureChanged(culture.ToString());
         }

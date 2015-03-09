@@ -46,6 +46,8 @@ namespace Hydra.Infrastructure.I18n
 
         public static void ApplyUserCulture(NameValueCollection headers, HttpCookieCollection cookies)
         {
+            Contract.Requires(cookies != null);
+
             CultureInfo culture = GetPreferredCulture(cookies)
                 ?? GetUserCulture(headers)
                 ?? SupportedCulturesProvider.SupportedCultures[0];

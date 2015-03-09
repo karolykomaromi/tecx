@@ -40,7 +40,10 @@
 
         public int CompareTo(Setting other)
         {
-            Contract.Requires(other != null);
+            if (other == null)
+            {
+                return 1;
+            }
 
             return this.Name.CompareTo(other.Name);
         }

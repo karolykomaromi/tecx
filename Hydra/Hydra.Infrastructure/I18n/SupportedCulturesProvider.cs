@@ -30,7 +30,7 @@ namespace Hydra.Infrastructure.I18n
 
         protected internal virtual IReadOnlyList<CultureInfo> GetSupportedCultures()
         {
-            Contract.Ensures(Contract.Result<CultureInfo[]>() != null);
+            Contract.Ensures(Contract.Result<IReadOnlyList<CultureInfo>>() != null);
 
             return new CultureInfo[0];
         }

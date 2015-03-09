@@ -1,6 +1,7 @@
 ﻿namespace Hydra.Infrastructure
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Linq;
 
     public abstract class Flags<T> : Enumeration<T> where T : Flags<T>
@@ -8,6 +9,7 @@
         protected Flags(string name, int sortKey)
             : base(name, sortKey)
         {
+            Contract.Requires(sortKey >= 0);
         }
 
         public override int Value

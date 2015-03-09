@@ -21,7 +21,6 @@ namespace Hydra.Import.Data
 
         public override ImportResult Write(IEnumerable<T> items)
         {
-            Contract.Requires(items != null);
             Contract.Ensures(Contract.Result<ImportResult>() != null);
 
             try

@@ -13,6 +13,7 @@ namespace Hydra.Unity.Tracking
         public DisposableItemNode(NamedTypeBuildKey buildKey, BuildTreeItemNode parentNode = null)
             : base(buildKey, parentNode)
         {
+            Contract.Requires(buildKey != null);
         }
 
         public override object Item
@@ -22,12 +23,14 @@ namespace Hydra.Unity.Tracking
 
         public override void AssignInstance(object instance)
         {
-            Contract.Requires(instance != null);
-            Contract.Requires(instance is IDisposable);
+            if (!(instance is IDisposable))
+            {
+                throw new ArgumentException(Properties.Resources.InstanceNotDisposable, "instance");
+            }
 
             if (this.item != null)
             {
-                throw new InvalidOperationException("Instance already assigned");
+                throw new InvalidOperationException(Properties.Resources.InstanceAlreadyAssigned);
             }
 
             this.item = instance;
@@ -35,8 +38,6 @@ namespace Hydra.Unity.Tracking
 
         public override void Accept(ITreeItemVisitor visitor)
         {
-            Contract.Requires(visitor != null);
-
             visitor.Visit(this);
         }
 

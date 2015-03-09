@@ -78,7 +78,10 @@
 
         public int CompareTo(SettingName other)
         {
-            Contract.Requires(other != null);
+            if (other == null)
+            {
+                return 1;
+            }
 
             return string.Compare(this.FullName, other.FullName, StringComparison.Ordinal);
         }

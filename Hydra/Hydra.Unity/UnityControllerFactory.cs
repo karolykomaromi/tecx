@@ -28,13 +28,10 @@ namespace Hydra.Unity
 
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
-            Contract.Requires(controllerType != null);
-            Contract.Requires(typeof(IController).IsAssignableFrom(controllerType));
             Contract.Ensures(Contract.Result<IController>() != null);
 
             string url;
-            if (requestContext.HttpContext != null && requestContext.HttpContext.Request != null &&
-                requestContext.HttpContext.Request.Url != null)
+            if (requestContext.HttpContext.Request.Url != null)
             {
                 url = requestContext.HttpContext.Request.Url.ToString();
             }

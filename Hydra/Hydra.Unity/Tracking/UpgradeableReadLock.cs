@@ -1,6 +1,7 @@
 namespace Hydra.Unity.Tracking
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Threading;
 
     public class UpgradeableReadLock : IDisposable
@@ -12,6 +13,7 @@ namespace Hydra.Unity.Tracking
         public UpgradeableReadLock(ReaderWriterLockSlim rws, int timeoutInMilliseconds = 500)
             : this(rws, TimeSpan.FromMilliseconds(timeoutInMilliseconds))
         {
+            Contract.Requires(rws != null);
         }
 
         private UpgradeableReadLock(ReaderWriterLockSlim rws, TimeSpan timeout)

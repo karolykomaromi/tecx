@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using Microsoft.Practices.Unity;
     using NHibernate.Bytecode;
@@ -18,6 +19,8 @@
 
         public UnityBytecodeProvider(IUnityContainer container, IProxyFactoryFactory proxyFactoryFactory, ICollectionTypeFactory collectionTypeFactory)
         {
+            Contract.Requires(container != null);
+
             this.container = container;
             this.proxyFactoryFactory = proxyFactoryFactory;
             this.collectionTypeFactory = collectionTypeFactory;

@@ -76,7 +76,9 @@
         public static EmbeddedDirectory Merge(EmbeddedDirectory dir1, EmbeddedDirectory dir2)
         {
             Contract.Requires(dir1 != null);
+            Contract.Requires(!string.IsNullOrWhiteSpace(dir1.AppRelativePath));
             Contract.Requires(dir2 != null);
+            Contract.Requires(!string.IsNullOrWhiteSpace(dir2.AppRelativePath));
             Contract.Ensures(Contract.Result<EmbeddedDirectory>() != null);
 
             if (!string.Equals(dir1.AppRelativePath, dir2.AppRelativePath, StringComparison.OrdinalIgnoreCase))
@@ -127,6 +129,8 @@
 
         public void Accept(EmbeddedVisitor visitor)
         {
+            Contract.Requires(visitor != null);
+
             visitor.Visit(this);
 
             foreach (var directory in this.directories)

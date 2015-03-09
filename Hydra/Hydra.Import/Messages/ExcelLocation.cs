@@ -11,6 +11,7 @@ namespace Hydra.Import.Messages
         public ExcelLocation(string sheetName, string cellReference)
             : this(sheetName, ExcelHelper.GetColumnName(cellReference), ExcelHelper.GetRowIndex(cellReference))
         {
+            Contract.Requires(!string.IsNullOrWhiteSpace(sheetName));
         }
 
         public ExcelLocation(string sheetName, string columnName, uint rowIndex)

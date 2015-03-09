@@ -24,8 +24,6 @@ namespace Hydra.Infrastructure.ServiceModel
 
         Type IDataContractSurrogate.GetDataContractType(Type type)
         {
-            Contract.Requires(type != null);
-
             if (typeof(IEnumeration).IsAssignableFrom(type))
             {
                 Type enumType;
@@ -40,8 +38,6 @@ namespace Hydra.Infrastructure.ServiceModel
 
         object IDataContractSurrogate.GetObjectToSerialize(object obj, Type targetType)
         {
-            Contract.Requires(targetType != null);
-
             IEnumeration enumeration = obj as IEnumeration;
             if (enumeration != null)
             {
@@ -57,9 +53,6 @@ namespace Hydra.Infrastructure.ServiceModel
 
         object IDataContractSurrogate.GetDeserializedObject(object obj, Type targetType)
         {
-            Contract.Requires(obj != null);
-            Contract.Requires(targetType != null);
-
             Type objType = obj.GetType();
 
             if (this.Generator.IsGeneratedEnum(objType) && typeof(IEnumeration).IsAssignableFrom(targetType))

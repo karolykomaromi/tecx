@@ -22,9 +22,12 @@
 
             idx = path.LastIndexOf("/", StringComparison.Ordinal);
 
-            path = path.Remove(idx, 1);
+            if (idx > 0)
+            {
+                path = path.Remove(idx, 1);
 
-            path = path.Insert(idx, ".");
+                path = path.Insert(idx, ".");
+            }
 
             return path;
         }
@@ -52,7 +55,8 @@
         public static EmbeddedDirectory ToDirectoryStructure(Assembly assembly, string manifestResourceName)
         {
             Contract.Requires(assembly != null);
-            Contract.Requires(!string.IsNullOrEmpty(manifestResourceName));
+            Contract.Requires(!string.IsNullOrWhiteSpace(assembly.GetName().Name));
+            Contract.Requires(!string.IsNullOrWhiteSpace(manifestResourceName));
             Contract.Ensures(Contract.Result<EmbeddedDirectory>() != null);
 
             string assemblyName = assembly.GetName().Name;

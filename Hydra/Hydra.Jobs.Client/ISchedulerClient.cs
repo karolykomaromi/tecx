@@ -6,6 +6,7 @@
     using Hydra.Infrastructure;
     using Constants = Hydra.Jobs.Constants;
 
+    [ContractClass(typeof(SchedulerClientContract))]
     [ServiceContract(Name = Constants.ServiceName, Namespace = Constants.ServiceNamespace)]
     public interface ISchedulerClient
     {

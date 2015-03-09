@@ -38,7 +38,6 @@ namespace Hydra.Infrastructure.I18n
         public static bool TryParse(string s, out MultiLanguageString mls)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(s));
-            Contract.Ensures(mls != null);
 
             try
             {
@@ -79,7 +78,10 @@ namespace Hydra.Infrastructure.I18n
 
         public int CompareTo(MultiLanguageString other)
         {
-            Contract.Requires(other != null);
+            if (other == null)
+            {
+                return 1;
+            }
 
             int compare = string.Compare(this.ToString(), other.ToString(), StringComparison.Ordinal);
 
@@ -171,8 +173,22 @@ namespace Hydra.Infrastructure.I18n
         {
             public int Compare(CultureInfo x, CultureInfo y)
             {
-                Contract.Requires(x != null);
-                Contract.Requires(y != null);
+                // From MSDN: By definition, any object compares greater than null, and two null references compare equal to each other.
+                // https://msdn.microsoft.com/en-us/library/43hc6wht%28v=vs.110%29.aspx
+                if (x == null && y == null)
+                {
+                    return 0;
+                }
+
+                if (x == null)
+                {
+                    return -1;
+                }
+
+                if (y == null)
+                {
+                    return 1;
+                }
 
                 int compare = string.Compare(x.ToString(), y.ToString(), StringComparison.Ordinal);
 
