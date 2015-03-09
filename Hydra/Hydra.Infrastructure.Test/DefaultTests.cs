@@ -81,6 +81,12 @@
             Assert.IsType<Dictionary<string, long>>(Default.Value<IDictionary<string, long>>());
         }
 
+        [Fact]
+        public void Default_Should_Be_Empty_Stack()
+        {
+            Assert.IsType<Stack<string>>(Default.Value<Stack<string>>());
+        }
+
         private class Foo : IFoo
         {
             public static readonly IFoo Empty = new Foo();
