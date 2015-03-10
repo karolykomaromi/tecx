@@ -2,6 +2,7 @@ namespace Hydra.Import.Data
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
     using System.Linq;
     using DocumentFormat.OpenXml.Spreadsheet;
@@ -18,6 +19,7 @@ namespace Hydra.Import.Data
         private readonly ValueWriterCollection writers;
         private readonly IExcelImportSettings settings;
 
+        [SuppressMessage("Hydra.CodeQuality.CodeQualityRules", "HD1000:ConstructorMustNotHaveMoreThanFourParameters", Justification = "Reviewed. Suppression is OK here.")]
         public ExcelDataReader(Worksheet worksheet, string sheetName, SharedStringTable sharedStringTable, ValueWriterCollection writers, IExcelImportSettings settings)
         {
             Contract.Requires(worksheet != null);

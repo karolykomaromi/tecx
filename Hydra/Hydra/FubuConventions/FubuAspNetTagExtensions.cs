@@ -1,6 +1,7 @@
 namespace Hydra.FubuConventions
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Linq.Expressions;
@@ -88,7 +89,11 @@ namespace Hydra.FubuConventions
             return tag;
         }
 
-        public static HtmlTag InputBlock<T>(this HtmlHelper<T> helper, Expression<Func<T, object>> expression, Action<HtmlTag> inputModifier = null, Action<HtmlTag> validatorModifier = null) 
+        public static HtmlTag InputBlock<T>(
+            this HtmlHelper<T> helper, 
+            Expression<Func<T, object>> expression, 
+            Action<HtmlTag> inputModifier = null, 
+            Action<HtmlTag> validatorModifier = null) 
             where T : class
         {
             Contract.Requires(helper != null);
@@ -111,6 +116,7 @@ namespace Hydra.FubuConventions
             return divTag;
         }
 
+        [SuppressMessage("Hydra.CodeQuality.CodeQualityRules", "HD1001:MethodMustNotHaveMoreThanFourParameters", Justification = "Reviewed. Copied from blog post. Leave as is.")]
         public static HtmlTag FormBlock<T>(
             this HtmlHelper<T> helper,
             Expression<Func<T, object>> expression,

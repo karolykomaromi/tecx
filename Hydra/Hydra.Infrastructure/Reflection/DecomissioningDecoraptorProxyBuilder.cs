@@ -2,6 +2,7 @@ namespace Hydra.Infrastructure.Reflection
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Reflection;
     using System.Reflection.Emit;
 
@@ -127,6 +128,7 @@ namespace Hydra.Infrastructure.Reflection
             return targetGetter;
         }
 
+        [SuppressMessage("Hydra.CodeQuality.CodeQualityRules", "HD1001:MethodMustNotHaveMoreThanFourParameters", Justification = "Reviewed. Suppression is OK here.")]
         protected override void CallMethodOnTarget(ILGenerator il, DecomissioningDecoraptorBuilderContext ctx, MethodInfo methodOnTarget, MethodInfo methodOnContract, ICollection<ParameterInfo> parameters)
         {
             il.DeclareLocal(this.Target);
