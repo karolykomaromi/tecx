@@ -2,6 +2,7 @@ namespace Hydra.Jobs.Test
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using Quartz;
     using Quartz.Impl.Matchers;
     using Quartz.Spi;
@@ -35,6 +36,7 @@ namespace Hydra.Jobs.Test
             get { return true; }
         }
 
+        [SuppressMessage("Hydra.CodeQuality.CodeQualityRules", "HD1005:DontDeclareSetOnlyProperties", Justification = "Implementing external API.")]
         public IJobFactory JobFactory
         {
             set { }

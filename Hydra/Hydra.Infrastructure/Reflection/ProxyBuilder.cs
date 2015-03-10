@@ -2,6 +2,7 @@ namespace Hydra.Infrastructure.Reflection
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Reflection;
     using System.Reflection.Emit;
@@ -380,6 +381,7 @@ namespace Hydra.Infrastructure.Reflection
             return setMethod;
         }
 
+        [SuppressMessage("Hydra.CodeQuality.CodeQualityRules", "HD1001:MethodMustNotHaveMoreThanFourParameters", Justification = "Reviewed. Suppression is OK here.")]
         protected virtual void CallMethodOnTarget(ILGenerator il, TBuilderContext ctx, MethodInfo methodOnTarget, MethodInfo methodOnContract, ICollection<ParameterInfo> parameters)
         {
             System.Diagnostics.Contracts.Contract.Requires(il != null);

@@ -48,7 +48,7 @@ namespace Hydra.Unity.Tracking
         public override void PreBuildUp(IBuilderContext context)
         {
             // weberse 2014-09-16 We don't track extension lifecycles. They will be disposed when the container is disposed.
-            if (typeof(UnityContainerExtension).IsAssignableFrom(context.BuildKey.Type))
+            if (WeAreResovlingContainerExtension(context))
             {
                 return;
             }
@@ -82,11 +82,7 @@ namespace Hydra.Unity.Tracking
                 newTreeNode = new NonDisposableItemNode(context.BuildKey, this.CurrentBuildNode);
             }
 
-            if (this.CurrentBuildNode != null)
-            {
-                // This is a child node
-                this.CurrentBuildNode.Children.Add(newTreeNode);
-            }
+            this.AddToBuildTreeIfNecessary(newTreeNode);
 
             this.CurrentBuildNode = newTreeNode;
         }
@@ -94,7 +90,7 @@ namespace Hydra.Unity.Tracking
         public override void PostBuildUp(IBuilderContext context)
         {
             // We don't track extension lifecycles. They will be disposed when the container is disposed.
-            if (AreWeResolvingContainerExtension(context))
+            if (WeAreResolvingContainerExtension(context))
             {
                 return;
             }
@@ -131,10 +127,7 @@ namespace Hydra.Unity.Tracking
 
             BuildTreeItemNode parentNode = this.CurrentBuildNode.Parent;
 
-            if (WeNeedNewTree(parentNode))
-            {
-                this.CreateNewTree();
-            }
+            this.CreateNewBuildTreeIfNecessary(parentNode);
 
             // Move the current node back up to the parent
             // If this is the top level node, this will set the current node back to null
@@ -159,7 +152,7 @@ namespace Hydra.Unity.Tracking
             GC.SuppressFinalize(this);
         }
 
-        private static bool AreWeResolvingContainerExtension(IBuilderContext context)
+        private static bool WeAreResolvingContainerExtension(IBuilderContext context)
         {
             return typeof(UnityContainerExtension).IsAssignableFrom(context.BuildKey.Type);
         }
@@ -199,7 +192,30 @@ namespace Hydra.Unity.Tracking
 
                 context.Policies.Set<ICurrentBuildNodePolicy>(policy, context.BuildKey);
             }
+
             return policy;
+        }
+
+        private static bool WeAreResovlingContainerExtension(IBuilderContext context)
+        {
+            return typeof(UnityContainerExtension).IsAssignableFrom(context.BuildKey.Type);
+        }
+        
+        private void CreateNewBuildTreeIfNecessary(BuildTreeItemNode parentNode)
+        {
+            if (WeNeedNewTree(parentNode))
+            {
+                this.CreateNewTree();
+            }
+        }
+
+        private void AddToBuildTreeIfNecessary(BuildTreeItemNode newTreeNode)
+        {
+            if (this.CurrentBuildNode != null)
+            {
+                // This is a child node
+                this.CurrentBuildNode.Children.Add(newTreeNode);
+            }
         }
 
         private bool IsBuildTreeConstructedOutOfOrder(IBuilderContext context)
