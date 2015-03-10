@@ -430,3 +430,9 @@ Hydra/packages/Unity.3.5.1404.0/lib/wp80/Microsoft.Practices.Unity.RegistrationB
 Hydra/packages/Unity.3.5.1404.0/lib/wp80/Microsoft.Practices.Unity.RegistrationByConvention.dll
 Hydra/packages/Unity.3.5.1404.0/lib/wp80/Microsoft.Practices.Unity.dll
 Hydra/packages/Unity.3.5.1404.0/lib/wp80/Microsoft.Practices.Unity.xml
+Hydra/packages/System.Data.SQLite.Core.1.0.94.0/lib/net20/System.Data.SQLite.dll
+Hydra/packages/System.Data.SQLite.Core.1.0.94.0/lib/net20/System.Data.SQLite.xml
+Hydra/packages/System.Data.SQLite.Core.1.0.94.0/lib/net40/System.Data.SQLite.dll
+Hydra/packages/System.Data.SQLite.Core.1.0.94.0/lib/net40/System.Data.SQLite.xml
+Hydra/packages/System.Data.SQLite.Core.1.0.94.0/lib/net45/System.Data.SQLite.dll
+Hydra/packages/System.Data.SQLite.Core.1.0.94.0/lib/net45/System.Data.SQLite.xml
