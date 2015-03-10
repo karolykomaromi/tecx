@@ -13,7 +13,6 @@ namespace Hydra.Infrastructure.Mail
         public FileMailSink(DirectoryInfo sentMailFolder)
         {
             Contract.Requires(sentMailFolder != null);
-            Contract.Requires(sentMailFolder.Exists);
 
             this.sentMailFolder = sentMailFolder;
         }

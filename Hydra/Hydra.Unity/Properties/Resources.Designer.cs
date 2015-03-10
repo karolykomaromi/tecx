@@ -56,6 +56,11 @@ namespace Hydra.Unity.Properties
             }
         }
 
+        public static string BuildTreeConstructedOutOfOrder
+        {
+            get { return Resources.ResourceManager.GetString("BuildTreeConstructedOutOfOrder", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string ContainerConfigurationMustNotBeAltered
         {
             get { return Resources.ResourceManager.GetString("ContainerConfigurationMustNotBeAltered", resourceCulture ?? CultureInfo.CurrentUICulture); }

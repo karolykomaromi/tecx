@@ -7,10 +7,10 @@
     using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
 
-    public class CollectionResolutionStrategy : BuilderStrategy
+    public class CollectionSupportStrategy : BuilderStrategy
     {
         private static readonly MethodInfo GenericResolveCollectionMethod = 
-            typeof(CollectionResolutionStrategy).GetMethod("ResolveCollection", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly);
+            typeof(CollectionSupportStrategy).GetMethod("ResolveCollection", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly);
 
         private delegate object CollectionResolver(IBuilderContext context);
 
@@ -30,7 +30,7 @@
                 {
                     Type elementType = typeToBuild.GetGenericArguments()[0];
 
-                    MethodInfo resolverMethod = CollectionResolutionStrategy.GenericResolveCollectionMethod.MakeGenericMethod(elementType);
+                    MethodInfo resolverMethod = CollectionSupportStrategy.GenericResolveCollectionMethod.MakeGenericMethod(elementType);
 
                     CollectionResolver resolver = (CollectionResolver)Delegate.CreateDelegate(typeof(CollectionResolver), resolverMethod);
 
