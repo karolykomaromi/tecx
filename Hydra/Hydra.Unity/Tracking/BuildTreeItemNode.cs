@@ -6,7 +6,6 @@ namespace Hydra.Unity.Tracking
     using System.Diagnostics.Contracts;
     using Microsoft.Practices.ObjectBuilder2;
 
-    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Second class contains contracts.")]
     [ContractClass(typeof(BuildTreeItemNodeContract))]
     public abstract class BuildTreeItemNode : IDisposable
     {
@@ -54,6 +53,7 @@ namespace Hydra.Unity.Tracking
         protected abstract void Dispose(bool disposing);
     }
 
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Second class contains contracts.")]
     [ContractClassFor(typeof(BuildTreeItemNode))]
     internal abstract class BuildTreeItemNodeContract : BuildTreeItemNode
     {

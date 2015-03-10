@@ -4,8 +4,6 @@ namespace Hydra.Unity
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using Hydra.Unity.Collections;
-    using Hydra.Unity.Tracking;
     using Microsoft.Practices.Unity;
 
     public class CompositionRoot : UnityContainerExtension
@@ -19,10 +17,9 @@ namespace Hydra.Unity
 
         protected override void Initialize()
         {
-            this.Container.AddNewExtension<CollectionResolutionExtension>();
-            this.Container.AddExtension(new DisposableExtension());
+            this.Container.AddNewExtension<HydraDefaultExtensions>();
 
-            IEnumerable<Type> configurationTypes = this.assemblies.SelectMany(a => a.GetTypes().Where(this.IsContainerConfiguration));
+            IEnumerable<Type> configurationTypes = this.assemblies.SelectMany(a => a.GetTypes().Where(IsContainerConfiguration));
 
             foreach (Type configurationType in configurationTypes)
             {
@@ -32,10 +29,10 @@ namespace Hydra.Unity
             }
         }
 
-        private bool IsContainerConfiguration(Type t)
+        private static bool IsContainerConfiguration(Type type)
         {
-            bool isContainerConfiguration = typeof(UnityContainerExtension).IsAssignableFrom(t) &&
-                t.Name.EndsWith("Configuration");
+            bool isContainerConfiguration = typeof(UnityContainerExtension).IsAssignableFrom(type) &&
+                type.Name.EndsWith("Configuration");
 
             return isContainerConfiguration;
         }

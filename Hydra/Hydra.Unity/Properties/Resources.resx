@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BuildTreeConstructedOutOfOrder" xml:space="preserve">
+    <value>Build tree constructed out of order. Build key '{0}' was expected but build key '{1}' was provided.</value>
+  </data>
   <data name="ContainerConfigurationMustNotBeAltered" xml:space="preserve">
     <value>Container configuration must not be altered when pulling container from request context.</value>
   </data>

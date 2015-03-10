@@ -456,12 +456,12 @@
             return this.Instance.GetEntityName(obj);
         }
 
-        public NHibernate.IFilter EnableFilter(string filterName)
+        public IFilter EnableFilter(string filterName)
         {
             return this.Instance.EnableFilter(filterName);
         }
 
-        public NHibernate.IFilter GetEnabledFilter(string filterName)
+        public IFilter GetEnabledFilter(string filterName)
         {
             return this.Instance.GetEnabledFilter(filterName);
         }

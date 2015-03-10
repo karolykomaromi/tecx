@@ -4,7 +4,6 @@ namespace Hydra.Unity
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Web;
-    using Hydra.Infrastructure.Logging;
     using Hydra.Unity.Properties;
     using Microsoft.Practices.Unity;
 

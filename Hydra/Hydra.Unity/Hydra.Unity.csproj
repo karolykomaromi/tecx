@@ -174,8 +174,8 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="AllTypes.cs" />
-    <Compile Include="Collections\CollectionResolutionExtension.cs" />
-    <Compile Include="Collections\CollectionResolutionStrategy.cs" />
+    <Compile Include="Collections\CollectionSupportExtension.cs" />
+    <Compile Include="Collections\CollectionSupportStrategy.cs" />
     <Compile Include="Collections\CoupledToImplementationDetailsOverrideExtractor.cs" />
     <Compile Include="Collections\ResolverOverrideExtractor.cs" />
     <Compile Include="CompositionRoot.cs" />
@@ -190,7 +190,6 @@
     <Compile Include="Mediator\NotificationHandlerRegistrationConvention.cs" />
     <Compile Include="Mediator\RequestHandlerRegistrationConvention.cs" />
     <Compile Include="Mediator\UnityMediator.cs" />
-    <Compile Include="ParameterByTypeResolverOverride.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.tt</DependentUpon>
@@ -203,22 +202,15 @@
     <Compile Include="Tracking\CurrentBuildNodePolicy.cs" />
     <Compile Include="Tracking\DisposableItemNode.cs" />
     <Compile Include="Tracking\DisposableExtension.cs" />
-    <Compile Include="Tracking\HierachicalTagGenerator.cs" />
     <Compile Include="Tracking\ICurrentBuildNodePolicy.cs" />
     <Compile Include="Tracking\ITreeItemVisitor.cs" />
     <Compile Include="Tracking\NonDisposableItemNode.cs" />
-    <Compile Include="Tracking\RandomTagGenerator.cs" />
     <Compile Include="Tracking\ReadLock.cs" />
     <Compile Include="Tracking\SomeoneElsesProblem.cs" />
-    <Compile Include="Tracking\TagGenerator.cs" />
     <Compile Include="Tracking\UpgradeableReadLock.cs" />
     <Compile Include="Tracking\WriteLock.cs" />
-    <Compile Include="UnityBytecodeProvider.cs" />
     <Compile Include="UnityControllerFactory.cs" />
     <Compile Include="UnityDependencyResolver.cs" />
-    <Compile Include="UnityObjectsFactory.cs" />
-    <Compile Include="UnityReflectionOptimizer.cs" />
-    <Compile Include="UseOnceParameterValue.cs" />
     <Compile Include="Validation\UnityValidatorFactory.cs" />
     <Compile Include="Validation\ValidatorRegistrationConvention.cs" />
     <Compile Include="WithInjectionMembers.cs" />

@@ -5,7 +5,6 @@
     using System.Linq;
     using FluentValidation;
     using Hydra.Infrastructure.Reflection;
-    using Hydra.Unity.Mediator;
     using Microsoft.Practices.Unity;
 
     public class ValidatorRegistrationConvention : RegistrationConvention

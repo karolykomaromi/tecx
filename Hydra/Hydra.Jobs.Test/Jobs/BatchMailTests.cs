@@ -31,6 +31,7 @@
                 ////    .Body("Bar!");
 
                 ////IUnsentMailSource unsent = new InMemoryMailSource(message);
+
                 ////ISentMailSink sent = new InMemoryMailSink();
 
                 ////DirectoryInfo unsentFolder = new DirectoryInfo(@".\Unsent");

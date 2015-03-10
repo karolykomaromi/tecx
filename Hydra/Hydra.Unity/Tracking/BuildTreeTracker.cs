@@ -18,6 +18,13 @@ namespace Hydra.Unity.Tracking
 
         private readonly List<BuildTreeItemNode> buildTrees = new List<BuildTreeItemNode>();
 
+        private readonly string tag;
+
+        public BuildTreeTracker()
+        {
+            this.tag = Guid.NewGuid().ToString("D");
+        }
+
         public BuildTreeItemNode CurrentBuildNode
         {
             get { return this.currentNode.Value; }
@@ -25,7 +32,10 @@ namespace Hydra.Unity.Tracking
             set { this.currentNode.Value = value; }
         }
 
-        public string Tag { get; set; }
+        public string Tag
+        {
+            get { return this.tag; }
+        }
 
         public IList<BuildTreeItemNode> BuildTrees
         {
@@ -47,29 +57,20 @@ namespace Hydra.Unity.Tracking
             // The last strategy called will be the one in the child container that was actually asked to Resolve the object.
             // This policy is used to track which strategy instances where tracking the creation of this object. That information
             // will be used to avoid tracking by a strategy in the wrong container.
-            ICurrentBuildNodePolicy policy = context.Policies.Get<ICurrentBuildNodePolicy>(context.BuildKey);
-            
-            if (policy == null)
-            {
-                policy = new CurrentBuildNodePolicy();
+            ICurrentBuildNodePolicy policy = GetCurrentBuildNodePolicy(context);
 
-                context.Policies.Set<ICurrentBuildNodePolicy>(policy, context.BuildKey);
-            }
-
-            policy.Tags.Push(this.Tag);
-
-            bool nodeCreatedByContainer = context.Existing == null;
+            this.MarkThatWeTookPartInResolution(policy);
 
             BuildTreeItemNode newTreeNode;
 
-            if (!nodeCreatedByContainer || HasNonTransientLifetime(context))
+            if (!IsObjectCreatedByContainer(context) || HasNonTransientLifetime(context))
             {
                 // This object was either not created by the container or is referenced by a LifetimeManager
                 // that will take care of disposing it when either this container or the parent container are disposed or whose
                 // lifetime is externally controlled. Either way it is someone else's problem...
                 newTreeNode = new SomeoneElsesProblem(context.BuildKey, this.CurrentBuildNode);
             }
-            else if (typeof(IDisposable).IsAssignableFrom(context.BuildKey.Type))
+            else if (IsObjectDisposable(context))
             {
                 // we know this object was created by the container and implements IDisposable so we need to take 
                 // care of disposing it
@@ -93,7 +94,7 @@ namespace Hydra.Unity.Tracking
         public override void PostBuildUp(IBuilderContext context)
         {
             // We don't track extension lifecycles. They will be disposed when the container is disposed.
-            if (typeof(UnityContainerExtension).IsAssignableFrom(context.BuildKey.Type))
+            if (AreWeResolvingContainerExtension(context))
             {
                 return;
             }
@@ -103,23 +104,23 @@ namespace Hydra.Unity.Tracking
             // Every other strategy has no business in tracking this object so we short circuit immediately.
             ICurrentBuildNodePolicy policy = context.Policies.Get<ICurrentBuildNodePolicy>(context.BuildKey);
 
-            if (!string.Equals(this.Tag, policy.Tags.Peek(), StringComparison.Ordinal))
+            if (this.WeAreNotResponsibleForDisposal(policy))
             {
                 this.CurrentBuildNode = null;
 
-                if (string.Equals(this.Tag, policy.Tags.Last(), StringComparison.Ordinal))
+                if (this.WeActuallyResolvedTheObject(policy))
                 {
-                    context.Policies.Set<ICurrentBuildNodePolicy>(null, context.BuildKey);
+                    RemoveTheTrackingPolicy(context);
                 }
 
                 return;
             }
 
-            if (this.CurrentBuildNode.BuildKey != context.BuildKey)
+            if (this.IsBuildTreeConstructedOutOfOrder(context))
             {
                 string message = string.Format(
                     CultureInfo.CurrentCulture,
-                    "Build tree constructed out of order. Build key '{0}' was expected but build key '{1}' was provided.",
+                    Properties.Resources.BuildTreeConstructedOutOfOrder,
                     this.CurrentBuildNode.BuildKey,
                     context.BuildKey);
 
@@ -130,13 +131,9 @@ namespace Hydra.Unity.Tracking
 
             BuildTreeItemNode parentNode = this.CurrentBuildNode.Parent;
 
-            if (parentNode == null)
+            if (WeNeedNewTree(parentNode))
             {
-                // This is the end of the creation of the root node
-                using (new WriteLock(ReaderWriterLock))
-                {
-                    this.BuildTrees.Add(this.CurrentBuildNode);
-                }
+                this.CreateNewTree();
             }
 
             // Move the current node back up to the parent
@@ -162,9 +159,75 @@ namespace Hydra.Unity.Tracking
             GC.SuppressFinalize(this);
         }
 
+        private static bool AreWeResolvingContainerExtension(IBuilderContext context)
+        {
+            return typeof(UnityContainerExtension).IsAssignableFrom(context.BuildKey.Type);
+        }
+
+        private static bool WeNeedNewTree(BuildTreeItemNode parentNode)
+        {
+            return parentNode == null;
+        }
+
+        private static void RemoveTheTrackingPolicy(IBuilderContext context)
+        {
+            context.Policies.Set<ICurrentBuildNodePolicy>(null, context.BuildKey);
+        }
+
         private static bool HasNonTransientLifetime(IBuilderContext context)
         {
             return context.Lifetime != null && context.Lifetime.OfType<LifetimeManager>().Any(lm => !(lm is TransientLifetimeManager));
+        }
+
+        private static bool IsObjectDisposable(IBuilderContext context)
+        {
+            return typeof(IDisposable).IsAssignableFrom(context.BuildKey.Type);
+        }
+
+        private static bool IsObjectCreatedByContainer(IBuilderContext context)
+        {
+            return context.Existing == null;
+        }
+
+        private static ICurrentBuildNodePolicy GetCurrentBuildNodePolicy(IBuilderContext context)
+        {
+            ICurrentBuildNodePolicy policy = context.Policies.Get<ICurrentBuildNodePolicy>(context.BuildKey);
+
+            if (policy == null)
+            {
+                policy = new CurrentBuildNodePolicy();
+
+                context.Policies.Set<ICurrentBuildNodePolicy>(policy, context.BuildKey);
+            }
+            return policy;
+        }
+
+        private bool IsBuildTreeConstructedOutOfOrder(IBuilderContext context)
+        {
+            return this.CurrentBuildNode.BuildKey != context.BuildKey;
+        }
+
+        private void CreateNewTree()
+        {
+            using (new WriteLock(ReaderWriterLock))
+            {
+                this.BuildTrees.Add(this.CurrentBuildNode);
+            }
+        }
+
+        private bool WeActuallyResolvedTheObject(ICurrentBuildNodePolicy policy)
+        {
+            return string.Equals(this.Tag, policy.Tags.Last(), StringComparison.Ordinal);
+        }
+
+        private bool WeAreNotResponsibleForDisposal(ICurrentBuildNodePolicy policy)
+        {
+            return !string.Equals(this.Tag, policy.Tags.Peek(), StringComparison.Ordinal);
+        }
+
+        private void MarkThatWeTookPartInResolution(ICurrentBuildNodePolicy policy)
+        {
+            policy.Tags.Push(this.Tag);
         }
 
         private void Dispose(bool disposing)

@@ -9,7 +9,7 @@
     {
         protected override void Initialize()
         {
-            this.Container.AddNewExtension<CollectionResolutionExtension>();
+            this.Container.AddNewExtension<CollectionSupportExtension>();
 
             this.Container.AddNewExtension<DisposableExtension>();
 
