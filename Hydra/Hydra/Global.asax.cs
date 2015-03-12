@@ -69,6 +69,8 @@
 
             IUnityContainer childContainer = container.CreateChildContainer();
 
+            childContainer.RegisterInstance<IUnityContainer>(new ContainerPerRequestAdapter());
+
             this.Context.Items[Unity.Constants.ContainerKey] = childContainer;
 
             CultureHelper.ApplyUserCulture(this.Request.Headers, this.Request.Cookies);

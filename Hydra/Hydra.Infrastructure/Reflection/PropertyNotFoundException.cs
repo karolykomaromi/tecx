@@ -3,6 +3,7 @@ namespace Hydra.Infrastructure.Reflection
     using System;
     using System.Diagnostics.Contracts;
 
+    [Serializable]
     public class PropertyNotFoundException : Exception
     {
         private readonly Type type;

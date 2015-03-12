@@ -33,6 +33,13 @@
             this.subscription = observer.Where(IsMappedFromInterface).Subscribe(strategy);
 
             this.Context.Strategies.Add(strategy, UnityBuildStage.PreCreation);
+
+            this.Context.ChildContainerCreated += OnChildContainerCreated;
+        }
+
+        private static void OnChildContainerCreated(object sender, ChildContainerCreatedEventArgs e)
+        {
+            e.ChildContainer.AddExtension(new DecoratorExtension());
         }
 
         private static bool IsMappedFromInterface(EventPattern<RegisterEventArgs> e)

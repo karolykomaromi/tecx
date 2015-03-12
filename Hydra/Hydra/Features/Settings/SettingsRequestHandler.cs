@@ -5,7 +5,7 @@ namespace Hydra.Features.Settings
     using Hydra.Infrastructure.Configuration;
     using Hydra.Infrastructure.Mediator;
 
-    public class SettingsRequestHandler : IRequestHandler<AllSettingsRequest, SettingsCollection>, IRequestHandler<SettingByNameRequest, Setting>
+    public class SettingsRequestHandler : IRequestHandler<AllSettingsQuery, SettingsCollection>, IRequestHandler<SettingByNameRequest, Setting>
     {
         private readonly ISettingsProvider settingsProvider;
 
@@ -16,7 +16,7 @@ namespace Hydra.Features.Settings
             this.settingsProvider = settingsProvider;
         }
 
-        public async Task<SettingsCollection> Handle(AllSettingsRequest request)
+        public async Task<SettingsCollection> Handle(AllSettingsQuery request)
         {
             return await Task<SettingsCollection>.Factory.StartNew(() => this.settingsProvider.GetSettings());
         }

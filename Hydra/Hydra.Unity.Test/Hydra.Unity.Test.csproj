@@ -99,9 +99,12 @@
     <Compile Include="Infrastructure\Reflection\UnityDuckTypeGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests.cs" />
+    <Compile Include="Tracking\Decorator1.cs" />
+    <Compile Include="Tracking\Decorator2.cs" />
     <Compile Include="Tracking\DisposableExtensionTests.cs" />
     <Compile Include="Tracking\DisposableTestClassBase.cs" />
     <Compile Include="Tracking\DisposeThis.cs" />
+    <Compile Include="Tracking\IDisposeThis.cs" />
     <Compile Include="Tracking\Level0.cs" />
     <Compile Include="Tracking\Level1.cs" />
     <Compile Include="Tracking\Level2.cs" />

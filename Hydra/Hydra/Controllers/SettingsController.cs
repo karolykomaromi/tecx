@@ -20,9 +20,11 @@
 
         public async Task<ActionResult> Index()
         {
-            SettingsCollection settings = await this.mediator.Send(new AllSettingsRequest());
+            SettingsCollection settings = await this.mediator.Send(new AllSettingsQuery());
 
-            return this.View(settings);
+            SettingsIndexViewModel vm = new SettingsIndexViewModel(settings);
+
+            return this.View(vm);
         }
 
         public async Task<ActionResult> Edit(string settingName)

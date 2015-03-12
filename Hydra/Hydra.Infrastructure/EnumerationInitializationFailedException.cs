@@ -2,6 +2,7 @@
 {
     using System;
 
+    [Serializable]
     public class EnumerationInitializationFailedException : InvalidOperationException
     {
         public EnumerationInitializationFailedException()

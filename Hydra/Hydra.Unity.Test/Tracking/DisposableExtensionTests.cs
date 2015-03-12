@@ -1,5 +1,7 @@
 namespace Hydra.Unity.Test.Tracking
 {
+    using System;
+    using System.Collections.Generic;
     using Hydra.Unity.Tracking;
     using Microsoft.Practices.Unity;
     using Xunit;
@@ -7,6 +9,21 @@ namespace Hydra.Unity.Test.Tracking
 
     public class DisposableExtensionTests
     {
+        [Theory, ContainerData]
+        public void Should_Resolve_With_Decorators(IUnityContainer container)
+        {
+            IDisposeThis sut;
+
+            using (container)
+            {
+                container.RegisterTypes(new DisposeThisRegistrationConvention(), true);
+
+                sut = container.Resolve<IDisposeThis>();
+            }
+
+            Assert.True(sut.IsDisposed);
+        }
+
         [Theory, ContainerData]
         public void Should_Dispose_On_TearDown(IUnityContainer container)
         {
@@ -117,6 +134,36 @@ namespace Hydra.Unity.Test.Tracking
 
             Assert.True(level0.IsDisposed);
             Assert.True(level0.Level1.Level2.Level3.IsDisposed);
+        }
+
+        private class DisposeThisRegistrationConvention : RegistrationConvention
+        {
+            public override IEnumerable<Type> GetTypes()
+            {
+                yield return typeof(DisposeThis);
+                yield return typeof(Decorator1);
+                yield return typeof(Decorator2);
+            }
+
+            public override Func<Type, IEnumerable<Type>> GetFromTypes()
+            {
+                return _ => new[] { typeof(IDisposeThis) };
+            }
+
+            public override Func<Type, string> GetName()
+            {
+                return WithName.Default;
+            }
+
+            public override Func<Type, LifetimeManager> GetLifetimeManager()
+            {
+                return WithLifetime.Transient;
+            }
+
+            public override Func<Type, IEnumerable<InjectionMember>> GetInjectionMembers()
+            {
+                return WithInjectionMembers.None;
+            }
         }
     }
 }
