@@ -2,6 +2,7 @@ namespace Hydra.Infrastructure.Extensions
 {
     using System;
 
+    [Serializable]
     public class DuplicateKeyException : ArgumentException
     {
         private readonly object duplicateKey;

@@ -2,6 +2,7 @@
 {
     using System;
 
+    [Serializable]
     public class InvalidEnumerationException : InvalidOperationException
     {
         public InvalidEnumerationException(string message)

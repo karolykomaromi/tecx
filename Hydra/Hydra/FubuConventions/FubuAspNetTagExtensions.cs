@@ -17,6 +17,8 @@ namespace Hydra.FubuConventions
             where T : class
         {
             Contract.Requires(helper != null);
+            Contract.Requires(helper.ViewData != null);
+            Contract.Requires(expression != null);
 
             var generator = FubuAspNetTagExtensions.GetGenerator<T>();
 
@@ -27,6 +29,8 @@ namespace Hydra.FubuConventions
             where T : class
         {
             Contract.Requires(helper != null);
+            Contract.Requires(helper.ViewData != null);
+            Contract.Requires(expression != null);
 
             var generator = FubuAspNetTagExtensions.GetGenerator<T>();
 
@@ -37,6 +41,8 @@ namespace Hydra.FubuConventions
             where T : class
         {
             Contract.Requires(helper != null);
+            Contract.Requires(helper.ViewData != null);
+            Contract.Requires(expression != null);
 
             var generator = FubuAspNetTagExtensions.GetGenerator<T>();
 
@@ -47,7 +53,12 @@ namespace Hydra.FubuConventions
             where T : class
         {
             Contract.Requires(helper != null);
-
+            Contract.Requires(expression != null);
+            Contract.Requires(helper.ViewContext != null);
+            Contract.Requires(helper.ViewContext.ViewData != null);
+            Contract.Requires(helper.ViewContext.ViewData.TemplateInfo != null);
+            Contract.Requires(helper.ViewData != null);
+            
             //// MVC code don't ask me I just copied
             string expressionText = ExpressionHelper.GetExpressionText(expression);
 
@@ -97,6 +108,8 @@ namespace Hydra.FubuConventions
             where T : class
         {
             Contract.Requires(helper != null);
+            Contract.Requires(helper.ViewContext != null);
+            Contract.Requires(expression != null);
 
             inputModifier = inputModifier ?? (_ => { });
             validatorModifier = validatorModifier ?? (_ => { });
@@ -127,6 +140,7 @@ namespace Hydra.FubuConventions
             where T : class
         {
             Contract.Requires(helper != null);
+            Contract.Requires(expression != null);
 
             labelModifier = labelModifier ?? (_ => { });
             inputBlockModifier = inputBlockModifier ?? (_ => { });

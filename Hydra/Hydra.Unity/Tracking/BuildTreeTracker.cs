@@ -104,24 +104,10 @@ namespace Hydra.Unity.Tracking
             {
                 this.CurrentBuildNode = null;
 
-                if (this.WeActuallyResolvedTheObject(policy))
-                {
-                    RemoveTheTrackingPolicy(context);
-                }
-
                 return;
             }
 
-            if (this.IsBuildTreeConstructedOutOfOrder(context))
-            {
-                string message = string.Format(
-                    CultureInfo.CurrentCulture,
-                    Properties.Resources.BuildTreeConstructedOutOfOrder,
-                    this.CurrentBuildNode.BuildKey,
-                    context.BuildKey);
-
-                throw new InvalidOperationException(message);
-            }
+            this.AssertBuildTreeIsNotConstructedOutOfOrder(context);
 
             this.CurrentBuildNode.AssignInstance(context.Existing);
 
@@ -161,12 +147,7 @@ namespace Hydra.Unity.Tracking
         {
             return parentNode == null;
         }
-
-        private static void RemoveTheTrackingPolicy(IBuilderContext context)
-        {
-            context.Policies.Set<ICurrentBuildNodePolicy>(null, context.BuildKey);
-        }
-
+        
         private static bool HasNonTransientLifetime(IBuilderContext context)
         {
             return context.Lifetime != null && context.Lifetime.OfType<LifetimeManager>().Any(lm => !(lm is TransientLifetimeManager));
@@ -218,9 +199,18 @@ namespace Hydra.Unity.Tracking
             }
         }
 
-        private bool IsBuildTreeConstructedOutOfOrder(IBuilderContext context)
+        private void AssertBuildTreeIsNotConstructedOutOfOrder(IBuilderContext context)
         {
-            return this.CurrentBuildNode.BuildKey != context.BuildKey;
+            if (this.CurrentBuildNode.BuildKey != context.BuildKey)
+            {
+                string message = string.Format(
+                    CultureInfo.CurrentCulture,
+                    Properties.Resources.BuildTreeConstructedOutOfOrder,
+                    this.CurrentBuildNode.BuildKey,
+                    context.BuildKey);
+
+                throw new InvalidOperationException(message);
+            }
         }
 
         private void CreateNewTree()
@@ -229,11 +219,6 @@ namespace Hydra.Unity.Tracking
             {
                 this.BuildTrees.Add(this.CurrentBuildNode);
             }
-        }
-
-        private bool WeActuallyResolvedTheObject(ICurrentBuildNodePolicy policy)
-        {
-            return string.Equals(this.Tag, policy.Tags.Last(), StringComparison.Ordinal);
         }
 
         private bool WeAreNotResponsibleForDisposal(ICurrentBuildNodePolicy policy)

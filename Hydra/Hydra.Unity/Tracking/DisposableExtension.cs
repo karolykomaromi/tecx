@@ -37,10 +37,10 @@ namespace Hydra.Unity.Tracking
         {
             this.Context.Strategies.Add(this.Tracker, UnityBuildStage.PreCreation);
 
-            this.Context.ChildContainerCreated += this.OnChildContainerCreated;
+            this.Context.ChildContainerCreated += OnChildContainerCreated;
         }
 
-        private void OnChildContainerCreated(object sender, ChildContainerCreatedEventArgs e)
+        private static void OnChildContainerCreated(object sender, ChildContainerCreatedEventArgs e)
         {
             e.ChildContainer.AddExtension(new DisposableExtension());
         }

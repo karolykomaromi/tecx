@@ -1,7 +1,9 @@
 namespace Hydra.Infrastructure.Extensions
 {
+    using System;
     using System.Collections.Generic;
 
+    [Serializable]
     public class MissingKeyException : KeyNotFoundException
     {
         private readonly object missingKey;

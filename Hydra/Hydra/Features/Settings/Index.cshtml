@@ -1,6 +1,7 @@
-﻿@using System.Web.Mvc.Html
+﻿@model Hydra.Features.Settings.SettingsIndexViewModel
+@using System.Web.Mvc.Html
+@using Hydra.FubuConventions
 @using Hydra.Infrastructure.Configuration
-@model SettingsCollection
 
 @{
     ViewBag.Title = Hydra.Properties.Resources.Settings_Index_Title;
@@ -15,7 +16,7 @@
         <th />
     </tr>
 
-    @foreach (Setting setting in Model)
+    @foreach (Setting setting in Model.Settings)
     {
         <tr>
             <td>@setting.Name</td>
@@ -24,3 +25,5 @@
         </tr>
     }
 </table>
+    
+@Html.Display(x => x.Settings);

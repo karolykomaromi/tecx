@@ -16,9 +16,9 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <SccProjectName>&lt;Project Location In Database&gt;</SccProjectName>
     <SccLocalPath>&lt;Local Binding Root of Project&gt;</SccLocalPath>
     <SccAuxPath>&lt;Source Control Database&gt;</SccAuxPath>
@@ -76,7 +76,7 @@
     <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
-    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <CodeContractsAnalysisWarningLevel>3</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -348,9 +348,10 @@
     <Compile Include="Features\Jobs\ScheduleViewModel.cs" />
     <Compile Include="Features\Registration\RegistrationViewModel.cs" />
     <Compile Include="Features\Registration\RegistrationViewModelValidator.cs" />
-    <Compile Include="Features\Settings\AllSettingsRequest.cs" />
+    <Compile Include="Features\Settings\AllSettingsQuery.cs" />
     <Compile Include="Features\Settings\SettingByNameRequest.cs" />
     <Compile Include="Features\Settings\SettingByNameRequestValidator.cs" />
+    <Compile Include="Features\Settings\SettingsIndexViewModel.cs" />
     <Compile Include="Features\Settings\SettingsRequestHandler.cs" />
     <Compile Include="FeatureViewLocationRazorViewEngine.cs" />
     <Compile Include="Composition\CachingConfiguration.cs" />

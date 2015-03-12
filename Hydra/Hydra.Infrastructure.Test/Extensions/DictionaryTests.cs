@@ -15,11 +15,11 @@ namespace Hydra.Infrastructure.Test.Extensions
 
             DuplicateKeyException exception = Assert.Throws<DuplicateKeyException>(() => sut.Add(1, "2"));
 
-            Assert.Equal(1, exception.DuplicateKey);
+            Assert.Equal("1", exception.DuplicateKey);
 
             exception = Assert.Throws<DuplicateKeyException>(() => sut.Add(new KeyValuePair<int, string>(1, "3")));
 
-            Assert.Equal(1, exception.DuplicateKey);
+            Assert.Equal("1", exception.DuplicateKey);
         }
 
         [Fact]
