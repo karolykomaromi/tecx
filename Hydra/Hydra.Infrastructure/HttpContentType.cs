@@ -19,12 +19,22 @@
 
         public string Name
         {
-            get { return this.name; }
+            get
+            {
+                Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
+                return this.name;
+            }
         }
 
         public string Value
         {
-            get { return this.value; }
+            get
+            {
+                Contract.Ensures(!string.IsNullOrWhiteSpace(Contract.Result<string>()));
+
+                return this.value;
+            }
         }
 
         public static implicit operator string(HttpContentType contentType)

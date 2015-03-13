@@ -38,6 +38,7 @@ namespace Hydra.Infrastructure.Reflection
         {
             Contract.Requires(propertySelector != null);
             Contract.Requires(propertySelector.Body is MemberExpression);
+            Contract.Ensures(Contract.Result<string>() != null);
 
             MemberExpression property = (MemberExpression)propertySelector.Body;
 
@@ -48,6 +49,7 @@ namespace Hydra.Infrastructure.Reflection
         {
             Contract.Requires(propertySelector != null);
             Contract.Requires(propertySelector.Body is MemberExpression);
+            Contract.Ensures(Contract.Result<string>() != null);
 
             MemberExpression property = (MemberExpression)propertySelector.Body;
 
@@ -56,6 +58,8 @@ namespace Hydra.Infrastructure.Reflection
 
         public static IEnumerable<Type> GetInheritanceHierarchy(Type type)
         {
+            Contract.Ensures(Contract.Result<IEnumerable<Type>>() != null);
+
             Type current = type;
             while (current != null)
             {
