@@ -58,5 +58,11 @@ namespace Hydra.Jobs.Server.Retry
 
             return retries;
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.settings != null);
+        }
     }
 }

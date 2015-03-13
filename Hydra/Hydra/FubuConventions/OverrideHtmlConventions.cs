@@ -36,6 +36,7 @@ namespace Hydra.FubuConventions
         {
             get
             {
+                Contract.Requires(this.Library != null);
                 Contract.Ensures(Contract.Result<ElementCategoryExpression>() != null);
 
                 BuilderSet<ElementRequest> builderSet = this.Library.For<ElementRequest>().Category("Validator").Defaults;

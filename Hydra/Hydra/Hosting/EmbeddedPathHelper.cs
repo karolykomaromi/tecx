@@ -16,7 +16,9 @@
 
             int idx = manifestResourceName.IndexOf(assemblyName, StringComparison.Ordinal);
 
-            string path = "~/" + manifestResourceName.Substring(idx + assemblyName.Length + 1);
+            int startIndex = idx + assemblyName.Length + 1;
+
+            string path = "~/" + manifestResourceName.Substring(startIndex);
 
             path = path.Replace('.', '/');
 
@@ -93,10 +95,9 @@
 
         public static EmbeddedDirectory ToDirectoryStructure(params Assembly[] assemblies)
         {
-            if (assemblies == null)
-            {
-                return new EmbeddedDirectory("~/", null, null);
-            }
+            Contract.Requires(assemblies != null);
+            Contract.Requires(assemblies.Length > 0);
+            Contract.Ensures(Contract.Result<EmbeddedDirectory>() != null);
 
             if (assemblies.Length == 1)
             {

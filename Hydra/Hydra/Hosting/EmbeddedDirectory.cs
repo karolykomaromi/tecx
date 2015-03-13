@@ -133,12 +133,12 @@
 
             visitor.Visit(this);
 
-            foreach (var directory in this.directories)
+            foreach (EmbeddedDirectory directory in this.directories)
             {
                 directory.Accept(visitor);
             }
 
-            foreach (var file in this.files)
+            foreach (EmbeddedFile file in this.files)
             {
                 file.Accept(visitor);
             }
@@ -188,6 +188,14 @@
             bool equals = string.Equals(this.AppRelativePath, other.AppRelativePath, StringComparison.OrdinalIgnoreCase);
 
             return equals;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.files != null);
+            Contract.Invariant(this.directories != null);
+            Contract.Invariant(!string.IsNullOrWhiteSpace(this.appRelativePath));
         }
     }
 }

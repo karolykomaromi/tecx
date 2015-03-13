@@ -17,8 +17,8 @@
         public EmbeddedFile(string appRelativePath, string resourceName, Assembly assembly)
             : base(appRelativePath)
         {
-            Contract.Requires(!string.IsNullOrEmpty(appRelativePath));
-            Contract.Requires(!string.IsNullOrEmpty(resourceName));
+            Contract.Requires(!string.IsNullOrWhiteSpace(appRelativePath));
+            Contract.Requires(!string.IsNullOrWhiteSpace(resourceName));
             Contract.Requires(assembly != null);
 
             this.appRelativePath = appRelativePath;
@@ -104,6 +104,14 @@
             bool equals = string.Equals(this.ResourceName, other.ResourceName, StringComparison.Ordinal);
 
             return equals;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.assembly != null);
+            Contract.Invariant(!string.IsNullOrWhiteSpace(this.appRelativePath));
+            Contract.Invariant(!string.IsNullOrWhiteSpace(this.resourceName));
         }
     }
 }

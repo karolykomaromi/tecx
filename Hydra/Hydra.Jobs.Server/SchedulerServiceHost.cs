@@ -153,5 +153,13 @@ namespace Hydra.Jobs.Server
         private void OnHostUnkownMessageReceived(object sender, UnknownMessageReceivedEventArgs e)
         {
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.host != null);
+            Contract.Invariant(this.scheduler != null);
+            Contract.Invariant(this.log != null);
+        }
     }
 }

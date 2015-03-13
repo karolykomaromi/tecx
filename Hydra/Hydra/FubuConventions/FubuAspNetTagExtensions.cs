@@ -178,9 +178,46 @@ namespace Hydra.FubuConventions
 
         private static IElementGenerator<T> GetGenerator<T>() where T : class
         {
-            IElementGenerator<T> generator = DependencyResolver.Current.GetService<IElementGenerator<T>>();
+            Contract.Ensures(Contract.Result<IElementGenerator<T>>() != null);
+
+            IElementGenerator<T> generator = DependencyResolver.Current.GetService<IElementGenerator<T>>() ?? new NullElementGenerator<T>();
 
             return generator;
+        }
+
+        private class NullElementGenerator<T> : IElementGenerator<T> where T : class
+        {
+            public T Model { get; set; }
+
+            public HtmlTag LabelFor(Expression<Func<T, object>> expression, string profile = null, T model = null)
+            {
+                return new NoTag();
+            }
+
+            public HtmlTag InputFor(Expression<Func<T, object>> expression, string profile = null, T model = null)
+            {
+                return new NoTag();
+            }
+
+            public HtmlTag DisplayFor(Expression<Func<T, object>> expression, string profile = null, T model = null)
+            {
+                return new NoTag();
+            }
+
+            public HtmlTag LabelFor(ElementRequest request, string profile = null, T model = null)
+            {
+                return new NoTag();
+            }
+
+            public HtmlTag InputFor(ElementRequest request, string profile = null, T model = null)
+            {
+                return new NoTag();
+            }
+
+            public HtmlTag DisplayFor(ElementRequest request, string profile = null, T model = null)
+            {
+                return new NoTag();
+            }
         }
     }
 }

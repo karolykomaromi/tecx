@@ -6,7 +6,7 @@
     {
         public string ToAppRelative(string virtualPath)
         {
-            return VirtualPathUtility.ToAppRelative(virtualPath);
+            return VirtualPathUtility.ToAppRelative(virtualPath) ?? string.Empty;
         }
     }
 }

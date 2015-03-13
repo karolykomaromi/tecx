@@ -1,5 +1,6 @@
 ﻿namespace Hydra.Composition
 {
+    using System.Diagnostics.Contracts;
     using System.Web.Mvc;
     using FluentValidation;
     using FluentValidation.Mvc;
@@ -11,6 +12,8 @@
     {
         protected override void Initialize()
         {
+            Contract.Assume(GlobalFilters.Filters != null);
+
             this.Container.RegisterType<IValidatorFactory, UnityValidatorFactory>(new ContainerControlledLifetimeManager());
 
             this.Container.RegisterTypes(new ValidatorRegistrationConvention());

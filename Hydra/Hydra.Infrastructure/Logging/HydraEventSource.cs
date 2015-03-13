@@ -1,6 +1,7 @@
 ﻿namespace Hydra.Infrastructure.Logging
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Diagnostics.Tracing;
 
     [EventSource(Name = "Outlawtrail-Hydra")]
@@ -16,6 +17,8 @@
         {
             get
             {
+                Contract.Ensures(Contract.Result<HydraEventSource>() != null);
+
                 return HydraEventSource.Instance.Value;
             }
         }

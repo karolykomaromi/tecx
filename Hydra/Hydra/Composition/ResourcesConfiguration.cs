@@ -1,11 +1,14 @@
 ﻿namespace Hydra.Composition
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
     using System.Resources;
     using Hydra.Infrastructure;
     using Hydra.Infrastructure.I18n;
+    using Hydra.Infrastructure.Reflection;
+    using Hydra.Unity;
     using Microsoft.Practices.Unity;
 
     public class ResourcesConfiguration : UnityContainerExtension
@@ -19,7 +22,7 @@
 
             Enumeration.SetResourceAccessorCache(new LazyResourceAccessorCache(() => this.Container.Resolve<IResourceAccessorCache>()));
 
-            foreach (Type resourceFile in AllClasses.FromLoadedAssemblies().Where(IsResourceFile))
+            foreach (Type resourceFile in AllTypes.FromHydraAssemblies().Where(IsResourceFile))
             {
                 PropertyInfo property = GetResourceManagerProperty(resourceFile);
 
@@ -41,7 +44,10 @@
 
         private static PropertyInfo GetResourceManagerProperty(Type implementationType)
         {
-            return implementationType.GetProperty("ResourceManager", BindingFlags.Public | BindingFlags.Static);
+            Contract.Requires(implementationType != null);
+            Contract.Ensures(Contract.Result<PropertyInfo>() != null);
+
+            return implementationType.GetProperty("ResourceManager", BindingFlags.Public | BindingFlags.Static) ?? Property.Null;
         }
     }
 }

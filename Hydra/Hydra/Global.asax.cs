@@ -1,6 +1,7 @@
 ﻿namespace Hydra
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Web;
     using System.Web.Hosting;
     using System.Web.Mvc;
@@ -17,6 +18,10 @@
     {
         protected void Application_Start()
         {
+            Contract.Requires(this.Application != null);
+            Contract.Requires(ViewEngines.Engines != null);
+            Contract.Requires(ControllerBuilder.Current != null);
+
             HydraEventSource.Log.Startup();
 
             ViewEngines.Engines.Clear();
@@ -49,6 +54,8 @@
 
         protected void Application_End()
         {
+            Contract.Requires(this.Application != null);
+
             // Logging ASP.NET Application Shutdown Events by ScottGu http://weblogs.asp.net/scottgu/433194
             HydraEventSource.Log.Shutdown();
 
@@ -62,6 +69,8 @@
 
         protected void Application_BeginRequest()
         {
+            Contract.Requires(this.Application != null);
+
             // we use child containers per request as lifetime scope. disposing the child container at the
             // end of each request will trigger a cleanup that disposes all objects that implement IDisposable and where
             // pulled from the container.

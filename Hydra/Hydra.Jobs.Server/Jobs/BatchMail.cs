@@ -1,6 +1,7 @@
 ﻿namespace Hydra.Jobs.Server.Jobs
 {
     using System;
+    using System.Diagnostics.Contracts;
     using Hydra.Infrastructure.Logging;
     using Hydra.Infrastructure.Mail;
     using MailKit.Net.Smtp;
@@ -15,6 +16,10 @@
 
         public BatchMail(IUnsentMailSource unsent, ISentMailSink sent, IMailJobSettings mailSettings)
         {
+            Contract.Requires(unsent != null);
+            Contract.Requires(sent != null);
+            Contract.Requires(mailSettings != null);
+
             this.unsent = unsent;
             this.sent = sent;
             this.mailSettings = mailSettings;
@@ -45,6 +50,14 @@
                     }
                 }
             }
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.unsent != null);
+            Contract.Invariant(this.sent != null);
+            Contract.Invariant(this.mailSettings != null);
         }
     }
 }

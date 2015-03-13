@@ -21,7 +21,9 @@ namespace Hydra
 
         protected override FilterInfo GetFilters(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
         {
-            var filterInfo = base.GetFilters(controllerContext, actionDescriptor);
+            Contract.Ensures(Contract.Result<FilterInfo>() != null);
+
+            FilterInfo filterInfo = base.GetFilters(controllerContext, actionDescriptor);
 
             filterInfo.ExceptionFilters.Add(this.filter);
 
