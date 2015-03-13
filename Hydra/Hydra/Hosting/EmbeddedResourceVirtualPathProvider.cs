@@ -32,6 +32,7 @@
         public static EmbeddedResourceVirtualPathProvider Create(IVirtualPathUtility virtualPathUtility, params Assembly[] assemblies)
         {
             Contract.Requires(assemblies != null);
+            Contract.Requires(assemblies.Length > 0);
             Contract.Requires(virtualPathUtility != null);
             Contract.Ensures(Contract.Result<EmbeddedResourceVirtualPathProvider>() != null);
 
@@ -77,7 +78,7 @@
         {
             if (!string.IsNullOrWhiteSpace(virtualDir))
             {
-                string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualDir);
+                string appRelativePath = this.virtualPathUtility.ToAppRelative(virtualDir) ?? string.Empty;
 
                 if (this.directoriesByAppRelativePath.ContainsKey(appRelativePath))
                 {
@@ -124,6 +125,14 @@
             CacheDependency cacheDependency = base.GetCacheDependency(virtualPath, virtualPathDependencies, utcStart);
 
             return cacheDependency;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.virtualPathUtility != null);
+            Contract.Invariant(this.filesByAppRelativePath != null);
+            Contract.Invariant(this.directoriesByAppRelativePath != null);
         }
     }
 }

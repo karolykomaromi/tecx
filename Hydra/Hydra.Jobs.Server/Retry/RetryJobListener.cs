@@ -48,5 +48,11 @@ namespace Hydra.Jobs.Server.Retry
         {
             return jobException != null;
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.retryStrategy != null);
+        }
     }
 }

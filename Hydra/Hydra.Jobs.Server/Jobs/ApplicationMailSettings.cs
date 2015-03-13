@@ -59,5 +59,14 @@ namespace Hydra.Jobs.Server.Jobs
         {
             get { return this.isAuthenticationRequired.Value; }
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.credentials != null);
+            Contract.Invariant(this.port != null);
+            Contract.Invariant(this.host != null);
+            Contract.Invariant(this.isAuthenticationRequired != null);
+        }
     }
 }

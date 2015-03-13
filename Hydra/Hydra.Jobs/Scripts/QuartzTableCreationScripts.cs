@@ -1,6 +1,7 @@
 ﻿namespace Hydra.Jobs.Scripts
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -54,6 +55,12 @@
                     return s;
                 }
             }
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInveriant()
+        {
+            Contract.Invariant(this.script != null);
         }
     }
 }

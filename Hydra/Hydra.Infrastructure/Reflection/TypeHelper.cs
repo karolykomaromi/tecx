@@ -58,6 +58,7 @@ namespace Hydra.Infrastructure.Reflection
 
         public static IEnumerable<Type> GetInheritanceHierarchy(Type type)
         {
+            Contract.Requires(type != null);
             Contract.Ensures(Contract.Result<IEnumerable<Type>>() != null);
 
             Type current = type;
@@ -103,6 +104,9 @@ namespace Hydra.Infrastructure.Reflection
 
         public static string GetCallerMemberName([CallerMemberName] string callerMemberName = "")
         {
+            Contract.Requires(callerMemberName != null);
+            Contract.Ensures(Contract.Result<string>() != null);
+
             return callerMemberName;
         }
 

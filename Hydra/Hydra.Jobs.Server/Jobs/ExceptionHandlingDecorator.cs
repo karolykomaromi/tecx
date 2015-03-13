@@ -32,5 +32,11 @@ namespace Hydra.Jobs.Server.Jobs
                 throw new JobExecutionException(cause);
             }
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.inner != null);
+        }
     }
 }

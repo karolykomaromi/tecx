@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Reflection;
 
@@ -12,16 +13,22 @@
 
         public static IReadOnlyList<Setting> All()
         {
+            Contract.Ensures(Contract.Result<IReadOnlyList<Setting>>() != null);
+
             return AllDefaultSettings.Value;
         }
 
         private static IReadOnlyList<Setting> GetAllDefaultSettings()
         {
+            Contract.Ensures(Contract.Result<IReadOnlyList<Setting>>() != null);
+
             return new ReadOnlyCollection<Setting>(GetForType(typeof(DefaultSettings)).OrderBy(s => s).ToList());
         }
 
         private static IEnumerable<Setting> GetForType(Type type)
         {
+            Contract.Ensures(Contract.Result<IEnumerable<Setting>>() != null);
+
             foreach (Type nestedType in type.GetNestedTypes(BindingFlags.Public | BindingFlags.Static))
             {
                 foreach (Setting setting in GetForType(nestedType))

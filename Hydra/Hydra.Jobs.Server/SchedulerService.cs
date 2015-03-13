@@ -35,5 +35,11 @@
 
             return new JobScheduleResponse { NextExecutionAt = nextExecutionAt };
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.scheduler != null);
+        }
     }
 }

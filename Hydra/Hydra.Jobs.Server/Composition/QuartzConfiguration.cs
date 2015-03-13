@@ -15,6 +15,8 @@ namespace Hydra.Jobs.Server.Composition
     {
         protected override void Initialize()
         {
+            Contract.Assume(ConfigurationManager.ConnectionStrings != null);
+
             ConnectionStringSettings mysql = ConfigurationManager.ConnectionStrings["mysql"];
 
             string connectionString;
@@ -86,6 +88,7 @@ namespace Hydra.Jobs.Server.Composition
                 Contract.Requires(bundle != null);
                 Contract.Requires(bundle.JobDetail != null);
                 Contract.Requires(bundle.JobDetail.JobType != null);
+                Contract.Requires(typeof(IJob).IsAssignableFrom(bundle.JobDetail.JobType));
                 Contract.Ensures(Contract.Result<IJob>() != null);
 
                 Type jobType = bundle.JobDetail.JobType;
@@ -116,6 +119,12 @@ namespace Hydra.Jobs.Server.Composition
                 Contract.Requires(job != null);
 
                 this.container.Teardown(job);
+            }
+
+            [ContractInvariantMethod]
+            private void ObjectInvariant()
+            {
+                Contract.Invariant(this.container != null);
             }
         }
     }

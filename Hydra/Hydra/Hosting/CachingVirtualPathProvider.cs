@@ -4,7 +4,6 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
-    using System.Runtime.Caching;
     using System.Web.Hosting;
 
     public class CachingVirtualPathProvider : VirtualPathProvider, IDisposable
@@ -89,6 +88,16 @@
                 this.files.Clear();
                 this.fileExists.Clear();
             }
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.files != null);
+            Contract.Invariant(this.fileExists != null);
+            Contract.Invariant(this.directories != null);
+            Contract.Invariant(this.directoryExists != null);
+            Contract.Invariant(this.inner != null);
         }
     }
 }
