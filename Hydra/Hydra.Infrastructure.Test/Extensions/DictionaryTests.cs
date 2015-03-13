@@ -29,7 +29,7 @@ namespace Hydra.Infrastructure.Test.Extensions
 
             var exception = Assert.Throws<MissingKeyException>(() => sut[1]);
 
-            Assert.Equal(1, exception.MissingKey);
+            Assert.Equal("1", exception.MissingKey);
         }
     }
 }
