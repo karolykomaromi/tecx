@@ -203,7 +203,7 @@
     <Compile Include="JobScheduleRequest.cs" />
     <Compile Include="JobScheduleResponse.cs" />
     <Compile Include="Jobs\ApplicationMailSettings.cs" />
-    <Compile Include="Jobs\ExceptionHandlingDecorator.cs" />
+    <Compile Include="Jobs\EnsureJobExecutionExceptionDecorator.cs" />
     <Compile Include="Jobs\Heartbeat.cs" />
     <Compile Include="Jobs\IMailJobSettings.cs" />
     <Compile Include="Jobs\InMemoryMailJobSettings.cs" />

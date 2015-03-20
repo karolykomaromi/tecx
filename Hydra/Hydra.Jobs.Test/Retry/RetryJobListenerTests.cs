@@ -17,23 +17,26 @@ namespace Hydra.Jobs.Test.Retry
         public void Should_Try_3_Times_And_Then_Give_Up()
         {
             ISchedulerFactory factory = new StdSchedulerFactory();
-
             IScheduler scheduler = factory.GetScheduler();
-
-            ManualResetEvent reset = new ManualResetEvent(false);
             
             AlwaysFails alwaysFails = new AlwaysFails();
-
+            IJob ensure = new EnsureJobExecutionExceptionDecorator(alwaysFails);
             var jobFactory = new Mock<IJobFactory>();
+            jobFactory
+                .Setup(jf => jf.NewJob(It.IsAny<TriggerFiredBundle>(), It.IsAny<IScheduler>()))
+                .Returns(ensure);
 
-            jobFactory.Setup(jf => jf.NewJob(It.IsAny<TriggerFiredBundle>(), It.IsAny<IScheduler>()))
-                .Returns(new ExceptionHandlingDecorator(alwaysFails));
-
-            var settings = new InMemoryRetrySettings { BackoffBaseInterval = 1.Seconds() };
-
+            ManualResetEvent reset = new ManualResetEvent(false);
+            IRetrySettings settings = new InMemoryRetrySettings
+            {
+                BackoffBaseInterval = 250.Milliseconds(), 
+                MaxRetries = 2
+            };
             IRetryStrategy retryStrategy = new ExponentialBackoffRetryStrategy(settings);
+            IRetryStrategy unfreeze = new UnfreezeWhenJobShouldNotRunAgain(retryStrategy, reset);
+            IJobListener listener = new RetryJobListener(unfreeze);
 
-            scheduler.ListenerManager.AddJobListener(new TestSupportJobListener(new RetryJobListener(retryStrategy), reset), GroupMatcher<JobKey>.AnyGroup());
+            scheduler.ListenerManager.AddJobListener(listener, GroupMatcher<JobKey>.AnyGroup());
 
             scheduler.JobFactory = jobFactory.Object;
 
@@ -46,18 +49,19 @@ namespace Hydra.Jobs.Test.Retry
                         x.WithIntervalInSeconds(1);
                         x.WithRepeatCount(0);
                     })
-                .WithIdentity("fails", "mail")
+                .WithIdentity("always", "fails")
                 .Build();
 
-            IJobDetail job = JobBuilder.Create<AlwaysFails>().WithIdentity("fails", "mail").Build();
+            IJobDetail job = JobBuilder
+                .Create<AlwaysFails>()
+                .WithIdentity("always", "fails")
+                .Build();
 
             scheduler.ScheduleJob(job, trigger);
-
             scheduler.Start();
-
             scheduler.ResumeAll();
 
-            reset.WaitOne(15.Seconds());
+            reset.WaitOne(3.Seconds());
 
             Assert.Equal(3, alwaysFails.Counter);
         }

@@ -211,6 +211,7 @@
     <Compile Include="Default.cs" />
     <Compile Include="DefaultTimeProvider.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="EntityMap.cs" />
     <Compile Include="Enumeration.cs" />
     <Compile Include="EnumerationTypeConverter.cs" />
     <Compile Include="EnumerationInitializationFailedException.cs" />
@@ -307,6 +308,7 @@
     <Compile Include="Mediator\RequestHandlers.cs" />
     <Compile Include="Mediator\RequestHandlerPipeline.cs" />
     <Compile Include="Mediator\ValidationRequestHandler.cs" />
+    <Compile Include="NotDeletedFilter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.tt</DependentUpon>
       <AutoGen>True</AutoGen>

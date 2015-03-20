@@ -4,11 +4,11 @@ namespace Hydra.Jobs.Server.Jobs
     using System.Diagnostics.Contracts;
     using Quartz;
 
-    public class ExceptionHandlingDecorator : IJob
+    public class EnsureJobExecutionExceptionDecorator : IJob
     {
         private readonly IJob inner;
 
-        public ExceptionHandlingDecorator(IJob inner)
+        public EnsureJobExecutionExceptionDecorator(IJob inner)
         {
             Contract.Requires(inner != null);
 
