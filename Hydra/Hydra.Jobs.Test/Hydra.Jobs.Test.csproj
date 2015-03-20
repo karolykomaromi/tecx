@@ -129,7 +129,7 @@
     <Compile Include="QuartzTableCreationScriptsTests.cs" />
     <Compile Include="Retry\AlwaysFails.cs" />
     <Compile Include="Retry\RetryJobListenerTests.cs" />
-    <Compile Include="Retry\TestSupportJobListener.cs" />
+    <Compile Include="Retry\UnfreezeWhenJobShouldNotRunAgain.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
