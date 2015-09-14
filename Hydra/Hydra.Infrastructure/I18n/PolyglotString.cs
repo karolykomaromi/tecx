@@ -8,34 +8,43 @@ namespace Hydra.Infrastructure.I18n
     using Hydra.Infrastructure.Logging;
     using Newtonsoft.Json;
 
-    public class MultiLanguageString : IEquatable<MultiLanguageString>, IComparable<MultiLanguageString>, IFreezable<MultiLanguageString>, ICloneable<MultiLanguageString>
+    public class PolyglotString : IEquatable<PolyglotString>, IComparable<PolyglotString>, ICloneable<PolyglotString>
     {
-        public static readonly MultiLanguageString Empty = new MultiLanguageString().Freeze();
+        public static readonly PolyglotString Empty = new PolyglotString();
 
         private readonly IDictionary<CultureInfo, string> translations;
 
-        private MultiLanguageString()
+        private PolyglotString()
         {
-            this.translations = new SortedDictionary<CultureInfo, string>(new CultureComparer());
+            this.translations = new Dictionary<CultureInfo, string>();
         }
 
-        public virtual bool IsMutable
-        {
-            get { return true; }
-        }
-
-        public static MultiLanguageString New(CultureInfo culture, string translation)
+        public PolyglotString(CultureInfo culture, string translation)
         {
             Contract.Requires(culture != null);
             Contract.Requires(!string.IsNullOrWhiteSpace(translation));
-            Contract.Ensures(Contract.Result<MultiLanguageString>() != null);
 
-            var mls = new MultiLanguageString().WithTranslation(culture, translation);
-
-            return mls;
+            this.translations = new SortedDictionary<CultureInfo, string>(new CultureComparer())
+                                {
+                                    { culture, translation }
+                                };
         }
 
-        public static bool TryParse(string s, out MultiLanguageString mls)
+        public PolyglotString(IEnumerable<KeyValuePair<CultureInfo, string>> translations)
+        {
+            Contract.Requires(translations != null);
+
+            this.translations = new SortedDictionary<CultureInfo, string>(
+                translations.ToDictionary(x => x.Key, x => x.Value ?? string.Empty),
+                new CultureComparer());
+        }
+
+        public IDictionary<CultureInfo, string> Translations
+        {
+            get { return new Dictionary<CultureInfo, string>(this.translations); }
+        }
+
+        public static bool TryParse(string s, out PolyglotString mls)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(s));
 
@@ -43,12 +52,7 @@ namespace Hydra.Infrastructure.I18n
             {
                 Dictionary<CultureInfo, string> t = JsonConvert.DeserializeObject<Dictionary<CultureInfo, string>>(s);
 
-                mls = new MultiLanguageString();
-
-                foreach (var translation in t)
-                {
-                    mls.translations[translation.Key] = translation.Value;
-                }
+                mls = new PolyglotString(t);
 
                 return true;
             }
@@ -56,53 +60,55 @@ namespace Hydra.Infrastructure.I18n
             {
                 HydraEventSource.Log.Error(ex);
 
-                mls = MultiLanguageString.Empty;
+                mls = PolyglotString.Empty;
+
                 return false;
             }
         }
-
-        public MultiLanguageString Freeze()
-        {
-            return new ImmutableMultiLanguageString(this);
-        }
-
-        public virtual MultiLanguageString WithTranslation(CultureInfo culture, string translation)
-        {
-            Contract.Requires(culture != null);
-            Contract.Requires(!string.IsNullOrWhiteSpace(translation));
-
-            this.translations[culture] = translation;
-
-            return this;
-        }
-
-        public int CompareTo(MultiLanguageString other)
+        
+        public int CompareTo(PolyglotString other)
         {
             if (other == null)
             {
                 return 1;
             }
 
-            int compare = string.Compare(this.ToString(), other.ToString(), StringComparison.Ordinal);
+            // weberse 2015-09-14 We sort using the current UI culture
+            int compare = string.Compare(this.ToString(), other.ToString(), false, CultureInfo.CurrentUICulture);
 
             return compare;
         }
 
-        public bool Equals(MultiLanguageString other)
+        public bool Equals(PolyglotString other)
         {
             if (other == null)
             {
                 return false;
             }
 
-            bool @equals = string.Equals(this.ToString(), other.ToString(), StringComparison.Ordinal);
+            foreach (CultureInfo culture in this.translations.Keys.Union(other.translations.Keys))
+            {
+                // weberse 2015-09-14 If any key is only in one dictionary but not the other the strings are not equal
+                string x, y;
+                if (!TranslationExistsInBothStrings(this.translations, other.translations, culture, out x, out y))
+                {
+                    return false;
+                }
 
-            return @equals;
+                // weberse 2015-09-14 If the strings for a given language are not equal when compared in that language
+                // the strings are not equal
+                if (string.Compare(x, y, false, culture) != 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public override bool Equals(object obj)
         {
-            MultiLanguageString other = obj as MultiLanguageString;
+            PolyglotString other = obj as PolyglotString;
 
             if (other == null)
             {
@@ -117,23 +123,16 @@ namespace Hydra.Infrastructure.I18n
             return this.ToString().GetHashCode();
         }
 
-        public virtual MultiLanguageString Clone()
+        public virtual PolyglotString Clone()
         {
-            MultiLanguageString clone = new MultiLanguageString();
-
-            foreach (var translation in this.translations)
-            {
-                clone.translations[translation.Key] = translation.Value;
-            }
+            PolyglotString clone = new PolyglotString(this.translations);
 
             return clone;
         }
 
         public override string ToString()
         {
-            string s = JsonConvert.SerializeObject(this.translations, Formatting.None);
-
-            return s;
+            return this.ToString(CultureInfo.CurrentUICulture);
         }
 
         public virtual string ToString(CultureInfo culture)
@@ -168,6 +167,24 @@ namespace Hydra.Infrastructure.I18n
 
             return Properties.Resources.TranslationNotFound;
         }
+        
+        private static bool TranslationExistsInBothStrings(
+            IDictionary<CultureInfo, string> first,
+            IDictionary<CultureInfo, string> second,
+            CultureInfo culture,
+            out string x,
+            out string y)
+        {
+            if (!first.TryGetValue(culture, out x) || !second.TryGetValue(culture, out y))
+            {
+                x = string.Empty;
+                y = string.Empty;
+
+                return false;
+            }
+
+            return true;
+        }
 
         private class CultureComparer : IComparer<CultureInfo>
         {
@@ -190,37 +207,9 @@ namespace Hydra.Infrastructure.I18n
                     return 1;
                 }
 
-                int compare = string.Compare(x.ToString(), y.ToString(), StringComparison.Ordinal);
+                int compare = string.Compare(x.Name, y.Name, StringComparison.Ordinal);
 
                 return compare;
-            }
-        }
-
-        private class ImmutableMultiLanguageString : MultiLanguageString
-        {
-            public ImmutableMultiLanguageString(MultiLanguageString mls)
-            {
-                Contract.Requires(mls != null);
-
-                foreach (var translation in mls.translations)
-                {
-                    this.translations[translation.Key] = translation.Value;
-                }
-            }
-
-            public override bool IsMutable
-            {
-                get { return false; }
-            }
-
-            public override MultiLanguageString Clone()
-            {
-                return base.Clone().Freeze();
-            }
-
-            public override MultiLanguageString WithTranslation(CultureInfo culture, string translation)
-            {
-                return this;
             }
         }
     }

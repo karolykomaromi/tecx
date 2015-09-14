@@ -45,7 +45,7 @@ namespace Hydra.Infrastructure.Configuration
 
             if (s == null)
             {
-                return MultiLanguageString.Empty;
+                return PolyglotString.Empty;
             }
 
             SettingName name;
