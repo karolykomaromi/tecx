@@ -4,12 +4,12 @@ namespace Hydra.Infrastructure.Test.Extensions
     using Hydra.Infrastructure.Extensions;
     using Xunit;
 
-    public class DictionaryTests
+    public class EnhancedDictionaryTests
     {
         [Fact]
         public void Should_Not_Throw_Totally_Useless_Exception_On_Duplicate_Key()
         {
-            IDictionary<int, string> sut = new Dictionary<int, string>().Wrap();
+            IDictionary<int, string> sut = new Dictionary<int, string>().Enhance();
 
             sut.Add(1, "1");
 
@@ -25,7 +25,7 @@ namespace Hydra.Infrastructure.Test.Extensions
         [Fact]
         public void Should_Not_Throw_Totally_Useless_Exception_On_Key_Not_Found()
         {
-            IDictionary<int, string> sut = new Dictionary<int, string>().Wrap();
+            IDictionary<int, string> sut = new Dictionary<int, string>().Enhance();
 
             var exception = Assert.Throws<MissingKeyException>(() => sut[1]);
 

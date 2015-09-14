@@ -15,7 +15,7 @@
 
         Type IUserType.ReturnedType
         {
-            get { return typeof(MultiLanguageString); }
+            get { return typeof(PolyglotString); }
         }
 
         bool IUserType.IsMutable
@@ -44,16 +44,16 @@
 
             if (s == null)
             {
-                return MultiLanguageString.Empty;
+                return PolyglotString.Empty;
             }
 
-            MultiLanguageString mls;
-            if (MultiLanguageString.TryParse(s, out mls))
+            PolyglotString mls;
+            if (PolyglotString.TryParse(s, out mls))
             {
                 return mls;
             }
 
-            return MultiLanguageString.Empty;
+            return PolyglotString.Empty;
         }
 
         void IUserType.NullSafeSet(IDbCommand cmd, object value, int index)
@@ -72,14 +72,14 @@
 
         object IUserType.DeepCopy(object value)
         {
-            MultiLanguageString original = value as MultiLanguageString;
+            PolyglotString original = value as PolyglotString;
 
             if (original == null)
             {
                 return null;
             }
 
-            MultiLanguageString clone = original.Clone();
+            PolyglotString clone = original.Clone();
 
             return clone;
         }

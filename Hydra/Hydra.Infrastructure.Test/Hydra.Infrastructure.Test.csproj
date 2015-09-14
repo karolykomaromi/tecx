@@ -145,13 +145,14 @@
     <Compile Include="EnumerationTests.cs" />
     <Compile Include="EqualityComparerAdapterTests.cs" />
     <Compile Include="EqualityComparerTests.cs" />
-    <Compile Include="Extensions\DictionaryTests.cs" />
+    <Compile Include="Extensions\DictionaryExtensionsTests.cs" />
+    <Compile Include="Extensions\EnhancedDictionaryTests.cs" />
     <Compile Include="Extensions\ProtectDataExtensionsTests.cs" />
     <Compile Include="FlagsTypeConverterTests.cs" />
     <Compile Include="FlagsTests.cs" />
     <Compile Include="I18n\CachingResourceManagerTests.cs" />
     <Compile Include="I18n\CultureHelperTests.cs" />
-    <Compile Include="I18n\MultiLanguageStringTests.cs" />
+    <Compile Include="I18n\PolyglotStringTests.cs" />
     <Compile Include="I18n\NhResourceManagerTests.cs" />
     <Compile Include="I18n\ResourceAccessorCacheTests.cs" />
     <Compile Include="I18n\ResourceItemBuilder.cs" />

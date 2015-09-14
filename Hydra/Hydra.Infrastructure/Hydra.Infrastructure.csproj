@@ -218,10 +218,11 @@
     <Compile Include="EqualityComparer.cs" />
     <Compile Include="EqualityComparerAdapter.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
-    <Compile Include="Extensions\DictionaryEnhancements.cs" />
+    <Compile Include="Extensions\HelpfulExceptionsDictionary.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\DuplicateKeyException.cs" />
     <Compile Include="Extensions\MissingKeyException.cs" />
+    <Compile Include="Extensions\PolyglotStringExtensions.cs" />
     <Compile Include="Extensions\ProtectDataExtensions.cs" />
     <Compile Include="HttpHeaders.cs" />
     <Compile Include="I18n\AppConfigSupportedCulturesProvider.cs" />
@@ -233,7 +234,7 @@
     <Compile Include="I18n\InMemorySupportedCulturesProvider.cs" />
     <Compile Include="I18n\IResourceAccessorCache.cs" />
     <Compile Include="I18n\LazyResourceAccessorCache.cs" />
-    <Compile Include="I18n\MultiLanguageString.cs" />
+    <Compile Include="I18n\PolyglotString.cs" />
     <Compile Include="I18n\MultiLanguageStringUserType.cs" />
     <Compile Include="I18n\MultiLanguageStringUserTypeConvention.cs" />
     <Compile Include="I18n\NhResourceManager.cs" />

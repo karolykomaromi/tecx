@@ -9,7 +9,7 @@ namespace Hydra.Features.Books
 
         public string ASIN { get; set; }
 
-        public MultiLanguageString Description { get; set; }
+        public PolyglotString Description { get; set; }
 
         public HttpPostedFileBase Cover { get; set; }
     }

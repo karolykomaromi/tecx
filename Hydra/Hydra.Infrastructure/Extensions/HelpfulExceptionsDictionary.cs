@@ -5,11 +5,11 @@ namespace Hydra.Infrastructure.Extensions
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
 
-    public class DictionaryEnhancements<TKey, TValue> : IDictionary<TKey, TValue>
+    public class HelpfulExceptionsDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
         private readonly IDictionary<TKey, TValue> target;
 
-        public DictionaryEnhancements(IDictionary<TKey, TValue> target)
+        public HelpfulExceptionsDictionary(IDictionary<TKey, TValue> target)
         {
             Contract.Requires(target != null);
 
