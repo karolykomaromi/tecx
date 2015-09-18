@@ -2,6 +2,7 @@ namespace Hydra.Jobs.Server
 {
     using System;
     using System.Diagnostics.Contracts;
+    using Hydra.Infrastructure;
     using Hydra.Infrastructure.Logging;
     using Quartz;
 
@@ -13,7 +14,7 @@ namespace Hydra.Jobs.Server
             Contract.Requires(jobKey != null);
             Contract.Requires(triggerKey != null);
 
-            log.JobScheduledForRetry(jobKey.ToString(), triggerKey.ToString(), nextRunAt.ToString("O"));
+            log.JobScheduledForRetry(jobKey.ToString(), triggerKey.ToString(), nextRunAt.ToString(FormatStrings.DateAndTime.RoundTrip));
         }
 
         public static void JobFinallyFailed(this HydraEventSource log, JobKey jobKey)

@@ -7,6 +7,7 @@
     using System.Text.RegularExpressions;
     using DocumentFormat.OpenXml.Packaging;
     using DocumentFormat.OpenXml.Spreadsheet;
+    using Hydra.Infrastructure;
 
     public static class ExcelHelper
     {
@@ -37,7 +38,7 @@
             if (((cell.DataType != null && cell.DataType.Value == CellValues.Date) || (cell.DataType == null)) &&
                 double.TryParse(value, NumberStyles.Float, CultureInfo.CurrentCulture, out oadate))
             {
-                value = DateTime.FromOADate(oadate).ToString("o", CultureInfo.InvariantCulture);
+                value = DateTime.FromOADate(oadate).ToString(FormatStrings.DateAndTime.RoundTrip, CultureInfo.InvariantCulture);
             }
 
             if (value.StartsWith("'", StringComparison.Ordinal))

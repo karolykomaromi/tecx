@@ -224,6 +224,7 @@
     <Compile Include="Extensions\MissingKeyException.cs" />
     <Compile Include="Extensions\PolyglotStringExtensions.cs" />
     <Compile Include="Extensions\ProtectDataExtensions.cs" />
+    <Compile Include="FormatStrings.cs" />
     <Compile Include="HttpHeaders.cs" />
     <Compile Include="I18n\AppConfigSupportedCulturesProvider.cs" />
     <Compile Include="I18n\CachingSupportedCulturesProvider.cs" />

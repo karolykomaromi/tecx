@@ -53,7 +53,5 @@ namespace Hydra.Infrastructure.Test.Extensions
             Assert.Equal(actual["A"], 1);
             Assert.Equal(actual["B"], 1);
         }
-
-
     }
 }
