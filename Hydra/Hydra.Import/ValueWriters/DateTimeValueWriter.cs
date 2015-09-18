@@ -5,6 +5,7 @@ namespace Hydra.Import.ValueWriters
     using System.Globalization;
     using System.Reflection;
     using Hydra.Import.Messages;
+    using Hydra.Infrastructure;
     using Hydra.Infrastructure.Logging;
 
     public class DateTimeValueWriter : PropertyValueWriter
@@ -35,7 +36,7 @@ namespace Hydra.Import.ValueWriters
                 {
                     HydraEventSource.Log.Error(ex);
 
-                    return new Error(string.Format(Properties.Resources.ErrorWritingValue, dt.ToString("o", CultureInfo.CurrentUICulture), this.Property.Name));
+                    return new Error(string.Format(Properties.Resources.ErrorWritingValue, dt.ToString(FormatStrings.DateAndTime.RoundTrip, CultureInfo.CurrentUICulture), this.Property.Name));
                 }
             }
             

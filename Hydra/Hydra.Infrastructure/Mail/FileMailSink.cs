@@ -21,7 +21,7 @@ namespace Hydra.Infrastructure.Mail
         {
             try
             {
-                string fileName = Path.Combine(this.sentMailFolder.FullName, Guid.NewGuid().ToString("N") + ".eml");
+                string fileName = Path.Combine(this.sentMailFolder.FullName, Guid.NewGuid().ToString(FormatStrings.Guid.Digits) + ".eml");
 
                 using (Stream stream = new FileStream(fileName, FileMode.Create))
                 {

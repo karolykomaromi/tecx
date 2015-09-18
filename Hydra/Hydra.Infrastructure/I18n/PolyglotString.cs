@@ -14,11 +14,6 @@ namespace Hydra.Infrastructure.I18n
 
         private readonly IDictionary<CultureInfo, string> translations;
 
-        private PolyglotString()
-        {
-            this.translations = new Dictionary<CultureInfo, string>();
-        }
-
         public PolyglotString(CultureInfo culture, string translation)
         {
             Contract.Requires(culture != null);
@@ -37,6 +32,11 @@ namespace Hydra.Infrastructure.I18n
             this.translations = new SortedDictionary<CultureInfo, string>(
                 translations.ToDictionary(x => x.Key, x => x.Value ?? string.Empty),
                 new CultureComparer());
+        }
+
+        private PolyglotString()
+        {
+            this.translations = new Dictionary<CultureInfo, string>();
         }
 
         public IDictionary<CultureInfo, string> Translations

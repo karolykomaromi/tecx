@@ -30,7 +30,7 @@ namespace Hydra.Infrastructure.Mail
 
             long ticks = this.timestamp.Ticks - Zero.Ticks;
 
-            string hex = ticks.ToString("X");
+            string hex = ticks.ToString(FormatStrings.Numeric.Hex);
 
             this.id = Hyphenate(hex);
         }

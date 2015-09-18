@@ -9,7 +9,7 @@
 
         public ExternallyControlledChangeMonitor()
         {
-            this.uniqueId = Guid.NewGuid().ToString("D");
+            this.uniqueId = Guid.NewGuid().ToString(FormatStrings.Guid.Digits);
 
             this.InitializationComplete();
         }

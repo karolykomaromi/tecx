@@ -26,7 +26,7 @@
         {
             DateTime now = TimeProvider.UtcNow;
 
-            string s = now.ToString("o");
+            string s = now.ToString(FormatStrings.DateAndTime.RoundTrip);
 
             C actual = (C)ConvertHelper.Convert(s, typeof(C), Cultures.GermanGermany);
 

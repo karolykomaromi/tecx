@@ -6,6 +6,7 @@ namespace Hydra.Unity.Tracking
     using System.Globalization;
     using System.Linq;
     using System.Threading;
+    using Hydra.Infrastructure;
     using Microsoft.Practices.ObjectBuilder2;
     using Microsoft.Practices.Unity;
 
@@ -22,7 +23,7 @@ namespace Hydra.Unity.Tracking
 
         public BuildTreeTracker()
         {
-            this.tag = Guid.NewGuid().ToString("D");
+            this.tag = Guid.NewGuid().ToString(FormatStrings.Guid.Hyphens);
         }
 
         public BuildTreeItemNode CurrentBuildNode
