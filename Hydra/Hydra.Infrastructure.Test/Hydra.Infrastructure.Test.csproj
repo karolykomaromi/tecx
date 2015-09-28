@@ -186,6 +186,7 @@
     <Compile Include="Reflection\LazyProxyBuilderTests.cs" />
     <Compile Include="Reflection\TypeHelperTests.cs" />
     <Compile Include="StringHelperTests.cs" />
+    <Compile Include="TemperatureTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
