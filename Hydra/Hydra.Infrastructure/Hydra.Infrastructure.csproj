@@ -208,6 +208,11 @@
     <Compile Include="Configuration\WebConfigSettingsProvider.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ConvertHelper.cs" />
+    <Compile Include="Cooling\Celsius.cs" />
+    <Compile Include="Cooling\Fahrenheit.cs" />
+    <Compile Include="Cooling\Kelvin.cs" />
+    <Compile Include="Cooling\Temperature.cs" />
+    <Compile Include="Cooling\TemperatureExtensions.cs" />
     <Compile Include="Default.cs" />
     <Compile Include="DefaultTimeProvider.cs" />
     <Compile Include="Entity.cs" />
