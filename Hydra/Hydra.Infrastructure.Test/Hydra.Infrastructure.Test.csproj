@@ -140,6 +140,10 @@
     <Compile Include="Configuration\SettingTests.cs" />
     <Compile Include="ContainerDataAttribute.cs" />
     <Compile Include="ConvertHelperTests.cs" />
+    <Compile Include="Cooling\CelsiusTests.cs" />
+    <Compile Include="Cooling\FahrenheitTests.cs" />
+    <Compile Include="Cooling\KelvinTests.cs" />
+    <Compile Include="Cooling\TemperatureTests.cs" />
     <Compile Include="DefaultTests.cs" />
     <Compile Include="EnumerationTypeConverterTests.cs" />
     <Compile Include="EnumerationTests.cs" />
@@ -186,7 +190,6 @@
     <Compile Include="Reflection\LazyProxyBuilderTests.cs" />
     <Compile Include="Reflection\TypeHelperTests.cs" />
     <Compile Include="StringHelperTests.cs" />
-    <Compile Include="TemperatureTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
