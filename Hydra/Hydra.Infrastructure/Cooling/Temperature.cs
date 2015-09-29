@@ -6,6 +6,8 @@ namespace Hydra.Infrastructure.Cooling
 
     public abstract class Temperature : IFormattable
     {
+        public static readonly Temperature Invalid = new InvalidTemperature();
+
         private const string DefaultPrecision = "1";
 
         private static readonly Regex LegalFormatString = new Regex("^[cfk][0-9]*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -29,6 +31,62 @@ namespace Hydra.Infrastructure.Cooling
         protected abstract string Symbol { get; }
 
         protected abstract string Format { get; }
+
+        public static bool TryParse(string s, out Temperature temperature)
+        {
+            return Temperature.TryParse(s, NumberStyles.Number, CultureInfo.CurrentCulture, out temperature);
+        }
+
+        public static bool TryParse(string s, NumberStyles style, IFormatProvider formatProvider, out Temperature temperature)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                temperature = Temperature.Invalid;
+                return false;
+            }
+
+            if (s.EndsWith(Celsius.UnitSymbol, StringComparison.Ordinal))
+            {
+                decimal t;
+                if (!decimal.TryParse(s.Substring(0, s.Length - 2), style, formatProvider, out t))
+                {
+                    temperature = Temperature.Invalid;
+                    return false;
+                }
+
+                temperature = new Celsius(t);
+                return true;
+            }
+
+            if (s.EndsWith(Fahrenheit.UnitSymbol, StringComparison.Ordinal))
+            {
+                decimal t;
+                if (!decimal.TryParse(s.Substring(0, s.Length - 2), style, formatProvider, out t))
+                {
+                    temperature = Temperature.Invalid;
+                    return false;
+                }
+
+                temperature = new Fahrenheit(t);
+                return true;
+            }
+
+            if (s.EndsWith(Kelvin.UnitSymbol, StringComparison.Ordinal))
+            {
+                decimal t;
+                if (!decimal.TryParse(s.Substring(0, s.Length - 1), style, formatProvider, out t))
+                {
+                    temperature = Temperature.Invalid;
+                    return false;
+                }
+
+                temperature = new Kelvin(t);
+                return true;
+            }
+
+            temperature = Temperature.Invalid;
+            return false;
+        }
 
         public abstract Kelvin ToKelvin();
 
@@ -71,19 +129,19 @@ namespace Hydra.Infrastructure.Cooling
 
             switch (unit)
             {
-                case Celsius.FormatString:
+                case FormatStrings.Temperatures.Celsius:
                 {
                     temperature = this.ToCelsius();
                     break;
                 }
 
-                case Kelvin.FormatString:
+                case FormatStrings.Temperatures.Kelvin:
                 {
                     temperature = this.ToKelvin();
                     break;
                 }
 
-                case Fahrenheit.FormatString:
+                case FormatStrings.Temperatures.Fahrenheit:
                 {
                     temperature = this.ToFahrenheit();
                     break;
@@ -102,6 +160,39 @@ namespace Hydra.Infrastructure.Cooling
             string decimalFormat = FormatStrings.Numeric.FixedPoint + precision;
 
             return temperature.Value.ToString(decimalFormat, formatProvider) + temperature.Symbol;
+        }
+
+        private class InvalidTemperature : Temperature
+        {
+            public InvalidTemperature()
+                : base(decimal.MinValue)
+            {
+            }
+
+            protected override string Symbol
+            {
+                get { return string.Empty; }
+            }
+
+            protected override string Format
+            {
+                get { return string.Empty; }
+            }
+
+            public override Kelvin ToKelvin()
+            {
+                return Kelvin.Invalid;
+            }
+
+            public override Celsius ToCelsius()
+            {
+                return Celsius.Invalid;
+            }
+
+            public override Fahrenheit ToFahrenheit()
+            {
+                return Fahrenheit.Invalid;
+            }
         }
     }
 }

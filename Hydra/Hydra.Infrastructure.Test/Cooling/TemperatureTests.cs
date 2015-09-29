@@ -1,5 +1,6 @@
 namespace Hydra.Infrastructure.Test.Cooling
 {
+    using System.Globalization;
     using Hydra.Infrastructure.Cooling;
     using Hydra.Infrastructure.I18n;
     using Xunit;
@@ -137,6 +138,84 @@ namespace Hydra.Infrastructure.Test.Cooling
             Kelvin f = kelvin.Kelvin();
 
             Assert.Equal(expected, f.ToString(format, Cultures.EnglishUnitedStates));
+        }
+
+        [Theory]
+        [InlineData("2,50°C", 2.5)]
+        [InlineData("-2,5°C", -2.5)]
+        [InlineData("0°C", 0)]
+        public void Should_Parse_Celsius_Given_German_Culture(string s, double temperature)
+        {
+            Celsius expected = temperature.DegreesCelsius();
+
+            Temperature actual;
+            Assert.True(Temperature.TryParse(s, NumberStyles.Number, Cultures.GermanGermany, out actual));
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("2.50°C", 2.5)]
+        [InlineData("-2.5°C", -2.5)]
+        [InlineData("0°C", 0)]
+        public void Should_Parse_Celsius_Given_English_Culture(string s, double temperature)
+        {
+            Celsius expected = temperature.DegreesCelsius();
+
+            Temperature actual;
+            Assert.True(Temperature.TryParse(s, NumberStyles.Number, Cultures.EnglishUnitedStates, out actual));
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("2,50°F", 2.5)]
+        [InlineData("-2,5°F", -2.5)]
+        [InlineData("0°F", 0)]
+        public void Should_Parse_Fahrenheit_Given_German_Culture(string s, double temperature)
+        {
+            Fahrenheit expected = temperature.DegreesFahrenheit();
+
+            Temperature actual;
+            Assert.True(Temperature.TryParse(s, NumberStyles.Number, Cultures.GermanGermany, out actual));
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("2.50°F", 2.5)]
+        [InlineData("-2.5°F", -2.5)]
+        [InlineData("0°F", 0)]
+        public void Should_Parse_Fahrenheit_Given_English_Culture(string s, double temperature)
+        {
+            Fahrenheit expected = temperature.DegreesFahrenheit();
+
+            Temperature actual;
+            Assert.True(Temperature.TryParse(s, NumberStyles.Number, Cultures.EnglishUnitedStates, out actual));
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("2,50K", 2.5)]
+        [InlineData("-2,5K", -2.5)]
+        [InlineData("0K", 0)]
+        public void Should_Parse_Kelvin_Given_German_Culture(string s, double temperature)
+        {
+            Kelvin expected = temperature.Kelvin();
+
+            Temperature actual;
+            Assert.True(Temperature.TryParse(s, NumberStyles.Number, Cultures.GermanGermany, out actual));
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("2.50K", 2.5)]
+        [InlineData("-2.5K", -2.5)]
+        [InlineData("0K", 0)]
+        public void Should_Parse_Kelvin_Given_English_Culture(string s, double temperature)
+        {
+            Kelvin expected = temperature.Kelvin();
+
+            Temperature actual;
+            Assert.True(Temperature.TryParse(s, NumberStyles.Number, Cultures.EnglishUnitedStates, out actual));
+            Assert.Equal(expected, actual);
         }
     }
 }

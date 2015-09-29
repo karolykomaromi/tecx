@@ -2,7 +2,6 @@ namespace Hydra.Infrastructure.Cooling
 {
     using System;
     using System.Diagnostics.Contracts;
-    using System.Globalization;
 
     public class Kelvin : Temperature, IComparable<Kelvin>, IEquatable<Kelvin>
     {
@@ -10,7 +9,7 @@ namespace Hydra.Infrastructure.Cooling
 
         public static readonly Kelvin AbsoluteZero = new Kelvin(0m);
 
-        internal const string FormatString = "K";
+        public new static readonly Kelvin Invalid = new Kelvin(decimal.MinValue);
 
         internal const decimal OffsetKelvinCelsius = 273.15m;
 
@@ -21,7 +20,7 @@ namespace Hydra.Infrastructure.Cooling
 
         protected override string Format
         {
-            get { return Kelvin.FormatString; }
+            get { return FormatStrings.Temperatures.Kelvin; }
         }
 
         protected override string Symbol

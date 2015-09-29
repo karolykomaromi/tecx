@@ -8,8 +8,8 @@ namespace Hydra.Infrastructure.Cooling
         public const string UnitSymbol = "°C";
 
         public static readonly Celsius AbsoluteZero = new Celsius(-273.15m);
-        
-        internal const string FormatString = "C";
+
+        public new static readonly Celsius Invalid = new Celsius(decimal.MinValue);
 
         public Celsius(decimal celsius)
             : base(celsius)
@@ -23,7 +23,7 @@ namespace Hydra.Infrastructure.Cooling
 
         protected override string Format
         {
-            get { return Celsius.FormatString; }
+            get { return FormatStrings.Temperatures.Celsius; }
         }
 
         public static explicit operator Kelvin(Celsius celsius)

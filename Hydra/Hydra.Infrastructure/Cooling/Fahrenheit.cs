@@ -8,8 +8,8 @@ namespace Hydra.Infrastructure.Cooling
         public const string UnitSymbol = "°F";
 
         public static readonly Fahrenheit AbsoluteZero = new Fahrenheit(-459.67m);
-        
-        internal const string FormatString = "F";
+
+        public new static readonly Fahrenheit Invalid = new Fahrenheit(decimal.MinValue);
 
         public Fahrenheit(decimal fahrenheit)
             : base(fahrenheit)
@@ -18,7 +18,7 @@ namespace Hydra.Infrastructure.Cooling
 
         protected override string Format
         {
-            get { return Fahrenheit.FormatString; }
+            get { return FormatStrings.Temperatures.Fahrenheit; }
         }
 
         protected override string Symbol
