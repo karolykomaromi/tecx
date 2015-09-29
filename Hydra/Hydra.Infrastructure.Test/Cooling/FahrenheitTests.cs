@@ -149,5 +149,30 @@ namespace Hydra.Infrastructure.Test.Cooling
             Assert.True(b.CompareTo(a) > 0);
             Assert.True(c.CompareTo(a) > 0);
         }
+
+        [Fact]
+        public void Should_Equal_To_Self()
+        {
+            Fahrenheit c = new Fahrenheit(10);
+
+            Assert.True(c.Equals(c));
+        }
+
+        [Fact]
+        public void Should_Not_Equal_Null()
+        {
+            Fahrenheit c = new Fahrenheit(10);
+
+            Assert.False(c.Equals(null));
+        }
+
+        [Fact]
+        public void Same_Values_Should_Equal()
+        {
+            Fahrenheit x = new Fahrenheit(10);
+            Fahrenheit y = new Fahrenheit(10);
+
+            Assert.True(x == y);
+        }
     }
 }
