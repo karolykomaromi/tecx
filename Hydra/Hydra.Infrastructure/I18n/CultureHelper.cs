@@ -14,7 +14,6 @@ namespace Hydra.Infrastructure.I18n
     {
         public static CultureInfo[] ParseUserCultures(string acceptLanguage)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(acceptLanguage));
             Contract.Ensures(Contract.Result<CultureInfo[]>() != null);
 
             // Accept-Language: fr-FR , en;q=0.8 , en-us;q=0.5 , de;q=0.3

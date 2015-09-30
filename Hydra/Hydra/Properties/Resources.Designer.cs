@@ -170,5 +170,10 @@ namespace Hydra.Properties
         {
             get { return Resources.ResourceManager.GetString("PasswordNotEqual", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
+
+        public static string Cooling_Dashboard_Title
+        {
+            get { return Resources.ResourceManager.GetString("Cooling_Dashboard_Title", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
     }
 }

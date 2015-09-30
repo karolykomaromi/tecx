@@ -169,7 +169,7 @@
     <Compile Include="Logging\HydraEventSourceTests.cs" />
     <Compile Include="Mail\EmbeddedResourceMailSourceTests.cs" />
     <Compile Include="Mail\FileMailSourceTests.cs" />
-    <Compile Include="Mail\MailChargeTests.cs" />
+    <Compile Include="Mail\MailBagTests.cs" />
     <Compile Include="Numbers.cs" />
     <Compile Include="Colors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

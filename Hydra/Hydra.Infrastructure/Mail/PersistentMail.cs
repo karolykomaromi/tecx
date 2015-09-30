@@ -15,6 +15,6 @@ namespace Hydra.Infrastructure.Mail
 
         public virtual DateTime? SentAt { get; set; }
 
-        public virtual MailCharge Charge { get; set; }
+        public virtual MailBag Bag { get; set; }
     }
 }

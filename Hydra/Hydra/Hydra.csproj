@@ -286,6 +286,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Features\Settings\Index.cshtml" />
     <Content Include="Features\Settings\Edit.cshtml" />
+    <Content Include="Features\Cooling\Dashboard.cshtml" />
     <None Include="Features\Shared\Error.cshtml" />
     <Content Include="Global.asax" />
     <Content Include="Properties\Resources.tt">
@@ -336,6 +337,7 @@
     <Compile Include="Composition\FluentValidationConfiguration.cs" />
     <Compile Include="Composition\NHibernateConfiguration.cs" />
     <Compile Include="Composition\SettingsConfiguration.cs" />
+    <Compile Include="Controllers\CoolingController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Features\Books\AllBooksRequestHandler.cs" />
     <Compile Include="Features\Books\BookViewModel.cs" />
@@ -411,6 +413,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Cooling\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj">

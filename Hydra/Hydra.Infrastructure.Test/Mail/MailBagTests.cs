@@ -5,7 +5,7 @@
     using Hydra.Infrastructure.Mail;
     using Xunit;
 
-    public class MailChargeTests
+    public class MailBagTests
     {
         private static readonly DateTime ReferenceDate = new DateTime(2015, 3, 1, 17, 37, 36, DateTimeKind.Utc);
 
@@ -14,16 +14,16 @@
         {
             ReferenceDate.Freeze();
 
-            MailCharge charge = MailCharge.NewCharge();
+            MailBag bag = MailBag.NewBag();
 
-            Assert.Equal("1100-5B42-64B0-00", charge.Id);
+            Assert.Equal("1100-5B42-64B0-00", bag.Id);
         }
 
         [Fact]
         public void Should_Parse_Correct_MailCharge_Id()
         {
-            MailCharge actual;
-            Assert.True(MailCharge.TryParse("1100-5B42-64B0-00", out actual));
+            MailBag actual;
+            Assert.True(MailBag.TryParse("1100-5B42-64B0-00", out actual));
 
             Assert.Equal(ReferenceDate, actual.Timestamp);
         }
@@ -33,11 +33,11 @@
         {
             ReferenceDate.Freeze();
 
-            MailCharge a = MailCharge.NewCharge();
+            MailBag a = MailBag.NewBag();
 
             5.Minutes().Pass();
 
-            MailCharge b = MailCharge.NewCharge();
+            MailBag b = MailBag.NewBag();
 
             Assert.True(a.CompareTo(b) < 0);
             Assert.True(b.CompareTo(a) > 0);
@@ -49,9 +49,9 @@
         {
             ReferenceDate.Freeze();
 
-            MailCharge a = MailCharge.NewCharge();
+            MailBag a = MailBag.NewBag();
 
-            MailCharge b = MailCharge.NewCharge();
+            MailBag b = MailBag.NewBag();
 
             Assert.Equal(a, b);
         }
@@ -61,11 +61,11 @@
         {
             ReferenceDate.Freeze();
 
-            MailCharge a = MailCharge.NewCharge();
+            MailBag a = MailBag.NewBag();
 
             5.Minutes().Pass();
 
-            MailCharge b = MailCharge.NewCharge();
+            MailBag b = MailBag.NewBag();
 
             Assert.NotEqual(a, b);
         }

@@ -5,9 +5,9 @@ namespace Hydra.Infrastructure.Mail
     using System.Diagnostics.Contracts;
     using System.Globalization;
 
-    public class MailCharge : IComparable<MailCharge>, IEquatable<MailCharge>, ICloneable<MailCharge>
+    public class MailBag : IComparable<MailBag>, IEquatable<MailBag>, ICloneable<MailBag>
     {
-        public static readonly MailCharge Empty;
+        public static readonly MailBag Empty;
 
         private static readonly DateTime Zero;
 
@@ -15,16 +15,16 @@ namespace Hydra.Infrastructure.Mail
 
         private readonly string id;
 
-        static MailCharge()
+        static MailBag()
         {
             DateTime zero = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
             Zero = zero;
 
-            Empty = new MailCharge(zero);
+            Empty = new MailBag(zero);
         }
 
-        private MailCharge(DateTime timestamp)
+        private MailBag(DateTime timestamp)
         {
             this.timestamp = timestamp;
 
@@ -45,18 +45,18 @@ namespace Hydra.Infrastructure.Mail
             get { return this.id; }
         }
 
-        public static MailCharge NewCharge()
+        public static MailBag NewBag()
         {
             DateTime timestamp = TimeProvider.UtcNow;
 
-            return new MailCharge(timestamp);
+            return new MailBag(timestamp);
         }
 
-        public static bool TryParse(string s, out MailCharge charge)
+        public static bool TryParse(string s, out MailBag bag)
         {
             if (string.IsNullOrWhiteSpace(s))
             {
-                charge = MailCharge.Empty;
+                bag = MailBag.Empty;
                 return false;
             }
 
@@ -65,20 +65,20 @@ namespace Hydra.Infrastructure.Mail
             {
                 DateTime dt = new DateTime(Zero.Ticks + t, DateTimeKind.Utc);
 
-                charge = new MailCharge(dt);
+                bag = new MailBag(dt);
                 return true;
             }
 
-            charge = MailCharge.Empty;
+            bag = MailBag.Empty;
             return false;
         }
 
-        public MailCharge Clone()
+        public MailBag Clone()
         {
-            return new MailCharge(this.Timestamp);
+            return new MailBag(this.Timestamp);
         }
 
-        public int CompareTo(MailCharge other)
+        public int CompareTo(MailBag other)
         {
             if (other == null)
             {
@@ -88,7 +88,7 @@ namespace Hydra.Infrastructure.Mail
             return this.Timestamp.CompareTo(other.Timestamp);
         }
 
-        public bool Equals(MailCharge other)
+        public bool Equals(MailBag other)
         {
             if (other == null)
             {
@@ -105,7 +105,7 @@ namespace Hydra.Infrastructure.Mail
 
         public override bool Equals(object obj)
         {
-            MailCharge other = obj as MailCharge;
+            MailBag other = obj as MailBag;
 
             return this.Equals(other);
         }

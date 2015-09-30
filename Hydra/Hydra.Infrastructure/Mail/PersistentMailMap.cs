@@ -8,7 +8,7 @@ namespace Hydra.Infrastructure.Mail
             this.Map(x => x.IsSent).Not.Nullable();
             this.Map(x => x.Message).Not.Nullable();
             this.Map(x => x.SentAt);
-            this.Map(x => x.Charge).Not.Nullable();
+            this.Map(x => x.Bag).Not.Nullable();
         }
     }
 }
