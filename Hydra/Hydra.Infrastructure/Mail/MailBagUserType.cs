@@ -6,7 +6,7 @@ namespace Hydra.Infrastructure.Mail
     using NHibernate.SqlTypes;
     using NHibernate.UserTypes;
 
-    public class MailChargeUserType : IUserType
+    public class MailBagUserType : IUserType
     {
         SqlType[] IUserType.SqlTypes
         {
@@ -15,7 +15,7 @@ namespace Hydra.Infrastructure.Mail
 
         Type IUserType.ReturnedType
         {
-            get { return typeof(MailCharge); }
+            get { return typeof(MailBag); }
         }
 
         bool IUserType.IsMutable
@@ -42,32 +42,32 @@ namespace Hydra.Infrastructure.Mail
         {
             string s = (string)NHibernateUtil.String.NullSafeGet(rs, names);
 
-            MailCharge charge;
-            if (s == null || !MailCharge.TryParse(s, out charge))
+            MailBag bag;
+            if (s == null || !MailBag.TryParse(s, out bag))
             {
-                return MailCharge.Empty;
+                return MailBag.Empty;
             }
 
-            return charge;
+            return bag;
         }
 
         public void NullSafeSet(IDbCommand cmd, object value, int index)
         {
-            MailCharge charge = value as MailCharge;
+            MailBag bag = value as MailBag;
 
-            if (charge == null)
+            if (bag == null)
             {
                 NHibernateUtil.String.NullSafeSet(cmd, null, index);
 
                 return;
             }
 
-            NHibernateUtil.String.NullSafeSet(cmd, charge.ToString(), index);
+            NHibernateUtil.String.NullSafeSet(cmd, bag.ToString(), index);
         }
 
         public object DeepCopy(object value)
         {
-            return ((MailCharge)value).Clone();
+            return ((MailBag)value).Clone();
         }
 
         public object Replace(object original, object target, object owner)

@@ -4,6 +4,8 @@ namespace Hydra.Unity
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Web;
+    using Hydra.Infrastructure.I18n;
+    using Hydra.Infrastructure.Logging;
     using Hydra.Unity.Properties;
     using Microsoft.Practices.Unity;
 
@@ -23,11 +25,6 @@ namespace Hydra.Unity
                 }
 
                 IUnityContainer container = HttpContext.Current.Items[Constants.ContainerKey] as IUnityContainer;
-
-                if (container == null)
-                {
-                    throw new InvalidOperationException(Resources.ContainerNotFound);
-                }
 
                 return container;
             }
@@ -51,7 +48,22 @@ namespace Hydra.Unity
 
         public void Dispose()
         {
-            this.Container.Dispose();
+            IUnityContainer container = this.Container;
+            if (container != null)
+            {
+                try
+                {
+                    container.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    HydraEventSource.Log.Warning(ex);
+                }
+            }
+            else
+            {
+                HydraEventSource.Log.Warning(Resources.ContainerNotFound);
+            }
         }
 
         [SuppressMessage("Hydra.CodeQuality.CodeQualityRules", "HD1001:MethodMustNotHaveMoreThanFourParameters", Justification = "Implementing external API.")]

@@ -1,7 +1,6 @@
 namespace Hydra.Infrastructure.Mail
 {
     using System.Diagnostics.Contracts;
-    using System.Net.Mail;
     using MimeKit;
 
     [ContractClass(typeof(SentMailSinkContract))]
