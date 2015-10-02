@@ -203,6 +203,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </None>
+    <EmbeddedResource Include="Properties\Resources.de-DE.resx" />
     <EmbeddedResource Include="TestFiles\Mails\Mail01.eml" />
   </ItemGroup>
   <ItemGroup>

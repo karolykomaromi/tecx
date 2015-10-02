@@ -5,6 +5,8 @@ namespace Hydra.Infrastructure.I18n
     using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Linq;
+    using System.Linq.Expressions;
+    using System.Reflection;
     using Hydra.Infrastructure.Logging;
     using Newtonsoft.Json;
 
@@ -42,6 +44,48 @@ namespace Hydra.Infrastructure.I18n
         public IDictionary<CultureInfo, string> Translations
         {
             get { return new Dictionary<CultureInfo, string>(this.translations); }
+        }
+
+        public static PolyglotString FromResource(Expression<Func<string>> resourceSelector)
+        {
+            Contract.Requires(resourceSelector != null);
+            Contract.Ensures(Contract.Result<PolyglotString>() != null);
+
+            MemberExpression memberExpression = resourceSelector.Body as MemberExpression;
+
+            if (memberExpression != null)
+            {
+                MemberInfo member = memberExpression.Member;
+
+                if (member.DeclaringType != null)
+                {
+                    PropertyInfo rm = member
+                        .DeclaringType
+                        .GetProperty("ResourceManager", BindingFlags.Static | BindingFlags.Public);
+
+                    if (rm != null)
+                    {
+                        IResourceManager resourceManager = rm.GetValue(null, null) as IResourceManager;
+
+                        if (resourceManager != null)
+                        {
+                            var translations = SupportedCulturesProvider.Current.GetSupportedCultures()
+                                .Select(
+                                    culture =>
+                                        new
+                                        {
+                                            Culture = culture,
+                                            Translation = resourceManager.GetString(member.Name, culture)
+                                        })
+                                .ToDictionary(x => x.Culture, x => x.Translation);
+
+                            return new PolyglotString(translations);
+                        }
+                    }
+                }
+            }
+
+            return PolyglotString.Empty;
         }
 
         public static bool TryParse(string s, out PolyglotString mls)

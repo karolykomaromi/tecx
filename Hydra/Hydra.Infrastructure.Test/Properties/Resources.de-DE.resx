@@ -117,19 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Bar" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="Foo" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="Foo_Bar" xml:space="preserve">
-    <value>My Internationalized Property Name</value>
-  </data>
   <data name="FromResource" xml:space="preserve">
-    <value>en-US</value>
-  </data>
-  <data name="Hydra_Infrastructure_Test_Reflection_Foo_FullTypeNamedResourceExpected" xml:space="preserve">
-    <value>I'm a full type named resource.</value>
+    <value>de-DE</value>
   </data>
 </root>
