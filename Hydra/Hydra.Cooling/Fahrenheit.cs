@@ -9,7 +9,7 @@ namespace Hydra.Cooling
 
         public static readonly Fahrenheit AbsoluteZero = new Fahrenheit(-459.67m);
 
-        public new static readonly Fahrenheit Invalid = new Fahrenheit(decimal.MinValue);
+        public static new readonly Fahrenheit Invalid = new Fahrenheit(decimal.MinValue);
 
         public Fahrenheit(decimal fahrenheit)
             : base(fahrenheit)

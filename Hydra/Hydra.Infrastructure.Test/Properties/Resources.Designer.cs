@@ -71,6 +71,11 @@ namespace Hydra.Infrastructure.Test.Properties
             get { return Resources.ResourceManager.GetString("Foo_Bar", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
+        public static string FromResource
+        {
+            get { return Resources.ResourceManager.GetString("FromResource", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string Hydra_Infrastructure_Test_Reflection_Foo_FullTypeNamedResourceExpected
         {
             get { return Resources.ResourceManager.GetString("Hydra_Infrastructure_Test_Reflection_Foo_FullTypeNamedResourceExpected", resourceCulture ?? CultureInfo.CurrentUICulture); }

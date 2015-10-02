@@ -90,5 +90,16 @@
 
             Assert.Equal("single", mls.ToString(Cultures.GermanGermany));
         }
+
+        [Fact]
+        public void Should_Create_PolyglotString_From_Resource()
+        {
+            PolyglotString actual = PolyglotString.FromResource(() => Properties.Resources.FromResource);
+
+            Assert.NotNull(actual);
+            Assert.NotSame(PolyglotString.Empty, actual);
+            Assert.Equal("en-US", actual.Translations[Cultures.EnglishUnitedStates]);
+            Assert.Equal("de-DE", actual.Translations[Cultures.GermanGermany]);
+        }
     }
 }

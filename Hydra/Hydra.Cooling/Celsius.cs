@@ -9,7 +9,7 @@ namespace Hydra.Cooling
 
         public static readonly Celsius AbsoluteZero = new Celsius(-273.15m);
 
-        public new static readonly Celsius Invalid = new Celsius(decimal.MinValue);
+        public static new readonly Celsius Invalid = new Celsius(decimal.MinValue);
 
         public Celsius(decimal celsius)
             : base(celsius)
