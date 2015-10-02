@@ -1,6 +1,5 @@
-namespace Hydra.Infrastructure.Test.Cooling
+namespace Hydra.Cooling.Test
 {
-    using Hydra.Infrastructure.Cooling;
     using Xunit;
     using Xunit.Extensions;
 

@@ -140,10 +140,6 @@
     <Compile Include="Configuration\SettingTests.cs" />
     <Compile Include="ContainerDataAttribute.cs" />
     <Compile Include="ConvertHelperTests.cs" />
-    <Compile Include="Cooling\CelsiusTests.cs" />
-    <Compile Include="Cooling\FahrenheitTests.cs" />
-    <Compile Include="Cooling\KelvinTests.cs" />
-    <Compile Include="Cooling\TemperatureTests.cs" />
     <Compile Include="DefaultTests.cs" />
     <Compile Include="EnumerationTypeConverterTests.cs" />
     <Compile Include="EnumerationTests.cs" />
@@ -227,7 +223,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Cooling\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

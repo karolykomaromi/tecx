@@ -10,12 +10,6 @@
     {
         private static readonly Regex CamelHumps = new Regex("(?<=[a-z])([A-Z])", RegexOptions.Compiled);
 
-        private static readonly Regex NoCharactersNumbersAndUnderscores = new Regex("[^a-zA-Z0-9_]", RegexOptions.Compiled);
-
-        private static readonly Regex MultipleUnderscores = new Regex("_{2,}", RegexOptions.Compiled);
-
-        private static readonly Regex TrailingUnderscores = new Regex("_+$", RegexOptions.Compiled);
-
         public static string SplitCamelCase(string s)
         {
             Contract.Requires(s != null);

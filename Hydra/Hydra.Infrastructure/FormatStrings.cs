@@ -354,7 +354,8 @@
             /// <para>
             /// Precision specifier: Number of digits in the result string.
             /// </para>
-            /// <para>More information: <see href="https://msdn.microsoft.com/en-us/library/dwhawy9k(v=vs.110).aspx#XFormatString">The HexaDecimal ("X") Format Specifier.</see></para>
+            /// <para>More information: <see href="https://msdn.microsoft.com/en-us/library/dwhawy9k(v=vs.110).aspx#XFormatString">The HexaDecimal ("X") Format Specifier.</see>
+            /// </para>
             /// </summary>
             public const string Hex = "X";
 
@@ -369,60 +370,10 @@
             /// Precision specifier: Ignored.
             /// </para>
             /// <para>
-            /// More information: <see href="https://msdn.microsoft.com/en-us/library/dwhawy9k(v=vs.110).aspx#RFormatString">The Round-trip ("R") Format Specifier.</see></para>
+            /// More information: <see href="https://msdn.microsoft.com/en-us/library/dwhawy9k(v=vs.110).aspx#RFormatString">The Round-trip ("R") Format Specifier.</see>
+            /// </para>
             /// </summary>
             public const string RoundTrip = "R";
-        }
-
-        public static class Temperatures
-        {
-            /// <summary>
-            /// <para>
-            /// Result: A temperature value in °C (degrees Celsius).
-            /// </para>
-            /// <para>
-            /// Supported by: All types derived from <see cref="Hydra.Infrastructure.Cooling.Temperature"/>.
-            /// </para>
-            /// <para>
-            /// Precision specifier: Number of decimal digits.
-            /// </para>
-            /// <para>
-            /// Default precision specifier: Defined by <see cref="Hydra.Infrastructure.Cooling.Temperature.DefaultPrecision">Hydra.Infrastructure.Cooling.Temperature.DefaultPrecision</see>.
-            /// </para>
-            /// </summary>
-            public const string Celsius = "C";
-
-            /// <summary>
-            /// <para>
-            /// Result: A temperature value in K (Kelvin).
-            /// </para>
-            /// <para>
-            /// Supported by: All types derived from <see cref="Hydra.Infrastructure.Cooling.Temperature"/>.
-            /// </para>
-            /// <para>
-            /// Precision specifier: Number of decimal digits.
-            /// </para>
-            /// <para>
-            /// Default precision specifier: Defined by <see cref="Hydra.Infrastructure.Cooling.Temperature.DefaultPrecision">Hydra.Infrastructure.Cooling.Temperature.DefaultPrecision</see>.
-            /// </para>
-            /// </summary>
-            public const string Kelvin = "K";
-
-            /// <summary>
-            /// <para>
-            /// Result: A temperature value in °F (degrees Fahrenheit).
-            /// </para>
-            /// <para>
-            /// Supported by: All types derived from <see cref="Hydra.Infrastructure.Cooling.Temperature"/>.
-            /// </para>
-            /// <para>
-            /// Precision specifier: Number of decimal digits.
-            /// </para>
-            /// <para>
-            /// Default precision specifier: Defined by <see cref="Hydra.Infrastructure.Cooling.Temperature.DefaultPrecision">Hydra.Infrastructure.Cooling.Temperature.DefaultPrecision</see>.
-            /// </para>
-            /// </summary>
-            public const string Fahrenheit = "F";
         }
     }
 }

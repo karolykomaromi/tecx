@@ -1,4 +1,4 @@
-namespace Hydra.Infrastructure.Cooling
+namespace Hydra.Cooling
 {
     public static class TemperatureExtensions
     {

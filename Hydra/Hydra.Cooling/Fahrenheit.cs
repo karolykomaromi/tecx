@@ -1,68 +1,66 @@
-namespace Hydra.Infrastructure.Cooling
+namespace Hydra.Cooling
 {
     using System;
     using System.Diagnostics.Contracts;
 
-    public class Kelvin : Temperature, IComparable<Kelvin>, IEquatable<Kelvin>
+    public class Fahrenheit : Temperature, IComparable<Fahrenheit>, IEquatable<Fahrenheit>
     {
-        public const string UnitSymbol = "K";
+        public const string UnitSymbol = "°F";
 
-        public static readonly Kelvin AbsoluteZero = new Kelvin(0m);
+        public static readonly Fahrenheit AbsoluteZero = new Fahrenheit(-459.67m);
 
-        public new static readonly Kelvin Invalid = new Kelvin(decimal.MinValue);
+        public new static readonly Fahrenheit Invalid = new Fahrenheit(decimal.MinValue);
 
-        internal const decimal OffsetKelvinCelsius = 273.15m;
-
-        public Kelvin(decimal kelvin)
-            : base(kelvin)
+        public Fahrenheit(decimal fahrenheit)
+            : base(fahrenheit)
         {
         }
 
         protected override string Format
         {
-            get { return FormatStrings.Temperatures.Kelvin; }
+            get { return FormatStrings.Temperatures.Fahrenheit; }
         }
 
         protected override string Symbol
         {
-            get { return Kelvin.UnitSymbol; }
+            get { return Fahrenheit.UnitSymbol; }
         }
 
-        public static explicit operator Celsius(Kelvin kelvin)
+        public static explicit operator Kelvin(Fahrenheit fahrenheit)
         {
-            Contract.Requires(kelvin != null);
+            Contract.Requires(fahrenheit != null);
+            Contract.Ensures(Contract.Result<Kelvin>() != null);
+
+            return fahrenheit.ToKelvin();
+        }
+
+        public static explicit operator Celsius(Fahrenheit fahrenheit)
+        {
+            Contract.Requires(fahrenheit != null);
             Contract.Ensures(Contract.Result<Celsius>() != null);
 
-            return kelvin.ToCelsius();
+            return fahrenheit.ToCelsius();
         }
 
-        public static explicit operator Fahrenheit(Kelvin kelvin)
+        public static Fahrenheit operator +(Fahrenheit x, Fahrenheit y)
         {
-            Contract.Requires(kelvin != null);
+            Contract.Requires(x != null);
+            Contract.Requires(y != null);
             Contract.Ensures(Contract.Result<Fahrenheit>() != null);
 
-            return kelvin.ToFahrenheit();
+            return new Fahrenheit(x.Value + y.Value);
         }
 
-        public static Kelvin operator +(Kelvin x, Kelvin y)
+        public static Fahrenheit operator -(Fahrenheit x, Fahrenheit y)
         {
             Contract.Requires(x != null);
             Contract.Requires(y != null);
-            Contract.Ensures(Contract.Result<Kelvin>() != null);
+            Contract.Ensures(Contract.Result<Fahrenheit>() != null);
 
-            return new Kelvin(x.Value + y.Value);
+            return new Fahrenheit(x.Value - y.Value);
         }
-
-        public static Kelvin operator -(Kelvin x, Kelvin y)
-        {
-            Contract.Requires(x != null);
-            Contract.Requires(y != null);
-            Contract.Ensures(Contract.Result<Kelvin>() != null);
-
-            return new Kelvin(x.Value - y.Value);
-        }
-
-        public static bool operator <(Kelvin x, Kelvin y)
+        
+        public static bool operator <(Fahrenheit x, Fahrenheit y)
         {
             if (object.ReferenceEquals(x, y))
             {
@@ -82,7 +80,7 @@ namespace Hydra.Infrastructure.Cooling
             return x.Value < y.Value;
         }
 
-        public static bool operator >(Kelvin x, Kelvin y)
+        public static bool operator >(Fahrenheit x, Fahrenheit y)
         {
             if (object.ReferenceEquals(x, y))
             {
@@ -102,7 +100,7 @@ namespace Hydra.Infrastructure.Cooling
             return x.Value > y.Value;
         }
 
-        public static bool operator <=(Kelvin x, Kelvin y)
+        public static bool operator <=(Fahrenheit x, Fahrenheit y)
         {
             if (object.ReferenceEquals(x, y))
             {
@@ -122,7 +120,7 @@ namespace Hydra.Infrastructure.Cooling
             return x.Value <= y.Value;
         }
 
-        public static bool operator >=(Kelvin x, Kelvin y)
+        public static bool operator >=(Fahrenheit x, Fahrenheit y)
         {
             if (object.ReferenceEquals(x, y))
             {
@@ -142,7 +140,7 @@ namespace Hydra.Infrastructure.Cooling
             return x.Value >= y.Value;
         }
 
-        public static bool operator ==(Kelvin x, Kelvin y)
+        public static bool operator ==(Fahrenheit x, Fahrenheit y)
         {
             if (object.ReferenceEquals(x, y))
             {
@@ -162,52 +160,52 @@ namespace Hydra.Infrastructure.Cooling
             return x.Value.Equals(y.Value);
         }
 
-        public static bool operator !=(Kelvin x, Kelvin y)
+        public static bool operator !=(Fahrenheit x, Fahrenheit y)
         {
             return !(x == y);
         }
 
-        public static Kelvin operator /(Kelvin kelvin, decimal factor)
+        public static Fahrenheit operator /(Fahrenheit fahrenheit, decimal factor)
         {
-            Contract.Requires(kelvin != null);
+            Contract.Requires(fahrenheit != null);
             Contract.Requires(factor != 0m);
-            Contract.Ensures(Contract.Result<Kelvin>() != null);
+            Contract.Ensures(Contract.Result<Fahrenheit>() != null);
 
-            return new Kelvin(kelvin.Value / factor);
+            return new Fahrenheit(fahrenheit.Value / factor);
         }
 
-        public static Kelvin operator *(Kelvin kelvin, decimal factor)
+        public static Fahrenheit operator *(Fahrenheit fahrenheit, decimal factor)
         {
-            Contract.Requires(kelvin != null);
-            Contract.Ensures(Contract.Result<Kelvin>() != null);
+            Contract.Requires(fahrenheit != null);
+            Contract.Ensures(Contract.Result<Fahrenheit>() != null);
 
-            return new Kelvin(kelvin.Value * factor);
+            return new Fahrenheit(fahrenheit.Value * factor);
         }
 
-        public static Kelvin operator *(decimal factor, Kelvin kelvin)
+        public static Fahrenheit operator *(decimal factor, Fahrenheit fahrenheit)
         {
-            Contract.Requires(kelvin != null);
-            Contract.Ensures(Contract.Result<Kelvin>() != null);
+            Contract.Requires(fahrenheit != null);
+            Contract.Ensures(Contract.Result<Fahrenheit>() != null);
 
-            return kelvin * factor;
+            return fahrenheit * factor;
         }
 
         public override Kelvin ToKelvin()
         {
-            return this;
+            return new Kelvin((this.Value * 1.8m) - 459.67m);
         }
 
         public override Celsius ToCelsius()
         {
-            return new Celsius(this.Value - OffsetKelvinCelsius);
+            return new Celsius((this.Value * 1.8m) + 32m);
         }
 
         public override Fahrenheit ToFahrenheit()
         {
-            return new Fahrenheit((this.Value * 1.8m) - 459.67m);
+            return this;
         }
 
-        public int CompareTo(Kelvin other)
+        public int CompareTo(Fahrenheit other)
         {
             if (object.ReferenceEquals(other, null))
             {
@@ -217,7 +215,7 @@ namespace Hydra.Infrastructure.Cooling
             return this.Value.CompareTo(other.Value);
         }
 
-        public bool Equals(Kelvin other)
+        public bool Equals(Fahrenheit other)
         {
             if (other == null)
             {
@@ -229,7 +227,7 @@ namespace Hydra.Infrastructure.Cooling
 
         public override bool Equals(object obj)
         {
-            Kelvin other = obj as Kelvin;
+            Fahrenheit other = obj as Fahrenheit;
 
             return this.Equals(other);
         }
