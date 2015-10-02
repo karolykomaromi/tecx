@@ -1,66 +1,66 @@
-namespace Hydra.Infrastructure.Cooling
+namespace Hydra.Cooling
 {
     using System;
     using System.Diagnostics.Contracts;
 
-    public class Fahrenheit : Temperature, IComparable<Fahrenheit>, IEquatable<Fahrenheit>
+    public class Celsius : Temperature, IComparable<Celsius>, IEquatable<Celsius>
     {
-        public const string UnitSymbol = "°F";
+        public const string UnitSymbol = "°C";
 
-        public static readonly Fahrenheit AbsoluteZero = new Fahrenheit(-459.67m);
+        public static readonly Celsius AbsoluteZero = new Celsius(-273.15m);
 
-        public new static readonly Fahrenheit Invalid = new Fahrenheit(decimal.MinValue);
+        public new static readonly Celsius Invalid = new Celsius(decimal.MinValue);
 
-        public Fahrenheit(decimal fahrenheit)
-            : base(fahrenheit)
+        public Celsius(decimal celsius)
+            : base(celsius)
         {
-        }
-
-        protected override string Format
-        {
-            get { return FormatStrings.Temperatures.Fahrenheit; }
         }
 
         protected override string Symbol
         {
-            get { return Fahrenheit.UnitSymbol; }
+            get { return Celsius.UnitSymbol; }
         }
 
-        public static explicit operator Kelvin(Fahrenheit fahrenheit)
+        protected override string Format
         {
-            Contract.Requires(fahrenheit != null);
+            get { return FormatStrings.Temperatures.Celsius; }
+        }
+
+        public static explicit operator Kelvin(Celsius celsius)
+        {
+            Contract.Requires(celsius != null);
             Contract.Ensures(Contract.Result<Kelvin>() != null);
 
-            return fahrenheit.ToKelvin();
+            return celsius.ToKelvin();
         }
 
-        public static explicit operator Celsius(Fahrenheit fahrenheit)
+        public static explicit operator Fahrenheit(Celsius celsius)
         {
-            Contract.Requires(fahrenheit != null);
+            Contract.Requires(celsius != null);
+            Contract.Ensures(Contract.Result<Fahrenheit>() != null);
+
+            return celsius.ToFahrenheit();
+        }
+
+        public static Celsius operator +(Celsius x, Celsius y)
+        {
+            Contract.Requires(x != null);
+            Contract.Requires(y != null);
             Contract.Ensures(Contract.Result<Celsius>() != null);
 
-            return fahrenheit.ToCelsius();
+            return new Celsius(x.Value + y.Value);
         }
 
-        public static Fahrenheit operator +(Fahrenheit x, Fahrenheit y)
+        public static Celsius operator -(Celsius x, Celsius y)
         {
             Contract.Requires(x != null);
             Contract.Requires(y != null);
-            Contract.Ensures(Contract.Result<Fahrenheit>() != null);
+            Contract.Ensures(Contract.Result<Celsius>() != null);
 
-            return new Fahrenheit(x.Value + y.Value);
+            return new Celsius(x.Value - y.Value);
         }
 
-        public static Fahrenheit operator -(Fahrenheit x, Fahrenheit y)
-        {
-            Contract.Requires(x != null);
-            Contract.Requires(y != null);
-            Contract.Ensures(Contract.Result<Fahrenheit>() != null);
-
-            return new Fahrenheit(x.Value - y.Value);
-        }
-        
-        public static bool operator <(Fahrenheit x, Fahrenheit y)
+        public static bool operator <(Celsius x, Celsius y)
         {
             if (object.ReferenceEquals(x, y))
             {
@@ -80,7 +80,7 @@ namespace Hydra.Infrastructure.Cooling
             return x.Value < y.Value;
         }
 
-        public static bool operator >(Fahrenheit x, Fahrenheit y)
+        public static bool operator >(Celsius x, Celsius y)
         {
             if (object.ReferenceEquals(x, y))
             {
@@ -100,7 +100,7 @@ namespace Hydra.Infrastructure.Cooling
             return x.Value > y.Value;
         }
 
-        public static bool operator <=(Fahrenheit x, Fahrenheit y)
+        public static bool operator <=(Celsius x, Celsius y)
         {
             if (object.ReferenceEquals(x, y))
             {
@@ -120,7 +120,7 @@ namespace Hydra.Infrastructure.Cooling
             return x.Value <= y.Value;
         }
 
-        public static bool operator >=(Fahrenheit x, Fahrenheit y)
+        public static bool operator >=(Celsius x, Celsius y)
         {
             if (object.ReferenceEquals(x, y))
             {
@@ -140,7 +140,7 @@ namespace Hydra.Infrastructure.Cooling
             return x.Value >= y.Value;
         }
 
-        public static bool operator ==(Fahrenheit x, Fahrenheit y)
+        public static bool operator ==(Celsius x, Celsius y)
         {
             if (object.ReferenceEquals(x, y))
             {
@@ -160,52 +160,52 @@ namespace Hydra.Infrastructure.Cooling
             return x.Value.Equals(y.Value);
         }
 
-        public static bool operator !=(Fahrenheit x, Fahrenheit y)
+        public static bool operator !=(Celsius x, Celsius y)
         {
             return !(x == y);
         }
 
-        public static Fahrenheit operator /(Fahrenheit fahrenheit, decimal factor)
+        public static Celsius operator /(Celsius celsius, decimal factor)
         {
-            Contract.Requires(fahrenheit != null);
+            Contract.Requires(celsius != null);
             Contract.Requires(factor != 0m);
-            Contract.Ensures(Contract.Result<Fahrenheit>() != null);
+            Contract.Ensures(Contract.Result<Celsius>() != null);
 
-            return new Fahrenheit(fahrenheit.Value / factor);
+            return new Celsius(celsius.Value / factor);
         }
 
-        public static Fahrenheit operator *(Fahrenheit fahrenheit, decimal factor)
+        public static Celsius operator *(Celsius celsius, decimal factor)
         {
-            Contract.Requires(fahrenheit != null);
-            Contract.Ensures(Contract.Result<Fahrenheit>() != null);
+            Contract.Requires(celsius != null);
+            Contract.Ensures(Contract.Result<Celsius>() != null);
 
-            return new Fahrenheit(fahrenheit.Value * factor);
+            return new Celsius(celsius.Value * factor);
         }
 
-        public static Fahrenheit operator *(decimal factor, Fahrenheit fahrenheit)
+        public static Celsius operator *(decimal factor, Celsius celsius)
         {
-            Contract.Requires(fahrenheit != null);
-            Contract.Ensures(Contract.Result<Fahrenheit>() != null);
+            Contract.Requires(celsius != null);
+            Contract.Ensures(Contract.Result<Celsius>() != null);
 
-            return fahrenheit * factor;
+            return celsius * factor;
         }
 
         public override Kelvin ToKelvin()
         {
-            return new Kelvin((this.Value * 1.8m) - 459.67m);
+            return new Kelvin(this.Value + Kelvin.OffsetKelvinCelsius);
         }
 
         public override Celsius ToCelsius()
         {
-            return new Celsius((this.Value * 1.8m) + 32m);
+            return this;
         }
 
         public override Fahrenheit ToFahrenheit()
         {
-            return this;
+            return new Fahrenheit(this.Value - (32m * 5m / 9m));
         }
 
-        public int CompareTo(Fahrenheit other)
+        public int CompareTo(Celsius other)
         {
             if (object.ReferenceEquals(other, null))
             {
@@ -215,7 +215,7 @@ namespace Hydra.Infrastructure.Cooling
             return this.Value.CompareTo(other.Value);
         }
 
-        public bool Equals(Fahrenheit other)
+        public bool Equals(Celsius other)
         {
             if (other == null)
             {
@@ -227,7 +227,7 @@ namespace Hydra.Infrastructure.Cooling
 
         public override bool Equals(object obj)
         {
-            Fahrenheit other = obj as Fahrenheit;
+            Celsius other = obj as Celsius;
 
             return this.Equals(other);
         }

@@ -1,10 +1,9 @@
-namespace Hydra.Infrastructure.Test.Cooling
+namespace Hydra.Cooling.Test
 {
-    using Hydra.Infrastructure.Cooling;
     using Xunit;
     using Xunit.Extensions;
 
-    public class KelvinTests
+    public class CelsiusTests
     {
         [Theory]
         [InlineData(2.5, 3.7, 6.2)]
@@ -12,9 +11,9 @@ namespace Hydra.Infrastructure.Test.Cooling
         [InlineData(-10, 7.5, -2.5)]
         public void Should_Correctly_Add_Values(double x, double y, double z)
         {
-            Kelvin actual = x.Kelvin() + y.Kelvin();
+            Celsius actual = x.DegreesCelsius() + y.DegreesCelsius();
 
-            Kelvin expected = z.Kelvin();
+            Celsius expected = z.DegreesCelsius();
 
             Assert.Equal(expected, actual);
         }
@@ -25,9 +24,9 @@ namespace Hydra.Infrastructure.Test.Cooling
         [InlineData(-10, 7.5, -17.5)]
         public void Should_Correctly_Subtract_Values(double x, double y, double z)
         {
-            Kelvin actual = x.Kelvin() - y.Kelvin();
+            Celsius actual = x.DegreesCelsius() - y.DegreesCelsius();
 
-            Kelvin expected = z.Kelvin();
+            Celsius expected = z.DegreesCelsius();
 
             Assert.Equal(expected, actual);
         }
@@ -38,8 +37,8 @@ namespace Hydra.Infrastructure.Test.Cooling
         [InlineData(-4.5, -4.49)]
         public void Should_Correctly_Identify_Lesser_Temperature(double lesser, double greater)
         {
-            Kelvin x = lesser.Kelvin();
-            Kelvin y = greater.Kelvin();
+            Celsius x = lesser.DegreesCelsius();
+            Celsius y = greater.DegreesCelsius();
 
             Assert.True(x < y);
         }
@@ -53,8 +52,8 @@ namespace Hydra.Infrastructure.Test.Cooling
         [InlineData(-4.5, -4.5)]
         public void Should_Correctly_Identify_Lesser_Or_Equal_Temperature(double lesser, double greater)
         {
-            Kelvin x = lesser.Kelvin();
-            Kelvin y = greater.Kelvin();
+            Celsius x = lesser.DegreesCelsius();
+            Celsius y = greater.DegreesCelsius();
 
             Assert.True(x <= y);
         }
@@ -65,8 +64,8 @@ namespace Hydra.Infrastructure.Test.Cooling
         [InlineData(-4.5, -4.49)]
         public void Should_Correctly_Identify_Greater_Temperature(double lesser, double greater)
         {
-            Kelvin x = lesser.Kelvin();
-            Kelvin y = greater.Kelvin();
+            Celsius x = lesser.DegreesCelsius();
+            Celsius y = greater.DegreesCelsius();
 
             Assert.True(y > x);
         }
@@ -80,8 +79,8 @@ namespace Hydra.Infrastructure.Test.Cooling
         [InlineData(-4.5, -4.5)]
         public void Should_Correctly_Identify_Greater_Or_Equal_Temperature(double lesser, double greater)
         {
-            Kelvin x = lesser.Kelvin();
-            Kelvin y = greater.Kelvin();
+            Celsius x = lesser.DegreesCelsius();
+            Celsius y = greater.DegreesCelsius();
 
             Assert.True(y >= x);
         }
@@ -89,7 +88,7 @@ namespace Hydra.Infrastructure.Test.Cooling
         [Fact]
         public void Any_Object_Compares_Greater_Than_Null()
         {
-            Kelvin a = new Kelvin(1);
+            Celsius a = new Celsius(1);
 
             Assert.True(a.CompareTo(null) > 0);
         }
@@ -97,7 +96,7 @@ namespace Hydra.Infrastructure.Test.Cooling
         [Fact]
         public void Compare_To_Self_Returns_Zero()
         {
-            Kelvin a = new Kelvin(1);
+            Celsius a = new Celsius(1);
 
             Assert.Equal(0, a.CompareTo(a));
         }
@@ -105,8 +104,8 @@ namespace Hydra.Infrastructure.Test.Cooling
         [Fact]
         public void If_A_CompareTo_B_Returns_Zero_Then_B_CompareTo_A_Must_Return_Zero()
         {
-            Kelvin a = new Kelvin(1);
-            Kelvin b = new Kelvin(1);
+            Celsius a = new Celsius(1);
+            Celsius b = new Celsius(1);
 
             Assert.Equal(0, a.CompareTo(b));
             Assert.Equal(0, b.CompareTo(a));
@@ -115,9 +114,9 @@ namespace Hydra.Infrastructure.Test.Cooling
         [Fact]
         public void If_A_CompareTo_B_Returns_Zero_And_B_CompareTo_C_Returns_Zero_Then_A_CompareTo_C_Must_Return_Zero()
         {
-            Kelvin a = new Kelvin(1);
-            Kelvin b = new Kelvin(1);
-            Kelvin c = new Kelvin(1);
+            Celsius a = new Celsius(1);
+            Celsius b = new Celsius(1);
+            Celsius c = new Celsius(1);
 
             Assert.Equal(0, a.CompareTo(b));
             Assert.Equal(0, b.CompareTo(c));
@@ -127,8 +126,8 @@ namespace Hydra.Infrastructure.Test.Cooling
         [Fact]
         public void If_A_CompareTo_B_Returns_Non_Zero_B_CompareTo_A_Must_Return_Value_Of_Opposite_Sign()
         {
-            Kelvin a = new Kelvin(10);
-            Kelvin b = new Kelvin(20);
+            Celsius a = new Celsius(10);
+            Celsius b = new Celsius(20);
 
             Assert.True(a.CompareTo(b) < 0);
             Assert.True(b.CompareTo(a) > 0);
@@ -137,9 +136,9 @@ namespace Hydra.Infrastructure.Test.Cooling
         [Fact]
         public void If_A_CompareTo_B_Returns_Non_Zero_And_B_CompareTo_C_Returns_Value_Of_Same_Sign_Then_A_CompareTo_C_Must_Return_Value_Of_Same_Sign()
         {
-            Kelvin a = new Kelvin(10);
-            Kelvin b = new Kelvin(20);
-            Kelvin c = new Kelvin(30);
+            Celsius a = new Celsius(10);
+            Celsius b = new Celsius(20);
+            Celsius c = new Celsius(30);
 
             Assert.True(a.CompareTo(b) < 0);
             Assert.True(b.CompareTo(c) < 0);
@@ -149,11 +148,11 @@ namespace Hydra.Infrastructure.Test.Cooling
             Assert.True(b.CompareTo(a) > 0);
             Assert.True(c.CompareTo(a) > 0);
         }
-        
+
         [Fact]
         public void Should_Equal_To_Self()
         {
-            Kelvin c = new Kelvin(10);
+            Celsius c = new Celsius(10);
 
             Assert.True(c.Equals(c));
         }
@@ -161,7 +160,7 @@ namespace Hydra.Infrastructure.Test.Cooling
         [Fact]
         public void Should_Not_Equal_Null()
         {
-            Kelvin c = new Kelvin(10);
+            Celsius c = new Celsius(10);
 
             Assert.False(c.Equals(null));
         }
@@ -169,8 +168,8 @@ namespace Hydra.Infrastructure.Test.Cooling
         [Fact]
         public void Same_Values_Should_Equal()
         {
-            Kelvin x = new Kelvin(10);
-            Kelvin y = new Kelvin(10);
+            Celsius x = new Celsius(10);
+            Celsius y = new Celsius(10);
 
             Assert.True(x == y);
         }

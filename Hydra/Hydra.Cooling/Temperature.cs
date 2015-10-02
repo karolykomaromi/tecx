@@ -1,4 +1,4 @@
-namespace Hydra.Infrastructure.Cooling
+namespace Hydra.Cooling
 {
     using System;
     using System.Globalization;
@@ -10,9 +10,9 @@ namespace Hydra.Infrastructure.Cooling
 
         private const string DefaultPrecision = "1";
 
-        private static readonly Regex LegalFormatString = new Regex("^[cfk][0-9]*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex LegalFormatString = new Regex("^[rcfk][0-9]*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        private static readonly Regex UnitIdentifier = new Regex("^[cfk]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex UnitIdentifier = new Regex("^[rcfk]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         private static readonly Regex Precision = new Regex("[0-9]+", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
@@ -147,6 +147,11 @@ namespace Hydra.Infrastructure.Cooling
                     break;
                 }
 
+                case FormatStrings.Temperatures.RoundTrip:
+                {
+                    return this.Value.ToString(CultureInfo.InvariantCulture) + this.Symbol;
+                }
+
                 default:
                 {
                     throw new FormatException();
@@ -157,7 +162,7 @@ namespace Hydra.Infrastructure.Cooling
 
             string precision = match.Success ? match.Value : Temperature.DefaultPrecision;
 
-            string decimalFormat = FormatStrings.Numeric.FixedPoint + precision;
+            string decimalFormat = Infrastructure.FormatStrings.Numeric.FixedPoint + precision;
 
             return temperature.Value.ToString(decimalFormat, formatProvider) + temperature.Symbol;
         }
