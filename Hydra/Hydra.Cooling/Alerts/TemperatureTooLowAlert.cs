@@ -40,7 +40,7 @@ namespace Hydra.Cooling.Alerts
             this.TemperatureTooLow(this, new TemperatureTooLowEventArgs(this.Device, this.MinAllowedTemperature, actualTemperature));
         }
 
-        protected override IObservable<EventPattern<TemperatureTooLowEventArgs>> ToObservable()
+        protected sealed override IObservable<EventPattern<TemperatureTooLowEventArgs>> ToObservable()
         {
             return Observable.FromEventPattern<TemperatureTooLowEventArgs>(
                 handler => this.TemperatureTooLow += handler,

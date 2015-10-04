@@ -28,7 +28,7 @@ namespace Hydra.Cooling.Alerts
             this.DoorOpened(this, new DoorOpenedEventArgs(this.Device));
         }
 
-        protected override IObservable<EventPattern<DoorOpenedEventArgs>> ToObservable()
+        protected sealed override IObservable<EventPattern<DoorOpenedEventArgs>> ToObservable()
         {
             return Observable.FromEventPattern<DoorOpenedEventArgs>(
                 handler => this.DoorOpened += handler,
