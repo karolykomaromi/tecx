@@ -37,7 +37,7 @@ namespace Hydra.Cooling.Alerts
 
         private void OnSwitchStateChanged(object sender, SwitchStateChangedEventArgs e)
         {
-            if (e.NewSwitchState == SwitchState.On)
+            if (e.NewSwitchState == SwitchState.Off)
             {
                 this.EmergencySwitchReleased(this, new EmergencySwitchReleasedEventArgs(this.Device));
             }
