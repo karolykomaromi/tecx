@@ -3,10 +3,12 @@ namespace Hydra.Import.Results
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.Linq;
     using Hydra.Import.Messages;
 
+    [DebuggerDisplay("Count={Count}")]
     public sealed class CompositeImportResult : ImportResult, IEnumerable<ImportResult>
     {
         private readonly HashSet<ImportResult> results;
@@ -15,9 +17,16 @@ namespace Hydra.Import.Results
 
         public CompositeImportResult(params ImportResult[] results)
         {
-            this.results = new HashSet<ImportResult>(results ?? new ImportResult[0]);
+            this.results = new HashSet<ImportResult>();
+
+            this.AddRange(results);
 
             this.messages = new CompositeImportMessages(this);
+        }
+
+        public int Count
+        {
+            get { return this.results.Count; }
         }
 
         public override string Summary
@@ -48,7 +57,7 @@ namespace Hydra.Import.Results
             Contract.Requires(result != null);
             Contract.Ensures(Contract.Result<CompositeImportResult>() != null);
 
-            this.results.Add(result);
+            this.AddRange(new[] { result });
 
             return this;
         }
@@ -63,6 +72,34 @@ namespace Hydra.Import.Results
             return this.GetEnumerator();
         }
 
+        private void AddRange(IEnumerable<ImportResult> results)
+        {
+            if (results == null)
+            {
+                return;
+            }
+
+            foreach (var result in results)
+            {
+                if (object.ReferenceEquals(this, result))
+                {
+                    continue;
+                }
+
+                CompositeImportResult other = result as CompositeImportResult;
+
+                if (other != null)
+                {
+                    this.AddRange(other.results);
+                }
+                else
+                {
+                    this.results.Add(result);
+                }
+            }
+        }
+
+        [DebuggerDisplay("Count={Count}")]
         private class CompositeImportMessages : ImportMessages
         {
             private readonly CompositeImportResult result;
