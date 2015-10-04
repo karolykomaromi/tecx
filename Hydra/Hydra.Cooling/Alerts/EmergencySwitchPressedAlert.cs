@@ -28,7 +28,7 @@ namespace Hydra.Cooling.Alerts
             this.EmergencySwitchPressed(this, new EmergencySwitchPressedEventArgs(this.Device));
         }
 
-        protected override IObservable<EventPattern<EmergencySwitchPressedEventArgs>> ToObservable()
+        protected sealed override IObservable<EventPattern<EmergencySwitchPressedEventArgs>> ToObservable()
         {
             return Observable.FromEventPattern<EmergencySwitchPressedEventArgs>(
                 handler => this.EmergencySwitchPressed += handler,
