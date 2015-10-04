@@ -211,6 +211,7 @@
     <Compile Include="Default.cs" />
     <Compile Include="DefaultTimeProvider.cs" />
     <Compile Include="DefaultTimeZoneProvider.cs" />
+    <Compile Include="Disposable.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityMap.cs" />
     <Compile Include="Enumeration.cs" />
