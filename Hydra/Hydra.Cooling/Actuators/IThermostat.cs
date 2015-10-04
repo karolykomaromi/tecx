@@ -1,4 +1,4 @@
-﻿namespace Hydra.Cooling
+﻿namespace Hydra.Cooling.Actuators
 {
     using System.Diagnostics.Contracts;
 

@@ -210,6 +210,7 @@
     <Compile Include="ConvertHelper.cs" />
     <Compile Include="Default.cs" />
     <Compile Include="DefaultTimeProvider.cs" />
+    <Compile Include="DefaultTimeZoneProvider.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityMap.cs" />
     <Compile Include="Enumeration.cs" />
@@ -343,6 +344,7 @@
     <Compile Include="TimeProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimespanExtensions.cs" />
+    <Compile Include="TimeZoneProvider.cs" />
     <Compile Include="TimeZones.cs" />
   </ItemGroup>
   <ItemGroup>

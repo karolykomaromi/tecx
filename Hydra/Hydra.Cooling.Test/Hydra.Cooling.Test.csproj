@@ -46,13 +46,16 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="CelsiusTests.cs" />
+    <Compile Include="Configuration\SurveillanceSystemBuilderTests.cs" />
     <Compile Include="FahrenheitTests.cs" />
     <Compile Include="KelvinTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TemperatureTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
