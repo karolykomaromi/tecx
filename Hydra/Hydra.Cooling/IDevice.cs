@@ -6,6 +6,8 @@ namespace Hydra.Cooling
     [ContractClass(typeof(DeviceContract))]
     public interface IDevice
     {
+        DeviceId Id { get; }
+
         PolyglotString Name { get; set; }
 
         PolyglotString Description { get; set; }
@@ -16,6 +18,16 @@ namespace Hydra.Cooling
     [ContractClassFor(typeof(IDevice))]
     internal abstract class DeviceContract : IDevice
     {
+        public DeviceId Id
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<DeviceId>() != null);
+
+                return DeviceId.Empty;
+            }
+        }
+
         public PolyglotString Name
         {
             get

@@ -1,13 +1,19 @@
 namespace Hydra.Cooling
 {
+    using System.Diagnostics.Contracts;
     using Hydra.Infrastructure.I18n;
 
     public abstract class Device : IDevice
     {
         public static readonly IDevice Null = new NullDevice();
 
-        protected Device()
+        private readonly DeviceId id;
+
+        protected Device(DeviceId id)
         {
+            Contract.Requires(id != null);
+
+            this.id = id;
             this.Name = PolyglotString.Empty;
             this.Description = PolyglotString.Empty;
             this.Location = Location.Nowhere;
@@ -19,8 +25,18 @@ namespace Hydra.Cooling
 
         public Location Location { get; set; }
 
+        public DeviceId Id
+        {
+            get { return this.id; }
+        }
+
         protected class NullDevice : IDevice
         {
+            public DeviceId Id
+            {
+                get { return DeviceId.Empty; }
+            }
+
             public PolyglotString Name
             {
                 get { return PolyglotString.Empty; }

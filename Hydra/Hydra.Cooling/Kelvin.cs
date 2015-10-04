@@ -9,6 +9,10 @@ namespace Hydra.Cooling
 
         public static readonly Kelvin AbsoluteZero = new Kelvin(0m);
 
+        public static readonly Kelvin WaterBoiling = new Kelvin(373.15m);
+
+        public static readonly Kelvin WaterFreezing = new Kelvin(273.16m);
+
         public static new readonly Kelvin Invalid = new Kelvin(decimal.MinValue);
 
         internal const decimal OffsetKelvinCelsius = 273.15m;
