@@ -1,6 +1,7 @@
 namespace Hydra.Cooling.Alerts
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
@@ -8,7 +9,7 @@ namespace Hydra.Cooling.Alerts
     using Hydra.Cooling.Sensors;
 
     [DebuggerDisplay("Count={Count}")]
-    public class CompositeAlert<TEventArgs> : IAlert<TEventArgs>
+    public class CompositeAlert<TEventArgs> : IAlert<TEventArgs>, IEnumerable<IAlert<TEventArgs>>
         where TEventArgs : SensorStateChangedEventArgs
     {
         private readonly HashSet<IAlert<TEventArgs>> alerts;
@@ -30,6 +31,16 @@ namespace Hydra.Cooling.Alerts
             IDisposable[] subscriptions = this.alerts.Select(alert => alert.Subscribe(observer)).ToArray();
 
             return new CompositeSubscription(subscriptions);
+        }
+        
+        public IEnumerator<IAlert<TEventArgs>> GetEnumerator()
+        {
+            return this.alerts.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         private void AddRange(IEnumerable<IAlert<TEventArgs>> alerts)
@@ -60,7 +71,7 @@ namespace Hydra.Cooling.Alerts
         }
 
         [DebuggerDisplay("Count={Count}")]
-        private class CompositeSubscription : IDisposable
+        private class CompositeSubscription : IDisposable, IEnumerable<IDisposable>
         {
             private readonly HashSet<IDisposable> subscriptions;
 
@@ -92,6 +103,16 @@ namespace Hydra.Cooling.Alerts
                 }
 
                 this.isDisposed = true;
+            }
+
+            public IEnumerator<IDisposable> GetEnumerator()
+            {
+                return this.subscriptions.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
             }
 
             private void AddRange(IEnumerable<IDisposable> subscriptions)
