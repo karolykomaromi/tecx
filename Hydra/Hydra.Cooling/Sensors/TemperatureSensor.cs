@@ -2,8 +2,10 @@
 {
     using System;
     using System.Diagnostics.Contracts;
+    using System.Reactive;
+    using System.Reactive.Linq;
 
-    public abstract class TemperatureSensor : Device, ITemperatureSensor
+    public abstract class TemperatureSensor : Sensor<ITemperatureSensor, TemperatureChangedEventArgs>, ITemperatureSensor
     {
         public static new readonly ITemperatureSensor Null = new NullTemperatureSensor();
 
@@ -15,6 +17,13 @@
         public event EventHandler<TemperatureChangedEventArgs> TemperatureChanged = delegate { };
 
         public abstract Temperature CurrentTemperature { get; }
+
+        protected sealed override IObservable<EventPattern<TemperatureChangedEventArgs>> ToObservable()
+        {
+            return Observable.FromEventPattern<TemperatureChangedEventArgs>(
+                handler => this.TemperatureChanged += handler,
+                handler => this.TemperatureChanged -= handler);
+        }
 
         protected virtual void OnTemperatureChanged(TemperatureChangedEventArgs args)
         {
@@ -30,7 +39,7 @@
             this.TemperatureChanged(this, new TemperatureChangedEventArgs(this, newTemperature));
         }
 
-        private class NullTemperatureSensor : NullDevice, ITemperatureSensor
+        private class NullTemperatureSensor : NullSensor<ITemperatureSensor, TemperatureChangedEventArgs>, ITemperatureSensor
         {
             public event EventHandler<TemperatureChangedEventArgs> TemperatureChanged = delegate { };
 

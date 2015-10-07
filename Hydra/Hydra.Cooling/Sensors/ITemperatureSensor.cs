@@ -4,7 +4,7 @@
     using System.Diagnostics.Contracts;
 
     [ContractClass(typeof(TemperatureSensorContract))]
-    public interface ITemperatureSensor : IDevice
+    public interface ITemperatureSensor : ISensor<ITemperatureSensor, TemperatureChangedEventArgs>
     {
         Temperature CurrentTemperature { get; }
 
@@ -12,7 +12,7 @@
     }
 
     [ContractClassFor(typeof(ITemperatureSensor))]
-    internal abstract class TemperatureSensorContract : DeviceContract, ITemperatureSensor
+    internal abstract class TemperatureSensorContract : SensorContract<ITemperatureSensor, TemperatureChangedEventArgs>, ITemperatureSensor
     {
         public Temperature CurrentTemperature
         {

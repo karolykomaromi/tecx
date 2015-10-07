@@ -1,4 +1,4 @@
-namespace Hydra.Cooling.Alerts
+namespace Hydra.Cooling.Sensors
 {
     using System;
     using System.Collections.Generic;

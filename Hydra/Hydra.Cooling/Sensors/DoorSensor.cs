@@ -2,8 +2,10 @@
 {
     using System;
     using System.Diagnostics.Contracts;
+    using System.Reactive;
+    using System.Reactive.Linq;
 
-    public abstract class DoorSensor : Device, IDoorSensor
+    public abstract class DoorSensor : Sensor<IDoorSensor, DoorStateChangedEventArgs>, IDoorSensor
     {
         public static new readonly IDoorSensor Null = new NullDoorSensor();
 
@@ -15,6 +17,13 @@
         public event EventHandler<DoorStateChangedEventArgs> DoorStateChanged = delegate { };
 
         public abstract DoorState CurrentDoorState { get; }
+
+        protected sealed override IObservable<EventPattern<DoorStateChangedEventArgs>> ToObservable()
+        {
+            return Observable.FromEventPattern<DoorStateChangedEventArgs>(
+                handler => this.DoorStateChanged += handler,
+                handler => this.DoorStateChanged -= handler);
+        }
 
         protected virtual void OnDoorStateChanged(DoorStateChangedEventArgs args)
         {
@@ -28,7 +37,7 @@
             this.DoorStateChanged(this, new DoorStateChangedEventArgs(this) { NewDoorState = newDoorState });
         }
 
-        private class NullDoorSensor : NullDevice, IDoorSensor
+        private class NullDoorSensor : NullSensor<IDoorSensor, DoorStateChangedEventArgs>, IDoorSensor
         {
             public event EventHandler<DoorStateChangedEventArgs> DoorStateChanged = delegate { };
 

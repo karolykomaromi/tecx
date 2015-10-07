@@ -4,15 +4,16 @@ namespace Hydra.Cooling.Sensors
     using System.Diagnostics.Contracts;
     using Hydra.Infrastructure;
 
-    public abstract class SensorStateChangedEventArgs : EventArgs
+    public abstract class DeviceStateChangedEventArgs<TDevice> : EventArgs
+        where TDevice : IDevice
     {
         private readonly DateTime timestamp;
 
         private readonly TimeZoneInfo timezone;
 
-        private readonly IDevice device;
+        private readonly TDevice device;
 
-        protected SensorStateChangedEventArgs(IDevice device)
+        protected DeviceStateChangedEventArgs(TDevice device)
         {
             Contract.Requires(device != null);
 

@@ -2,7 +2,7 @@ namespace Hydra.Cooling.Sensors
 {
     using System;
 
-    public interface IDoorSensor : IDevice
+    public interface IDoorSensor : ISensor<IDoorSensor, DoorStateChangedEventArgs>
     {
         DoorState CurrentDoorState { get; }
 
