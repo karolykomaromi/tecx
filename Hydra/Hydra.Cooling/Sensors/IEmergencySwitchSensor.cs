@@ -4,8 +4,8 @@ namespace Hydra.Cooling.Sensors
 
     public interface IEmergencySwitchSensor : ISensor<IEmergencySwitchSensor, SwitchStateChangedEventArgs>
     {
-        SwitchState CurrentSwitchState { get; }
-
         event EventHandler<SwitchStateChangedEventArgs> SwitchStateChanged;
+
+        SwitchState CurrentSwitchState { get; }
     }
 }
