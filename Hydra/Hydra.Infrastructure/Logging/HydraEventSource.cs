@@ -202,6 +202,8 @@
             public const EventKeywords Resources = (EventKeywords)64;
 
             public const EventKeywords Retry = (EventKeywords)128;
+
+            public const EventKeywords Translation = (EventKeywords)256;
         }
 
         public class Tasks

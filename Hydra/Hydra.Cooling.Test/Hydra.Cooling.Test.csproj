@@ -65,7 +65,6 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Alerts\CompositeAlertTests.cs" />
     <Compile Include="Alerts\CompositeObserverTests.cs" />
     <Compile Include="Alerts\DoorClosedAlertTests.cs" />
     <Compile Include="Alerts\DoorOpenedAlertTests.cs" />

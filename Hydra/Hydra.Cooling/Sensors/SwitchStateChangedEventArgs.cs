@@ -1,8 +1,8 @@
 namespace Hydra.Cooling.Sensors
 {
-    public class SwitchStateChangedEventArgs : SensorStateChangedEventArgs
+    public class SwitchStateChangedEventArgs : DeviceStateChangedEventArgs<IEmergencySwitchSensor>
     {
-        public SwitchStateChangedEventArgs(IDevice device)
+        public SwitchStateChangedEventArgs(IEmergencySwitchSensor device)
             : base(device)
         {
         }

@@ -1,8 +1,8 @@
 namespace Hydra.Cooling.Sensors
 {
-    public class DoorStateChangedEventArgs : SensorStateChangedEventArgs
+    public class DoorStateChangedEventArgs : DeviceStateChangedEventArgs<IDoorSensor>
     {
-        public DoorStateChangedEventArgs(IDevice device)
+        public DoorStateChangedEventArgs(IDoorSensor device)
             : base(device)
         {
         }

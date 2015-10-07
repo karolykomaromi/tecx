@@ -2,8 +2,10 @@
 {
     using System;
     using System.Diagnostics.Contracts;
+    using System.Reactive;
+    using System.Reactive.Linq;
 
-    public abstract class EmergencySwitchSensor : Device, IEmergencySwitchSensor
+    public abstract class EmergencySwitchSensor : Sensor<IEmergencySwitchSensor, SwitchStateChangedEventArgs>, IEmergencySwitchSensor
     {
         public static new readonly IEmergencySwitchSensor Null = new NullEmergencySwitchSensor();
 
@@ -15,6 +17,13 @@
         public event EventHandler<SwitchStateChangedEventArgs> SwitchStateChanged = delegate { };
 
         public abstract SwitchState CurrentSwitchState { get; }
+        
+        protected sealed override IObservable<EventPattern<SwitchStateChangedEventArgs>> ToObservable()
+        {
+            return Observable.FromEventPattern<SwitchStateChangedEventArgs>(
+                handler => this.SwitchStateChanged += handler,
+                handler => this.SwitchStateChanged -= handler);
+        }
 
         protected virtual void OnSwitchStateChanged(SwitchStateChangedEventArgs args)
         {
@@ -28,7 +37,7 @@
             this.SwitchStateChanged(this, new SwitchStateChangedEventArgs(this) { NewSwitchState = newSwitchState });
         }
 
-        private class NullEmergencySwitchSensor : NullDevice, IEmergencySwitchSensor
+        private class NullEmergencySwitchSensor : NullSensor<IEmergencySwitchSensor, SwitchStateChangedEventArgs>, IEmergencySwitchSensor
         {
             public event EventHandler<SwitchStateChangedEventArgs> SwitchStateChanged = delegate { };
 

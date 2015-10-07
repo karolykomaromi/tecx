@@ -1,7 +1,7 @@
-﻿namespace Hydra.Cooling.Test.Alerts
+namespace Hydra.Cooling.Test.Sensors
 {
     using System;
-    using Hydra.Cooling.Alerts;
+    using Hydra.Cooling.Sensors;
     using Moq;
     using Xunit;
 
