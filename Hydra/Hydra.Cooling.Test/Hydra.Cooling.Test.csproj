@@ -65,6 +65,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Alerts\PhoneNumberTests.cs" />
     <Compile Include="CelsiusTests.cs" />
     <Compile Include="Configuration\SurveillanceSystemBuilderTests.cs" />
     <Compile Include="FahrenheitTests.cs" />
