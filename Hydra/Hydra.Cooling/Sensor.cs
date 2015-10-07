@@ -5,11 +5,11 @@ namespace Hydra.Cooling
     using System.Reactive.Linq;
     using Hydra.Cooling.Sensors;
 
-    public abstract class Sensor<TDevice, TEventArgs> : Device, ISensor<TDevice, TEventArgs> 
-        where TEventArgs : DeviceStateChangedEventArgs<TDevice> 
-        where TDevice : ISensor<TDevice, TEventArgs>
+    public abstract class Sensor<TSensor, TEventArgs> : Device, ISensor<TSensor, TEventArgs> 
+        where TEventArgs : DeviceStateChangedEventArgs<TSensor> 
+        where TSensor : ISensor<TSensor, TEventArgs>
     {
-        public static readonly ISensor<TDevice, TEventArgs> Null = new NullSensor<TDevice, TEventArgs>();
+        public static readonly new ISensor<TSensor, TEventArgs> Null = new NullSensor<TSensor, TEventArgs>();
 
         private readonly IObservable<EventPattern<TEventArgs>> observable;
 
@@ -26,18 +26,18 @@ namespace Hydra.Cooling
 
         protected abstract IObservable<EventPattern<TEventArgs>> ToObservable();
 
-        protected class NullSensor<TDevice, TEventArgs> : Sensor<TDevice, TEventArgs>
-            where TDevice : ISensor<TDevice, TEventArgs>
-            where TEventArgs : DeviceStateChangedEventArgs<TDevice>
+        protected class NullSensor<TDevice, TArgs> : Sensor<TDevice, TArgs>
+            where TDevice : ISensor<TDevice, TArgs>
+            where TArgs : DeviceStateChangedEventArgs<TDevice>
         {
             public NullSensor()
                 : base(DeviceId.Empty)
             {
             }
 
-            protected sealed override IObservable<EventPattern<TEventArgs>> ToObservable()
+            protected sealed override IObservable<EventPattern<TArgs>> ToObservable()
             {
-                return Observable.Empty<EventPattern<TEventArgs>>();
+                return Observable.Empty<EventPattern<TArgs>>();
             }
         }
     }

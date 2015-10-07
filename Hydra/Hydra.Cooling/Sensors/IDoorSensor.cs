@@ -4,8 +4,8 @@ namespace Hydra.Cooling.Sensors
 
     public interface IDoorSensor : ISensor<IDoorSensor, DoorStateChangedEventArgs>
     {
-        DoorState CurrentDoorState { get; }
-
         event EventHandler<DoorStateChangedEventArgs> DoorStateChanged;
+
+        DoorState CurrentDoorState { get; }
     }
 }

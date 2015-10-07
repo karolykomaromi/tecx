@@ -65,18 +65,15 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Alerts\CompositeObserverTests.cs" />
-    <Compile Include="Alerts\DoorClosedAlertTests.cs" />
-    <Compile Include="Alerts\DoorOpenedAlertTests.cs" />
-    <Compile Include="Alerts\EmergencySwitchPressedAlertTests.cs" />
-    <Compile Include="Alerts\EmergencySwitchReleasedAlertTests.cs" />
-    <Compile Include="Alerts\TemperatureTooHighAlertTests.cs" />
-    <Compile Include="Alerts\TemperatureTooLowAlertTests.cs" />
     <Compile Include="CelsiusTests.cs" />
     <Compile Include="Configuration\SurveillanceSystemBuilderTests.cs" />
     <Compile Include="FahrenheitTests.cs" />
     <Compile Include="KelvinTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sensors\CompositeObserverTests.cs" />
+    <Compile Include="Sensors\DoorSensorTests.cs" />
+    <Compile Include="Sensors\EmergencySwitchSensorTests.cs" />
+    <Compile Include="Sensors\TemperatureSensorTests.cs" />
     <Compile Include="TemperatureTests.cs" />
   </ItemGroup>
   <ItemGroup>

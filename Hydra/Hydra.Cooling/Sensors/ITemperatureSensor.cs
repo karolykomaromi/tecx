@@ -6,14 +6,16 @@
     [ContractClass(typeof(TemperatureSensorContract))]
     public interface ITemperatureSensor : ISensor<ITemperatureSensor, TemperatureChangedEventArgs>
     {
-        Temperature CurrentTemperature { get; }
-
         event EventHandler<TemperatureChangedEventArgs> TemperatureChanged;
+
+        Temperature CurrentTemperature { get; }
     }
 
     [ContractClassFor(typeof(ITemperatureSensor))]
     internal abstract class TemperatureSensorContract : SensorContract<ITemperatureSensor, TemperatureChangedEventArgs>, ITemperatureSensor
     {
+        public event EventHandler<TemperatureChangedEventArgs> TemperatureChanged = delegate { };
+
         public Temperature CurrentTemperature
         {
             get
@@ -22,7 +24,5 @@
                 return Temperature.Invalid;
             }
         }
-
-        public event EventHandler<TemperatureChangedEventArgs> TemperatureChanged = delegate { };
     }
 }
