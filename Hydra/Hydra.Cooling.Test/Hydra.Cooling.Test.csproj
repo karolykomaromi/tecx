@@ -65,7 +65,10 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Alerts\AreaCodeTests.cs" />
+    <Compile Include="Alerts\CountryCodeTests.cs" />
     <Compile Include="Alerts\PhoneNumberTests.cs" />
+    <Compile Include="Alerts\TextMessageTests.cs" />
     <Compile Include="CelsiusTests.cs" />
     <Compile Include="Configuration\SurveillanceSystemBuilderTests.cs" />
     <Compile Include="FahrenheitTests.cs" />

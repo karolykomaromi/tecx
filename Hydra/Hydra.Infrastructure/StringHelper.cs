@@ -1,7 +1,8 @@
 ﻿namespace Hydra.Infrastructure
 {
+    using System;
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
-    using System.Globalization;
     using System.IO;
     using System.Text;
     using System.Text.RegularExpressions;
@@ -52,6 +53,18 @@
             }
 
             return s.Substring(0, 1).ToUpperInvariant() + s.Substring(1);
+        }
+
+        public static IEnumerable<string> Chunkify(string s, int maxChunkLength)
+        {
+            Contract.Requires(s != null);
+            Contract.Requires(maxChunkLength > 0);
+            Contract.Ensures(Contract.Result<IEnumerable<string>>() != null);
+
+            for (var i = 0; i < s.Length; i += maxChunkLength)
+            {
+                yield return s.Substring(i, Math.Min(maxChunkLength, s.Length - i));
+            }
         }
     }
 }

@@ -8,6 +8,12 @@
 
         public static readonly CultureInfo GermanGermany = new CultureInfo("de-DE");
 
+        public static readonly CultureInfo GermanSwitzerland = new CultureInfo("de-CH");
+
+        public static readonly CultureInfo GermanAustria = new CultureInfo("de-AT");
+
+        public static readonly CultureInfo ItalianSwitzerland = new CultureInfo("it-CH");
+
         public static readonly CultureInfo EnglishNeutral = new CultureInfo("en");
 
         public static readonly CultureInfo EnglishGreatBritain = new CultureInfo("en-GB");
@@ -17,5 +23,9 @@
         public static readonly CultureInfo FrenchNeutral = new CultureInfo("fr");
 
         public static readonly CultureInfo FrenchFrance = new CultureInfo("fr-FR");
+
+        public static readonly CultureInfo FrenchSwitzerland = new CultureInfo("fr-CH");
+
+        public static readonly CultureInfo RomanshSwitzerland = new CultureInfo("rm-CH");
     }
 }

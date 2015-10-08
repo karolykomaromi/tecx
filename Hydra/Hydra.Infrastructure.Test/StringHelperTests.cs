@@ -1,7 +1,7 @@
 ﻿namespace Hydra.Infrastructure.Test
 {
-    using System.Globalization;
     using System.IO;
+    using System.Linq;
     using System.Text;
     using Xunit;
 
@@ -65,6 +65,20 @@
             Assert.Equal(string.Empty, StringHelper.CapitalizeFirstLetter("    "));
             Assert.Equal(string.Empty, StringHelper.CapitalizeFirstLetter(string.Empty));
             Assert.Equal(string.Empty, StringHelper.CapitalizeFirstLetter(null));
+        }
+
+        [Fact]
+        public void Should_Chunkify_Empty_String_As_Empty_String()
+        {
+            Assert.NotNull(StringHelper.Chunkify(string.Empty, 1));
+        }
+
+        [Fact]
+        public void Should_Chunkify_String_That_Is_Shorter_Than_Chunk_Size()
+        {
+            string s = "12345";
+
+            Assert.Equal(s, StringHelper.Chunkify(s, 15).Single());
         }
     }
 }
