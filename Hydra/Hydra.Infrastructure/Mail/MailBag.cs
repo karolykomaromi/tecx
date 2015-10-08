@@ -122,17 +122,9 @@ namespace Hydra.Infrastructure.Mail
 
         private static string Hyphenate(string s)
         {
-            var chunks = Chunk(s, 4);
+            var chunks = StringHelper.Chunkify(s, 4);
 
             return string.Join("-", chunks);
-        }
-
-        private static IEnumerable<string> Chunk(string s, int chunkSize)
-        {
-            for (var i = 0; i < s.Length; i += chunkSize)
-            {
-                yield return s.Substring(i, Math.Min(chunkSize, s.Length - i));
-            }
         }
     }
 }
