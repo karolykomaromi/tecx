@@ -19,7 +19,7 @@
         [InlineData(FormatStrings.PhoneNumbers.General, (ushort)41, 123u, 4567890UL, 123u, "+41 (123) 4567890 - 123")]
         [InlineData(FormatStrings.PhoneNumbers.Number, (ushort)49, 721u, 47049050UL, 0u, "4972147049050")]
         [InlineData(FormatStrings.PhoneNumbers.Number, (ushort)41, 123u, 4567890UL, 123u, "411234567890123")]
-        public void Should_Print_Phone_Number_Correctrly(
+        public void Should_Print_Phone_Number_Correctly(
             string format,
             ushort countryCode,
             uint areaCode,

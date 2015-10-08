@@ -73,6 +73,13 @@ namespace Hydra.Cooling.Alerts
                 return true;
             }
 
+            if (culture.Equals(Cultures.FrenchFrance) || 
+                culture.Equals(Cultures.FrenchNeutral))
+            {
+                countryCode = CountryCodes.France;
+                return true;
+            }
+
             countryCode = CountryCode.Empty;
             return false;
         }

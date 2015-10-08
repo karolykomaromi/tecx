@@ -9,7 +9,7 @@
         [Fact]
         public void Should_Split_Overly_Large_Messages_In_Chunks_Of_160_Letters()
         {
-            string overlyLargeMessage = string.Concat(Enumerable.Range(0, 330).Select(i => (int) (i/160)));
+            string overlyLargeMessage = string.Concat(Enumerable.Range(0, 330).Select(i => (int)(i / 160)));
 
             TextMessage originalMessage = new TextMessage(PhoneNumber.Empty, overlyLargeMessage);
 

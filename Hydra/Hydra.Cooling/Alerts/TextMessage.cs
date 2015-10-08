@@ -69,7 +69,7 @@ namespace Hydra.Cooling.Alerts
 
         public IEnumerable<TextMessage> Chunkify()
         {
-            uint total = (uint) Math.Ceiling((double)this.Message.Length / TextMessage.MaxChunkLength);
+            uint total = (uint)Math.Ceiling((double)this.Message.Length / TextMessage.MaxChunkLength);
 
             return StringHelper
                 .Chunkify(this.message, TextMessage.MaxChunkLength)

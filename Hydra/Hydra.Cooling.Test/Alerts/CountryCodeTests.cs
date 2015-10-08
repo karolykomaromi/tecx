@@ -38,7 +38,6 @@ namespace Hydra.Cooling.Test.Alerts
         [Fact]
         public void Should_Return_Swisse_County_Code()
         {
-
             CountryCode actual;
 
             Assert.True(CountryCode.TryGetCountryCode(Cultures.FrenchSwitzerland, out actual));
@@ -52,10 +51,19 @@ namespace Hydra.Cooling.Test.Alerts
 
             Assert.True(CountryCode.TryGetCountryCode(Cultures.RomanshSwitzerland, out actual));
             Assert.Equal(CountryCodes.Switzerland, actual);
+        }
 
-            //var cultures =
-            //    CultureInfo.GetCultures(CultureTypes.AllCultures | CultureTypes.NeutralCultures)
-            //        .Where(culture => culture.Name.EndsWith("CH", StringComparison.Ordinal)).ToArray();
+        [Fact]
+        public void Should_Return_French_Country_Code()
+        {
+            CountryCode actual;
+
+            Assert.True(CountryCode.TryGetCountryCode(Cultures.FrenchFrance, out actual));
+            Assert.Equal(CountryCodes.France, actual);
+
+            // var cultures =
+            //     CultureInfo.GetCultures(CultureTypes.AllCultures | CultureTypes.NeutralCultures)
+            //         .Where(culture => culture.Name.EndsWith("FR", StringComparison.Ordinal)).ToArray();
         }
     }
 }
