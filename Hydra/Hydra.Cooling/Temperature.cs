@@ -30,7 +30,7 @@ namespace Hydra.Cooling
 
         protected abstract string Symbol { get; }
 
-        protected abstract string Format { get; }
+        protected abstract string DefaultFormat { get; }
 
         public static bool TryParse(string s, out Temperature temperature)
         {
@@ -96,7 +96,7 @@ namespace Hydra.Cooling
 
         public override string ToString()
         {
-            return this.ToString(this.Format + Temperature.DefaultPrecision, CultureInfo.CurrentCulture);
+            return this.ToString(this.DefaultFormat + Temperature.DefaultPrecision, CultureInfo.CurrentCulture);
         }
 
         public string ToString(string format)
@@ -106,14 +106,14 @@ namespace Hydra.Cooling
 
         public string ToString(IFormatProvider formatProvider)
         {
-            string format = this.Format + Temperature.DefaultPrecision;
+            string format = this.DefaultFormat + Temperature.DefaultPrecision;
 
             return this.ToString(format, formatProvider);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            format = format ?? this.Format + Temperature.DefaultPrecision;
+            format = format ?? this.DefaultFormat + Temperature.DefaultPrecision;
             formatProvider = formatProvider ?? CultureInfo.CurrentCulture;
 
             if (!Temperature.LegalFormatString.IsMatch(format))
@@ -179,7 +179,7 @@ namespace Hydra.Cooling
                 get { return string.Empty; }
             }
 
-            protected override string Format
+            protected override string DefaultFormat
             {
                 get { return string.Empty; }
             }

@@ -22,7 +22,7 @@ namespace Hydra.Cooling
         {
         }
 
-        protected override string Format
+        protected override string DefaultFormat
         {
             get { return FormatStrings.Temperatures.Kelvin; }
         }

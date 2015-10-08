@@ -215,8 +215,6 @@ namespace Hydra.Cooling.Alerts
                     throw new FormatException();
                 }
             }
-
-            return string.Empty;
         }
 
         public override string ToString()

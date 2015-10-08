@@ -11,7 +11,7 @@ namespace Hydra.Cooling
 
         public DeviceId(string id)
         {
-            Contract.Requires(!string.IsNullOrEmpty(id));
+            Contract.Requires(!string.IsNullOrWhiteSpace(id));
 
             this.id = id;
         }

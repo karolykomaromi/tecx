@@ -25,7 +25,7 @@ namespace Hydra.Cooling
             get { return Celsius.UnitSymbol; }
         }
 
-        protected override string Format
+        protected override string DefaultFormat
         {
             get { return FormatStrings.Temperatures.Celsius; }
         }
