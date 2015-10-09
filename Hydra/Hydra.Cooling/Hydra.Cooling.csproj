@@ -64,13 +64,16 @@
     <Compile Include="Alerts\PhoneNumber.cs" />
     <Compile Include="Alerts\TextMessage.cs" />
     <Compile Include="Celsius.cs" />
+    <Compile Include="CelsiusEpsilonComparer.cs" />
     <Compile Include="Device.cs" />
     <Compile Include="DeviceId.cs" />
     <Compile Include="Fahrenheit.cs" />
+    <Compile Include="FahrenheitEpsilonComparer.cs" />
     <Compile Include="FormatStrings.cs" />
     <Compile Include="IDevice.cs" />
     <Compile Include="ISensor.cs" />
     <Compile Include="Kelvin.cs" />
+    <Compile Include="KelvinEpsilonComparer.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

@@ -69,6 +69,7 @@
     <Compile Include="Alerts\CountryCodeTests.cs" />
     <Compile Include="Alerts\PhoneNumberTests.cs" />
     <Compile Include="Alerts\TextMessageTests.cs" />
+    <Compile Include="CelsiusEpsilonComparerTests.cs" />
     <Compile Include="CelsiusTests.cs" />
     <Compile Include="Configuration\SurveillanceSystemBuilderTests.cs" />
     <Compile Include="FahrenheitTests.cs" />
