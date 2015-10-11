@@ -32,7 +32,7 @@ namespace Hydra.Cooling.Sensors
             get { return this.timezone; }
         }
 
-        public IDevice Device
+        public TDevice Device
         {
             get { return this.device; }
         }

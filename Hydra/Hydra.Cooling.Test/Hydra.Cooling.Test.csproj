@@ -72,7 +72,9 @@
     <Compile Include="CelsiusEpsilonComparerTests.cs" />
     <Compile Include="CelsiusTests.cs" />
     <Compile Include="Configuration\SurveillanceSystemBuilderTests.cs" />
+    <Compile Include="FahrenheitEpsilonComparerTests.cs" />
     <Compile Include="FahrenheitTests.cs" />
+    <Compile Include="KelvinEpsilonComparerTests.cs" />
     <Compile Include="KelvinTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sensors\CompositeObserverTests.cs" />
@@ -95,6 +97,10 @@
     <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj">
       <Project>{DA9F1B57-18BD-451F-A3FA-7D149849A8BD}</Project>
       <Name>Hydra.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hydra.Jobs.Client\Hydra.Jobs.Client.csproj">
+      <Project>{142991E5-4D24-42E8-BF52-14DA01764D2A}</Project>
+      <Name>Hydra.Jobs.Client</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

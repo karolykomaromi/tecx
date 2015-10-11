@@ -99,6 +99,7 @@
     <Compile Include="Sensors\TemperatureChangedEventArgs.cs" />
     <Compile Include="Sensors\TemperatureSensor.cs" />
     <Compile Include="Temperature.cs" />
+    <Compile Include="TemperatureEpsilonComparer.cs" />
     <Compile Include="TemperatureExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
