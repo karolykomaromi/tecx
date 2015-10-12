@@ -2,6 +2,7 @@ namespace Hydra.Cooling.Alerts
 {
     using System;
     using System.Globalization;
+    using System.Linq;
     using Hydra.Infrastructure.I18n;
 
     public class CountryCode : IEquatable<CountryCode>, IComparable<CountryCode>, IFormattable
@@ -77,6 +78,27 @@ namespace Hydra.Cooling.Alerts
                 culture.Equals(Cultures.FrenchNeutral))
             {
                 countryCode = CountryCodes.France;
+                return true;
+            }
+
+            countryCode = CountryCode.Empty;
+            return false;
+        }
+
+        public static bool TryParse(string s, out CountryCode countryCode)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                countryCode = CountryCode.Empty;
+                return false;
+            }
+
+            string numbers = new string(s.ToCharArray().Where(char.IsDigit).ToArray());
+
+            ushort cc;
+            if (ushort.TryParse(numbers, out cc))
+            {
+                countryCode = new CountryCode(cc);
                 return true;
             }
 

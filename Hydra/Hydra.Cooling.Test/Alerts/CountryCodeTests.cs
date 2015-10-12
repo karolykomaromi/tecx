@@ -3,9 +3,19 @@ namespace Hydra.Cooling.Test.Alerts
     using Hydra.Cooling.Alerts;
     using Hydra.Infrastructure.I18n;
     using Xunit;
+    using Xunit.Extensions;
 
     public class CountryCodeTests
     {
+        [Theory]
+        [InlineData("+49", (ushort) 49)]
+        public void Should_Parse_Valid_Strings(string s, ushort expected)
+        {
+            CountryCode actual;
+            Assert.True(CountryCode.TryParse(s, out actual));
+            Assert.Equal(new CountryCode(expected), actual);
+        }
+
         [Fact]
         public void Should_Print_Empty_CountryCode_As_Empty_String()
         {
