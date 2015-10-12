@@ -62,7 +62,7 @@
     <Compile Include="Alerts\DialNumber.cs" />
     <Compile Include="Alerts\PhoneExtension.cs" />
     <Compile Include="Alerts\PhoneNumber.cs" />
-    <Compile Include="Alerts\TextMessage.cs" />
+    <Compile Include="Alerts\SmsMessage.cs" />
     <Compile Include="Celsius.cs" />
     <Compile Include="CelsiusEpsilonComparer.cs" />
     <Compile Include="Device.cs" />

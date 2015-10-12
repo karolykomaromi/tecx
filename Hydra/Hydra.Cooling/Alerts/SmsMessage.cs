@@ -7,7 +7,7 @@ namespace Hydra.Cooling.Alerts
     using Hydra.Cooling.Properties;
     using Hydra.Infrastructure;
 
-    public class TextMessage : IEquatable<TextMessage>
+    public class SmsMessage : IEquatable<SmsMessage>
     {
         private const uint CompleteMessagePartNumber = 0;
 
@@ -21,12 +21,12 @@ namespace Hydra.Cooling.Alerts
 
         private readonly uint partsTotal;
 
-        public TextMessage(PhoneNumber recepient, string message)
-            : this(recepient, message, TextMessage.CompleteMessagePartNumber, TextMessage.CompleteMessagePartNumber)
+        public SmsMessage(PhoneNumber recepient, string message)
+            : this(recepient, message, SmsMessage.CompleteMessagePartNumber, SmsMessage.CompleteMessagePartNumber)
         {
         }
 
-        private TextMessage(PhoneNumber recepient, string message, uint partNumber, uint partsTotal)
+        private SmsMessage(PhoneNumber recepient, string message, uint partNumber, uint partsTotal)
         {
             Contract.Requires(recepient != null);
             Contract.Requires(!string.IsNullOrWhiteSpace(message));
@@ -67,16 +67,16 @@ namespace Hydra.Cooling.Alerts
             get { return this.partsTotal; }
         }
 
-        public IEnumerable<TextMessage> Chunkify()
+        public IEnumerable<SmsMessage> Chunkify()
         {
-            uint total = (uint)Math.Ceiling((double)this.Message.Length / TextMessage.MaxChunkLength);
+            uint total = (uint)Math.Ceiling((double)this.Message.Length / SmsMessage.MaxChunkLength);
 
             return StringHelper
-                .Chunkify(this.message, TextMessage.MaxChunkLength)
-                .Select((chunk, index) => new TextMessage(this.Recepient, chunk, (uint)(index + 1), total));
+                .Chunkify(this.message, SmsMessage.MaxChunkLength)
+                .Select((chunk, index) => new SmsMessage(this.Recepient, chunk, (uint)(index + 1), total));
         }
 
-        public bool Equals(TextMessage other)
+        public bool Equals(SmsMessage other)
         {
             if (other == null)
             {
@@ -92,7 +92,7 @@ namespace Hydra.Cooling.Alerts
 
         public override bool Equals(object obj)
         {
-            TextMessage other = obj as TextMessage;
+            SmsMessage other = obj as SmsMessage;
 
             return this.Equals(other);
         }

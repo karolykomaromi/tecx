@@ -11,9 +11,9 @@
         {
             string overlyLargeMessage = string.Concat(Enumerable.Range(0, 330).Select(i => (int)(i / 160)));
 
-            TextMessage originalMessage = new TextMessage(PhoneNumber.Empty, overlyLargeMessage);
+            SmsMessage originalMessage = new SmsMessage(PhoneNumber.Empty, overlyLargeMessage);
 
-            TextMessage[] chunkifiedMessages = originalMessage.Chunkify().ToArray();
+            SmsMessage[] chunkifiedMessages = originalMessage.Chunkify().ToArray();
 
             Assert.Equal(3, chunkifiedMessages.Length);
             Assert.True(chunkifiedMessages[0].Message.All(c => c == '0'));
