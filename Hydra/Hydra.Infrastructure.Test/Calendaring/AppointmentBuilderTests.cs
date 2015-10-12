@@ -9,13 +9,13 @@
     public class AppointmentBuilderTests
     {
         [Theory, ContainerData]
-        public void Should_Never_Return_Null(AppointmentBuilder sut, MailAddressBuilder mailTo)
+        public void Should_Never_Return_Null(AppointmentBuilder sut, MailboxAddressBuilder mailTo)
         {
             Assert.NotNull(sut.OrganizedBy(mailTo.JohnWayne()).Build());
         }
 
         [Theory, ContainerData]
-        public void Should(AppointmentBuilder sut, MailAddressBuilder mailTo)
+        public void Should(AppointmentBuilder sut, MailboxAddressBuilder mailTo)
         {
             string ics = sut
                 .StartsAt(TimeProvider.Now.Date.AddDays(1))

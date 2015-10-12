@@ -1,8 +1,8 @@
 ﻿namespace Hydra.Infrastructure.Calendaring
 {
     using System;
-    using System.Net.Mail;
     using System.Text;
+    using MimeKit;
 
     public class Attendee : CalendarItem<Attendee>
     {
@@ -15,7 +15,7 @@
             this.ParticipationStatus = string.Empty;
         }
 
-        public MailAddress Mail { get; set; }
+        public MailboxAddress Mail { get; set; }
 
         public bool Rsvp { get; set; }
 
@@ -23,9 +23,9 @@
 
         public string ParticipationStatus { get; set; }
 
-        public MailAddress Delegatee { get; set; }
+        public MailboxAddress Delegatee { get; set; }
 
-        public MailAddress Delegator { get; set; }
+        public MailboxAddress Delegator { get; set; }
 
         public override Attendee Clone()
         {
@@ -33,7 +33,7 @@
                 {
                     Delegatee = this.Delegatee,
                     Delegator = this.Delegator,
-                    Mail = new MailAddress(this.Mail.Address, this.Mail.DisplayName),
+                    Mail = new MailboxAddress(this.Mail.Name, this.Mail.Address),
                     ParticipationStatus = this.ParticipationStatus,
                     Role = this.Role,
                     Rsvp = this.Rsvp
@@ -75,9 +75,9 @@
                 sb.Append("DELEGATED-FROM=\"MAILTO:").Append(this.Delegator.Address).Append("\";");
             }
 
-            if (!string.IsNullOrEmpty(this.Mail.DisplayName))
+            if (!string.IsNullOrEmpty(this.Mail.Name))
             {
-                sb.Append("CN=").Append(this.Mail.DisplayName).Append(":");
+                sb.Append("CN=").Append(this.Mail.Name).Append(":");
             }
 
             sb.Append("MAILTO:").Append(this.Mail.Address);

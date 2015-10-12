@@ -281,13 +281,10 @@
     <Compile Include="Mail\InMemoryMailSource.cs" />
     <Compile Include="Mail\ISentMailSink.cs" />
     <Compile Include="Mail\IUnsentMailSource.cs" />
-    <Compile Include="Mail\MailAddressBuilder.cs" />
     <Compile Include="Mail\MailboxAddressBuilder.cs" />
     <Compile Include="Mail\MailBag.cs" />
     <Compile Include="Mail\MailBagUserType.cs" />
     <Compile Include="Mail\MailBagUserTypeConvention.cs" />
-    <Compile Include="Mail\MailMessageBuilder.cs" />
-    <Compile Include="Mail\MailMessageExtensions.cs" />
     <Compile Include="Mail\MimeMessageBuilder.cs" />
     <Compile Include="Mail\MimeMessageTypeConverter.cs" />
     <Compile Include="Mail\MimeMessageUserType.cs" />
