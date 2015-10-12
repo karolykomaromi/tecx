@@ -1,7 +1,7 @@
 ﻿namespace Hydra.Infrastructure.Calendaring
 {
     using System.Diagnostics.Contracts;
-    using System.Net.Mail;
+    using MimeKit;
 
     public class AttendeeBuilder : Builder<Attendee>
     {
@@ -12,7 +12,7 @@
             this.attendee = new Attendee { Role = Constants.Roles.Required };
         }
 
-        public AttendeeBuilder Invite(MailAddress attendee)
+        public AttendeeBuilder Invite(MailboxAddress attendee)
         {
             Contract.Requires(attendee != null);
 
@@ -84,7 +84,7 @@
             return this;
         }
 
-        public AttendeeBuilder DelegatedTo(MailAddress delegateee)
+        public AttendeeBuilder DelegatedTo(MailboxAddress delegateee)
         {
             this.attendee.Role = Constants.Roles.NonParticipant;
             this.attendee.ParticipationStatus = Constants.ParticipationStatus.Delegated;
@@ -94,7 +94,7 @@
             return this;
         }
 
-        public AttendeeBuilder DelegatedFrom(MailAddress delegator)
+        public AttendeeBuilder DelegatedFrom(MailboxAddress delegator)
         {
             this.attendee.Delegator = delegator;
 

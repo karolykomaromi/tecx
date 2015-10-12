@@ -5,6 +5,7 @@
     using System.Diagnostics.Contracts;
     using System.Net.Mail;
     using System.Text;
+    using MimeKit;
 
     public class Appointment : CalendarItem<Appointment>
     {
@@ -49,7 +50,7 @@
 
         public string Summary { get; set; }
 
-        public MailAddress Organizer { get; set; }
+        public MailboxAddress Organizer { get; set; }
 
         public override Appointment Clone()
         {
@@ -58,7 +59,7 @@
                     Description = this.Description,
                     EndsAt = this.EndsAt,
                     Location = this.Location,
-                    Organizer = new MailAddress(this.Organizer.Address, this.Organizer.DisplayName),
+                    Organizer = new MailboxAddress(this.Organizer.Name, this.Organizer.Address),
                     ProductId = this.ProductId,
                     StartsAt = this.StartsAt,
                     Summary = this.Summary

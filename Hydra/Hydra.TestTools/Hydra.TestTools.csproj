@@ -101,7 +101,6 @@
     <Compile Include="ContainerCustomization.cs" />
     <Compile Include="ContainerDataAttribute.cs" />
     <Compile Include="ContainerSpecimenBuilder.cs" />
-    <Compile Include="MailAddressBuilderExtensions.cs" />
     <Compile Include="MailAddressBuilderTests.cs" />
     <Compile Include="MailboxAddressBuilderExtensions.cs" />
     <Compile Include="NhTestSupportConfiguration.cs" />

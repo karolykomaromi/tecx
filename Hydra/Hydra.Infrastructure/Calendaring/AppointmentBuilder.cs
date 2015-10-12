@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics.Contracts;
     using System.Net.Mail;
+    using MimeKit;
 
     public class AppointmentBuilder : Builder<Appointment>
     {
@@ -65,7 +66,7 @@
             return this;
         }
 
-        public AppointmentBuilder OrganizedBy(MailAddress organizer)
+        public AppointmentBuilder OrganizedBy(MailboxAddress organizer)
         {
             Contract.Requires(organizer != null);
 
