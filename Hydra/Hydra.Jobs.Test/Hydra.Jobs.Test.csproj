@@ -118,6 +118,7 @@
     </Compile>
     <Compile Include="ClientServerCommunicationTests.cs" />
     <Compile Include="ContainerDataAttribute.cs" />
+    <Compile Include="Input\CmdLineParameterParserTests.cs" />
     <Compile Include="Jobs\BatchMailTests.cs" />
     <Compile Include="KnownTestFiles.cs">
       <AutoGen>True</AutoGen>

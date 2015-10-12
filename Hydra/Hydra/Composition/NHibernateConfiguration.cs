@@ -22,7 +22,7 @@
                     .Mappings(m =>
                         {
                             m.FluentMappings.AddFromAssemblyOf<ResourceItemMap>();
-                            m.FluentMappings.Conventions.AddFromAssemblyOf<MultiLanguageStringUserTypeConvention>();
+                            m.FluentMappings.Conventions.AddFromAssemblyOf<PolyglotStringUserTypeConvention>();
                         })
                     ////.ExposeConfiguration(cfg => BuildSchema(this.Container, cfg))
                     .BuildSessionFactory()));

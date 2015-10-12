@@ -156,7 +156,6 @@
     <Compile Include="I18n\NhResourceManagerTests.cs" />
     <Compile Include="I18n\ResourceAccessorCacheTests.cs" />
     <Compile Include="I18n\ResourceItemBuilder.cs" />
-    <Compile Include="Input\CmdLineParameterParserTests.cs" />
     <Compile Include="KnownTestFiles.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -6,7 +6,7 @@
     using NHibernate.SqlTypes;
     using NHibernate.UserTypes;
 
-    public class MultiLanguageStringUserType : IUserType
+    public class PolyglotStringUserType : IUserType
     {
         SqlType[] IUserType.SqlTypes
         {

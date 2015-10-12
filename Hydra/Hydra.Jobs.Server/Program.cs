@@ -4,7 +4,7 @@ namespace Hydra.Jobs.Server
     using Common.Logging;
     using Common.Logging.Configuration;
     using Common.Logging.Log4Net;
-    using Hydra.Infrastructure.Input;
+    using Hydra.Jobs.Input;
     using Hydra.Unity;
     using Microsoft.Practices.Unity;
     using Topshelf;
