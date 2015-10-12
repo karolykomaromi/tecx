@@ -60,10 +60,6 @@ namespace Hydra.Cooling.Test.Alerts
 
             Assert.True(CountryCode.TryGetCountryCode(Cultures.FrenchFrance, out actual));
             Assert.Equal(CountryCodes.France, actual);
-
-            // var cultures =
-            //     CultureInfo.GetCultures(CultureTypes.AllCultures | CultureTypes.NeutralCultures)
-            //         .Where(culture => culture.Name.EndsWith("FR", StringComparison.Ordinal)).ToArray();
         }
     }
 }

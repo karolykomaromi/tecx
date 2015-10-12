@@ -4,14 +4,14 @@
     using Hydra.Cooling.Alerts;
     using Xunit;
 
-    public class TextMessageTests
+    public class SmsMessageTests
     {
         [Fact]
         public void Should_Split_Overly_Large_Messages_In_Chunks_Of_160_Letters()
         {
             string overlyLargeMessage = string.Concat(Enumerable.Range(0, 330).Select(i => (int)(i / 160)));
 
-            SmsMessage originalMessage = new SmsMessage(PhoneNumber.Empty, overlyLargeMessage);
+            SmsMessage originalMessage = new SmsMessage(new PhoneNumberCollection(PhoneNumber.Empty), overlyLargeMessage);
 
             SmsMessage[] chunkifiedMessages = originalMessage.Chunkify().ToArray();
 

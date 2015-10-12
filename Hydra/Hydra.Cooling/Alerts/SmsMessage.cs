@@ -13,7 +13,7 @@ namespace Hydra.Cooling.Alerts
 
         private const int MaxChunkLength = 160;
 
-        private readonly PhoneNumber recepient;
+        private readonly PhoneNumberCollection recepients;
 
         private readonly string message;
 
@@ -21,29 +21,29 @@ namespace Hydra.Cooling.Alerts
 
         private readonly uint partsTotal;
 
-        public SmsMessage(PhoneNumber recepient, string message)
-            : this(recepient, message, SmsMessage.CompleteMessagePartNumber, SmsMessage.CompleteMessagePartNumber)
+        public SmsMessage(PhoneNumberCollection recepients, string message)
+            : this(recepients, message, SmsMessage.CompleteMessagePartNumber, SmsMessage.CompleteMessagePartNumber)
         {
         }
 
-        private SmsMessage(PhoneNumber recepient, string message, uint partNumber, uint partsTotal)
+        private SmsMessage(PhoneNumberCollection recepients, string message, uint partNumber, uint partsTotal)
         {
-            Contract.Requires(recepient != null);
+            Contract.Requires(recepients != null);
             Contract.Requires(!string.IsNullOrWhiteSpace(message));
 
-            this.recepient = recepient;
+            this.recepients = recepients;
             this.message = message;
             this.partNumber = partNumber;
             this.partsTotal = partsTotal;
         }
 
-        public PhoneNumber Recepient
+        public PhoneNumberCollection Recepients
         {
             get
             {
-                Contract.Ensures(Contract.Result<PhoneNumber>() != null);
+                Contract.Ensures(Contract.Result<PhoneNumberCollection>() != null);
 
-                return this.recepient;
+                return this.recepients;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Hydra.Cooling.Alerts
 
             return StringHelper
                 .Chunkify(this.message, SmsMessage.MaxChunkLength)
-                .Select((chunk, index) => new SmsMessage(this.Recepient, chunk, (uint)(index + 1), total));
+                .Select((chunk, index) => new SmsMessage(this.Recepients, chunk, (uint)(index + 1), total));
         }
 
         public bool Equals(SmsMessage other)
@@ -84,7 +84,7 @@ namespace Hydra.Cooling.Alerts
             }
 
             bool isEqual = this.PartNumber == other.PartNumber &&
-                this.Recepient == other.Recepient &&
+                this.Recepients.Equals(other.Recepients) &&
                 string.Equals(this.Message, other.Message, StringComparison.Ordinal);
 
             return isEqual;
@@ -101,14 +101,14 @@ namespace Hydra.Cooling.Alerts
         {
             int hashCode = this.PartNumber.GetHashCode() ^ 
                 this.Message.GetHashCode() ^ 
-                this.Recepient.GetHashCode();
+                this.Recepients.GetHashCode();
 
             return hashCode;
         }
 
         public override string ToString()
         {
-            return string.Format(Resources.TextMessage_Format_String, this.Recepient, this.Message);
+            return string.Format(Resources.TextMessage_Format_String, this.Recepients, this.Message);
         }
     }
 }
