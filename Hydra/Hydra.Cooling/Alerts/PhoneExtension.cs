@@ -2,6 +2,7 @@ namespace Hydra.Cooling.Alerts
 {
     using System;
     using System.Globalization;
+    using System.Linq;
 
     public class PhoneExtension : IEquatable<PhoneExtension>, IComparable<PhoneExtension>, IFormattable
     {
@@ -41,6 +42,27 @@ namespace Hydra.Cooling.Alerts
         public static bool operator !=(PhoneExtension first, PhoneExtension second)
         {
             return !(first == second);
+        }
+
+        public static bool TryParse(string s, out PhoneExtension phoneExtension)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                phoneExtension = PhoneExtension.Empty;
+                return false;
+            }
+
+            string numbers = new string(s.ToCharArray().Where(char.IsDigit).ToArray());
+
+            uint pe;
+            if (uint.TryParse(numbers, out pe))
+            {
+                phoneExtension = new PhoneExtension(pe);
+                return true;
+            }
+
+            phoneExtension = PhoneExtension.Empty;
+            return false;
         }
 
         public int CompareTo(PhoneExtension other)

@@ -21,14 +21,14 @@ namespace Hydra.Cooling.Alerts
                 .ToList();
         }
 
-        public PhoneNumber this[int index]
-        {
-            get { return this.phoneNumbers[index]; }
-        }
-
         public int Count
         {
             get { return this.phoneNumbers.Count; }
+        }
+
+        public PhoneNumber this[int index]
+        {
+            get { return this.phoneNumbers[index]; }
         }
 
         public IEnumerator<PhoneNumber> GetEnumerator()

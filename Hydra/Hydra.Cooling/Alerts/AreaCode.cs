@@ -2,6 +2,7 @@ namespace Hydra.Cooling.Alerts
 {
     using System;
     using System.Globalization;
+    using System.Linq;
 
     public class AreaCode : IEquatable<AreaCode>, IComparable<AreaCode>, IFormattable
     {
@@ -41,6 +42,27 @@ namespace Hydra.Cooling.Alerts
         public static bool operator !=(AreaCode first, AreaCode second)
         {
             return !(first == second);
+        }
+
+        public static bool TryParse(string s, out AreaCode areaCode)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                areaCode = AreaCode.Empty;
+                return false;
+            }
+
+            string numbers = new string(s.ToCharArray().Where(char.IsDigit).ToArray());
+
+            uint ac;
+            if (uint.TryParse(numbers, out ac))
+            {
+                areaCode = new AreaCode(ac);
+                return true;
+            }
+
+            areaCode = AreaCode.Empty;
+            return false;
         }
 
         public int CompareTo(AreaCode other)

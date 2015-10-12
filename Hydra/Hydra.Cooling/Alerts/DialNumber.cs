@@ -2,6 +2,7 @@ namespace Hydra.Cooling.Alerts
 {
     using System;
     using System.Globalization;
+    using System.Linq;
 
     public class DialNumber : IEquatable<DialNumber>, IComparable<DialNumber>, IFormattable
     {
@@ -41,6 +42,27 @@ namespace Hydra.Cooling.Alerts
         public static bool operator !=(DialNumber first, DialNumber second)
         {
             return !(first == second);
+        }
+
+        public static bool TryParse(string s, out DialNumber dialNumber)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                dialNumber = DialNumber.Empty;
+                return false;
+            }
+
+            string numbers = new string(s.ToCharArray().Where(char.IsDigit).ToArray());
+
+            ulong dn;
+            if (ulong.TryParse(numbers, out dn))
+            {
+                dialNumber = new DialNumber(dn);
+                return true;
+            }
+
+            dialNumber = DialNumber.Empty;
+            return false;
         }
 
         public int CompareTo(DialNumber other)
