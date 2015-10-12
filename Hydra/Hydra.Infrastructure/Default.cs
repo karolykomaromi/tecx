@@ -70,6 +70,11 @@ namespace Hydra.Infrastructure
                 return ValueOfField(field);
             }
 
+            if ((field = Field(type, "Invalid")) != null)
+            {
+                return ValueOfField(field);
+            }
+
             return FrameworkDefault(type);
         }
 

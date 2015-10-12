@@ -1,4 +1,4 @@
-﻿namespace Hydra.Infrastructure.Input
+﻿namespace Hydra.Jobs.Input
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;

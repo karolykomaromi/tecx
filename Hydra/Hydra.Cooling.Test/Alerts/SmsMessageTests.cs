@@ -1,5 +1,6 @@
 ﻿namespace Hydra.Cooling.Test.Alerts
 {
+    using System.Diagnostics.Contracts;
     using System.Linq;
     using Hydra.Cooling.Alerts;
     using Xunit;
@@ -29,5 +30,26 @@
             Assert.Equal(3u, chunkifiedMessages[2].PartNumber);
             Assert.Equal(3u, chunkifiedMessages[2].PartsTotal);
         }
+    }
+
+    public interface ISmsGateway
+    {
+        SmsSendResult SendSms(SmsMessage message);
+    }
+
+    internal abstract class SmsGatewayContract : ISmsGateway
+    {
+        public SmsSendResult SendSms(SmsMessage message)
+        {
+            Contract.Requires(message != null);
+            Contract.Ensures(Contract.Result<SmsSendResult>() != null);
+
+            return SmsSendResult.Empty;
+        }
+    }
+
+    public class SmsSendResult
+    {
+        public static readonly SmsSendResult Empty = new SmsSendResult();
     }
 }

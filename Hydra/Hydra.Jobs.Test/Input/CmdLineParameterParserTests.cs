@@ -1,8 +1,8 @@
-﻿namespace Hydra.Infrastructure.Test.Input
+﻿namespace Hydra.Jobs.Test.Input
 {
     using System;
     using System.Linq;
-    using Hydra.Infrastructure.Input;
+    using Hydra.Jobs.Input;
     using Xunit;
     using Xunit.Extensions;
 

@@ -28,7 +28,7 @@ namespace Hydra.TestTools
                 .Mappings(m =>
                 {
                     m.FluentMappings.AddFromAssemblyOf<ResourceItemMap>();
-                    m.FluentMappings.Conventions.AddFromAssemblyOf<MultiLanguageStringUserTypeConvention>();
+                    m.FluentMappings.Conventions.AddFromAssemblyOf<PolyglotStringUserTypeConvention>();
                 })
                 .ExposeConfiguration(cfg => BuildSchema(container, cfg))
                 .BuildSessionFactory();
