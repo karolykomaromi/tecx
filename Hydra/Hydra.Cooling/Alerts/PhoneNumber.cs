@@ -5,7 +5,7 @@ namespace Hydra.Cooling.Alerts
     using System.Globalization;
     using System.Linq;
 
-    public class PhoneNumber : IEquatable<PhoneNumber>, IFormattable
+    public class PhoneNumber : IEquatable<PhoneNumber>, IComparable<PhoneNumber>, IFormattable
     {
         public static readonly PhoneNumber Empty = new PhoneNumber();
 
@@ -215,6 +215,37 @@ namespace Hydra.Cooling.Alerts
                     throw new FormatException();
                 }
             }
+        }
+
+        public int CompareTo(PhoneNumber other)
+        {
+            if (other == null)
+            {
+                return 1;
+            }
+
+            int comparison;
+            if ((comparison = this.CountryCode.CompareTo(other.CountryCode)) != 0)
+            {
+                return comparison;
+            }
+
+            if ((comparison = this.AreaCode.CompareTo(other.AreaCode)) != 0)
+            {
+                return comparison;
+            }
+
+            if ((comparison = this.DialNumber.CompareTo(other.DialNumber)) != 0)
+            {
+                return comparison;
+            }
+
+            if ((comparison = this.PhoneExtension.CompareTo(other.PhoneExtension)) != 0)
+            {
+                return comparison;
+            }
+
+            return 0;
         }
 
         public override string ToString()
