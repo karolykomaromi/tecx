@@ -54,6 +54,7 @@
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Actuators\IThermostat.cs" />
+    <Compile Include="Actuators\SimulationThermostat.cs" />
     <Compile Include="Actuators\Thermostat.cs" />
     <Compile Include="Actuators\ThermostatTargetTemperatureChangedEventArgs.cs" />
     <Compile Include="Alerts\AreaCode.cs" />
