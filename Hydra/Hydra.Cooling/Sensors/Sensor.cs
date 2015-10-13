@@ -1,9 +1,8 @@
-namespace Hydra.Cooling
+namespace Hydra.Cooling.Sensors
 {
     using System;
     using System.Reactive;
     using System.Reactive.Linq;
-    using Hydra.Cooling.Sensors;
 
     public abstract class Sensor<TSensor, TEventArgs> : Device, ISensor<TSensor, TEventArgs> 
         where TEventArgs : DeviceStateChangedEventArgs<TSensor> 

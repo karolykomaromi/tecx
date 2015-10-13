@@ -1,9 +1,8 @@
-namespace Hydra.Cooling
+namespace Hydra.Cooling.Sensors
 {
     using System;
     using System.Diagnostics.Contracts;
     using System.Reactive;
-    using Hydra.Cooling.Sensors;
     using Hydra.Infrastructure;
 
     [ContractClass(typeof(SensorContract<,>))]
