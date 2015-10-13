@@ -15,16 +15,4 @@ namespace Hydra.Cooling.Test.Alerts
             Assert.Equal(new AreaCode(expected), actual);
         }
     }
-
-    public class DialNumberTests
-    {
-        [Theory]
-        [InlineData("123 456 7890", 1234567890UL)]
-        public void Should_Parse_Valid_Strings(string s, ulong expected)
-        {
-            DialNumber actual;
-            Assert.True(DialNumber.TryParse(s, out actual));
-            Assert.Equal(new DialNumber(expected), actual);
-        }
-    }
 }

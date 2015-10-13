@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="Alerts\AreaCodeTests.cs" />
     <Compile Include="Alerts\CountryCodeTests.cs" />
+    <Compile Include="Alerts\DialNumberTests.cs" />
     <Compile Include="Alerts\PhoneExtensionTests.cs" />
     <Compile Include="Alerts\PhoneNumberCollectionTests.cs" />
     <Compile Include="Alerts\PhoneNumberTests.cs" />
