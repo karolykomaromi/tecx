@@ -2,9 +2,11 @@
 {
     using System;
     using System.Diagnostics.Contracts;
+    using System.Reactive;
+    using System.Reactive.Disposables;
 
     [ContractClass(typeof(ThermostatContract))]
-    public interface IThermostat : IDevice
+    public interface IThermostat : IDevice, IObservable<EventPattern<ThermostatTargetTemperatureChangedEventArgs>>
     {
         event EventHandler<ThermostatTargetTemperatureChangedEventArgs> TargetTemperatureChanged;
         
@@ -28,6 +30,14 @@
             {
                 Contract.Requires(value != null);
             }
+        }
+
+        public IDisposable Subscribe(IObserver<EventPattern<ThermostatTargetTemperatureChangedEventArgs>> observer)
+        {
+            Contract.Requires(observer != null);
+            Contract.Ensures(Contract.Result<IDisposable>() != null);
+
+            return Disposable.Empty;
         }
     }
 }

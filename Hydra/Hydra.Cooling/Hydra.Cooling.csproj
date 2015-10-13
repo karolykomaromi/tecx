@@ -72,7 +72,6 @@
     <Compile Include="FahrenheitEpsilonComparer.cs" />
     <Compile Include="FormatStrings.cs" />
     <Compile Include="IDevice.cs" />
-    <Compile Include="ISensor.cs" />
     <Compile Include="Kelvin.cs" />
     <Compile Include="KelvinEpsilonComparer.cs" />
     <Compile Include="Location.cs" />
@@ -82,7 +81,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.tt</DependentUpon>
     </Compile>
-    <Compile Include="Sensor.cs" />
     <Compile Include="Sensors\CompositeObserver.cs" />
     <Compile Include="Sensors\DoorSensor.cs" />
     <Compile Include="Sensors\DoorState.cs" />
@@ -90,8 +88,10 @@
     <Compile Include="Sensors\EmergencySwitchSensor.cs" />
     <Compile Include="Sensors\IDoorSensor.cs" />
     <Compile Include="Sensors\IEmergencySwitchSensor.cs" />
+    <Compile Include="Sensors\ISensor.cs" />
     <Compile Include="Sensors\ITemperatureSensor.cs" />
     <Compile Include="Sensors\DeviceStateChangedEventArgs.cs" />
+    <Compile Include="Sensors\Sensor.cs" />
     <Compile Include="Sensors\SimulationDoorSensor.cs" />
     <Compile Include="Sensors\SimulationEmergencySwitchSensor.cs" />
     <Compile Include="Sensors\SimulationTemperatureSensor.cs" />
