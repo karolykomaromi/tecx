@@ -20,9 +20,11 @@ namespace Hydra.Cooling.Sensors
         {
             Contract.Requires(newTemperature != null);
 
+            Temperature oldTemperature = this.currentTemperature;
+
             this.currentTemperature = newTemperature;
 
-            this.OnTemperatureChanged(newTemperature);
+            this.OnTemperatureChanged(oldTemperature, newTemperature);
         }
     }
 }
