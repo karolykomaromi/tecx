@@ -32,11 +32,12 @@
             this.TemperatureChanged(this, args);
         }
 
-        protected virtual void OnTemperatureChanged(Temperature newTemperature)
+        protected virtual void OnTemperatureChanged(Temperature oldTemperature, Temperature newTemperature)
         {
+            Contract.Requires(oldTemperature != null);
             Contract.Requires(newTemperature != null);
 
-            this.TemperatureChanged(this, new TemperatureChangedEventArgs(this, newTemperature));
+            this.TemperatureChanged(this, new TemperatureChangedEventArgs(this, oldTemperature, newTemperature));
         }
 
         private class NullTemperatureSensor : NullSensor<ITemperatureSensor, TemperatureChangedEventArgs>, ITemperatureSensor
