@@ -81,6 +81,14 @@ namespace Hydra.Cooling.Alerts
                 return true;
             }
 
+            if (culture.Equals(Cultures.ScottishGaelicUnitedKingdom) ||
+                culture.Equals(Cultures.WelshUnitedKingdom) ||
+                culture.Equals(Cultures.EnglishUnitedKingdom))
+            {
+                countryCode = CountryCodes.UnitedKingdom;
+                return true;
+            }
+
             countryCode = CountryCode.Empty;
             return false;
         }

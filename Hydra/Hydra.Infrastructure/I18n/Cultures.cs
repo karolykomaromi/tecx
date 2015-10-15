@@ -16,7 +16,11 @@
 
         public static readonly CultureInfo EnglishNeutral = new CultureInfo("en");
 
-        public static readonly CultureInfo EnglishGreatBritain = new CultureInfo("en-GB");
+        public static readonly CultureInfo EnglishUnitedKingdom = new CultureInfo("en-GB");
+
+        public static readonly CultureInfo WelshUnitedKingdom = new CultureInfo("cy-GB");
+
+        public static readonly CultureInfo ScottishGaelicUnitedKingdom = new CultureInfo("gd-GB");
 
         public static readonly CultureInfo EnglishUnitedStates = new CultureInfo("en-US");
 

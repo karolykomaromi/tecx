@@ -1,6 +1,5 @@
 ﻿namespace Hydra.Cooling.Test.Alerts
 {
-    using System.Diagnostics.Contracts;
     using System.Linq;
     using Hydra.Cooling.Alerts;
     using Xunit;
@@ -17,39 +16,21 @@
             SmsMessage[] chunkifiedMessages = originalMessage.Chunkify().ToArray();
 
             Assert.Equal(3, chunkifiedMessages.Length);
+
             Assert.True(chunkifiedMessages[0].Message.All(c => c == '0'));
             Assert.Equal(160, chunkifiedMessages[0].Message.Length);
             Assert.Equal(1u, chunkifiedMessages[0].PartNumber);
             Assert.Equal(3u, chunkifiedMessages[0].PartsTotal);
+
             Assert.True(chunkifiedMessages[1].Message.All(c => c == '1'));
             Assert.Equal(160, chunkifiedMessages[1].Message.Length);
             Assert.Equal(2u, chunkifiedMessages[1].PartNumber);
             Assert.Equal(3u, chunkifiedMessages[1].PartsTotal);
+
             Assert.True(chunkifiedMessages[2].Message.All(c => c == '2'));
             Assert.Equal(10, chunkifiedMessages[2].Message.Length);
             Assert.Equal(3u, chunkifiedMessages[2].PartNumber);
             Assert.Equal(3u, chunkifiedMessages[2].PartsTotal);
         }
-    }
-
-    public interface ISmsGateway
-    {
-        SmsSendResult SendSms(SmsMessage message);
-    }
-
-    internal abstract class SmsGatewayContract : ISmsGateway
-    {
-        public SmsSendResult SendSms(SmsMessage message)
-        {
-            Contract.Requires(message != null);
-            Contract.Ensures(Contract.Result<SmsSendResult>() != null);
-
-            return SmsSendResult.Empty;
-        }
-    }
-
-    public class SmsSendResult
-    {
-        public static readonly SmsSendResult Empty = new SmsSendResult();
     }
 }

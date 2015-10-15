@@ -8,6 +8,7 @@ namespace Hydra.Cooling.Test.Alerts
     {
         [Theory]
         [InlineData("123 456 7890", 1234567890UL)]
+        [InlineData("123-456-7890", 1234567890UL)]
         public void Should_Parse_Valid_Strings(string s, ulong expected)
         {
             DialNumber actual;
