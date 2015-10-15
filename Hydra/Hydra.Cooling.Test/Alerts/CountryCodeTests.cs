@@ -8,7 +8,8 @@ namespace Hydra.Cooling.Test.Alerts
     public class CountryCodeTests
     {
         [Theory]
-        [InlineData("+49", (ushort) 49)]
+        [InlineData("+49", (ushort)49)]
+        [InlineData("49", (ushort)49)]
         public void Should_Parse_Valid_Strings(string s, ushort expected)
         {
             CountryCode actual;
@@ -70,6 +71,21 @@ namespace Hydra.Cooling.Test.Alerts
 
             Assert.True(CountryCode.TryGetCountryCode(Cultures.FrenchFrance, out actual));
             Assert.Equal(CountryCodes.France, actual);
+        }
+
+        [Fact]
+        public void Should_Return_British_Country_Code()
+        {
+            CountryCode actual;
+
+            Assert.True(CountryCode.TryGetCountryCode(Cultures.EnglishUnitedKingdom, out actual));
+            Assert.Equal(CountryCodes.UnitedKingdom, actual);
+
+            Assert.True(CountryCode.TryGetCountryCode(Cultures.WelshUnitedKingdom, out actual));
+            Assert.Equal(CountryCodes.UnitedKingdom, actual);
+
+            Assert.True(CountryCode.TryGetCountryCode(Cultures.ScottishGaelicUnitedKingdom, out actual));
+            Assert.Equal(CountryCodes.UnitedKingdom, actual);
         }
     }
 }

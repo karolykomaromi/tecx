@@ -61,10 +61,15 @@
     <Compile Include="Alerts\CountryCode.cs" />
     <Compile Include="Alerts\CountryCodes.cs" />
     <Compile Include="Alerts\DialNumber.cs" />
+    <Compile Include="Alerts\ISmsGateway.cs" />
     <Compile Include="Alerts\PhoneExtension.cs" />
     <Compile Include="Alerts\PhoneNumber.cs" />
     <Compile Include="Alerts\PhoneNumberCollection.cs" />
+    <Compile Include="Alerts\ProtocolItem.cs" />
     <Compile Include="Alerts\SmsMessage.cs" />
+    <Compile Include="Alerts\SmsTransmissionProtocol.cs" />
+    <Compile Include="Alerts\TransmissionFailed.cs" />
+    <Compile Include="Alerts\TransmissionSucceeded.cs" />
     <Compile Include="Celsius.cs" />
     <Compile Include="CelsiusEpsilonComparer.cs" />
     <Compile Include="Device.cs" />

@@ -22,7 +22,12 @@ namespace Hydra.Cooling.Actuators
 
         public abstract Temperature TargetTemperature { get; set; }
 
-        protected  virtual IObservable<EventPattern<ThermostatTargetTemperatureChangedEventArgs>> ToObservable()
+        public virtual IDisposable Subscribe(IObserver<EventPattern<ThermostatTargetTemperatureChangedEventArgs>> observer)
+        {
+            return this.observable.Subscribe(observer);
+        }
+
+        protected virtual IObservable<EventPattern<ThermostatTargetTemperatureChangedEventArgs>> ToObservable()
         {
             return Observable.FromEventPattern<ThermostatTargetTemperatureChangedEventArgs>(
                 handler => this.TargetTemperatureChanged += handler,
@@ -41,11 +46,6 @@ namespace Hydra.Cooling.Actuators
             Contract.Requires(newTargetTemperature != null);
 
             this.TargetTemperatureChanged(this, new ThermostatTargetTemperatureChangedEventArgs(this, newTargetTemperature));
-        }
-
-        public virtual IDisposable Subscribe(IObserver<EventPattern<ThermostatTargetTemperatureChangedEventArgs>> observer)
-        {
-            return this.observable.Subscribe(observer);
         }
 
         private class NullThermostat : NullDevice, IThermostat
