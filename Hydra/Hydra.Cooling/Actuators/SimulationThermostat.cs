@@ -19,8 +19,11 @@ namespace Hydra.Cooling.Actuators
 
             set
             {
+                Temperature oldTargetTemperature = this.targetTemperature;
+
                 this.targetTemperature = value;
-                this.OnTargetTemperatureChanged(value);
+
+                this.OnTargetTemperatureChanged(oldTargetTemperature, value);
             }
         }
     }

@@ -5,7 +5,7 @@
         private DoorState currentDoorState;
 
         public SimulationDoorSensor()
-            : base(new DeviceId(typeof(SimulationDoorSensor).Name))
+            : base(new DeviceId(byte.MaxValue))
         {
         }
 

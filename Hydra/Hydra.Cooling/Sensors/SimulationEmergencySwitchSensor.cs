@@ -5,7 +5,7 @@ namespace Hydra.Cooling.Sensors
         private SwitchState currentSwitchState;
 
         public SimulationEmergencySwitchSensor()
-            : base(new DeviceId(typeof(SimulationEmergencySwitchSensor).Name))
+            : base(new DeviceId(byte.MaxValue))
         {
         }
 

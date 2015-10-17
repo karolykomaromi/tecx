@@ -7,18 +7,23 @@ namespace Hydra.Cooling
     {
         public static readonly DeviceId Empty = new DeviceId();
 
-        private readonly string id;
+        private readonly byte id;
 
-        public DeviceId(string id)
+        public DeviceId(byte id)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(id));
-
             this.id = id;
         }
 
         private DeviceId()
         {
-            this.id = string.Empty;
+            this.id = byte.MinValue;
+        }
+
+        public static implicit operator byte(DeviceId deviceId)
+        {
+            Contract.Requires(deviceId != null);
+
+            return deviceId.id;
         }
 
         public bool Equals(DeviceId other)
@@ -33,7 +38,7 @@ namespace Hydra.Cooling
                 return true;
             }
 
-            return string.Equals(this.id, other.id, StringComparison.Ordinal);
+            return this.id == other.id;
         }
 
         public override bool Equals(object obj)
@@ -50,7 +55,7 @@ namespace Hydra.Cooling
 
         public override string ToString()
         {
-            return this.id;
+            return this.id.ToString();
         }
     }
 }

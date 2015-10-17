@@ -41,11 +41,12 @@ namespace Hydra.Cooling.Actuators
             this.TargetTemperatureChanged(this, args);
         }
 
-        protected virtual void OnTargetTemperatureChanged(Temperature newTargetTemperature)
+        protected virtual void OnTargetTemperatureChanged(Temperature oldTargetTemperature, Temperature newTargetTemperature)
         {
             Contract.Requires(newTargetTemperature != null);
+            Contract.Requires(oldTargetTemperature != null);
 
-            this.TargetTemperatureChanged(this, new ThermostatTargetTemperatureChangedEventArgs(this, newTargetTemperature));
+            this.TargetTemperatureChanged(this, new ThermostatTargetTemperatureChangedEventArgs(this, oldTargetTemperature, newTargetTemperature));
         }
 
         private class NullThermostat : NullDevice, IThermostat
