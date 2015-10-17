@@ -7,7 +7,7 @@ namespace Hydra.Cooling.Sensors
         private Temperature currentTemperature;
 
         public SimulationTemperatureSensor()
-            : base(new DeviceId(typeof(SimulationTemperatureSensor).Name))
+            : base(new DeviceId(byte.MaxValue))
         {
         }
 

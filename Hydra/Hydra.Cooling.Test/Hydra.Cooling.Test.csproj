@@ -34,6 +34,10 @@
       <HintPath>..\packages\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NModbus4, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NModbus4.2.1.0\lib\net40\NModbus4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -65,6 +69,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Actuators\ModbusThermostatTests.cs" />
     <Compile Include="Alerts\AreaCodeTests.cs" />
     <Compile Include="Alerts\CountryCodeTests.cs" />
     <Compile Include="Alerts\DialNumberTests.cs" />
@@ -83,6 +88,7 @@
     <Compile Include="Sensors\CompositeObserverTests.cs" />
     <Compile Include="Sensors\DoorSensorTests.cs" />
     <Compile Include="Sensors\EmergencySwitchSensorTests.cs" />
+    <Compile Include="Sensors\ModBusTemperatureSensorTests.cs" />
     <Compile Include="Sensors\TemperatureSensorTests.cs" />
     <Compile Include="TemperatureTests.cs" />
   </ItemGroup>
