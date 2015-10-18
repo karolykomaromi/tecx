@@ -23,7 +23,6 @@ namespace Hydra.Cooling.Sensors
         private Probe(int registerIndex, [CallerMemberName] string name = null)
         {
             Contract.Requires(registerIndex >= 0);
-            Contract.Requires(registerIndex <= ModbusHelper.NumRegisters - 1);
             Contract.Requires(!string.IsNullOrEmpty(name));
 
             this.registerIndex = registerIndex;

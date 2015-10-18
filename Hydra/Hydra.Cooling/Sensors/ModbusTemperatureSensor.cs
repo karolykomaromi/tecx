@@ -6,16 +6,20 @@ namespace Hydra.Cooling.Sensors
 
     public class ModbusTemperatureSensor : TemperatureSensor, IDisposable
     {
+        private readonly ModbusSettings settings;
+
         private readonly IModbusSerialMaster master;
 
         private readonly Probe probe;
 
-        public ModbusTemperatureSensor(DeviceId deviceId, IModbusSerialMaster master, Probe probe)
+        public ModbusTemperatureSensor(DeviceId deviceId, ModbusSettings settings, IModbusSerialMaster master, Probe probe)
             : base(deviceId)
         {
             Contract.Requires(master != null);
+            Contract.Requires(settings != null);
             Contract.Requires(probe != null);
 
+            this.settings = settings;
             this.master = master;
             this.probe = probe;
         }
@@ -24,9 +28,9 @@ namespace Hydra.Cooling.Sensors
         {
             get
             {
-                ushort[] registers = this.master.ReadHoldingRegisters(this.Id, ModbusHelper.StartAddress, ModbusHelper.NumRegisters);
+                ushort[] registers = this.master.ReadHoldingRegisters(this.Id, this.settings.StartAddress, this.settings.NumberOfRegisters);
 
-                double temp = (double)ModbusHelper.ConvertRegisterValueToOutput(registers[this.probe]) / 10;
+                double temp = ModbusHelper.ConvertTemperatureReadFromRegister(registers[this.probe]);
 
                 return temp.DegreesCelsius();
             }

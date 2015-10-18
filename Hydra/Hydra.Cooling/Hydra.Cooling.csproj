@@ -79,6 +79,7 @@
     <Compile Include="BaudRate.cs" />
     <Compile Include="Celsius.cs" />
     <Compile Include="CelsiusEpsilonComparer.cs" />
+    <Compile Include="ComPort.cs" />
     <Compile Include="Device.cs" />
     <Compile Include="DeviceId.cs" />
     <Compile Include="Fahrenheit.cs" />
@@ -89,6 +90,8 @@
     <Compile Include="KelvinEpsilonComparer.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="ModbusHelper.cs" />
+    <Compile Include="ModbusSerialMasterExtensions.cs" />
+    <Compile Include="ModbusSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -7,10 +7,10 @@
 
     public class ModbusTemperatureSensorTests
     {
-        [Fact]
+        [Fact(Skip = "Won't work without hardware.")]
         public void Should()
         {
-            SerialPort port = new SerialPortBuilder().ForPort("COM3");
+            SerialPort port = new SerialPortBuilder().WithPort(ComPort.Com3);
 
             port.Open();
 
@@ -18,7 +18,9 @@
 
             DeviceId deviceId = new DeviceId(41);
 
-            using (var sut = new ModbusTemperatureSensor(deviceId, master, Probe.Room))
+            ModbusSettings settings = new ModbusSettings();
+
+            using (var sut = new ModbusTemperatureSensor(deviceId, settings, master, Probe.Room))
             {
             }
         }

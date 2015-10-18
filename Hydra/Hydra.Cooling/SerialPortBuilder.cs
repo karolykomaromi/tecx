@@ -6,7 +6,7 @@ namespace Hydra.Cooling
 
     public class SerialPortBuilder : Builder<SerialPort>
     {
-        private string portName;
+        private ComPort port;
 
         private BaudRate baudRate;
 
@@ -18,19 +18,19 @@ namespace Hydra.Cooling
 
         public SerialPortBuilder()
         {
-            this.portName = "COM1";
+            this.port = ComPort.Com1;
             this.baudRate = BaudRate.Bd19200;
             this.dataBits = 8;
             this.parity = Parity.None;
             this.stopBits = StopBits.One;
         }
 
-        public SerialPortBuilder ForPort(string portName)
+        public SerialPortBuilder WithPort(ComPort port)
         {
-            Contract.Requires(!string.IsNullOrEmpty(portName));
+            Contract.Requires(port != null);
             Contract.Ensures(Contract.Result<SerialPortBuilder>() != null);
 
-            this.portName = portName;
+            this.port = port;
 
             return this;
         }
@@ -77,7 +77,7 @@ namespace Hydra.Cooling
         {
             Contract.Ensures(Contract.Result<SerialPort>() != null);
 
-            SerialPort serialPort = new SerialPort(this.portName)
+            SerialPort serialPort = new SerialPort(this.port)
                                     {
                                         BaudRate = this.baudRate,
                                         DataBits = this.dataBits,

@@ -77,13 +77,16 @@
     <Compile Include="Alerts\PhoneNumberCollectionTests.cs" />
     <Compile Include="Alerts\PhoneNumberTests.cs" />
     <Compile Include="Alerts\SmsMessageTests.cs" />
+    <Compile Include="BaudRateTests.cs" />
     <Compile Include="CelsiusEpsilonComparerTests.cs" />
     <Compile Include="CelsiusTests.cs" />
+    <Compile Include="ComPortTests.cs" />
     <Compile Include="Configuration\SurveillanceSystemBuilderTests.cs" />
     <Compile Include="FahrenheitEpsilonComparerTests.cs" />
     <Compile Include="FahrenheitTests.cs" />
     <Compile Include="KelvinEpsilonComparerTests.cs" />
     <Compile Include="KelvinTests.cs" />
+    <Compile Include="ModbusHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sensors\CompositeObserverTests.cs" />
     <Compile Include="Sensors\DoorSensorTests.cs" />

@@ -14,7 +14,6 @@ namespace Hydra.Cooling.Actuators
 
         private Actuator(ushort registerIndex, [CallerMemberName] string name = null)
         {
-            Contract.Requires(registerIndex <= ModbusHelper.NumRegisters - 1);
             Contract.Requires(!string.IsNullOrEmpty(name));
 
             this.registerIndex = registerIndex;
