@@ -6,18 +6,22 @@ namespace Hydra.Cooling.Actuators
 
     public class ModbusThermostat : Thermostat, IDisposable
     {
+        private readonly ModbusSettings settings;
+
         private readonly IModbusSerialMaster master;
 
         private readonly Actuator actuator;
 
         private Celsius targetTemperature;
 
-        public ModbusThermostat(DeviceId id, IModbusSerialMaster master, Actuator actuator)
+        public ModbusThermostat(DeviceId id, ModbusSettings settings, IModbusSerialMaster master, Actuator actuator)
             : base(id)
         {
+            Contract.Requires(settings != null);
             Contract.Requires(master != null);
             Contract.Requires(actuator != null);
 
+            this.settings = settings;
             this.master = master;
             this.actuator = actuator;
         }
@@ -30,10 +34,10 @@ namespace Hydra.Cooling.Actuators
                 {
                     ushort[] registers = this.master.ReadHoldingRegisters(
                         this.Id,
-                        ModbusHelper.StartAddress,
-                        ModbusHelper.NumRegisters);
+                        this.settings.StartAddress,
+                        this.settings.NumberOfRegisters);
 
-                    double temp = (double)ModbusHelper.ConvertRegisterValueToOutput(registers[this.actuator]) / 10;
+                    double temp = ModbusHelper.ConvertTemperatureReadFromRegister(registers[this.actuator]);
 
                     this.targetTemperature = temp.DegreesCelsius();
                 }
@@ -48,7 +52,7 @@ namespace Hydra.Cooling.Actuators
 
                 if (oldTargetTemperature != newTargetTemperature)
                 {
-                    ushort v = ModbusHelper.ConvertRegisterValueToInput((double)value.Value);
+                    ushort v = ModbusHelper.ConvertTemperatureValueForWriteToRegister((double)value.Value);
 
                     this.master.WriteSingleRegister(this.Id, this.actuator, v);
 

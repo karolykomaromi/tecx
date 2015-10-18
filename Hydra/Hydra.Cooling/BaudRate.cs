@@ -10,6 +10,8 @@
     {
         public static readonly BaudRate Bd19200 = new BaudRate();
 
+        public static readonly BaudRate Bd9600 = new BaudRate();
+
         private readonly int rate;
 
         private BaudRate([CallerMemberName] string name = null)
@@ -26,6 +28,111 @@
             Contract.Requires(bd != null);
 
             return bd.rate;
+        }
+
+        public static bool operator ==(BaudRate x, BaudRate y)
+        {
+            if (object.ReferenceEquals(x, y))
+            {
+                return true;
+            }
+
+            if (object.ReferenceEquals(x, null))
+            {
+                return false;
+            }
+
+            if (object.ReferenceEquals(y, null))
+            {
+                return false;
+            }
+
+            return x.Equals(y);
+        }
+
+        public static bool operator !=(BaudRate x, BaudRate y)
+        {
+            return !(x == y);
+        }
+
+        public static bool operator <(BaudRate x, BaudRate y)
+        {
+            if (object.ReferenceEquals(x, y))
+            {
+                return false;
+            }
+
+            if (object.ReferenceEquals(x, null))
+            {
+                return true;
+            }
+
+            if (object.ReferenceEquals(y, null))
+            {
+                return false;
+            }
+
+            return x.rate < y.rate;
+        }
+
+        public static bool operator <=(BaudRate x, BaudRate y)
+        {
+            if (object.ReferenceEquals(x, y))
+            {
+                return true;
+            }
+
+            if (object.ReferenceEquals(x, null))
+            {
+                return true;
+            }
+
+            if (object.ReferenceEquals(y, null))
+            {
+                return false;
+            }
+
+            return x.rate <= y.rate;
+        }
+
+        public static bool operator >(BaudRate x, BaudRate y)
+        {
+            if (object.ReferenceEquals(x, y))
+            {
+                return false;
+            }
+
+            if (object.ReferenceEquals(x, null))
+            {
+                return false;
+            }
+
+            if (object.ReferenceEquals(y, null))
+            {
+                return true;
+            }
+
+            return x.rate > y.rate;
+        }
+
+        public static bool operator >=(BaudRate x, BaudRate y)
+        {
+            if (object.ReferenceEquals(x, y))
+            {
+                return true;
+            }
+
+            if (object.ReferenceEquals(x, null))
+            {
+                return false;
+            }
+
+            if (object.ReferenceEquals(y, null))
+            {
+                return true;
+            }
+
+            return x.rate >= y.rate;
         }
 
         public bool Equals(BaudRate other)

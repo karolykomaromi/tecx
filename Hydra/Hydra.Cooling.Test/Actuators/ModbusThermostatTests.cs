@@ -7,10 +7,10 @@ namespace Hydra.Cooling.Test.Actuators
 
     public class ModbusThermostatTests
     {
-        [Fact]
+        [Fact(Skip = "Won't work without hardware.")]
         public void Should2()
         {
-            SerialPort port = new SerialPortBuilder().ForPort("COM3");
+            SerialPort port = new SerialPortBuilder().WithPort(ComPort.Com3);
 
             port.Open();
 
@@ -18,7 +18,9 @@ namespace Hydra.Cooling.Test.Actuators
 
             DeviceId deviceId = new DeviceId(41);
 
-            using (var sut = new ModbusThermostat(deviceId, master, Actuator.TargetTemperature))
+            ModbusSettings settings = new ModbusSettings();
+
+            using (var sut = new ModbusThermostat(deviceId, settings, master, Actuator.TargetTemperature))
             {
             }
         }

@@ -2,27 +2,23 @@ namespace Hydra.Cooling
 {
     public static class ModbusHelper
     {
-        public const ushort StartAddress = 0;
-
-        public const ushort NumRegisters = 38;
-
-        public static short ConvertRegisterValueToOutput(ushort value)
+        public static double ConvertTemperatureReadFromRegister(ushort value)
         {
-            short converted;
+            double converted;
 
             if (value > short.MaxValue)
             {
-                converted = (short)((int)value - ushort.MaxValue - 1);
+                converted = (int)value - ushort.MaxValue - 1;
             }
             else
             {
-                converted = (short)value;
+                converted = value;
             }
 
-            return converted;
+            return converted / 10;
         }
 
-        public static ushort ConvertRegisterValueToInput(double value)
+        public static ushort ConvertTemperatureValueForWriteToRegister(double value)
         {
             ushort converted;
 
