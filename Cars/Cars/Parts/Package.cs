@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using Cars;
+using Cars.Financial;
 
-namespace Cars
+namespace Cars.Parts
 {
     public class Package : Part, IEnumerable<Part>
     {

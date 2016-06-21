@@ -59,10 +59,12 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="PartNumberTests.cs" />
-    <Compile Include="PackageTests.cs" />
+    <Compile Include="Financial\CurrencyAmountTests.cs" />
+    <Compile Include="Parts\PackageTests.cs" />
+    <Compile Include="Parts\PartCollectionTests.cs" />
+    <Compile Include="Parts\PartNumberTests.cs" />
+    <Compile Include="Parts\YourCarTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="YourCarTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
