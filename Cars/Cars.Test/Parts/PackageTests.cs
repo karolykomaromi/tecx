@@ -1,6 +1,7 @@
-﻿using Xunit;
+﻿using Cars.Parts;
+using Xunit;
 
-namespace Cars.Test
+namespace Cars.Test.Parts
 {
     public class PackageTests
     {

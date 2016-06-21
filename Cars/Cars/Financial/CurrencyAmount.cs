@@ -2,9 +2,9 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 
-namespace Cars
+namespace Cars.Financial
 {
-    public class CurrencyAmount : IEquatable<CurrencyAmount>
+    public class CurrencyAmount : IEquatable<CurrencyAmount>, IComparable<CurrencyAmount>
     {
         private readonly decimal amount;
         private readonly Currency currency;
@@ -25,6 +25,66 @@ namespace Cars
         public Currency Currency
         {
             get { return this.currency; }
+        }
+
+        public static CurrencyAmount operator *(CurrencyAmount ca, decimal factor)
+        {
+            return new CurrencyAmount(ca.Amount * factor, ca.currency);
+        }
+
+        public static CurrencyAmount operator *(decimal factor, CurrencyAmount ca)
+        {
+            return new CurrencyAmount(ca.Amount * factor, ca.currency);
+        }
+
+        public static CurrencyAmount operator /(CurrencyAmount ca, decimal divisor)
+        {
+            return new CurrencyAmount(ca.Amount / divisor, ca.currency);
+        }
+
+        public static CurrencyAmount operator /(decimal divisor, CurrencyAmount ca)
+        {
+            return new CurrencyAmount(ca.Amount / divisor, ca.currency);
+        }
+
+        public static CurrencyAmount operator *(CurrencyAmount ca, int factor)
+        {
+            return new CurrencyAmount(ca.Amount * factor, ca.currency);
+        }
+
+        public static CurrencyAmount operator *(int factor, CurrencyAmount ca)
+        {
+            return new CurrencyAmount(ca.Amount * factor, ca.currency);
+        }
+
+        public static CurrencyAmount operator /(CurrencyAmount ca, int divisor)
+        {
+            return new CurrencyAmount(ca.Amount / divisor, ca.currency);
+        }
+
+        public static CurrencyAmount operator /(int divisor, CurrencyAmount ca)
+        {
+            return new CurrencyAmount(ca.Amount / divisor, ca.currency);
+        }
+
+        public static CurrencyAmount operator *(CurrencyAmount ca, long factor)
+        {
+            return new CurrencyAmount(ca.Amount * factor, ca.currency);
+        }
+
+        public static CurrencyAmount operator *(long factor, CurrencyAmount ca)
+        {
+            return new CurrencyAmount(ca.Amount * factor, ca.currency);
+        }
+
+        public static CurrencyAmount operator /(CurrencyAmount ca, long divisor)
+        {
+            return new CurrencyAmount(ca.Amount / divisor, ca.currency);
+        }
+
+        public static CurrencyAmount operator /(long divisor, CurrencyAmount ca)
+        {
+            return new CurrencyAmount(ca.Amount / divisor, ca.currency);
         }
 
         public static bool operator ==(CurrencyAmount ca1, CurrencyAmount ca2)
@@ -175,6 +235,18 @@ namespace Cars
             }
         }
 
+        public int CompareTo(CurrencyAmount other)
+        {
+            if (object.ReferenceEquals(other, null))
+            {
+                return 1;
+            }
+
+            AssertCurrenciesMatch(this, other);
+
+            return this.Amount.CompareTo(other.Amount);
+        }
+
         public bool Equals(CurrencyAmount other)
         {
             if (other == null)
@@ -182,7 +254,7 @@ namespace Cars
                 return false;
             }
 
-            return this.Currency.Equals(other.Currency) && this.Amount == other.Amount;
+            return this.Currency== other.Currency && this.Amount == other.Amount;
         }
 
         public override bool Equals(object obj)
@@ -199,7 +271,7 @@ namespace Cars
 
         public override string ToString()
         {
-            return this.Amount.ToString(CultureInfo.CurrentCulture) + this.Currency.Symbol;
+            return this.Amount.ToString(CultureInfo.CurrentCulture) + " " + this.Currency.ISO;
         }
     }
 }

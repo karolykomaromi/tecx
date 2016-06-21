@@ -1,6 +1,6 @@
 using System;
 
-namespace Cars
+namespace Cars.Financial
 {
     public class CurrencyMismatchException : Exception
     {

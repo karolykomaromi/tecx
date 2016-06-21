@@ -42,14 +42,20 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Currency.cs" />
-    <Compile Include="CurrencyAmount.cs" />
-    <Compile Include="CurrencyAmountExtensions.cs" />
-    <Compile Include="CurrencyMismatchException.cs" />
-    <Compile Include="ICurrencyConverter.cs" />
-    <Compile Include="Package.cs" />
-    <Compile Include="Part.cs" />
-    <Compile Include="PartNumber.cs" />
+    <Compile Include="Financial\Currencies.cs" />
+    <Compile Include="Financial\Currency.cs" />
+    <Compile Include="Financial\CurrencyAmount.cs" />
+    <Compile Include="Financial\CurrencyAmountExtensions.cs" />
+    <Compile Include="Financial\CurrencyMismatchException.cs" />
+    <Compile Include="Financial\ExchangeRate.cs" />
+    <Compile Include="Financial\ExchangeRateCollection.cs" />
+    <Compile Include="Financial\ExchangeRateNotFoundException.cs" />
+    <Compile Include="Financial\ICurrencyConverter.cs" />
+    <Compile Include="Financial\StaticCurrencyConverter.cs" />
+    <Compile Include="Parts\Package.cs" />
+    <Compile Include="Parts\Part.cs" />
+    <Compile Include="Parts\PartCollection.cs" />
+    <Compile Include="Parts\PartNumber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

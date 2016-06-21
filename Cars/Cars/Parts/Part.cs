@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Runtime.InteropServices;
+using Cars.Financial;
 
-namespace Cars
+namespace Cars.Parts
 {
     public class Part : IEquatable<Part>, IComparable<Part>
     {
@@ -27,7 +27,7 @@ namespace Cars
             this.replacesTheseParts = new HashSet<PartNumber>(replacesTheseParts);
             this.cantBeCombinedWithTheseParts = new HashSet<PartNumber>(cantBeCombinedWithTheseParts);
 
-            this.price = new CurrencyAmount(0, Currency.Default);
+            this.price = new CurrencyAmount(0, Currencies.Default);
         }
 
         public PartNumber PartNumber

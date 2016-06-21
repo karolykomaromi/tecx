@@ -1,26 +1,32 @@
 using System;
 using System.Diagnostics.Contracts;
 
-namespace Cars
+namespace Cars.Financial
 {
     public class Currency : IEquatable<Currency>
     {
-        public static readonly Currency Default = new Currency('€', "EUR");
+        public static readonly Currency Empty = new Currency();
 
-        public static readonly Currency Euro = new Currency('€', "EUR");
+        private readonly string symbol;
 
-        private readonly char symbol;
         private readonly string iso;
 
-        public Currency(char symbol, string iso)
+        public Currency(string symbol, string iso)
         {
+            Contract.Requires(!string.IsNullOrWhiteSpace(symbol));
             Contract.Requires(!string.IsNullOrWhiteSpace(iso));
 
             this.symbol = symbol;
             this.iso = iso.ToUpperInvariant();
         }
 
-        public char Symbol
+        private Currency()
+        {
+            this.symbol = string.Empty;
+            this.iso = string.Empty;
+        }
+
+        public string Symbol
         {
             get { return this.symbol; }
         }

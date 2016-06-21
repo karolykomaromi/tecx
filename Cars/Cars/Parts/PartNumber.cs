@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 
-namespace Cars
+namespace Cars.Parts
 {
     public struct PartNumber : IEquatable<PartNumber>, IComparable<PartNumber>
     {
@@ -35,6 +35,11 @@ namespace Cars
 
         public int CompareTo(PartNumber other)
         {
+            if (other == null)
+            {
+                return 1;
+            }
+
             return string.Compare(this.partNumber, other.partNumber, StringComparison.Ordinal);
         }
 
