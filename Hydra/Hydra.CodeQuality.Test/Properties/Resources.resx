@@ -117,19 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-    <data name="NoResourceNameEndsWith" xml:space="preserve">
+  <data name="NoResourceNameEndsWith" xml:space="preserve">
     <value>No resource has a name that ends with '{0}'.</value>
   </data>
-    <data name="NoResourceWithName" xml:space="preserve">
+  <data name="NoResourceWithName" xml:space="preserve">
     <value>No resource with name '{0}' exists.</value>
   </data>
-    <data name="SourceFileCouldNotBeAdded" xml:space="preserve">
+  <data name="SourceFileCouldNotBeAdded" xml:space="preserve">
     <value>Source file '{0}' could not be added.</value>
   </data>
-    <data name="ViolationsMessage" xml:space="preserve">
+  <data name="ViolationsMessage" xml:space="preserve">
     <value>[{0}][{1}][Line:{2} Pos:{3}]: {4}</value>
   </data>
-    <data name="RuleNotViolated" xml:space="preserve">
+  <data name="RuleNotViolated" xml:space="preserve">
     <value>Rule '{0}' was not violated.</value>
   </data>
 </root>
