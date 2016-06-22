@@ -23,10 +23,10 @@ namespace Cars.Financial
 
                 if (source == target)
                 {
-                    return ExchangeRate.Empty;
+                    return ExchangeRate.Identity;
                 }
 
-                var key = new Tuple<Currency, Currency>(source, target);
+                var key = Key(source, target);
 
                 ExchangeRate rate;
                 if (!this.exchangeRates.TryGetValue(key, out rate))
@@ -40,7 +40,7 @@ namespace Cars.Financial
 
         public void Add(ExchangeRate exchangeRate)
         {
-            var key = new Tuple<Currency, Currency>(exchangeRate.Source, exchangeRate.Target);
+            var key = Key(exchangeRate.Source, exchangeRate.Target);
 
             this.exchangeRates[key] = exchangeRate;
         }
@@ -53,6 +53,11 @@ namespace Cars.Financial
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        private static Tuple<Currency, Currency> Key(Currency source, Currency target)
+        {
+            return new Tuple<Currency, Currency>(source, target);
         }
     }
 }

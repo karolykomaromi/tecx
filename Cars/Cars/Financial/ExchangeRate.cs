@@ -5,7 +5,7 @@ namespace Cars.Financial
 {
     public class ExchangeRate : IEquatable<ExchangeRate>
     {
-        public static readonly ExchangeRate Empty = new ExchangeRate(Currency.Empty, Currency.Empty, 1);
+        public static readonly ExchangeRate Identity = new ExchangeRate(Currency.Empty, Currency.Empty, 1);
 
         private readonly Currency source;
         private readonly Currency target;

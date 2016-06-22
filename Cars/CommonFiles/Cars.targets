@@ -1,0 +1,9 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TransformOnBuild>true</TransformOnBuild>
+  </PropertyGroup>
+  <!--<ItemGroup>
+    <T4ReferencePath Include="$(MSBuildProjectDirectory)\..\..\..\libs\DeVizor.TextTemplating" />
+  </ItemGroup>-->
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TextTemplating\Microsoft.TextTemplating.targets" />
+</Project>

@@ -1,9 +1,9 @@
-using System;
-using System.Diagnostics.Contracts;
-using System.Globalization;
-
 namespace Cars.Financial
 {
+    using System;
+    using System.Diagnostics.Contracts;
+    using System.Globalization;
+
     public class CurrencyAmount : IEquatable<CurrencyAmount>, IComparable<CurrencyAmount>
     {
         private readonly decimal amount;
@@ -231,7 +231,7 @@ namespace Cars.Financial
                 ca2 != null && 
                 ca1.Currency != ca2.Currency)
             {
-                throw new CurrencyMismatchException();
+                throw new CurrencyMismatchException(ca1, ca2);
             }
         }
 
@@ -271,7 +271,7 @@ namespace Cars.Financial
 
         public override string ToString()
         {
-            return this.Amount.ToString(CultureInfo.CurrentCulture) + " " + this.Currency.ISO;
+            return this.Amount.ToString(CultureInfo.CurrentCulture) + " " + this.Currency.ISO4217Code;
         }
     }
 }
