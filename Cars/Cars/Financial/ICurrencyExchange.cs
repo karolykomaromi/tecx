@@ -3,15 +3,15 @@ using System.Diagnostics.Contracts;
 namespace Cars.Financial
 {
     [ContractClass(typeof(CurrencyConverterContract))]
-    public interface ICurrencyConverter
+    public interface ICurrencyExchange
     {
-        CurrencyAmount Convert(CurrencyAmount amount, Currency targetCurrency);
+        CurrencyAmount Exchange(CurrencyAmount amount, Currency targetCurrency);
     }
 
-    [ContractClassFor(typeof(ICurrencyConverter))]
-    internal abstract class CurrencyConverterContract : ICurrencyConverter
+    [ContractClassFor(typeof(ICurrencyExchange))]
+    internal abstract class CurrencyConverterContract : ICurrencyExchange
     {
-        public CurrencyAmount Convert(CurrencyAmount amount, Currency targetCurrency)
+        public CurrencyAmount Exchange(CurrencyAmount amount, Currency targetCurrency)
         {
             Contract.Requires(amount != null);
             Contract.Requires(targetCurrency != null);

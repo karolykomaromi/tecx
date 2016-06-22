@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Cars.Financial;
+using Cars.I18n;
 
 namespace Cars.Parts
 {
@@ -12,6 +13,8 @@ namespace Cars.Parts
         private readonly HashSet<PartNumber> cantBeCombinedWithTheseParts;
 
         private CurrencyAmount price;
+        private PolyglotString @abstract;
+        private PolyglotString description;
 
         public Part(PartNumber partNumber)
             : this(partNumber, PartNumber.None, PartNumber.None)
@@ -28,6 +31,8 @@ namespace Cars.Parts
             this.cantBeCombinedWithTheseParts = new HashSet<PartNumber>(cantBeCombinedWithTheseParts);
 
             this.price = new CurrencyAmount(0, Currencies.Default);
+            this.@abstract = PolyglotString.Empty;
+            this.description = PolyglotString.Empty;
         }
 
         public PartNumber PartNumber
@@ -60,7 +65,35 @@ namespace Cars.Parts
             }
         }
 
-        public string ShortDescription { get; set; }
+        public PolyglotString Abstract
+        {
+            get
+            {
+                return this.@abstract;
+            }
+
+            set
+            {
+                Contract.Requires(value != null);
+
+                this.@abstract = value;
+            }
+        }
+
+        public PolyglotString Description
+        {
+            get
+            {
+                return this.description;
+            }
+
+            set
+            {
+                Contract.Requires(value != null);
+
+                this.description = value;
+            }
+        }
 
         public static bool operator ==(Part p1, Part p2)
         {

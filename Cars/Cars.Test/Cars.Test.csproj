@@ -59,23 +59,51 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Extensions\DictionaryExtensionsTests.cs" />
     <Compile Include="Financial\CurrencyAmountTests.cs" />
+    <Compile Include="I18n\PolyglotStringBuilderTests.cs" />
+    <Compile Include="I18n\PolyglotStringExtensionsTests.cs" />
+    <Compile Include="I18n\PolyglotStringTests.cs" />
     <Compile Include="Parts\PackageTests.cs" />
     <Compile Include="Parts\PartCollectionTests.cs" />
     <Compile Include="Parts\PartNumberTests.cs" />
     <Compile Include="Parts\YourCarTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\Resources.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Cars.I18n\Cars.I18n.csproj">
+      <Project>{36bd55ff-2d1b-4f00-98e9-290b7f3f8947}</Project>
+      <Name>Cars.I18n</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Cars\Cars.csproj">
       <Project>{a8c422a7-cf08-404c-b7a3-baae5a00e664}</Project>
       <Name>Cars</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.de-DE.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\CommonFiles\Cars.targets" Condition="Exists('$(SolutionDir)\CommonFiles\Cars.targets')" />
   <Import Project="..\packages\StyleCop.MSBuild.4.7.54.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.54.0\build\StyleCop.MSBuild.Targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
