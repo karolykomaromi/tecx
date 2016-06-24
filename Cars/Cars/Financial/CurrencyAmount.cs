@@ -4,9 +4,10 @@ namespace Cars.Financial
     using System.Diagnostics.Contracts;
     using System.Globalization;
 
-    public class CurrencyAmount : IEquatable<CurrencyAmount>, IComparable<CurrencyAmount>
+    public class CurrencyAmount : IEquatable<CurrencyAmount>, IComparable<CurrencyAmount>, IFormattable
     {
         private readonly decimal amount;
+
         private readonly Currency currency;
 
         public CurrencyAmount(decimal amount, Currency currency)
@@ -225,16 +226,6 @@ namespace Cars.Financial
             return new CurrencyAmount(ca1.Amount - ca2.Amount, ca1.Currency);
         }
 
-        private static void AssertCurrenciesMatch(CurrencyAmount ca1, CurrencyAmount ca2)
-        {
-            if (ca1 != null && 
-                ca2 != null && 
-                ca1.Currency != ca2.Currency)
-            {
-                throw new CurrencyMismatchException(ca1, ca2);
-            }
-        }
-
         public int CompareTo(CurrencyAmount other)
         {
             if (object.ReferenceEquals(other, null))
@@ -254,7 +245,7 @@ namespace Cars.Financial
                 return false;
             }
 
-            return this.Currency== other.Currency && this.Amount == other.Amount;
+            return this.Currency == other.Currency && this.Amount == other.Amount;
         }
 
         public override bool Equals(object obj)
@@ -269,9 +260,49 @@ namespace Cars.Financial
             return this.Currency.GetHashCode() ^ this.Amount.GetHashCode();
         }
 
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            format = format ?? string.Empty;
+            formatProvider = formatProvider ?? CultureInfo.CurrentCulture;
+
+            if (format.StartsWith(FormatStrings.CurrencyAmount.FixedPoint))
+            {
+                return this.Amount.ToString(format, formatProvider);
+            }
+
+            if (format.StartsWith(FormatStrings.CurrencyAmount.Currency))
+            {
+                format = format.Replace(FormatStrings.CurrencyAmount.Currency, FormatStrings.CurrencyAmount.FixedPoint);
+
+                return this.Amount.ToString(format, formatProvider) + " " + this.Currency.ISO4217Code;
+            }
+
+            throw new FormatException(string.Format(Properties.Resources.InvalidCurrencyFormatString, format));
+        }
+
+        public string ToString(string format)
+        {
+            return this.ToString(format, CultureInfo.CurrentCulture);
+        }
+
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return this.ToString(string.Empty, formatProvider);
+        }
+
         public override string ToString()
         {
-            return this.Amount.ToString(CultureInfo.CurrentCulture) + " " + this.Currency.ISO4217Code;
+            return this.ToString(string.Empty, CultureInfo.CurrentCulture);
+        }
+
+        private static void AssertCurrenciesMatch(CurrencyAmount ca1, CurrencyAmount ca2)
+        {
+            if (ca1 != null &&
+                ca2 != null &&
+                ca1.Currency != ca2.Currency)
+            {
+                throw new CurrencyMismatchException(ca1, ca2);
+            }
         }
     }
 }

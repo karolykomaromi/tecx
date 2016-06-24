@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-
-namespace Cars.Parts
+﻿namespace Cars.Parts
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Linq;
+
     public class PartCollection : IReadOnlyCollection<Part>
     {
         private readonly HashSet<Part> parts;
@@ -51,7 +51,7 @@ namespace Cars.Parts
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return this.GetEnumerator();
         }
     }
 }

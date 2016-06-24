@@ -1,10 +1,10 @@
-﻿using System.Diagnostics.Contracts;
-using System.Linq;
-using Cars.Financial;
-using Cars.Parts;
-
-namespace Cars.Test.Parts
+﻿namespace Cars.Test.Parts
 {
+    using System.Diagnostics.Contracts;
+    using System.Linq;
+    using Cars.Financial;
+    using Cars.Parts;
+
     public class YourCarTests
     {
     }

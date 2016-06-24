@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Globalization;
-
 namespace Cars.I18n
 {
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Globalization;
+
     public abstract class SupportedCulturesProvider
     {
         private static SupportedCulturesProvider currentProvider = new InMemorySupportedCulturesProvider(Cultures.EnglishUnitedStates, Cultures.GermanGermany);

@@ -1,10 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-
 namespace Cars.Financial
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+
     public class ExchangeRateCollection : IEnumerable<ExchangeRate>
     {
         private readonly IDictionary<Tuple<Currency, Currency>, ExchangeRate> exchangeRates;
@@ -52,7 +52,7 @@ namespace Cars.Financial
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return this.GetEnumerator();
         }
 
         private static Tuple<Currency, Currency> Key(Currency source, Currency target)

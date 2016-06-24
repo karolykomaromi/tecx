@@ -1,7 +1,7 @@
-using System.Diagnostics.Contracts;
-
 namespace Cars.Financial
 {
+    using System.Diagnostics.Contracts;
+
     [ContractClass(typeof(CurrencyConverterContract))]
     public interface ICurrencyExchange
     {
@@ -17,7 +17,7 @@ namespace Cars.Financial
             Contract.Requires(targetCurrency != null);
             Contract.Ensures(Contract.Result<CurrencyAmount>() != null);
 
-            return default(CurrencyAmount);
+            return Default.Value<CurrencyAmount>();
         }
     }
 }

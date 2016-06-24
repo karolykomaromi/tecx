@@ -1,8 +1,8 @@
-using Cars.Parts;
-using Xunit;
-
 namespace Cars.Test.Parts
 {
+    using Cars.Parts;
+    using Xunit;
+
     public class PartNumberTests
     {
         [Fact]

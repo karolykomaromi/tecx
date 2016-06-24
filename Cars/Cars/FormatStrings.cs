@@ -408,5 +408,12 @@
             /// </summary>
             public const string RoundTrip = "R";
         }
+
+        public static class CurrencyAmount
+        {
+            public const string FixedPoint = "F";
+
+            public const string Currency = "C";
+        }
     }
 }

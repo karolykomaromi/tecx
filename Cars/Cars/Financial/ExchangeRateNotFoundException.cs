@@ -1,35 +1,35 @@
-using System;
-using System.Diagnostics.Contracts;
-
 namespace Cars.Financial
 {
+    using System;
+    using System.Diagnostics.Contracts;
+
     public class ExchangeRateNotFoundException : Exception
     {
-        private readonly Currency source;
-        private readonly Currency target;
+        private readonly Currency sourceCurrency;
+        private readonly Currency targetCurrency;
 
-        public ExchangeRateNotFoundException(Currency source)
-            : this(source, Currency.Empty)
+        public ExchangeRateNotFoundException(Currency sourceCurrency)
+            : this(sourceCurrency, Currency.Empty)
         {
         }
 
-        public ExchangeRateNotFoundException(Currency source, Currency target)
+        public ExchangeRateNotFoundException(Currency sourceCurrency, Currency targetCurrency)
         {
-            Contract.Requires(source != null);
-            Contract.Requires(target != null);
+            Contract.Requires(sourceCurrency != null);
+            Contract.Requires(targetCurrency != null);
 
-            this.source = source;
-            this.target = target;
+            this.sourceCurrency = sourceCurrency;
+            this.targetCurrency = targetCurrency;
         }
 
-        public Currency Source
+        public Currency SourceCurrency
         {
-            get { return this.source; }
+            get { return this.sourceCurrency; }
         }
 
-        public Currency Target
+        public Currency TargetCurrency
         {
-            get { return this.target; }
+            get { return this.targetCurrency; }
         }
     }
 }

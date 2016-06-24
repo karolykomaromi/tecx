@@ -120,6 +120,9 @@
   <data name="CurrencyMismatch" xml:space="preserve">
     <value>Currencies of '{0}' and '{1}' don't match.</value>
   </data>
+  <data name="InvalidCurrencyFormatString" xml:space="preserve">
+    <value>Invalid format '{0}'.</value>
+  </data>
   <data name="TranslationNotFound" xml:space="preserve">
     <value>No translation found.</value>
   </data>

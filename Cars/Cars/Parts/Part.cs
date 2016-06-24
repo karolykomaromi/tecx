@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using Cars.Financial;
-using Cars.I18n;
-
 namespace Cars.Parts
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using Cars.Financial;
+    using Cars.I18n;
+
     public class Part : IEquatable<Part>, IComparable<Part>
     {
         private readonly PartNumber partNumber;

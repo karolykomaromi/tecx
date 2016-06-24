@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Globalization;
-
 namespace Cars.I18n
 {
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Globalization;
+
     public class PolyglotStringBuilder : Builder<PolyglotString>
     {
         private readonly IDictionary<CultureInfo, string> translations;

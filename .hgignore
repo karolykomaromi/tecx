@@ -446,3 +446,6 @@ Cars/Cars/bin
 Cars/Cars/obj
 Cars/Cars.I18n/obj
 Cars/Cars.I18n/bin
+Cars/Cars.CodeQuality.Test/bin
+Cars/Cars.CodeQuality.Test/obj
+Cars/Cars.CodeQuality/obj

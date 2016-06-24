@@ -61,6 +61,11 @@ namespace Cars.Properties
             get { return Resources.ResourceManager.GetString("CurrencyMismatch", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
+        public static string InvalidCurrencyFormatString
+        {
+            get { return Resources.ResourceManager.GetString("InvalidCurrencyFormatString", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string TranslationNotFound
         {
             get { return Resources.ResourceManager.GetString("TranslationNotFound", resourceCulture ?? CultureInfo.CurrentUICulture); }

@@ -1,8 +1,8 @@
-using System;
-using System.Diagnostics.Contracts;
-
 namespace Cars.Parts
 {
+    using System;
+    using System.Diagnostics.Contracts;
+
     public struct PartNumber : IEquatable<PartNumber>, IComparable<PartNumber>
     {
         public static readonly PartNumber Empty = new PartNumber("EMPTY");
