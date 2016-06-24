@@ -1,8 +1,10 @@
-﻿using Cars.Financial;
-using Xunit;
-
-namespace Cars.Test.Financial
+﻿namespace Cars.Test.Financial
 {
+    using System;
+    using System.Globalization;
+    using Cars.Financial;
+    using Xunit;
+
     public class CurrencyAmountTests
     {
         [Theory]
@@ -56,7 +58,7 @@ namespace Cars.Test.Financial
 
         [Theory]
         [InlineData(1.1, 1)]
-        [InlineData(0.1 , - 1)]
+        [InlineData(0.1, -1)]
         [InlineData(2, 1.9)]
         [InlineData(0, -1.9)]
         public void Should_Be_Greater_Than(double x, double y)
@@ -78,7 +80,7 @@ namespace Cars.Test.Financial
 
         [Theory]
         [InlineData(1.1, 1)]
-        [InlineData(0.1 , - 1)]
+        [InlineData(0.1, -1)]
         [InlineData(2, 1.9)]
         [InlineData(0, -1.9)]
         [InlineData(-1.9, -1.9)]
@@ -86,6 +88,30 @@ namespace Cars.Test.Financial
         public void Should_Be_Greater_Than_Or_Equal(double x, double y)
         {
             Assert.True(x.EUR() >= y.EUR());
+        }
+
+        [Theory]
+        [InlineData(-12.345, "C3", "de-DE", "-12,345 EUR")]
+        [InlineData(-12.345, "C3", "en-US", "-12.345 EUR")]
+        [InlineData(-12.345, "F3", "de-DE", "-12,345")]
+        [InlineData(-12.345, "F3", "en-US", "-12.345")]
+        [InlineData(12.345, "C3", "de-DE", "12,345 EUR")]
+        [InlineData(12.345, "C3", "en-US", "12.345 EUR")]
+        [InlineData(12.345, "F3", "de-DE", "12,345")]
+        [InlineData(12.345, "F3", "en-US", "12.345")]
+        [InlineData(0, "C3", "de-DE", "0,000 EUR")]
+        [InlineData(0, "C3", "en-US", "0.000 EUR")]
+        [InlineData(0, "F3", "de-DE", "0,000")]
+        [InlineData(0, "F3", "en-US", "0.000")]
+        public void Should_Format_CurrencyAmount_Properly(double amount, string format, string culture, string expected)
+        {
+            IFormattable sut = amount.EUR();
+
+            IFormatProvider formatProvider = CultureInfo.CreateSpecificCulture(culture);
+
+            string actual = sut.ToString(format, formatProvider);
+
+            Assert.Equal(expected, actual);
         }
     }
 }

@@ -110,12 +110,42 @@
     </timestamps>
     <violations />
   </sourcecode>
+  <project key="1302619891">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="GlobalAssemblyVersion.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2016.06.20 09:13:27.981</styleCop>
+      <settingsFile>2016.06.24 09:44:07.070</settingsFile>
+      <sourceFile>2016.06.22 15:27:10.295</sourceFile>
+      <parser>2016.06.20 09:13:27.981</parser>
+      <Cars.CodeQuality.CodeQualityRules>2016.06.20 09:13:27.981</Cars.CodeQuality.CodeQualityRules>
+      <Cars.CodeQuality.CodeQualityRules.FilesHashCode>0</Cars.CodeQuality.CodeQualityRules.FilesHashCode>
+      <StyleCop.CSharp.DocumentationRules>2016.06.20 09:13:27.981</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>-2035655049</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2016.06.20 09:13:27.981</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2016.06.20 09:13:27.981</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2016.06.20 09:13:27.981</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2016.06.20 09:13:27.981</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2016.06.20 09:13:27.981</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2016.06.20 09:13:27.981</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
   <sourcecode name="DictionaryExtensionsTests.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016.06.20 09:13:27.981</styleCop>
-      <settingsFile>2016.06.20 09:13:27.886</settingsFile>
+      <settingsFile>2016.06.24 09:44:07.070</settingsFile>
       <sourceFile>2016.06.22 15:24:49.435</sourceFile>
       <parser>2016.06.20 09:13:27.981</parser>
+      <Cars.CodeQuality.CodeQualityRules>2016.06.20 09:13:27.981</Cars.CodeQuality.CodeQualityRules>
+      <Cars.CodeQuality.CodeQualityRules.FilesHashCode>0</Cars.CodeQuality.CodeQualityRules.FilesHashCode>
       <StyleCop.CSharp.DocumentationRules>2016.06.20 09:13:27.981</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-2035655049</StyleCop.CSharp.DocumentationRules.FilesHashCode>
       <StyleCop.CSharp.LayoutRules>2016.06.20 09:13:27.981</StyleCop.CSharp.LayoutRules>
@@ -136,9 +166,11 @@
   <sourcecode name="CurrencyAmountTests.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016.06.20 09:13:27.981</styleCop>
-      <settingsFile>2016.06.20 09:13:27.886</settingsFile>
-      <sourceFile>2016.06.21 15:31:44.956</sourceFile>
+      <settingsFile>2016.06.24 09:44:07.070</settingsFile>
+      <sourceFile>2016.06.24 15:11:05.468</sourceFile>
       <parser>2016.06.20 09:13:27.981</parser>
+      <Cars.CodeQuality.CodeQualityRules>2016.06.20 09:13:27.981</Cars.CodeQuality.CodeQualityRules>
+      <Cars.CodeQuality.CodeQualityRules.FilesHashCode>0</Cars.CodeQuality.CodeQualityRules.FilesHashCode>
       <StyleCop.CSharp.DocumentationRules>2016.06.20 09:13:27.981</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-2035655049</StyleCop.CSharp.DocumentationRules.FilesHashCode>
       <StyleCop.CSharp.LayoutRules>2016.06.20 09:13:27.981</StyleCop.CSharp.LayoutRules>
@@ -159,9 +191,11 @@
   <sourcecode name="PolyglotStringBuilderTests.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016.06.20 09:13:27.981</styleCop>
-      <settingsFile>2016.06.20 09:13:27.886</settingsFile>
+      <settingsFile>2016.06.24 09:44:07.070</settingsFile>
       <sourceFile>2016.06.22 15:24:35.663</sourceFile>
       <parser>2016.06.20 09:13:27.981</parser>
+      <Cars.CodeQuality.CodeQualityRules>2016.06.20 09:13:27.981</Cars.CodeQuality.CodeQualityRules>
+      <Cars.CodeQuality.CodeQualityRules.FilesHashCode>0</Cars.CodeQuality.CodeQualityRules.FilesHashCode>
       <StyleCop.CSharp.DocumentationRules>2016.06.20 09:13:27.981</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-2035655049</StyleCop.CSharp.DocumentationRules.FilesHashCode>
       <StyleCop.CSharp.LayoutRules>2016.06.20 09:13:27.981</StyleCop.CSharp.LayoutRules>
@@ -182,9 +216,11 @@
   <sourcecode name="PolyglotStringExtensionsTests.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016.06.20 09:13:27.981</styleCop>
-      <settingsFile>2016.06.20 09:13:27.886</settingsFile>
+      <settingsFile>2016.06.24 09:44:07.070</settingsFile>
       <sourceFile>2016.06.22 15:24:24.649</sourceFile>
       <parser>2016.06.20 09:13:27.981</parser>
+      <Cars.CodeQuality.CodeQualityRules>2016.06.20 09:13:27.981</Cars.CodeQuality.CodeQualityRules>
+      <Cars.CodeQuality.CodeQualityRules.FilesHashCode>0</Cars.CodeQuality.CodeQualityRules.FilesHashCode>
       <StyleCop.CSharp.DocumentationRules>2016.06.20 09:13:27.981</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-2035655049</StyleCop.CSharp.DocumentationRules.FilesHashCode>
       <StyleCop.CSharp.LayoutRules>2016.06.20 09:13:27.981</StyleCop.CSharp.LayoutRules>
@@ -205,9 +241,11 @@
   <sourcecode name="PolyglotStringTests.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016.06.20 09:13:27.981</styleCop>
-      <settingsFile>2016.06.20 09:13:27.886</settingsFile>
+      <settingsFile>2016.06.24 09:44:07.070</settingsFile>
       <sourceFile>2016.06.22 15:24:14.450</sourceFile>
       <parser>2016.06.20 09:13:27.981</parser>
+      <Cars.CodeQuality.CodeQualityRules>2016.06.20 09:13:27.981</Cars.CodeQuality.CodeQualityRules>
+      <Cars.CodeQuality.CodeQualityRules.FilesHashCode>0</Cars.CodeQuality.CodeQualityRules.FilesHashCode>
       <StyleCop.CSharp.DocumentationRules>2016.06.20 09:13:27.981</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-2035655049</StyleCop.CSharp.DocumentationRules.FilesHashCode>
       <StyleCop.CSharp.LayoutRules>2016.06.20 09:13:27.981</StyleCop.CSharp.LayoutRules>
@@ -228,9 +266,11 @@
   <sourcecode name="PackageTests.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016.06.20 09:13:27.981</styleCop>
-      <settingsFile>2016.06.20 09:13:27.886</settingsFile>
-      <sourceFile>2016.06.21 15:17:07.917</sourceFile>
+      <settingsFile>2016.06.24 09:44:07.070</settingsFile>
+      <sourceFile>2016.06.24 10:41:07.047</sourceFile>
       <parser>2016.06.20 09:13:27.981</parser>
+      <Cars.CodeQuality.CodeQualityRules>2016.06.20 09:13:27.981</Cars.CodeQuality.CodeQualityRules>
+      <Cars.CodeQuality.CodeQualityRules.FilesHashCode>0</Cars.CodeQuality.CodeQualityRules.FilesHashCode>
       <StyleCop.CSharp.DocumentationRules>2016.06.20 09:13:27.981</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-2035655049</StyleCop.CSharp.DocumentationRules.FilesHashCode>
       <StyleCop.CSharp.LayoutRules>2016.06.20 09:13:27.981</StyleCop.CSharp.LayoutRules>
@@ -246,14 +286,22 @@
       <StyleCop.CSharp.SpacingRules>2016.06.20 09:13:27.981</StyleCop.CSharp.SpacingRules>
       <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
     </timestamps>
-    <violations />
+    <violations>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="ParameterMustNotSpanMultipleLines" ruleCheckId="SA1118">
+        <context>The parameter spans multiple lines. If the parameter is short, place the entire parameter on a single line. Otherwise, save the contents of the parameter in a temporary variable and pass the temporary variable as a parameter. </context>
+        <line>15</line>
+        <warning>False</warning>
+      </violation>
+    </violations>
   </sourcecode>
   <sourcecode name="PartCollectionTests.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016.06.20 09:13:27.981</styleCop>
-      <settingsFile>2016.06.20 09:13:27.886</settingsFile>
-      <sourceFile>2016.06.21 15:17:07.918</sourceFile>
+      <settingsFile>2016.06.24 09:44:07.070</settingsFile>
+      <sourceFile>2016.06.24 10:39:05.219</sourceFile>
       <parser>2016.06.20 09:13:27.981</parser>
+      <Cars.CodeQuality.CodeQualityRules>2016.06.20 09:13:27.981</Cars.CodeQuality.CodeQualityRules>
+      <Cars.CodeQuality.CodeQualityRules.FilesHashCode>0</Cars.CodeQuality.CodeQualityRules.FilesHashCode>
       <StyleCop.CSharp.DocumentationRules>2016.06.20 09:13:27.981</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-2035655049</StyleCop.CSharp.DocumentationRules.FilesHashCode>
       <StyleCop.CSharp.LayoutRules>2016.06.20 09:13:27.981</StyleCop.CSharp.LayoutRules>
@@ -274,9 +322,11 @@
   <sourcecode name="PartNumberTests.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016.06.20 09:13:27.981</styleCop>
-      <settingsFile>2016.06.20 09:13:27.886</settingsFile>
-      <sourceFile>2016.06.21 15:17:07.918</sourceFile>
+      <settingsFile>2016.06.24 09:44:07.070</settingsFile>
+      <sourceFile>2016.06.24 10:39:14.551</sourceFile>
       <parser>2016.06.20 09:13:27.981</parser>
+      <Cars.CodeQuality.CodeQualityRules>2016.06.20 09:13:27.981</Cars.CodeQuality.CodeQualityRules>
+      <Cars.CodeQuality.CodeQualityRules.FilesHashCode>0</Cars.CodeQuality.CodeQualityRules.FilesHashCode>
       <StyleCop.CSharp.DocumentationRules>2016.06.20 09:13:27.981</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-2035655049</StyleCop.CSharp.DocumentationRules.FilesHashCode>
       <StyleCop.CSharp.LayoutRules>2016.06.20 09:13:27.981</StyleCop.CSharp.LayoutRules>
@@ -297,9 +347,11 @@
   <sourcecode name="YourCarTests.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016.06.20 09:13:27.981</styleCop>
-      <settingsFile>2016.06.20 09:13:27.886</settingsFile>
-      <sourceFile>2016.06.22 08:10:43.423</sourceFile>
+      <settingsFile>2016.06.24 09:44:07.070</settingsFile>
+      <sourceFile>2016.06.24 10:39:22.741</sourceFile>
       <parser>2016.06.20 09:13:27.981</parser>
+      <Cars.CodeQuality.CodeQualityRules>2016.06.20 09:13:27.981</Cars.CodeQuality.CodeQualityRules>
+      <Cars.CodeQuality.CodeQualityRules.FilesHashCode>0</Cars.CodeQuality.CodeQualityRules.FilesHashCode>
       <StyleCop.CSharp.DocumentationRules>2016.06.20 09:13:27.981</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-2035655049</StyleCop.CSharp.DocumentationRules.FilesHashCode>
       <StyleCop.CSharp.LayoutRules>2016.06.20 09:13:27.981</StyleCop.CSharp.LayoutRules>
@@ -315,14 +367,22 @@
       <StyleCop.CSharp.SpacingRules>2016.06.20 09:13:27.981</StyleCop.CSharp.SpacingRules>
       <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
     </timestamps>
-    <violations />
+    <violations>
+      <violation namespace="StyleCop.CSharp.MaintainabilityRules" rule="FileMayOnlyContainASingleClass" ruleCheckId="SA1402">
+        <context>A C# document may only contain a single class at the root level unless all of the classes are partial and are of the same type.</context>
+        <line>12</line>
+        <warning>False</warning>
+      </violation>
+    </violations>
   </sourcecode>
   <sourcecode name="AssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016.06.20 09:13:27.981</styleCop>
-      <settingsFile>2016.06.20 09:13:27.886</settingsFile>
+      <settingsFile>2016.06.24 09:44:07.070</settingsFile>
       <sourceFile>2016.06.20 09:36:28.577</sourceFile>
       <parser>2016.06.20 09:13:27.981</parser>
+      <Cars.CodeQuality.CodeQualityRules>2016.06.20 09:13:27.981</Cars.CodeQuality.CodeQualityRules>
+      <Cars.CodeQuality.CodeQualityRules.FilesHashCode>0</Cars.CodeQuality.CodeQualityRules.FilesHashCode>
       <StyleCop.CSharp.DocumentationRules>2016.06.20 09:13:27.981</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-2035655049</StyleCop.CSharp.DocumentationRules.FilesHashCode>
       <StyleCop.CSharp.LayoutRules>2016.06.20 09:13:27.981</StyleCop.CSharp.LayoutRules>
@@ -343,35 +403,11 @@
   <sourcecode name=".NETFramework,Version=v4.6.AssemblyAttributes.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2016.06.20 09:13:27.981</styleCop>
-      <settingsFile>2016.06.20 09:13:27.886</settingsFile>
+      <settingsFile>2016.06.24 09:44:07.070</settingsFile>
       <sourceFile>2015.10.19 08:26:23.876</sourceFile>
       <parser>2016.06.20 09:13:27.981</parser>
-      <StyleCop.CSharp.DocumentationRules>2016.06.20 09:13:27.981</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>-2035655049</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.LayoutRules>2016.06.20 09:13:27.981</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2016.06.20 09:13:27.981</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2016.06.20 09:13:27.981</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2016.06.20 09:13:27.981</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2016.06.20 09:13:27.981</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2016.06.20 09:13:27.981</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <project key="1302619891">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
-  <sourcecode name="GlobalAssemblyVersion.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2016.06.20 09:13:27.981</styleCop>
-      <settingsFile>2016.06.20 09:13:27.886</settingsFile>
-      <sourceFile>2016.06.22 15:27:10.295</sourceFile>
-      <parser>2016.06.20 09:13:27.981</parser>
+      <Cars.CodeQuality.CodeQualityRules>2016.06.20 09:13:27.981</Cars.CodeQuality.CodeQualityRules>
+      <Cars.CodeQuality.CodeQualityRules.FilesHashCode>0</Cars.CodeQuality.CodeQualityRules.FilesHashCode>
       <StyleCop.CSharp.DocumentationRules>2016.06.20 09:13:27.981</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-2035655049</StyleCop.CSharp.DocumentationRules.FilesHashCode>
       <StyleCop.CSharp.LayoutRules>2016.06.20 09:13:27.981</StyleCop.CSharp.LayoutRules>

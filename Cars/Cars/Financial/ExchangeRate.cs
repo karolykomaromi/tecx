@@ -1,8 +1,8 @@
-using System;
-using System.Diagnostics.Contracts;
-
 namespace Cars.Financial
 {
+    using System;
+    using System.Diagnostics.Contracts;
+
     public class ExchangeRate : IEquatable<ExchangeRate>
     {
         public static readonly ExchangeRate Identity = new ExchangeRate(Currency.Empty, Currency.Empty, 1);
@@ -39,7 +39,7 @@ namespace Cars.Financial
 
         public static bool operator ==(ExchangeRate er1, ExchangeRate er2)
         {
-            if(object.ReferenceEquals(er1, er2))
+            if (object.ReferenceEquals(er1, er2))
             {
                 return true;
             }

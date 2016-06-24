@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using Cars.Financial;
-
 namespace Cars.Parts
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Linq;
+    using Cars.Financial;
+
     public class Package : Part, IEnumerable<Part>
     {
         private readonly HashSet<Part> parts;
@@ -69,7 +69,7 @@ namespace Cars.Parts
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return this.GetEnumerator();
         }
     }
 }

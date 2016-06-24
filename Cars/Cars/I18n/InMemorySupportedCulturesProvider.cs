@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using System.Globalization;
-
 namespace Cars.I18n
 {
+    using System.Collections.Generic;
+    using System.Globalization;
+
     public class InMemorySupportedCulturesProvider : SupportedCulturesProvider
     {
         private readonly CultureInfo[] cultures;

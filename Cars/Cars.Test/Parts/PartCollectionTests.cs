@@ -1,15 +1,15 @@
-using Cars.Parts;
-using Xunit;
-
 namespace Cars.Test.Parts
 {
+    using Cars.Parts;
+    using Xunit;
+
     public class PartCollectionTests
     {
         [Fact]
         public void Should_Replace_Steel_Wheels_With_Alu_Wheels()
         {
             var steel = new Part("16_STEEL");
-            var alu = new Part("17_ALU", new [] { new PartNumber("16_STEEL") }, PartNumber.None);
+            var alu = new Part("17_ALU", new[] { new PartNumber("16_STEEL") }, PartNumber.None);
 
             var sut = new PartCollection();
 

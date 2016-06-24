@@ -1,7 +1,7 @@
-using System.Diagnostics.Contracts;
-
 namespace Cars.Financial
 {
+    using System.Diagnostics.Contracts;
+
     public class StaticCurrencyExchange : ICurrencyExchange
     {
         private readonly ExchangeRateCollection exchangeRates;
