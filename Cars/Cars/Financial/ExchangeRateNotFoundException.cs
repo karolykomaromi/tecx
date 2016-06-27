@@ -9,7 +9,7 @@ namespace Cars.Financial
         private readonly Currency targetCurrency;
 
         public ExchangeRateNotFoundException(Currency sourceCurrency)
-            : this(sourceCurrency, Currency.Empty)
+            : this(sourceCurrency, Currency.None)
         {
         }
 

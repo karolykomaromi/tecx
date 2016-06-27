@@ -30,7 +30,7 @@ namespace Cars.Parts
             this.replacesTheseParts = new HashSet<PartNumber>(replacesTheseParts);
             this.cantBeCombinedWithTheseParts = new HashSet<PartNumber>(cantBeCombinedWithTheseParts);
 
-            this.price = new CurrencyAmount(0, Currencies.Default);
+            this.price = new CurrencyAmount(0, Currencies.EUR);
             this.@abstract = PolyglotString.Empty;
             this.description = PolyglotString.Empty;
         }

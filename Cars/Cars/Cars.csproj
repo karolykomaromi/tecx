@@ -57,6 +57,7 @@
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Financial\Currencies.cs" />
     <Compile Include="Financial\Currency.cs" />
+    <Compile Include="Financial\Currency2Countries.cs" />
     <Compile Include="Financial\CurrencyAmount.cs" />
     <Compile Include="Financial\CurrencyAmountExtensions.cs" />
     <Compile Include="Financial\CurrencyMismatchException.cs" />
@@ -67,6 +68,9 @@
     <Compile Include="Financial\StaticCurrencyExchange.cs" />
     <Compile Include="FormatStrings.cs" />
     <Compile Include="FrozenTimeProvider.cs" />
+    <Compile Include="I18n\Countries.cs" />
+    <Compile Include="I18n\Country2Currencies.cs" />
+    <Compile Include="I18n\Country.cs" />
     <Compile Include="I18n\Cultures.cs" />
     <Compile Include="I18n\InMemorySupportedCulturesProvider.cs" />
     <Compile Include="I18n\PolyglotString.cs" />
