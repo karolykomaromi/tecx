@@ -2,26 +2,27 @@ namespace Cars.Financial
 {
     using System;
     using System.Diagnostics.Contracts;
+    using Cars.I18n;
 
     public class Currency : IEquatable<Currency>
     {
-        public static readonly Currency Empty = new Currency();
+        public static readonly Currency None = new Currency();
 
         private readonly string iso4217Code;
         private readonly short iso4217Number;
-        private readonly string iso4217Name;
+        private readonly PolyglotString name;
         private readonly string symbol;
 
-        public Currency(string iso4217Code, short iso4217Number, string iso4217Name = "", string symbol = "")
+        public Currency(PolyglotString name, string iso4217Code, short iso4217Number, string symbol = "")
         {
+            Contract.Requires(name != null);
             Contract.Requires(!string.IsNullOrWhiteSpace(iso4217Code));
-            Contract.Requires(iso4217Name != null);
-            Contract.Requires(symbol != null);
+            Contract.Requires(iso4217Code.Length == 3);
 
+            this.name = name;
             this.iso4217Code = iso4217Code.ToUpperInvariant();
             this.iso4217Number = iso4217Number;
-            this.iso4217Name = iso4217Name;
-            this.symbol = symbol;
+            this.symbol = symbol ?? string.Empty;
         }
 
         private Currency()
@@ -29,7 +30,7 @@ namespace Cars.Financial
             this.symbol = string.Empty;
             this.iso4217Code = string.Empty;
             this.iso4217Number = 0;
-            this.iso4217Name = string.Empty;
+            this.name = PolyglotString.Empty;
         }
 
         public string Symbol
@@ -47,9 +48,9 @@ namespace Cars.Financial
             get { return this.iso4217Number; }
         }
 
-        public string ISO4217Name
+        public PolyglotString Name
         {
-            get { return this.iso4217Name; }
+            get { return this.name; }
         }
 
         public static bool operator ==(Currency c1, Currency c2)
