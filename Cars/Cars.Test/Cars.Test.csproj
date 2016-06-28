@@ -61,6 +61,9 @@
     </Compile>
     <Compile Include="Extensions\DictionaryExtensionsTests.cs" />
     <Compile Include="Financial\CurrencyAmountTests.cs" />
+    <Compile Include="Financial\CurrencyTests.cs" />
+    <Compile Include="Financial\YahooCurrencyExchangeTests.cs" />
+    <Compile Include="I18n\CountryTests.cs" />
     <Compile Include="I18n\PolyglotStringBuilderTests.cs" />
     <Compile Include="I18n\PolyglotStringExtensionsTests.cs" />
     <Compile Include="I18n\PolyglotStringTests.cs" />

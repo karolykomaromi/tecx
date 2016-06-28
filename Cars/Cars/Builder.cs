@@ -1,9 +1,26 @@
 ﻿namespace Cars
 {
+    using System;
     using System.ComponentModel;
     using System.Diagnostics.Contracts;
 
-    public abstract class Builder<T>
+    public interface IBuilder<T>
+        where T : class
+    {
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        Type GetType();
+
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        string ToString();
+
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        bool Equals(object obj);
+
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        int GetHashCode();
+    }
+
+    public abstract class Builder<T> : IBuilder<T>
         where T : class
     {
         public static implicit operator T(Builder<T> builder)

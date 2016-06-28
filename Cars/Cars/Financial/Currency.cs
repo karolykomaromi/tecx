@@ -1,7 +1,9 @@
 namespace Cars.Financial
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
+    using System.Reflection;
     using Cars.I18n;
 
     public class Currency : IEquatable<Currency>
@@ -12,6 +14,7 @@ namespace Cars.Financial
         private readonly short iso4217Number;
         private readonly PolyglotString name;
         private readonly string symbol;
+        private readonly Lazy<IReadOnlyCollection<Country>> countries;
 
         public Currency(PolyglotString name, string iso4217Code, short iso4217Number, string symbol = "")
         {
@@ -23,6 +26,7 @@ namespace Cars.Financial
             this.iso4217Code = iso4217Code.ToUpperInvariant();
             this.iso4217Number = iso4217Number;
             this.symbol = symbol ?? string.Empty;
+            this.countries = new Lazy<IReadOnlyCollection<Country>>(this.GetCountries);
         }
 
         private Currency()
@@ -31,16 +35,27 @@ namespace Cars.Financial
             this.iso4217Code = string.Empty;
             this.iso4217Number = 0;
             this.name = PolyglotString.Empty;
+            this.countries = new Lazy<IReadOnlyCollection<Country>>(this.GetCountries);
         }
 
         public string Symbol
         {
-            get { return this.symbol; }
+            get
+            {
+                Contract.Ensures(Contract.Result<string>() != null);
+
+                return this.symbol;
+            }
         }
 
         public string ISO4217Code
         {
-            get { return this.iso4217Code; }
+            get
+            {
+                Contract.Ensures(Contract.Result<string>() != null);
+
+                return this.iso4217Code;
+            }
         }
 
         public short ISO4217Number
@@ -50,7 +65,22 @@ namespace Cars.Financial
 
         public PolyglotString Name
         {
-            get { return this.name; }
+            get
+            {
+                Contract.Ensures(Contract.Result<PolyglotString>() != null);
+
+                return this.name;
+            }
+        }
+
+        public IReadOnlyCollection<Country> Countries
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<IReadOnlyCollection<Country>>() != null);
+
+                return this.countries.Value;
+            }
         }
 
         public static bool operator ==(Currency c1, Currency c2)
@@ -85,8 +115,7 @@ namespace Cars.Financial
                 return false;
             }
 
-            return this.Symbol == other.Symbol &&
-                string.Equals(this.ISO4217Code, other.ISO4217Code, StringComparison.Ordinal);
+            return this.ISO4217Number == other.iso4217Number;
         }
 
         public override bool Equals(object obj)
@@ -99,6 +128,28 @@ namespace Cars.Financial
         public override int GetHashCode()
         {
             return this.Symbol.GetHashCode() ^ this.ISO4217Code.GetHashCode();
+        }
+
+        private IReadOnlyCollection<Country> GetCountries()
+        {
+            if (this.ISO4217Number == Currency.None.ISO4217Number)
+            {
+                return new Country[0];
+            }
+
+            FieldInfo field = typeof(Currency2Countries).GetField(this.ISO4217Code, BindingFlags.Static | BindingFlags.Public);
+
+            if (field != null)
+            {
+                IReadOnlyCollection<Country> cs = field.GetValue(null) as IReadOnlyCollection<Country>;
+
+                if (cs != null)
+                {
+                    return cs;
+                }
+            }
+
+            return new Country[0];
         }
     }
 }

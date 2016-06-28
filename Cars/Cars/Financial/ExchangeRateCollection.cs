@@ -38,6 +38,17 @@ namespace Cars.Financial
             }
         }
 
+        public bool TryGetExchangeRate(Currency source, Currency target, out ExchangeRate exchangeRate)
+        {
+            var key = Key(source, target);
+            if (this.exchangeRates.TryGetValue(key, out exchangeRate))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public void Add(ExchangeRate exchangeRate)
         {
             var key = Key(exchangeRate.Source, exchangeRate.Target);

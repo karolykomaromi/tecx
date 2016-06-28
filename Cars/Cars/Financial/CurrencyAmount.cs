@@ -1,9 +1,11 @@
 namespace Cars.Financial
 {
     using System;
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.Globalization;
 
+    [DebuggerDisplay("{ToString()}")]
     public class CurrencyAmount : IEquatable<CurrencyAmount>, IComparable<CurrencyAmount>, IFormattable
     {
         private readonly decimal amount;
@@ -277,6 +279,11 @@ namespace Cars.Financial
                 return this.Amount.ToString(format, formatProvider) + " " + this.Currency.ISO4217Code;
             }
 
+            if (format == string.Empty)
+            {
+                return this.Amount.ToString(format, formatProvider) + " " + this.Currency.ISO4217Code;
+            }
+
             throw new FormatException(string.Format(Properties.Resources.InvalidCurrencyFormatString, format));
         }
 
@@ -293,6 +300,29 @@ namespace Cars.Financial
         public override string ToString()
         {
             return this.ToString(string.Empty, CultureInfo.CurrentCulture);
+        }
+
+        internal CurrencyAmount Exchange(ExchangeRate exchangeRate)
+        {
+            Contract.Requires(exchangeRate != null);
+            Contract.Ensures(Contract.Result<CurrencyAmount>() != null);
+
+            if (exchangeRate == ExchangeRate.Identity)
+            {
+                return this;
+            }
+
+            if (this.Currency != exchangeRate.Source)
+            {
+                throw new CurrencyMismatchException(this.Currency, exchangeRate.Source);
+            }
+
+            if (this.Currency == exchangeRate.Target)
+            {
+                return this;
+            }
+
+            return new CurrencyAmount(this.Amount * exchangeRate.Rate, exchangeRate.Target);
         }
 
         private static void AssertCurrenciesMatch(CurrencyAmount ca1, CurrencyAmount ca2)

@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
     using Cars.Financial;
+    using Cars.I18n;
     using Xunit;
 
     public class CurrencyAmountTests
@@ -112,6 +113,18 @@
             string actual = sut.ToString(format, formatProvider);
 
             Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(-12.345, "de-DE", "-12,345 EUR")]
+        public void Should_Format_Currency_Amount_Properly(double amount, string culture, string expected)
+        {
+            CultureInfo targetCulture = CultureInfo.CreateSpecificCulture(culture);
+
+            using (new TemporarilyChangeCulture(targetCulture))
+            {
+                Assert.Equal(expected, amount.EUR().ToString());
+            }
         }
     }
 }
