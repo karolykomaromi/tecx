@@ -2,6 +2,7 @@ namespace Cars.I18n
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Linq;
@@ -124,7 +125,7 @@ namespace Cars.I18n
             {
                 // weberse 2015-09-14 If any key is only in one dictionary but not the other the strings are not equal
                 string x, y;
-                if (!TranslationExistsInBothStrings(this.translations, other.translations, culture, out x, out y))
+                if (!TryGetTranslations(this.translations, other.translations, culture, out x, out y))
                 {
                     return false;
                 }
@@ -202,7 +203,8 @@ namespace Cars.I18n
             return Properties.Resources.TranslationNotFound;
         }
 
-        private static bool TranslationExistsInBothStrings(
+        [SuppressMessage("Cars.CodeQuality.CodeQualityRules", "DV1001:MethodMustNotHaveMoreThanFourParameters", Justification = "Checked, is OK.")]
+        private static bool TryGetTranslations(
             IDictionary<CultureInfo, string> first,
             IDictionary<CultureInfo, string> second,
             CultureInfo culture,

@@ -10,16 +10,7 @@
         {
             var alu = new Part("17_ALU", new[] { new PartNumber("16_STEEL") }, PartNumber.None);
 
-            var surplus = new Package(
-                "SURPLUS", 
-                new[]
-                {
-                    new PartNumber("BASIC")
-                }, 
-                PartNumber.None)
-            {
-                alu
-            };
+            var surplus = new Package("SURPLUS", new[] { new PartNumber("BASIC") }, PartNumber.None) { alu };
 
             Assert.Contains(new PartNumber("16_STEEL"), surplus.ReplacesTheseParts);
             Assert.Contains(new PartNumber("BASIC"), surplus.ReplacesTheseParts);

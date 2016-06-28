@@ -36,7 +36,7 @@ namespace Cars.Financial
         {
             ExchangeRate exchangeRate = this.exchangeRates[amount.Currency, targetCurrency];
 
-            return new CurrencyAmount(amount.Amount * exchangeRate.Rate, targetCurrency);
+            return amount.Exchange(exchangeRate);
         }
     }
 }

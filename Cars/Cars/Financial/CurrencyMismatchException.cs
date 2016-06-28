@@ -8,5 +8,10 @@ namespace Cars.Financial
             : base(string.Format(Properties.Resources.CurrencyMismatch, x, y))
         {
         }
+
+        public CurrencyMismatchException(Currency x, Currency y)
+            : base(string.Format(Properties.Resources.CurrencyMismatch, x, y))
+        {
+        }
     }
 }
