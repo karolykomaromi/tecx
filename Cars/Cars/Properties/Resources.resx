@@ -123,6 +123,9 @@
   <data name="ExchangeRateNotFound" xml:space="preserve">
     <value>No exchange rate found between '{0}' and '{1}'.</value>
   </data>
+  <data name="FuelConsumptionPerDistance" xml:space="preserve">
+    <value>{0} {1} per {2}</value>
+  </data>
   <data name="InvalidCurrencyFormatString" xml:space="preserve">
     <value>Invalid format '{0}'.</value>
   </data>

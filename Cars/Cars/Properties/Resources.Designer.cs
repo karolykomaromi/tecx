@@ -66,6 +66,11 @@ namespace Cars.Properties
             get { return Resources.ResourceManager.GetString("ExchangeRateNotFound", resourceCulture ?? CultureInfo.CurrentUICulture); }
         }
 
+        public static string FuelConsumptionPerDistance
+        {
+            get { return Resources.ResourceManager.GetString("FuelConsumptionPerDistance", resourceCulture ?? CultureInfo.CurrentUICulture); }
+        }
+
         public static string InvalidCurrencyFormatString
         {
             get { return Resources.ResourceManager.GetString("InvalidCurrencyFormatString", resourceCulture ?? CultureInfo.CurrentUICulture); }

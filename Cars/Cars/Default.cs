@@ -80,6 +80,11 @@ namespace Cars
                 return ValueOfField(field);
             }
 
+            if ((field = Field(type, "Identity")) != null)
+            {
+                return ValueOfField(field);
+            }
+
             if ((field = Field(type, "None")) != null)
             {
                 return ValueOfField(field);

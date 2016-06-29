@@ -1,3 +1,6 @@
+using System.Globalization;
+using System.Text;
+
 namespace Cars.Parts
 {
     using System.Collections;
@@ -70,6 +73,22 @@ namespace Cars.Parts
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder(200);
+
+            CultureInfo culture = CultureInfo.CurrentUICulture;
+
+            sb.AppendLine(this.Abstract.ToString(culture));
+
+            foreach (Part part in this.parts)
+            {
+                sb.Append("\t- ").AppendLine(part.ToString());
+            }
+
+            return sb.ToString();
         }
     }
 }
