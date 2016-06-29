@@ -3,6 +3,7 @@ namespace Cars.Parts
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
+    using System.Globalization;
     using Cars.Financial;
     using Cars.I18n;
 
@@ -159,7 +160,7 @@ namespace Cars.Parts
 
         public override string ToString()
         {
-            return this.PartNumber.ToString();
+            return this.Abstract.ToString(CultureInfo.CurrentUICulture);
         }
     }
 }

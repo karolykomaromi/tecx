@@ -59,6 +59,7 @@
     <Compile Include="..\CommonFiles\GlobalAssemblyVersion.cs">
       <Link>Properties\GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="DefaultTests.cs" />
     <Compile Include="Extensions\DictionaryExtensionsTests.cs" />
     <Compile Include="Financial\CurrencyAmountTests.cs" />
     <Compile Include="Financial\CurrencyTests.cs" />
@@ -67,6 +68,9 @@
     <Compile Include="I18n\PolyglotStringBuilderTests.cs" />
     <Compile Include="I18n\PolyglotStringExtensionsTests.cs" />
     <Compile Include="I18n\PolyglotStringTests.cs" />
+    <Compile Include="Measures\DistanceTests.cs" />
+    <Compile Include="Parts\EngineTests.cs" />
+    <Compile Include="Parts\PackageBuilderTests.cs" />
     <Compile Include="Parts\PackageTests.cs" />
     <Compile Include="Parts\PartCollectionTests.cs" />
     <Compile Include="Parts\PartNumberTests.cs" />
