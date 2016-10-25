@@ -61,7 +61,6 @@ namespace Cars.Parts
             return this;
         }
 
-
         public PartBuilder Excludes(PartNumber partNumber)
         {
             Contract.Requires(partNumber != null);

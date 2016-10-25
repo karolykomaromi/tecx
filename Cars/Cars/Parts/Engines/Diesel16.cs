@@ -1,7 +1,7 @@
-﻿using Cars.Measures;
-
-namespace Cars.Parts.Engines
+﻿namespace Cars.Parts.Engines
 {
+    using Cars.Measures;
+
     public class Diesel16 : EngineBuilder
     {
         public Diesel16()

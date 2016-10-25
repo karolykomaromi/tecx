@@ -1,9 +1,8 @@
-using Cars.Measures;
-
 namespace Cars.Parts.Engines
 {
     using System;
     using System.Diagnostics.Contracts;
+    using Cars.Measures;
 
     public class EngineBuilder : Builder<Engine>
     {

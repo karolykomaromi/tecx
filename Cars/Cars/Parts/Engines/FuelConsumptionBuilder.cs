@@ -1,8 +1,8 @@
-using System.Diagnostics.Contracts;
-using Cars.Measures;
-
 namespace Cars.Parts.Engines
 {
+    using System.Diagnostics.Contracts;
+    using Cars.Measures;
+
     public class FuelConsumptionBuilder : Builder<FuelConsumption>
     {
         private decimal liters;

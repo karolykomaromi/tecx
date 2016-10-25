@@ -1,8 +1,7 @@
-using System.Diagnostics.Contracts;
-using Cars.Measures;
-
 namespace Cars.Parts.Engines
 {
+    using Cars.Measures;
+
     public class TorqueAtRpm
     {
         private readonly Torque torque;
@@ -10,8 +9,6 @@ namespace Cars.Parts.Engines
 
         public TorqueAtRpm(Torque torque, ulong revolutionsPerMinute)
         {
-            Contract.Requires(torque != null);
-
             this.torque = torque;
             this.revolutionsPerMinute = revolutionsPerMinute;
         }

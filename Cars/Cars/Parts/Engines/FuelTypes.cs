@@ -1,7 +1,7 @@
-using Cars.I18n;
-
 namespace Cars.Parts.Engines
 {
+    using Cars.I18n;
+
     public class FuelTypes
     {
         public static readonly FuelType Diesel = new FuelType(new PolyglotString(Cultures.GermanGermany, "Diesel"));

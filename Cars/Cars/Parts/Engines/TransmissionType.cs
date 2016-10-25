@@ -1,8 +1,8 @@
-using System.Diagnostics.Contracts;
-using Cars.I18n;
-
 namespace Cars.Parts.Engines
 {
+    using System.Diagnostics.Contracts;
+    using Cars.I18n;
+
     public class TransmissionType
     {
         private readonly PolyglotString name;
@@ -16,7 +16,12 @@ namespace Cars.Parts.Engines
 
         public PolyglotString Name
         {
-            get { return this.name; }
+            get
+            {
+                Contract.Ensures(Contract.Result<PolyglotString>() != null);
+
+                return this.name;
+            }
         }
     }
 }

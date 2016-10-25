@@ -1,8 +1,8 @@
-using System.Diagnostics.Contracts;
-using Cars.I18n;
-
 namespace Cars.Parts.Engines
 {
+    using System.Diagnostics.Contracts;
+    using Cars.I18n;
+
     public class FuelType
     {
         private readonly PolyglotString name;
