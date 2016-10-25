@@ -1,10 +1,35 @@
-﻿namespace Cars.Test.Measures
+﻿using System;
+using FsCheck.Xunit;
+
+namespace Cars.Test.Measures
 {
     using Cars.Measures;
     using Xunit;
 
     public class DistanceTests
     {
+        [Property]
+        public void Should_Properly_Add(decimal x, decimal y)
+        {
+            try
+            {
+                Distance expected = x.Kilometers() + y.Kilometers();
+                Distance actual = (x + y).Kilometers();
+
+                Assert.Equal(expected, actual);
+            }
+            catch (OverflowException)
+            {
+            }
+        }
+
+        [Fact]
+        public void Should_Throw_On_Overflow()
+        {
+            Assert.Throws<OverflowException>(() => decimal.MaxValue.Kilometers() + 10.0.Kilometers());
+            Assert.Throws<OverflowException>(() => decimal.MinValue.Kilometers() - 10.0.Kilometers());
+        }
+
         [Theory]
         [InlineData(1, 2, 3)]
         [InlineData(1.5, 2.7, 4.2)]

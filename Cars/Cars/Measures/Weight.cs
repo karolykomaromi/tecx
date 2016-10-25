@@ -3,11 +3,11 @@ namespace Cars.Measures
     using System;
     using System.Diagnostics.Contracts;
 
-    public class Weight : IEquatable<Weight>, IComparable<Weight>
+    public struct Weight : IEquatable<Weight>, IComparable<Weight>
     {
-        public readonly static Weight Zero = new Weight(0);
+        public static readonly Weight Zero = new Weight(0);
 
-        private readonly decimal weightInGrams = 0;
+        private readonly decimal weightInGrams;
 
         private Weight(decimal weightInGrams)
         {
@@ -16,39 +16,16 @@ namespace Cars.Measures
 
         public static Weight operator +(Weight w1, Weight w2)
         {
-            Contract.Requires(w1 != null);
-            Contract.Requires(w2 != null);
-            Contract.Ensures(Contract.Result<Weight>() != null);
-
             return new Weight(w1.weightInGrams + w2.weightInGrams);
         }
 
         public static Weight operator -(Weight w1, Weight w2)
         {
-            Contract.Requires(w1 != null);
-            Contract.Requires(w2 != null);
-            Contract.Ensures(Contract.Result<Weight>() != null);
-
             return new Weight(w1.weightInGrams - w2.weightInGrams);
         }
 
         public static bool operator ==(Weight x, Weight y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return false;
-            }
-
             return x.weightInGrams == y.weightInGrams;
         }
 
@@ -59,81 +36,21 @@ namespace Cars.Measures
 
         public static bool operator <(Weight x, Weight y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return false;
-            }
-
             return x.weightInGrams < y.weightInGrams;
         }
 
         public static bool operator >(Weight x, Weight y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return true;
-            }
-
             return x.weightInGrams > y.weightInGrams;
         }
 
         public static bool operator <=(Weight x, Weight y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return false;
-            }
-
             return x.weightInGrams <= y.weightInGrams;
         }
 
         public static bool operator >=(Weight x, Weight y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return true;
-            }
-
             return x.weightInGrams >= y.weightInGrams;
         }
 
@@ -245,27 +162,22 @@ namespace Cars.Measures
 
         public int CompareTo(Weight other)
         {
-            if (object.ReferenceEquals(other, null))
-            {
-                return 1;
-            }
-
             return this.weightInGrams.CompareTo(other.weightInGrams);
         }
 
         public bool Equals(Weight other)
         {
-            if (object.ReferenceEquals(other, null))
-            {
-                return false;
-            }
-
             return this.weightInGrams == other.weightInGrams;
         }
 
         public override bool Equals(object obj)
         {
-            Weight other = obj as Weight;
+            if (!(obj is Weight))
+            {
+                return false;
+            }
+
+            Weight other = (Weight)obj;
 
             return this.Equals(other);
         }

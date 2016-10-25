@@ -1,7 +1,7 @@
-using System.Diagnostics.Contracts;
-
 namespace Cars.Parts.Engines
 {
+    using System.Diagnostics.Contracts;
+
     public class TransmissionBuilder : Builder<Transmission>
     {
         private TransmissionType type;

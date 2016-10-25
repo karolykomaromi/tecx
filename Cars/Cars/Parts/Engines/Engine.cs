@@ -1,7 +1,7 @@
-using Cars.Measures;
-
 namespace Cars.Parts.Engines
 {
+    using Cars.Measures;
+
     public class Engine : Part
     {
         public Engine(PartNumber partNumber)

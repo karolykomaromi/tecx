@@ -3,8 +3,10 @@ namespace Cars.Measures
     using System;
     using System.Diagnostics.Contracts;
 
-    public class Distance : IEquatable<Distance>, IComparable<Distance>
+    public struct Distance : IEquatable<Distance>, IComparable<Distance>
     {
+        public static readonly Distance Zero = new Distance(0);
+
         private readonly decimal distanceInMeters;
 
         private Distance(decimal distanceInMeters)
@@ -14,39 +16,16 @@ namespace Cars.Measures
 
         public static Distance operator +(Distance x, Distance y)
         {
-            Contract.Requires(x != null);
-            Contract.Requires(y != null);
-            Contract.Ensures(Contract.Result<Weight>() != null);
-
-            return new Distance(x.distanceInMeters + y.distanceInMeters);
+            return new Distance(checked(x.distanceInMeters + y.distanceInMeters));
         }
 
         public static Distance operator -(Distance x, Distance y)
         {
-            Contract.Requires(x != null);
-            Contract.Requires(y != null);
-            Contract.Ensures(Contract.Result<Distance>() != null);
-
-            return new Distance(x.distanceInMeters - y.distanceInMeters);
+            return new Distance(checked(x.distanceInMeters - y.distanceInMeters));
         }
 
         public static bool operator ==(Distance x, Distance y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return false;
-            }
-
             return x.distanceInMeters == y.distanceInMeters;
         }
 
@@ -57,81 +36,21 @@ namespace Cars.Measures
 
         public static bool operator <(Distance x, Distance y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return false;
-            }
-
             return x.distanceInMeters < y.distanceInMeters;
         }
 
         public static bool operator >(Distance x, Distance y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return true;
-            }
-
             return x.distanceInMeters > y.distanceInMeters;
         }
 
         public static bool operator <=(Distance x, Distance y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return false;
-            }
-
             return x.distanceInMeters <= y.distanceInMeters;
         }
 
         public static bool operator >=(Distance x, Distance y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return true;
-            }
-
             return x.distanceInMeters >= y.distanceInMeters;
         }
 
@@ -258,27 +177,22 @@ namespace Cars.Measures
 
         public int CompareTo(Distance other)
         {
-            if (object.ReferenceEquals(other, null))
-            {
-                return 1;
-            }
-
             return this.distanceInMeters.CompareTo(other.distanceInMeters);
         }
 
         public bool Equals(Distance other)
         {
-            if (object.ReferenceEquals(other, null))
-            {
-                return false;
-            }
-
             return this.distanceInMeters == other.distanceInMeters;
         }
 
         public override bool Equals(object obj)
         {
-            Distance other = obj as Distance;
+            if (!(obj is Distance))
+            {
+                return false;
+            }
+
+            Distance other = (Distance)obj;
 
             return this.Equals(other);
         }
@@ -286,49 +200,6 @@ namespace Cars.Measures
         public override int GetHashCode()
         {
             return this.distanceInMeters.GetHashCode();
-        }
-    }
-
-    public static class DistanceExtensions
-    {
-        public static Distance Kilometers(this double kilometers)
-        {
-            return Distance.FromKilometers(new decimal(kilometers));
-        }
-
-        public static Distance Kilometers(this decimal kilometers)
-        {
-            return Distance.FromKilometers(kilometers);
-        }
-
-        public static Distance Centimeters(this double centimeters)
-        {
-            return Distance.FromCentimeters(new decimal(centimeters));
-        }
-
-        public static Distance Centimeters(this decimal centimeters)
-        {
-            return Distance.FromCentimeters(centimeters);
-        }
-        
-        public static Distance Millimeters(this double millimeters)
-        {
-            return Distance.FromMillimeters(new decimal(millimeters));
-        }
-
-        public static Distance Millimeters(this decimal millimeters)
-        {
-            return Distance.FromMillimeters(millimeters);
-        }
-
-        public static Distance Meters(this double meters)
-        {
-            return Distance.FromMeters(new decimal(meters));
-        }
-
-        public static Distance Meters(this decimal meters)
-        {
-            return Distance.FromMeters(meters);
         }
     }
 }

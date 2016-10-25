@@ -1,8 +1,8 @@
-using System.Diagnostics.Contracts;
-using Cars.Measures;
-
 namespace Cars.Parts.Engines
 {
+    using System.Diagnostics.Contracts;
+    using Cars.Measures;
+
     public class TorqueAtRpmBuilder : Builder<TorqueAtRpm>
     {
         private Torque torque;
@@ -25,7 +25,6 @@ namespace Cars.Parts.Engines
 
         public TorqueAtRpmBuilder Torque(Torque torque)
         {
-            Contract.Requires(torque != null);
             Contract.Ensures(Contract.Result<TorqueAtRpmBuilder>() != null);
 
             this.torque = torque;

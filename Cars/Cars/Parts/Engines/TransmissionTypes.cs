@@ -1,7 +1,7 @@
-using Cars.I18n;
-
 namespace Cars.Parts.Engines
 {
+    using Cars.I18n;
+
     public class TransmissionTypes
     {
         public static readonly TransmissionType None = new TransmissionType(PolyglotString.Empty);

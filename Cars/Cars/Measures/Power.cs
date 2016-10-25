@@ -3,7 +3,7 @@ namespace Cars.Measures
     using System;
     using System.Diagnostics.Contracts;
 
-    public class Power : IEquatable<Power>, IComparable<Power>
+    public struct Power : IEquatable<Power>, IComparable<Power>
     {
         public static readonly Power Zero = new Power(0);
 
@@ -16,39 +16,16 @@ namespace Cars.Measures
 
         public static Power operator +(Power x, Power y)
         {
-            Contract.Requires(x != null);
-            Contract.Requires(y != null);
-            Contract.Ensures(Contract.Result<Weight>() != null);
-
             return new Power(x.powerInWatts + y.powerInWatts);
         }
 
         public static Power operator -(Power x, Power y)
         {
-            Contract.Requires(x != null);
-            Contract.Requires(y != null);
-            Contract.Ensures(Contract.Result<Power>() != null);
-
             return new Power(x.powerInWatts - y.powerInWatts);
         }
 
         public static bool operator ==(Power x, Power y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return false;
-            }
-
             return x.powerInWatts == y.powerInWatts;
         }
 
@@ -59,81 +36,21 @@ namespace Cars.Measures
 
         public static bool operator <(Power x, Power y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return false;
-            }
-
             return x.powerInWatts < y.powerInWatts;
         }
 
         public static bool operator >(Power x, Power y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return true;
-            }
-
             return x.powerInWatts > y.powerInWatts;
         }
 
         public static bool operator <=(Power x, Power y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return false;
-            }
-
             return x.powerInWatts <= y.powerInWatts;
         }
 
         public static bool operator >=(Power x, Power y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return true;
-            }
-
             return x.powerInWatts >= y.powerInWatts;
         }
 
@@ -245,27 +162,22 @@ namespace Cars.Measures
 
         public int CompareTo(Power other)
         {
-            if (object.ReferenceEquals(other, null))
-            {
-                return 1;
-            }
-
             return this.powerInWatts.CompareTo(other.powerInWatts);
         }
 
         public bool Equals(Power other)
         {
-            if (object.ReferenceEquals(other, null))
-            {
-                return false;
-            }
-
             return this.powerInWatts == other.powerInWatts;
         }
 
         public override bool Equals(object obj)
         {
-            Power other = obj as Power;
+            if (!(obj is Power))
+            {
+                return false;
+            }
+
+            Power other = (Power)obj;
 
             return this.Equals(other);
         }

@@ -87,6 +87,7 @@
     <Compile Include="I18n\TemporarilyChangeCulture.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="Measures\Distance.cs" />
+    <Compile Include="Measures\DistanceExtensions.cs" />
     <Compile Include="Measures\Power.cs" />
     <Compile Include="Measures\Torque.cs" />
     <Compile Include="Measures\Volume.cs" />

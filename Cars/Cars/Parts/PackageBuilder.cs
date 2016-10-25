@@ -10,11 +10,10 @@ namespace Cars.Parts
     {
         private readonly HashSet<PartNumber> replaces;
         private readonly HashSet<PartNumber> excludes;
+        private readonly HashSet<PartBuilder> parts;
         private PartNumber partNumber;
         private PolyglotStringBuilder description;
         private PolyglotStringBuilder @abstract;
-
-        private readonly HashSet<PartBuilder> parts;
 
         public PackageBuilder()
         {

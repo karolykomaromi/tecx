@@ -3,9 +3,9 @@ namespace Cars.Measures
     using System;
     using System.Diagnostics.Contracts;
 
-    public class Torque : IEquatable<Torque>, IComparable<Torque>
+    public struct Torque : IEquatable<Torque>, IComparable<Torque>
     {
-        public static readonly Torque Zero = Torque.FromNewtonMeter(0);
+        public static readonly Torque Zero = new Torque(0);
 
         private readonly decimal torqueInNewtonMeter;
         
@@ -16,39 +16,16 @@ namespace Cars.Measures
 
         public static Torque operator +(Torque x, Torque y)
         {
-            Contract.Requires(x != null);
-            Contract.Requires(y != null);
-            Contract.Ensures(Contract.Result<Weight>() != null);
-
             return new Torque(x.torqueInNewtonMeter + y.torqueInNewtonMeter);
         }
 
         public static Torque operator -(Torque x, Torque y)
         {
-            Contract.Requires(x != null);
-            Contract.Requires(y != null);
-            Contract.Ensures(Contract.Result<Torque>() != null);
-
             return new Torque(x.torqueInNewtonMeter - y.torqueInNewtonMeter);
         }
         
         public static bool operator ==(Torque x, Torque y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return false;
-            }
-
             return x.torqueInNewtonMeter == y.torqueInNewtonMeter;
         }
 
@@ -59,81 +36,21 @@ namespace Cars.Measures
 
         public static bool operator <(Torque x, Torque y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return false;
-            }
-
             return x.torqueInNewtonMeter < y.torqueInNewtonMeter;
         }
 
         public static bool operator >(Torque x, Torque y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return true;
-            }
-
             return x.torqueInNewtonMeter > y.torqueInNewtonMeter;
         }
 
         public static bool operator <=(Torque x, Torque y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return false;
-            }
-
             return x.torqueInNewtonMeter <= y.torqueInNewtonMeter;
         }
 
         public static bool operator >=(Torque x, Torque y)
         {
-            if (object.ReferenceEquals(x, y))
-            {
-                return true;
-            }
-
-            if (object.ReferenceEquals(x, null))
-            {
-                return false;
-            }
-
-            if (object.ReferenceEquals(y, null))
-            {
-                return true;
-            }
-
             return x.torqueInNewtonMeter >= y.torqueInNewtonMeter;
         }
 
@@ -240,27 +157,22 @@ namespace Cars.Measures
 
         public int CompareTo(Torque other)
         {
-            if (object.ReferenceEquals(other, null))
-            {
-                return 1;
-            }
-
             return this.torqueInNewtonMeter.CompareTo(other.torqueInNewtonMeter);
         }
 
         public bool Equals(Torque other)
         {
-            if (object.ReferenceEquals(other, null))
-            {
-                return false;
-            }
-
             return this.torqueInNewtonMeter == other.torqueInNewtonMeter;
         }
 
         public override bool Equals(object obj)
         {
-            Torque other = obj as Torque;
+            if (!(obj is Torque))
+            {
+                return false;
+            }
+
+            Torque other = (Torque)obj;
 
             return this.Equals(other);
         }
