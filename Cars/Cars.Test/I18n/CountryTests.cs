@@ -20,7 +20,7 @@
         {
             var actual = Countries.CHE.Cultures;
 
-            Assert.Equal(4, actual.Count);
+            Assert.Equal(6, actual.Count);
         }
 
         [Fact]
