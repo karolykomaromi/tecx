@@ -449,3 +449,7 @@ Cars/Cars.I18n/bin
 Cars/Cars.CodeQuality.Test/bin
 Cars/Cars.CodeQuality.Test/obj
 Cars/Cars.CodeQuality/obj
+Janus/Janus.TextTemplating.Test/bin
+Janus/Janus.TextTemplating.Test/obj
+Janus/Janus.TextTemplating/obj
+Janus/Janus.TextTemplating/bin
