@@ -3,24 +3,18 @@ using System.Resources;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Janus.TextTemplating")]
+[assembly: AssemblyCompany("Outlawtrail.de")]
+[assembly: AssemblyProduct("Janus")]
 [assembly: AssemblyCopyright("Copyright © Outlawtrail 2016")]
 [assembly: AssemblyTrademark("")]
+
+// Version related information
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
+
+// Lease AssemblyCulture alone! https://msdn.microsoft.com/en-us/library/system.reflection.assemblycultureattribute
 [assembly: AssemblyCulture("")]
+[assembly: NeutralResourcesLanguage("en")]
 
 [assembly: ComVisible(false)]
 
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly:NeutralResourcesLanguage("en")]
