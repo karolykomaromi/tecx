@@ -26,6 +26,8 @@ namespace Janus.TextTemplating
 
         public PropertyBuilder Name(string name)
         {
+            Contract.Ensures(Contract.Result<PropertyBuilder>() != null);
+
             this.name = name;
 
             return this;
@@ -33,6 +35,8 @@ namespace Janus.TextTemplating
 
         public PropertyBuilder String()
         {
+            Contract.Ensures(Contract.Result<PropertyBuilder>() != null);
+
             this.type = "string";
 
             StringBuilder sb = new StringBuilder(100);
@@ -46,6 +50,8 @@ namespace Janus.TextTemplating
 
         public PropertyBuilder ByteArray()
         {
+            Contract.Ensures(Contract.Result<PropertyBuilder>() != null);
+
             this.type = "byte[]";
 
             StringBuilder sb = new StringBuilder(100);
@@ -60,6 +66,11 @@ namespace Janus.TextTemplating
 
         public override string Build()
         {
+            Contract.Requires(!string.IsNullOrWhiteSpace(this.name));
+            Contract.Requires(!string.IsNullOrWhiteSpace(this.type));
+            Contract.Requires(!string.IsNullOrWhiteSpace(this.body));
+            Contract.Ensures(Contract.Result<string>() != null);
+
             StringBuilder sb = new StringBuilder(500);
 
             sb.AppendLine();
