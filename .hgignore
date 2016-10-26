@@ -453,3 +453,6 @@ Janus/Janus.TextTemplating.Test/bin
 Janus/Janus.TextTemplating.Test/obj
 Janus/Janus.TextTemplating/obj
 Janus/Janus.TextTemplating/bin
+Janus/Janus.I18n/obj
+Janus/Janus.I18n/bin
+Janus/.vs/config/applicationhost.config

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System.ComponentModel;
+using System.Diagnostics.Contracts;
 
 namespace Janus.TextTemplating
 {
@@ -13,5 +14,11 @@ namespace Janus.TextTemplating
         }
 
         public abstract T Build();
+
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }

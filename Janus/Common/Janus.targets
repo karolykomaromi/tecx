@@ -1,0 +1,18 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <t4LibDir>$(MSBuildProjectDirectory)\..\Janus.TextTemplating\bin\Debug</t4LibDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <T4ReferencePath Include="$(t4LibDir)" />
+  </ItemGroup>
+  <ItemGroup>
+    <T4ParameterValues Include="t4LibDir">
+      <Value>$(t4LibDir)</Value>
+    </T4ParameterValues>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v14.0\TextTemplating\Microsoft.TextTemplating.targets" />
+  <PropertyGroup>
+    <TransformOnBuild>true</TransformOnBuild>
+    <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
+  </PropertyGroup>
+</Project>

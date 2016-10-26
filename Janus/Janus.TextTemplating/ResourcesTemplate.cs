@@ -69,6 +69,8 @@ namespace Janus.TextTemplating
 
         public string Properties()
         {
+            Contract.Ensures(Contract.Result<string>() != null);
+
             StringBuilder sb = new StringBuilder(500);
 
             foreach (XElement data in this.document.Root.Descendants("data"))

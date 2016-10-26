@@ -1,0 +1,24 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask 
+    AssemblyFile="$(MSBuildProjectDirectory)\..\packages\MSBuild.Extension.Pack.1.5.0\tools\net40\MSBuild.ExtensionPack.dll"
+    TaskName="MSBuild.ExtensionPack.Framework.AssemblyInfo"/>
+  <ItemGroup>
+    <AssemblyInfoFiles Include="$(MSBuildProjectDirectory)\..\CommonFiles\GlobalAssemblyVersion.cs" />
+  </ItemGroup>
+  <Target Name="IncrementAssemblyVersion" BeforeTargets="Build">
+    <AssemblyInfo
+      AssemblyInfoFiles="@(AssemblyInfoFiles)"
+
+      AssemblyBuildNumberType="YearWeekDay"
+      AssemblyRevisionType="AutoIncrement"
+      AssemblyRevisionReset="True"
+      AssemblyRevisionFormat="00"
+
+      AssemblyFileBuildNumberType="YearWeekDay"
+      AssemblyFileRevisionType="AutoIncrement"
+      AssemblyFileRevisionReset="True"
+      AssemblyFileRevisionFormat="00"
+
+      FirstDayOfWeek="Monday" />
+  </Target>
+</Project>
