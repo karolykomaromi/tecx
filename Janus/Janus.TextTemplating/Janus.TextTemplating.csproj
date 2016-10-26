@@ -53,6 +53,7 @@
     <Compile Include="ResourcesTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Build\Janus.TextTemplating.targets" />
     <None Include="Janus.TextTemplating.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
