@@ -1,0 +1,1 @@
+﻿..\.nuget\Nuget.exe push .\bin\Release\Janus.I18n.1.0.0.nupkg -source ..\JanusLocalPackageFeed

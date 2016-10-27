@@ -10,7 +10,9 @@
     <description>Internationalization support for Janus projects.</description>
     <copyright>Copyright © Outlawtrail 2016</copyright>
     <dependencies>
-      <dependency id="Janus.TextTemplating" version="[1,)" />
+      <group>
+        <dependency id="janus.texttemplating" version="[1,)" />
+      </group>
     </dependencies>
   </metadata>
   <files>

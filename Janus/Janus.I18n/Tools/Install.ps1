@@ -2,7 +2,7 @@
 
 $buildProject = @([Microsoft.Build.Evaluation.ProjectCollection]::GlobalProjectCollection.GetLoadedProjects($project.FullName))[0]  
 
-$file = $buildProject.Xml.Items | Where Include -eq "Resources.tt"
+$file = $buildProject.Xml.Items | Where Include -match "Resources.tt"
 $propertyToEdit = $file.Metadata | Where Name -eq "DependentUpon"
 
 if (!$propertyToEdit)
