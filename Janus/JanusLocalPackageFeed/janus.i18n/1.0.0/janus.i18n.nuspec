@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Janus.I18n</id>
     <version>1.0.0</version>
@@ -9,6 +9,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Internationalization support for Janus projects.</description>
     <copyright>Copyright © Outlawtrail 2016</copyright>
-    <dependencies />
+    <dependencies>
+      <dependency id="janus.texttemplating" version="1.0.0" />
+    </dependencies>
   </metadata>
 </package>
