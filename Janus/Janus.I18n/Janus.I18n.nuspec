@@ -16,5 +16,6 @@
   <files>
     <file src="Content\Properties\Resources.resx" target="content\Properties\Resources.resx" />
     <file src="Content\Properties\Resources.tt.pp" target="content\Properties\Resources.tt.pp" />
+    <file src="Tools\Install.ps1" target="tools\Install.ps1" />
   </files>
 </package>

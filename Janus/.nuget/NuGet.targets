@@ -3,6 +3,7 @@
     <ItemGroup>
         <OutputPackages Include="$(TargetDir)*.nupkg" />
     </ItemGroup>
+
     <PropertyGroup>
         <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(MSBuildProjectDirectory)\..\</SolutionDir>
 
