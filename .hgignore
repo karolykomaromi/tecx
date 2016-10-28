@@ -459,3 +459,5 @@ Janus/.vs/config/applicationhost.config
 Janus/Hydra.TextTemplating.TestResults.html
 Janus/Janus.I18n.Resources/bin
 Janus/Janus.I18n.Resources/obj
+Janus/Janus.Versioning/bin
+Janus/Janus.Versioning/obj
