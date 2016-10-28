@@ -11,7 +11,7 @@ namespace $rootnamespace$.Properties
     using System.ComponentModel;
     using System.Globalization;
     using System.Resources;
-    using Janus.I18n;
+    using Janus.I18n.Resources;
 
     public static class Resources
     {

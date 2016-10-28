@@ -1,4 +1,4 @@
-﻿namespace Janus.I18n
+﻿namespace Janus.I18n.Resources
 {
     using System.Diagnostics.Contracts;
     using System.Globalization;

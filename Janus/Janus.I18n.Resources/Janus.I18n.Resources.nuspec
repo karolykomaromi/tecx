@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>Janus.I18n</id>
+    <id>Janus.I18n.Resources</id>
     <version>1.0.0</version>
-    <title>Janus.I18n</title>
+    <title>Janus.I18n.Resources</title>
     <authors>Outlawtrail.de</authors>
     <owners>Outlawtrail.de</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

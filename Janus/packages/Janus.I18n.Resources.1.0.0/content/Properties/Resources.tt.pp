@@ -1,4 +1,12 @@
-namespace Janus.TextTemplating.Test.Properties
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".Designer.cs" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ assembly name="$(t4LibDir)\Janus.TextTemplating.dll" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="Janus.TextTemplating" #>
+namespace $rootnamespace$.Properties
 {
     using System.ComponentModel;
     using System.Globalization;
@@ -18,7 +26,7 @@ namespace Janus.TextTemplating.Test.Properties
             {
                 if(resourceManager == null)
                 {
-                    IResourceManager temp = new ResourceManagerAdapter(new ResourceManager("Janus.TextTemplating.Test.Properties.Resources", typeof(Resources).Assembly));
+                    IResourceManager temp = new ResourceManagerAdapter(new ResourceManager("$rootnamespace$.Properties.Resources", typeof(Resources).Assembly));
                     resourceManager = temp;
                 }
 
@@ -44,30 +52,13 @@ namespace Janus.TextTemplating.Test.Properties
                 resourceCulture = value;
             }
         }
+<# 
+    string resxFileName = this.Host.TemplateFile.Replace(".tt", ".resx");
+    XDocument doc = XDocument.Load(resxFileName);
 
-        public static byte[] MyJsonFile
-        {
-            get
-            {
-                object obj = ResourceManager.GetObject("MyJsonFile", resourceCulture);
-                return (byte[])obj;
-            }
-        }
+    ResourcesTemplate template = ResourcesTemplate.FromNode(doc);
 
-        public static string MyString
-        {
-            get
-            {
-                return ResourceManager.GetString("MyString", resourceCulture);
-            }
-        }
-
-        public static string MyTextFile
-        {
-            get
-            {
-                return ResourceManager.GetString("MyTextFile", resourceCulture);
-            }
-        }
+    Write(template.Properties());
+ #>
     }
 }

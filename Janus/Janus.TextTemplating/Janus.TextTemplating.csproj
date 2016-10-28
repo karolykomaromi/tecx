@@ -53,12 +53,16 @@
     <Compile Include="ResourcesTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Build\Janus.TextTemplating.targets" />
+    <None Include="Build\Janus.TextTemplating.targets">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Janus.TextTemplating.nuspec">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="PublishNugetPackage.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PublishToLocalNuGetFeed.bat" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildProjectDirectory)\..\.nuget\NuGet.targets" Condition="Exists('$(MSBuildProjectDirectory)\..\.nuget\NuGet.targets')" />

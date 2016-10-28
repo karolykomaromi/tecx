@@ -1,0 +1,1 @@
+FOR /R  %~dp0bin\Release %%F IN (*.nupkg) DO %~dp0..\.nuget\NuGet.exe add %%F -source %~dp0..\JanusLocalPackageFeed
