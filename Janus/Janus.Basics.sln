@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Janus.TextTemplating", "Jan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Janus.TextTemplating.Test", "Janus.TextTemplating.Test\Janus.TextTemplating.Test.csproj", "{2FE85A01-F79F-4013-B958-F3178975A00B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Janus.I18n", "Janus.I18n\Janus.I18n.csproj", "{FA06F90F-F519-4E66-9EE3-4EA2A44CA7AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Janus.I18n.Resources", "Janus.I18n.Resources\Janus.I18n.Resources.csproj", "{FA06F90F-F519-4E66-9EE3-4EA2A44CA7AD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{31E09099-4D3E-4B3D-9F6E-05FACB4C5703}"
 	ProjectSection(SolutionItems) = preProject

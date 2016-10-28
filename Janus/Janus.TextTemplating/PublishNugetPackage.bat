@@ -1,1 +1,0 @@
-﻿"..\.nuget\Nuget.exe" push "bin\Release\Janus.TextTemplating.1.0.0.nupkg" -source "..\JanusLocalPackageFeed"
